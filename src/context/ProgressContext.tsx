@@ -29,6 +29,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       try {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setProgress(JSON.parse(saved));
       } catch (e) {
         console.error("Failed to parse progress", e);

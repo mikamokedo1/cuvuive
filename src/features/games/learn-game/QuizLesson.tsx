@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { ActionButton } from "@/components/common/ActionButton";
 import { playSound } from "@/libs/utils/playSound";
 import { SoundNumbers } from "./LearnLesson";
@@ -16,21 +16,24 @@ export function QuizLesson({ range, onComplete }: QuizLessonProps) {
   const [targetNumber, setTargetNumber] = useState(0);
   const [options, setOptions] = useState<number[]>([]);
   const [correctCount, setCorrectCount] = useState(0);
+  const prevTargetRef = useRef<number | null>(null);
   const REQUIRED_WINS = 6;
 
   // Sound effects would go here
 
   // Generate new question
-  const generateQuestion = () => {
+  const generateQuestion = useCallback(() => {
     // Pick random target
     let target = Math.floor(Math.random() * (end - start + 1)) + start;
 
     // Prevent regenerating the previous number
-    if (end > start) {
-      while (target === targetNumber) {
+    if (end > start && prevTargetRef.current !== null) {
+      while (target === prevTargetRef.current) {
         target = Math.floor(Math.random() * (end - start + 1)) + start;
       }
     }
+
+    prevTargetRef.current = target;
 
     // Pick distractors
     // Simple logic: pick 2 other unique numbers from range if possible, or wider range if needed
@@ -41,11 +44,12 @@ export function QuizLesson({ range, onComplete }: QuizLessonProps) {
 
     setTargetNumber(target);
     setOptions(shuffled);
-  };
+  }, [end, start]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     generateQuestion();
-  }, []); // Init
+  }, [generateQuestion]); // Init
 
   const handleAnswer = (num: number) => {
     playSound(SoundNumbers[num - 1]);

@@ -2,13 +2,15 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { ActionButton } from "@/components/common/ActionButton";
-import { Eraser, ChevronRight } from "lucide-react";
-import { NUMBER_PATHS, NUMBER_NAMES_VI } from "@/libs/contants/numberPaths";
-import { ThingImages } from "@/libs/contants/thingImages";
+import { ChevronRight } from "lucide-react";
+import { NUMBER_PATHS } from "@/libs/contants/numberPaths";
 import Image from "next/image";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import Easer from "@/assets/games/common/earser.webp";
-import { playButtonSound } from "@/libs/utils/playSound";
+import Pen from "@/assets/games/pen.webp";
+import LoudSpeaker from "@/assets/games/loud-speaker.webp";
+import { playButtonSound, playSound } from "@/libs/utils/playSound";
+import { SoundNumbers } from "./LearnLesson";
 
 interface WritingLessonProps {
   range: [number, number];
@@ -23,13 +25,13 @@ interface Point {
 export function WritingLesson({ range, onComplete }: WritingLessonProps) {
   const [start, end] = range;
   const [currentNumber, setCurrentNumber] = useState(start);
-  const [completedCount, setCompletedCount] = useState(0);
   const [isDrawing, setIsDrawing] = useState(false);
   const [completedStrokes, setCompletedStrokes] = useState<Point[][]>([]);
   const [currentStroke, setCurrentStroke] = useState<Point[]>([]);
   const [isSuccess, setIsSuccess] = useState(false);
   const [showSparkle, setShowSparkle] = useState(false);
   const svgRef = useRef<SVGSVGElement>(null);
+  const [cursorPos, setCursorPos] = useState<Point | null>(null);
 
   const numberData = NUMBER_PATHS[currentNumber];
 
@@ -98,6 +100,11 @@ export function WritingLesson({ range, onComplete }: WritingLessonProps) {
   const handlePointerDown = (e: React.PointerEvent) => {
     if (isSuccess) return;
     e.preventDefault();
+
+    // Update custom cursor position
+    const rect = e.currentTarget.getBoundingClientRect();
+    setCursorPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+
     const point = getPointerPosition(e);
     if (point && isPointNearPath(point)) {
       setIsDrawing(true);
@@ -106,8 +113,13 @@ export function WritingLesson({ range, onComplete }: WritingLessonProps) {
   };
 
   const handlePointerMove = (e: React.PointerEvent) => {
-    if (!isDrawing || isSuccess) return;
     e.preventDefault();
+
+    // Update custom cursor position
+    const rect = e.currentTarget.getBoundingClientRect();
+    setCursorPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+
+    if (!isDrawing || isSuccess) return;
     const point = getPointerPosition(e);
     if (point && isPointNearPath(point)) {
       setCurrentStroke((prev) => [...prev, point]);
@@ -124,6 +136,11 @@ export function WritingLesson({ range, onComplete }: WritingLessonProps) {
       setCurrentStroke([]);
       validateDrawing(newCompleted);
     }
+  };
+
+  const handlePointerLeave = () => {
+    handlePointerUp();
+    setCursorPos(null);
   };
 
   // Validate coverage: Check per-point coverage along the reference path
@@ -172,7 +189,6 @@ export function WritingLesson({ range, onComplete }: WritingLessonProps) {
   const handleNext = () => {
     if (currentNumber < end) {
       setCurrentNumber((prev) => prev + 1);
-      setCompletedCount((prev) => prev + 1);
       clearDrawing();
     } else {
       // All numbers completed
@@ -195,8 +211,8 @@ export function WritingLesson({ range, onComplete }: WritingLessonProps) {
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
-          onPointerLeave={handlePointerUp}
-          style={{ cursor: "crosshair" }}
+          onPointerLeave={handlePointerLeave}
+          style={{ cursor: "none" }}
         >
           {/* Background grid (subtle) */}
           <defs>
@@ -269,6 +285,21 @@ export function WritingLesson({ range, onComplete }: WritingLessonProps) {
           )}
         </svg>
 
+        {/* Custom Pen Cursor */}
+        {cursorPos && !isSuccess && (
+          <div
+            className="absolute pointer-events-none transition-transform duration-75 will-change-transform"
+            style={{
+              left: 0,
+              top: 0,
+              transform: `translate(${cursorPos.x}px, ${cursorPos.y - 48}px)`, // Offset to make pen tip match cursor
+              zIndex: 20,
+            }}
+          >
+            <Image src={Pen} alt="Pen" width={48} height={48} className="drop-shadow-lg" />
+          </div>
+        )}
+
         {/* Sparkle overlay */}
         {showSparkle && (
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -284,6 +315,14 @@ export function WritingLesson({ range, onComplete }: WritingLessonProps) {
             <Image src={Easer} alt="Eraser" className="w-12 h-12" />
           </button>
         )}
+
+        <button
+          className="absolute top-4 left-4 cursor-pointer hover:scale-105 transition-all"
+          onClick={() => playSound(SoundNumbers[currentNumber - 1])}
+          onMouseEnter={playButtonSound}
+        >
+          <Image src={LoudSpeaker} alt="Eraser" className="w-12 h-10" />
+        </button>
       </div>
 
       {/* Bottom Controls */}

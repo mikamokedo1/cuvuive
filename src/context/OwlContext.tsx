@@ -48,6 +48,7 @@ export const OwlProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const sound = MAP_PATHNAME_TO_SOUND[pathname as keyof typeof MAP_PATHNAME_TO_SOUND];
     if (sound) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSound(sound);
     } else {
       setSound(HomeSound);

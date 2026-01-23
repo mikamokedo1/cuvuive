@@ -4,7 +4,7 @@ import Image from "next/image";
 import PlayIcon from "@/assets/games/common/play.webp";
 import { playButtonSound } from "@/libs/utils/playSound";
 
-export interface PlayButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+export type PlayButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const PlayButton: React.FC<PlayButtonProps> = ({ onClick, onMouseEnter }) => {
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {

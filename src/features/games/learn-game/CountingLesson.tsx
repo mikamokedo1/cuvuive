@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { ActionButton } from "@/components/common/ActionButton";
 import { ThingImages } from "@/libs/contants/thingImages";
 import { randomNum } from "@/libs/utils/randomNum";
@@ -20,17 +20,20 @@ export function CountingLesson({ range, onComplete }: CountingLessonProps) {
   const [options, setOptions] = useState<number[]>([]);
   const [iconType, setIconType] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
+  const prevTargetRef = useRef<number | null>(null);
   const REQUIRED_WINS = 6;
 
-  const generateQuestion = () => {
+  const generateQuestion = useCallback(() => {
     let target = Math.floor(Math.random() * (end - start + 1)) + start;
 
     // Prevent regenerating the previous number
-    if (end > start) {
-      while (target === targetNumber) {
+    if (end > start && prevTargetRef.current !== null) {
+      while (target === prevTargetRef.current) {
         target = Math.floor(Math.random() * (end - start + 1)) + start;
       }
     }
+
+    prevTargetRef.current = target;
 
     // Options: target + 2 distractors from range
     const pool = Array.from({ length: end - start + 1 }).map((_, i) => start + i);
@@ -39,11 +42,12 @@ export function CountingLesson({ range, onComplete }: CountingLessonProps) {
     setTargetNumber(target);
     setOptions(shuffledOpts);
     setIconType(randomNum(0, ThingImages.length - 1));
-  };
+  }, [end, start]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     generateQuestion();
-  }, []);
+  }, [generateQuestion]);
 
   const handleAnswer = (num: number) => {
     playSound(SoundNumbers[num - 1]);

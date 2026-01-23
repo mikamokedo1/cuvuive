@@ -15,12 +15,14 @@ export const NumberCard = ({ number, active, soundNum, image }: NumberCardProps)
   const dots = Array.from({ length: number });
   useEffect(() => {
     const timer = setTimeout(() => {
-      soundNum && playSound(soundNum);
+      if (soundNum) {
+        playSound(soundNum);
+      }
     }, 1000);
     return () => {
       clearTimeout(timer);
     };
-  }, [number]);
+  }, [number, soundNum]);
   return (
     <div
       className={cn(
