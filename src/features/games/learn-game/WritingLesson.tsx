@@ -150,24 +150,9 @@ export function WritingLesson({ range, onComplete }: WritingLessonProps) {
     const coverageRatio = coveredCount / pathSamples.length;
 
     // Required coverage: ~95% of path points must be visited
-    if (coverageRatio >= 0.95) {
+    if (coverageRatio >= 1) {
       triggerSuccess();
     }
-  };
-
-  const getPathBounds = () => {
-    // Simple bounds based on viewBox - can be refined per number
-    return {
-      minX: 40,
-      maxX: 220,
-      minY: 30,
-      maxY: 290,
-    };
-  };
-
-  // Kept for backward compat or specialized checks if needed, but primary logic is now coverageRatio
-  const calculateStrokeLength = (): number => {
-    return 0; // Deprecated in favor of point coverage
   };
 
   const triggerSuccess = () => {

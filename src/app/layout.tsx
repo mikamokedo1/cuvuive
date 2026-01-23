@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Baloo_2, Nunito_Sans } from "next/font/google";
 import "./globals.css";
+import { OwlProvider } from "@/context/OwlContext";
+import { OwlCompanion } from "@/components/common/OwlCompanion";
 
 // Configure fonts
 const baloo2 = Baloo_2({
@@ -29,7 +31,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi">
-      <body className={`${baloo2.variable} ${nunitoSans.variable} antialiased`}>{children}</body>
+      <body className={`${baloo2.variable} ${nunitoSans.variable} antialiased`}>
+        <OwlProvider>
+          {children}
+          <OwlCompanion />
+        </OwlProvider>
+      </body>
     </html>
   );
 }
