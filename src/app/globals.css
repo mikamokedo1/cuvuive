@@ -1,26 +1,116 @@
 @import "tailwindcss";
+@import "../styles/button.css";
+@import "../styles/title.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  --font-sans: "Nunito Sans", system-ui, sans-serif;
+  --font-display: "Baloo 2", cursive;
+  /* Background & text */
+  --background: #f9fafb; /* off-white, dịu mắt */
+  --foreground: #1f2937; /* gray-800 */
+  /* ===== Primary (Education Blue) ===== */
+  --color-primary-40: rgb(219 234 254); /* blue-100 */
+  --color-primary-50: rgb(147 197 253); /* blue-300 */
+  --color-primary-70: rgb(59 130 246); /* blue-500 */
+  --color-primary-100: rgb(37 99 235); /* blue-600 */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* ===== Secondary (Friendly Green) ===== */
+  --color-secondary-40: rgb(220 252 231); /* green-100 */
+  --color-secondary-50: rgb(134 239 172); /* green-300 */
+  --color-secondary-70: rgb(34 197 94); /* green-500 */
+  --color-secondary-100: rgb(22 163 74); /* green-600 */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* ===== Accent (Warm Orange – thay đỏ) ===== */
+  --color-accent-40: rgb(254 240 138); /* yellow-200 */
+  --color-accent-50: rgb(253 224 71); /* yellow-300 */
+  --color-accent-70: rgb(250 204 21); /* yellow-400 */
+  --color-accent-100: rgb(234 179 8); /* yellow-500 */
+
+  /* ===== Purple (So sánh) ===== */
+  --color-purple-40: rgb(233 213 255); /* purple-200 */
+  --color-purple-50: rgb(216 180 254); /* purple-300 */
+  --color-purple-70: rgb(168 85 247); /* purple-500 */
+  --color-purple-100: rgb(147 51 234); /* purple-600 */
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-display);
+
+  /* Typography cho trẻ */
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.2px;
+  font-weight: 400;
+}
+
+h1 {
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 800;
+}
+h2 {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 700;
+}
+h3 {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 700;
+}
+
+.animate-scale {
+  animation: scale 1s ease-in-out infinite;
+}
+
+@keyframes scale {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-8px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(8px);
+  }
+}
+
+.animate-bounce-subtle {
+  animation: bounce-subtle 2s ease-in-out infinite;
+}
+
+@keyframes bounce-subtle {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
 }

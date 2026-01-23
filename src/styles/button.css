@@ -1,0 +1,26 @@
+.glossy {
+  position: relative;
+}
+
+.glossy::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 6px;
+  right: 6px;
+  height: 40%;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.35);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .glossy:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+  }
+
+  .glossy:hover::before {
+    background: rgba(255, 255, 255, 0.45);
+  }
+}
