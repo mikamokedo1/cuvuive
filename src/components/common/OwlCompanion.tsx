@@ -5,8 +5,12 @@ import Image from "next/image";
 import { useOwl } from "@/context/OwlContext";
 import ownLearningImg from "@/assets/own-learning.webp";
 import { playSound } from "@/libs/utils/playSound";
+import { usePathname } from "next/navigation";
+
+const DO_NOT_SHOW_PATHNAMES = ["/auth/update-password"];
 
 export const OwlCompanion = () => {
+  const pathname = usePathname();
   const { sound } = useOwl();
   const [isBouncing, setIsBouncing] = useState(false);
   const [isJumping, setIsJumping] = useState(false);
@@ -24,6 +28,10 @@ export const OwlCompanion = () => {
   const handleMouseLeave = () => {
     setIsBouncing(false);
   };
+
+  if (DO_NOT_SHOW_PATHNAMES.includes(pathname)) {
+    return null;
+  }
 
   return (
     <div

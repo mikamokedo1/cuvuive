@@ -8,6 +8,10 @@ import LearnNumbersGroup3Lesson1Sound from "@/assets/pages-sounds/learn-numbers/
 import LearnNumbersGroupLesson2Sound from "@/assets/pages-sounds/learn-numbers/learn-numbers-group-lesson-lesson2.mp3";
 import LearnNumbersGroupLesson3Sound from "@/assets/pages-sounds/learn-numbers/learn-numbers-group-lesson-lesson3.mp3";
 import LearnNumbersGroupLesson4Sound from "@/assets/pages-sounds/learn-numbers/learn-numbers-group-lesson-lesson4.mp3";
+import LoginSound from "@/assets/pages-sounds/auth/auth-login.mp3";
+import SignupSound from "@/assets/pages-sounds/auth/auth-signup.mp3";
+import ForgotPasswordSound from "@/assets/pages-sounds/auth/auth-forgot-password.mp3";
+import SignupSuccsessSound from "@/assets/pages-sounds/auth/auth-login.mp3";
 
 import { usePathname } from "next/navigation";
 
@@ -29,6 +33,10 @@ const MAP_PATHNAME_TO_SOUND = {
   "/games/learn-numbers/group1/lesson/lesson4": LearnNumbersGroupLesson4Sound,
   "/games/learn-numbers/group2/lesson/lesson4": LearnNumbersGroupLesson4Sound,
   "/games/learn-numbers/group3/lesson/lesson4": LearnNumbersGroupLesson4Sound,
+  "/auth/login": LoginSound,
+  "/auth/sign-up": SignupSound,
+  "/auth/forgot-password": ForgotPasswordSound,
+  "/auth/sign-up-success": SignupSuccsessSound,
 };
 
 interface OwlContextType {
