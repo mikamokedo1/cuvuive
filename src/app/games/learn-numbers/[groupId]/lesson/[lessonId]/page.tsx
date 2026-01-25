@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { GameLayout } from "@/components/layout/GameLayout";
 import { useProgress } from "@/context/ProgressContext";
+import { useAccess } from "@/context/AccessContext";
 import { LearnLesson } from "@/features/games/learn-game/LearnLesson";
 import { QuizLesson } from "@/features/games/learn-game/QuizLesson";
 import { CountingLesson } from "@/features/games/learn-game/CountingLesson";
@@ -14,6 +15,7 @@ export default function LessonPage() {
   const params = useParams();
   const router = useRouter();
   const { markLessonComplete } = useProgress();
+  const { checkAccess, showPaywall } = useAccess();
 
   const [showModal, setShowModal] = useState(false);
   const [currentLessonNum, setCurrentLessonNum] = useState<number | string>(1);
@@ -67,19 +69,48 @@ export default function LessonPage() {
     setShowModal(true);
   };
 
-  const handleNextLesson = () => {
+  const handleNextLesson = async () => {
     setShowModal(false);
     const currentIdx = LESSON_ORDER.indexOf(lessonId);
 
     if (currentIdx < LESSON_ORDER.length - 1) {
-      const nextId = LESSON_ORDER[currentIdx + 1];
-      router.push(`/games/learn-numbers/${groupId}/lesson/${nextId}`);
+      const nextLessonId = LESSON_ORDER[currentIdx + 1];
+
+      // Check access before navigating to next lesson
+      const access = await checkAccess("learn-numbers", groupId, nextLessonId);
+
+      if (!access.userHasAccess) {
+        if (access.reason === "not_logged_in") {
+          showPaywall("login", `/games/learn-numbers/${groupId}/lesson/${nextLessonId}`);
+        } else if (access.reason === "premium_required") {
+          showPaywall("premium", `/games/learn-numbers/${groupId}/lesson/${nextLessonId}`);
+        }
+        // Navigate back to group page instead of staying on completed lesson
+        router.push(`/games/learn-numbers/${groupId}`);
+        return;
+      }
+
+      router.push(`/games/learn-numbers/${groupId}/lesson/${nextLessonId}`);
     } else {
       // Group complete
       // Check if next group exists
       const groupIdx = GROUPS_ORDER.indexOf(groupId);
       if (groupIdx < GROUPS_ORDER.length - 1) {
         const nextGroupId = GROUPS_ORDER[groupIdx + 1];
+
+        // Check access for next group's first lesson
+        const access = await checkAccess("learn-numbers", nextGroupId, "lesson1");
+
+        if (!access.userHasAccess) {
+          if (access.reason === "not_logged_in") {
+            showPaywall("login", `/games/learn-numbers/${nextGroupId}/lesson/lesson1`);
+          } else if (access.reason === "premium_required") {
+            showPaywall("premium", `/games/learn-numbers/${nextGroupId}/lesson/lesson1`);
+          }
+          router.push(`/games/learn-numbers`);
+          return;
+        }
+
         router.push(`/games/learn-numbers/${nextGroupId}`);
       } else {
         // Back to menu

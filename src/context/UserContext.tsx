@@ -3,6 +3,7 @@
 import { createClient } from "@/libs/supabase/client";
 import { User } from "@supabase/supabase-js";
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import { getSubscriptionStatusAction } from "@/libs/actions/user";
 
 interface UserContextType {
   user: User | null;
@@ -10,6 +11,8 @@ interface UserContextType {
   showMissingInfoModal: boolean;
   setShowMissingInfoModal: (show: boolean) => void;
   checkMissingInfo: () => Promise<void>;
+  isPremium: boolean;
+  refreshSubscription: () => Promise<void>;
   handleLogout: () => Promise<void>;
 }
 
@@ -17,9 +20,20 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [isPremium, setIsPremium] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [showMissingInfoModal, setShowMissingInfoModal] = useState(false);
   const supabase = createClient();
+
+  const refreshSubscription = async () => {
+    try {
+      const status = await getSubscriptionStatusAction();
+      setIsPremium(status);
+    } catch (error) {
+      console.error("Error fetching subscription status:", error);
+      setIsPremium(false);
+    }
+  };
 
   const checkMissingInfo = async () => {
     const {
@@ -60,6 +74,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
           } else {
             setShowMissingInfoModal(false);
           }
+          // Fetch fresh premium status on login
+          refreshSubscription();
         } else {
           setUser(null);
           setShowMissingInfoModal(false);
@@ -78,6 +94,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setUser(null);
+    setIsPremium(false);
   };
 
   return (
@@ -88,6 +105,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         showMissingInfoModal,
         setShowMissingInfoModal,
         checkMissingInfo,
+        isPremium,
+        refreshSubscription,
         handleLogout,
       }}
     >

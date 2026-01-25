@@ -4,7 +4,12 @@ import "./globals.css";
 import { OwlProvider } from "@/context/OwlContext";
 import { OwlCompanion } from "@/components/common/OwlCompanion";
 import { UserProvider } from "@/context/UserContext";
+import { AccessProvider } from "@/context/AccessContext";
 import { MissingInfoListener } from "@/features/auth/MissingInfoListener";
+import { PaywallListener } from "@/features/paywall/PaywallListener";
+
+import { createClient } from "@/libs/supabase/server";
+import { checkUserSubscription } from "@/libs/subscription";
 
 // Configure fonts
 const baloo2 = Baloo_2({
@@ -26,7 +31,7 @@ export const metadata: Metadata = {
   description: "Ứng dụng học tập vui nhộn cho bé",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -35,11 +40,14 @@ export default function RootLayout({
     <html lang="vi">
       <body className={`${baloo2.variable} ${nunitoSans.variable} antialiased`}>
         <UserProvider>
-          <OwlProvider>
-            {children}
-            <OwlCompanion />
-            <MissingInfoListener />
-          </OwlProvider>
+          <AccessProvider>
+            <OwlProvider>
+              {children}
+              <OwlCompanion />
+              <MissingInfoListener />
+              <PaywallListener />
+            </OwlProvider>
+          </AccessProvider>
         </UserProvider>
       </body>
     </html>

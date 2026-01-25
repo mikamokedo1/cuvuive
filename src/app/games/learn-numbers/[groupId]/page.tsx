@@ -4,6 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import Image, { StaticImageData } from "next/image";
 import { GameLayout } from "@/components/layout/GameLayout";
 import { useProgress } from "@/context/ProgressContext";
+import { useAccess } from "@/context/AccessContext";
 import { BookOpen, HelpCircle, Calculator, Lock, PenTool } from "lucide-react";
 import PlayButton from "@/components/common/PlayButton";
 import { cn } from "@/libs/utils/cn";
@@ -21,6 +22,7 @@ export default function GroupLessonsPage() {
   const params = useParams();
   const router = useRouter();
   const { isLessonUnlocked, progress } = useProgress();
+  const { checkAccess, showPaywall } = useAccess();
 
   // Ensure groupId is string
   const groupId =
@@ -39,7 +41,27 @@ export default function GroupLessonsPage() {
     return <div>Group not found</div>;
   }
 
-  const handleLessonClick = (lessonId: string) => {
+  const handleLessonClick = async (lessonId: string) => {
+    // Step 1: Check progress - must complete previous lesson first
+    if (!isLessonUnlocked(groupId, lessonId)) {
+      // Lesson is locked due to progress (previous lesson not completed)
+      // Don't show paywall, the UI already shows it as locked
+      return;
+    }
+
+    // Step 2: Check access - lesson must be free OR user must be premium
+    const access = await checkAccess("learn-numbers", groupId, lessonId);
+
+    if (!access.userHasAccess) {
+      if (access.reason === "not_logged_in") {
+        showPaywall("login", `/games/learn-numbers/${groupId}/lesson/${lessonId}`);
+      } else if (access.reason === "premium_required") {
+        showPaywall("premium", `/games/learn-numbers/${groupId}/lesson/${lessonId}`);
+      }
+      return;
+    }
+
+    // Both checks passed - navigate to lesson
     router.push(`/games/learn-numbers/${groupId}/lesson/${lessonId}`);
   };
 
@@ -49,24 +71,28 @@ export default function GroupLessonsPage() {
       title: `Học số ${config.range}`,
       icon: <BookOpen className="text-white w-6 h-6" />,
       color: "blue",
+      isPremium: false,
     },
     {
       id: "lesson2",
       title: "Số nào đúng?",
-      icon: <HelpCircle className="text-white w-6 h-6" />, // Will be grayscale if locked
+      icon: <HelpCircle className="text-white w-6 h-6" />,
       color: "green",
+      isPremium: true,
     },
     {
       id: "lesson3",
       title: "Đếm và chọn",
       icon: <Calculator className="text-white w-6 h-6" />,
       color: "purple",
+      isPremium: true,
     },
     {
       id: "lesson4",
       title: "Tập viết số",
       icon: <PenTool className="text-white w-6 h-6" />,
       color: "green",
+      isPremium: true,
     },
   ];
 
@@ -168,12 +194,12 @@ export default function GroupLessonsPage() {
               <div
                 key={lesson.id}
                 className={cn(
-                  "relative w-full h-24 rounded-[24px] flex items-center px-4 border-2 transition-all",
+                  "relative w-full h-24 rounded-[24px] flex items-center px-4 border-2 transition-all cursor-pointer",
                   unlocked
-                    ? "bg-white border-slate-100 shadow-sm cursor-pointer" // Inactive but unlocked state (if any)
-                    : "bg-[#F0F0F0]/80 border-transparent shadow-none cursor-not-allowed", // Locked state
+                    ? "bg-white border-slate-100 shadow-sm hover:shadow-md" // Inactive but unlocked state
+                    : "bg-[#F0F0F0]/80 border-transparent shadow-none", // Locked state (still clickable for paywall)
                 )}
-                onClick={() => unlocked && handleLessonClick(lesson.id)}
+                onClick={() => handleLessonClick(lesson.id)}
               >
                 {/* Left Icon and Text */}
                 <div className="flex items-center gap-4 flex-1">
@@ -181,9 +207,11 @@ export default function GroupLessonsPage() {
                     {lesson.icon}
                   </div>
                   <div className="flex flex-col">
-                    <h3 className={cn("text-lg font-bold", unlocked ? "text-slate-700" : "text-slate-400")}>
-                      {lesson.title}
-                    </h3>
+                    <div className="flex items-center gap-2">
+                      <h3 className={cn("text-lg font-bold", unlocked ? "text-slate-700" : "text-slate-400")}>
+                        {lesson.title}
+                      </h3>
+                    </div>
                     {!unlocked && <p className="text-slate-400 text-xs font-semibold">Đang khóa</p>}
                   </div>
                 </div>

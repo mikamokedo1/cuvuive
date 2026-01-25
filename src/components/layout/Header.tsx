@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ActionButton } from "@/components/common/ActionButton";
+import { Crown } from "lucide-react";
 
 // Assets
 import LogoLong from "@/assets/logo-long.png";
@@ -15,7 +16,7 @@ import { Dropdown } from "@/components/common/Dropdown";
 
 const Header = () => {
   const router = useRouter();
-  const { user, handleLogout } = useUser();
+  const { user, handleLogout, isPremium } = useUser();
 
   console.log(user);
   return (
@@ -40,9 +41,13 @@ const Header = () => {
                     alt="Avatar"
                     className="w-14 h-14 rounded-full border-4 border-white shadow-md bg-blue-200 object-cover"
                   />
-                  {/* <div className="absolute -bottom-1 -right-1 bg-green-500 text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-white">
-                    ✓
-                  </div> */}
+                  {isPremium && (
+                    <div
+                      className={`absolute -bottom-1 -right-1 text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-white ${isPremium ? "bg-yellow-400" : "bg-green-500"}`}
+                    >
+                      <Crown className="w-3 h-3 text-white" fill="white" />
+                    </div>
+                  )}
                 </div>
                 <div className="hidden md:block text-left">
                   <p className="text-sm font-bold text-gray-700 leading-tight">

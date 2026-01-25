@@ -12,6 +12,7 @@ import LoginSound from "@/assets/pages-sounds/auth/auth-login.mp3";
 import SignupSound from "@/assets/pages-sounds/auth/auth-signup.mp3";
 import ForgotPasswordSound from "@/assets/pages-sounds/auth/auth-forgot-password.mp3";
 import SignupSuccsessSound from "@/assets/pages-sounds/auth/auth-login.mp3";
+import UpgradeSound from "@/assets/pages-sounds/upgrade.mp3";
 
 import { usePathname } from "next/navigation";
 
@@ -37,6 +38,7 @@ const MAP_PATHNAME_TO_SOUND = {
   "/auth/sign-up": SignupSound,
   "/auth/forgot-password": ForgotPasswordSound,
   "/auth/sign-up-success": SignupSuccsessSound,
+  "/upgrade": UpgradeSound,
 };
 
 interface OwlContextType {
