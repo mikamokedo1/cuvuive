@@ -132,29 +132,8 @@ export default function LessonPage() {
       router.push(`/games/learn-numbers/${groupId}/lesson/${nextLessonId}`);
     } else {
       // Group complete
-      // Check if next group exists
-      const groupIdx = GROUPS_ORDER.indexOf(groupId);
-      if (groupIdx < GROUPS_ORDER.length - 1) {
-        const nextGroupId = GROUPS_ORDER[groupIdx + 1];
-
-        // Check access for next group's first lesson
-        const access = await checkAccess("learn-numbers", nextGroupId, "lesson1");
-
-        if (!access.userHasAccess) {
-          if (access.reason === "not_logged_in") {
-            showPaywall("login", `/games/learn-numbers/${nextGroupId}/lesson/lesson1`);
-          } else if (access.reason === "premium_required") {
-            showPaywall("premium", `/games/learn-numbers/${nextGroupId}/lesson/lesson1`);
-          }
-          router.push(`/games/learn-numbers`);
-          return;
-        }
-
-        router.push(`/games/learn-numbers/${nextGroupId}`);
-      } else {
-        // Back to menu
-        router.push(`/games/learn-numbers`);
-      }
+      // Always back to menu
+      router.push(`/games/learn-numbers`);
     }
   };
 

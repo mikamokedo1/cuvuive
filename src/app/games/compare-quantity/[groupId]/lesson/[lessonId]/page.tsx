@@ -116,27 +116,8 @@ export default function LessonPage() {
       router.push(`/games/compare-quantity/${groupId}/lesson/${nextLessonId}`);
     } else {
       // Navigate to next group
-      const groupIdx = GROUPS_ORDER.indexOf(groupId);
-      if (groupIdx < GROUPS_ORDER.length - 1) {
-        const nextGroupId = GROUPS_ORDER[groupIdx + 1];
-
-        // Check access for next group
-        const access = await checkAccess("compare-quantity", nextGroupId, "lesson1");
-        if (!access.userHasAccess) {
-          if (access.reason === "not_logged_in") {
-            showPaywall("login", `/games/compare-quantity/${nextGroupId}/lesson/lesson1`);
-          } else if (access.reason === "premium_required") {
-            showPaywall("premium", `/games/compare-quantity/${nextGroupId}/lesson/lesson1`);
-          }
-          router.push(`/games/compare-quantity`);
-          return;
-        }
-
-        router.push(`/games/compare-quantity/${nextGroupId}`);
-      } else {
-        // Back to menu
-        router.push(`/games/compare-quantity`);
-      }
+      // Always back to menu
+      router.push(`/games/compare-quantity`);
     }
   };
 
