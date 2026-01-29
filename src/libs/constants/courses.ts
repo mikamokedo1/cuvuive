@@ -97,10 +97,8 @@ export const COURSES: CourseDef[] = [
         id: "group4",
         title: "Luyện tập",
         lessons: [
-          { id: "lesson1", title: "Ôn tập dấu", isFree: true },
-          { id: "lesson2", title: "So sánh hình" },
-          { id: "lesson3", title: "So sánh số" },
-          { id: "lesson4", title: "Thử thách" },
+          { id: "lesson1", title: "So sánh đồ vật", isFree: true },
+          { id: "lesson2", title: "So sánh số" },
         ],
       },
     ],

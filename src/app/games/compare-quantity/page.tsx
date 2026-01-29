@@ -16,7 +16,19 @@ import { LessonTitle } from "@/components/games/LessonTitle";
 
 export default function CompareQuantityPage() {
   const router = useRouter();
-  const { allProgress } = useProgress();
+  const { allProgress, isLoaded, isGroupUnlocked } = useProgress();
+
+  // Smart loading: Only show spinner if we haven't loaded AND we don't have cached data for this course
+  if (!isLoaded && !allProgress["compare-quantity"]) {
+    return (
+      <GameLayout showBackButton={false} backTo="/">
+        <div className="flex flex-col items-center justify-center min-h-[60vh]">
+          <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin" />
+          <p className="mt-4 text-orange-600 font-bold">Đang tải dữ liệu...</p>
+        </div>
+      </GameLayout>
+    );
+  }
 
   // Get progress for this course
   const progress = allProgress["compare-quantity"] || {
@@ -26,15 +38,6 @@ export default function CompareQuantityPage() {
 
   const handleGroupClick = (groupId: string) => {
     router.push(`/games/compare-quantity/${groupId}`);
-  };
-
-  // Helper to check if group is unlocked
-  const isGroupUnlocked = (groupId: string) => {
-    if (groupId === "group1") return true;
-    if (groupId === "group2") return progress.completedGroups.includes("group1");
-    if (groupId === "group3") return progress.completedGroups.includes("group2");
-    if (groupId === "group4") return progress.completedGroups.includes("group3");
-    return false;
   };
 
   // Define groups with new structure
@@ -80,7 +83,7 @@ export default function CompareQuantityPage() {
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full max-w-6xl px-4 items-center justify-center">
         {groups.map((group, index) => {
-          const unlocked = isGroupUnlocked(group.id);
+          const unlocked = isGroupUnlocked(group.id, "compare-quantity");
           const isCompleted = progress.completedGroups.includes(group.id);
 
           return (

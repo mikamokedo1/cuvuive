@@ -48,9 +48,7 @@ INSERT INTO course_access (id, course_id, group_id, lesson_id, access_type) VALU
   (gen_random_uuid(), 'compare-quantity', 'group3', 'lesson4', 'premium'),
   -- Group 4 (Luyện tập / Practice)
   (gen_random_uuid(), 'compare-quantity', 'group4', 'lesson1', 'free'),
-  (gen_random_uuid(), 'compare-quantity', 'group4', 'lesson2', 'premium'),
-  (gen_random_uuid(), 'compare-quantity', 'group4', 'lesson3', 'premium'),
-  (gen_random_uuid(), 'compare-quantity', 'group4', 'lesson4', 'premium');
+  (gen_random_uuid(), 'compare-quantity', 'group4', 'lesson2', 'premium');
 
 -- Verify the data
 SELECT * FROM course_access ORDER BY course_id, group_id, lesson_id;

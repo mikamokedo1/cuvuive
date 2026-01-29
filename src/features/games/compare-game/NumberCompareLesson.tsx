@@ -12,7 +12,7 @@ import { MAP_COMPARE_SIGN_SOUND } from "./VisualCompareLesson";
 import { SoundNumbers } from "../learn-game/LearnLesson";
 
 interface NumberCompareLessonProps {
-  comparisonType: "greater" | "less" | "equal";
+  comparisonType: "greater" | "less" | "equal" | "mixed";
   onComplete: () => void;
 }
 
@@ -38,11 +38,15 @@ export function NumberCompareLesson({ comparisonType, onComplete }: NumberCompar
         // Generate where left < right
         right = randomNum(3, 9);
         left = randomNum(1, right - 1);
-      } else {
+      } else if (comparisonType === "equal") {
         // Equal
         const val = randomNum(1, 9);
         left = val;
         right = val;
+      } else {
+        // Mixed
+        left = randomNum(1, 9);
+        right = randomNum(1, 9);
       }
       attempts++;
     } while (`${left}-${right}` === prevQuestionRef.current && attempts < 10);

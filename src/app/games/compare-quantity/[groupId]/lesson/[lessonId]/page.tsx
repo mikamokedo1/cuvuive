@@ -74,22 +74,69 @@ export default function LessonPage() {
     verifyAccess();
   }, [groupId, lessonId, checkAccess, showPaywall, isLessonUnlocked, router]);
 
+  // Lesson order definition
+  const maxLessons = groupId === "group4" ? 2 : 4;
+  const LESSON_ORDER = Array.from({ length: maxLessons }, (_, i) => `lesson${i + 1}`);
+  const GROUPS_ORDER = ["group1", "group2", "group3", "group4"];
+
+  const [currentLessonNum, setCurrentLessonNum] = useState<number | string>(1);
+  const [nextLessonNum, setNextLessonNum] = useState<number | string | null>(null);
+  const [isGroupDone, setIsGroupDone] = useState(false);
+
   const handleComplete = () => {
     markLessonComplete(groupId, lessonId, "compare-quantity");
+
+    const currentIdx = LESSON_ORDER.indexOf(lessonId);
+    setCurrentLessonNum(currentIdx + 1);
+
+    if (currentIdx < LESSON_ORDER.length - 1) {
+      // Has next lesson
+      setNextLessonNum(currentIdx + 2);
+      setIsGroupDone(false);
+    } else {
+      // Last lesson of group
+      setIsGroupDone(true);
+      const groupIdx = GROUPS_ORDER.indexOf(groupId);
+      if (groupIdx < GROUPS_ORDER.length - 1) {
+        setNextLessonNum(groupIdx + 2); // Show next group number
+      } else {
+        setNextLessonNum(null); // Course complete
+      }
+    }
     setShowModal(true);
   };
 
-  const handleModalClose = () => {
+  const handleNextLesson = async () => {
     setShowModal(false);
+    const currentIdx = LESSON_ORDER.indexOf(lessonId);
 
-    // Navigate to next lesson or back to group
-    const currentLessonNum = parseInt(lessonId.replace("lesson", ""), 10);
-    const nextLessonId = `lesson${currentLessonNum + 1}`;
-
-    if (currentLessonNum < 4) {
+    if (currentIdx < LESSON_ORDER.length - 1) {
+      // Navigate to next lesson
+      const nextLessonId = LESSON_ORDER[currentIdx + 1];
       router.push(`/games/compare-quantity/${groupId}/lesson/${nextLessonId}`);
     } else {
-      router.push(`/games/compare-quantity/${groupId}`);
+      // Navigate to next group
+      const groupIdx = GROUPS_ORDER.indexOf(groupId);
+      if (groupIdx < GROUPS_ORDER.length - 1) {
+        const nextGroupId = GROUPS_ORDER[groupIdx + 1];
+
+        // Check access for next group
+        const access = await checkAccess("compare-quantity", nextGroupId, "lesson1");
+        if (!access.userHasAccess) {
+          if (access.reason === "not_logged_in") {
+            showPaywall("login", `/games/compare-quantity/${nextGroupId}/lesson/lesson1`);
+          } else if (access.reason === "premium_required") {
+            showPaywall("premium", `/games/compare-quantity/${nextGroupId}/lesson/lesson1`);
+          }
+          router.push(`/games/compare-quantity`);
+          return;
+        }
+
+        router.push(`/games/compare-quantity/${nextGroupId}`);
+      } else {
+        // Back to menu
+        router.push(`/games/compare-quantity`);
+      }
     }
   };
 
@@ -117,21 +164,12 @@ export default function LessonPage() {
     // Practice group - different lesson structure
     switch (lessonId) {
       case "lesson1":
-        // Mixed explain - could show all 3 symbols
-        LessonContent = <ExplainLesson comparisonType="greater" onComplete={handleComplete} />;
-        LessonTitle = "Ôn tập lại các dấu";
-        break;
-      case "lesson2":
-        LessonContent = <MixedPracticeLesson onComplete={handleComplete} />;
+        LessonContent = <VisualCompareLesson comparisonType="mixed" onComplete={handleComplete} />;
         LessonTitle = "So sánh đồ vật";
         break;
-      case "lesson3":
-        LessonContent = <MixedPracticeLesson onComplete={handleComplete} />;
+      case "lesson2":
+        LessonContent = <NumberCompareLesson comparisonType="mixed" onComplete={handleComplete} />;
         LessonTitle = "So sánh số";
-        break;
-      case "lesson4":
-        LessonContent = <MixedPracticeLesson onComplete={handleComplete} />;
-        LessonTitle = "Tập viết dấu";
         break;
     }
   } else if (comparisonType && comparisonType !== "mixed") {
@@ -170,14 +208,10 @@ export default function LessonPage() {
 
       <CompletionModal
         isOpen={showModal}
-        onNext={handleModalClose}
-        currentLessonNum={parseInt(lessonId.replace("lesson", ""), 10)}
-        nextLessonNum={
-          parseInt(lessonId.replace("lesson", ""), 10) < 4
-            ? parseInt(lessonId.replace("lesson", ""), 10) + 1
-            : undefined
-        }
-        isGroupComplete={parseInt(lessonId.replace("lesson", ""), 10) >= 4}
+        onNext={handleNextLesson}
+        currentLessonNum={isGroupDone ? groupId.replace("group", "") : currentLessonNum}
+        nextLessonNum={nextLessonNum ?? undefined}
+        isGroupComplete={isGroupDone}
       />
     </GameLayout>
   );

@@ -64,10 +64,8 @@ const groupConfig: Record<
     image: ThingImages[8].icon,
     comparisonType: "mixed",
     lessons: [
-      { id: "lesson1", title: "Ôn tập dấu", icon: <BookOpen className="text-white w-6 h-6" /> },
-      { id: "lesson2", title: "So sánh hình", icon: <Scale className="text-white w-6 h-6" /> },
-      { id: "lesson3", title: "So sánh số", icon: <Hash className="text-white w-6 h-6" /> },
-      { id: "lesson4", title: "Thử thách", icon: <Dumbbell className="text-white w-6 h-6" /> },
+      { id: "lesson1", title: "So sánh đồ vật", icon: <Scale className="text-white w-6 h-6" /> },
+      { id: "lesson2", title: "So sánh số", icon: <Hash className="text-white w-6 h-6" /> },
     ],
   },
 };
@@ -127,16 +125,25 @@ export default function GroupLessonsPage() {
     router.push(`/games/compare-quantity/${groupId}/lesson/${lessonId}`);
   };
 
-  // Determine active lesson
+  // Determine active lesson (the first one that is Unlocked AND Not Completed)
   const groupProgress = progress.completedLessons[groupId] || [];
+  const isGroupCompleted = progress.completedGroups.includes(groupId);
+
   let activeIndex = -1;
-  for (let i = config.lessons.length - 1; i >= 0; i--) {
-    if (isLessonUnlocked(groupId, config.lessons[i].id)) {
-      activeIndex = i;
-      break;
+
+  if (!isGroupCompleted) {
+    for (let i = config.lessons.length - 1; i >= 0; i--) {
+      if (isLessonUnlocked(groupId, config.lessons[i].id)) {
+        activeIndex = i;
+        break;
+      }
     }
   }
-  if (activeIndex === -1) activeIndex = 0;
+
+  // Fallback to first lesson if just starting
+  if (!isGroupCompleted && activeIndex === -1) {
+    activeIndex = 0;
+  }
 
   return (
     <GameLayout title={config.title} backTo="/games/compare-quantity">

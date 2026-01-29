@@ -49,8 +49,6 @@ async function seed() {
     // compare-quantity: Group 4 (Luyện tập)
     { courseId: "compare-quantity", groupId: "group4", lessonId: "lesson1", accessType: "free" },
     { courseId: "compare-quantity", groupId: "group4", lessonId: "lesson2", accessType: "premium" },
-    { courseId: "compare-quantity", groupId: "group4", lessonId: "lesson3", accessType: "premium" },
-    { courseId: "compare-quantity", groupId: "group4", lessonId: "lesson4", accessType: "premium" },
   ];
 
   // Use Upsert for Course Access

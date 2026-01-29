@@ -19,7 +19,7 @@ export const MAP_COMPARE_SIGN_SOUND = {
 };
 
 interface VisualCompareLessonProps {
-  comparisonType: "greater" | "less" | "equal";
+  comparisonType: "greater" | "less" | "equal" | "mixed";
   onComplete: () => void;
 }
 
@@ -47,11 +47,16 @@ export function VisualCompareLesson({ comparisonType, onComplete }: VisualCompar
         // Left should be less
         right = randomNum(3, 8);
         left = randomNum(1, right - 1);
-      } else {
+      } else if (comparisonType === "equal") {
         // Equal
         const val = randomNum(2, 6);
         left = val;
         right = val;
+      } else {
+        // Mixed - random relation
+        // Random 1-8 for visual clarity
+        left = randomNum(1, 8);
+        right = randomNum(1, 8);
       }
       attempts++;
     } while (`${left}-${right}` === prevQuestionRef.current && attempts < 10);

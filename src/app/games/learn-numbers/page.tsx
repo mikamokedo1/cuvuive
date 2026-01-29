@@ -13,7 +13,19 @@ import Image, { StaticImageData } from "next/image";
 
 export default function NumberGroupsPage() {
   const router = useRouter();
-  const { isGroupUnlocked, progress } = useProgress();
+  const { isGroupUnlocked, progress, isLoaded, allProgress } = useProgress();
+
+  // Smart loading logic
+  if (!isLoaded && !allProgress["learn-numbers"]) {
+    return (
+      <GameLayout showBackButton={false} backTo="/">
+        <div className="flex flex-col items-center justify-center min-h-[60vh]">
+          <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin" />
+          <p className="mt-4 text-orange-600 font-bold">Đang tải dữ liệu...</p>
+        </div>
+      </GameLayout>
+    );
+  }
 
   const handleGroupClick = (groupId: string) => {
     router.push(`/games/learn-numbers/${groupId}`);
