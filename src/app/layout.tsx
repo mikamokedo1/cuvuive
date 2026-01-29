@@ -28,8 +28,27 @@ const nunitoSans = Nunito_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Cú Thông Minh - Vừa học vừa chơi",
-  description: "Ứng dụng học tập vui nhộn cho bé",
+  title: "Cú Thông Minh - Vừa học vừa chơi | Ứng dụng học tập cho bé",
+  description:
+    "Cú Thông Minh là ứng dụng giáo dục tương tác giúp bé vừa học vừa chơi, phát triển tư duy toán học và ngôn ngữ một cách tự nhiên.",
+  keywords: ["bé học toán", "học đếm", "giáo dục sớm", "trò chơi trí tuệ cho bé", "cú thông minh"],
+  openGraph: {
+    title: "Cú Thông Minh - Vừa học vừa chơi",
+    description: "Ứng dụng giáo dục tương tác giúp bé phát triển tư duy.",
+    url: "https://cuthongminh.vn",
+    siteName: "Cú Thông Minh",
+    locale: "vi_VN",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Cú Thông Minh - Vừa học vừa chơi",
+    description: "Ứng dụng giáo dục tương tác giúp bé phát triển tư duy.",
+  },
+};
+
+export const viewport = {
+  themeColor: "#FF9C01",
 };
 
 export default async function RootLayout({

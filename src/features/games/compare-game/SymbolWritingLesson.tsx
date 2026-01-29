@@ -182,7 +182,7 @@ export function SymbolWritingLesson({ comparisonType, onComplete }: SymbolWritin
   };
 
   return (
-    <div className="flex flex-col items-center gap-6 w-full max-w-md px-4">
+    <div className="flex flex-col items-center gap-6 w-full max-w-md px-4 scale-90 sm:scale-100 origin-top">
       {/* Writing Card */}
       <div
         className={`relative bg-white rounded-3xl shadow-xl border-4 border-blue-100 overflow-hidden transition-transform`}
@@ -305,7 +305,7 @@ export function SymbolWritingLesson({ comparisonType, onComplete }: SymbolWritin
 
         <button
           className="absolute top-2 left-2 cursor-pointer hover:scale-105 transition-all"
-          onClick={() => playSound(MAP_COMPARE_SIGN_SOUND[symbol])}
+          onClick={() => playSound(MAP_COMPARE_SIGN_SOUND[symbol as keyof typeof MAP_COMPARE_SIGN_SOUND])}
           onMouseEnter={playButtonSound}
         >
           <Image src={LoudSpeaker} alt="Eraser" className="w-12 h-10" />

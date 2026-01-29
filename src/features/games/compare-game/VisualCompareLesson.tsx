@@ -106,7 +106,7 @@ export function VisualCompareLesson({ comparisonType, onComplete }: VisualCompar
     <div className="flex flex-col items-center gap-6 w-full max-w-4xl">
       {/* Visual comparison */}
       <div
-        className={`bg-white/90 rounded-3xl p-6 shadow-xl border-4 w-full transition-all ${
+        className={`bg-white/90 rounded-3xl p-4 md:p-6 shadow-xl border-4 w-full transition-all ${
           feedback === "correct"
             ? "border-green-400 bg-green-50"
             : feedback === "wrong"
@@ -114,16 +114,16 @@ export function VisualCompareLesson({ comparisonType, onComplete }: VisualCompar
               : "border-yellow-200"
         }`}
       >
-        <div className="flex items-center justify-around gap-4">
+        <div className="flex items-center justify-around gap-2 md:gap-4">
           {/* Left Group */}
           <div
             onClick={() => speak(`Có ${leftCount} ${ThingImages[imageIndex].name}`)}
-            className="flex flex-wrap justify-center gap-2 p-4 rounded-2xl bg-white/50 border-2 border-slate-100 w-2/5 min-h-[150px] cursor-pointer hover:scale-105"
+            className="flex flex-wrap justify-center gap-1 md:gap-2 p-2 md:p-4 rounded-2xl bg-white/50 border-2 border-slate-100 w-[45%] min-h-[120px] md:min-h-[150px] cursor-pointer hover:scale-105"
           >
             {Array.from({ length: leftCount }).map((_, i) => (
               <div
                 key={`left-${i}`}
-                className="w-16 h-16 md:w-20 md:h-20 relative animate-popIn"
+                className="w-12 h-12 md:w-20 md:h-20 relative animate-popIn"
                 style={{ animationDelay: `${i * 0.1}s` }}
               >
                 <Image src={ThingImages[imageIndex].icon} alt="item" fill className="object-contain drop-shadow-md" />
@@ -131,26 +131,24 @@ export function VisualCompareLesson({ comparisonType, onComplete }: VisualCompar
             ))}
           </div>
 
-          {/* Center Space for Sign */}
-          <div className="w-16 h-16 flex items-center justify-center">
+          <div className="w-10 h-10 md:w-16 md:h-16 flex items-center justify-center shrink-0">
             {feedback === "correct" ? (
-              <div className="text-6xl font-black text-green-500 animate-scaleIn">
+              <div className="text-4xl md:text-6xl font-black text-green-500 animate-scaleIn">
                 {leftCount > rightCount ? ">" : leftCount < rightCount ? "<" : "="}
               </div>
             ) : (
-              <div className="w-12 h-12 rounded-full bg-slate-100 border-2 border-dashed border-slate-300"></div>
+              <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-slate-100 border-2 border-dashed border-slate-300"></div>
             )}
           </div>
 
-          {/* Right Group */}
           <div
             onClick={() => speak(`Có ${rightCount} ${ThingImages[(imageIndex + 1) % ThingImages.length].name}`)}
-            className="flex flex-wrap justify-center gap-2 p-4 rounded-2xl bg-white/50 border-2 border-slate-100 w-2/5 min-h-[150px] cursor-pointer hover:scale-105"
+            className="flex flex-wrap justify-center gap-1 md:gap-2 p-2 md:p-4 rounded-2xl bg-white/50 border-2 border-slate-100 w-[45%] min-h-[120px] md:min-h-[150px] cursor-pointer hover:scale-105"
           >
             {Array.from({ length: rightCount }).map((_, i) => (
               <div
                 key={`right-${i}`}
-                className="w-16 h-16 md:w-20 md:h-20 relative animate-popIn"
+                className="w-12 h-12 md:w-20 md:h-20 relative animate-popIn"
                 style={{ animationDelay: `${i * 0.1}s` }}
               >
                 <Image

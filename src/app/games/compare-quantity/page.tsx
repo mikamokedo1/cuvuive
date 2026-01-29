@@ -14,6 +14,37 @@ import Group4Logo from "@/assets/games/compare-quantity/compare-quantity-logo-4.
 import compareLogo from "@/assets/games/game-3-logo.png";
 import { LessonTitle } from "@/components/games/LessonTitle";
 
+const GROUPS = [
+  {
+    id: "group1",
+    title: "Lớn hơn",
+    subtitle: ">",
+    variant: "green" as const,
+    image: Group1Logo,
+  },
+  {
+    id: "group2",
+    title: "Nhỏ hơn",
+    subtitle: "<",
+    variant: "orange" as const,
+    image: Group2Logo,
+  },
+  {
+    id: "group3",
+    title: "Bằng nhau",
+    subtitle: "=",
+    variant: "purple" as const,
+    image: Group3Logo,
+  },
+  {
+    id: "group4",
+    title: "Luyện tập",
+    subtitle: "Mix",
+    variant: "blue" as const,
+    image: Group4Logo,
+  },
+];
+
 export default function CompareQuantityPage() {
   const router = useRouter();
   const { allProgress, isLoaded, isGroupUnlocked } = useProgress();
@@ -40,66 +71,36 @@ export default function CompareQuantityPage() {
     router.push(`/games/compare-quantity/${groupId}`);
   };
 
-  // Define groups with new structure
-  const groups = [
-    {
-      id: "group1",
-      title: "Lớn hơn",
-      subtitle: ">",
-      variant: "green" as const,
-      image: Group1Logo,
-    },
-    {
-      id: "group2",
-      title: "Nhỏ hơn",
-      subtitle: "<",
-      variant: "orange" as const,
-      image: Group2Logo,
-    },
-    {
-      id: "group3",
-      title: "Bằng nhau",
-      subtitle: "=",
-      variant: "purple" as const,
-      image: Group3Logo,
-    },
-    {
-      id: "group4",
-      title: "Luyện tập",
-      subtitle: "Mix",
-      variant: "blue" as const,
-      image: Group4Logo,
-    },
-  ];
-
   return (
     <GameLayout showBackButton={false} backTo="/">
-      <div className="w-full max-w-6xl mx-auto flex flex-col items-center justify-center relative mb-8">
-        <div className="relative w-32 h-32 mb-4">
-          <Image src={compareLogo} alt="So Sánh" fill className="object-contain" />
+      <main className="flex flex-col items-center">
+        <div className="w-full max-w-6xl mx-auto flex flex-col items-center justify-center relative mb-8">
+          <div className="relative w-24 h-24 md:w-32 md:h-32 mb-4">
+            <Image src={compareLogo} alt="So Sánh" fill className="object-contain" priority />
+          </div>
+          <LessonTitle>So Sánh Số Lượng</LessonTitle>
         </div>
-        <LessonTitle>So Sánh Số Lượng</LessonTitle>
-      </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full max-w-6xl px-4 items-center justify-center">
-        {groups.map((group, index) => {
-          const unlocked = isGroupUnlocked(group.id, "compare-quantity");
-          const isCompleted = progress.completedGroups.includes(group.id);
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 w-full max-w-6xl px-4 items-center justify-center">
+          {GROUPS.map((group, index) => {
+            const unlocked = isGroupUnlocked(group.id, "compare-quantity");
+            const isCompleted = progress.completedGroups.includes(group.id);
 
-          return (
-            <GroupCard
-              key={group.id}
-              title={group.title}
-              variant={group.variant}
-              isLocked={!unlocked}
-              mainImage={group.image}
-              level={index + 1}
-              onClick={() => handleGroupClick(group.id)}
-              isCompleted={isCompleted}
-            />
-          );
-        })}
-      </div>
+            return (
+              <GroupCard
+                key={group.id}
+                title={group.title}
+                variant={group.variant}
+                isLocked={!unlocked}
+                mainImage={group.image}
+                level={index + 1}
+                onClick={() => handleGroupClick(group.id)}
+                isCompleted={isCompleted}
+              />
+            );
+          })}
+        </div>
+      </main>
     </GameLayout>
   );
 }

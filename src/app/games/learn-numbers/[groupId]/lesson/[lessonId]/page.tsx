@@ -1,5 +1,10 @@
 "use client";
 
+import { Metadata } from "next";
+
+// Note: In Next.js, metadata cannot be exported from a Client Component.
+// We should use a layout.tsx for metadata if needed.
+
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { GameLayout } from "@/components/layout/GameLayout";
@@ -207,7 +212,7 @@ export default function LessonPage() {
 
   return (
     <GameLayout title={title} backTo={`/games/learn-numbers/${groupId}`}>
-      <div className="flex flex-col items-center justify-center w-full min-h-[60vh]">{Content}</div>
+      <main className="flex flex-col items-center justify-center w-full min-h-[60vh]">{Content}</main>
 
       <CompletionModal
         isOpen={showModal}

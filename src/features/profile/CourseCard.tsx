@@ -59,15 +59,8 @@ export function CourseCard({ course }: CourseCardProps) {
 
   return (
     <div className="bg-white rounded-3xl p-6 border-4 border-blue-100 shadow-xl flex flex-col md:flex-row gap-6 items-center">
-      <div className="relative w-32 h-32 flex-shrink-0">
-        {/* Placeholder for thumbnail */}
-        <div className="w-full h-full bg-blue-50 rounded-2xl flex items-center justify-center text-4xl">
-          {course.title[0]}
-        </div>
-      </div>
-
       <div className="flex-1 w-full">
-        <h3 className="text-2xl font-black text-gray-800 mb-2 font-display">{course.title}</h3>
+        <h3 className="text-2xl font-black text-gray-800 mb-2 font-display text-primary-100">{course.title}</h3>
         <p className="text-gray-500 mb-4">{course.description}</p>
 
         <div className="w-full bg-gray-200 rounded-full h-4 mb-2 overflow-hidden">

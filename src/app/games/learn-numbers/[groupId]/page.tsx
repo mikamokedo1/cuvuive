@@ -168,34 +168,36 @@ export default function GroupLessonsPage() {
 
   return (
     <GameLayout title="" backTo="/games/learn-numbers">
-      {/* Custom Header Section */}
-      <div className="w-full max-w-2xl px-4 flex flex-col items-center gap-6 pt-4">
-        {/* Title Group */}
-        <div className="text-center space-y-2">
-          <LessonTitle>{config.title}</LessonTitle>
-          <div className="relative w-60 h-24 mx-auto">
-            <Image src={config.image} alt="Group Logo" fill className="object-contain" />
+      <main className="w-full flex flex-col items-center">
+        {/* Custom Header Section */}
+        <div className="w-full max-w-2xl px-4 flex flex-col items-center gap-6 pt-4">
+          {/* Title Group */}
+          <div className="text-center space-y-2">
+            <LessonTitle>{config.title}</LessonTitle>
+            <div className="relative w-60 h-24 mx-auto">
+              <Image src={config.image} alt="Group Logo" fill className="object-contain" priority />
+            </div>
+          </div>
+
+          {/* Lesson Cards */}
+          <div className="w-full space-y-4 pb-10">
+            {lessons.map((lesson, index) => {
+              const unlocked = isLessonUnlocked(groupId, lesson.id);
+              const isActive = index === activeIndex;
+
+              return (
+                <LessonCard
+                  key={lesson.id}
+                  lesson={lesson}
+                  unlocked={unlocked}
+                  isActive={isActive}
+                  onClick={handleLessonClick}
+                />
+              );
+            })}
           </div>
         </div>
-
-        {/* Lesson Cards */}
-        <div className="w-full space-y-4 pb-10">
-          {lessons.map((lesson, index) => {
-            const unlocked = isLessonUnlocked(groupId, lesson.id);
-            const isActive = index === activeIndex;
-
-            return (
-              <LessonCard
-                key={lesson.id}
-                lesson={lesson}
-                unlocked={unlocked}
-                isActive={isActive}
-                onClick={handleLessonClick}
-              />
-            );
-          })}
-        </div>
-      </div>
+      </main>
     </GameLayout>
   );
 }

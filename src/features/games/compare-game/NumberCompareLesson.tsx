@@ -96,7 +96,7 @@ export function NumberCompareLesson({ comparisonType, onComplete }: NumberCompar
     <div className="flex flex-col items-center gap-6 w-full max-w-2xl">
       {/* Number comparison */}
       <div
-        className={`bg-white/90 rounded-3xl p-8 shadow-xl border-4 w-full transition-all ${
+        className={`bg-white/90 rounded-3xl p-4 md:p-8 shadow-xl border-4 w-full transition-all ${
           feedback === "correct"
             ? "border-green-400 bg-green-50"
             : feedback === "wrong"
@@ -105,33 +105,30 @@ export function NumberCompareLesson({ comparisonType, onComplete }: NumberCompar
         }`}
       >
         <div className="flex items-center justify-center gap-4 md:gap-8">
-          {/* Left Number */}
           <div
             className="flex-1 flex items-center justify-center cursor-pointer hover:scale-105"
             onClick={() => leftNum && playSound(SoundNumbers[leftNum - 1])}
           >
-            <span className="text-[12rem] leading-none font-display font-black text-orange-500 drop-shadow-md animate-scale ">
+            <span className="text-8xl md:text-[12rem] leading-none font-display font-black text-orange-500 drop-shadow-md animate-scale">
               {leftNum}
             </span>
           </div>
 
-          {/* Symbol placeholder */}
-          <div className="w-24 h-24 md:w-32 md:h-32 flex items-center justify-center">
+          <div className="w-16 h-16 md:w-32 md:h-32 flex items-center justify-center shrink-0">
             {feedback === "correct" ? (
-              <div className="text-6xl md:text-8xl font-black text-green-500 animate-scaleIn">
+              <div className="text-5xl md:text-8xl font-black text-green-500 animate-scaleIn">
                 {leftNum > rightNum ? ">" : leftNum < rightNum ? "<" : "="}
               </div>
             ) : (
-              <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-slate-100 border-2 border-dashed border-slate-300"></div>
+              <div className="w-12 h-12 md:w-20 md:h-20 rounded-full bg-slate-100 border-2 border-dashed border-slate-300"></div>
             )}
           </div>
 
-          {/* Right Number */}
           <div
             className="flex-1 flex items-center justify-center cursor-pointer hover:scale-105"
             onClick={() => rightNum && playSound(SoundNumbers[rightNum - 1])}
           >
-            <span className="text-[12rem] leading-none font-display font-black text-orange-500 drop-shadow-md animate-scale ">
+            <span className="text-8xl md:text-[12rem] leading-none font-display font-black text-orange-500 drop-shadow-md animate-scale">
               {rightNum}
             </span>
           </div>

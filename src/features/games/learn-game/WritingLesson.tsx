@@ -198,7 +198,7 @@ export function WritingLesson({ range, onComplete }: WritingLessonProps) {
   };
 
   return (
-    <div className="flex flex-col items-center gap-6 w-full max-w-md px-4">
+    <div className="flex flex-col items-center gap-6 w-full max-w-md px-4 scale-90 sm:scale-100 origin-top">
       {/* Writing Card */}
       <div
         className={`relative bg-white rounded-3xl shadow-xl border-4 border-blue-100 overflow-hidden transition-transform`}

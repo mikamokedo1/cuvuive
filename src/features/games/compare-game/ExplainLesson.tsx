@@ -155,38 +155,35 @@ export function ExplainLesson({ comparisonType, onComplete }: ExplainLessonProps
 
   return (
     <div className="flex flex-col items-center gap-6 w-full max-w-4xl">
-      {/* Visual Comparison */}
-      <div className="bg-white/90 rounded-3xl p-8 shadow-xl border-4 border-yellow-200 w-full">
-        <div className="flex items-center justify-center gap-4 md:gap-8">
+      <div className="bg-white/90 rounded-3xl p-4 md:p-8 shadow-xl border-4 border-yellow-200 w-full overflow-hidden">
+        <div className="flex items-center justify-center gap-2 md:gap-8">
           {/* Left Group */}
           <div
-            className="flex flex-wrap justify-center gap-2 w-32 md:w-48 min-h-[100px] cursor-pointer hover:scale-105"
+            className="flex flex-wrap justify-center gap-1 md:gap-2 w-28 md:w-48 min-h-[80px] md:min-h-[100px] cursor-pointer hover:scale-105"
             onClick={() => speak(concept.examples[currentIndex].textSpeakLeft)}
           >
             {Array.from({ length: example.left }).map((_, i) => (
-              <div key={`left-${i}`} className="w-16 h-16 md:w-20 md:h-20 relative">
+              <div key={`left-${i}`} className="w-12 h-12 md:w-20 md:h-20 relative">
                 <Image src={ThingImages[IconIndex].icon} alt="item" fill className="object-contain drop-shadow-md" />
               </div>
             ))}
           </div>
 
-          {/* Symbol */}
           <div
-            className="flex items-center justify-center cursor-pointer  hover:scale-105"
+            className="flex items-center justify-center cursor-pointer hover:scale-105 shrink-0"
             onClick={() => speak(concept.examples[currentIndex].sound)}
           >
-            <span className="text-[12rem] leading-none font-display font-black text-orange-500 drop-shadow-md animate-scale ">
+            <span className="text-8xl md:text-[12rem] leading-none font-display font-black text-orange-500 drop-shadow-md animate-scale">
               {concept.symbol}
             </span>
           </div>
 
-          {/* Right Group */}
           <div
-            className="flex flex-wrap justify-center gap-2 w-32 md:w-48 min-h-[100px] cursor-pointer hover:scale-105"
+            className="flex flex-wrap justify-center gap-1 md:gap-2 w-28 md:w-48 min-h-[80px] md:min-h-[100px] cursor-pointer hover:scale-105"
             onClick={() => speak(concept.examples[currentIndex].textSpeakRight)}
           >
             {Array.from({ length: example.right }).map((_, i) => (
-              <div key={`right-${i}`} className="w-16 h-16 md:w-20 md:h-20 relative">
+              <div key={`right-${i}`} className="w-12 h-12 md:w-20 md:h-20 relative">
                 <Image src={ThingImages[IconIndex].icon} alt="item" fill className="object-contain drop-shadow-md" />
               </div>
             ))}

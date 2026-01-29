@@ -116,7 +116,7 @@ export function MixedPracticeLesson({ onComplete }: MixedPracticeLessonProps) {
 
       {/* Comparison area */}
       <div
-        className={`bg-white/90 rounded-3xl p-6 shadow-xl border-4 w-full transition-all ${
+        className={`bg-white/90 rounded-3xl p-4 md:p-6 shadow-xl border-4 w-full transition-all ${
           feedback === "correct"
             ? "border-green-400 bg-green-50"
             : feedback === "wrong"
@@ -128,7 +128,7 @@ export function MixedPracticeLesson({ onComplete }: MixedPracticeLessonProps) {
           {/* Left Side */}
           <button
             onClick={() => handleChoice("left")}
-            className="flex flex-col items-center gap-2 p-4 rounded-2xl hover:bg-yellow-50 transition-colors cursor-pointer w-2/5 min-h-[150px]"
+            className="flex flex-col items-center gap-2 p-2 md:p-4 rounded-2xl hover:bg-yellow-50 transition-colors cursor-pointer w-[45%] min-h-[120px] md:min-h-[150px]"
             disabled={!!feedback}
           >
             {questionType === "visual" ? (
@@ -157,7 +157,7 @@ export function MixedPracticeLesson({ onComplete }: MixedPracticeLessonProps) {
           {/* Right Side */}
           <button
             onClick={() => handleChoice("right")}
-            className="flex flex-col items-center gap-2 p-4 rounded-2xl hover:bg-yellow-50 transition-colors cursor-pointer w-2/5 min-h-[150px]"
+            className="flex flex-col items-center gap-2 p-2 md:p-4 rounded-2xl hover:bg-yellow-50 transition-colors cursor-pointer w-[45%] min-h-[120px] md:min-h-[150px]"
             disabled={!!feedback}
           >
             {questionType === "visual" ? (

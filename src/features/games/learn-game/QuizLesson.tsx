@@ -81,12 +81,12 @@ export function QuizLesson({ range, onComplete, requiredWins = 6 }: QuizLessonPr
   };
 
   return (
-    <div className="flex flex-col items-center gap-8 w-full max-w-4xl">
+    <div className="flex flex-col items-center gap-4 md:gap-8 w-full max-w-4xl px-4">
       <div
-        className={`bg-white p-12 rounded-3xl border-4 shadow-xl mb-8 ${feedback === "correct" ? "border-green-400 bg-green-50" : feedback === "wrong" ? "border-red-400 bg-red-50 animate-shake" : "border-blue-200"}`}
+        className={`bg-white p-8 md:p-12 rounded-3xl border-4 shadow-xl mb-4 md:mb-8 ${feedback === "correct" ? "border-green-400 bg-green-50" : feedback === "wrong" ? "border-red-400 bg-red-50 animate-shake" : "border-blue-200"}`}
       >
         <span
-          className="text-9xl font-display font-black text-blue-600 block text-center min-w-[200px] animate-scale cursor-pointer"
+          className="text-7xl md:text-9xl font-display font-black text-blue-600 block text-center min-w-[150px] md:min-w-[200px] animate-scale cursor-pointer"
           onClick={() => playSound(SoundNumbers[targetNumber - 1])}
         >
           {targetNumber}
@@ -100,12 +100,12 @@ export function QuizLesson({ range, onComplete, requiredWins = 6 }: QuizLessonPr
             variant="glossy"
             color={MAP_INDEX_TO_COLOR[index]}
             size="auto"
-            className="w-24 h-24 md:w-32 md:h-32 rounded-3xl"
+            className="w-20 h-20 md:w-32 md:h-32 rounded-3xl"
             onClick={() => handleAnswer(opt)}
             clickPlaySound={false}
             disabled={!!feedback}
           >
-            <span className="text-5xl md:text-6xl font-display text-white drop-shadow-md">{opt}</span>
+            <span className="text-4xl md:text-6xl font-display text-white drop-shadow-md">{opt}</span>
           </ActionButton>
         ))}
       </div>

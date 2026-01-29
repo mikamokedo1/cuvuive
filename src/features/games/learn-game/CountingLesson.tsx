@@ -77,13 +77,13 @@ export function CountingLesson({ range, onComplete, requiredWins = 6 }: Counting
   };
 
   return (
-    <div className="flex flex-col items-center gap-8 w-full w-100">
+    <div className="flex flex-col items-center gap-4 md:gap-8 w-full px-4">
       <div
-        className={`bg-white/80 rounded-3xl py-2 hover:scale-105 cursor-pointer border-4 shadow-xl flex  items-center flex-wrap justify-center w-100 min-h-50 ${feedback === "correct" ? "border-green-400 bg-green-50" : feedback === "wrong" ? "border-red-400 bg-red-50 animate-shake" : "border-purple-200"}`}
+        className={`bg-white/80 rounded-3xl p-4 md:py-2 hover:scale-105 cursor-pointer border-4 shadow-xl flex items-center flex-wrap justify-center w-full min-h-[150px] md:min-h-50 ${feedback === "correct" ? "border-green-400 bg-green-50" : feedback === "wrong" ? "border-red-400 bg-red-50 animate-shake" : "border-purple-200"}`}
         onClick={() => speak(`Có ${targetNumber} ${ThingImages[iconType].name}`)}
       >
         {Array.from({ length: targetNumber }).map((_, i) => (
-          <div key={i} className="w-30 h-30 relative ">
+          <div key={i} className="w-16 h-16 md:w-30 md:h-30 relative">
             <Image src={ThingImages[iconType].icon} alt="Number" fill className="object-contain" />
           </div>
         ))}
@@ -96,12 +96,12 @@ export function CountingLesson({ range, onComplete, requiredWins = 6 }: Counting
             variant="glossy"
             color={MAP_INDEX_TO_COLOR[index]}
             size="auto"
-            className="w-24 h-24 md:w-32 md:h-32 rounded-3xl"
+            className="w-20 h-20 md:w-32 md:h-32 rounded-3xl"
             onClick={() => handleAnswer(opt)}
             clickPlaySound={false}
             disabled={!!feedback}
           >
-            <span className="text-5xl md:text-6xl font-display text-white drop-shadow-md">{opt}</span>
+            <span className="text-4xl md:text-6xl font-display text-white drop-shadow-md">{opt}</span>
           </ActionButton>
         ))}
       </div>
