@@ -22,7 +22,10 @@ INSERT INTO course_access (id, course_id, group_id, lesson_id, access_type) VALU
   (gen_random_uuid(), 'learn-numbers', 'group3', 'lesson1', 'free'),
   (gen_random_uuid(), 'learn-numbers', 'group3', 'lesson2', 'premium'),
   (gen_random_uuid(), 'learn-numbers', 'group3', 'lesson3', 'premium'),
-  (gen_random_uuid(), 'learn-numbers', 'group3', 'lesson4', 'premium');
+  (gen_random_uuid(), 'learn-numbers', 'group3', 'lesson4', 'premium'),
+  -- Group 4 (Luyện tập / Practice 1-9)
+  (gen_random_uuid(), 'learn-numbers', 'group4', 'lesson1', 'free'),
+  (gen_random_uuid(), 'learn-numbers', 'group4', 'lesson2', 'premium');
 
 -- Seed compare-quantity course (4 groups)
 -- Lesson 1 of each group is FREE

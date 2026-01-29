@@ -40,7 +40,7 @@ const GROUP_TO_TYPE: Record<string, "greater" | "less" | "equal" | "mixed"> = {
 export default function LessonPage() {
   const params = useParams();
   const router = useRouter();
-  const { markLessonComplete } = useProgress();
+  const { markLessonComplete, isLessonUnlocked } = useProgress();
   const { checkAccess, showPaywall } = useAccess();
 
   const [showModal, setShowModal] = useState(false);
@@ -53,6 +53,12 @@ export default function LessonPage() {
   // Check access on mount
   useEffect(() => {
     const verifyAccess = async () => {
+      // 1. Progress Check (must complete previous lesson)
+      if (!isLessonUnlocked(groupId, lessonId, "compare-quantity")) {
+        router.push(`/games/compare-quantity/${groupId}`);
+        return;
+      }
+
       const result = await checkAccess("compare-quantity", groupId, lessonId);
       if (!result.userHasAccess) {
         if (result.reason === "not_logged_in") {
@@ -66,7 +72,7 @@ export default function LessonPage() {
       }
     };
     verifyAccess();
-  }, [groupId, lessonId, checkAccess, showPaywall]);
+  }, [groupId, lessonId, checkAccess, showPaywall, isLessonUnlocked, router]);
 
   const handleComplete = () => {
     markLessonComplete(groupId, lessonId, "compare-quantity");

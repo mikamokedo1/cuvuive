@@ -33,6 +33,7 @@ export default function LessonPage() {
     group1: [1, 3],
     group2: [4, 6],
     group3: [7, 9],
+    group4: [1, 9],
   };
 
   const range = groupRanges[groupId];
@@ -71,8 +72,9 @@ export default function LessonPage() {
     return <div>Bài học không tồn tại</div>;
   }
 
-  const LESSON_ORDER = ["lesson1", "lesson2", "lesson3", "lesson4"];
-  const GROUPS_ORDER = ["group1", "group2", "group3"];
+  // Group4 has only 2 lessons, others have 4
+  const LESSON_ORDER = groupId === "group4" ? ["lesson1", "lesson2"] : ["lesson1", "lesson2", "lesson3", "lesson4"];
+  const GROUPS_ORDER = ["group1", "group2", "group3", "group4"];
 
   const handleComplete = () => {
     markLessonComplete(groupId, lessonId, "learn-numbers");
@@ -154,26 +156,42 @@ export default function LessonPage() {
   let Content = null;
   let title = "";
 
-  // Switch based on lessonId
-  switch (lessonId) {
-    case "lesson1":
-      title = `Học số ${range[0]} - ${range[1]}`;
-      Content = <LearnLesson range={range} onComplete={handleComplete} />;
-      break;
-    case "lesson2":
-      title = "Số nào đúng?";
-      Content = <QuizLesson range={range} onComplete={handleComplete} />;
-      break;
-    case "lesson3":
-      title = "Đếm và chọn";
-      Content = <CountingLesson range={range} onComplete={handleComplete} />;
-      break;
-    case "lesson4":
-      title = "Tập viết số";
-      Content = <WritingLesson range={range} onComplete={handleComplete} />;
-      break;
-    default:
-      Content = <div>Unknown Lesson</div>;
+  // Group4 has different lesson mapping (lesson1=Quiz, lesson2=Counting)
+  if (groupId === "group4") {
+    switch (lessonId) {
+      case "lesson1":
+        title = "Số nào đúng?";
+        Content = <QuizLesson range={range} onComplete={handleComplete} requiredWins={12} />;
+        break;
+      case "lesson2":
+        title = "Đếm và chọn";
+        Content = <CountingLesson range={range} onComplete={handleComplete} requiredWins={12} />;
+        break;
+      default:
+        Content = <div>Unknown Lesson</div>;
+    }
+  } else {
+    // Regular groups (1-3)
+    switch (lessonId) {
+      case "lesson1":
+        title = `Học số ${range[0]} - ${range[1]}`;
+        Content = <LearnLesson range={range} onComplete={handleComplete} />;
+        break;
+      case "lesson2":
+        title = "Số nào đúng?";
+        Content = <QuizLesson range={range} onComplete={handleComplete} />;
+        break;
+      case "lesson3":
+        title = "Đếm và chọn";
+        Content = <CountingLesson range={range} onComplete={handleComplete} />;
+        break;
+      case "lesson4":
+        title = "Tập viết số";
+        Content = <WritingLesson range={range} onComplete={handleComplete} />;
+        break;
+      default:
+        Content = <div>Unknown Lesson</div>;
+    }
   }
 
   if (!isLoaded || isCheckingAccess) {

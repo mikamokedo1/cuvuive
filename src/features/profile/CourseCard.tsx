@@ -49,7 +49,7 @@ export function CourseCard({ course }: CourseCardProps) {
 
     // If no next lesson found (all done), maybe link to first?
     if (!nextLessonUrl && course.groups.length > 0) {
-      nextLessonUrl = `/games/${course.id}/${course.groups[0].id}/lesson/${course.groups[0].lessons[0].id}`;
+      nextLessonUrl = `/games/${course.id}`;
     }
 
     return { totalLessons, completedCount, nextLessonUrl };

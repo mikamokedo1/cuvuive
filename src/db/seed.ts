@@ -27,6 +27,10 @@ async function seed() {
     { courseId: "learn-numbers", groupId: "group3", lessonId: "lesson3", accessType: "premium" },
     { courseId: "learn-numbers", groupId: "group3", lessonId: "lesson4", accessType: "premium" },
 
+    // learn-numbers: Group 4 (1-9)
+    { courseId: "learn-numbers", groupId: "group4", lessonId: "lesson1", accessType: "free" },
+    { courseId: "learn-numbers", groupId: "group4", lessonId: "lesson2", accessType: "premium" },
+
     // compare-quantity: Group 1 (Lớn hơn)
     { courseId: "compare-quantity", groupId: "group1", lessonId: "lesson1", accessType: "free" },
     { courseId: "compare-quantity", groupId: "group1", lessonId: "lesson2", accessType: "premium" },

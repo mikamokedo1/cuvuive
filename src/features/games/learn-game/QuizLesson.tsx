@@ -6,15 +6,15 @@ import { playSound } from "@/libs/utils/playSound";
 import { SoundNumbers } from "./LearnLesson";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 
-export const MAP_INDEX_TO_COLOR = ["blue", "green", "orange", "purple"];
+export const MAP_INDEX_TO_COLOR = ["blue", "green", "orange", "purple"] as const;
 
 interface QuizLessonProps {
   range: [number, number];
   onComplete: () => void;
+  requiredWins?: number;
 }
-export const REQUIRED_WINS = 6;
 
-export function QuizLesson({ range, onComplete }: QuizLessonProps) {
+export function QuizLesson({ range, onComplete, requiredWins = 6 }: QuizLessonProps) {
   const [start, end] = range;
   const [targetNumber, setTargetNumber] = useState(0);
   const [options, setOptions] = useState<number[]>([]);
@@ -37,14 +37,18 @@ export function QuizLesson({ range, onComplete }: QuizLessonProps) {
     prevTargetRef.current = target;
 
     // Pick distractors
-    // Simple logic: pick 2 other unique numbers from range if possible, or wider range if needed
-    // Since range is small (3 numbers), we can just shuffle the range [start, start+1, start+2]
-    const pool = Array.from({ length: end - start + 1 }).map((_, i) => start + i);
-    // Shuffle pool
-    const shuffled = pool.sort(() => Math.random() - 0.5).slice(0, 3);
+    const pool = Array.from({ length: end - start + 1 })
+      .map((_, i) => start + i)
+      .filter((n) => n !== target);
+
+    // Shuffle pool and take 2
+    const distractors = pool.sort(() => Math.random() - 0.5).slice(0, 2);
+
+    // Combine and shuffle
+    const finalOptions = [target, ...distractors].sort(() => Math.random() - 0.5);
 
     setTargetNumber(target);
-    setOptions(shuffled);
+    setOptions(finalOptions);
     setFeedback(null);
   }, [end, start]);
 
@@ -60,7 +64,7 @@ export function QuizLesson({ range, onComplete }: QuizLessonProps) {
       // Correct
       playWinEffect(500);
 
-      if (correctCount + 1 >= REQUIRED_WINS) {
+      if (correctCount + 1 >= requiredWins) {
         // Finished lesson
         setTimeout(onComplete, 1000); // Delay to show success
       } else {

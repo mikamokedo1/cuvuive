@@ -8,15 +8,16 @@ import Image from "next/image";
 import { playSound } from "@/libs/utils/playSound";
 import { SoundNumbers } from "./LearnLesson";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
-import { MAP_INDEX_TO_COLOR, REQUIRED_WINS } from "./QuizLesson";
+import { MAP_INDEX_TO_COLOR } from "./QuizLesson";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
 
 interface CountingLessonProps {
   range: [number, number];
   onComplete: () => void;
+  requiredWins?: number;
 }
 
-export function CountingLesson({ range, onComplete }: CountingLessonProps) {
+export function CountingLesson({ range, onComplete, requiredWins = 6 }: CountingLessonProps) {
   const { speak } = useTextToSpeech();
   const [start, end] = range;
   const [targetNumber, setTargetNumber] = useState(0);
@@ -38,12 +39,16 @@ export function CountingLesson({ range, onComplete }: CountingLessonProps) {
 
     prevTargetRef.current = target;
 
-    // Options: target + 2 distractors from range
-    const pool = Array.from({ length: end - start + 1 }).map((_, i) => start + i);
-    const shuffledOpts = pool.sort(() => Math.random() - 0.5).slice(0, 3);
+    // Options: target + 2 distractors
+    const pool = Array.from({ length: end - start + 1 })
+      .map((_, i) => start + i)
+      .filter((n) => n !== target);
+
+    const distractors = pool.sort(() => Math.random() - 0.5).slice(0, 2);
+    const finalOptions = [target, ...distractors].sort(() => Math.random() - 0.5);
 
     setTargetNumber(target);
-    setOptions(shuffledOpts);
+    setOptions(finalOptions);
     setIconType(randomNum(0, ThingImages.length - 1));
     setFeedback(null);
   }, [end, start]);
@@ -59,7 +64,7 @@ export function CountingLesson({ range, onComplete }: CountingLessonProps) {
       playWinEffect(500);
       setFeedback("correct");
 
-      if (correctCount + 1 >= REQUIRED_WINS) {
+      if (correctCount + 1 >= requiredWins) {
         setTimeout(onComplete, 1500);
       } else {
         setCorrectCount((prev) => prev + 1);

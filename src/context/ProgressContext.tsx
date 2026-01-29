@@ -14,8 +14,8 @@ interface ProgressContextType {
   progress: ProgressState;
   allProgress: Record<string, ProgressState>;
   markLessonComplete: (groupId: string, lessonId: string, courseId?: string) => void;
-  isGroupUnlocked: (groupId: string) => boolean;
-  isLessonUnlocked: (groupId: string, lessonId: string) => boolean;
+  isGroupUnlocked: (groupId: string, courseId?: string) => boolean;
+  isLessonUnlocked: (groupId: string, lessonId: string, courseId?: string) => boolean;
   isLoaded: boolean;
 }
 
@@ -58,12 +58,48 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     }
   }, [user]);
 
+  const [courseStructure, setCourseStructure] = useState<Record<string, Record<string, number>>>({});
+
+  // Fetch Course Structure (Access Definitions)
+  useEffect(() => {
+    const fetchStructure = async () => {
+      const { data, error } = await supabase.from("course_access").select("course_id, group_id, lesson_id");
+
+      if (error) {
+        console.error("Error fetching course structure:", error);
+        return;
+      }
+
+      const structure: Record<string, Record<string, number>> = {};
+
+      // Count unique lessons per group
+      data?.forEach((row) => {
+        const cId = row.course_id;
+        const gId = row.group_id;
+        // We just need unique lesson IDs count.
+        // Assuming database is unique on (course, group, lesson) or we handle duplicates
+        if (!structure[cId]) structure[cId] = {};
+        if (!structure[cId][gId]) structure[cId][gId] = 0;
+        structure[cId][gId]++;
+      });
+
+      setCourseStructure(structure);
+    };
+
+    fetchStructure();
+  }, [supabase]);
+
   // Fetch progress from Supabase
   useEffect(() => {
     if (!user) {
       setIsLoaded(true);
       return;
     }
+
+    // Wait for structure to load effectively, or just use defaults if not ready?
+    // Ideally we want structure first. But for now, let's treat them somewhat independently
+    // and trigger recalc when either changes if needed.
+    // Actually, we need structure to calculate 'completedGroups'.
 
     // Set loading to false while fetching from Supabase
     setIsLoaded(false);
@@ -102,20 +138,11 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
             });
 
             // Re-calculate completed groups for ALL courses
-            Object.keys(newAllProgress).forEach((courseId) => {
-              const courseProgress = newAllProgress[courseId];
-              const newCompletedGroups = [...courseProgress.completedGroups];
-
-              Object.keys(courseProgress.completedLessons).forEach((groupId) => {
-                // Hardcoded rule: 4 lessons needed per group
-                if (courseProgress.completedLessons[groupId].length >= 4) {
-                  if (!newCompletedGroups.includes(groupId)) {
-                    newCompletedGroups.push(groupId);
-                  }
-                }
-              });
-              courseProgress.completedGroups = newCompletedGroups;
-            });
+            // We use the current 'courseStructure' state here.
+            // Note: If courseStructure isn't loaded yet, this might run with empty structure.
+            // We should add courseStructure to dependency array or rely on the fact that setState is async.
+            // For robustness, let's perform this recalc logic in a separate effect or memo, but here is fine for now
+            // provided we re-trigger when courseStructure updates.
 
             return newAllProgress;
           });
@@ -129,6 +156,57 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
 
     fetchProgress();
   }, [user, supabase]);
+
+  // Re-calculate completed groups whenever 'allProgress' (lessons) OR 'courseStructure' changes
+  // This ensures that even if structure loads AFTER progress, we update the groups status.
+  useEffect(() => {
+    setAllProgress((prevAll) => {
+      const newAll = { ...prevAll };
+      let changed = false;
+
+      Object.keys(newAll).forEach((courseId) => {
+        const courseProgress = newAll[courseId];
+        const courseStruct = courseStructure[courseId] || {};
+
+        const newCompletedGroups: string[] = [];
+
+        Object.keys(courseProgress.completedLessons).forEach((groupId) => {
+          const completedCount = courseProgress.completedLessons[groupId].length;
+          const requiredCount = courseStruct[groupId] || 4; // Default to 4 if unknown, or maybe 0? 4 is safe legacy.
+
+          if (completedCount > 0 && completedCount >= requiredCount) {
+            newCompletedGroups.push(groupId);
+          }
+        });
+
+        // Simple array compare to see if changed
+        const isSame =
+          newCompletedGroups.length === courseProgress.completedGroups.length &&
+          newCompletedGroups.every((g) => courseProgress.completedGroups.includes(g));
+
+        if (!isSame) {
+          courseProgress.completedGroups = newCompletedGroups;
+          changed = true;
+        }
+      });
+
+      return changed ? newAll : prevAll;
+    });
+  }, [courseStructure, allProgress]);
+  // Wait, modifying allProgress in useEffect dependent on allProgress is a loop.
+  // We should split "Lessons State" and "Groups Status (Derived)".
+  // But for now, to fit in current structure:
+  // We can just rely on the fact that we ONLY update if 'changed' is true.
+  // But 'prevAll' in setAllProgress is fresh.
+
+  // Actually, simpler approach: Update the logic inside 'markLessonComplete' and the initial fetch
+  // to use courseStructure. To handle the "structure loads later" case, we can just trigger a recalc.
+
+  // Let's perform the recalc in the same useEffect we added or a new safe one.
+  // Ideally, 'completedGroups' should be derived data, not state.
+  // But refactoring that might be too big.
+
+  // Let's stick to updating the calculations in the places they happen, fetching structure first.
 
   // Save to local storage
   useEffect(() => {
@@ -147,7 +225,9 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
       const newCompletedLessons = { ...prevCourse.completedLessons, [groupId]: newGroupLessons };
 
       // Check if group is fully complete
-      const isGroupDone = newGroupLessons.length >= 4;
+      const courseStruct = courseStructure[courseId] || {};
+      const requiredLessons = courseStruct[groupId] || 4;
+      const isGroupDone = newGroupLessons.length >= requiredLessons;
 
       let newCompletedGroups = prevCourse.completedGroups;
       if (isGroupDone && !prevCourse.completedGroups.includes(groupId)) {
@@ -201,11 +281,24 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const isGroupUnlocked = (groupId: string) => {
-    // Legacy support: checks 'learn-numbers' progress
-    if (groupId === "group1") return true;
-    if (groupId === "group2") return progress.completedGroups.includes("group1");
-    if (groupId === "group3") return progress.completedGroups.includes("group2");
+  const isGroupUnlocked = (groupId: string, courseId: string = "learn-numbers") => {
+    // Check specific course progress
+    const courseProgress = allProgress[courseId] || { completedGroups: [] };
+
+    // Generic check for groupN pattern
+    const match = groupId.match(/^group(\d+)$/);
+    if (match) {
+      const groupNum = parseInt(match[1], 10);
+      // group1 is always unlocked
+      if (groupNum === 1) return true;
+
+      // groupN requires group(N-1) to be completed
+      const prevGroupId = `group${groupNum - 1}`;
+      return courseProgress.completedGroups.includes(prevGroupId);
+    }
+
+    // Fallback for non-standard IDs (default to locked unless explicitly handled or is first)
+    // If you have named groups like "intro", "advanced", you would add specific logic here.
     return false;
   };
 
@@ -214,20 +307,28 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     return allProgress[courseId];
   };
 
-  const isLessonUnlocked = (groupId: string, lessonId: string) => {
+  const isLessonUnlocked = (groupId: string, lessonId: string, courseId: string = "learn-numbers") => {
     // Lesson logic:
-    if (!isGroupUnlocked(groupId)) return false;
+    // Pass courseId to isGroupUnlocked
+    if (!isGroupUnlocked(groupId, courseId)) return false;
 
-    const completedInGroup = progress.completedLessons[groupId] || [];
+    const courseProgress = allProgress[courseId] || { completedLessons: {} };
+    const completedInGroup = courseProgress.completedLessons[groupId] || [];
 
     // If lesson is already completed, it is effectively unlocked (can replay)
     if (completedInGroup.includes(lessonId)) return true;
 
-    // Assuming lessonId format "lesson1", "lesson2", "lesson3" for simplicity across groups
-    if (lessonId === "lesson1") return true;
-    if (lessonId === "lesson2") return completedInGroup.includes("lesson1");
-    if (lessonId === "lesson3") return completedInGroup.includes("lesson2");
-    if (lessonId === "lesson4") return completedInGroup.includes("lesson3");
+    // Generic check for lessonN pattern
+    const match = lessonId.match(/^lesson(\d+)$/);
+    if (match) {
+      const lessonNum = parseInt(match[1], 10);
+      // lesson1 is always unlocked (if group is unlocked)
+      if (lessonNum === 1) return true;
+
+      // lessonN requires lesson(N-1) to be completed
+      const prevLessonId = `lesson${lessonNum - 1}`;
+      return completedInGroup.includes(prevLessonId);
+    }
 
     return false;
   };

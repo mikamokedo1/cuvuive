@@ -31,6 +31,7 @@ export default function GroupLessonsPage() {
     group1: { title: "Nhóm 1,2,3", range: "1 - 3", image: group1 },
     group2: { title: "Nhóm 4,5,6", range: "4 - 6", image: group2 },
     group3: { title: "Nhóm 7,8,9", range: "7 - 9", image: group3 },
+    group4: { title: "Luyện tập", range: "1 - 9", image: group1 },
   };
 
   const config = groupConfig[groupId];
@@ -63,7 +64,8 @@ export default function GroupLessonsPage() {
     router.push(`/games/learn-numbers/${groupId}/lesson/${lessonId}`);
   };
 
-  const lessons = [
+  // Regular lessons for groups 1-3
+  const regularLessons = [
     {
       id: "lesson1",
       title: `Học số ${config.range}`,
@@ -94,6 +96,27 @@ export default function GroupLessonsPage() {
     },
   ];
 
+  // Practice lessons for group4 - only 2 lessons with full range 1-9
+  const practiceLessons = [
+    {
+      id: "lesson1",
+      title: "Số nào đúng?",
+      icon: <HelpCircle className="text-white w-6 h-6" />,
+      color: "green",
+      isPremium: false,
+    },
+    {
+      id: "lesson2",
+      title: "Đếm và chọn",
+      icon: <Calculator className="text-white w-6 h-6" />,
+      color: "purple",
+      isPremium: true,
+    },
+  ];
+
+  // Choose lessons based on group
+  const lessons = groupId === "group4" ? practiceLessons : regularLessons;
+
   // Determine active lesson
   // Logic: The first unlocked lesson that is NOT completed?
   // OR simpy the first unlocked lesson if we want linear progression.
@@ -115,16 +138,28 @@ export default function GroupLessonsPage() {
   // Let's default "Active" to be the *first unlocked lesson* that the user clicked?
   // Determine active lesson
   // Logic: The "Frontier". The highest lesson that is Unlocked.
-  // This allows users to continue where they left off, even if they skipped a previous lesson (gap).
+  // This allows users to continue where they left off.
+  // BUT if the whole group is completed, we want all shrunken (activeIndex = -1)
+
+  const isGroupCompleted = progress.completedGroups.includes(groupId);
+
   let activeIndex = -1;
-  for (let i = lessons.length - 1; i >= 0; i--) {
-    if (isLessonUnlocked(groupId, lessons[i].id)) {
-      activeIndex = i;
-      break;
+
+  if (!isGroupCompleted) {
+    for (let i = lessons.length - 1; i >= 0; i--) {
+      if (isLessonUnlocked(groupId, lessons[i].id)) {
+        activeIndex = i;
+        break;
+      }
     }
   }
 
-  if (activeIndex === -1) {
+  // If nothing is unlocked (shouldn't happen for group1) or just starting, defaults to -1 (shrunken) or 0?
+  // Code previously defaulted to 0 if found nothing.
+  // If group is NOT completed but somehow no lessons found (bug?), maybe fallback to 0.
+  // But if group IS completed, activeIndex stays -1.
+
+  if (!isGroupCompleted && activeIndex === -1) {
     activeIndex = 0;
   }
 

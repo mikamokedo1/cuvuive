@@ -309,7 +309,7 @@ export function WritingLesson({ range, onComplete }: WritingLessonProps) {
         )}
         {completedStrokes.length > 0 && (
           <button
-            className="absolute bottom-4 right-4 cursor-pointer hover:scale-105 transition-all"
+            className="absolute bottom-2 right-2 cursor-pointer hover:scale-105 transition-all"
             onClick={clearDrawing}
             onMouseEnter={playButtonSound}
           >
@@ -318,7 +318,7 @@ export function WritingLesson({ range, onComplete }: WritingLessonProps) {
         )}
 
         <button
-          className="absolute top-4 left-4 cursor-pointer hover:scale-105 transition-all"
+          className="absolute top-2 left-2 cursor-pointer hover:scale-105 transition-all"
           onClick={() => playSound(SoundNumbers[currentNumber - 1])}
           onMouseEnter={playButtonSound}
         >
