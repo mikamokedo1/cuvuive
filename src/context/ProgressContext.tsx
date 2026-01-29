@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useUser } from "./UserContext";
 import { createClient } from "@/libs/supabase/client";
+import { generateUUID } from "@/libs/utils/uuid";
 
 interface ProgressState {
   completedGroups: string[];
@@ -11,9 +12,11 @@ interface ProgressState {
 
 interface ProgressContextType {
   progress: ProgressState;
-  markLessonComplete: (groupId: string, lessonId: string) => void;
+  allProgress: Record<string, ProgressState>;
+  markLessonComplete: (groupId: string, lessonId: string, courseId?: string) => void;
   isGroupUnlocked: (groupId: string) => boolean;
   isLessonUnlocked: (groupId: string, lessonId: string) => boolean;
+  isLoaded: boolean;
 }
 
 const ProgressContext = createContext<ProgressContextType | undefined>(undefined);
@@ -24,80 +27,103 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
   const { user } = useUser();
   const supabase = createClient();
 
-  const [progress, setProgress] = useState<ProgressState>({
+  const [allProgress, setAllProgress] = useState<Record<string, ProgressState>>({});
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  // Derived legacy state for backward compatibility (default to learn-numbers)
+  const progress = allProgress["learn-numbers"] || {
     completedGroups: [],
     completedLessons: {},
-  });
+  };
 
   // Load from local storage (initial load)
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       try {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setProgress(JSON.parse(saved));
+        const parsed = JSON.parse(saved);
+        // Migration check: if old format (direct ProgressState), wrap it
+        if (parsed.completedLessons && !parsed["learn-numbers"]) {
+          setAllProgress({ "learn-numbers": parsed });
+        } else {
+          setAllProgress(parsed);
+        }
       } catch (e) {
         console.error("Failed to parse progress", e);
       }
     }
-  }, []);
+    // Even if no saved progress, we are "loaded" from local storage perspective
+    if (!user) {
+      setIsLoaded(true);
+    }
+  }, [user]);
 
-  // Fetch progress from Supabase when user logs in
+  // Fetch progress from Supabase
   useEffect(() => {
-    if (!user) return;
+    if (!user) {
+      setIsLoaded(true);
+      return;
+    }
+
+    // Set loading to false while fetching from Supabase
+    setIsLoaded(false);
 
     const fetchProgress = async () => {
       try {
-        const { data, error } = await supabase.from("progress").select("group_id, lesson_id").eq("user_id", user.id);
+        const { data, error } = await supabase
+          .from("progress")
+          .select("course_id, group_id, lesson_id")
+          .eq("user_id", user.id);
 
         if (error) throw error;
 
         if (data && data.length > 0) {
-          // Merge with local state or overwrite?
-          // Strategy: Merge DB data into local state.
-          // DB is truth, but we keep local if it has more (e.g. offline play).
-          // Actually, let's rebuild the state from DB data + local backup?
-          // For simplicity, let's just use DB data + existing local state merged.
-
-          setProgress((prev) => {
-            const newCompletedLessons = { ...prev.completedLessons };
+          setAllProgress((prev) => {
+            const newAllProgress = { ...prev };
 
             data.forEach((row) => {
+              const courseId = row.course_id || "learn-numbers"; // Default if null
               const groupId = row.group_id;
               const lessonId = row.lesson_id;
 
-              if (!newCompletedLessons[groupId]) {
-                newCompletedLessons[groupId] = [];
+              if (!newAllProgress[courseId]) {
+                newAllProgress[courseId] = { completedGroups: [], completedLessons: {} };
               }
-              if (!newCompletedLessons[groupId].includes(lessonId)) {
-                newCompletedLessons[groupId].push(lessonId);
+
+              const courseProgress = newAllProgress[courseId];
+
+              // Helper to safely add lesson
+              if (!courseProgress.completedLessons[groupId]) {
+                courseProgress.completedLessons[groupId] = [];
+              }
+              if (!courseProgress.completedLessons[groupId].includes(lessonId)) {
+                courseProgress.completedLessons[groupId].push(lessonId);
               }
             });
 
-            // Re-calculate completed groups based on new lessons
-            // This logic duplicates the one in markLessonComplete.
-            // Ideally should be a helper.
-            const newCompletedGroups = [...prev.completedGroups];
+            // Re-calculate completed groups for ALL courses
+            Object.keys(newAllProgress).forEach((courseId) => {
+              const courseProgress = newAllProgress[courseId];
+              const newCompletedGroups = [...courseProgress.completedGroups];
 
-            Object.keys(newCompletedLessons).forEach((groupId) => {
-              // Hardcoded rule: 4 lessons needed per group (lesson1..lesson4)
-              // Or just check if lesson4 is present?
-              // Let's stick to the rule: if we have 4 lessons, group is done.
-              if (newCompletedLessons[groupId].length >= 4) {
-                if (!newCompletedGroups.includes(groupId)) {
-                  newCompletedGroups.push(groupId);
+              Object.keys(courseProgress.completedLessons).forEach((groupId) => {
+                // Hardcoded rule: 4 lessons needed per group
+                if (courseProgress.completedLessons[groupId].length >= 4) {
+                  if (!newCompletedGroups.includes(groupId)) {
+                    newCompletedGroups.push(groupId);
+                  }
                 }
-              }
+              });
+              courseProgress.completedGroups = newCompletedGroups;
             });
 
-            return {
-              completedGroups: newCompletedGroups,
-              completedLessons: newCompletedLessons,
-            };
+            return newAllProgress;
           });
         }
       } catch (error) {
         console.error("Error fetching progress:", error);
+      } finally {
+        setIsLoaded(true);
       }
     };
 
@@ -106,58 +132,67 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
 
   // Save to local storage
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
-  }, [progress]);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(allProgress));
+  }, [allProgress]);
 
-  const markLessonComplete = async (groupId: string, lessonId: string) => {
+  const markLessonComplete = async (groupId: string, lessonId: string, courseId: string = "learn-numbers") => {
     // 1. Optimistic update
-    setProgress((prev) => {
-      const groupLessons = prev.completedLessons[groupId] || [];
-      if (groupLessons.includes(lessonId)) return prev;
+    setAllProgress((prevAll) => {
+      const prevCourse = prevAll[courseId] || { completedGroups: [], completedLessons: {} };
+
+      const groupLessons = prevCourse.completedLessons[groupId] || [];
+      if (groupLessons.includes(lessonId)) return prevAll;
 
       const newGroupLessons = [...groupLessons, lessonId];
-      const newCompletedLessons = { ...prev.completedLessons, [groupId]: newGroupLessons };
+      const newCompletedLessons = { ...prevCourse.completedLessons, [groupId]: newGroupLessons };
 
       // Check if group is fully complete
       const isGroupDone = newGroupLessons.length >= 4;
 
-      let newCompletedGroups = prev.completedGroups;
-      if (isGroupDone && !prev.completedGroups.includes(groupId)) {
-        newCompletedGroups = [...prev.completedGroups, groupId];
+      let newCompletedGroups = prevCourse.completedGroups;
+      if (isGroupDone && !prevCourse.completedGroups.includes(groupId)) {
+        newCompletedGroups = [...prevCourse.completedGroups, groupId];
       }
 
       return {
-        completedGroups: newCompletedGroups,
-        completedLessons: newCompletedLessons,
+        ...prevAll,
+        [courseId]: {
+          completedGroups: newCompletedGroups,
+          completedLessons: newCompletedLessons,
+        },
       };
     });
 
     // 2. Sync to Supabase if logged in
     if (user) {
       try {
-        // Check if already exists to avoid unique constraint violation if exists?
-        // Our schema doesn't have unique constraint on (user_id, lesson_id).
-        // It uses a random UUID PK.
-        // So simple insert will duplicate if we run it multiple times.
-        // We should check existence first or assume `markLessonComplete` only runs on *new* completion.
-        // But `markLessonComplete` might be called multiple times.
-        // Better to check existence.
-
-        const { data: existing } = await supabase
+        const { data: existing, error: selectError } = await supabase
           .from("progress")
           .select("id")
           .eq("user_id", user.id)
+          .eq("course_id", courseId)
           .eq("group_id", groupId)
           .eq("lesson_id", lessonId)
-          .single();
+          .maybeSingle();
+
+        if (selectError && selectError.code !== "PGRST116") {
+          console.error("Error checking progress:", selectError);
+          return;
+        }
 
         if (!existing) {
-          await supabase.from("progress").insert({
+          const { error: insertError } = await supabase.from("progress").insert({
+            id: generateUUID(),
             user_id: user.id,
+            course_id: courseId,
             group_id: groupId,
             lesson_id: lessonId,
             completed_at: new Date().toISOString(),
           });
+
+          if (insertError) {
+            console.error("Error saving progress:", insertError);
+          }
         }
       } catch (error) {
         console.error("Error syncing progress to Supabase:", error);
@@ -167,24 +202,26 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
   };
 
   const isGroupUnlocked = (groupId: string) => {
-    // Group logic:
-    // "1-3" (id: 'group1') -> Always unlocked
-    // "4-6" (id: 'group2') -> Locked until 'group1' is in completedGroups
-    // "7-9" (id: 'group3') -> Locked until 'group2' is in completedGroups
+    // Legacy support: checks 'learn-numbers' progress
     if (groupId === "group1") return true;
     if (groupId === "group2") return progress.completedGroups.includes("group1");
     if (groupId === "group3") return progress.completedGroups.includes("group2");
     return false;
   };
 
+  // Helper for Profile Page to calculate stats
+  const getCourseProgress = (courseId: string) => {
+    return allProgress[courseId];
+  };
+
   const isLessonUnlocked = (groupId: string, lessonId: string) => {
     // Lesson logic:
-    // Lesson 1 -> Unlocked if Group is unlocked
-    // Lesson 2 -> Unlocked if Lesson 1 is complete
-    // Lesson 3 -> Unlocked if Lesson 2 is complete
     if (!isGroupUnlocked(groupId)) return false;
 
     const completedInGroup = progress.completedLessons[groupId] || [];
+
+    // If lesson is already completed, it is effectively unlocked (can replay)
+    if (completedInGroup.includes(lessonId)) return true;
 
     // Assuming lessonId format "lesson1", "lesson2", "lesson3" for simplicity across groups
     if (lessonId === "lesson1") return true;
@@ -196,7 +233,9 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <ProgressContext.Provider value={{ progress, markLessonComplete, isGroupUnlocked, isLessonUnlocked }}>
+    <ProgressContext.Provider
+      value={{ progress, allProgress, markLessonComplete, isGroupUnlocked, isLessonUnlocked, isLoaded }}
+    >
       {children}
     </ProgressContext.Provider>
   );

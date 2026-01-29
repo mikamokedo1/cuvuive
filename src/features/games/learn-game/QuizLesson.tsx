@@ -6,10 +6,13 @@ import { playSound } from "@/libs/utils/playSound";
 import { SoundNumbers } from "./LearnLesson";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 
+export const MAP_INDEX_TO_COLOR = ["blue", "green", "orange", "purple"];
+
 interface QuizLessonProps {
   range: [number, number];
   onComplete: () => void;
 }
+export const REQUIRED_WINS = 6;
 
 export function QuizLesson({ range, onComplete }: QuizLessonProps) {
   const [start, end] = range;
@@ -17,9 +20,7 @@ export function QuizLesson({ range, onComplete }: QuizLessonProps) {
   const [options, setOptions] = useState<number[]>([]);
   const [correctCount, setCorrectCount] = useState(0);
   const prevTargetRef = useRef<number | null>(null);
-  const REQUIRED_WINS = 6;
-
-  // Sound effects would go here
+  const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
 
   // Generate new question
   const generateQuestion = useCallback(() => {
@@ -44,6 +45,7 @@ export function QuizLesson({ range, onComplete }: QuizLessonProps) {
 
     setTargetNumber(target);
     setOptions(shuffled);
+    setFeedback(null);
   }, [end, start]);
 
   useEffect(() => {
@@ -54,6 +56,7 @@ export function QuizLesson({ range, onComplete }: QuizLessonProps) {
   const handleAnswer = (num: number) => {
     playSound(SoundNumbers[num - 1]);
     if (num === targetNumber) {
+      setFeedback("correct");
       // Correct
       playWinEffect(500);
 
@@ -62,18 +65,22 @@ export function QuizLesson({ range, onComplete }: QuizLessonProps) {
         setTimeout(onComplete, 1000); // Delay to show success
       } else {
         setCorrectCount((prev) => prev + 1);
-        setTimeout(generateQuestion, 500); // Delay for next Q
+        setTimeout(generateQuestion, 1500); // Delay for next Q
       }
     } else {
       // Wrong - shake or sound
       // For now, no penalty, just maybe visual feedback handled by button or parent
       // We could add state for 'wrongId' to shake specific button
+      setFeedback("wrong");
+      setTimeout(() => setFeedback(null), 600);
     }
   };
 
   return (
     <div className="flex flex-col items-center gap-8 w-full max-w-4xl">
-      <div className="bg-white p-12 rounded-3xl border-4 border-blue-200 shadow-xl mb-8">
+      <div
+        className={`bg-white p-12 rounded-3xl border-4 shadow-xl mb-8 ${feedback === "correct" ? "border-green-400 bg-green-50" : feedback === "wrong" ? "border-red-400 bg-red-50 animate-shake" : "border-blue-200"}`}
+      >
         <span
           className="text-9xl font-display font-black text-blue-600 block text-center min-w-[200px] animate-scale cursor-pointer"
           onClick={() => playSound(SoundNumbers[targetNumber - 1])}
@@ -83,15 +90,16 @@ export function QuizLesson({ range, onComplete }: QuizLessonProps) {
       </div>
 
       <div className="flex gap-6 flex-wrap justify-center">
-        {options.map((opt) => (
+        {options.map((opt, index) => (
           <ActionButton
             key={opt}
             variant="glossy"
-            color="orange"
+            color={MAP_INDEX_TO_COLOR[index]}
             size="auto"
             className="w-24 h-24 md:w-32 md:h-32 rounded-3xl"
             onClick={() => handleAnswer(opt)}
             clickPlaySound={false}
+            disabled={!!feedback}
           >
             <span className="text-5xl md:text-6xl font-display text-white drop-shadow-md">{opt}</span>
           </ActionButton>

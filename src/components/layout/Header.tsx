@@ -9,16 +9,24 @@ import { Crown } from "lucide-react";
 import LogoLong from "@/assets/logo-long.png";
 import avatarBoy from "@/assets/avatar-boy.png";
 import avatarGirl from "@/assets/avatar-girl.webp";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { SignoutIcon } from "../common/Icons";
 import { useUser } from "@/context/UserContext";
 import { Dropdown } from "@/components/common/Dropdown";
+import { useAccess } from "@/context/AccessContext";
+import { User } from "lucide-react";
 
 const Header = () => {
+  const pathname = usePathname();
   const router = useRouter();
   const { user, handleLogout, isPremium } = useUser();
+  const { setPaywallState } = useAccess();
 
-  console.log(user);
+  const handleLogin = () => {
+    setPaywallState({ isOpen: false, type: "login", redirectUrl: pathname });
+    router.push("/auth/login");
+  };
+
   return (
     <header className="w-full flex justify-between items-center relative mb-8 bg-[#F8EEDD] backdrop-blur-sm rounded-3xl shadow-xl px-6 border-4 border-white relative z-50">
       <Link href="/">
@@ -59,6 +67,13 @@ const Header = () => {
             }
           >
             <div className="p-2">
+              <Link
+                href="/profile"
+                className="w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 rounded-lg font-bold text-sm transition-colors flex items-center gap-2"
+              >
+                <User size={18} />
+                Hồ sơ của bé
+              </Link>
               <button
                 onClick={handleLogout}
                 className="cursor-pointer w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg font-bold text-sm transition-colors flex items-center gap-2"
@@ -76,7 +91,7 @@ const Header = () => {
           color="orange"
           size="auto"
           className="px-4 py-2 rounded-xl flex items-center gap-2"
-          onClick={() => router.push("/auth/login")}
+          onClick={handleLogin}
         >
           Đăng nhập
         </ActionButton>

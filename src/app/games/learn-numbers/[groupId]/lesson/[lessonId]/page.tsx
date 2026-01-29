@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { GameLayout } from "@/components/layout/GameLayout";
 import { useProgress } from "@/context/ProgressContext";
@@ -14,10 +14,12 @@ import { CompletionModal } from "@/components/games/CompletionModal";
 export default function LessonPage() {
   const params = useParams();
   const router = useRouter();
-  const { markLessonComplete } = useProgress();
+  const [showModal, setShowModal] = useState(false);
+  const [isCheckingAccess, setIsCheckingAccess] = useState(true);
+
+  const { isLoaded, isLessonUnlocked, markLessonComplete } = useProgress();
   const { checkAccess, showPaywall } = useAccess();
 
-  const [showModal, setShowModal] = useState(false);
   const [currentLessonNum, setCurrentLessonNum] = useState<number | string>(1);
   const [nextLessonNum, setNextLessonNum] = useState<number | string | null>(null);
   const [isGroupDone, setIsGroupDone] = useState(false);
@@ -35,6 +37,36 @@ export default function LessonPage() {
 
   const range = groupRanges[groupId];
 
+  // Final check on mount/params change
+  useEffect(() => {
+    const runAccessCheck = async () => {
+      // Wait for progress to load from Supabase/Local
+      if (!isLoaded) return;
+
+      // 1. Progress Check (must complete previous lesson)
+      if (!isLessonUnlocked(groupId, lessonId)) {
+        router.push(`/games/learn-numbers/${groupId}`);
+        return;
+      }
+
+      // 2. Freemium Check (must be free or premium)
+      const access = await checkAccess("learn-numbers", groupId, lessonId);
+      if (!access.userHasAccess) {
+        if (access.reason === "not_logged_in") {
+          showPaywall("login", `/games/learn-numbers/${groupId}/lesson/${lessonId}`);
+        } else if (access.reason === "premium_required") {
+          showPaywall("premium", `/games/learn-numbers/${groupId}/lesson/${lessonId}`);
+        }
+        router.push(`/games/learn-numbers/${groupId}`);
+        return;
+      }
+
+      setIsCheckingAccess(false);
+    };
+
+    runAccessCheck();
+  }, [isLoaded, groupId, lessonId, isLessonUnlocked, checkAccess, showPaywall, router]);
+
   if (!range || !groupId || !lessonId) {
     return <div>Bài học không tồn tại</div>;
   }
@@ -43,7 +75,7 @@ export default function LessonPage() {
   const GROUPS_ORDER = ["group1", "group2", "group3"];
 
   const handleComplete = () => {
-    markLessonComplete(groupId, lessonId);
+    markLessonComplete(groupId, lessonId, "learn-numbers");
 
     // Determine next step
     const currentIdx = LESSON_ORDER.indexOf(lessonId);
@@ -142,6 +174,17 @@ export default function LessonPage() {
       break;
     default:
       Content = <div>Unknown Lesson</div>;
+  }
+
+  if (!isLoaded || isCheckingAccess) {
+    return (
+      <GameLayout title="" backTo={`/games/learn-numbers/${groupId}`} showBackButton={true}>
+        <div className="flex flex-col items-center justify-center min-h-[60vh]">
+          <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin" />
+          <p className="mt-4 text-orange-600 font-bold">Đang kiểm tra quyền truy cập...</p>
+        </div>
+      </GameLayout>
+    );
   }
 
   return (

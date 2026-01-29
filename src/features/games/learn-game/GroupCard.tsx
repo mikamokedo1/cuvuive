@@ -6,7 +6,7 @@ import Star from "@/assets/games/star.png";
 
 interface GroupCardProps {
   title: string;
-  variant: "green" | "orange" | "purple";
+  variant: "green" | "orange" | "purple" | "blue";
   isLocked: boolean;
   mainImage: StaticImageData | string;
   level: number;
@@ -14,15 +14,7 @@ interface GroupCardProps {
   isCompleted: boolean;
 }
 
-export function GroupCard({
-  title,
-  variant,
-  isLocked,
-  mainImage,
-  onClick,
-  level,
-  isCompleted,
-}: GroupCardProps) {
+export function GroupCard({ title, variant, isLocked, mainImage, onClick, level, isCompleted }: GroupCardProps) {
   // Styles configuration based on variant
   const styles = {
     green: {
@@ -44,6 +36,13 @@ export function GroupCard({
       header: "text-[#7e22ce]",
       range: "text-[#6b21a8]",
       button: "bg-white/40 text-[#6b21a8]", // Disabled looking style
+      buttonText: "BẮT ĐẦU",
+    },
+    blue: {
+      card: "bg-gradient-to-b from-[#7dd3fc] to-[#38bdf8] border-[#0284c7]",
+      header: "text-[#0369a1]",
+      range: "text-[#075985]",
+      button: "bg-white/40 text-[#075985]", // Disabled looking style
       buttonText: "BẮT ĐẦU",
     },
   };

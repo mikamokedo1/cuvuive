@@ -7,6 +7,7 @@ import { UserProvider } from "@/context/UserContext";
 import { AccessProvider } from "@/context/AccessContext";
 import { MissingInfoListener } from "@/features/auth/MissingInfoListener";
 import { PaywallListener } from "@/features/paywall/PaywallListener";
+import { ProgressProvider } from "@/context/ProgressContext";
 
 import { createClient } from "@/libs/supabase/server";
 import { checkUserSubscription } from "@/libs/subscription";
@@ -41,12 +42,14 @@ export default async function RootLayout({
       <body className={`${baloo2.variable} ${nunitoSans.variable} antialiased`}>
         <UserProvider>
           <AccessProvider>
-            <OwlProvider>
-              {children}
-              <OwlCompanion />
-              <MissingInfoListener />
-              <PaywallListener />
-            </OwlProvider>
+            <ProgressProvider>
+              <OwlProvider>
+                {children}
+                <OwlCompanion />
+                <MissingInfoListener />
+                <PaywallListener />
+              </OwlProvider>
+            </ProgressProvider>
           </AccessProvider>
         </UserProvider>
       </body>

@@ -2,6 +2,8 @@ import { cn } from "@/libs/utils/cn";
 import { playSound } from "@/libs/utils/playSound";
 import Image, { StaticImageData } from "next/image";
 import { useEffect } from "react";
+import { ThingImages } from "@/libs/constants/thingImages";
+import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
 
 interface NumberCardProps {
   number: number;
@@ -11,6 +13,7 @@ interface NumberCardProps {
 }
 
 export const NumberCard = ({ number, active, soundNum, image }: NumberCardProps) => {
+  const { speak } = useTextToSpeech();
   // Generate dots corresponding to the number
   const dots = Array.from({ length: number });
   useEffect(() => {
@@ -41,9 +44,12 @@ export const NumberCard = ({ number, active, soundNum, image }: NumberCardProps)
       </div>
 
       {/* The Visuals (Dots for now) */}
-      <div className="w-full flex flex-wrap gap-3 justify-center mb-2">
+      <div
+        className="w-full flex flex-wrap gap-3 justify-center mb-2 hover:scale-105 cursor-pointer"
+        onClick={() => speak(`Có ${number} ${ThingImages[number - 1].name}`)}
+      >
         {dots.map((_, i) => (
-          <div key={i} className="w-30 h-20 relative hover:scale-105">
+          <div key={i} className="w-30 h-20 relative">
             <Image src={image} alt="Number" fill className="object-contain" />
           </div>
         ))}

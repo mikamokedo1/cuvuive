@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { ActionButton } from "@/components/common/ActionButton";
 import { ChevronRight } from "lucide-react";
-import { NUMBER_PATHS } from "@/libs/contants/numberPaths";
+import { NUMBER_PATHS } from "@/libs/constants/numberPaths";
 import Image from "next/image";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import Easer from "@/assets/games/common/earser.webp";
@@ -11,6 +11,7 @@ import Pen from "@/assets/games/pen.webp";
 import LoudSpeaker from "@/assets/games/loud-speaker.webp";
 import { playButtonSound, playSound } from "@/libs/utils/playSound";
 import { SoundNumbers } from "./LearnLesson";
+import { NextLessonButton } from "@/components/games/NextLessonButton";
 
 interface WritingLessonProps {
   range: [number, number];
@@ -327,17 +328,7 @@ export function WritingLesson({ range, onComplete }: WritingLessonProps) {
 
       {/* Bottom Controls */}
       <div className="flex items-center gap-6">
-        {/* Next button */}
-        <ActionButton
-          variant="glossy"
-          color="orange"
-          size="auto"
-          className={`w-20 h-20 rounded-full transition-all ${!isSuccess ? "opacity-50 grayscale" : "animate-bounce-subtle"}`}
-          onClick={handleNext}
-          disabled={!isSuccess}
-        >
-          <ChevronRight className="w-10 h-10 text-white" strokeWidth={3} />
-        </ActionButton>
+        <NextLessonButton onClick={handleNext} isLast={currentNumber === end} disabled={!isSuccess} />
       </div>
     </div>
   );

@@ -15,6 +15,7 @@ export const progress = pgTable("progress", {
   userId: text("user_id")
     .notNull()
     .references(() => users.id),
+  courseId: text("course_id").notNull().default("learn-numbers"),
   groupId: text("group_id").notNull(), // e.g., "group1"
   lessonId: text("lesson_id").notNull(), // e.g., "lesson1"
   score: integer("score").default(0),

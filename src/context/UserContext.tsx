@@ -4,6 +4,7 @@ import { createClient } from "@/libs/supabase/client";
 import { User } from "@supabase/supabase-js";
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { getSubscriptionStatusAction } from "@/libs/actions/user";
+import Loading from "@/components/common/Loading";
 
 interface UserContextType {
   user: User | null;
@@ -110,7 +111,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         handleLogout,
       }}
     >
-      {children}
+      {isLoading ? <Loading /> : children}
     </UserContext.Provider>
   );
 };

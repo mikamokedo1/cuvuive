@@ -13,7 +13,9 @@ import Sound6 from "@/assets/games/learn-numbers/sound/number-6.mp3";
 import Sound7 from "@/assets/games/learn-numbers/sound/number-7.mp3";
 import Sound8 from "@/assets/games/learn-numbers/sound/number-8.mp3";
 import Sound9 from "@/assets/games/learn-numbers/sound/number-9.mp3";
-import { ThingImages } from "@/libs/contants/thingImages";
+import { ThingImages } from "@/libs/constants/thingImages";
+import { BackLessonButton } from "@/components/games/BackLessonButton";
+import { NextLessonButton } from "@/components/games/NextLessonButton";
 
 export const SoundNumbers = [Sound1, Sound2, Sound3, Sound4, Sound5, Sound6, Sound7, Sound8, Sound9];
 
@@ -21,55 +23,55 @@ const MAP_NUMBERS = [
   {
     number: 1,
     title: "Số 1",
-    icon: ThingImages[0],
+    icon: ThingImages[0].icon,
     sound: SoundNumbers[0],
   },
   {
     number: 2,
     title: "Số 2",
-    icon: ThingImages[1],
+    icon: ThingImages[1].icon,
     sound: SoundNumbers[1],
   },
   {
     number: 3,
     title: "Số 3",
-    icon: ThingImages[2],
+    icon: ThingImages[2].icon,
     sound: SoundNumbers[2],
   },
   {
     number: 4,
     title: "Số 4",
-    icon: ThingImages[3],
+    icon: ThingImages[3].icon,
     sound: SoundNumbers[3],
   },
   {
     number: 5,
     title: "Số 5",
-    icon: ThingImages[4],
+    icon: ThingImages[4].icon,
     sound: SoundNumbers[4],
   },
   {
     number: 6,
     title: "Số 6",
-    icon: ThingImages[5],
+    icon: ThingImages[5].icon,
     sound: SoundNumbers[5],
   },
   {
     number: 7,
     title: "Số 7",
-    icon: ThingImages[6],
+    icon: ThingImages[6].icon,
     sound: SoundNumbers[6],
   },
   {
     number: 8,
     title: "Số 8",
-    icon: ThingImages[7],
+    icon: ThingImages[7].icon,
     sound: SoundNumbers[7],
   },
   {
     number: 9,
     title: "Số 9",
-    icon: ThingImages[8],
+    icon: ThingImages[8].icon,
     sound: SoundNumbers[8],
   },
 ];
@@ -125,30 +127,8 @@ export function LearnLesson({ range, onComplete }: LearnLessonProps) {
 
       {/* Controls */}
       <div className="flex items-center gap-6 mt-4">
-        <ActionButton
-          variant="glossy"
-          color="blue"
-          size="auto"
-          className="w-16 h-16 rounded-full disabled:opacity-50 disabled:grayscale"
-          onClick={handlePrev}
-          disabled={currentNumber === start}
-        >
-          <span className="text-3xl font-black text-white">{"<"}</span>
-        </ActionButton>
-
-        <ActionButton
-          variant="glossy"
-          color={isLast ? "green" : "orange"}
-          size="auto"
-          className="w-24 h-24 rounded-full animate-bounce-subtle"
-          onClick={handleNext}
-        >
-          {isLast ? (
-            <Check className="w-10 h-10 text-white" strokeWidth={4} />
-          ) : (
-            <ChevronRight className="w-10 h-10 text-white" strokeWidth={4} />
-          )}
-        </ActionButton>
+        <BackLessonButton onClick={handlePrev} disabled={currentNumber === start} />
+        <NextLessonButton onClick={handleNext} isLast={isLast} />
       </div>
     </div>
   );

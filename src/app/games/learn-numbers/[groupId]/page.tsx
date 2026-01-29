@@ -5,16 +5,14 @@ import Image, { StaticImageData } from "next/image";
 import { GameLayout } from "@/components/layout/GameLayout";
 import { useProgress } from "@/context/ProgressContext";
 import { useAccess } from "@/context/AccessContext";
-import { BookOpen, HelpCircle, Calculator, Lock, PenTool } from "lucide-react";
-import PlayButton from "@/components/common/PlayButton";
-import { cn } from "@/libs/utils/cn";
+import { BookOpen, HelpCircle, Calculator, PenTool } from "lucide-react";
+import { LessonTitle } from "@/components/games/LessonTitle";
 
 // Assets
 import group1 from "@/assets/games/learn-numbers/number-logo-1.png";
 import group2 from "@/assets/games/learn-numbers/number-logo-2.png";
 import group3 from "@/assets/games/learn-numbers/number-logo-3.png";
-import LockCardIcon from "@/assets/games/lock-card.png";
-import OwnSayHi from "@/assets/games/common/owl-say-hi.webp";
+import { LessonCard } from "@/components/games/LessonCard";
 // Note: User mentioned "own-sleep" but design shows lock icon for locked state.
 // Using LockCardIcon for the right side image of locked cards.
 
@@ -115,20 +113,18 @@ export default function GroupLessonsPage() {
   // If all unlocked are completed, then the user has finished the group.
   // But maybe they want to replay.
   // Let's default "Active" to be the *first unlocked lesson* that the user clicked?
-  // PROPOSAL: The "Active" lesson is determined by:
-  // 1. The first unlocked but not completed lesson.
-  // 2. If all unlocked are completed, then the last unlocked lesson (or the first one to replay?).
-  // Let's set it to the highest unlocked lesson index?
-  // User Requirement: "if the leeson active it expand".
-
-  let activeIndex = lessons.findIndex((l) => {
-    const unlocked = isLessonUnlocked(groupId, l.id);
-    const completed = groupProgress.includes(l.id);
-    return unlocked && !completed;
-  });
+  // Determine active lesson
+  // Logic: The "Frontier". The highest lesson that is Unlocked.
+  // This allows users to continue where they left off, even if they skipped a previous lesson (gap).
+  let activeIndex = -1;
+  for (let i = lessons.length - 1; i >= 0; i--) {
+    if (isLessonUnlocked(groupId, lessons[i].id)) {
+      activeIndex = i;
+      break;
+    }
+  }
 
   if (activeIndex === -1) {
-    // If all unlocked lessons are completed, reset to the first lesson
     activeIndex = 0;
   }
 
@@ -137,11 +133,11 @@ export default function GroupLessonsPage() {
 
   return (
     <GameLayout title="" backTo="/games/learn-numbers">
-      1{/* Custom Header Section */}
+      {/* Custom Header Section */}
       <div className="w-full max-w-2xl px-4 flex flex-col items-center gap-6 pt-4">
         {/* Title Group */}
         <div className="text-center space-y-2">
-          <h1 className="text-4xl font-extrabold text-[#FF6B00] drop-shadow-sm font-nunito">{config.title}</h1>
+          <LessonTitle>{config.title}</LessonTitle>
           <div className="relative w-60 h-24 mx-auto">
             <Image src={config.image} alt="Group Logo" fill className="object-contain" />
           </div>
@@ -153,76 +149,14 @@ export default function GroupLessonsPage() {
             const unlocked = isLessonUnlocked(groupId, lesson.id);
             const isActive = index === activeIndex;
 
-            // Render Expanded Active Card
-            if (isActive) {
-              return (
-                <div
-                  key={lesson.id}
-                  onClick={() => handleLessonClick(lesson.id)}
-                  className="relative w-full bg-[#FFF9E6] rounded-[32px] border-4 border-[#FFD057] p-4 shadow-[0_8px_0_#FFEBA0] overflow-hidden cursor-pointer hover:-translate-y-1"
-                >
-                  {/* Content Container */}
-                  <div className="flex items-center justify-between relative z-10">
-                    {/* Left Side */}
-                    <div className="flex flex-col gap-3">
-                      <div className="w-14 h-14 bg-[#2C9AFF] rounded-2xl flex items-center justify-center shadow-[0_4px_0_#1a7ccf]">
-                        {lesson.icon}
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-bold text-[#FF6B00]">{lesson.title}</h3>
-                      </div>
-                    </div>
-                    <div className="relative w-32 h-32 z-0">
-                      <Image src={OwnSayHi} alt="Lesson" fill className="object-contain" />
-                    </div>
-                    {/* Right Side: Image + Play Button */}
-                    <div className="flex flex-col items-center justify-center pl-4 relative">
-                      {/* Optional: Lesson Image (Blocks) */}
-                      <div className="z-10 scale-110 -ml-4">
-                        <PlayButton />
-                      </div>
-                    </div>
-                  </div>
-                  {/* Background Decor (optional) */}
-                  <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-l from-white/40 to-transparent pointer-events-none" />
-                </div>
-              );
-            }
-
-            // Render Locked/Collapsed Card
             return (
-              <div
+              <LessonCard
                 key={lesson.id}
-                className={cn(
-                  "relative w-full h-24 rounded-[24px] flex items-center px-4 border-2 transition-all cursor-pointer",
-                  unlocked
-                    ? "bg-white border-slate-100 shadow-sm hover:shadow-md" // Inactive but unlocked state
-                    : "bg-[#F0F0F0]/80 border-transparent shadow-none", // Locked state (still clickable for paywall)
-                )}
-                onClick={() => handleLessonClick(lesson.id)}
-              >
-                {/* Left Icon and Text */}
-                <div className="flex items-center gap-4 flex-1">
-                  <div className={cn("w-12 h-12 rounded-2xl flex items-center justify-center bg-green-500")}>
-                    {lesson.icon}
-                  </div>
-                  <div className="flex flex-col">
-                    <div className="flex items-center gap-2">
-                      <h3 className={cn("text-lg font-bold", unlocked ? "text-slate-700" : "text-slate-400")}>
-                        {lesson.title}
-                      </h3>
-                    </div>
-                    {!unlocked && <p className="text-slate-400 text-xs font-semibold">Đang khóa</p>}
-                  </div>
-                </div>
-
-                {/* Right Lock Icon */}
-                {!unlocked && (
-                  <div className="opacity-50">
-                    <Image src={LockCardIcon} alt="Locked" width={32} height={32} />
-                  </div>
-                )}
-              </div>
+                lesson={lesson}
+                unlocked={unlocked}
+                isActive={isActive}
+                onClick={handleLessonClick}
+              />
             );
           })}
         </div>

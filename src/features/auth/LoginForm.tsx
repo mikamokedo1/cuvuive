@@ -12,6 +12,7 @@ import owlHi from "@/assets/games/common/owl-say-hi.webp";
 import { EmailIcon, ExclamationIcon, EyeIcon, FacebookIcon, GoogleIcon, PasswordIcon } from "@/components/common/Icons";
 import { MAP_ERROR } from "./SignupForm";
 import { useSearchParams } from "next/navigation";
+import { useAccess } from "@/context/AccessContext";
 
 export function LoginForm() {
   const router = useRouter();
@@ -20,6 +21,7 @@ export function LoginForm() {
   const [loading, setLoading] = useState(false);
   const [generalError, setGeneralError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
+  const { paywallState, setPaywallState } = useAccess();
 
   const formik = useFormik({
     initialValues: {
@@ -67,8 +69,8 @@ export function LoginForm() {
     setLoading(true);
     // Get redirect param from URL to pass through OAuth flow
     const redirectUrl = searchParams.get("redirect") || "/";
-    const redirectTo = `${location.origin}/auth/callback?next=${encodeURIComponent(redirectUrl)}`;
-
+    const redirectTo = `${location.origin}/${redirectUrl}`;
+    console.log({ redirectTo });
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {

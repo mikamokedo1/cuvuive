@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import BgImage from "@/assets/bg.jpg";
 import Header from "./Header";
+import { LessonTitle } from "@/components/games/LessonTitle";
 
 interface GameLayoutProps {
   children: React.ReactNode;
@@ -38,11 +39,7 @@ export const GameLayout = ({ children, title, backTo, showBackButton = true }: G
           </ActionButton>
         )}
 
-        {title && (
-          <span className="text-3xl md:text-6xl text-orange-500 font-display font-bold text-center drop-shadow-sm">
-            {title}
-          </span>
-        )}
+        {title && <LessonTitle>{title}</LessonTitle>}
 
         {/* Placeholder for settings/sound toggle */}
         <div className="w-16" />

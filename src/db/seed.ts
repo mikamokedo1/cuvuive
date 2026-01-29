@@ -9,23 +9,44 @@ async function seed() {
 
   console.log("🌱 Seeding course_access table...");
 
-  // Seed learn-numbers course
+  // Seed learn-numbers and compare-quantity courses
   const seedData = [
-    // Group 1 (1-3)
+    // learn-numbers: Group 1 (1-3)
     { courseId: "learn-numbers", groupId: "group1", lessonId: "lesson1", accessType: "free" },
     { courseId: "learn-numbers", groupId: "group1", lessonId: "lesson2", accessType: "premium" },
     { courseId: "learn-numbers", groupId: "group1", lessonId: "lesson3", accessType: "premium" },
     { courseId: "learn-numbers", groupId: "group1", lessonId: "lesson4", accessType: "premium" },
-    // Group 2 (4-6)
+    // learn-numbers: Group 2 (4-6)
     { courseId: "learn-numbers", groupId: "group2", lessonId: "lesson1", accessType: "free" },
     { courseId: "learn-numbers", groupId: "group2", lessonId: "lesson2", accessType: "premium" },
     { courseId: "learn-numbers", groupId: "group2", lessonId: "lesson3", accessType: "premium" },
     { courseId: "learn-numbers", groupId: "group2", lessonId: "lesson4", accessType: "premium" },
-    // Group 3 (7-9)
+    // learn-numbers: Group 3 (7-9)
     { courseId: "learn-numbers", groupId: "group3", lessonId: "lesson1", accessType: "free" },
     { courseId: "learn-numbers", groupId: "group3", lessonId: "lesson2", accessType: "premium" },
     { courseId: "learn-numbers", groupId: "group3", lessonId: "lesson3", accessType: "premium" },
     { courseId: "learn-numbers", groupId: "group3", lessonId: "lesson4", accessType: "premium" },
+
+    // compare-quantity: Group 1 (Lớn hơn)
+    { courseId: "compare-quantity", groupId: "group1", lessonId: "lesson1", accessType: "free" },
+    { courseId: "compare-quantity", groupId: "group1", lessonId: "lesson2", accessType: "premium" },
+    { courseId: "compare-quantity", groupId: "group1", lessonId: "lesson3", accessType: "premium" },
+    { courseId: "compare-quantity", groupId: "group1", lessonId: "lesson4", accessType: "premium" },
+    // compare-quantity: Group 2 (Nhỏ hơn)
+    { courseId: "compare-quantity", groupId: "group2", lessonId: "lesson1", accessType: "free" },
+    { courseId: "compare-quantity", groupId: "group2", lessonId: "lesson2", accessType: "premium" },
+    { courseId: "compare-quantity", groupId: "group2", lessonId: "lesson3", accessType: "premium" },
+    { courseId: "compare-quantity", groupId: "group2", lessonId: "lesson4", accessType: "premium" },
+    // compare-quantity: Group 3 (Bằng nhau)
+    { courseId: "compare-quantity", groupId: "group3", lessonId: "lesson1", accessType: "free" },
+    { courseId: "compare-quantity", groupId: "group3", lessonId: "lesson2", accessType: "premium" },
+    { courseId: "compare-quantity", groupId: "group3", lessonId: "lesson3", accessType: "premium" },
+    { courseId: "compare-quantity", groupId: "group3", lessonId: "lesson4", accessType: "premium" },
+    // compare-quantity: Group 4 (Luyện tập)
+    { courseId: "compare-quantity", groupId: "group4", lessonId: "lesson1", accessType: "free" },
+    { courseId: "compare-quantity", groupId: "group4", lessonId: "lesson2", accessType: "premium" },
+    { courseId: "compare-quantity", groupId: "group4", lessonId: "lesson3", accessType: "premium" },
+    { courseId: "compare-quantity", groupId: "group4", lessonId: "lesson4", accessType: "premium" },
   ];
 
   // Use Upsert for Course Access
@@ -83,8 +104,8 @@ async function seed() {
   console.log("✅ Seeded/Updated", plansData.length, "plans");
 
   console.log("📊 Access breakdown:");
-  console.log("   - FREE lessons: 3 (lesson1 of each group)");
-  console.log("   - PREMIUM lessons: 9 (lessons 2-4 of each group)");
+  console.log("   - learn-numbers: 12 lessons (3 free, 9 premium)");
+  console.log("   - compare-quantity: 16 lessons (4 free, 12 premium)");
   console.log("   - PLANS seeded: 3 (Mầm, Chồi, Lá)");
 
   process.exit(0);

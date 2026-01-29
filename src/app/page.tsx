@@ -46,15 +46,17 @@ export default function Home() {
           <span className="text-4xl text-white drop-shadow-md">Đếm hình</span>
         </ActionButton>
 
-        <ActionButton
-          variant="glossy"
-          color="purple"
-          size="auto"
-          className="w-full flex flex-col items-center justify-center gap-4 p-4"
-        >
-          <Image src={Game3Logo} alt="Scale" className="w-40 h-40 object-contain" />
-          <span className="text-4xl text-white drop-shadow-md">So sánh</span>
-        </ActionButton>
+        <Link href="/games/compare-quantity" className="w-full">
+          <ActionButton
+            variant="glossy"
+            color="purple"
+            size="auto"
+            className="w-full flex flex-col items-center justify-center gap-4 p-4"
+          >
+            <Image src={Game3Logo} alt="Scale" className="w-40 h-40 object-contain" />
+            <span className="text-4xl text-white drop-shadow-md">So sánh</span>
+          </ActionButton>
+        </Link>
 
         <ActionButton
           variant="glossy"

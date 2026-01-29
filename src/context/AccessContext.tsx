@@ -13,6 +13,7 @@ interface AccessContextType {
   showPaywall: (type: PaywallType, redirectUrl?: string) => void;
   hidePaywall: () => void;
   paywallState: { isOpen: boolean; type: PaywallType | null; redirectUrl: string | null };
+  setPaywallState: (state: { isOpen: boolean; type: PaywallType | null; redirectUrl: string | null }) => void;
 }
 
 const AccessContext = createContext<AccessContextType | undefined>(undefined);
@@ -55,6 +56,7 @@ export function AccessProvider({ children }: { children: ReactNode }) {
         showPaywall,
         hidePaywall,
         paywallState,
+        setPaywallState,
       }}
     >
       {children}

@@ -121,33 +121,43 @@ function UpgradeContent() {
             const discount = calculateDiscount(baseMonthlyPrice, pkg.price, pkg.durationMonths);
 
             // Define styles based on color theme
-            const colorStyles =
+            const colorStylesMap: Record<
+              string,
               {
-                green: {
-                  bg: "bg-gradient-to-b from-[#E8F5E9] to-[#C8E6C9]",
-                  border: "border-[#4CAF50]",
-                  title: "text-[#2E7D32]",
-                  btn: "green" as const,
-                  glow: "shadow-[0_0_30px_rgba(76,175,80,0.3)]",
-                  darkBorder: "border-[#388E3C]",
-                },
-                blue: {
-                  bg: "bg-gradient-to-b from-[#E3F2FD] to-[#BBDEFB]",
-                  border: "border-[#2196F3]",
-                  title: "text-[#1565C0]",
-                  btn: "blue" as const,
-                  glow: "shadow-[0_0_30px_rgba(33,150,243,0.3)]",
-                  darkBorder: "border-[#1976D2]",
-                },
-                yellow: {
-                  bg: "bg-gradient-to-b from-[#FFFDE7] to-[#FFF9C4]",
-                  border: "border-[#FFC107]",
-                  title: "text-[#F57F17]",
-                  btn: "orange" as const,
-                  glow: "shadow-[0_0_30px_rgba(255,193,7,0.3)]",
-                  darkBorder: "border-[#FFA000]",
-                },
-              }[color] || colorStyles.green; // Fallback
+                bg: string;
+                border: string;
+                title: string;
+                btn: "green" | "blue" | "orange";
+                glow: string;
+                darkBorder: string;
+              }
+            > = {
+              green: {
+                bg: "bg-gradient-to-b from-[#E8F5E9] to-[#C8E6C9]",
+                border: "border-[#4CAF50]",
+                title: "text-[#2E7D32]",
+                btn: "green",
+                glow: "shadow-[0_0_30px_rgba(76,175,80,0.3)]",
+                darkBorder: "border-[#388E3C]",
+              },
+              blue: {
+                bg: "bg-gradient-to-b from-[#E3F2FD] to-[#BBDEFB]",
+                border: "border-[#2196F3]",
+                title: "text-[#1565C0]",
+                btn: "blue",
+                glow: "shadow-[0_0_30px_rgba(33,150,243,0.3)]",
+                darkBorder: "border-[#1976D2]",
+              },
+              yellow: {
+                bg: "bg-gradient-to-b from-[#FFFDE7] to-[#FFF9C4]",
+                border: "border-[#FFC107]",
+                title: "text-[#F57F17]",
+                btn: "orange",
+                glow: "shadow-[0_0_30px_rgba(255,193,7,0.3)]",
+                darkBorder: "border-[#FFA000]",
+              },
+            };
+            const colorStyles = colorStylesMap[color] || colorStylesMap.green;
 
             return (
               <div
