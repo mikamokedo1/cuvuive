@@ -62,12 +62,11 @@ export function GroupCard({ title, variant, isLocked, mainImage, onClick, level,
       {/* Header */}
       <div className={cn("text-4xl font-bold uppercase tracking-wider font-display", currentStyle.header)}>{title}</div>
       <div className="flex gap-1 h-10 items-center justify-center">
-        {isCompleted &&
-          Array.from({ length: level }).map((_, i) => (
-            <div key={i} className="relative w-10 h-10">
-              <Image src={Star} alt="Star" fill className="object-contain" />
-            </div>
-          ))}
+        {isCompleted && (
+          <div className="relative w-10 h-10">
+            <Image src={Star} alt="Star" fill className="object-contain" />
+          </div>
+        )}
       </div>
       {/* Main Image Area */}
       <div className="relative w-full flex-1 flex items-center justify-center">

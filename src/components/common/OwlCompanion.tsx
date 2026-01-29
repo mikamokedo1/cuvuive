@@ -6,19 +6,27 @@ import { useOwl } from "@/context/OwlContext";
 import ownLearningImg from "@/assets/own-learning.webp";
 import { playSound } from "@/libs/utils/playSound";
 import { usePathname } from "next/navigation";
+import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
 
 const DO_NOT_SHOW_PATHNAMES = ["/auth/update-password"];
 
 export const OwlCompanion = () => {
   const pathname = usePathname();
-  const { sound } = useOwl();
+  const { sound, textSpeak } = useOwl();
   const [isBouncing, setIsBouncing] = useState(false);
   const [isJumping, setIsJumping] = useState(false);
+  const { speak } = useTextToSpeech();
 
   const handleClick = () => {
     setIsJumping(true);
-    playSound(sound);
-    setTimeout(() => setIsJumping(false), 500); // Reset jump after animation
+
+    if (textSpeak) {
+      speak(textSpeak);
+    } else {
+      playSound(sound);
+    }
+
+    setTimeout(() => setIsJumping(false), 500);
   };
 
   const handleMouseEnter = () => {

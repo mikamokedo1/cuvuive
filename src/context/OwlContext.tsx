@@ -20,9 +20,6 @@ import UpgradeSound from "@/assets/pages-sounds/upgrade.mp3";
 import CompareQuantityGroup1Lesson1Sound from "@/assets/pages-sounds/compare-quantity/compare-quantity-group1-lesson-lesson1.mp3";
 import CompareQuantityGroup2Lesson1Sound from "@/assets/pages-sounds/compare-quantity/compare-quantity-group2-lesson-lesson1.mp3";
 import CompareQuantityGroup3Lesson1Sound from "@/assets/pages-sounds/compare-quantity/compare-quantity-group3-lesson-lesson1.mp3";
-import CompareQuantityGroup1Lesson2Sound from "@/assets/pages-sounds/compare-quantity/compare-quantity-group1-lesson-lesson2.mp3";
-import CompareQuantityGroup2Lesson2Sound from "@/assets/pages-sounds/compare-quantity/compare-quantity-group2-lesson-lesson2.mp3";
-import CompareQuantityGroup3Lesson2Sound from "@/assets/pages-sounds/compare-quantity/compare-quantity-group3-lesson-lesson2.mp3";
 
 import { usePathname } from "next/navigation";
 
@@ -52,9 +49,20 @@ const MAP_PATHNAME_TO_SOUND = {
   "/games/compare-quantity/group1/lesson/lesson1": CompareQuantityGroup1Lesson1Sound,
   "/games/compare-quantity/group2/lesson/lesson1": CompareQuantityGroup2Lesson1Sound,
   "/games/compare-quantity/group3/lesson/lesson1": CompareQuantityGroup3Lesson1Sound,
-  "/games/compare-quantity/group1/lesson/lesson2": CompareQuantityGroup1Lesson2Sound,
-  "/games/compare-quantity/group2/lesson/lesson2": CompareQuantityGroup2Lesson2Sound,
-  "/games/compare-quantity/group3/lesson/lesson2": CompareQuantityGroup3Lesson2Sound,
+};
+
+export const MAP_PATHNAME_TO_TEXT = {
+  "/games/compare-quantity/group1/lesson/lesson2": "Bên trái nhiều đồ vật hơn bên phải, Pé chọn dấu lớn nhé",
+  "/games/compare-quantity/group2/lesson/lesson2": "Bên trái ít đồ vật hơn bên phải, Pé chọn dấu Pé nhé",
+  "/games/compare-quantity/group3/lesson/lesson2": "Bên trái và bên phải có số đồ vật bằng nhau, Pé chọn dấu bằng nhé",
+  "/games/compare-quantity/group1/lesson/lesson3": "Số bên trái lớn hơn bên phải, Pé chọn dấu lớn nhé",
+  "/games/compare-quantity/group2/lesson/lesson3": "Số bên trái nhỏ hơn bên phải, Pé chọn dấu Pé nhé",
+  "/games/compare-quantity/group3/lesson/lesson3": "Số bên trái và bên phải bằng nhau, Pé chọn dấu bằng nhé",
+  "/games/compare-quantity/group1/lesson/lesson4": "Pé tập viết dấu lớn",
+  "/games/compare-quantity/group2/lesson/lesson4": "Pé tập viết dấu Pé",
+  "/games/compare-quantity/group3/lesson/lesson4": "Pé tập viết dấu bằng",
+  "/games/compare-quantity/group4/lesson/lesson1": "So sánh đồ vật và chọn dấu lớn, Pé hoặc bằng nhé",
+  "/games/compare-quantity/group4/lesson/lesson2": "So sánh số và chọn dấu lớn, Pé hoặc bằng nhé",
 };
 
 interface OwlContextType {
@@ -62,6 +70,8 @@ interface OwlContextType {
   setSound: (sound: string) => void;
   isHappy: boolean;
   setIsHappy: (happy: boolean) => void;
+  textSpeak: string;
+  setTextSpeak: (textSpeak: string) => void;
 }
 
 const OwlContext = createContext<OwlContextType | undefined>(undefined);
@@ -69,6 +79,9 @@ const OwlContext = createContext<OwlContextType | undefined>(undefined);
 export const OwlProvider = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname();
   const [sound, setSound] = useState<string>(HomeSound);
+  const [textSpeak, setTextSpeak] = useState<string>(
+    MAP_PATHNAME_TO_TEXT[pathname as keyof typeof MAP_PATHNAME_TO_TEXT],
+  );
   const [isHappy, setIsHappy] = useState<boolean>(true);
 
   useEffect(() => {
@@ -79,9 +92,20 @@ export const OwlProvider = ({ children }: { children: ReactNode }) => {
     } else {
       setSound(HomeSound);
     }
+
+    const text = MAP_PATHNAME_TO_TEXT[pathname as keyof typeof MAP_PATHNAME_TO_TEXT];
+    if (text) {
+      setTextSpeak(text);
+    } else {
+      setTextSpeak("");
+    }
   }, [pathname]);
 
-  return <OwlContext.Provider value={{ sound, setSound, isHappy, setIsHappy }}>{children}</OwlContext.Provider>;
+  return (
+    <OwlContext.Provider value={{ sound, setSound, isHappy, setIsHappy, textSpeak, setTextSpeak }}>
+      {children}
+    </OwlContext.Provider>
+  );
 };
 
 export const useOwl = () => {
