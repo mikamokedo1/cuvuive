@@ -63,6 +63,15 @@ export const MAP_PATHNAME_TO_TEXT = {
   "/games/compare-quantity/group3/lesson/lesson4": "Pé tập viết dấu bằng",
   "/games/compare-quantity/group4/lesson/lesson1": "So sánh đồ vật và chọn dấu lớn, Pé hoặc bằng nhé",
   "/games/compare-quantity/group4/lesson/lesson2": "So sánh số và chọn dấu lớn, Pé hoặc bằng nhé",
+  "/games/learn-color/group1/lesson/lesson1": "Pé học màu đỏ, màu xanh dương, màu vàng và màu xanh lá",
+  "/games/learn-color/group1/lesson/lesson2": "Pé chọn màu phía dưới giống phía trên nhé",
+  "/games/learn-color/group1/lesson/lesson3": "Hình phía trên có màu gì?",
+  "/games/learn-color/group2/lesson/lesson1": "Pé học màu cam, màu tím, màu hồng, màu nâu, màu đen và màu trắng",
+  "/games/learn-color/group2/lesson/lesson2": "Pé chọn màu phía dưới giống phía trên nhé",
+  "/games/learn-color/group2/lesson/lesson3": "Hình phía trên có màu gì?",
+  "/games/learn-color/group3/lesson/lesson1": "Pé ôn lại các màu đã học",
+  "/games/learn-color/group3/lesson/lesson2": "Pé chọn màu phía dưới giống phía trên nhé",
+  "/games/learn-color/group3/lesson/lesson3": "Hình phía trên có màu gì?",
 };
 
 interface OwlContextType {

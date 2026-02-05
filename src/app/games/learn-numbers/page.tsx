@@ -70,7 +70,7 @@ export default function NumberGroupsPage() {
         </div>
 
         {/* Updated title to match style better if needed, or keep "Chọn số muốn học" */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 w-full max-w-6xl px-4 items-center justify-center">
+        <div className="grid grid-cols-1 gap-4  sm:grid-cols-2 sm:gap-6  lg:grid-cols-4 lg:gap-6 w-full max-w-6xl items-center justify-center">
           {GROUPS.map((group, index) => {
             const unlocked = isGroupUnlocked(group.id);
             const isCompleted = progress.completedGroups.includes(group.id);

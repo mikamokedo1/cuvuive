@@ -107,18 +107,16 @@ export function LearnLesson({ range, onComplete }: LearnLessonProps) {
   const isLast = currentNumber === end;
 
   return (
-    <div className="flex flex-col items-center gap-6 md:gap-8 w-full max-w-4xl px-4">
+    <div className="flex flex-col items-center gap-6 md:gap-8 w-full max-w-4xl">
       {/* Progress Indicator */}
       <div className="flex items-center justify-center gap-4 md:gap-16 w-full">
         {/* Number Display */}
-        <div className="transform transition-all duration-500 w-full max-w-[280px] md:max-w-xs">
-          <NumberCard
-            number={currentNumber}
-            active={true}
-            soundNum={MAP_NUMBERS[currentNumber - 1].sound}
-            image={MAP_NUMBERS[currentNumber - 1].icon}
-          />
-        </div>
+        <NumberCard
+          number={currentNumber}
+          active={true}
+          soundNum={MAP_NUMBERS[currentNumber - 1].sound}
+          image={MAP_NUMBERS[currentNumber - 1].icon}
+        />
       </div>
 
       {/* <div className="text-2xl text-orange-600 font-bold bg-white/80 px-6 py-2 rounded-full backdrop-blur-sm">

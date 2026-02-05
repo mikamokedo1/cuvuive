@@ -172,7 +172,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
 
         Object.keys(courseProgress.completedLessons).forEach((groupId) => {
           const completedCount = courseProgress.completedLessons[groupId].length;
-          const requiredCount = courseStruct[groupId] || 4; // Default to 4 if unknown, or maybe 0? 4 is safe legacy.
+          const requiredCount = courseStruct[groupId] || (courseId === "learn-color" ? 3 : 4); // Default to 4 if unknown, or 3 for learn-color
 
           if (completedCount > 0 && completedCount >= requiredCount) {
             newCompletedGroups.push(groupId);
@@ -226,7 +226,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
 
       // Check if group is fully complete
       const courseStruct = courseStructure[courseId] || {};
-      const requiredLessons = courseStruct[groupId] || 4;
+      const requiredLessons = courseStruct[groupId] || (courseId === "learn-color" ? 3 : 4);
       const isGroupDone = newGroupLessons.length >= requiredLessons;
 
       let newCompletedGroups = prevCourse.completedGroups;

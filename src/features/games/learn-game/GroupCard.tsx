@@ -55,11 +55,11 @@ export function GroupCard({ title, variant, isLocked, mainImage, onClick, isComp
         "relative flex flex-col items-center p-4 rounded-[40px] border-[8px] overflow-hidden transition-transform",
         currentStyle.card,
         !isLocked && "cursor-pointer hover:scale-105 active:scale-95",
-        "w-full aspect-[3/4] max-w-[320px] mx-auto shadow-xl group",
+        "w-full aspect-[3/4] max-w-[300px] mx-auto shadow-xl group",
       )}
     >
       {/* Header */}
-      <h3 className={cn("text-3xl md:text-4xl font-bold uppercase tracking-wider font-display", currentStyle.header)}>
+      <h3 className={cn("text-2.5xl md:text-3xl font-bold uppercase tracking-wider font-display", currentStyle.header)}>
         {title}
       </h3>
       <div className="flex gap-1 h-10 items-center justify-center">
@@ -75,7 +75,7 @@ export function GroupCard({ title, variant, isLocked, mainImage, onClick, isComp
           src={mainImage}
           alt={title}
           fill
-          className={cn("object-contain drop-shadow-xl transition-transform group-hover:scale-110")}
+          className={cn("object-contain drop-shadow-xl")}
           sizes="(max-width: 768px) 100vw, 320px"
         />
       </div>

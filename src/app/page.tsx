@@ -7,9 +7,8 @@ import Header from "@/components/layout/Header";
 // Assets
 import BgImage from "@/assets/bg.jpg";
 import NumberLogo from "@/assets/games/learn-numbers/number-logo.png";
-import Game2Logo from "@/assets/games/game-2-logo.png";
 import Game3Logo from "@/assets/games/game-3-logo.png";
-import Game4Logo from "@/assets/games/game-4-logo.png";
+import GameColorLogo from "@/assets/games/learn-color-color.webp";
 
 interface Game {
   id: string;
@@ -28,12 +27,6 @@ const GAMES: Game[] = [
     icon: NumberLogo,
   },
   {
-    id: "count-shapes",
-    title: "Đếm hình",
-    color: "orange",
-    icon: Game2Logo,
-  },
-  {
     id: "compare",
     title: "So sánh",
     href: "/games/compare-quantity",
@@ -41,10 +34,11 @@ const GAMES: Game[] = [
     icon: Game3Logo,
   },
   {
-    id: "mini-game",
-    title: "Mini game",
-    color: "blue",
-    icon: Game4Logo,
+    id: "learn-color",
+    title: "Học màu",
+    href: "/games/learn-color",
+    color: "orange",
+    icon: GameColorLogo,
   },
 ];
 
@@ -68,12 +62,12 @@ export default function Home() {
               variant="glossy"
               color={game.color}
               size="auto"
-              className="w-full flex flex-col items-center justify-center gap-4 p-4 min-h-[160px]"
+              className="w-full flex flex-col items-center justify-center p-4 min-h-[160px]"
             >
               <Image
                 src={game.icon}
                 alt={game.title}
-                className="w-32 h-32 md:w-40 md:h-40 object-contain transition-transform group-hover:scale-110"
+                className="w-48 h-48 md:w-40 md:h-40 object-contain transition-transform group-hover:scale-110"
               />
               <span className="text-3xl md:text-4xl text-white drop-shadow-md">{game.title}</span>
             </ActionButton>

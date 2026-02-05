@@ -35,7 +35,7 @@ export const GameLayout = ({ children, title, backTo, showBackButton = true }: G
             onClick={() => (backTo ? router.push(backTo) : router.back())}
           >
             <ArrowLeft size={20} className="text-white" />
-            <span className="text-white font-bold">Quay lại</span>
+            <span className="text-white font-bold hidden sm:block">Quay lại</span>
           </ActionButton>
         )}
 
