@@ -12,7 +12,6 @@ export const useTextToSpeech = (defaultLang: string = "vi"): UseTextToSpeechRetu
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [selectedVoice, setSelectedVoice] = useState<SpeechSynthesisVoice | null>(null);
   const [isSupported, setIsSupported] = useState(false);
-
   useEffect(() => {
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -24,7 +23,6 @@ export const useTextToSpeech = (defaultLang: string = "vi"): UseTextToSpeechRetu
 
         // Try to find a voice that matches the default language
         const defaultVoice = availableVoices.find((v) => v.lang.toLowerCase().startsWith(defaultLang.toLowerCase()));
-
         // If no specific language match, fall back to the first available or keep current if valid
         if (defaultVoice) {
           setSelectedVoice(defaultVoice);

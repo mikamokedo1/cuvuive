@@ -172,7 +172,16 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
 
         Object.keys(courseProgress.completedLessons).forEach((groupId) => {
           const completedCount = courseProgress.completedLessons[groupId].length;
-          const requiredCount = courseStruct[groupId] || (courseId === "learn-color" ? 3 : 4); // Default to 4 if unknown, or 3 for learn-color
+          // For learn-shape: group1 and group2 have 4 lessons, group3 has 3
+          // For learn-color: all groups have 3 lessons
+          // For other courses: default to 4 lessons
+          let defaultLessons = 4;
+          if (courseId === "learn-color") {
+            defaultLessons = 3;
+          } else if (courseId === "learn-shape") {
+            defaultLessons = groupId === "group3" ? 3 : 4;
+          }
+          const requiredCount = courseStruct[groupId] || defaultLessons;
 
           if (completedCount > 0 && completedCount >= requiredCount) {
             newCompletedGroups.push(groupId);
@@ -226,7 +235,16 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
 
       // Check if group is fully complete
       const courseStruct = courseStructure[courseId] || {};
-      const requiredLessons = courseStruct[groupId] || (courseId === "learn-color" ? 3 : 4);
+      // For learn-shape: group1 and group2 have 4 lessons, group3 has 3
+      // For learn-color: all groups have 3 lessons
+      // For other courses: default to 4 lessons
+      let defaultLessons = 4;
+      if (courseId === "learn-color") {
+        defaultLessons = 3;
+      } else if (courseId === "learn-shape") {
+        defaultLessons = groupId === "group3" ? 3 : 4;
+      }
+      const requiredLessons = courseStruct[groupId] || defaultLessons;
       const isGroupDone = newGroupLessons.length >= requiredLessons;
 
       let newCompletedGroups = prevCourse.completedGroups;
