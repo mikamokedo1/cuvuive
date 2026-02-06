@@ -58,7 +58,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="vi">
-      <body className={`${baloo2.variable} ${nunitoSans.variable} antialiased`}>
+      <body className={`${baloo2.variable} ${nunitoSans.variable} antialiased`} suppressHydrationWarning>
         <UserProvider>
           <AccessProvider>
             <ProgressProvider>
