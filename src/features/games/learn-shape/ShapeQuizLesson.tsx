@@ -107,8 +107,9 @@ export function ShapeQuizLesson({ shapes, onComplete, requiredWins = 6 }: ShapeQ
             relative w-3/4 h-3/4 transition-all duration-700 ease-out
             ${feedback === "correct" ? "opacity-100 scale-100" : "opacity-20 grayscale brightness-0 scale-90"}
           `}
+          onClick={() => speak(`${targetShape.name} bị thiếu`)}
         >
-          <Image src={targetShape.image} alt={targetShape.name} fill className="object-contain" />
+          <Image src={targetShape.image} alt={targetShape.name} fill className="object-contain hover:scale-105" />
         </div>
 
         {/* Success Particles/Effect (Optional simple verify visual) */}

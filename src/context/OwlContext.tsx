@@ -72,6 +72,14 @@ export const MAP_PATHNAME_TO_TEXT = {
   "/games/learn-color/group3/lesson/lesson1": "Pé ôn lại các màu đã học",
   "/games/learn-color/group3/lesson/lesson2": "Pé chọn màu phía dưới giống phía trên nhé",
   "/games/learn-color/group3/lesson/lesson3": "Hình phía trên có màu gì?",
+  "/games/learn-shape/group1/lesson/lesson1": "Pé học hình vuông, tròn, tam giác, chữ nhật",
+  "/games/learn-shape/group1/lesson/lesson2": "Chọn hình bị thiếu",
+  "/games/learn-shape/group1/lesson/lesson3": "Chọn hình dạng của đồ vật",
+  "/games/learn-shape/group1/lesson/lesson4": "Pé tập vẻ hình",
+  "/games/learn-shape/group2/lesson/lesson1": "Pé học hình lục giác, ngôi sao, hình thoi, bầu dục và hình thang",
+  "/games/learn-shape/group2/lesson/lesson2": "Chọn hình bị thiếu",
+  "/games/learn-shape/group2/lesson/lesson3": "Chọn hình dạng của đồ vật",
+  "/games/learn-shape/group2/lesson/lesson4": "Pé tập vẻ hình",
 };
 
 interface OwlContextType {
