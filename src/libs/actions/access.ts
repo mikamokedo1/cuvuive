@@ -1,8 +1,7 @@
 "use server";
 
 import { db } from "@/db";
-import { courseAccess } from "@/db/schema";
-import { eq, and } from "drizzle-orm";
+// import { eq, and } from "drizzle-orm"; // Not used if using callback syntax
 import { createClient } from "@/libs/supabase/server";
 import { checkUserSubscription } from "@/libs/subscription";
 
@@ -30,17 +29,23 @@ export async function checkLessonAccess(
 ): Promise<AccessCheckResult> {
   const supabase = await createClient();
 
-  // Get lesson access type from database
-  const accessConfig = await db
-    .select()
-    .from(courseAccess)
-    .where(
-      and(eq(courseAccess.courseId, courseId), eq(courseAccess.groupId, groupId), eq(courseAccess.lessonId, lessonId)),
-    )
-    .limit(1);
+  // Get lesson access type from database (lessons table)
+  // Find group by courseId + groupSlug, then find lesson by groupId + lessonSlug
+  const group = await db.query.groups.findFirst({
+    where: (g, { eq, and }) => and(eq(g.courseId, courseId), eq(g.slug, groupId)),
+  });
 
-  // Default to premium if not found in database
-  const accessType: AccessType = (accessConfig[0]?.accessType as AccessType) || "premium";
+  if (!group) {
+    // If group doesn't exist, default to premium (safe fail)
+    return { accessType: "premium", userHasAccess: false, reason: "premium_required" };
+  }
+
+  const targetLesson = await db.query.lessons.findFirst({
+    where: (l, { eq, and }) => and(eq(l.groupId, group.id), eq(l.slug, lessonId)),
+  });
+
+  const isFree = targetLesson?.isFree || false;
+  const accessType: AccessType = isFree ? "free" : "premium";
 
   // If lesson is free, allow access
   if (accessType === "free") {
@@ -86,16 +91,12 @@ export async function checkLessonAccess(
  * Get access config for all lessons in a course
  */
 export async function getCourseAccessConfig(courseId: string): Promise<LessonAccessConfig[]> {
-  const configs = await db
-    .select({
-      lessonId: courseAccess.lessonId,
-      accessType: courseAccess.accessType,
-    })
-    .from(courseAccess)
-    .where(eq(courseAccess.courseId, courseId));
+  const allLessons = await db.query.lessons.findMany({
+    where: (l, { eq }) => eq(l.courseId, courseId),
+  });
 
-  return configs.map((c) => ({
-    lessonId: c.lessonId,
-    accessType: c.accessType as AccessType,
+  return allLessons.map((l) => ({
+    lessonId: l.slug,
+    accessType: l.isFree ? "free" : "premium",
   }));
 }

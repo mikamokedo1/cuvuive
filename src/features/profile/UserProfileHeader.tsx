@@ -1,8 +1,9 @@
 import { ActionButton } from "@/components/common/ActionButton";
 import { Crown, Star } from "lucide-react";
+import { User } from "@supabase/supabase-js";
 
 interface UserProfileHeaderProps {
-  user: any; // Type properly if possible
+  user: User;
   isPremium: boolean;
 }
 

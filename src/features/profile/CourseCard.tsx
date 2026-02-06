@@ -1,7 +1,5 @@
-"use client";
-
 import { ActionButton } from "@/components/common/ActionButton";
-import { CourseDef } from "@/libs/constants/courses";
+import { CourseDef } from "@/libs/actions/courses";
 import { useProgress } from "@/context/ProgressContext";
 import { CheckCircle, Lock, PlayCircle } from "lucide-react";
 import Image from "next/image";

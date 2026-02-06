@@ -103,4 +103,76 @@ export const COURSES: CourseDef[] = [
       },
     ],
   },
+  {
+    id: "learn-shape",
+    title: "Học hình dạng",
+    description: "Bé làm quen với các hình tròn, vuông, tam giác... qua các trò chơi thú vị.",
+    thumbnail: "/assets/courses/shapes.png",
+    groups: [
+      {
+        id: "group1",
+        title: "Hình cơ bản",
+        lessons: [
+          { id: "lesson1", title: "Học hình dạng", isFree: true },
+          { id: "lesson2", title: "Tìm hình giống" },
+          { id: "lesson3", title: "Vật gì hình gì?" },
+          { id: "lesson4", title: "Vẽ hình" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Hình nâng cao",
+        lessons: [
+          { id: "lesson1", title: "Học hình dạng", isFree: true },
+          { id: "lesson2", title: "Tìm hình giống" },
+          { id: "lesson3", title: "Vật gì hình gì?" },
+          { id: "lesson4", title: "Vẽ hình" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Luyện tập",
+        lessons: [
+          { id: "lesson1", title: "Học hình dạng", isFree: true },
+          { id: "lesson2", title: "Tìm hình giống" },
+          { id: "lesson3", title: "Vật gì hình gì?" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "learn-color",
+    title: "Học màu sắc",
+    description: "Bé khám phá thế giới màu sắc rực rỡ và học cách phân biệt màu.",
+    thumbnail: "/assets/courses/colors.png",
+    groups: [
+      {
+        id: "group1",
+        title: "Màu cơ bản",
+        lessons: [
+          { id: "lesson1", title: "Học màu sắc", isFree: true },
+          { id: "lesson2", title: "Tìm màu giống" },
+          { id: "lesson3", title: "Hình gì màu gì?" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Màu nâng cao",
+        lessons: [
+          { id: "lesson1", title: "Học màu sắc", isFree: true },
+          { id: "lesson2", title: "Tìm màu giống" },
+          { id: "lesson3", title: "Hình gì màu gì?" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Luyện tập",
+        lessons: [
+          { id: "lesson1", title: "Học màu sắc", isFree: true },
+          { id: "lesson2", title: "Tìm màu giống" },
+          { id: "lesson3", title: "Hình gì màu gì?" },
+        ],
+      },
+    ],
+  },
 ];

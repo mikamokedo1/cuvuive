@@ -2,113 +2,113 @@ import { config } from "dotenv";
 import { sql } from "drizzle-orm";
 config({ path: ".env.local" });
 
+// Use relative path for imports to avoid alias issues if not configured in tsx
+import { COURSES } from "../libs/constants/courses";
+
 async function seed() {
-  // Dynamic imports AFTER dotenv loads
   const { db } = await import("./index");
-  const { courseAccess, plans } = await import("./schema");
+  const { courses, groups, lessons, plans } = await import("./schema");
 
-  console.log("🌱 Seeding course_access table...");
+  console.log("🌱 Seeding courses, groups, and lessons...");
 
-  // Seed learn-numbers and compare-quantity courses
-  const seedData = [
-    // learn-numbers: Group 1 (1-3)
-    { courseId: "learn-numbers", groupId: "group1", lessonId: "lesson1", accessType: "free" },
-    { courseId: "learn-numbers", groupId: "group1", lessonId: "lesson2", accessType: "premium" },
-    { courseId: "learn-numbers", groupId: "group1", lessonId: "lesson3", accessType: "premium" },
-    { courseId: "learn-numbers", groupId: "group1", lessonId: "lesson4", accessType: "premium" },
-    // learn-numbers: Group 2 (4-6)
-    { courseId: "learn-numbers", groupId: "group2", lessonId: "lesson1", accessType: "free" },
-    { courseId: "learn-numbers", groupId: "group2", lessonId: "lesson2", accessType: "premium" },
-    { courseId: "learn-numbers", groupId: "group2", lessonId: "lesson3", accessType: "premium" },
-    { courseId: "learn-numbers", groupId: "group2", lessonId: "lesson4", accessType: "premium" },
-    // learn-numbers: Group 3 (7-9)
-    { courseId: "learn-numbers", groupId: "group3", lessonId: "lesson1", accessType: "free" },
-    { courseId: "learn-numbers", groupId: "group3", lessonId: "lesson2", accessType: "premium" },
-    { courseId: "learn-numbers", groupId: "group3", lessonId: "lesson3", accessType: "premium" },
-    { courseId: "learn-numbers", groupId: "group3", lessonId: "lesson4", accessType: "premium" },
+  try {
+    // Clear existing data (lessons depend on groups, groups on courses)
+    await db.delete(lessons);
+    await db.delete(groups);
+    await db.delete(courses);
+    console.log("Deleted old course data");
 
-    // learn-numbers: Group 4 (1-9)
-    { courseId: "learn-numbers", groupId: "group4", lessonId: "lesson1", accessType: "free" },
-    { courseId: "learn-numbers", groupId: "group4", lessonId: "lesson2", accessType: "premium" },
+    for (const course of COURSES) {
+      console.log(`Inserting course: ${course.title}`);
+      await db.insert(courses).values({
+        id: course.id,
+        title: course.title,
+        description: course.description,
+        thumbnail: course.thumbnail,
+        sortIndex: 0, // You can add logic for index if needed
+      });
 
-    // compare-quantity: Group 1 (Lớn hơn)
-    { courseId: "compare-quantity", groupId: "group1", lessonId: "lesson1", accessType: "free" },
-    { courseId: "compare-quantity", groupId: "group1", lessonId: "lesson2", accessType: "premium" },
-    { courseId: "compare-quantity", groupId: "group1", lessonId: "lesson3", accessType: "premium" },
-    { courseId: "compare-quantity", groupId: "group1", lessonId: "lesson4", accessType: "premium" },
-    // compare-quantity: Group 2 (Nhỏ hơn)
-    { courseId: "compare-quantity", groupId: "group2", lessonId: "lesson1", accessType: "free" },
-    { courseId: "compare-quantity", groupId: "group2", lessonId: "lesson2", accessType: "premium" },
-    { courseId: "compare-quantity", groupId: "group2", lessonId: "lesson3", accessType: "premium" },
-    { courseId: "compare-quantity", groupId: "group2", lessonId: "lesson4", accessType: "premium" },
-    // compare-quantity: Group 3 (Bằng nhau)
-    { courseId: "compare-quantity", groupId: "group3", lessonId: "lesson1", accessType: "free" },
-    { courseId: "compare-quantity", groupId: "group3", lessonId: "lesson2", accessType: "premium" },
-    { courseId: "compare-quantity", groupId: "group3", lessonId: "lesson3", accessType: "premium" },
-    { courseId: "compare-quantity", groupId: "group3", lessonId: "lesson4", accessType: "premium" },
-    // compare-quantity: Group 4 (Luyện tập)
-    { courseId: "compare-quantity", groupId: "group4", lessonId: "lesson1", accessType: "free" },
-    { courseId: "compare-quantity", groupId: "group4", lessonId: "lesson2", accessType: "premium" },
-  ];
+      for (const group of course.groups) {
+        // Construct a unique ID for the group since we might have collisions with "group1" across courses if we didn't use composite keys
+        // But our schema says group.id is PK text.
+        // It's safer to generate a UUID or use composite-like unique string.
+        // Let's use `${course.id}-${group.id}` to be essentially unique and readable,
+        // OR just use a UUID.
+        // The URL uses `groupId` (slug). So we need to store the slug "group1".
+        // The table schema has `id` (PK) and `slug`.
+        // So `id` = UUID, `slug` = `group.id` (e.g. "group1").
 
-  // Use Upsert for Course Access
-  await db
-    .insert(courseAccess)
-    .values(seedData)
-    .onConflictDoUpdate({
-      target: [courseAccess.courseId, courseAccess.groupId, courseAccess.lessonId],
-      set: { accessType: sql.raw("excluded.access_type") },
-    });
+        const groupDbId = crypto.randomUUID();
 
-  console.log("✅ Seeded/Updated", seedData.length, "course access entries");
+        await db.insert(groups).values({
+          id: groupDbId,
+          slug: group.id, // "group1"
+          courseId: course.id,
+          title: group.title,
+          sortIndex: 0,
+        });
 
-  // Seed Plans
-  console.log("🌱 Seeding plans table...");
+        for (const lesson of group.lessons) {
+          await db.insert(lessons).values({
+            id: crypto.randomUUID(),
+            slug: lesson.id, // "lesson1"
+            groupId: groupDbId,
+            courseId: course.id,
+            title: lesson.title,
+            isFree: lesson.isFree || false,
+            sortIndex: 0,
+          });
+        }
+      }
+    }
 
-  const plansData = [
-    {
-      name: "Lớp Mầm",
-      code: "seed",
-      price: 100000,
-      durationMonths: 1,
-      description: "Gói 1 tháng dành cho bé mới bắt đầu",
-    },
-    {
-      name: "Lớp Chồi",
-      code: "bud",
-      price: 240000,
-      durationMonths: 3,
-      description: "Gói 3 tháng tiết kiệm hơn",
-    },
-    {
-      name: "Lớp Lá",
-      code: "leaf",
-      price: 600000,
-      durationMonths: 12,
-      description: "Gói 1 năm đầu tư dài hạn",
-    },
-  ];
+    console.log("✅ Courses seeded successfully");
 
-  // Use Upsert for Plans
-  await db
-    .insert(plans)
-    .values(plansData)
-    .onConflictDoUpdate({
-      target: plans.code,
-      set: {
-        name: sql.raw("excluded.name"),
-        price: sql.raw("excluded.price"),
-        durationMonths: sql.raw("excluded.duration_months"),
-        description: sql.raw("excluded.description"),
+    // Seed Plans (Keep existing logic)
+    console.log("🌱 Seeding plans table...");
+
+    const plansData = [
+      {
+        name: "Lớp Mầm",
+        code: "seed",
+        price: 100000,
+        durationMonths: 1,
+        description: "Gói 1 tháng dành cho bé mới bắt đầu",
       },
-    });
+      {
+        name: "Lớp Chồi",
+        code: "bud",
+        price: 240000,
+        durationMonths: 3,
+        description: "Gói 3 tháng tiết kiệm hơn",
+      },
+      {
+        name: "Lớp Lá",
+        code: "leaf",
+        price: 600000,
+        durationMonths: 12,
+        description: "Gói 1 năm đầu tư dài hạn",
+      },
+    ];
 
-  console.log("✅ Seeded/Updated", plansData.length, "plans");
+    await db
+      .insert(plans)
+      .values(plansData)
+      .onConflictDoUpdate({
+        target: plans.code,
+        set: {
+          name: sql.raw("excluded.name"),
+          price: sql.raw("excluded.price"),
+          durationMonths: sql.raw("excluded.duration_months"),
+          description: sql.raw("excluded.description"),
+        },
+      });
 
-  console.log("📊 Access breakdown:");
-  console.log("   - learn-numbers: 12 lessons (3 free, 9 premium)");
-  console.log("   - compare-quantity: 16 lessons (4 free, 12 premium)");
-  console.log("   - PLANS seeded: 3 (Mầm, Chồi, Lá)");
+    console.log("✅ Plans seeded/updated");
+  } catch (error) {
+    console.error("Error seeding:", error);
+    process.exit(1);
+  }
 
   process.exit(0);
 }

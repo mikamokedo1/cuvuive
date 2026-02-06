@@ -1,6 +1,8 @@
 import { pgTable, text, timestamp, integer, boolean, uniqueIndex } from "drizzle-orm/pg-core";
+import { relations } from "drizzle-orm";
 
 export const users = pgTable("users", {
+  // ... (unchanged)
   id: text("id").primaryKey(), // Clerk User ID
   email: text("email").notNull(),
   isPro: boolean("is_pro").default(false),
@@ -22,24 +24,72 @@ export const progress = pgTable("progress", {
   completedAt: timestamp("completed_at").defaultNow(),
 });
 
-// Access control for freemium model
-export const courseAccess = pgTable(
-  "course_access",
+// Courses, Groups, and Lessons
+export const courses = pgTable("courses", {
+  id: text("id").primaryKey(), // e.g., "learn-numbers"
+  title: text("title").notNull(),
+  description: text("description"),
+  thumbnail: text("thumbnail"),
+  sortIndex: integer("sort_index").default(0),
+});
+
+export const coursesRelations = relations(courses, ({ many }) => ({
+  groups: many(groups),
+}));
+
+export const groups = pgTable("groups", {
+  id: text("id").primaryKey(), // UUID
+  slug: text("slug").notNull(), // e.g., "group1"
+  courseId: text("course_id")
+    .notNull()
+    .references(() => courses.id, { onDelete: "cascade" }),
+  title: text("title").notNull(),
+  sortIndex: integer("sort_index").default(0),
+});
+
+export const groupsRelations = relations(groups, ({ one, many }) => ({
+  course: one(courses, {
+    fields: [groups.courseId],
+    references: [courses.id],
+  }),
+  lessons: many(lessons),
+}));
+
+export const lessons = pgTable(
+  "lessons",
   {
-    id: text("id")
-      .primaryKey()
-      .$defaultFn(() => crypto.randomUUID()),
-    courseId: text("course_id").notNull(), // e.g., "learn-numbers"
-    groupId: text("group_id").notNull(), // e.g., "group1"
-    lessonId: text("lesson_id").notNull(), // e.g., "lesson1"
-    accessType: text("access_type").notNull(), // "free" | "premium"
+    id: text("id").primaryKey(), // UUID
+    slug: text("slug").notNull(), // e.g., "lesson1"
+    groupId: text("group_id")
+      .notNull()
+      .references(() => groups.id, { onDelete: "cascade" }),
+    courseId: text("course_id")
+      .notNull()
+      .references(() => courses.id, { onDelete: "cascade" }), // Denormalized for query ease
+    title: text("title").notNull(),
+    isFree: boolean("is_free").default(false),
+    sortIndex: integer("sort_index").default(0),
   },
   (table) => {
     return {
-      uniqeLesson: uniqueIndex("course_access_unique_lesson_idx").on(table.courseId, table.groupId, table.lessonId),
+      // Ensure unique lesson slugs within a group
+      uniqueLessonSlug: uniqueIndex("unique_lesson_slug_idx").on(table.groupId, table.slug),
     };
   },
 );
+
+export const lessonsRelations = relations(lessons, ({ one }) => ({
+  group: one(groups, {
+    fields: [lessons.groupId],
+    references: [groups.id],
+  }),
+  course: one(courses, {
+    fields: [lessons.courseId],
+    references: [courses.id],
+  }),
+}));
+
+// Deprecated: courseAccess is removed
 
 export const plans = pgTable("plans", {
   id: text("id")

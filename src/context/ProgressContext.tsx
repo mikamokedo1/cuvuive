@@ -63,31 +63,39 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
   // Fetch Course Structure (Access Definitions)
   useEffect(() => {
     const fetchStructure = async () => {
-      const { data, error } = await supabase.from("course_access").select("course_id, group_id, lesson_id");
+      // Use Server Action to avoid RLS/table issues with 'lessons'
+      // import { getCourseStructureAction } from "@/libs/actions/courses";
+      // We need to import it. Dynamic import or top level?
+      // Top level is better. I will add import in next step or use require?
+      // Let's use string replacement to add import too.
+      // For now, I'll put the logic here assuming import exists, or use dynamic import if I can't touch top of file easily.
+      // But I can touch top of file.
+      // I'll stick to dynamic import for this block to avoid multi-chunk complexity if possible, OR just replace this block and I'll add import header separately.
 
-      if (error) {
-        console.error("Error fetching course structure:", error);
-        return;
+      try {
+        const { getCourseStructureAction } = await import("@/libs/actions/courses");
+        const data = await getCourseStructureAction();
+
+        const structure: Record<string, Record<string, number>> = {};
+
+        // Count unique lessons per group
+        data.forEach((row) => {
+          const cId = row.courseId;
+          const gId = row.groupId;
+
+          if (!structure[cId]) structure[cId] = {};
+          if (!structure[cId][gId]) structure[cId][gId] = 0;
+          structure[cId][gId]++;
+        });
+
+        setCourseStructure(structure);
+      } catch (err) {
+        console.error("Error fetching course structure:", err);
       }
-
-      const structure: Record<string, Record<string, number>> = {};
-
-      // Count unique lessons per group
-      data?.forEach((row) => {
-        const cId = row.course_id;
-        const gId = row.group_id;
-        // We just need unique lesson IDs count.
-        // Assuming database is unique on (course, group, lesson) or we handle duplicates
-        if (!structure[cId]) structure[cId] = {};
-        if (!structure[cId][gId]) structure[cId][gId] = 0;
-        structure[cId][gId]++;
-      });
-
-      setCourseStructure(structure);
     };
 
     fetchStructure();
-  }, [supabase]);
+  }, []); // Remove Supabase dependency as we use Server Action
 
   // Fetch progress from Supabase
   useEffect(() => {
