@@ -175,4 +175,39 @@ export const COURSES: CourseDef[] = [
       },
     ],
   },
+  {
+    id: "learn-animal",
+    title: "Học động vật",
+    description: "Bé làm quen với các loài động vật qua hình ảnh và âm thanh.",
+    thumbnail: "/assets/courses/animals.png",
+    groups: [
+      {
+        id: "group1",
+        title: "Động vật nuôi",
+        lessons: [
+          { id: "lesson1", title: "Học tên động vật", isFree: true },
+          { id: "lesson2", title: "Đây là con gì?" },
+          { id: "lesson3", title: "Ghép đôi" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Động vật hoang dã",
+        lessons: [
+          { id: "lesson1", title: "Học tên động vật", isFree: true },
+          { id: "lesson2", title: "Đây là con gì?" },
+          { id: "lesson3", title: "Ghép đôi" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Động vật biển",
+        lessons: [
+          { id: "lesson1", title: "Học tên động vật", isFree: true },
+          { id: "lesson2", title: "Đây là con gì?" },
+          { id: "lesson3", title: "Ghép đôi" },
+        ],
+      },
+    ],
+  },
 ];

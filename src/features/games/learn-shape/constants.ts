@@ -102,7 +102,7 @@ export const GROUPS = [
     description: "Học các hình dạng cơ bản",
     shapes: ["circle", "square", "triangle", "rectangle"],
     logo: LogoGroup1,
-    variant: "green",
+    variant: "green" as const,
   },
   {
     id: "group2",
@@ -110,7 +110,7 @@ export const GROUPS = [
     description: "Học thêm các hình dạng khác",
     shapes: ["hexagon", "star", "heart", "diamond", "oval", "trapezium"],
     logo: LogoGroup2,
-    variant: "purple",
+    variant: "purple" as const,
   },
   {
     id: "group3",
@@ -118,6 +118,6 @@ export const GROUPS = [
     description: "Ôn tập tất cả các hình",
     shapes: SHAPES.map((s) => s.id),
     logo: LogoGroup3,
-    variant: "blue",
+    variant: "blue" as const,
   },
 ];

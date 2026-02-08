@@ -35,16 +35,22 @@ export async function checkLessonAccess(
     where: (g, { eq, and }) => and(eq(g.courseId, courseId), eq(g.slug, groupId)),
   });
 
+  let isFree = false;
+
   if (!group) {
-    // If group doesn't exist, default to premium (safe fail)
-    return { accessType: "premium", userHasAccess: false, reason: "premium_required" };
+    // Fallback: check local COURSES constant if DB entry doesn't exist
+    const { COURSES } = await import("@/libs/constants/courses");
+    const course = COURSES.find((c) => c.id === courseId);
+    const localGroup = course?.groups.find((g) => g.id === groupId);
+    const localLesson = localGroup?.lessons.find((l) => l.id === lessonId);
+    isFree = localLesson?.isFree || false;
+  } else {
+    const targetLesson = await db.query.lessons.findFirst({
+      where: (l, { eq, and }) => and(eq(l.groupId, group.id), eq(l.slug, lessonId)),
+    });
+    isFree = targetLesson?.isFree || false;
   }
 
-  const targetLesson = await db.query.lessons.findFirst({
-    where: (l, { eq, and }) => and(eq(l.groupId, group.id), eq(l.slug, lessonId)),
-  });
-
-  const isFree = targetLesson?.isFree || false;
   const accessType: AccessType = isFree ? "free" : "premium";
 
   // If lesson is free, allow access

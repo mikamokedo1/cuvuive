@@ -59,7 +59,12 @@ export function GroupCard({ title, variant, isLocked, mainImage, onClick, isComp
       )}
     >
       {/* Header */}
-      <h3 className={cn("text-2.5xl md:text-3xl font-bold uppercase tracking-wider font-display", currentStyle.header)}>
+      <h3
+        className={cn(
+          "text-center text-2xl md:text-[22px] font-bold uppercase tracking-wider font-display",
+          currentStyle.header,
+        )}
+      >
         {title}
       </h3>
       <div className="flex gap-1 h-10 items-center justify-center">

@@ -188,6 +188,8 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
             defaultLessons = 3;
           } else if (courseId === "learn-shape") {
             defaultLessons = groupId === "group3" ? 3 : 4;
+          } else if (courseId === "learn-animal") {
+            defaultLessons = 3;
           }
           const requiredCount = courseStruct[groupId] || defaultLessons;
 
@@ -251,6 +253,8 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
         defaultLessons = 3;
       } else if (courseId === "learn-shape") {
         defaultLessons = groupId === "group3" ? 3 : 4;
+      } else if (courseId === "learn-animal") {
+        defaultLessons = 3;
       }
       const requiredLessons = courseStruct[groupId] || defaultLessons;
       const isGroupDone = newGroupLessons.length >= requiredLessons;

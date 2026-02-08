@@ -80,6 +80,15 @@ export const MAP_PATHNAME_TO_TEXT = {
   "/games/learn-shape/group2/lesson/lesson2": "Chọn hình bị thiếu",
   "/games/learn-shape/group2/lesson/lesson3": "Chọn hình dạng của đồ vật",
   "/games/learn-shape/group2/lesson/lesson4": "Pé tập vẻ hình",
+  "/games/learn-animal/group1/lesson/lesson1": "Pé học các con vật được nuôi trong nhà",
+  "/games/learn-animal/group1/lesson/lesson2": "Pé chọn con vật đang bị ẩn nhé",
+  "/games/learn-animal/group1/lesson/lesson3": "Pé ghép đôi cho các con vật đi nào",
+  "/games/learn-animal/group2/lesson/lesson1": "Pé học các con vật sống trong rừng",
+  "/games/learn-animal/group2/lesson/lesson2": "Pé chọn con vật đang bị ẩn nhé",
+  "/games/learn-animal/group2/lesson/lesson3": "Pé ghép đôi cho các con vật đi nào",
+  "/games/learn-animal/group3/lesson/lesson1": "Pé học các con vật sống dưới nước",
+  "/games/learn-animal/group3/lesson/lesson2": "Pé chọn con vật đang bị ẩn nhé",
+  "/games/learn-animal/group3/lesson/lesson3": "Pé ghép đôi cho các con vật đi nào",
 };
 
 interface OwlContextType {
