@@ -11,6 +11,7 @@ import Game3Logo from "@/assets/games/game-3-logo.png";
 import GameColorLogo from "@/assets/games/learn-color-color.webp";
 import ShapeLogo from "@/assets/games/learn-shape/learn-shape-logo.webp";
 import GameAnimalLogo from "@/assets/games/learn-animal/logo.webp";
+import GameVehicleLogo from "@/assets/games/learn-vehicle/logo.webp";
 
 interface Game {
   id: string;
@@ -56,6 +57,13 @@ const GAMES: Game[] = [
     color: "blue",
     icon: GameAnimalLogo,
   },
+  {
+    id: "learn-vehicle",
+    title: "Học phương tiện",
+    href: "/games/learn-vehicle",
+    color: "blue",
+    icon: GameVehicleLogo,
+  },
 ];
 
 export default function Home() {
@@ -83,6 +91,8 @@ export default function Home() {
               <Image
                 src={game.icon}
                 alt={game.title}
+                width={192}
+                height={192}
                 className="w-48 h-48 md:w-40 md:h-40 object-contain transition-transform group-hover:scale-110"
               />
               <span className="text-3xl md:text-4xl text-white drop-shadow-md">{game.title}</span>

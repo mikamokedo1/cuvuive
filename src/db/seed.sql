@@ -10,7 +10,8 @@ INSERT INTO courses (id, title, description, thumbnail, sort_index) VALUES
   ('compare-quantity', 'So sánh số lượng', 'Bé học so sánh nhiều hơn, ít hơn, bằng nhau.', '/assets/courses/compare.png', 2),
   ('learn-color', 'Học màu sắc', 'Bé làm quen với các màu sắc cơ bản.', '/assets/courses/colors.png', 3),
   ('learn-shape', 'Học hình dạng', 'Bé nhận biết các hình dạng qua đồ vật.', '/assets/courses/shapes.png', 4),
-  ('learn-animal', 'Học động vật', 'Bé làm quen với các loài động vật qua hình ảnh và âm thanh.', '/assets/courses/animals.png', 5)
+  ('learn-animal', 'Học động vật', 'Bé làm quen với các loài động vật qua hình ảnh và âm thanh.', '/assets/courses/animals.png', 5),
+  ('learn-vehicle', 'Học phương tiện', 'Bé làm quen với các phương tiện giao thông đường bộ, đường thủy và hàng không.', '/assets/courses/vehicles.png', 6)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   description = EXCLUDED.description,
@@ -64,6 +65,16 @@ INSERT INTO groups (id, slug, course_id, title, sort_index) VALUES
   ('learn-animal-group1', 'group1', 'learn-animal', 'Động vật nuôi', 1),
   ('learn-animal-group2', 'group2', 'learn-animal', 'Động vật hoang dã', 2),
   ('learn-animal-group3', 'group3', 'learn-animal', 'Động vật biển', 3)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  sort_index = EXCLUDED.sort_index;
+
+-- Learn Vehicle Groups
+INSERT INTO groups (id, slug, course_id, title, sort_index) VALUES
+  ('learn-vehicle-group1', 'group1', 'learn-vehicle', 'Phương tiện đường bộ', 1),
+  ('learn-vehicle-group2', 'group2', 'learn-vehicle', 'Phương tiện đường thủy', 2),
+  ('learn-vehicle-group3', 'group3', 'learn-vehicle', 'Phương tiện hàng không', 3),
+  ('learn-vehicle-group4', 'group4', 'learn-vehicle', 'Luyện tập', 4)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   sort_index = EXCLUDED.sort_index;
@@ -173,7 +184,30 @@ INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) 
   -- Group 3 (Ocean Animals)
   ('learn-animal-g3-l1', 'lesson1', 'learn-animal-group3', 'learn-animal', 'Học tên động vật', true, 1),
   ('learn-animal-g3-l2', 'lesson2', 'learn-animal-group3', 'learn-animal', 'Đây là con gì?', false, 2),
-  ('learn-animal-g3-l3', 'lesson3', 'learn-animal-group3', 'learn-animal', 'Nghe tiếng kêu', false, 3)
+  ('learn-animal-g3-l3', 'lesson3', 'learn-animal-group3', 'learn-animal', 'Ghép đôi', false, 3)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  is_free = EXCLUDED.is_free,
+  sort_index = EXCLUDED.sort_index;
+
+-- Learn Vehicle Lessons
+INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) VALUES
+  -- Group 1 (Land Vehicles) - 3 lessons
+  ('learn-vehicle-g1-l1', 'lesson1', 'learn-vehicle-group1', 'learn-vehicle', 'Học tên phương tiện', true, 1),
+  ('learn-vehicle-g1-l2', 'lesson2', 'learn-vehicle-group1', 'learn-vehicle', 'Đây là gì?', false, 2),
+  ('learn-vehicle-g1-l3', 'lesson3', 'learn-vehicle-group1', 'learn-vehicle', 'Ghép đôi', false, 3),
+  -- Group 2 (Water Vehicles) - 3 lessons
+  ('learn-vehicle-g2-l1', 'lesson1', 'learn-vehicle-group2', 'learn-vehicle', 'Học tên phương tiện', true, 1),
+  ('learn-vehicle-g2-l2', 'lesson2', 'learn-vehicle-group2', 'learn-vehicle', 'Đây là gì?', false, 2),
+  ('learn-vehicle-g2-l3', 'lesson3', 'learn-vehicle-group2', 'learn-vehicle', 'Ghép đôi', false, 3),
+  -- Group 3 (Air Vehicles) - 3 lessons
+  ('learn-vehicle-g3-l1', 'lesson1', 'learn-vehicle-group3', 'learn-vehicle', 'Học tên phương tiện', true, 1),
+  ('learn-vehicle-g3-l2', 'lesson2', 'learn-vehicle-group3', 'learn-vehicle', 'Đây là gì?', false, 2),
+  ('learn-vehicle-g3-l3', 'lesson3', 'learn-vehicle-group3', 'learn-vehicle', 'Ghép đôi', false, 3),
+  -- Group 4 (Practice) - 3 lessons
+  ('learn-vehicle-g4-l1', 'lesson1', 'learn-vehicle-group4', 'learn-vehicle', 'Đây là gì?', true, 1),
+  ('learn-vehicle-g4-l2', 'lesson2', 'learn-vehicle-group4', 'learn-vehicle', 'Ghép đôi', false, 2),
+  ('learn-vehicle-g4-l3', 'lesson3', 'learn-vehicle-group4', 'learn-vehicle', 'Xe đi đâu?', false, 3)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   is_free = EXCLUDED.is_free,

@@ -48,6 +48,7 @@ export const GROUPS = [
     description: "Học các màu sắc cơ bản",
     colors: ["red", "blue", "yellow", "green"],
     logo: LogoLesson1,
+    variant: "green" as const,
   },
   {
     id: "group2",
@@ -55,6 +56,7 @@ export const GROUPS = [
     description: "Học thêm nhiều màu sắc khác",
     colors: ["orange", "purple", "pink", "brown", "black", "white"],
     logo: LogoLesson2,
+    variant: "orange" as const,
   },
   {
     id: "group3",
@@ -62,5 +64,6 @@ export const GROUPS = [
     description: "Ôn tập tất cả các màu",
     colors: COLORS.map((c) => c.id),
     logo: LogoLesson3,
+    variant: "purple" as const,
   },
 ];

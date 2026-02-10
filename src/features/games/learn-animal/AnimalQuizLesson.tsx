@@ -106,7 +106,11 @@ export function AnimalQuizLesson({ animals, onComplete, requiredWins = 6 }: Anim
         <div
           className={`
             relative w-3/4 h-3/4 transition-all duration-700 ease-out
-            ${feedback === "correct" ? "opacity-100 scale-100" : "opacity-20 grayscale brightness-0 scale-90"}
+            ${
+              feedback === "correct"
+                ? "opacity-100 scale-100"
+                : "opacity-40 grayscale contrast-[10] mix-blend-multiply scale-90"
+            }
           `}
           onClick={() => speak(`${targetAnimal.name} bị thiếu`)}
         >

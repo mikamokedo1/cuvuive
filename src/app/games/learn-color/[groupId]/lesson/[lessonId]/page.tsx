@@ -10,6 +10,7 @@ import { GROUPS, COLORS } from "@/features/games/learn-color/constants";
 import { ColorLearnLesson } from "@/features/games/learn-color/ColorLearnLesson";
 import { ColorQuizLesson } from "@/features/games/learn-color/ColorQuizLesson";
 import { ColorImageMatchLesson } from "@/features/games/learn-color/ColorImageMatchLesson";
+import { CheckingPermission } from "@/components/common/CheckingPermission";
 
 export default function LessonPage() {
   const params = useParams();
@@ -107,14 +108,7 @@ export default function LessonPage() {
   };
 
   if (!isLoaded || isCheckingAccess) {
-    return (
-      <GameLayout title="" backTo={`/games/learn-color/${groupId}`} showBackButton={true}>
-        <div className="flex flex-col items-center justify-center min-h-[60vh]">
-          <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin" />
-          <p className="mt-4 text-orange-600 font-bold">Đang kiểm tra quyền truy cập...</p>
-        </div>
-      </GameLayout>
-    );
+    return <CheckingPermission path={`/games/learn-color/${groupId}`} />;
   }
 
   let Content = null;

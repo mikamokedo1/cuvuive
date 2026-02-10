@@ -210,4 +210,48 @@ export const COURSES: CourseDef[] = [
       },
     ],
   },
+  {
+    id: "learn-vehicle",
+    title: "Học phương tiện",
+    description: "Bé làm quen với các phương tiện giao thông đường bộ, đường thủy và hàng không.",
+    thumbnail: "/assets/courses/vehicles.png",
+    groups: [
+      {
+        id: "group1",
+        title: "Phương tiện đường bộ",
+        lessons: [
+          { id: "lesson1", title: "Học tên phương tiện", isFree: true },
+          { id: "lesson2", title: "Đây là gì?" },
+          { id: "lesson3", title: "Ghép đôi" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Phương tiện đường thủy",
+        lessons: [
+          { id: "lesson1", title: "Học tên phương tiện", isFree: true },
+          { id: "lesson2", title: "Đây là gì?" },
+          { id: "lesson3", title: "Ghép đôi" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Phương tiện hàng không",
+        lessons: [
+          { id: "lesson1", title: "Học tên phương tiện", isFree: true },
+          { id: "lesson2", title: "Đây là gì?" },
+          { id: "lesson3", title: "Ghép đôi" },
+        ],
+      },
+      {
+        id: "group4",
+        title: "Luyện tập",
+        lessons: [
+          { id: "lesson1", title: "Đây là gì?", isFree: true },
+          { id: "lesson2", title: "Ghép đôi" },
+          { id: "lesson3", title: "Xe đi đâu?" },
+        ],
+      },
+    ],
+  },
 ];

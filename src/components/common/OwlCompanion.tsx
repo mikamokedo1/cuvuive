@@ -51,7 +51,13 @@ export const OwlCompanion = () => {
       onMouseLeave={handleMouseLeave}
     >
       <div className="relative w-24 h-24 md:w-32 md:h-32 drop-shadow-xl filter">
-        <Image src={ownLearningImg} alt="Owl Companion" fill className="object-contain" priority />
+        <Image
+          src={ownLearningImg}
+          alt="Owl Companion"
+          width={128}
+          height={128}
+          className="object-contain w-full h-full"
+        />
       </div>
 
       {/* Optional: Simple speech bubble or visual cue could go here if requested later */}

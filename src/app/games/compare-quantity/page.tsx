@@ -1,10 +1,3 @@
-"use client";
-
-import { useRouter } from "next/navigation";
-import { GameLayout } from "@/components/layout/GameLayout";
-import { GroupCard } from "@/features/games/learn-game/GroupCard";
-import { useProgress } from "@/context/ProgressContext";
-import Image from "next/image";
 import Group1Logo from "@/assets/games/compare-quantity/compare-quantity-logo-1.webp";
 import Group2Logo from "@/assets/games/compare-quantity/compare-quantity-logo-2.webp";
 import Group3Logo from "@/assets/games/compare-quantity/compare-quantity-logo-3.webp";
@@ -12,95 +5,43 @@ import Group4Logo from "@/assets/games/compare-quantity/compare-quantity-logo-4.
 
 // Reuse assets
 import compareLogo from "@/assets/games/game-3-logo.png";
-import { LessonTitle } from "@/components/games/LessonTitle";
+import { GameWrapGroups } from "@/components/layout/GameWrapGroups";
 
 const GROUPS = [
   {
     id: "group1",
     title: "Lớn hơn",
+    description: "so sánh hơn",
     subtitle: ">",
     variant: "green" as const,
-    image: Group1Logo,
+    logo: Group1Logo,
   },
   {
     id: "group2",
     title: "Nhỏ hơn",
+    description: "so sánh kém",
     subtitle: "<",
     variant: "orange" as const,
-    image: Group2Logo,
+    logo: Group2Logo,
   },
   {
     id: "group3",
     title: "Bằng nhau",
+    description: "so sánh bằng",
     subtitle: "=",
     variant: "purple" as const,
-    image: Group3Logo,
+    logo: Group3Logo,
   },
   {
     id: "group4",
     title: "Luyện tập",
+    description: "luyện tập so sánh",
     subtitle: "Mix",
     variant: "blue" as const,
-    image: Group4Logo,
+    logo: Group4Logo,
   },
 ];
 
 export default function CompareQuantityPage() {
-  const router = useRouter();
-  const { allProgress, isLoaded, isGroupUnlocked } = useProgress();
-
-  // Smart loading: Only show spinner if we haven't loaded AND we don't have cached data for this course
-  if (!isLoaded && !allProgress["compare-quantity"]) {
-    return (
-      <GameLayout showBackButton={false} backTo="/">
-        <div className="flex flex-col items-center justify-center min-h-[60vh]">
-          <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin" />
-          <p className="mt-4 text-orange-600 font-bold">Đang tải dữ liệu...</p>
-        </div>
-      </GameLayout>
-    );
-  }
-
-  // Get progress for this course
-  const progress = allProgress["compare-quantity"] || {
-    completedGroups: [],
-    completedLessons: {},
-  };
-
-  const handleGroupClick = (groupId: string) => {
-    router.push(`/games/compare-quantity/${groupId}`);
-  };
-
-  return (
-    <GameLayout showBackButton={false} backTo="/">
-      <main className="flex flex-col items-center">
-        <div className="w-full max-w-6xl mx-auto flex flex-col items-center justify-center relative mb-8">
-          <div className="relative w-24 h-24 md:w-32 md:h-32 mb-4">
-            <Image src={compareLogo} alt="So Sánh" fill className="object-contain" priority />
-          </div>
-          <LessonTitle>So Sánh Số Lượng</LessonTitle>
-        </div>
-
-        <div className="grid grid-cols-1 gap-4  sm:grid-cols-2 sm:gap-6  lg:grid-cols-4 lg:gap-6 w-full max-w-6xl items-center justify-center">
-          {GROUPS.map((group, index) => {
-            const unlocked = isGroupUnlocked(group.id, "compare-quantity");
-            const isCompleted = progress.completedGroups.includes(group.id);
-
-            return (
-              <GroupCard
-                key={group.id}
-                title={group.title}
-                variant={group.variant}
-                isLocked={!unlocked}
-                mainImage={group.image}
-                level={index + 1}
-                onClick={() => handleGroupClick(group.id)}
-                isCompleted={isCompleted}
-              />
-            );
-          })}
-        </div>
-      </main>
-    </GameLayout>
-  );
+  return <GameWrapGroups logo={compareLogo} gameId="compare-quantity" groups={GROUPS} title="So Sánh Số Lượng" />;
 }

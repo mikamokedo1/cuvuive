@@ -55,7 +55,7 @@ export function GroupCard({ title, variant, isLocked, mainImage, onClick, isComp
         "relative flex flex-col items-center p-4 rounded-[40px] border-[8px] overflow-hidden transition-transform",
         currentStyle.card,
         !isLocked && "cursor-pointer hover:scale-105 active:scale-95",
-        "w-full aspect-[3/4] max-w-[300px] mx-auto shadow-xl group",
+        "w-full aspect-[3/4] max-w-[240px] shadow-xl group",
       )}
     >
       {/* Header */}

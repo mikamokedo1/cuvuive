@@ -1,54 +1,41 @@
 "use client";
 
 import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
-import HomeSound from "@/assets/pages-sounds/home.mp3";
-//learn numbers
-import LearnNumbersGroup1Lesson1Sound from "@/assets/pages-sounds/learn-numbers/learn-numbers-group1-lesson-lesson1.mp3";
-import LearnNumbersGroup2Lesson1Sound from "@/assets/pages-sounds/learn-numbers/learn-numbers-group2-lesson-lesson1.mp3";
-import LearnNumbersGroup3Lesson1Sound from "@/assets/pages-sounds/learn-numbers/learn-numbers-group3-lesson-lesson1.mp3";
-import LearnNumbersGroupLesson2Sound from "@/assets/pages-sounds/learn-numbers/learn-numbers-group-lesson-lesson2.mp3";
-import LearnNumbersGroupLesson3Sound from "@/assets/pages-sounds/learn-numbers/learn-numbers-group-lesson-lesson3.mp3";
-import LearnNumbersGroupLesson4Sound from "@/assets/pages-sounds/learn-numbers/learn-numbers-group-lesson-lesson4.mp3";
-//auth
-import LoginSound from "@/assets/pages-sounds/auth/auth-login.mp3";
-import SignupSound from "@/assets/pages-sounds/auth/auth-signup.mp3";
-import ForgotPasswordSound from "@/assets/pages-sounds/auth/auth-forgot-password.mp3";
-import SignupSuccsessSound from "@/assets/pages-sounds/auth/auth-login.mp3";
-//upgrade
-import UpgradeSound from "@/assets/pages-sounds/upgrade.mp3";
-//compare quantity
-import CompareQuantityGroup1Lesson1Sound from "@/assets/pages-sounds/compare-quantity/compare-quantity-group1-lesson-lesson1.mp3";
-import CompareQuantityGroup2Lesson1Sound from "@/assets/pages-sounds/compare-quantity/compare-quantity-group2-lesson-lesson1.mp3";
-import CompareQuantityGroup3Lesson1Sound from "@/assets/pages-sounds/compare-quantity/compare-quantity-group3-lesson-lesson1.mp3";
-
 import { usePathname } from "next/navigation";
 
-const MAP_PATHNAME_TO_SOUND = {
-  "/": HomeSound,
-  "/games/learn-numbers": HomeSound,
-  "/games/learn-numbers/group1": HomeSound,
-  "/games/learn-numbers/group2": HomeSound,
-  "/games/learn-numbers/group3": HomeSound,
-  "/games/learn-numbers/group1/lesson/lesson1": LearnNumbersGroup1Lesson1Sound,
-  "/games/learn-numbers/group2/lesson/lesson1": LearnNumbersGroup2Lesson1Sound,
-  "/games/learn-numbers/group3/lesson/lesson1": LearnNumbersGroup3Lesson1Sound,
-  "/games/learn-numbers/group1/lesson/lesson2": LearnNumbersGroupLesson2Sound,
-  "/games/learn-numbers/group2/lesson/lesson2": LearnNumbersGroupLesson2Sound,
-  "/games/learn-numbers/group3/lesson/lesson2": LearnNumbersGroupLesson2Sound,
-  "/games/learn-numbers/group1/lesson/lesson3": LearnNumbersGroupLesson3Sound,
-  "/games/learn-numbers/group2/lesson/lesson3": LearnNumbersGroupLesson3Sound,
-  "/games/learn-numbers/group3/lesson/lesson3": LearnNumbersGroupLesson3Sound,
-  "/games/learn-numbers/group1/lesson/lesson4": LearnNumbersGroupLesson4Sound,
-  "/games/learn-numbers/group2/lesson/lesson4": LearnNumbersGroupLesson4Sound,
-  "/games/learn-numbers/group3/lesson/lesson4": LearnNumbersGroupLesson4Sound,
-  "/auth/login": LoginSound,
-  "/auth/sign-up": SignupSound,
-  "/auth/forgot-password": ForgotPasswordSound,
-  "/auth/sign-up-success": SignupSuccsessSound,
-  "/upgrade": UpgradeSound,
-  "/games/compare-quantity/group1/lesson/lesson1": CompareQuantityGroup1Lesson1Sound,
-  "/games/compare-quantity/group2/lesson/lesson1": CompareQuantityGroup2Lesson1Sound,
-  "/games/compare-quantity/group3/lesson/lesson1": CompareQuantityGroup3Lesson1Sound,
+// Use string paths to public directory instead of static imports.
+// This avoids bundling all MP3 files into the JS bundle on every route.
+const HOME_SOUND = "/sounds/home.mp3";
+
+const MAP_PATHNAME_TO_SOUND: Record<string, string> = {
+  "/": HOME_SOUND,
+  "/games/learn-numbers": HOME_SOUND,
+  "/games/learn-numbers/group1": HOME_SOUND,
+  "/games/learn-numbers/group2": HOME_SOUND,
+  "/games/learn-numbers/group3": HOME_SOUND,
+  "/games/learn-numbers/group1/lesson/lesson1": "/sounds/learn-numbers/learn-numbers-group1-lesson-lesson1.mp3",
+  "/games/learn-numbers/group2/lesson/lesson1": "/sounds/learn-numbers/learn-numbers-group2-lesson-lesson1.mp3",
+  "/games/learn-numbers/group3/lesson/lesson1": "/sounds/learn-numbers/learn-numbers-group3-lesson-lesson1.mp3",
+  "/games/learn-numbers/group1/lesson/lesson2": "/sounds/learn-numbers/learn-numbers-group-lesson-lesson2.mp3",
+  "/games/learn-numbers/group2/lesson/lesson2": "/sounds/learn-numbers/learn-numbers-group-lesson-lesson2.mp3",
+  "/games/learn-numbers/group3/lesson/lesson2": "/sounds/learn-numbers/learn-numbers-group-lesson-lesson2.mp3",
+  "/games/learn-numbers/group1/lesson/lesson3": "/sounds/learn-numbers/learn-numbers-group-lesson-lesson3.mp3",
+  "/games/learn-numbers/group2/lesson/lesson3": "/sounds/learn-numbers/learn-numbers-group-lesson-lesson3.mp3",
+  "/games/learn-numbers/group3/lesson/lesson3": "/sounds/learn-numbers/learn-numbers-group-lesson-lesson3.mp3",
+  "/games/learn-numbers/group1/lesson/lesson4": "/sounds/learn-numbers/learn-numbers-group-lesson-lesson4.mp3",
+  "/games/learn-numbers/group2/lesson/lesson4": "/sounds/learn-numbers/learn-numbers-group-lesson-lesson4.mp3",
+  "/games/learn-numbers/group3/lesson/lesson4": "/sounds/learn-numbers/learn-numbers-group-lesson-lesson4.mp3",
+  "/auth/login": "/sounds/auth/auth-login.mp3",
+  "/auth/sign-up": "/sounds/auth/auth-signup.mp3",
+  "/auth/forgot-password": "/sounds/auth/auth-forgot-password.mp3",
+  "/auth/sign-up-success": "/sounds/auth/auth-login.mp3",
+  "/upgrade": "/sounds/upgrade.mp3",
+  "/games/compare-quantity/group1/lesson/lesson1":
+    "/sounds/compare-quantity/compare-quantity-group1-lesson-lesson1.mp3",
+  "/games/compare-quantity/group2/lesson/lesson1":
+    "/sounds/compare-quantity/compare-quantity-group2-lesson-lesson1.mp3",
+  "/games/compare-quantity/group3/lesson/lesson1":
+    "/sounds/compare-quantity/compare-quantity-group3-lesson-lesson1.mp3",
 };
 
 export const MAP_PATHNAME_TO_TEXT = {
@@ -89,6 +76,18 @@ export const MAP_PATHNAME_TO_TEXT = {
   "/games/learn-animal/group3/lesson/lesson1": "Pé học các con vật sống dưới nước",
   "/games/learn-animal/group3/lesson/lesson2": "Pé chọn con vật đang bị ẩn nhé",
   "/games/learn-animal/group3/lesson/lesson3": "Pé ghép đôi cho các con vật đi nào",
+  "/games/learn-vehicle/group1/lesson/lesson1": "Pé học các phương tiện đường bộ",
+  "/games/learn-vehicle/group1/lesson/lesson2": "Pé chọn phương tiện đang bị ẩn nhé",
+  "/games/learn-vehicle/group1/lesson/lesson3": "Pé ghép đôi cho các phương tiện đi nào",
+  "/games/learn-vehicle/group2/lesson/lesson1": "Pé học các phương tiện đường thủy",
+  "/games/learn-vehicle/group2/lesson/lesson2": "Pé chọn phương tiện đang bị ẩn nhé",
+  "/games/learn-vehicle/group2/lesson/lesson3": "Pé ghép đôi cho các phương tiện đi nào",
+  "/games/learn-vehicle/group3/lesson/lesson1": "Pé học các phương tiện đường không",
+  "/games/learn-vehicle/group3/lesson/lesson2": "Pé chọn phương tiện đang bị ẩn nhé",
+  "/games/learn-vehicle/group3/lesson/lesson3": "Pé ghép đôi cho các phương tiện đi nào",
+  "/games/learn-vehicle/group4/lesson/lesson1": "Pé chọn phương tiện đang bị ẩn nhé",
+  "/games/learn-vehicle/group4/lesson/lesson2": "Pé ghép đôi cho các phương tiện đi nào",
+  "/games/learn-vehicle/group4/lesson/lesson3": "Pé chọn môi trường phù hợp cho các phương tiện hoạt động",
 };
 
 interface OwlContextType {
@@ -104,7 +103,7 @@ const OwlContext = createContext<OwlContextType | undefined>(undefined);
 
 export const OwlProvider = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname();
-  const [sound, setSound] = useState<string>(HomeSound);
+  const [sound, setSound] = useState<string>(HOME_SOUND);
   const [textSpeak, setTextSpeak] = useState<string>(
     MAP_PATHNAME_TO_TEXT[pathname as keyof typeof MAP_PATHNAME_TO_TEXT],
   );
@@ -116,7 +115,7 @@ export const OwlProvider = ({ children }: { children: ReactNode }) => {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setSound(sound);
     } else {
-      setSound(HomeSound);
+      setSound(HOME_SOUND);
     }
 
     const text = MAP_PATHNAME_TO_TEXT[pathname as keyof typeof MAP_PATHNAME_TO_TEXT];

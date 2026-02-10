@@ -10,6 +10,7 @@ import { GROUPS, getAnimalsForGroup } from "@/features/games/learn-animal/consta
 import { AnimalLearnLesson } from "@/features/games/learn-animal/AnimalLearnLesson";
 import { AnimalQuizLesson } from "@/features/games/learn-animal/AnimalQuizLesson";
 import { AnimalMemoryLesson } from "@/features/games/learn-animal/AnimalMemoryLesson";
+import { CheckingPermission } from "@/components/common/CheckingPermission";
 
 export default function LessonPage() {
   const params = useParams();
@@ -106,14 +107,7 @@ export default function LessonPage() {
   };
 
   if (!isLoaded || isCheckingAccess) {
-    return (
-      <GameLayout backTo={`/games/learn-animal/${groupId}`} showBackButton={true}>
-        <div className="flex flex-col items-center justify-center min-h-[60vh]">
-          <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin" />
-          <p className="mt-4 text-orange-600 font-bold">Đang kiểm tra quyền truy cập...</p>
-        </div>
-      </GameLayout>
-    );
+    return <CheckingPermission path={`/games/learn-animal/${groupId}`} />;
   }
 
   const animals = getAnimalsForGroup(groupId);

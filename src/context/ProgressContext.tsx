@@ -60,65 +60,54 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
 
   const [courseStructure, setCourseStructure] = useState<Record<string, Record<string, number>>>({});
 
-  // Fetch Course Structure (Access Definitions)
+  // Fetch course structure and user progress in parallel
   useEffect(() => {
-    const fetchStructure = async () => {
-      // Use Server Action to avoid RLS/table issues with 'lessons'
-      // import { getCourseStructureAction } from "@/libs/actions/courses";
-      // We need to import it. Dynamic import or top level?
-      // Top level is better. I will add import in next step or use require?
-      // Let's use string replacement to add import too.
-      // For now, I'll put the logic here assuming import exists, or use dynamic import if I can't touch top of file easily.
-      // But I can touch top of file.
-      // I'll stick to dynamic import for this block to avoid multi-chunk complexity if possible, OR just replace this block and I'll add import header separately.
+    const fetchStructureAndProgress = async () => {
+      if (!user) {
+        // Still need structure even without user
+        try {
+          const { getCourseStructureAction } = await import("@/libs/actions/courses");
+          const data = await getCourseStructureAction();
 
-      try {
-        const { getCourseStructureAction } = await import("@/libs/actions/courses");
-        const data = await getCourseStructureAction();
-
-        const structure: Record<string, Record<string, number>> = {};
-
-        // Count unique lessons per group
-        data.forEach((row) => {
-          const cId = row.courseId;
-          const gId = row.groupId;
-
-          if (!structure[cId]) structure[cId] = {};
-          if (!structure[cId][gId]) structure[cId][gId] = 0;
-          structure[cId][gId]++;
-        });
-
-        setCourseStructure(structure);
-      } catch (err) {
-        console.error("Error fetching course structure:", err);
+          const structure: Record<string, Record<string, number>> = {};
+          data.forEach((row) => {
+            const cId = row.courseId;
+            const gId = row.groupId;
+            if (!structure[cId]) structure[cId] = {};
+            if (!structure[cId][gId]) structure[cId][gId] = 0;
+            structure[cId][gId]++;
+          });
+          setCourseStructure(structure);
+        } catch (err) {
+          console.error("Error fetching course structure:", err);
+        }
+        setIsLoaded(true);
+        return;
       }
-    };
 
-    fetchStructure();
-  }, []); // Remove Supabase dependency as we use Server Action
+      setIsLoaded(false);
 
-  // Fetch progress from Supabase
-  useEffect(() => {
-    if (!user) {
-      setIsLoaded(true);
-      return;
-    }
-
-    // Wait for structure to load effectively, or just use defaults if not ready?
-    // Ideally we want structure first. But for now, let's treat them somewhat independently
-    // and trigger recalc when either changes if needed.
-    // Actually, we need structure to calculate 'completedGroups'.
-
-    // Set loading to false while fetching from Supabase
-    setIsLoaded(false);
-
-    const fetchProgress = async () => {
       try {
-        const { data, error } = await supabase
-          .from("progress")
-          .select("course_id, group_id, lesson_id")
-          .eq("user_id", user.id);
+        // Run both fetches in parallel
+        const [structureResult, progressResult] = await Promise.all([
+          import("@/libs/actions/courses").then(async (mod) => {
+            const data = await mod.getCourseStructureAction();
+            const structure: Record<string, Record<string, number>> = {};
+            data.forEach((row) => {
+              const cId = row.courseId;
+              const gId = row.groupId;
+              if (!structure[cId]) structure[cId] = {};
+              if (!structure[cId][gId]) structure[cId][gId] = 0;
+              structure[cId][gId]++;
+            });
+            return structure;
+          }),
+          supabase.from("progress").select("course_id, group_id, lesson_id").eq("user_id", user.id),
+        ]);
 
+        setCourseStructure(structureResult);
+
+        const { data, error } = progressResult;
         if (error) throw error;
 
         if (data && data.length > 0) {
@@ -126,7 +115,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
             const newAllProgress = { ...prev };
 
             data.forEach((row) => {
-              const courseId = row.course_id || "learn-numbers"; // Default if null
+              const courseId = row.course_id || "learn-numbers";
               const groupId = row.group_id;
               const lessonId = row.lesson_id;
 
@@ -136,7 +125,6 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
 
               const courseProgress = newAllProgress[courseId];
 
-              // Helper to safely add lesson
               if (!courseProgress.completedLessons[groupId]) {
                 courseProgress.completedLessons[groupId] = [];
               }
@@ -145,24 +133,17 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
               }
             });
 
-            // Re-calculate completed groups for ALL courses
-            // We use the current 'courseStructure' state here.
-            // Note: If courseStructure isn't loaded yet, this might run with empty structure.
-            // We should add courseStructure to dependency array or rely on the fact that setState is async.
-            // For robustness, let's perform this recalc logic in a separate effect or memo, but here is fine for now
-            // provided we re-trigger when courseStructure updates.
-
             return newAllProgress;
           });
         }
       } catch (error) {
-        console.error("Error fetching progress:", error);
+        console.error("Error fetching data:", error);
       } finally {
         setIsLoaded(true);
       }
     };
 
-    fetchProgress();
+    fetchStructureAndProgress();
   }, [user, supabase]);
 
   // Re-calculate completed groups whenever 'allProgress' (lessons) OR 'courseStructure' changes
@@ -183,15 +164,8 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
           // For learn-shape: group1 and group2 have 4 lessons, group3 has 3
           // For learn-color: all groups have 3 lessons
           // For other courses: default to 4 lessons
-          let defaultLessons = 4;
-          if (courseId === "learn-color") {
-            defaultLessons = 3;
-          } else if (courseId === "learn-shape") {
-            defaultLessons = groupId === "group3" ? 3 : 4;
-          } else if (courseId === "learn-animal") {
-            defaultLessons = 3;
-          }
-          const requiredCount = courseStruct[groupId] || defaultLessons;
+          // Use database structure first, default to 3 if not loaded
+          const requiredCount = courseStruct[groupId] || 3;
 
           if (completedCount > 0 && completedCount >= requiredCount) {
             newCompletedGroups.push(groupId);
@@ -248,15 +222,8 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
       // For learn-shape: group1 and group2 have 4 lessons, group3 has 3
       // For learn-color: all groups have 3 lessons
       // For other courses: default to 4 lessons
-      let defaultLessons = 4;
-      if (courseId === "learn-color") {
-        defaultLessons = 3;
-      } else if (courseId === "learn-shape") {
-        defaultLessons = groupId === "group3" ? 3 : 4;
-      } else if (courseId === "learn-animal") {
-        defaultLessons = 3;
-      }
-      const requiredLessons = courseStruct[groupId] || defaultLessons;
+      // Use database structure first, default to 3 if not loaded
+      const requiredLessons = courseStruct[groupId] || 3;
       const isGroupDone = newGroupLessons.length >= requiredLessons;
 
       let newCompletedGroups = prevCourse.completedGroups;
