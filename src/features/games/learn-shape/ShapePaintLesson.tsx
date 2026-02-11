@@ -196,9 +196,6 @@ export function ShapePaintLesson({ shapes, onComplete }: ShapePaintLessonProps) 
 
   return (
     <div className="flex flex-col items-center gap-6 w-full max-w-md px-4 scale-90 sm:scale-100 origin-top">
-      {/* Shape Name */}
-      <h2 className="text-2xl font-bold text-orange-600">{currentShape.name}</h2>
-
       {/* Drawing Card */}
       <div
         className="relative bg-white rounded-3xl shadow-xl border-4 border-blue-100 overflow-hidden transition-transform"

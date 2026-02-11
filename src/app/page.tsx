@@ -12,6 +12,7 @@ import GameColorLogo from "@/assets/games/learn-color-color.webp";
 import ShapeLogo from "@/assets/games/learn-shape/learn-shape-logo.webp";
 import GameAnimalLogo from "@/assets/games/learn-animal/logo.webp";
 import GameVehicleLogo from "@/assets/games/learn-vehicle/logo.webp";
+import GameFruitLogo from "@/assets/games/learn-fruit/logo.webp";
 
 interface Game {
   id: string;
@@ -63,6 +64,13 @@ const GAMES: Game[] = [
     href: "/games/learn-vehicle",
     color: "blue",
     icon: GameVehicleLogo,
+  },
+  {
+    id: "learn-fruit",
+    title: "Học trái cây",
+    href: "/games/learn-fruit",
+    color: "green",
+    icon: GameFruitLogo,
   },
 ];
 

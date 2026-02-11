@@ -4,15 +4,8 @@ import { useState, useEffect } from "react";
 import { VehicleData } from "./constants";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
-import Image from "next/image";
 import { playButtonSound } from "@/libs/utils/playSound";
-
-interface Card {
-  id: string;
-  vehicle: VehicleData;
-  isFlipped: boolean;
-  isMatched: boolean;
-}
+import { CardFlip, Card } from "@/components/games/CardFlip";
 
 interface VehicleMemoryLessonProps {
   vehicles: VehicleData[];
@@ -45,13 +38,13 @@ export function VehicleMemoryLesson({ vehicles, onComplete, pairsCount = 6 }: Ve
     selectedVehicles.forEach((vehicle, index) => {
       cardPairs.push({
         id: `${vehicle.id}-a-${index}`,
-        vehicle,
+        data: vehicle,
         isFlipped: false,
         isMatched: false,
       });
       cardPairs.push({
         id: `${vehicle.id}-b-${index}`,
-        vehicle,
+        data: vehicle,
         isFlipped: false,
         isMatched: false,
       });
@@ -82,7 +75,7 @@ export function VehicleMemoryLesson({ vehicles, onComplete, pairsCount = 6 }: Ve
     setCards((prev) => prev.map((c) => (c.id === cardId ? { ...c, isFlipped: true } : c)));
 
     // Speak vehicle name
-    speak(card.vehicle.name);
+    speak(card.data.name);
 
     // Check for match when 2 cards are flipped
     if (newFlipped.length === 2) {
@@ -93,7 +86,7 @@ export function VehicleMemoryLesson({ vehicles, onComplete, pairsCount = 6 }: Ve
       const firstCard = cards.find((c) => c.id === firstId);
       const secondCard = cards.find((c) => c.id === secondId);
 
-      if (firstCard && secondCard && firstCard.vehicle.id === secondCard.vehicle.id) {
+      if (firstCard && secondCard && firstCard.data.id === secondCard.data.id) {
         // Match found!
         setTimeout(() => {
           speak("Đúng rồi!");
@@ -142,56 +135,7 @@ export function VehicleMemoryLesson({ vehicles, onComplete, pairsCount = 6 }: Ve
         {cards.map((card) => {
           const isRevealed = card.isFlipped || card.isMatched;
 
-          return (
-            <div
-              key={card.id}
-              onClick={() => handleCardClick(card.id)}
-              className={`
-                relative aspect-square cursor-pointer
-                ${card.isMatched ? "opacity-80" : ""}
-                ${!isRevealed ? "hover:scale-105" : ""}
-                transition-transform duration-200
-              `}
-              style={{ perspective: "1000px" }}
-            >
-              {/* Card Inner - This rotates */}
-              <div
-                className="relative w-full h-full transition-transform duration-500 ease-in-out"
-                style={{
-                  transformStyle: "preserve-3d",
-                  transform: isRevealed ? "rotateY(180deg)" : "rotateY(0deg)",
-                }}
-              >
-                {/* Card Front (Question mark - visible when not flipped) */}
-                <div
-                  className="absolute inset-0 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-2xl shadow-lg flex items-center justify-center"
-                  style={{
-                    backfaceVisibility: "hidden",
-                    WebkitBackfaceVisibility: "hidden",
-                  }}
-                >
-                  <span className="text-white text-4xl sm:text-5xl font-bold drop-shadow-md">?</span>
-                </div>
-
-                {/* Card Back (Vehicle - visible when flipped) */}
-                <div
-                  className={`
-                    absolute inset-0 bg-white rounded-2xl shadow-lg p-2 flex flex-col items-center justify-center
-                    ${card.isMatched ? "ring-4 ring-green-400 bg-green-50" : "ring-2 ring-blue-300"}
-                  `}
-                  style={{
-                    backfaceVisibility: "hidden",
-                    WebkitBackfaceVisibility: "hidden",
-                    transform: "rotateY(180deg)",
-                  }}
-                >
-                  <div className="relative w-full h-3/4">
-                    <Image src={card.vehicle.image} alt={card.vehicle.name} fill className="object-contain" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          );
+          return <CardFlip key={card.id} card={card} isRevealed={isRevealed} handleCardClick={handleCardClick} />;
         })}
       </div>
     </div>

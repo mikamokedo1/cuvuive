@@ -88,6 +88,15 @@ export const MAP_PATHNAME_TO_TEXT = {
   "/games/learn-vehicle/group4/lesson/lesson1": "Pé chọn phương tiện đang bị ẩn nhé",
   "/games/learn-vehicle/group4/lesson/lesson2": "Pé ghép đôi cho các phương tiện đi nào",
   "/games/learn-vehicle/group4/lesson/lesson3": "Pé chọn môi trường phù hợp cho các phương tiện hoạt động",
+  "/games/learn-fruit/group1/lesson/lesson1": "Pé học các loại trái cây",
+  "/games/learn-fruit/group1/lesson/lesson2": "Pé chọn trái cây đang bị ẩn",
+  "/games/learn-fruit/group1/lesson/lesson3": "Pé ghép đôi cho các trái cây đi nào",
+  "/games/learn-fruit/group2/lesson/lesson1": "Pé học các loại trái cây",
+  "/games/learn-fruit/group2/lesson/lesson2": "Pé chọn trái cây đang bị ẩn",
+  "/games/learn-fruit/group2/lesson/lesson3": "Pé ghép đôi cho các trái cây đi nào",
+  "/games/learn-fruit/group3/lesson/lesson1": "Pé học các loại trái cây",
+  "/games/learn-fruit/group3/lesson/lesson2": "Pé chọn trái cây đang bị ẩn",
+  "/games/learn-fruit/group3/lesson/lesson3": "Pé ghép đôi cho các trái cây đi nào",
 };
 
 interface OwlContextType {
