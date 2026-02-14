@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { OccupationData } from "./constants";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
+import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
 import Image from "next/image";
 import LoudSpeaker from "@/assets/games/loud-speaker.webp";
@@ -16,6 +17,7 @@ interface OccupationQuizLessonProps {
 export function OccupationQuizLesson({ occupations, onComplete, requiredWins = 6 }: OccupationQuizLessonProps) {
   const { speak } = useTextToSpeech();
   const [targetOccupation, setTargetOccupation] = useState<OccupationData | null>(null);
+  const prevTargetRef = useRef<OccupationData | null>(null);
   const [options, setOptions] = useState<OccupationData[]>([]);
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
@@ -23,8 +25,8 @@ export function OccupationQuizLesson({ occupations, onComplete, requiredWins = 6
   const generateQuestion = () => {
     if (occupations.length < 2) return;
 
-    const targetIdx = Math.floor(Math.random() * occupations.length);
-    const target = occupations[targetIdx];
+    const target = getRandomItem(occupations, prevTargetRef.current);
+    prevTargetRef.current = target;
 
     let distractorPool = occupations.filter((o) => o.id !== target.id);
     distractorPool = distractorPool.sort(() => Math.random() - 0.5);

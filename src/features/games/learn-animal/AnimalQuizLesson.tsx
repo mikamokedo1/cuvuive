@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { AnimalData } from "./constants";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
+import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
 import Image from "next/image";
 import LoudSpeaker from "@/assets/games/loud-speaker.webp";
@@ -17,6 +18,7 @@ interface AnimalQuizLessonProps {
 export function AnimalQuizLesson({ animals, onComplete, requiredWins = 6 }: AnimalQuizLessonProps) {
   const { speak } = useTextToSpeech();
   const [targetAnimal, setTargetAnimal] = useState<AnimalData | null>(null);
+  const prevTargetRef = useRef<AnimalData | null>(null);
   const [options, setOptions] = useState<AnimalData[]>([]);
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
@@ -26,8 +28,8 @@ export function AnimalQuizLesson({ animals, onComplete, requiredWins = 6 }: Anim
     if (animals.length < 2) return;
 
     // Pick a random target
-    const targetIdx = Math.floor(Math.random() * animals.length);
-    const target = animals[targetIdx];
+    const target = getRandomItem(animals, prevTargetRef.current);
+    prevTargetRef.current = target;
 
     // Pick distractors (need total 3 options usually)
     let distractorPool = animals.filter((a) => a.id !== target.id);

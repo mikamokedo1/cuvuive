@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { VehicleData } from "./constants";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
+import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
 import Image from "next/image";
 import LoudSpeaker from "@/assets/games/loud-speaker.webp";
@@ -16,6 +17,7 @@ interface VehicleQuizLessonProps {
 export function VehicleQuizLesson({ vehicles, onComplete, requiredWins = 6 }: VehicleQuizLessonProps) {
   const { speak } = useTextToSpeech();
   const [targetVehicle, setTargetVehicle] = useState<VehicleData | null>(null);
+  const prevTargetRef = useRef<VehicleData | null>(null);
   const [options, setOptions] = useState<VehicleData[]>([]);
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
@@ -25,8 +27,8 @@ export function VehicleQuizLesson({ vehicles, onComplete, requiredWins = 6 }: Ve
     if (vehicles.length < 2) return;
 
     // Pick a random target
-    const targetIdx = Math.floor(Math.random() * vehicles.length);
-    const target = vehicles[targetIdx];
+    const target = getRandomItem(vehicles, prevTargetRef.current);
+    prevTargetRef.current = target;
 
     // Pick distractors (need total 3 options usually)
     let distractorPool = vehicles.filter((v) => v.id !== target.id);

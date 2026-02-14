@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ShapeData } from "./constants";
 import NextImage from "next/image";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
+import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
 
 interface ShapeMatchLessonProps {
@@ -15,6 +16,7 @@ interface ShapeMatchLessonProps {
 export function ShapeMatchLesson({ shapes, onComplete, requiredWins = 6 }: ShapeMatchLessonProps) {
   const { speak } = useTextToSpeech();
   const [targetShape, setTargetShape] = useState<ShapeData | null>(null);
+  const prevTargetRef = useRef<ShapeData | null>(null);
   const [options, setOptions] = useState<ShapeData[]>([]);
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
@@ -24,8 +26,8 @@ export function ShapeMatchLesson({ shapes, onComplete, requiredWins = 6 }: Shape
     if (shapes.length < 2) return;
 
     // Pick a random target
-    const targetIdx = Math.floor(Math.random() * shapes.length);
-    const target = shapes[targetIdx];
+    const target = getRandomItem(shapes, prevTargetRef.current);
+    prevTargetRef.current = target;
 
     // Pick distractors
     let distractorPool = shapes.filter((c) => c.id !== target.id);

@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FruitData } from "./constants";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
+import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
 import Image from "next/image";
 import LoudSpeaker from "@/assets/games/loud-speaker.webp";
@@ -16,6 +17,7 @@ interface FruitQuizLessonProps {
 export function FruitQuizLesson({ fruits, onComplete, requiredWins = 6 }: FruitQuizLessonProps) {
   const { speak } = useTextToSpeech();
   const [targetFruit, setTargetFruit] = useState<FruitData | null>(null);
+  const prevTargetRef = useRef<FruitData | null>(null);
   const [options, setOptions] = useState<FruitData[]>([]);
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
@@ -23,8 +25,8 @@ export function FruitQuizLesson({ fruits, onComplete, requiredWins = 6 }: FruitQ
   const generateQuestion = () => {
     if (fruits.length < 2) return;
 
-    const targetIdx = Math.floor(Math.random() * fruits.length);
-    const target = fruits[targetIdx];
+    const target = getRandomItem(fruits, prevTargetRef.current);
+    prevTargetRef.current = target;
 
     let distractorPool = fruits.filter((f) => f.id !== target.id);
     distractorPool = distractorPool.sort(() => Math.random() - 0.5);

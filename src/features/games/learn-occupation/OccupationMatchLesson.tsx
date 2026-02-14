@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { OccupationData } from "./constants";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
+import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { playButtonSound } from "@/libs/utils/playSound";
 import Image from "next/image";
 import LoudSpeaker from "@/assets/games/loud-speaker.webp";
@@ -17,6 +18,7 @@ interface OccupationMatchLessonProps {
 export function OccupationMatchLesson({ occupations, onComplete, requiredWins = 6 }: OccupationMatchLessonProps) {
   const { speak } = useTextToSpeech();
   const [targetOccupation, setTargetOccupation] = useState<OccupationData | null>(null);
+  const prevTargetRef = useRef<OccupationData | null>(null);
   const [toolOptions, setToolOptions] = useState<OccupationData[]>([]);
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
@@ -25,8 +27,8 @@ export function OccupationMatchLesson({ occupations, onComplete, requiredWins = 
   const generateQuestion = () => {
     if (occupations.length < 2) return;
 
-    const targetIdx = Math.floor(Math.random() * occupations.length);
-    const target = occupations[targetIdx];
+    const target = getRandomItem(occupations, prevTargetRef.current);
+    prevTargetRef.current = target;
 
     let distractorPool = occupations.filter((o) => o.id !== target.id);
     distractorPool = distractorPool.sort(() => Math.random() - 0.5);

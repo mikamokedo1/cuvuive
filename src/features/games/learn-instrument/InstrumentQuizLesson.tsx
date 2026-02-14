@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { InstrumentData } from "./constants";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
+import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
 import Image from "next/image";
 import LoudSpeaker from "@/assets/games/loud-speaker.webp";
@@ -16,6 +17,7 @@ interface InstrumentQuizLessonProps {
 export function InstrumentQuizLesson({ instruments, onComplete, requiredWins = 6 }: InstrumentQuizLessonProps) {
   const { speak } = useTextToSpeech();
   const [targetInstrument, setTargetInstrument] = useState<InstrumentData | null>(null);
+  const prevTargetRef = useRef<InstrumentData | null>(null);
   const [options, setOptions] = useState<InstrumentData[]>([]);
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
@@ -23,8 +25,8 @@ export function InstrumentQuizLesson({ instruments, onComplete, requiredWins = 6
   const generateQuestion = () => {
     if (instruments.length < 2) return;
 
-    const targetIdx = Math.floor(Math.random() * instruments.length);
-    const target = instruments[targetIdx];
+    const target = getRandomItem(instruments, prevTargetRef.current);
+    prevTargetRef.current = target;
 
     let distractorPool = instruments.filter((i) => i.id !== target.id);
     distractorPool = distractorPool.sort(() => Math.random() - 0.5);

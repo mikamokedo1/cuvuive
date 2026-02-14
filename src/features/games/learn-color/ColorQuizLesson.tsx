@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ColorData } from "./constants";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
+import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
 
 interface ColorQuizLessonProps {
@@ -14,6 +15,7 @@ interface ColorQuizLessonProps {
 export function ColorQuizLesson({ colors, onComplete, requiredWins = 5 }: ColorQuizLessonProps) {
   const { speak } = useTextToSpeech();
   const [targetColor, setTargetColor] = useState<ColorData | null>(null);
+  const prevTargetRef = useRef<ColorData | null>(null);
   const [options, setOptions] = useState<ColorData[]>([]);
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
@@ -23,8 +25,8 @@ export function ColorQuizLesson({ colors, onComplete, requiredWins = 5 }: ColorQ
     if (colors.length < 2) return;
 
     // Pick a random target
-    const targetIdx = Math.floor(Math.random() * colors.length);
-    const target = colors[targetIdx];
+    const target = getRandomItem(colors, prevTargetRef.current);
+    prevTargetRef.current = target;
 
     // Pick distractors (need total 3 options usually)
     let distractorPool = colors.filter((c) => c.id !== target.id);
