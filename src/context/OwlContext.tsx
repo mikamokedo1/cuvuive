@@ -106,6 +106,15 @@ export const MAP_PATHNAME_TO_TEXT = {
   "/games/learn-instrument/group3/lesson/lesson1": "Pé học các loại nhạc cụ hơi",
   "/games/learn-instrument/group3/lesson/lesson2": "Pé chọn nhạc cụ đang bị ẩn nhé",
   "/games/learn-instrument/group3/lesson/lesson3": "Pé ghép đôi cho các nhạc cụ đi nào",
+  "/games/learn-occupation/group1/lesson/lesson1": "Pé học các nghề cộng đồng",
+  "/games/learn-occupation/group1/lesson/lesson2": "Pé chọn nghề đang bị ẩn nhé",
+  "/games/learn-occupation/group1/lesson/lesson3": "Pé nối nghề với dụng cụ đúng nhé",
+  "/games/learn-occupation/group2/lesson/lesson1": "Pé học các nghề y tế và khoa học",
+  "/games/learn-occupation/group2/lesson/lesson2": "Pé chọn nghề đang bị ẩn nhé",
+  "/games/learn-occupation/group2/lesson/lesson3": "Pé nối nghề với dụng cụ đúng nhé",
+  "/games/learn-occupation/group3/lesson/lesson1": "Pé học các nghề nghệ thuật",
+  "/games/learn-occupation/group3/lesson/lesson2": "Pé chọn nghề đang bị ẩn nhé",
+  "/games/learn-occupation/group3/lesson/lesson3": "Pé nối nghề với dụng cụ đúng nhé",
 };
 
 interface OwlContextType {

@@ -14,6 +14,7 @@ import GameAnimalLogo from "@/assets/games/learn-animal/logo.webp";
 import GameVehicleLogo from "@/assets/games/learn-vehicle/logo.webp";
 import GameFruitLogo from "@/assets/games/learn-fruit/logo.webp";
 import GameInstrumentLogo from "@/assets/games/learn-instrument/logo.webp";
+import GameOccupationLogo from "@/assets/games/learn-occupation/logo.png";
 
 interface Game {
   id: string;
@@ -79,6 +80,13 @@ const GAMES: Game[] = [
     href: "/games/learn-instrument",
     color: "purple",
     icon: GameInstrumentLogo,
+  },
+  {
+    id: "learn-occupation",
+    title: "Học nghề nghiệp",
+    href: "/games/learn-occupation",
+    color: "orange",
+    icon: GameOccupationLogo,
   },
 ];
 
