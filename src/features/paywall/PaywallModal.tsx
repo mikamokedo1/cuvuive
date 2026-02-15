@@ -20,48 +20,20 @@ export function PaywallModal({ isOpen, type, onClose }: PaywallModalProps) {
   if (!isOpen || !type) return null;
 
   const handleLogin = () => {
-    // Flow: Login -> Upgrade Page (with next=Lesson)
-    // If we have a redirectUrl (the lesson), we pass it to Upgrade Page as `next`
-    // Then we pass the Upgrade Page URL to Login as `redirect`
-
-    let redirectParam = "";
-    if (paywallState.redirectUrl) {
-      const upgradeUrl = `/upgrade?next=${encodeURIComponent(paywallState.redirectUrl)}`;
-      redirectParam = `?redirect=${encodeURIComponent(upgradeUrl)}`;
-    } else {
-      // if no specific lesson redirect, maybe just go to upgrade page? or home?
-      // let's assume if paywall shows, it's usually for a locked feature that needs upgrade
-      // so default redirect to upgrade page is reasonable if we want them to upgrade
-      // But wait, if type is 'login', they just need to login.
-      // logic: if they are clicking a locked lesson as guest -> login -> upgrade -> lesson
-      // if they are just logging in normally -> home
-      // Here we are in PaywallModal, so they hit a paywall.
-      // So we should encourage upgrade flow.
-      const upgradeUrl = "/upgrade";
-      redirectParam = `?redirect=${encodeURIComponent(upgradeUrl)}`;
-    }
-
-    router.push(`/auth/login${redirectParam}`);
+    // paywallState.redirectUrl is already set by showPaywall() and synced to sessionStorage
+    // After login, LoginForm will read it from context (or sessionStorage for OAuth)
+    router.push("/auth/login");
     onClose();
   };
 
   const handleSignup = () => {
-    let redirectParam = "";
-    if (paywallState.redirectUrl) {
-      const upgradeUrl = `/upgrade?next=${encodeURIComponent(paywallState.redirectUrl)}`;
-      redirectParam = `?redirect=${encodeURIComponent(upgradeUrl)}`;
-    } else {
-      const upgradeUrl = "/upgrade";
-      redirectParam = `?redirect=${encodeURIComponent(upgradeUrl)}`;
-    }
-
-    router.push(`/auth/sign-up${redirectParam}`);
+    // Same as login — paywallState.redirectUrl already set
+    router.push("/auth/sign-up");
     onClose();
   };
 
   const handleUpgrade = () => {
-    // Just go to Upgrade page
-    // If we have a redirectUrl, pass it as `next`
+    // For premium paywall, pass redirectUrl as ?next= to the upgrade page
     let nextParam = "";
     if (paywallState.redirectUrl) {
       nextParam = `?next=${encodeURIComponent(paywallState.redirectUrl)}`;

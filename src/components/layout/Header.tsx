@@ -23,7 +23,7 @@ const Header = () => {
   const { setPaywallState } = useAccess();
 
   const handleLogin = () => {
-    setPaywallState({ isOpen: false, type: "login", redirectUrl: pathname });
+    setPaywallState({ isOpen: false, type: null, redirectUrl: pathname });
     router.push("/auth/login");
   };
 

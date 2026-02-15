@@ -11,12 +11,10 @@ import { ActionButton } from "@/components/common/ActionButton";
 import owlHi from "@/assets/games/common/owl-say-hi.webp";
 import { EmailIcon, ExclamationIcon, EyeIcon, FacebookIcon, GoogleIcon, PasswordIcon } from "@/components/common/Icons";
 import { MAP_ERROR } from "./SignupForm";
-import { useSearchParams } from "next/navigation";
-import { useAccess } from "@/context/AccessContext";
+import { useAccess, getRedirectUrl, clearRedirectUrl } from "@/context/AccessContext";
 
 export function LoginForm() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const supabase = createClient();
   const [loading, setLoading] = useState(false);
   const [generalError, setGeneralError] = useState<string | null>(null);
@@ -54,10 +52,15 @@ export function LoginForm() {
         } = await supabase.auth.getSession();
         console.log("Login Success - Session established:", !!session);
 
-        const redirectUrl = searchParams.get("redirect") || "/";
+        // Read redirect URL from context or sessionStorage fallback
+        const redirectUrl = paywallState.redirectUrl || getRedirectUrl() || "/";
 
         // Prevent redirect loop
         const target = redirectUrl.includes("/auth/login") || redirectUrl.includes("/auth/sign-up") ? "/" : redirectUrl;
+
+        // Clear redirect state
+        clearRedirectUrl();
+        setPaywallState({ isOpen: false, type: null, redirectUrl: null });
 
         router.refresh();
         router.replace(target);
@@ -67,14 +70,13 @@ export function LoginForm() {
 
   const handleSocialLogin = async (provider: "google" | "facebook") => {
     setLoading(true);
-    // Get redirect param from URL to pass through OAuth flow
-    const redirectUrl = searchParams.get("redirect") || "/";
-    const redirectTo = `${location.origin}/${redirectUrl}`;
-    console.log({ redirectTo });
+    // Social OAuth leaves the app — redirect URL is persisted in sessionStorage
+    // (already saved by AccessContext when paywallState.redirectUrl was set)
+    // The useAuthRedirect hook will pick it up on return
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo,
+        redirectTo: `${location.origin}/`,
       },
     });
 

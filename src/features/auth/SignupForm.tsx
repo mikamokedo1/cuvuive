@@ -19,6 +19,7 @@ import {
   PasswordIcon,
   UserIcon,
 } from "@/components/common/Icons";
+import { useAccess } from "@/context/AccessContext";
 
 export const MAP_ERROR = {
   "User already registered": "Email đã được đăng ký",
@@ -32,6 +33,7 @@ export function SignupForm() {
   const [generalError, setGeneralError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { paywallState } = useAccess();
 
   const formik = useFormik({
     initialValues: {
@@ -80,6 +82,9 @@ export function SignupForm() {
 
   const handleSocialLogin = async (provider: "google" | "facebook") => {
     setLoading(true);
+    // Social OAuth leaves the app — redirect URL is persisted in sessionStorage
+    // (already saved by AccessContext when paywallState.redirectUrl was set)
+    // The useAuthRedirect hook will pick it up on return
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {

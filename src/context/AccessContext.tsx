@@ -4,6 +4,27 @@ import { createContext, useContext, useState, ReactNode, useCallback } from "rea
 import { useUser } from "./UserContext";
 import { checkLessonAccess, AccessCheckResult, AccessReason } from "@/libs/actions/access";
 
+const REDIRECT_STORAGE_KEY = "auth_redirect_url";
+
+export function getRedirectUrl(): string | null {
+  if (typeof window === "undefined") return null;
+  return sessionStorage.getItem(REDIRECT_STORAGE_KEY);
+}
+
+export function clearRedirectUrl(): void {
+  if (typeof window === "undefined") return;
+  sessionStorage.removeItem(REDIRECT_STORAGE_KEY);
+}
+
+function saveRedirectUrl(url: string | null): void {
+  if (typeof window === "undefined") return;
+  if (url) {
+    sessionStorage.setItem(REDIRECT_STORAGE_KEY, url);
+  } else {
+    sessionStorage.removeItem(REDIRECT_STORAGE_KEY);
+  }
+}
+
 type PaywallType = "login" | "premium";
 
 interface AccessContextType {
@@ -40,7 +61,9 @@ export function AccessProvider({ children }: { children: ReactNode }) {
   );
 
   const showPaywall = useCallback((type: PaywallType, redirectUrl?: string) => {
-    setPaywallState({ isOpen: true, type, redirectUrl: redirectUrl || null });
+    const url = redirectUrl || null;
+    setPaywallState({ isOpen: true, type, redirectUrl: url });
+    saveRedirectUrl(url);
   }, []);
 
   const hidePaywall = useCallback(() => {
