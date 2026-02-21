@@ -15,6 +15,8 @@ import GameVehicleLogo from "@/assets/games/learn-vehicle/logo.webp";
 import GameFruitLogo from "@/assets/games/learn-fruit/logo.webp";
 import GameInstrumentLogo from "@/assets/games/learn-instrument/logo.webp";
 import GameOccupationLogo from "@/assets/games/learn-occupation/logo.png";
+import GameDinosaurLogo from "@/assets/games/learn-dinosaur/logo.png";
+import GameFoodLogo from "@/assets/games/learn-food/logo.png";
 
 interface Game {
   id: string;
@@ -88,6 +90,13 @@ const GAMES: Game[] = [
     color: "orange",
     icon: GameOccupationLogo,
   },
+  {
+    id: "learn-dinosaur",
+    title: "Học khủng long",
+    href: "/games/learn-dinosaur",
+    color: "green",
+    icon: GameDinosaurLogo,
+  },
 ];
 
 export default function Home() {
@@ -104,7 +113,15 @@ export default function Home() {
 
       {/* Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full max-w-4xl px-4 md:px-0">
-        {GAMES.map((game) => {
+        {GAMES.concat([
+          {
+            id: "learn-food",
+            title: "Học món ăn",
+            href: "/games/learn-food",
+            color: "orange",
+            icon: GameFoodLogo,
+          },
+        ]).map((game) => {
           const content = (
             <ActionButton
               variant="glossy"

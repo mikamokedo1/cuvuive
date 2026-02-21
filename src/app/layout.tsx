@@ -8,6 +8,8 @@ import { AccessProvider } from "@/context/AccessContext";
 import { MissingInfoListener } from "@/features/auth/MissingInfoListener";
 import { PaywallListener } from "@/features/paywall/PaywallListener";
 import { ProgressProvider } from "@/context/ProgressContext";
+import { PlayTimerProvider } from "@/context/PlayTimerContext";
+import { PlayTimerListener } from "@/features/parental/PlayTimerListener";
 
 import { createClient } from "@/libs/supabase/server";
 import { checkUserSubscription } from "@/libs/subscription";
@@ -62,12 +64,15 @@ export default async function RootLayout({
         <UserProvider>
           <AccessProvider>
             <ProgressProvider>
-              <OwlProvider>
-                {children}
-                <OwlCompanion />
-                <MissingInfoListener />
-                <PaywallListener />
-              </OwlProvider>
+              <PlayTimerProvider>
+                <OwlProvider>
+                  {children}
+                  <OwlCompanion />
+                  <MissingInfoListener />
+                  <PaywallListener />
+                  <PlayTimerListener />
+                </OwlProvider>
+              </PlayTimerProvider>
             </ProgressProvider>
           </AccessProvider>
         </UserProvider>

@@ -14,7 +14,7 @@ import { SignoutIcon } from "../common/Icons";
 import { useUser } from "@/context/UserContext";
 import { Dropdown } from "@/components/common/Dropdown";
 import { useAccess } from "@/context/AccessContext";
-import { User } from "lucide-react";
+import { User, Settings } from "lucide-react";
 
 const Header = () => {
   const pathname = usePathname();
@@ -85,6 +85,13 @@ const Header = () => {
               >
                 <User size={18} />
                 Hồ sơ của bé
+              </Link>
+              <Link
+                href="/settings"
+                className="w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 rounded-lg font-bold text-sm transition-colors flex items-center gap-2"
+              >
+                <Settings size={18} />
+                Cài đặt
               </Link>
               <button
                 onClick={handleLogout}

@@ -13,10 +13,12 @@ interface ProfileViewProps {
 }
 
 import { useProgress } from "@/context/ProgressContext";
+import { useRouter } from "next/navigation";
 
 export function ProfileView({ courses }: ProfileViewProps) {
   const { user, isPremium } = useUser();
   const { allProgress } = useProgress();
+  const router = useRouter();
 
   if (!user) {
     return (
@@ -25,7 +27,7 @@ export function ProfileView({ courses }: ProfileViewProps) {
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
             <p className="text-xl text-gray-500 mb-6">Vui lòng đăng nhập để xem hồ sơ.</p>
-            <ActionButton variant="glossy" color="orange">
+            <ActionButton variant="glossy" color="orange" onClick={() => router.push("/auth/login")}>
               Đăng nhập ngay
             </ActionButton>
           </div>
