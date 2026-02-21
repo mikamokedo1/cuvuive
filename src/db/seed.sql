@@ -11,7 +11,13 @@ INSERT INTO courses (id, title, description, thumbnail, sort_index) VALUES
   ('learn-color', 'Học màu sắc', 'Bé làm quen với các màu sắc cơ bản.', '/assets/courses/colors.png', 3),
   ('learn-shape', 'Học hình dạng', 'Bé nhận biết các hình dạng qua đồ vật.', '/assets/courses/shapes.png', 4),
   ('learn-animal', 'Học động vật', 'Bé làm quen với các loài động vật qua hình ảnh và âm thanh.', '/assets/courses/animals.png', 5),
-  ('learn-vehicle', 'Học phương tiện', 'Bé làm quen với các phương tiện giao thông đường bộ, đường thủy và hàng không.', '/assets/courses/vehicles.png', 6)
+  ('learn-vehicle', 'Học phương tiện', 'Bé làm quen với các phương tiện giao thông đường bộ, đường thủy và hàng không.', '/assets/courses/vehicles.png', 6),
+  ('learn-fruit', 'Học trái cây', 'Bé nhận biết tên và hình dạng của các loại trái cây quen thuộc.', '/assets/courses/fruits.png', 7),
+  ('learn-food', 'Học món ăn', 'Bé học tên các món ăn sáng, món chính và món tráng miệng.', '/assets/courses/foods.png', 8),
+  ('learn-dinosaur', 'Học khủng long', 'Khám phá thế giới của các loài khủng long.', '/assets/courses/dinosaurs.png', 9),
+  ('learn-instrument', 'Học nhạc cụ', 'Bé làm quen với các loại nhạc cụ và âm thanh của chúng.', '/assets/courses/instruments.png', 10),
+  ('learn-occupation', 'Học nghề nghiệp', 'Tìm hiểu về các nghề nghiệp phổ biến trong xã hội.', '/assets/courses/occupations.png', 11),
+  ('learn-flower', 'Học Hoa & Cây', 'Khám phá các loài hoa và cây quen thuộc ở Việt Nam.', '/assets/courses/flowers.png', 12)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   description = EXCLUDED.description,
@@ -75,6 +81,60 @@ INSERT INTO groups (id, slug, course_id, title, sort_index) VALUES
   ('learn-vehicle-group2', 'group2', 'learn-vehicle', 'Phương tiện đường thủy', 2),
   ('learn-vehicle-group3', 'group3', 'learn-vehicle', 'Phương tiện hàng không', 3),
   ('learn-vehicle-group4', 'group4', 'learn-vehicle', 'Luyện tập', 4)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  sort_index = EXCLUDED.sort_index;
+
+-- Learn Fruit Groups
+INSERT INTO groups (id, slug, course_id, title, sort_index) VALUES
+  ('learn-fruit-group1', 'group1', 'learn-fruit', 'Trái cây phổ biến', 1),
+  ('learn-fruit-group2', 'group2', 'learn-fruit', 'Trái cây nhiệt đới', 2),
+  ('learn-fruit-group3', 'group3', 'learn-fruit', 'Trái cây khác', 3)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  sort_index = EXCLUDED.sort_index;
+
+-- Learn Food Groups
+INSERT INTO groups (id, slug, course_id, title, sort_index) VALUES
+  ('learn-food-group1', 'group1', 'learn-food', 'Món ăn sáng', 1),
+  ('learn-food-group2', 'group2', 'learn-food', 'Món chính', 2),
+  ('learn-food-group3', 'group3', 'learn-food', 'Món tráng miệng', 3)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  sort_index = EXCLUDED.sort_index;
+
+-- Learn Dinosaur Groups
+INSERT INTO groups (id, slug, course_id, title, sort_index) VALUES
+  ('learn-dinosaur-group1', 'group1', 'learn-dinosaur', 'Khủng long ăn cỏ', 1),
+  ('learn-dinosaur-group2', 'group2', 'learn-dinosaur', 'Khủng long ăn thịt', 2),
+  ('learn-dinosaur-group3', 'group3', 'learn-dinosaur', 'Khủng long bay & biển', 3)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  sort_index = EXCLUDED.sort_index;
+
+-- Learn Instrument Groups
+INSERT INTO groups (id, slug, course_id, title, sort_index) VALUES
+  ('learn-instrument-group1', 'group1', 'learn-instrument', 'Nhạc cụ dây', 1),
+  ('learn-instrument-group2', 'group2', 'learn-instrument', 'Nhạc cụ gõ', 2),
+  ('learn-instrument-group3', 'group3', 'learn-instrument', 'Nhạc cụ hơi', 3)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  sort_index = EXCLUDED.sort_index;
+
+-- Learn Occupation Groups
+INSERT INTO groups (id, slug, course_id, title, sort_index) VALUES
+  ('learn-occupation-group1', 'group1', 'learn-occupation', 'Nghề cộng đồng', 1),
+  ('learn-occupation-group2', 'group2', 'learn-occupation', 'Nghề y tế & khoa học', 2),
+  ('learn-occupation-group3', 'group3', 'learn-occupation', 'Nghề nghệ thuật', 3)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  sort_index = EXCLUDED.sort_index;
+
+-- Learn Flower Groups
+INSERT INTO groups (id, slug, course_id, title, sort_index) VALUES
+  ('learn-flower-group1', 'group1', 'learn-flower', 'Hoa phổ biến', 1),
+  ('learn-flower-group2', 'group2', 'learn-flower', 'Hoa Tết & Trang trí', 2),
+  ('learn-flower-group3', 'group3', 'learn-flower', 'Cây ăn quả', 3)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   sort_index = EXCLUDED.sort_index;
@@ -208,6 +268,102 @@ INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) 
   ('learn-vehicle-g4-l1', 'lesson1', 'learn-vehicle-group4', 'learn-vehicle', 'Đây là gì?', true, 1),
   ('learn-vehicle-g4-l2', 'lesson2', 'learn-vehicle-group4', 'learn-vehicle', 'Ghép đôi', false, 2),
   ('learn-vehicle-g4-l3', 'lesson3', 'learn-vehicle-group4', 'learn-vehicle', 'Xe đi đâu?', false, 3)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  is_free = EXCLUDED.is_free,
+  sort_index = EXCLUDED.sort_index;
+
+-- Learn Fruit Lessons
+INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) VALUES
+  ('learn-fruit-g1-l1', 'lesson1', 'learn-fruit-group1', 'learn-fruit', 'Học tên trái cây', true, 1),
+  ('learn-fruit-g1-l2', 'lesson2', 'learn-fruit-group1', 'learn-fruit', 'Đây là gì?', false, 2),
+  ('learn-fruit-g1-l3', 'lesson3', 'learn-fruit-group1', 'learn-fruit', 'Ghép đôi', false, 3),
+  ('learn-fruit-g2-l1', 'lesson1', 'learn-fruit-group2', 'learn-fruit', 'Học tên trái cây', true, 1),
+  ('learn-fruit-g2-l2', 'lesson2', 'learn-fruit-group2', 'learn-fruit', 'Đây là gì?', false, 2),
+  ('learn-fruit-g2-l3', 'lesson3', 'learn-fruit-group2', 'learn-fruit', 'Ghép đôi', false, 3),
+  ('learn-fruit-g3-l1', 'lesson1', 'learn-fruit-group3', 'learn-fruit', 'Học tên trái cây', true, 1),
+  ('learn-fruit-g3-l2', 'lesson2', 'learn-fruit-group3', 'learn-fruit', 'Đây là gì?', false, 2),
+  ('learn-fruit-g3-l3', 'lesson3', 'learn-fruit-group3', 'learn-fruit', 'Ghép đôi', false, 3)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  is_free = EXCLUDED.is_free,
+  sort_index = EXCLUDED.sort_index;
+
+-- Learn Food Lessons
+INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) VALUES
+  ('learn-food-g1-l1', 'lesson1', 'learn-food-group1', 'learn-food', 'Học tên món ăn', true, 1),
+  ('learn-food-g1-l2', 'lesson2', 'learn-food-group1', 'learn-food', 'Đây là gì?', false, 2),
+  ('learn-food-g1-l3', 'lesson3', 'learn-food-group1', 'learn-food', 'Ghép đôi', false, 3),
+  ('learn-food-g2-l1', 'lesson1', 'learn-food-group2', 'learn-food', 'Học tên món ăn', true, 1),
+  ('learn-food-g2-l2', 'lesson2', 'learn-food-group2', 'learn-food', 'Đây là gì?', false, 2),
+  ('learn-food-g2-l3', 'lesson3', 'learn-food-group2', 'learn-food', 'Ghép đôi', false, 3),
+  ('learn-food-g3-l1', 'lesson1', 'learn-food-group3', 'learn-food', 'Học tên món ăn', true, 1),
+  ('learn-food-g3-l2', 'lesson2', 'learn-food-group3', 'learn-food', 'Đây là gì?', false, 2),
+  ('learn-food-g3-l3', 'lesson3', 'learn-food-group3', 'learn-food', 'Ghép đôi', false, 3)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  is_free = EXCLUDED.is_free,
+  sort_index = EXCLUDED.sort_index;
+
+-- Learn Dinosaur Lessons
+INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) VALUES
+  ('learn-dinosaur-g1-l1', 'lesson1', 'learn-dinosaur-group1', 'learn-dinosaur', 'Học tên khủng long', true, 1),
+  ('learn-dinosaur-g1-l2', 'lesson2', 'learn-dinosaur-group1', 'learn-dinosaur', 'Đây là gì?', false, 2),
+  ('learn-dinosaur-g1-l3', 'lesson3', 'learn-dinosaur-group1', 'learn-dinosaur', 'Ghép đôi', false, 3),
+  ('learn-dinosaur-g2-l1', 'lesson1', 'learn-dinosaur-group2', 'learn-dinosaur', 'Học tên khủng long', true, 1),
+  ('learn-dinosaur-g2-l2', 'lesson2', 'learn-dinosaur-group2', 'learn-dinosaur', 'Đây là gì?', false, 2),
+  ('learn-dinosaur-g2-l3', 'lesson3', 'learn-dinosaur-group2', 'learn-dinosaur', 'Ghép đôi', false, 3),
+  ('learn-dinosaur-g3-l1', 'lesson1', 'learn-dinosaur-group3', 'learn-dinosaur', 'Học tên khủng long', true, 1),
+  ('learn-dinosaur-g3-l2', 'lesson2', 'learn-dinosaur-group3', 'learn-dinosaur', 'Đây là gì?', false, 2),
+  ('learn-dinosaur-g3-l3', 'lesson3', 'learn-dinosaur-group3', 'learn-dinosaur', 'Ghép đôi', false, 3)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  is_free = EXCLUDED.is_free,
+  sort_index = EXCLUDED.sort_index;
+
+-- Learn Instrument Lessons
+INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) VALUES
+  ('learn-instrument-g1-l1', 'lesson1', 'learn-instrument-group1', 'learn-instrument', 'Học nhạc cụ', true, 1),
+  ('learn-instrument-g1-l2', 'lesson2', 'learn-instrument-group1', 'learn-instrument', 'Đây là gì?', false, 2),
+  ('learn-instrument-g1-l3', 'lesson3', 'learn-instrument-group1', 'learn-instrument', 'Ghép đôi', false, 3),
+  ('learn-instrument-g2-l1', 'lesson1', 'learn-instrument-group2', 'learn-instrument', 'Học nhạc cụ', true, 1),
+  ('learn-instrument-g2-l2', 'lesson2', 'learn-instrument-group2', 'learn-instrument', 'Đây là gì?', false, 2),
+  ('learn-instrument-g2-l3', 'lesson3', 'learn-instrument-group2', 'learn-instrument', 'Ghép đôi', false, 3),
+  ('learn-instrument-g3-l1', 'lesson1', 'learn-instrument-group3', 'learn-instrument', 'Học nhạc cụ', true, 1),
+  ('learn-instrument-g3-l2', 'lesson2', 'learn-instrument-group3', 'learn-instrument', 'Đây là gì?', false, 2),
+  ('learn-instrument-g3-l3', 'lesson3', 'learn-instrument-group3', 'learn-instrument', 'Ghép đôi', false, 3)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  is_free = EXCLUDED.is_free,
+  sort_index = EXCLUDED.sort_index;
+
+-- Learn Occupation Lessons
+INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) VALUES
+  ('learn-occupation-g1-l1', 'lesson1', 'learn-occupation-group1', 'learn-occupation', 'Học tên nghề', true, 1),
+  ('learn-occupation-g1-l2', 'lesson2', 'learn-occupation-group1', 'learn-occupation', 'Đây là gì?', false, 2),
+  ('learn-occupation-g1-l3', 'lesson3', 'learn-occupation-group1', 'learn-occupation', 'Nối dụng cụ', false, 3),
+  ('learn-occupation-g2-l1', 'lesson1', 'learn-occupation-group2', 'learn-occupation', 'Học tên nghề', true, 1),
+  ('learn-occupation-g2-l2', 'lesson2', 'learn-occupation-group2', 'learn-occupation', 'Đây là gì?', false, 2),
+  ('learn-occupation-g2-l3', 'lesson3', 'learn-occupation-group2', 'learn-occupation', 'Nối dụng cụ', false, 3),
+  ('learn-occupation-g3-l1', 'lesson1', 'learn-occupation-group3', 'learn-occupation', 'Học tên nghề', true, 1),
+  ('learn-occupation-g3-l2', 'lesson2', 'learn-occupation-group3', 'learn-occupation', 'Đây là gì?', false, 2),
+  ('learn-occupation-g3-l3', 'lesson3', 'learn-occupation-group3', 'learn-occupation', 'Nối dụng cụ', false, 3)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  is_free = EXCLUDED.is_free,
+  sort_index = EXCLUDED.sort_index;
+
+-- Learn Flower Lessons
+INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) VALUES
+  ('learn-flower-g1-l1', 'lesson1', 'learn-flower-group1', 'learn-flower', 'Học tên hoa', true, 1),
+  ('learn-flower-g1-l2', 'lesson2', 'learn-flower-group1', 'learn-flower', 'Đây là gì?', false, 2),
+  ('learn-flower-g1-l3', 'lesson3', 'learn-flower-group1', 'learn-flower', 'Ghép đôi', false, 3),
+  ('learn-flower-g2-l1', 'lesson1', 'learn-flower-group2', 'learn-flower', 'Học tên hoa', true, 1),
+  ('learn-flower-g2-l2', 'lesson2', 'learn-flower-group2', 'learn-flower', 'Đây là gì?', false, 2),
+  ('learn-flower-g2-l3', 'lesson3', 'learn-flower-group2', 'learn-flower', 'Ghép đôi', false, 3),
+  ('learn-flower-g3-l1', 'lesson1', 'learn-flower-group3', 'learn-flower', 'Học tên cây', true, 1),
+  ('learn-flower-g3-l2', 'lesson2', 'learn-flower-group3', 'learn-flower', 'Đây là gì?', false, 2),
+  ('learn-flower-g3-l3', 'lesson3', 'learn-flower-group3', 'learn-flower', 'Ghép đôi', false, 3)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   is_free = EXCLUDED.is_free,

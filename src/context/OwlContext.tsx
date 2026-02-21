@@ -133,6 +133,15 @@ export const MAP_PATHNAME_TO_TEXT = {
   "/games/learn-food/group3/lesson/lesson1": "Pé học tên các món tráng miệng",
   "/games/learn-food/group3/lesson/lesson2": "Pé chọn món ăn đang bị ẩn nhé",
   "/games/learn-food/group3/lesson/lesson3": "Pé ghép đôi cho các món ăn đi nào",
+  "/games/learn-flower/group1/lesson/lesson1": "Pé học các loại hoa phổ biến ở Việt Nam",
+  "/games/learn-flower/group1/lesson/lesson2": "Pé chọn hoa đang bị ẩn nhé",
+  "/games/learn-flower/group1/lesson/lesson3": "Pé ghép đôi cho các loại hoa đi nào",
+  "/games/learn-flower/group2/lesson/lesson1": "Pé học các loại hoa Tết và hoa trang trí",
+  "/games/learn-flower/group2/lesson/lesson2": "Pé chọn hoa đang bị ẩn nhé",
+  "/games/learn-flower/group2/lesson/lesson3": "Pé ghép đôi cho các loại hoa đi nào",
+  "/games/learn-flower/group3/lesson/lesson1": "Pé học các loại cây ăn quả Việt Nam",
+  "/games/learn-flower/group3/lesson/lesson2": "Pé chọn cây đang bị ẩn nhé",
+  "/games/learn-flower/group3/lesson/lesson3": "Pé ghép đôi cho các loại cây đi nào",
 };
 
 interface OwlContextType {

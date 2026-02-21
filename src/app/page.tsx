@@ -17,6 +17,7 @@ import GameInstrumentLogo from "@/assets/games/learn-instrument/logo.webp";
 import GameOccupationLogo from "@/assets/games/learn-occupation/logo.png";
 import GameDinosaurLogo from "@/assets/games/learn-dinosaur/logo.png";
 import GameFoodLogo from "@/assets/games/learn-food/logo.png";
+import GameFlowerLogo from "@/assets/games/learn-flower/logo.png";
 
 interface Game {
   id: string;
@@ -120,6 +121,13 @@ export default function Home() {
             href: "/games/learn-food",
             color: "orange",
             icon: GameFoodLogo,
+          },
+          {
+            id: "learn-flower",
+            title: "Học hoa & cây",
+            href: "/games/learn-flower",
+            color: "green",
+            icon: GameFlowerLogo,
           },
         ]).map((game) => {
           const content = (
