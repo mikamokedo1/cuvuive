@@ -14,6 +14,7 @@ interface ProfileViewProps {
 
 import { useProgress } from "@/context/ProgressContext";
 import { useRouter } from "next/navigation";
+import { useMemo } from "react";
 
 export function ProfileView({ courses }: ProfileViewProps) {
   const { user, isPremium } = useUser();
@@ -36,14 +37,35 @@ export function ProfileView({ courses }: ProfileViewProps) {
     );
   }
 
-  // Filter courses where user has finished at least 1 lesson
-  const startedCourses = courses.filter((course) => {
-    const progress = allProgress[course.id];
-    if (!progress) return false;
+  // Calculate how many courses are 100% complete (all lessons done)
+  const { startedCourses, userLevel } = useMemo(() => {
+    let completedCoursesCount = 0;
 
-    // Check if any group has completed lessons
-    return Object.values(progress.completedLessons).some((lessons) => lessons.length > 0);
-  });
+    const started = courses.filter((course) => {
+      const progress = allProgress[course.id];
+      if (!progress) return false;
+
+      // Check if any group has completed lessons
+      const hasStarted = Object.values(progress.completedLessons).some((lessons) => lessons.length > 0);
+
+      // Check if ALL lessons in ALL groups are completed
+      if (hasStarted) {
+        const totalLessons = course.groups.reduce((sum, g) => sum + g.lessons.length, 0);
+        const completedLessons = course.groups.reduce((sum, g) => {
+          const done = progress.completedLessons[g.id] || [];
+          return sum + done.length;
+        }, 0);
+
+        if (totalLessons > 0 && completedLessons >= totalLessons) {
+          completedCoursesCount++;
+        }
+      }
+
+      return hasStarted;
+    });
+
+    return { startedCourses: started, userLevel: 1 + completedCoursesCount };
+  }, [courses, allProgress]);
 
   return (
     <main className="min-h-screen bg-[#F0F7FF] py-6 px-4">
@@ -51,7 +73,7 @@ export function ProfileView({ courses }: ProfileViewProps) {
 
       <div className="container mx-auto px-4 pt-4">
         <div className="max-w-4xl mx-auto">
-          <UserProfileHeader user={user} isPremium={isPremium} />
+          <UserProfileHeader user={user} isPremium={isPremium} level={userLevel} />
 
           <div className="mt-12 mb-8">
             <LessonTitle tag="h1">Tiến độ học tập</LessonTitle>

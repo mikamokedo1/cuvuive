@@ -5,9 +5,10 @@ import { User } from "@supabase/supabase-js";
 interface UserProfileHeaderProps {
   user: User;
   isPremium: boolean;
+  level: number;
 }
 
-export function UserProfileHeader({ user, isPremium }: UserProfileHeaderProps) {
+export function UserProfileHeader({ user, isPremium, level }: UserProfileHeaderProps) {
   return (
     <div className="bg-[#FFF4E0] rounded-3xl p-8 border-4 border-white shadow-xl mb-10 flex flex-col md:flex-row items-center gap-8">
       <div className="relative">
@@ -31,7 +32,7 @@ export function UserProfileHeader({ user, isPremium }: UserProfileHeaderProps) {
       <div className="flex gap-4">
         <div className="bg-white px-6 py-3 rounded-2xl border-2 border-yellow-200 flex flex-col items-center">
           <Star className="text-yellow-400 mb-1" fill="currentColor" />
-          <span className="font-bold text-gray-700">Level 1</span>
+          <span className="font-bold text-gray-700">Level {level}</span>
         </div>
       </div>
     </div>
