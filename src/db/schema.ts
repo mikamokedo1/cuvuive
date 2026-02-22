@@ -119,3 +119,15 @@ export const subscriptions = pgTable("subscriptions", {
   transactionId: text("transaction_id"),
   createdAt: timestamp("created_at").defaultNow(),
 });
+
+export const feedbacks = pgTable("feedbacks", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  userId: text("user_id").references(() => users.id), // Nullable for guest feedback
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  email: text("email").notNull(),
+  phone: text("phone"), // Optional
+  createdAt: timestamp("created_at").defaultNow(),
+});
