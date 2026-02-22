@@ -1,7 +1,8 @@
 import group1 from "@/assets/games/learn-numbers/number-logo-1.png";
 import group2 from "@/assets/games/learn-numbers/number-logo-2.png";
 import group3 from "@/assets/games/learn-numbers/number-logo-3.png";
-import group4 from "@/assets/games/compare-quantity/compare-quantity-logo-4.webp";
+import group4 from "@/assets/games/learn-numbers/number-logo-4.webp";
+import group5 from "@/assets/games/compare-quantity/compare-quantity-logo-4.webp";
 import { GameWrapGroups } from "@/components/layout/GameWrapGroups";
 
 const GROUPS = [
@@ -31,11 +32,19 @@ const GROUPS = [
   },
   {
     id: "group4",
-    title: "Luyện tập",
-    description: "Luyện tập số từ 1 đến 9",
-    range: "1 - 9",
+    title: "Số 10-20",
+    description: "Học số 0 và số từ 10 đến 20",
+    range: "0, 10 - 20",
     variant: "blue" as const,
     logo: group4,
+  },
+  {
+    id: "group5",
+    title: "Luyện tập",
+    description: "Luyện tập số từ 0 đến 20",
+    range: "0 - 20",
+    variant: "green" as const,
+    logo: group5,
   },
 ];
 

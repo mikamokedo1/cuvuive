@@ -36,6 +36,8 @@ const MAP_PATHNAME_TO_SOUND: Record<string, string> = {
     "/sounds/compare-quantity/compare-quantity-group2-lesson-lesson1.mp3",
   "/games/compare-quantity/group3/lesson/lesson1":
     "/sounds/compare-quantity/compare-quantity-group3-lesson-lesson1.mp3",
+  "/games/learn-numbers/group4": HOME_SOUND,
+  "/games/learn-numbers/group5": HOME_SOUND,
 };
 
 export const MAP_PATHNAME_TO_TEXT = {
@@ -142,6 +144,12 @@ export const MAP_PATHNAME_TO_TEXT = {
   "/games/learn-flower/group3/lesson/lesson1": "Pé học các loại cây ăn quả Việt Nam",
   "/games/learn-flower/group3/lesson/lesson2": "Pé chọn cây đang bị ẩn nhé",
   "/games/learn-flower/group3/lesson/lesson3": "Pé ghép đôi cho các loại cây đi nào",
+  "/games/learn-numbers/group4/lesson/lesson1": "Pé học số 0 và từ 10 đến 20",
+  "/games/learn-numbers/group4/lesson/lesson2": "Pé chọn số đúng nhé",
+  "/games/learn-numbers/group4/lesson/lesson3": "Pé đếm và chọn số đúng nhé",
+  "/games/learn-numbers/group4/lesson/lesson4": "Pé tập viết số",
+  "/games/learn-numbers/group5/lesson/lesson1": "Pé chọn số đúng nhé",
+  "/games/learn-numbers/group5/lesson/lesson2": "Pé đếm và chọn số đúng nhé",
 };
 
 interface OwlContextType {

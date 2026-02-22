@@ -55,6 +55,24 @@ export const COURSES: CourseDef[] = [
           { id: "lesson4", title: "Tập viết số" },
         ],
       },
+      {
+        id: "group4",
+        title: "Số 10-20",
+        lessons: [
+          { id: "lesson1", title: "Học số 10-20", isFree: true },
+          { id: "lesson2", title: "Số nào đúng?" },
+          { id: "lesson3", title: "Đếm và chọn" },
+          { id: "lesson4", title: "Tập viết số" },
+        ],
+      },
+      {
+        id: "group5",
+        title: "Luyện tập",
+        lessons: [
+          { id: "lesson1", title: "Số nào đúng?", isFree: true },
+          { id: "lesson2", title: "Đếm và chọn" },
+        ],
+      },
     ],
   },
   {

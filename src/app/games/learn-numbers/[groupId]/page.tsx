@@ -12,6 +12,7 @@ import { LessonTitle } from "@/components/games/LessonTitle";
 import group1 from "@/assets/games/learn-numbers/number-logo-1.png";
 import group2 from "@/assets/games/learn-numbers/number-logo-2.png";
 import group3 from "@/assets/games/learn-numbers/number-logo-3.png";
+import group4 from "@/assets/games/learn-numbers/number-logo-4.webp";
 import { LessonCard } from "@/components/games/LessonCard";
 // Note: User mentioned "own-sleep" but design shows lock icon for locked state.
 // Using LockCardIcon for the right side image of locked cards.
@@ -31,7 +32,8 @@ export default function GroupLessonsPage() {
     group1: { title: "Nhóm 1,2,3", range: "1 - 3", image: group1 },
     group2: { title: "Nhóm 4,5,6", range: "4 - 6", image: group2 },
     group3: { title: "Nhóm 7,8,9", range: "7 - 9", image: group3 },
-    group4: { title: "Luyện tập", range: "1 - 9", image: group1 },
+    group4: { title: "Số 10-20", range: "0, 10 - 20", image: group4 },
+    group5: { title: "Luyện tập", range: "0 - 20", image: group1 },
   };
 
   const config = groupConfig[groupId];
@@ -115,7 +117,7 @@ export default function GroupLessonsPage() {
   ];
 
   // Choose lessons based on group
-  const lessons = groupId === "group4" ? practiceLessons : regularLessons;
+  const lessons = groupId === "group5" ? practiceLessons : groupId === "group4" ? regularLessons : regularLessons;
 
   // Determine active lesson
   // Logic: The first unlocked lesson that is NOT completed?
