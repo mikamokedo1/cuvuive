@@ -6,8 +6,8 @@ import { ActionButton } from "@/components/common/ActionButton";
 import { Crown } from "lucide-react";
 
 // Assets
-import LogoLong from "@/assets/logo-long.png";
-import avatarBoy from "@/assets/avatar-boy.png";
+import LogoLong from "@/assets/logo-long.webp";
+import avatarBoy from "@/assets/avatar-boy.webp";
 import avatarGirl from "@/assets/avatar-girl.webp";
 import { usePathname, useRouter } from "next/navigation";
 import { SignoutIcon } from "../common/Icons";

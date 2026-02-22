@@ -1,6 +1,6 @@
-import group1 from "@/assets/games/learn-numbers/number-logo-1.png";
-import group2 from "@/assets/games/learn-numbers/number-logo-2.png";
-import group3 from "@/assets/games/learn-numbers/number-logo-3.png";
+import group1 from "@/assets/games/learn-numbers/number-logo-1.webp";
+import group2 from "@/assets/games/learn-numbers/number-logo-2.webp";
+import group3 from "@/assets/games/learn-numbers/number-logo-3.webp";
 import group4 from "@/assets/games/learn-numbers/number-logo-4.webp";
 import group5 from "@/assets/games/compare-quantity/compare-quantity-logo-4.webp";
 import { GameWrapGroups } from "@/components/layout/GameWrapGroups";

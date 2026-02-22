@@ -1,15 +1,15 @@
 import { StaticImageData } from "next/image";
 
 // Import images
-import RedApple from "@/assets/games/learn-color/red-apple.png";
+import RedApple from "@/assets/games/learn-color/red-apple.webp";
 import BlueDolphin from "@/assets/games/learn-color/blue-whale.webp";
-import YellowBanana from "@/assets/games/learn-color/yellow-banana.png";
+import YellowBanana from "@/assets/games/learn-color/yellow-banana.webp";
 import GreenFrog from "@/assets/games/learn-color/green-frog.webp";
-import OrangeFruit from "@/assets/games/learn-color/orange-fruit.png";
-import PurpleGrape from "@/assets/games/learn-color/purple-grape.png";
-import PinkPig from "@/assets/games/learn-color/pink-pig.png";
-import BrownBear from "@/assets/games/learn-color/brown-bear.png";
-import BlackCat from "@/assets/games/learn-color/black-cat.png";
+import OrangeFruit from "@/assets/games/learn-color/orange-fruit.webp";
+import PurpleGrape from "@/assets/games/learn-color/purple-grape.webp";
+import PinkPig from "@/assets/games/learn-color/pink-pig.webp";
+import BrownBear from "@/assets/games/learn-color/brown-bear.webp";
+import BlackCat from "@/assets/games/learn-color/black-cat.webp";
 import WhiteCloud from "@/assets/games/learn-color/cloud.webp";
 import LogoLesson1 from "@/assets/games/learn-color/learn-color-logo-1.webp";
 import LogoLesson2 from "@/assets/games/learn-color/learn-color-logo-2.webp";

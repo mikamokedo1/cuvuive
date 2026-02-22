@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useUser } from "./UserContext";
 import { createClient } from "@/libs/supabase/client";
 import { generateUUID } from "@/libs/utils/uuid";
@@ -25,16 +25,11 @@ const STORAGE_KEY = "number-game-progress";
 
 export function ProgressProvider({ children }: { children: React.ReactNode }) {
   const { user } = useUser();
-  const supabase = createClient();
+  const supabaseRef = useRef(createClient());
+  const supabase = supabaseRef.current;
 
   const [allProgress, setAllProgress] = useState<Record<string, ProgressState>>({});
   const [isLoaded, setIsLoaded] = useState(false);
-
-  // Derived legacy state for backward compatibility (default to learn-numbers)
-  const progress = allProgress["learn-numbers"] || {
-    completedGroups: [],
-    completedLessons: {},
-  };
 
   // Load from local storage ONLY for anonymous users
   useEffect(() => {
@@ -150,62 +145,50 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     };
 
     fetchStructureAndProgress();
-  }, [user, supabase]);
+  }, [user]);
 
-  // Re-calculate completed groups whenever 'allProgress' (lessons) OR 'courseStructure' changes
-  // This ensures that even if structure loads AFTER progress, we update the groups status.
-  useEffect(() => {
-    setAllProgress((prevAll) => {
-      const newAll = { ...prevAll };
-      let changed = false;
+  // Derive completedGroups from allProgress + courseStructure (no state mutation needed)
+  const derivedCompletedGroups = useMemo(() => {
+    const result: Record<string, string[]> = {};
 
-      Object.keys(newAll).forEach((courseId) => {
-        const courseProgress = newAll[courseId];
-        const courseStruct = courseStructure[courseId] || {};
+    Object.keys(allProgress).forEach((courseId) => {
+      const courseProgress = allProgress[courseId];
+      const courseStruct = courseStructure[courseId] || {};
+      const completed: string[] = [];
 
-        const newCompletedGroups: string[] = [];
+      Object.keys(courseProgress.completedLessons).forEach((groupId) => {
+        const completedCount = courseProgress.completedLessons[groupId].length;
+        const requiredCount = courseStruct[groupId] || 3;
 
-        Object.keys(courseProgress.completedLessons).forEach((groupId) => {
-          const completedCount = courseProgress.completedLessons[groupId].length;
-          // For learn-shape: group1 and group2 have 4 lessons, group3 has 3
-          // For learn-color: all groups have 3 lessons
-          // For other courses: default to 4 lessons
-          // Use database structure first, default to 3 if not loaded
-          const requiredCount = courseStruct[groupId] || 3;
-
-          if (completedCount > 0 && completedCount >= requiredCount) {
-            newCompletedGroups.push(groupId);
-          }
-        });
-
-        // Simple array compare to see if changed
-        const isSame =
-          newCompletedGroups.length === courseProgress.completedGroups.length &&
-          newCompletedGroups.every((g) => courseProgress.completedGroups.includes(g));
-
-        if (!isSame) {
-          courseProgress.completedGroups = newCompletedGroups;
-          changed = true;
+        if (completedCount > 0 && completedCount >= requiredCount) {
+          completed.push(groupId);
         }
       });
 
-      return changed ? newAll : prevAll;
+      result[courseId] = completed;
     });
-  }, [courseStructure, allProgress]);
-  // Wait, modifying allProgress in useEffect dependent on allProgress is a loop.
-  // We should split "Lessons State" and "Groups Status (Derived)".
-  // But for now, to fit in current structure:
-  // We can just rely on the fact that we ONLY update if 'changed' is true.
-  // But 'prevAll' in setAllProgress is fresh.
 
-  // Actually, simpler approach: Update the logic inside 'markLessonComplete' and the initial fetch
-  // to use courseStructure. To handle the "structure loads later" case, we can just trigger a recalc.
+    return result;
+  }, [allProgress, courseStructure]);
 
-  // Let's perform the recalc in the same useEffect we added or a new safe one.
-  // Ideally, 'completedGroups' should be derived data, not state.
-  // But refactoring that might be too big.
+  // Merge derived completedGroups back into allProgress for backward compatibility
+  // This ensures external consumers (e.g., `allProgress["learn-animal"].completedGroups`) still work
+  const allProgressWithGroups = useMemo(() => {
+    const result: Record<string, ProgressState> = {};
+    Object.keys(allProgress).forEach((courseId) => {
+      result[courseId] = {
+        completedLessons: allProgress[courseId].completedLessons,
+        completedGroups: derivedCompletedGroups[courseId] || [],
+      };
+    });
+    return result;
+  }, [allProgress, derivedCompletedGroups]);
 
-  // Let's stick to updating the calculations in the places they happen, fetching structure first.
+  // Derived legacy state for backward compatibility uses the merged version
+  const progressWithGroups = allProgressWithGroups["learn-numbers"] || {
+    completedGroups: [],
+    completedLessons: {},
+  };
 
   // Save to local storage ONLY for anonymous users
   useEffect(() => {
@@ -215,7 +198,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
   }, [allProgress, user]);
 
   const markLessonComplete = async (groupId: string, lessonId: string, courseId: string = "learn-numbers") => {
-    // 1. Optimistic update
+    // 1. Optimistic update — only update completedLessons, groups are derived automatically
     setAllProgress((prevAll) => {
       const prevCourse = prevAll[courseId] || { completedGroups: [], completedLessons: {} };
 
@@ -225,24 +208,10 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
       const newGroupLessons = [...groupLessons, lessonId];
       const newCompletedLessons = { ...prevCourse.completedLessons, [groupId]: newGroupLessons };
 
-      // Check if group is fully complete
-      const courseStruct = courseStructure[courseId] || {};
-      // For learn-shape: group1 and group2 have 4 lessons, group3 has 3
-      // For learn-color: all groups have 3 lessons
-      // For other courses: default to 4 lessons
-      // Use database structure first, default to 3 if not loaded
-      const requiredLessons = courseStruct[groupId] || 3;
-      const isGroupDone = newGroupLessons.length >= requiredLessons;
-
-      let newCompletedGroups = prevCourse.completedGroups;
-      if (isGroupDone && !prevCourse.completedGroups.includes(groupId)) {
-        newCompletedGroups = [...prevCourse.completedGroups, groupId];
-      }
-
       return {
         ...prevAll,
         [courseId]: {
-          completedGroups: newCompletedGroups,
+          ...prevCourse,
           completedLessons: newCompletedLessons,
         },
       };
@@ -287,8 +256,8 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
   };
 
   const isGroupUnlocked = (groupId: string, courseId: string = "learn-numbers") => {
-    // Check specific course progress
-    const courseProgress = allProgress[courseId] || { completedGroups: [] };
+    // Use derived completed groups
+    const completedGroups = derivedCompletedGroups[courseId] || [];
 
     // Generic check for groupN pattern
     const match = groupId.match(/^group(\d+)$/);
@@ -299,17 +268,11 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
 
       // groupN requires group(N-1) to be completed
       const prevGroupId = `group${groupNum - 1}`;
-      return courseProgress.completedGroups.includes(prevGroupId);
+      return completedGroups.includes(prevGroupId);
     }
 
-    // Fallback for non-standard IDs (default to locked unless explicitly handled or is first)
-    // If you have named groups like "intro", "advanced", you would add specific logic here.
+    // Fallback for non-standard IDs
     return false;
-  };
-
-  // Helper for Profile Page to calculate stats
-  const getCourseProgress = (courseId: string) => {
-    return allProgress[courseId];
   };
 
   const isLessonUnlocked = (groupId: string, lessonId: string, courseId: string = "learn-numbers") => {
@@ -340,7 +303,14 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <ProgressContext.Provider
-      value={{ progress, allProgress, markLessonComplete, isGroupUnlocked, isLessonUnlocked, isLoaded }}
+      value={{
+        progress: progressWithGroups,
+        allProgress: allProgressWithGroups,
+        markLessonComplete,
+        isGroupUnlocked,
+        isLessonUnlocked,
+        isLoaded,
+      }}
     >
       {children}
     </ProgressContext.Provider>

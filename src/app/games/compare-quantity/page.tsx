@@ -4,7 +4,7 @@ import Group3Logo from "@/assets/games/compare-quantity/compare-quantity-logo-3.
 import Group4Logo from "@/assets/games/compare-quantity/compare-quantity-logo-4.webp";
 
 // Reuse assets
-import compareLogo from "@/assets/games/game-3-logo.png";
+import compareLogo from "@/assets/games/game-3-logo.webp";
 import { GameWrapGroups } from "@/components/layout/GameWrapGroups";
 
 const GROUPS = [

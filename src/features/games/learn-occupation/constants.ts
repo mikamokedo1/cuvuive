@@ -1,53 +1,53 @@
 import { StaticImageData } from "next/image";
 
 // Import group logos
-import LogoGroup1 from "@/assets/games/learn-occupation/group1.png";
-import LogoGroup2 from "@/assets/games/learn-occupation/group2.png";
-import LogoGroup3 from "@/assets/games/learn-occupation/group3.png";
+import LogoGroup1 from "@/assets/games/learn-occupation/group1.webp";
+import LogoGroup2 from "@/assets/games/learn-occupation/group2.webp";
+import LogoGroup3 from "@/assets/games/learn-occupation/group3.webp";
 
 // Import Community Helpers (Group 1)
-import Police from "@/assets/games/learn-occupation/police.png";
-import Firefighter from "@/assets/games/learn-occupation/firefighter.png";
-import Teacher from "@/assets/games/learn-occupation/teacher.png";
-import Chef from "@/assets/games/learn-occupation/chef.png";
-import Farmer from "@/assets/games/learn-occupation/farmer.png";
-import Driver from "@/assets/games/learn-occupation/driver.png";
+import Police from "@/assets/games/learn-occupation/police.webp";
+import Firefighter from "@/assets/games/learn-occupation/firefighter.webp";
+import Teacher from "@/assets/games/learn-occupation/teacher.webp";
+import Chef from "@/assets/games/learn-occupation/chef.webp";
+import Farmer from "@/assets/games/learn-occupation/farmer.webp";
+import Driver from "@/assets/games/learn-occupation/driver.webp";
 
 // Import Medical & Science (Group 2)
-import Doctor from "@/assets/games/learn-occupation/doctor.png";
-import Nurse from "@/assets/games/learn-occupation/nurse.png";
-import Dentist from "@/assets/games/learn-occupation/dentist.png";
-import Scientist from "@/assets/games/learn-occupation/scientist.png";
-import Pharmacist from "@/assets/games/learn-occupation/pharmacist.png";
-import Veterinarian from "@/assets/games/learn-occupation/veterinarian.png";
+import Doctor from "@/assets/games/learn-occupation/doctor.webp";
+import Nurse from "@/assets/games/learn-occupation/nurse.webp";
+import Dentist from "@/assets/games/learn-occupation/dentist.webp";
+import Scientist from "@/assets/games/learn-occupation/scientist.webp";
+import Pharmacist from "@/assets/games/learn-occupation/pharmacist.webp";
+import Veterinarian from "@/assets/games/learn-occupation/veterinarian.webp";
 
 // Import Creative & Entertainment (Group 3)
-import Singer from "@/assets/games/learn-occupation/singer.png";
-import Painter from "@/assets/games/learn-occupation/painter.png";
-import Dancer from "@/assets/games/learn-occupation/dancer.png";
-import Photographer from "@/assets/games/learn-occupation/photographer.png";
-import Athlete from "@/assets/games/learn-occupation/athlete.png";
-import Astronaut from "@/assets/games/learn-occupation/astronaut.png";
+import Singer from "@/assets/games/learn-occupation/singer.webp";
+import Painter from "@/assets/games/learn-occupation/painter.webp";
+import Dancer from "@/assets/games/learn-occupation/dancer.webp";
+import Photographer from "@/assets/games/learn-occupation/photographer.webp";
+import Athlete from "@/assets/games/learn-occupation/athlete.webp";
+import Astronaut from "@/assets/games/learn-occupation/astronaut.webp";
 
 // Import Tool images
-import ToolPolice from "@/assets/games/learn-occupation/tool_police.png";
-import ToolFirefighter from "@/assets/games/learn-occupation/tool_firefighter.png";
-import ToolTeacher from "@/assets/games/learn-occupation/tool_teacher.png";
-import ToolChef from "@/assets/games/learn-occupation/tool_chef.png";
-import ToolFarmer from "@/assets/games/learn-occupation/tool_farmer.png";
-import ToolDriver from "@/assets/games/learn-occupation/tool_driver.png";
-import ToolDoctor from "@/assets/games/learn-occupation/tool_doctor.png";
-import ToolNurse from "@/assets/games/learn-occupation/tool_nurse.png";
-import ToolDentist from "@/assets/games/learn-occupation/tool_dentist.png";
-import ToolScientist from "@/assets/games/learn-occupation/tool_scientist.png";
-import ToolPharmacist from "@/assets/games/learn-occupation/tool_pharmacist.png";
-import ToolVeterinarian from "@/assets/games/learn-occupation/tool_veterinarian.png";
-import ToolSinger from "@/assets/games/learn-occupation/tool_singer.png";
-import ToolPainter from "@/assets/games/learn-occupation/tool_painter.png";
-import ToolDancer from "@/assets/games/learn-occupation/tool_dancer.png";
-import ToolPhotographer from "@/assets/games/learn-occupation/tool_photographer.png";
-import ToolAthlete from "@/assets/games/learn-occupation/tool_athlete.png";
-import ToolAstronaut from "@/assets/games/learn-occupation/tool_astronaut.png";
+import ToolPolice from "@/assets/games/learn-occupation/tool_police.webp";
+import ToolFirefighter from "@/assets/games/learn-occupation/tool_firefighter.webp";
+import ToolTeacher from "@/assets/games/learn-occupation/tool_teacher.webp";
+import ToolChef from "@/assets/games/learn-occupation/tool_chef.webp";
+import ToolFarmer from "@/assets/games/learn-occupation/tool_farmer.webp";
+import ToolDriver from "@/assets/games/learn-occupation/tool_driver.webp";
+import ToolDoctor from "@/assets/games/learn-occupation/tool_doctor.webp";
+import ToolNurse from "@/assets/games/learn-occupation/tool_nurse.webp";
+import ToolDentist from "@/assets/games/learn-occupation/tool_dentist.webp";
+import ToolScientist from "@/assets/games/learn-occupation/tool_scientist.webp";
+import ToolPharmacist from "@/assets/games/learn-occupation/tool_pharmacist.webp";
+import ToolVeterinarian from "@/assets/games/learn-occupation/tool_veterinarian.webp";
+import ToolSinger from "@/assets/games/learn-occupation/tool_singer.webp";
+import ToolPainter from "@/assets/games/learn-occupation/tool_painter.webp";
+import ToolDancer from "@/assets/games/learn-occupation/tool_dancer.webp";
+import ToolPhotographer from "@/assets/games/learn-occupation/tool_photographer.webp";
+import ToolAthlete from "@/assets/games/learn-occupation/tool_athlete.webp";
+import ToolAstronaut from "@/assets/games/learn-occupation/tool_astronaut.webp";
 
 export type OccupationCategory = "community" | "medical" | "creative";
 

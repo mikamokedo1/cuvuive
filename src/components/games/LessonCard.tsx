@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { cn } from "@/libs/utils/cn";
-import LockCardIcon from "@/assets/games/lock-card.png";
+import LockCardIcon from "@/assets/games/lock-card.webp";
 import OwnSayHi from "@/assets/games/common/owl-say-hi.webp";
 import PlayButton from "@/components/common/PlayButton";
 import { playButtonSound } from "@/libs/utils/playSound";

@@ -1,33 +1,33 @@
 import { StaticImageData } from "next/image";
 
 // Import group logos
-import LogoGroup1 from "@/assets/games/learn-food/group1.png";
-import LogoGroup2 from "@/assets/games/learn-food/group2.png";
-import LogoGroup3 from "@/assets/games/learn-food/group3.png";
+import LogoGroup1 from "@/assets/games/learn-food/group1.webp";
+import LogoGroup2 from "@/assets/games/learn-food/group2.webp";
+import LogoGroup3 from "@/assets/games/learn-food/group3.webp";
 
 // Import Breakfast Items (Group 1)
-import BanhMi from "@/assets/games/learn-food/banh_mi.png";
-import Pho from "@/assets/games/learn-food/pho.png";
-import TrungOpLa from "@/assets/games/learn-food/trung_op_la.png";
-import SuaTuoi from "@/assets/games/learn-food/sua_tuoi.png";
-import NguCoc from "@/assets/games/learn-food/ngu_coc.png";
-import XucXich from "@/assets/games/learn-food/xuc_xich.png";
+import BanhMi from "@/assets/games/learn-food/banh_mi.webp";
+import Pho from "@/assets/games/learn-food/pho.webp";
+import TrungOpLa from "@/assets/games/learn-food/trung_op_la.webp";
+import SuaTuoi from "@/assets/games/learn-food/sua_tuoi.webp";
+import NguCoc from "@/assets/games/learn-food/ngu_coc.webp";
+import XucXich from "@/assets/games/learn-food/xuc_xich.webp";
 
 // Import Main Dishes (Group 2)
-import ComTrang from "@/assets/games/learn-food/com_trang.png";
-import Canh from "@/assets/games/learn-food/canh.png";
-import GaRan from "@/assets/games/learn-food/ga_ran.png";
-import Pizza from "@/assets/games/learn-food/pizza.png";
-import Hamburger from "@/assets/games/learn-food/hamburger.png";
-import MiY from "@/assets/games/learn-food/mi_y.png";
+import ComTrang from "@/assets/games/learn-food/com_trang.webp";
+import Canh from "@/assets/games/learn-food/canh.webp";
+import GaRan from "@/assets/games/learn-food/ga_ran.webp";
+import Pizza from "@/assets/games/learn-food/pizza.webp";
+import Hamburger from "@/assets/games/learn-food/hamburger.webp";
+import MiY from "@/assets/games/learn-food/mi_y.webp";
 
 // Import Desserts (Group 3)
-import Kem from "@/assets/games/learn-food/kem.png";
-import BanhNgot from "@/assets/games/learn-food/banh_ngot.png";
-import NuocCam from "@/assets/games/learn-food/nuoc_cam.png";
-import SuaChua from "@/assets/games/learn-food/sua_chua.png";
-import BanhVong from "@/assets/games/learn-food/banh_vong.png";
-import BanhQuy from "@/assets/games/learn-food/banh_quy.png";
+import Kem from "@/assets/games/learn-food/kem.webp";
+import BanhNgot from "@/assets/games/learn-food/banh_ngot.webp";
+import NuocCam from "@/assets/games/learn-food/nuoc_cam.webp";
+import SuaChua from "@/assets/games/learn-food/sua_chua.webp";
+import BanhVong from "@/assets/games/learn-food/banh_vong.webp";
+import BanhQuy from "@/assets/games/learn-food/banh_quy.webp";
 
 export type FoodCategory = "breakfast" | "main_dish" | "dessert";
 

@@ -1,8 +1,8 @@
 import Image, { StaticImageData } from "next/image";
 import { cn } from "@/libs/utils/cn";
-import lockImg from "@/assets/games/lock-card.png";
+import lockImg from "@/assets/games/lock-card.webp";
 import { ActionButton } from "@/components/common/ActionButton";
-import Star from "@/assets/games/star.png";
+import Star from "@/assets/games/star.webp";
 
 interface GroupCardProps {
   title: string;

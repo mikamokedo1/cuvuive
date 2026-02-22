@@ -1,5 +1,5 @@
 import { GROUPS } from "@/features/games/learn-food/constants";
-import GameFoodLogo from "@/assets/games/learn-food/logo.png";
+import GameFoodLogo from "@/assets/games/learn-food/logo.webp";
 import { GameWrapGroups } from "@/components/layout/GameWrapGroups";
 
 export default function LearnFoodPage() {

@@ -9,7 +9,7 @@ import { LessonTitle } from "@/components/games/LessonTitle";
 import { LessonCard } from "@/components/games/LessonCard";
 import { GROUPS } from "@/features/games/learn-color/constants";
 import Image from "next/image";
-import GameLogo from "@/assets/games/learn-numbers/number-logo-1.png"; // Placeholder
+import GameLogo from "@/assets/games/learn-numbers/number-logo-1.webp"; // Placeholder
 
 export default function GroupLessonsPage() {
   const params = useParams();

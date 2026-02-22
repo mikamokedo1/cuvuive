@@ -1,33 +1,33 @@
 import { StaticImageData } from "next/image";
 
 // Import group logos
-import LogoGroup1 from "@/assets/games/learn-flower/group1.png";
-import LogoGroup2 from "@/assets/games/learn-flower/group2.png";
-import LogoGroup3 from "@/assets/games/learn-flower/group3.png";
+import LogoGroup1 from "@/assets/games/learn-flower/group1.webp";
+import LogoGroup2 from "@/assets/games/learn-flower/group2.webp";
+import LogoGroup3 from "@/assets/games/learn-flower/group3.webp";
 
 // Import Group 1: Hoa Phổ Biến (Common Vietnamese Flowers)
-import HoaSen from "@/assets/games/learn-flower/hoa_sen.png";
-import HoaMai from "@/assets/games/learn-flower/hoa_mai.png";
-import HoaDao from "@/assets/games/learn-flower/hoa_dao.png";
-import HoaCuc from "@/assets/games/learn-flower/hoa_cuc.png";
-import HoaHong from "@/assets/games/learn-flower/hoa_hong.png";
-import HoaLan from "@/assets/games/learn-flower/hoa_lan.png";
+import HoaSen from "@/assets/games/learn-flower/hoa_sen.webp";
+import HoaMai from "@/assets/games/learn-flower/hoa_mai.webp";
+import HoaDao from "@/assets/games/learn-flower/hoa_dao.webp";
+import HoaCuc from "@/assets/games/learn-flower/hoa_cuc.webp";
+import HoaHong from "@/assets/games/learn-flower/hoa_hong.webp";
+import HoaLan from "@/assets/games/learn-flower/hoa_lan.webp";
 
 // Import Group 2: Hoa Tết & Hoa Trang Trí (Tết & Decorative Flowers)
-import HoaLy from "@/assets/games/learn-flower/hoa_ly.png";
-import HoaDongTien from "@/assets/games/learn-flower/hoa_dong_tien.png";
-import HoaCatTuong from "@/assets/games/learn-flower/hoa_cat_tuong.png";
-import HoaVanTho from "@/assets/games/learn-flower/hoa_van_tho.png";
-import HoaGiay from "@/assets/games/learn-flower/hoa_giay.png";
-import HoaPhuong from "@/assets/games/learn-flower/hoa_phuong.png";
+import HoaLy from "@/assets/games/learn-flower/hoa_ly.webp";
+import HoaDongTien from "@/assets/games/learn-flower/hoa_dong_tien.webp";
+import HoaCatTuong from "@/assets/games/learn-flower/hoa_cat_tuong.webp";
+import HoaVanTho from "@/assets/games/learn-flower/hoa_van_tho.webp";
+import HoaGiay from "@/assets/games/learn-flower/hoa_giay.webp";
+import HoaPhuong from "@/assets/games/learn-flower/hoa_phuong.webp";
 
 // Import Group 3: Cây Ăn Quả (Fruit Trees)
-import CayXoai from "@/assets/games/learn-flower/cay_xoai.png";
-import CayDua from "@/assets/games/learn-flower/cay_dua.png";
-import CayChuoi from "@/assets/games/learn-flower/cay_chuoi.png";
-import CayBuoi from "@/assets/games/learn-flower/cay_buoi.png";
-import CayNhan from "@/assets/games/learn-flower/cay_nhan.png";
-import CayMit from "@/assets/games/learn-flower/cay_mit.png";
+import CayXoai from "@/assets/games/learn-flower/cay_xoai.webp";
+import CayDua from "@/assets/games/learn-flower/cay_dua.webp";
+import CayChuoi from "@/assets/games/learn-flower/cay_chuoi.webp";
+import CayBuoi from "@/assets/games/learn-flower/cay_buoi.webp";
+import CayNhan from "@/assets/games/learn-flower/cay_nhan.webp";
+import CayMit from "@/assets/games/learn-flower/cay_mit.webp";
 
 export type FlowerCategory = "common" | "tet" | "tree";
 

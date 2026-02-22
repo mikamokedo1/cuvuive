@@ -1,33 +1,33 @@
 import { StaticImageData } from "next/image";
 
 // Import group logos
-import LogoGroup1 from "@/assets/games/learn-dinosaur/group1.png";
-import LogoGroup2 from "@/assets/games/learn-dinosaur/group2.png";
-import LogoGroup3 from "@/assets/games/learn-dinosaur/group3.png";
+import LogoGroup1 from "@/assets/games/learn-dinosaur/group1.webp";
+import LogoGroup2 from "@/assets/games/learn-dinosaur/group2.webp";
+import LogoGroup3 from "@/assets/games/learn-dinosaur/group3.webp";
 
 // Import Herbivores (Group 1)
-import Triceratops from "@/assets/games/learn-dinosaur/triceratops.png";
-import Stegosaurus from "@/assets/games/learn-dinosaur/stegosaurus.png";
-import Brachiosaurus from "@/assets/games/learn-dinosaur/brachiosaurus.png";
-import Ankylosaurus from "@/assets/games/learn-dinosaur/ankylosaurus.png";
-import Parasaurolophus from "@/assets/games/learn-dinosaur/parasaurolophus.png";
-import Diplodocus from "@/assets/games/learn-dinosaur/diplodocus.png";
+import Triceratops from "@/assets/games/learn-dinosaur/triceratops.webp";
+import Stegosaurus from "@/assets/games/learn-dinosaur/stegosaurus.webp";
+import Brachiosaurus from "@/assets/games/learn-dinosaur/brachiosaurus.webp";
+import Ankylosaurus from "@/assets/games/learn-dinosaur/ankylosaurus.webp";
+import Parasaurolophus from "@/assets/games/learn-dinosaur/parasaurolophus.webp";
+import Diplodocus from "@/assets/games/learn-dinosaur/diplodocus.webp";
 
 // Import Carnivores (Group 2)
-import TRex from "@/assets/games/learn-dinosaur/trex.png";
-import Velociraptor from "@/assets/games/learn-dinosaur/velociraptor.png";
-import Spinosaurus from "@/assets/games/learn-dinosaur/spinosaurus.png";
-import Allosaurus from "@/assets/games/learn-dinosaur/allosaurus.png";
-import Carnotaurus from "@/assets/games/learn-dinosaur/carnotaurus.png";
-import Dilophosaurus from "@/assets/games/learn-dinosaur/dilophosaurus.png";
+import TRex from "@/assets/games/learn-dinosaur/trex.webp";
+import Velociraptor from "@/assets/games/learn-dinosaur/velociraptor.webp";
+import Spinosaurus from "@/assets/games/learn-dinosaur/spinosaurus.webp";
+import Allosaurus from "@/assets/games/learn-dinosaur/allosaurus.webp";
+import Carnotaurus from "@/assets/games/learn-dinosaur/carnotaurus.webp";
+import Dilophosaurus from "@/assets/games/learn-dinosaur/dilophosaurus.webp";
 
 // Import Flying & Sea (Group 3)
-import Pteranodon from "@/assets/games/learn-dinosaur/pteranodon.png";
-import Plesiosaurus from "@/assets/games/learn-dinosaur/plesiosaurus.png";
-import Mosasaurus from "@/assets/games/learn-dinosaur/mosasaurus.png";
-import Ichthyosaurus from "@/assets/games/learn-dinosaur/ichthyosaurus.png";
-import Quetzalcoatlus from "@/assets/games/learn-dinosaur/quetzalcoatlus.png";
-import Archelon from "@/assets/games/learn-dinosaur/archelon.png";
+import Pteranodon from "@/assets/games/learn-dinosaur/pteranodon.webp";
+import Plesiosaurus from "@/assets/games/learn-dinosaur/plesiosaurus.webp";
+import Mosasaurus from "@/assets/games/learn-dinosaur/mosasaurus.webp";
+import Ichthyosaurus from "@/assets/games/learn-dinosaur/ichthyosaurus.webp";
+import Quetzalcoatlus from "@/assets/games/learn-dinosaur/quetzalcoatlus.webp";
+import Archelon from "@/assets/games/learn-dinosaur/archelon.webp";
 
 export type DinosaurCategory = "herbivore" | "carnivore" | "flying_sea";
 

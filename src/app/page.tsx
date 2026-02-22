@@ -6,18 +6,18 @@ import Header from "@/components/layout/Header";
 
 // Assets
 import BgImage from "@/assets/bg.jpg";
-import NumberLogo from "@/assets/games/learn-numbers/number-logo.png";
-import Game3Logo from "@/assets/games/game-3-logo.png";
+import NumberLogo from "@/assets/games/learn-numbers/number-logo.webp";
+import Game3Logo from "@/assets/games/game-3-logo.webp";
 import GameColorLogo from "@/assets/games/learn-color-color.webp";
 import ShapeLogo from "@/assets/games/learn-shape/learn-shape-logo.webp";
 import GameAnimalLogo from "@/assets/games/learn-animal/logo.webp";
 import GameVehicleLogo from "@/assets/games/learn-vehicle/logo.webp";
 import GameFruitLogo from "@/assets/games/learn-fruit/logo.webp";
 import GameInstrumentLogo from "@/assets/games/learn-instrument/logo.webp";
-import GameOccupationLogo from "@/assets/games/learn-occupation/logo.png";
-import GameDinosaurLogo from "@/assets/games/learn-dinosaur/logo.png";
-import GameFoodLogo from "@/assets/games/learn-food/logo.png";
-import GameFlowerLogo from "@/assets/games/learn-flower/logo.png";
+import GameOccupationLogo from "@/assets/games/learn-occupation/logo.webp";
+import GameDinosaurLogo from "@/assets/games/learn-dinosaur/logo.webp";
+import GameFoodLogo from "@/assets/games/learn-food/logo.webp";
+import GameFlowerLogo from "@/assets/games/learn-flower/logo.webp";
 
 interface Game {
   id: string;

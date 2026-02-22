@@ -1,5 +1,5 @@
 import { GROUPS } from "@/features/games/learn-occupation/constants";
-import GameOccupationLogo from "@/assets/games/learn-occupation/logo.png";
+import GameOccupationLogo from "@/assets/games/learn-occupation/logo.webp";
 import { GameWrapGroups } from "@/components/layout/GameWrapGroups";
 
 export default function LearnOccupationPage() {
