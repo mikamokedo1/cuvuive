@@ -14,7 +14,7 @@ import { SignoutIcon } from "../common/Icons";
 import { useUser } from "@/context/UserContext";
 import { Dropdown } from "@/components/common/Dropdown";
 import { useAccess } from "@/context/AccessContext";
-import { User, Settings, MessageSquare } from "lucide-react";
+import { User, Settings, MessageSquare, Trophy } from "lucide-react";
 
 const Header = () => {
   const pathname = usePathname();
@@ -80,11 +80,11 @@ const Header = () => {
               </div>
 
               <Link
-                href="/profile"
+                href="/learn-progress"
                 className="w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 rounded-lg font-bold text-sm transition-colors flex items-center gap-2"
               >
-                <User size={18} />
-                Hồ sơ của bé
+                <Trophy size={18} />
+                Tiến độ học tập
               </Link>
               <Link
                 href="/settings"

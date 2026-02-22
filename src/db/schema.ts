@@ -129,5 +129,6 @@ export const feedbacks = pgTable("feedbacks", {
   description: text("description").notNull(),
   email: text("email").notNull(),
   phone: text("phone"), // Optional
+  isResponded: boolean("is_responded").default(false),
   createdAt: timestamp("created_at").defaultNow(),
 });

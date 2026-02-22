@@ -8,7 +8,17 @@ import { eq, and, gt, desc } from "drizzle-orm";
  * potentially stale `is_pro` flags in the `users` table.
  */
 export async function checkUserSubscription(userId: string): Promise<boolean> {
-  if (!userId) return false;
+  const details = await getUserSubscriptionDetails(userId);
+  return details.isPremium;
+}
+
+/**
+ * Gets detailed subscription information for a user.
+ */
+export async function getUserSubscriptionDetails(
+  userId: string,
+): Promise<{ isPremium: boolean; endDate: Date | null }> {
+  if (!userId) return { isPremium: false, endDate: null };
 
   // 1. Get the latest active subscription that hasn't expired
   const validSubscription = await db
@@ -25,13 +35,10 @@ export async function checkUserSubscription(userId: string): Promise<boolean> {
     .limit(1);
 
   const isValid = validSubscription.length > 0;
+  const endDate = isValid ? validSubscription[0].endDate : null;
 
   // 2. Optional: Auto-correct the user table if it's out of sync
-  // This is a "lazy update" strategy.
   if (!isValid) {
-    // If we didn't find a valid sub, but user is marked as pro, fix it.
-    // We check purely for side-effect, don't await this if performance is critical
-    // but useful to keep DB clean.
     const user = await db.query.users.findFirst({
       where: eq(users.id, userId),
       columns: { isPro: true },
@@ -42,5 +49,5 @@ export async function checkUserSubscription(userId: string): Promise<boolean> {
     }
   }
 
-  return isValid;
+  return { isPremium: isValid, endDate };
 }

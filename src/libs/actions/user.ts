@@ -1,6 +1,6 @@
 "use server";
 
-import { checkUserSubscription } from "@/libs/subscription";
+import { checkUserSubscription, getUserSubscriptionDetails } from "@/libs/subscription";
 import { createClient } from "@/libs/supabase/server";
 
 export async function getSubscriptionStatusAction(): Promise<boolean> {
@@ -14,4 +14,17 @@ export async function getSubscriptionStatusAction(): Promise<boolean> {
   }
 
   return await checkUserSubscription(user.id);
+}
+
+export async function getSubscriptionDetailsAction(): Promise<{ isPremium: boolean; endDate: Date | null }> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return { isPremium: false, endDate: null };
+  }
+
+  return await getUserSubscriptionDetails(user.id);
 }

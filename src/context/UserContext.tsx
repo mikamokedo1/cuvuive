@@ -3,7 +3,7 @@
 import { createClient } from "@/libs/supabase/client";
 import { User } from "@supabase/supabase-js";
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
-import { getSubscriptionStatusAction } from "@/libs/actions/user";
+import { getSubscriptionDetailsAction } from "@/libs/actions/user";
 
 interface UserContextType {
   user: User | null;
@@ -12,6 +12,7 @@ interface UserContextType {
   setShowMissingInfoModal: (show: boolean) => void;
   checkMissingInfo: () => Promise<void>;
   isPremium: boolean;
+  premiumEndDate: Date | null;
   refreshSubscription: () => Promise<void>;
   handleLogout: () => Promise<void>;
 }
@@ -21,17 +22,20 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isPremium, setIsPremium] = useState(false);
+  const [premiumEndDate, setPremiumEndDate] = useState<Date | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showMissingInfoModal, setShowMissingInfoModal] = useState(false);
   const supabase = createClient();
 
   const refreshSubscription = async () => {
     try {
-      const status = await getSubscriptionStatusAction();
-      setIsPremium(status);
+      const details = await getSubscriptionDetailsAction();
+      setIsPremium(details.isPremium);
+      setPremiumEndDate(details.endDate);
     } catch (error) {
       console.error("Error fetching subscription status:", error);
       setIsPremium(false);
+      setPremiumEndDate(null);
     }
   };
 
@@ -95,6 +99,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     await supabase.auth.signOut();
     setUser(null);
     setIsPremium(false);
+    setPremiumEndDate(null);
   };
 
   return (
@@ -106,6 +111,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         setShowMissingInfoModal,
         checkMissingInfo,
         isPremium,
+        premiumEndDate,
         refreshSubscription,
         handleLogout,
       }}

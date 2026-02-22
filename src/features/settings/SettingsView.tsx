@@ -17,7 +17,7 @@ import owlHi from "@/assets/games/common/owl-say-hi.webp";
 export function SettingsView() {
   const router = useRouter();
   const supabase = createClient();
-  const { user, refreshSubscription } = useUser();
+  const { user, isPremium, premiumEndDate, refreshSubscription } = useUser();
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [generalError, setGeneralError] = useState<string | null>(null);
@@ -98,6 +98,39 @@ export function SettingsView() {
               </div>
               <h2 className="text-2xl text-purple-600 font-display mb-2 drop-shadow-sm">Cài Đặt Tài Khoản</h2>
               <p className="text-gray-500 font-medium text-sm">Cập nhật thông tin của bé yêu nhé!</p>
+            </div>
+
+            <div className="bg-[#FFF4E5] p-5 rounded-2xl border-2 border-orange-200 mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between shadow-sm">
+              <div>
+                <h3 className="text-sm font-bold text-orange-900 mb-2 uppercase tracking-wide">Loại Tài Khoản</h3>
+                {isPremium ? (
+                  <div className="flex flex-col">
+                    <span className="text-xl font-bold text-yellow-600 flex items-center gap-2">🌟 Premium</span>
+                    {premiumEndDate && (
+                      <span className="text-sm font-medium text-orange-700 mt-1.5">
+                        Hiệu lực đến: {new Date(premiumEndDate).toLocaleDateString("vi-VN")}
+                      </span>
+                    )}
+                  </div>
+                ) : (
+                  <div className="flex flex-col">
+                    <span className="text-lg font-bold text-gray-700 flex items-center gap-2">
+                      🌱 Thường (Miễn phí)
+                    </span>
+                    <span className="text-sm text-gray-500 mt-1.5">Nâng cấp để mở khóa tất cả bài học!</span>
+                  </div>
+                )}
+              </div>
+              {!isPremium && (
+                <ActionButton
+                  variant="glossy"
+                  color="orange"
+                  onClick={() => router.push("/upgrade")}
+                  className="py-3 px-6 text-sm whitespace-nowrap shadow-md hover:shadow-lg transition-shadow"
+                >
+                  Nâng cấp Premium
+                </ActionButton>
+              )}
             </div>
 
             <form onSubmit={formik.handleSubmit} className="flex flex-col gap-4">
