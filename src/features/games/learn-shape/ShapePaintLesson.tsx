@@ -35,6 +35,7 @@ export function ShapePaintLesson({ shapes, onComplete }: ShapePaintLessonProps) 
   const [pathSamples, setPathSamples] = useState<Point[]>([]);
 
   const currentShape = shapes[currentIndex];
+  const color = currentShape.id === "star" ? "#F7F603" : "#3b82f6";
   const shapePathData: ShapePathData | undefined = SHAPE_PATHS[currentShape?.id];
 
   // Initialize path samples when shape changes
@@ -236,7 +237,7 @@ export function ShapePaintLesson({ shapes, onComplete }: ShapePaintLessonProps) 
             cx={shapePathData.startPoint.x}
             cy={shapePathData.startPoint.y}
             r="12"
-            fill="#3b82f6"
+            fill={color}
             opacity={completedStrokes.length > 0 || currentStroke.length > 0 ? 0 : 0.9}
           >
             <animate attributeName="r" values="10;14;10" dur="1.5s" repeatCount="indefinite" />
@@ -254,7 +255,7 @@ export function ShapePaintLesson({ shapes, onComplete }: ShapePaintLessonProps) 
                   .join(" ")
               }
               fill="none"
-              stroke={isSuccess ? "#22c55e" : "#3b82f6"}
+              stroke={isSuccess ? "#22c55e" : color}
               strokeWidth="16"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -273,7 +274,7 @@ export function ShapePaintLesson({ shapes, onComplete }: ShapePaintLessonProps) 
                   .join(" ")
               }
               fill="none"
-              stroke={isSuccess ? "#22c55e" : "#3b82f6"}
+              stroke={isSuccess ? "#22c55e" : color}
               strokeWidth="16"
               strokeLinecap="round"
               strokeLinejoin="round"

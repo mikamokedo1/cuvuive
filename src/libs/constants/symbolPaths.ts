@@ -31,6 +31,21 @@ export const SYMBOL_PATHS: Record<string, SymbolPathData> = {
     viewBox: "0 0 260 320",
     estimatedLength: 280,
   },
+  "+": {
+    // Plus: Vertical and horizontal line crossing
+    path: "M 130 80 L 130 240 M 50 160 L 210 160",
+    startPoint: { x: 130, y: 80 },
+    viewBox: "0 0 260 320",
+    estimatedLength: 320,
+  },
+  "−": {
+    // Using the minus character used in the project
+    // Minus: Single horizontal line
+    path: "M 50 160 L 210 160",
+    startPoint: { x: 50, y: 160 },
+    viewBox: "0 0 260 320",
+    estimatedLength: 160,
+  },
 };
 
 // Vietnamese symbol names for captions
@@ -38,4 +53,6 @@ export const SYMBOL_NAMES_VI: Record<string, string> = {
   ">": "Lớn hơn",
   "<": "Nhỏ hơn",
   "=": "Bằng nhau",
+  "+": "Cộng",
+  "−": "Trừ",
 };

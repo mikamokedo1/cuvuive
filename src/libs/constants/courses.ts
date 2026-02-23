@@ -272,4 +272,40 @@ export const COURSES: CourseDef[] = [
       },
     ],
   },
+  {
+    id: "learn-math",
+    title: "Học toán đơn giản",
+    description: "Bé học phép cộng và phép trừ với các con số đến 20.",
+    thumbnail: "/assets/games/learn-math/logo.png",
+    groups: [
+      {
+        id: "group1",
+        title: "Phép Cộng",
+        lessons: [
+          { id: "lesson1", title: "Giải thích phép cộng", isFree: true },
+          { id: "lesson2", title: "Cộng bằng hình" },
+          { id: "lesson3", title: "Cộng bằng số" },
+          { id: "lesson4", title: "Tập viết dấu" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Phép Trừ",
+        lessons: [
+          { id: "lesson1", title: "Giải thích phép trừ", isFree: true },
+          { id: "lesson2", title: "Trừ bằng hình" },
+          { id: "lesson3", title: "Trừ bằng số" },
+          { id: "lesson4", title: "Tập viết dấu" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Luyện tập",
+        lessons: [
+          { id: "lesson1", title: "Cộng trừ bằng hình", isFree: true },
+          { id: "lesson2", title: "Cộng trừ bằng số", isFree: true },
+        ],
+      },
+    ],
+  },
 ];

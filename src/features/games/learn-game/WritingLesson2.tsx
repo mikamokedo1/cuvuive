@@ -284,32 +284,6 @@ export function WritingLesson2({ numbers, onComplete }: WritingLesson2Props) {
 
   return (
     <div className="flex flex-col items-center gap-6 w-full max-w-md px-4 scale-90 sm:scale-100 origin-top">
-      {/* Number display */}
-      <div className="flex items-center gap-2">
-        <span className="text-3xl font-display font-bold text-blue-600">Viết số {currentNumber}</span>
-        <span className="text-xl text-orange-500 font-bold">({NUMBER_NAMES_VI[currentNumber]})</span>
-      </div>
-
-      {/* Multi-digit progress indicator */}
-      {isMultiDigit && (
-        <div className="flex gap-2">
-          {digits.map((d, i) => (
-            <span
-              key={i}
-              className={`text-2xl font-bold px-3 py-1 rounded-xl transition-all ${
-                i < activeDigitIndex
-                  ? "bg-green-100 text-green-600"
-                  : i === activeDigitIndex
-                    ? "bg-blue-100 text-blue-600 animate-pulse"
-                    : "bg-gray-100 text-gray-400"
-              }`}
-            >
-              {d}
-            </span>
-          ))}
-        </div>
-      )}
-
       {/* Writing Card */}
       <div
         className="relative bg-white rounded-3xl shadow-xl border-4 border-blue-100 overflow-hidden transition-transform"
@@ -455,7 +429,7 @@ export function WritingLesson2({ numbers, onComplete }: WritingLesson2Props) {
         {/* Speaker */}
         <button
           className="absolute top-2 left-2 cursor-pointer hover:scale-105 transition-all"
-          onClick={() => speak(`Số ${currentNumber}, ${NUMBER_NAMES_VI[currentNumber]}`)}
+          onClick={() => speak(`Số ${currentNumber}`)}
           onMouseEnter={playButtonSound}
         >
           <Image src={LoudSpeaker} alt="Speaker" className="w-12 h-10" />

@@ -98,12 +98,9 @@ export function CountingLesson2({ numbers, onComplete, requiredWins = 6 }: Count
       );
     }
 
-    // Cap display at 15 items for layout
-    const displayCount = Math.min(targetNumber, 15);
-
     return (
       <>
-        {Array.from({ length: displayCount }).map((_, i) => (
+        {Array.from({ length: targetNumber }).map((_, i) => (
           <div
             key={i}
             className={`relative ${targetNumber > 9 ? "w-12 h-12 md:w-16 md:h-16" : "w-16 h-16 md:w-24 md:h-24"}`}
@@ -111,9 +108,6 @@ export function CountingLesson2({ numbers, onComplete, requiredWins = 6 }: Count
             <Image src={ThingImages[iconType].icon} alt="Item" fill className="object-contain" />
           </div>
         ))}
-        {targetNumber > displayCount && (
-          <div className="flex items-center text-lg font-bold text-gray-500">+{targetNumber - displayCount}</div>
-        )}
       </>
     );
   };
@@ -121,14 +115,16 @@ export function CountingLesson2({ numbers, onComplete, requiredWins = 6 }: Count
   return (
     <div className="flex flex-col items-center gap-4 md:gap-8 w-full px-4">
       <div
-        className={`bg-white/80 rounded-3xl p-4 md:py-2 hover:scale-105 cursor-pointer border-4 shadow-xl flex items-center flex-wrap justify-center w-full min-h-[150px] md:min-h-50 gap-1 ${
+        className={`bg-white/80 rounded-3xl p-4 md:py-2 hover:scale-105 cursor-pointer border-4 shadow-xl flex items-center flex-wrap justify-center w-full min-h-[150px] md:min-h-50 gap-1 max-w-3xl ${
           feedback === "correct"
             ? "border-green-400 bg-green-50"
             : feedback === "wrong"
               ? "border-red-400 bg-red-50 animate-shake"
               : "border-purple-200"
         }`}
-        onClick={() => speak(`Có ${targetNumber} ${ThingImages[iconType].name}`)}
+        onClick={() =>
+          speak(targetNumber === 0 ? "Không có gì cả" : `Có ${targetNumber} ${ThingImages[iconType].name}`)
+        }
       >
         {renderItems()}
       </div>

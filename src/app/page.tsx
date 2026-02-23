@@ -18,6 +18,7 @@ import GameOccupationLogo from "@/assets/games/learn-occupation/logo.webp";
 import GameDinosaurLogo from "@/assets/games/learn-dinosaur/logo.webp";
 import GameFoodLogo from "@/assets/games/learn-food/logo.webp";
 import GameFlowerLogo from "@/assets/games/learn-flower/logo.webp";
+import GameMathLogo from "@/assets/games/learn-math/logo.png";
 
 interface Game {
   id: string;
@@ -115,6 +116,13 @@ export default function Home() {
       {/* Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full max-w-4xl px-4 md:px-0">
         {GAMES.concat([
+          {
+            id: "learn-math",
+            title: "Học toán",
+            href: "/games/learn-math",
+            color: "purple",
+            icon: GameMathLogo,
+          },
           {
             id: "learn-food",
             title: "Học món ăn",

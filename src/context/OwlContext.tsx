@@ -150,6 +150,19 @@ export const MAP_PATHNAME_TO_TEXT = {
   "/games/learn-numbers/group4/lesson/lesson4": "Pé tập viết số",
   "/games/learn-numbers/group5/lesson/lesson1": "Pé chọn số đúng nhé",
   "/games/learn-numbers/group5/lesson/lesson2": "Pé đếm và chọn số đúng nhé",
+  "/games/learn-math/group1": "Pé học phép cộng",
+  "/games/learn-math/group1/lesson/lesson1": "Pé làm quen với phép cộng",
+  "/games/learn-math/group1/lesson/lesson2": "Pé đếm hình và chọn số đúng",
+  "/games/learn-math/group1/lesson/lesson3": "Pé làm phép cộng với số",
+  "/games/learn-math/group1/lesson/lesson4": "Pé tập viết dấu cộng",
+  "/games/learn-math/group2": "Pé học phép trừ",
+  "/games/learn-math/group2/lesson/lesson1": "Pé làm quen với phép trừ",
+  "/games/learn-math/group2/lesson/lesson2": "Pé đếm hình và chọn số đúng",
+  "/games/learn-math/group2/lesson/lesson3": "Pé làm phép trừ với số",
+  "/games/learn-math/group2/lesson/lesson4": "Pé tập viết dấu trừ",
+  "/games/learn-math/group3": "Pé ôn lại 2 phép cộng trừ",
+  "/games/learn-math/group3/lesson/lesson1": "Pé đếm hình và chọn số đúng",
+  "/games/learn-math/group3/lesson/lesson2": "Pé làm phép cộng trừ với số",
 };
 
 interface OwlContextType {

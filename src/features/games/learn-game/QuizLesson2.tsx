@@ -100,9 +100,6 @@ export function QuizLesson2({ numbers, onComplete, requiredWins = 6 }: QuizLesso
         <span className="text-7xl md:text-9xl font-display font-black text-blue-600 block text-center min-w-[150px] md:min-w-[200px] animate-scale">
           {targetNumber}
         </span>
-        <span className="text-xl md:text-2xl font-bold text-orange-500 block text-center mt-2">
-          {NUMBER_NAMES_VI[targetNumber]}
-        </span>
       </div>
 
       <div className="flex gap-6 flex-wrap justify-center">

@@ -16,17 +16,15 @@ export const NumberCard2 = ({ number, active }: NumberCard2Props) => {
   const { speak } = useTextToSpeech();
   const nameVi = NUMBER_NAMES_VI[number] ?? `${number}`;
   const thingImage = getThingImage(number);
-
   // How many objects to show (cap at 12 for layout)
-  const displayCount = Math.min(number, 12);
-  const dots = Array.from({ length: displayCount });
+  const dots = Array.from({ length: number });
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      speak(`Số ${number}, ${nameVi}`);
+      speak(`Số ${number}`);
     }, 800);
     return () => clearTimeout(timer);
-  }, [number, nameVi, speak]);
+  }, [number, speak]);
 
   return (
     <div
@@ -38,12 +36,11 @@ export const NumberCard2 = ({ number, active }: NumberCard2Props) => {
       {/* The Digit */}
       <div
         className="flex-1 flex flex-col items-center justify-center cursor-pointer hover:scale-105 gap-1"
-        onClick={() => speak(`Số ${number}, ${nameVi}`)}
+        onClick={() => speak(`Số ${number}`)}
       >
         <span className="text-[10rem] leading-none font-display font-black text-orange-500 drop-shadow-md animate-scale">
           {number}
         </span>
-        <span className="text-2xl font-bold text-blue-600">{nameVi}</span>
       </div>
 
       {/* The Visuals (objects representing the count) */}
@@ -57,16 +54,6 @@ export const NumberCard2 = ({ number, active }: NumberCard2Props) => {
               <Image src={thingImage.icon} alt={thingImage.name} fill className="object-contain" />
             </div>
           ))}
-          {number > displayCount && (
-            <div className="flex items-center text-lg font-bold text-gray-500">+{number - displayCount}</div>
-          )}
-        </div>
-      )}
-
-      {/* Special display for 0 */}
-      {number === 0 && (
-        <div className="w-full flex items-center justify-center mb-4 px-2">
-          <span className="text-xl text-gray-400 italic">Không có gì cả!</span>
         </div>
       )}
     </div>

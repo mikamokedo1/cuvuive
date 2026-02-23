@@ -13,6 +13,8 @@ import group1 from "@/assets/games/learn-numbers/number-logo-1.webp";
 import group2 from "@/assets/games/learn-numbers/number-logo-2.webp";
 import group3 from "@/assets/games/learn-numbers/number-logo-3.webp";
 import group4 from "@/assets/games/learn-numbers/number-logo-4.webp";
+import group5 from "@/assets/games/compare-quantity/compare-quantity-logo-4.webp";
+
 import { LessonCard } from "@/components/games/LessonCard";
 // Note: User mentioned "own-sleep" but design shows lock icon for locked state.
 // Using LockCardIcon for the right side image of locked cards.
@@ -33,7 +35,7 @@ export default function GroupLessonsPage() {
     group2: { title: "Nhóm 4,5,6", range: "4 - 6", image: group2 },
     group3: { title: "Nhóm 7,8,9", range: "7 - 9", image: group3 },
     group4: { title: "Số 10-20", range: "0, 10 - 20", image: group4 },
-    group5: { title: "Luyện tập", range: "0 - 20", image: group1 },
+    group5: { title: "Luyện tập", range: "0 - 20", image: group5 },
   };
 
   const config = groupConfig[groupId];
