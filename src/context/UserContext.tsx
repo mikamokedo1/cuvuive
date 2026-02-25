@@ -70,7 +70,15 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         data: { subscription },
       } = supabase.auth.onAuthStateChange(async (event, session) => {
         if (session?.user) {
-          setUser(session.user);
+          setUser((prev) => {
+            if (
+              prev?.id === session.user.id &&
+              JSON.stringify(prev?.user_metadata) === JSON.stringify(session.user.user_metadata)
+            ) {
+              return prev;
+            }
+            return session.user;
+          });
           // Check metadata on login
           const { kidName, age, sex } = session.user.user_metadata || {};
           if (!kidName || !age || !sex) {

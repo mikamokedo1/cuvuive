@@ -50,7 +50,6 @@ export function OccupationMatchLesson({ occupations, onComplete, requiredWins = 
 
   useEffect(() => {
     generateQuestion();
-    speak("Nối nghề nghiệp với dụng cụ đúng nhé!");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [occupations]);
 
@@ -89,13 +88,6 @@ export function OccupationMatchLesson({ occupations, onComplete, requiredWins = 
 
   return (
     <div className="flex flex-col items-center gap-6 w-full max-w-4xl px-4">
-      {/* Progress */}
-      <div className="flex items-center gap-4">
-        <div className="bg-green-100 text-green-700 px-4 py-2 rounded-full font-bold text-lg">
-          ⭐ {score}/{requiredWins}
-        </div>
-      </div>
-
       {/* Target Occupation */}
       <div className="flex flex-col items-center gap-4">
         <div className="relative w-40 h-40 md:w-52 md:h-52 bg-gradient-to-br from-blue-50 to-purple-50 rounded-3xl border-4 border-blue-200 shadow-lg p-4">
@@ -137,7 +129,6 @@ export function OccupationMatchLesson({ occupations, onComplete, requiredWins = 
               <div className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24">
                 <Image src={option.toolImage} alt={option.toolName} fill className="object-contain" />
               </div>
-              {isCorrectAnswer && <span className="text-sm font-bold text-green-600 mt-1">{option.toolName}</span>}
             </div>
           );
         })}

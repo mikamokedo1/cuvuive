@@ -28,6 +28,7 @@ import NuocCam from "@/assets/games/learn-food/nuoc_cam.webp";
 import SuaChua from "@/assets/games/learn-food/sua_chua.webp";
 import BanhVong from "@/assets/games/learn-food/banh_vong.webp";
 import BanhQuy from "@/assets/games/learn-food/banh_quy.webp";
+import Traicay from "@/assets/games/learn-food/trai_cay.webp";
 
 export type FoodCategory = "breakfast" | "main_dish" | "dessert";
 
@@ -51,8 +52,8 @@ export const FOODS: FoodData[] = [
   { id: "com_trang", name: "Cơm trắng", image: ComTrang, category: "main_dish" },
   { id: "canh", name: "Canh", image: Canh, category: "main_dish" },
   { id: "ga_ran", name: "Gà rán", image: GaRan, category: "main_dish" },
-  { id: "pizza", name: "Pizza", image: Pizza, category: "main_dish" },
-  { id: "hamburger", name: "Hamburger", image: Hamburger, category: "main_dish" },
+  { id: "pizza", name: "Pi da", image: Pizza, category: "main_dish" },
+  { id: "hamburger", name: "ham bơ gơ", image: Hamburger, category: "main_dish" },
   { id: "mi_y", name: "Mì Ý", image: MiY, category: "main_dish" },
 
   // Desserts (Group 3)
@@ -61,7 +62,8 @@ export const FOODS: FoodData[] = [
   { id: "nuoc_cam", name: "Nước cam", image: NuocCam, category: "dessert" },
   { id: "sua_chua", name: "Sữa chua", image: SuaChua, category: "dessert" },
   { id: "banh_vong", name: "Bánh vòng", image: BanhVong, category: "dessert" },
-  { id: "banh_quy", name: "Bánh quy", image: BanhQuy, category: "dessert" },
+  { id: "banh_quy", name: "Bánh qui", image: BanhQuy, category: "dessert" },
+  { id: "trai_cay", name: "Trái cây", image: Traicay, category: "dessert" },
 ];
 
 export const GROUPS = [
@@ -89,7 +91,7 @@ export const GROUPS = [
     id: "group3",
     title: "Tráng miệng",
     description: "Học các món tráng miệng",
-    foods: ["kem", "banh_ngot", "nuoc_cam", "sua_chua", "banh_vong", "banh_quy"],
+    foods: ["kem", "banh_ngot", "nuoc_cam", "sua_chua", "banh_vong", "banh_quy", "trai_cay"],
     logo: LogoGroup3,
     color: "bg-purple-100 text-purple-600",
     variant: "purple" as const,

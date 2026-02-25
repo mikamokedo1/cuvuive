@@ -127,14 +127,14 @@ export const OCCUPATIONS: OccupationData[] = [
   },
 
   // Creative & Entertainment (Group 3)
-  { id: "singer", name: "Ca sĩ", image: Singer, toolImage: ToolSinger, toolName: "Micro", category: "creative" },
+  { id: "singer", name: "Ca sĩ", image: Singer, toolImage: ToolSinger, toolName: "Mi cờ rô", category: "creative" },
   { id: "painter", name: "Họa sĩ", image: Painter, toolImage: ToolPainter, toolName: "Bảng vẽ", category: "creative" },
   {
     id: "dancer",
     name: "Vũ công",
     image: Dancer,
     toolImage: ToolDancer,
-    toolName: "Giày ballet",
+    toolName: "Giày ba-lê",
     category: "creative",
   },
   {

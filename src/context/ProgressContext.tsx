@@ -31,9 +31,11 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
   const [allProgress, setAllProgress] = useState<Record<string, ProgressState>>({});
   const [isLoaded, setIsLoaded] = useState(false);
 
+  const userId = user?.id;
+
   // Load from local storage ONLY for anonymous users
   useEffect(() => {
-    if (user) {
+    if (userId) {
       // Logged-in user: reset state so we don't carry over another user's localStorage data.
       // The Supabase fetch effect below will populate with the correct user's data.
       setAllProgress({});
@@ -58,14 +60,14 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
       setAllProgress({});
     }
     setIsLoaded(true);
-  }, [user]);
+  }, [userId]);
 
   const [courseStructure, setCourseStructure] = useState<Record<string, Record<string, number>>>({});
 
   // Fetch course structure and user progress in parallel
   useEffect(() => {
     const fetchStructureAndProgress = async () => {
-      if (!user) {
+      if (!userId) {
         // Still need structure even without user
         try {
           const { getCourseStructureAction } = await import("@/libs/actions/courses");
@@ -104,7 +106,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
             });
             return structure;
           }),
-          supabase.from("progress").select("course_id, group_id, lesson_id").eq("user_id", user.id),
+          supabase.from("progress").select("course_id, group_id, lesson_id").eq("user_id", userId),
         ]);
 
         setCourseStructure(structureResult);
@@ -145,7 +147,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     };
 
     fetchStructureAndProgress();
-  }, [user]);
+  }, [userId]);
 
   // Derive completedGroups from allProgress + courseStructure (no state mutation needed)
   const derivedCompletedGroups = useMemo(() => {
@@ -192,10 +194,10 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
 
   // Save to local storage ONLY for anonymous users
   useEffect(() => {
-    if (!user) {
+    if (!userId) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(allProgress));
     }
-  }, [allProgress, user]);
+  }, [allProgress, userId]);
 
   const markLessonComplete = async (groupId: string, lessonId: string, courseId: string = "learn-numbers") => {
     // 1. Optimistic update — only update completedLessons, groups are derived automatically
