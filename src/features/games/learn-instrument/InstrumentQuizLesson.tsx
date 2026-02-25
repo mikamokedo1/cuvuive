@@ -7,6 +7,7 @@ import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
 import Image from "next/image";
 import LoudSpeaker from "@/assets/games/loud-speaker.webp";
+import { FeedbackType } from "@/types/game";
 
 interface InstrumentQuizLessonProps {
   instruments: EntityData[];
@@ -20,7 +21,7 @@ export function InstrumentQuizLesson({ instruments, onComplete, requiredWins = 6
   const prevTargetRef = useRef<EntityData | null>(null);
   const [options, setOptions] = useState<EntityData[]>([]);
   const [score, setScore] = useState(0);
-  const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
+  const [feedback, setFeedback] = useState<FeedbackType>(null);
 
   const generateQuestion = () => {
     if (instruments.length < 2) return;

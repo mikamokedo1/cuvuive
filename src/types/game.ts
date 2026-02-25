@@ -6,3 +6,5 @@ export interface EntityData {
   image: StaticImageData;
   category?: string;
 }
+
+export type FeedbackType = "correct" | "wrong" | null;

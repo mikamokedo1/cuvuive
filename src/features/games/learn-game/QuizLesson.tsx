@@ -5,6 +5,7 @@ import { ActionButton } from "@/components/common/ActionButton";
 import { playSound } from "@/libs/utils/playSound";
 import { SoundNumbers } from "./LearnLesson";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
+import { FeedbackType } from "@/types/game";
 
 export const MAP_INDEX_TO_COLOR = ["blue", "green", "orange", "purple"] as const;
 
@@ -20,7 +21,7 @@ export function QuizLesson({ range, onComplete, requiredWins = 6 }: QuizLessonPr
   const [options, setOptions] = useState<number[]>([]);
   const [correctCount, setCorrectCount] = useState(0);
   const prevTargetRef = useRef<number | null>(null);
-  const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
+  const [feedback, setFeedback] = useState<FeedbackType>(null);
 
   // Generate new question
   const generateQuestion = useCallback(() => {

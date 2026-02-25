@@ -6,6 +6,7 @@ import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
 import Image from "next/image";
 import { EntityData } from "@/types/game";
+import { FeedbackType } from "@/types/game";
 
 interface VehicleSortLessonProps {
   vehicles: EntityData[];
@@ -17,7 +18,7 @@ export function VehicleSortLesson({ vehicles, onComplete, requiredCorrect = 8 }:
   const { speak } = useTextToSpeech();
   const [currentVehicle, setCurrentVehicle] = useState<EntityData | null>(null);
   const [score, setScore] = useState(0);
-  const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
+  const [feedback, setFeedback] = useState<FeedbackType>(null);
   const [selectedZone, setSelectedZone] = useState<string | null>(null);
   const [remainingVehicles, setRemainingVehicles] = useState<EntityData[]>([]);
 

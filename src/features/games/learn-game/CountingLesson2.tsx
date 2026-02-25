@@ -9,6 +9,7 @@ import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
 import { NUMBER_NAMES_VI } from "@/libs/constants/numberPaths2";
 import { getThingImage } from "@/libs/constants/numberData";
+import { FeedbackType } from "@/types/game";
 
 const MAP_INDEX_TO_COLOR = ["blue", "green", "orange", "purple"] as const;
 
@@ -25,7 +26,7 @@ export function CountingLesson2({ numbers, onComplete, requiredWins = 6 }: Count
   const [iconType, setIconType] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
   const prevTargetRef = useRef<number | null>(null);
-  const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
+  const [feedback, setFeedback] = useState<FeedbackType>(null);
 
   const generateQuestion = useCallback(() => {
     let target: number;

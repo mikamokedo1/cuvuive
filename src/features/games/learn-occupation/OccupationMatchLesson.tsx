@@ -8,6 +8,7 @@ import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { playButtonSound } from "@/libs/utils/playSound";
 import Image from "next/image";
 import LoudSpeaker from "@/assets/games/loud-speaker.webp";
+import { FeedbackType } from "@/types/game";
 
 interface OccupationMatchLessonProps {
   occupations: OccupationData[];
@@ -21,7 +22,7 @@ export function OccupationMatchLesson({ occupations, onComplete, requiredWins = 
   const prevTargetRef = useRef<OccupationData | null>(null);
   const [toolOptions, setToolOptions] = useState<OccupationData[]>([]);
   const [score, setScore] = useState(0);
-  const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
+  const [feedback, setFeedback] = useState<FeedbackType>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const generateQuestion = () => {

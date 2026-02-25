@@ -8,6 +8,7 @@ import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
 import { SymbolComponent } from "./ExplainMathLesson";
 import LoudSpeaker from "@/assets/games/loud-speaker.webp";
+import { FeedbackType } from "@/types/game";
 
 interface MixedMathLessonProps {
   mode: "visual" | "number" | "mixed";
@@ -23,7 +24,7 @@ export function MixedMathLesson({ mode, maxSum, onComplete }: MixedMathLessonPro
   const [displayMode, setDisplayMode] = useState<"visual" | "number">("visual");
   const [choices, setChoices] = useState<number[]>([]);
   const [imageIndex, setImageIndex] = useState(0);
-  const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
+  const [feedback, setFeedback] = useState<FeedbackType>(null);
   const [correctCount, setCorrectCount] = useState(0);
   const prevQuestionRef = useRef<string>("");
 

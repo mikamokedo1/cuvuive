@@ -10,6 +10,7 @@ import { SoundNumbers } from "./LearnLesson";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { MAP_INDEX_TO_COLOR } from "./QuizLesson";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
+import { FeedbackType } from "@/types/game";
 
 interface CountingLessonProps {
   range: [number, number];
@@ -25,7 +26,7 @@ export function CountingLesson({ range, onComplete, requiredWins = 6 }: Counting
   const [iconType, setIconType] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
   const prevTargetRef = useRef<number | null>(null);
-  const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
+  const [feedback, setFeedback] = useState<FeedbackType>(null);
 
   const generateQuestion = useCallback(() => {
     let target = Math.floor(Math.random() * (end - start + 1)) + start;

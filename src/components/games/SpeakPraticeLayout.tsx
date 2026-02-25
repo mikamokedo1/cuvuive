@@ -8,7 +8,7 @@ import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
 import { useSpeechRecognition } from "@/libs/hooks/useSpeechRecognition";
 import { fuzzyMatchVietnamese } from "@/libs/utils/fuzzyMatch";
-import { EntityData } from "@/types/game";
+import { EntityData, FeedbackType } from "@/types/game";
 import { playButtonSound } from "@/libs/utils/playSound";
 
 interface SpeakPraticeLayoutProps {
@@ -25,7 +25,7 @@ const SpeakPraticeLayout = ({ entities, onComplete, requiredWins = 6 }: SpeakPra
   const [targetEntity, setTargetEntity] = useState<EntityData | null>(null);
   const prevTargetRef = useRef<EntityData | null>(null);
   const [score, setScore] = useState(0);
-  const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
+  const [feedback, setFeedback] = useState<FeedbackType>(null);
   const [hasTried, setHasTried] = useState(false);
 
   // Generate new question

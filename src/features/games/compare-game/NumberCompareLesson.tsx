@@ -10,6 +10,7 @@ import SoundEqual from "@/assets/games/compare-quantity/sounds/dau-bang.mp3";
 import { playSound } from "@/libs/utils/playSound";
 import { MAP_COMPARE_SIGN_SOUND } from "./VisualCompareLesson";
 import { SoundNumbers } from "../learn-game/LearnLesson";
+import { FeedbackType } from "@/types/game";
 
 interface NumberCompareLessonProps {
   comparisonType: "greater" | "less" | "equal" | "mixed";
@@ -21,7 +22,7 @@ const REQUIRED_WINS = 5;
 export function NumberCompareLesson({ comparisonType, onComplete }: NumberCompareLessonProps) {
   const [leftNum, setLeftNum] = useState(0);
   const [rightNum, setRightNum] = useState(0);
-  const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
+  const [feedback, setFeedback] = useState<FeedbackType>(null);
   const [correctCount, setCorrectCount] = useState(0);
   const prevQuestionRef = useRef<string>("");
 

@@ -7,6 +7,7 @@ import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
 import { SymbolComponent } from "./ExplainMathLesson";
 import LoudSpeaker from "@/assets/games/loud-speaker.webp";
+import { FeedbackType } from "@/types/game";
 
 interface NumberMathLessonProps {
   operator: MathOperator | "mixed";
@@ -20,7 +21,7 @@ export function NumberMathLesson({ operator, maxSum, onComplete }: NumberMathLes
   const { speak } = useTextToSpeech();
   const [question, setQuestion] = useState<ReturnType<typeof generateMathQuestion> | null>(null);
   const [choices, setChoices] = useState<number[]>([]);
-  const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
+  const [feedback, setFeedback] = useState<FeedbackType>(null);
   const [correctCount, setCorrectCount] = useState(0);
   const prevQuestionRef = useRef<string>("");
 

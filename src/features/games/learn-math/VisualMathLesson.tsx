@@ -8,6 +8,7 @@ import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
 import { SymbolComponent } from "./ExplainMathLesson";
 import LoudSpeaker from "@/assets/games/loud-speaker.webp";
+import { FeedbackType } from "@/types/game";
 
 interface VisualMathLessonProps {
   operator: MathOperator | "mixed";
@@ -22,7 +23,7 @@ export function VisualMathLesson({ operator, maxSum, onComplete }: VisualMathLes
   const [question, setQuestion] = useState<ReturnType<typeof generateMathQuestion> | null>(null);
   const [choices, setChoices] = useState<number[]>([]);
   const [imageIndex, setImageIndex] = useState(0);
-  const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
+  const [feedback, setFeedback] = useState<FeedbackType>(null);
   const [correctCount, setCorrectCount] = useState(0);
   const prevQuestionRef = useRef<string>("");
 

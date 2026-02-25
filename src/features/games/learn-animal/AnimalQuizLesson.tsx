@@ -8,6 +8,7 @@ import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
 import Image from "next/image";
 import LoudSpeaker from "@/assets/games/loud-speaker.webp";
 import { playButtonSound } from "@/libs/utils/playSound";
+import { FeedbackType } from "@/types/game";
 
 interface AnimalQuizLessonProps {
   animals: EntityData[];
@@ -21,7 +22,7 @@ export function AnimalQuizLesson({ animals, onComplete, requiredWins = 6 }: Anim
   const prevTargetRef = useRef<EntityData | null>(null);
   const [options, setOptions] = useState<EntityData[]>([]);
   const [score, setScore] = useState(0);
-  const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
+  const [feedback, setFeedback] = useState<FeedbackType>(null);
 
   // Generate new question
   const generateQuestion = () => {

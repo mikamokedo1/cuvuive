@@ -6,6 +6,7 @@ import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { NUMBER_NAMES_VI } from "@/libs/constants/numberPaths2";
 import { randomExcluding } from "@/libs/utils/randomNum";
+import { FeedbackType } from "@/types/game";
 
 const MAP_INDEX_TO_COLOR = ["blue", "green", "orange", "purple"] as const;
 
@@ -21,7 +22,7 @@ export function QuizLesson2({ numbers, onComplete, requiredWins = 6 }: QuizLesso
   const [options, setOptions] = useState<number[]>([]);
   const [correctCount, setCorrectCount] = useState(0);
   const prevTargetRef = useRef<number | null>(null);
-  const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
+  const [feedback, setFeedback] = useState<FeedbackType>(null);
 
   const generateQuestion = useCallback(() => {
     let target: number;

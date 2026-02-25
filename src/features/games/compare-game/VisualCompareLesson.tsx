@@ -11,6 +11,7 @@ import SoundLess from "@/assets/games/compare-quantity/sounds/dau-be.mp3";
 import SoundEqual from "@/assets/games/compare-quantity/sounds/dau-bang.mp3";
 import { playSound } from "@/libs/utils/playSound";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
+import { FeedbackType } from "@/types/game";
 
 export const MAP_COMPARE_SIGN_SOUND = {
   ">": SoundGreater,
@@ -30,7 +31,7 @@ export function VisualCompareLesson({ comparisonType, onComplete }: VisualCompar
   const [leftCount, setLeftCount] = useState(0);
   const [rightCount, setRightCount] = useState(0);
   const [imageIndex, setImageIndex] = useState(0);
-  const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
+  const [feedback, setFeedback] = useState<FeedbackType>(null);
   const [correctCount, setCorrectCount] = useState(0);
   const prevQuestionRef = useRef<string>("");
 

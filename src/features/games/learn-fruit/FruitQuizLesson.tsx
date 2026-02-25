@@ -7,6 +7,7 @@ import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
 import Image from "next/image";
 import LoudSpeaker from "@/assets/games/loud-speaker.webp";
+import { FeedbackType } from "@/types/game";
 
 interface FruitQuizLessonProps {
   fruits: EntityData[];
@@ -20,7 +21,7 @@ export function FruitQuizLesson({ fruits, onComplete, requiredWins = 6 }: FruitQ
   const prevTargetRef = useRef<EntityData | null>(null);
   const [options, setOptions] = useState<EntityData[]>([]);
   const [score, setScore] = useState(0);
-  const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
+  const [feedback, setFeedback] = useState<FeedbackType>(null);
 
   const generateQuestion = () => {
     if (fruits.length < 2) return;

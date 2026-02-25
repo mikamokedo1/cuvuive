@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ThingImages } from "@/libs/constants/thingImages";
 import { randomNum } from "@/libs/utils/randomNum";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
+import { FeedbackType } from "@/types/game";
 
 interface MixedPracticeLessonProps {
   onComplete: () => void;
@@ -21,7 +22,7 @@ export function MixedPracticeLesson({ onComplete }: MixedPracticeLessonProps) {
   const [questionType, setQuestionType] = useState<QuestionType>("visual");
   const [targetComparison, setTargetComparison] = useState<ComparisonType>("greater");
   const [imageIndex, setImageIndex] = useState(0);
-  const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
+  const [feedback, setFeedback] = useState<FeedbackType>(null);
   const [correctCount, setCorrectCount] = useState(0);
   const prevQuestionRef = useRef<string>("");
 

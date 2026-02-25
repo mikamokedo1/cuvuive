@@ -5,6 +5,7 @@ import { ColorData } from "./constants";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
+import { FeedbackType } from "@/types/game";
 
 interface ColorQuizLessonProps {
   colors: ColorData[];
@@ -18,7 +19,7 @@ export function ColorQuizLesson({ colors, onComplete, requiredWins = 5 }: ColorQ
   const prevTargetRef = useRef<ColorData | null>(null);
   const [options, setOptions] = useState<ColorData[]>([]);
   const [score, setScore] = useState(0);
-  const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
+  const [feedback, setFeedback] = useState<FeedbackType>(null);
 
   // Generate new question
   const generateQuestion = () => {
