@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { OccupationData } from "./constants";
+import { EntityData } from "@/types/game";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
@@ -9,16 +9,16 @@ import Image from "next/image";
 import LoudSpeaker from "@/assets/games/loud-speaker.webp";
 
 interface OccupationQuizLessonProps {
-  occupations: OccupationData[];
+  occupations: EntityData[];
   onComplete: () => void;
   requiredWins?: number;
 }
 
 export function OccupationQuizLesson({ occupations, onComplete, requiredWins = 6 }: OccupationQuizLessonProps) {
   const { speak } = useTextToSpeech();
-  const [targetOccupation, setTargetOccupation] = useState<OccupationData | null>(null);
-  const prevTargetRef = useRef<OccupationData | null>(null);
-  const [options, setOptions] = useState<OccupationData[]>([]);
+  const [targetOccupation, setTargetOccupation] = useState<EntityData | null>(null);
+  const prevTargetRef = useRef<EntityData | null>(null);
+  const [options, setOptions] = useState<EntityData[]>([]);
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
 
@@ -50,7 +50,7 @@ export function OccupationQuizLesson({ occupations, onComplete, requiredWins = 6
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [occupations]);
 
-  const handleOptionClick = (selected: OccupationData) => {
+  const handleOptionClick = (selected: EntityData) => {
     if (!targetOccupation) return;
     if (feedback === "correct") return;
 

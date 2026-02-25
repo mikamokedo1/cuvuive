@@ -206,6 +206,7 @@ export const COURSES: CourseDef[] = [
           { id: "lesson1", title: "Học tên động vật", isFree: true },
           { id: "lesson2", title: "Đây là con gì?" },
           { id: "lesson3", title: "Ghép đôi" },
+          { id: "lesson4", title: "Tập nói" },
         ],
       },
       {
@@ -215,6 +216,7 @@ export const COURSES: CourseDef[] = [
           { id: "lesson1", title: "Học tên động vật", isFree: true },
           { id: "lesson2", title: "Đây là con gì?" },
           { id: "lesson3", title: "Ghép đôi" },
+          { id: "lesson4", title: "Tập nói" },
         ],
       },
       {
@@ -224,6 +226,7 @@ export const COURSES: CourseDef[] = [
           { id: "lesson1", title: "Học tên động vật", isFree: true },
           { id: "lesson2", title: "Đây là con gì?" },
           { id: "lesson3", title: "Ghép đôi" },
+          { id: "lesson4", title: "Tập nói" },
         ],
       },
     ],

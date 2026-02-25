@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { InstrumentData } from "./constants";
+import { EntityData } from "@/types/game";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
@@ -9,16 +9,16 @@ import Image from "next/image";
 import LoudSpeaker from "@/assets/games/loud-speaker.webp";
 
 interface InstrumentQuizLessonProps {
-  instruments: InstrumentData[];
+  instruments: EntityData[];
   onComplete: () => void;
   requiredWins?: number;
 }
 
 export function InstrumentQuizLesson({ instruments, onComplete, requiredWins = 6 }: InstrumentQuizLessonProps) {
   const { speak } = useTextToSpeech();
-  const [targetInstrument, setTargetInstrument] = useState<InstrumentData | null>(null);
-  const prevTargetRef = useRef<InstrumentData | null>(null);
-  const [options, setOptions] = useState<InstrumentData[]>([]);
+  const [targetInstrument, setTargetInstrument] = useState<EntityData | null>(null);
+  const prevTargetRef = useRef<EntityData | null>(null);
+  const [options, setOptions] = useState<EntityData[]>([]);
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
 
@@ -50,7 +50,7 @@ export function InstrumentQuizLesson({ instruments, onComplete, requiredWins = 6
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [instruments]);
 
-  const handleOptionClick = (selected: InstrumentData) => {
+  const handleOptionClick = (selected: EntityData) => {
     if (!targetInstrument) return;
     if (feedback === "correct") return;
 

@@ -4,7 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import { GameLayout } from "@/components/layout/GameLayout";
 import { useProgress } from "@/context/ProgressContext";
 import { useAccess } from "@/context/AccessContext";
-import { BookOpen, HelpCircle, Grid2X2 } from "lucide-react";
+import { BookOpen, HelpCircle, Grid2X2, Mic } from "lucide-react";
 import { LessonTitle } from "@/components/games/LessonTitle";
 import { LessonCard } from "@/components/games/LessonCard";
 import { GROUPS } from "@/features/games/learn-animal/constants";
@@ -60,6 +60,12 @@ export default function GroupLessonsPage() {
       id: "lesson3",
       title: "Ghép đôi",
       icon: <Grid2X2 className="text-white w-6 h-6" />,
+      isPremium: true,
+    },
+    {
+      id: "lesson4",
+      title: "Tập nói",
+      icon: <Mic className="text-white w-6 h-6" />,
       isPremium: true,
     },
   ];

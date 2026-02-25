@@ -1,12 +1,12 @@
 "use client";
 
-import { DinosaurData } from "./constants";
+import { EntityData } from "@/types/game";
 import Image from "next/image";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
 import { useEffect } from "react";
 
 interface DinosaurCardProps {
-  dinosaur: DinosaurData;
+  dinosaur: EntityData;
   active?: boolean;
   showName?: boolean;
   onClick?: () => void;

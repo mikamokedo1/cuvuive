@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { AnimalData } from "./constants";
+import { EntityData } from "@/types/game";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
@@ -10,16 +10,16 @@ import LoudSpeaker from "@/assets/games/loud-speaker.webp";
 import { playButtonSound } from "@/libs/utils/playSound";
 
 interface AnimalQuizLessonProps {
-  animals: AnimalData[];
+  animals: EntityData[];
   onComplete: () => void;
   requiredWins?: number;
 }
 
 export function AnimalQuizLesson({ animals, onComplete, requiredWins = 6 }: AnimalQuizLessonProps) {
   const { speak } = useTextToSpeech();
-  const [targetAnimal, setTargetAnimal] = useState<AnimalData | null>(null);
-  const prevTargetRef = useRef<AnimalData | null>(null);
-  const [options, setOptions] = useState<AnimalData[]>([]);
+  const [targetAnimal, setTargetAnimal] = useState<EntityData | null>(null);
+  const prevTargetRef = useRef<EntityData | null>(null);
+  const [options, setOptions] = useState<EntityData[]>([]);
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
 
@@ -58,7 +58,7 @@ export function AnimalQuizLesson({ animals, onComplete, requiredWins = 6 }: Anim
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [animals]);
 
-  const handleOptionClick = (selected: AnimalData) => {
+  const handleOptionClick = (selected: EntityData) => {
     if (!targetAnimal) return;
     if (feedback === "correct") return;
 

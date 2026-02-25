@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { VehicleData } from "./constants";
+import { EntityData } from "@/types/game";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
@@ -9,16 +9,16 @@ import Image from "next/image";
 import LoudSpeaker from "@/assets/games/loud-speaker.webp";
 
 interface VehicleQuizLessonProps {
-  vehicles: VehicleData[];
+  vehicles: EntityData[];
   onComplete: () => void;
   requiredWins?: number;
 }
 
 export function VehicleQuizLesson({ vehicles, onComplete, requiredWins = 6 }: VehicleQuizLessonProps) {
   const { speak } = useTextToSpeech();
-  const [targetVehicle, setTargetVehicle] = useState<VehicleData | null>(null);
-  const prevTargetRef = useRef<VehicleData | null>(null);
-  const [options, setOptions] = useState<VehicleData[]>([]);
+  const [targetVehicle, setTargetVehicle] = useState<EntityData | null>(null);
+  const prevTargetRef = useRef<EntityData | null>(null);
+  const [options, setOptions] = useState<EntityData[]>([]);
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
 
@@ -57,7 +57,7 @@ export function VehicleQuizLesson({ vehicles, onComplete, requiredWins = 6 }: Ve
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [vehicles]);
 
-  const handleOptionClick = (selected: VehicleData) => {
+  const handleOptionClick = (selected: EntityData) => {
     if (!targetVehicle) return;
     if (feedback === "correct") return;
 

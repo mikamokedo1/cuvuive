@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { InstrumentData } from "./constants";
+import { EntityData } from "@/types/game";
 import { InstrumentCard } from "./InstrumentCard";
 import { BackLessonButton } from "@/components/games/BackLessonButton";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 
 interface InstrumentLearnLessonProps {
-  instruments: InstrumentData[];
+  instruments: EntityData[];
   onComplete: () => void;
 }
 

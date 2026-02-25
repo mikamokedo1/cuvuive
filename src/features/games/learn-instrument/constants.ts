@@ -28,17 +28,9 @@ import Trumpet from "@/assets/games/learn-instrument/trumpet.webp";
 import Saxophone from "@/assets/games/learn-instrument/saxophone.webp";
 import Clarinet from "@/assets/games/learn-instrument/clarinet.webp";
 import Harmonica from "@/assets/games/learn-instrument/harmonica.webp";
+import { EntityData } from "@/types/game";
 
-export type InstrumentCategory = "string" | "percussion" | "wind";
-
-export interface InstrumentData {
-  id: string;
-  name: string;
-  image: StaticImageData;
-  category: InstrumentCategory;
-}
-
-export const INSTRUMENTS: InstrumentData[] = [
+export const INSTRUMENTS: EntityData[] = [
   // String Instruments (Group 1)
   { id: "guitar", name: "Đàn Ghi ta", image: Guitar, category: "string" },
   { id: "piano", name: "Đàn Piano", image: Piano, category: "string" },
@@ -94,14 +86,12 @@ export const GROUPS = [
   },
 ];
 
-export function getInstrumentsForGroup(groupId: string): InstrumentData[] {
+export function getInstrumentsForGroup(groupId: string): EntityData[] {
   const group = GROUPS.find((g) => g.id === groupId);
   if (!group) return [];
-  return group.instruments
-    .map((instId) => INSTRUMENTS.find((i) => i.id === instId))
-    .filter(Boolean) as InstrumentData[];
+  return group.instruments.map((instId) => INSTRUMENTS.find((i) => i.id === instId)).filter(Boolean) as EntityData[];
 }
 
-export function getAllInstruments(): InstrumentData[] {
+export function getAllInstruments(): EntityData[] {
   return INSTRUMENTS;
 }

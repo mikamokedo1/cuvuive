@@ -14,14 +14,12 @@ import WhiteCloud from "@/assets/games/learn-color/cloud.webp";
 import LogoLesson1 from "@/assets/games/learn-color/learn-color-logo-1.webp";
 import LogoLesson2 from "@/assets/games/learn-color/learn-color-logo-2.webp";
 import LogoLesson3 from "@/assets/games/learn-color/learn-color-logo-3.webp";
+import { EntityData } from "@/types/game";
 
-export interface ColorData {
-  id: string;
-  name: string;
+export interface ColorData extends EntityData {
   hex: string;
   audio?: string;
   isBasic: boolean;
-  image: StaticImageData; // Changed to StaticImageData
   imageName: string; // e.g. "Quả táo", "Cá voi"
 }
 

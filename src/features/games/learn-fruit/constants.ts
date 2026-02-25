@@ -28,15 +28,9 @@ import Pomelo from "@/assets/games/learn-fruit/pomelo.webp";
 import Lychee from "@/assets/games/learn-fruit/lychee.webp";
 import Lemon from "@/assets/games/learn-fruit/lemon.webp";
 import Kiwi from "@/assets/games/learn-fruit/kiwi.webp";
+import { EntityData } from "@/types/game";
 
-export interface FruitData {
-  id: string;
-  name: string;
-  image: StaticImageData;
-  category: "tropical" | "common" | "special";
-}
-
-export const FRUITS: FruitData[] = [
+export const FRUITS: EntityData[] = [
   // Tropical Fruits (Group 1)
   { id: "banana", name: "Chuối", image: Banana, category: "tropical" },
   { id: "mango", name: "Xoài", image: Mango, category: "tropical" },
@@ -92,12 +86,12 @@ export const GROUPS = [
   },
 ];
 
-export function getFruitsForGroup(groupId: string): FruitData[] {
+export function getFruitsForGroup(groupId: string): EntityData[] {
   const group = GROUPS.find((g) => g.id === groupId);
   if (!group) return [];
-  return group.fruits.map((fruitId) => FRUITS.find((f) => f.id === fruitId)).filter(Boolean) as FruitData[];
+  return group.fruits.map((fruitId) => FRUITS.find((f) => f.id === fruitId)).filter(Boolean) as EntityData[];
 }
 
-export function getAllFruits(): FruitData[] {
+export function getAllFruits(): EntityData[] {
   return FRUITS;
 }

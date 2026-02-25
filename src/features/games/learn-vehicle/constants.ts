@@ -32,17 +32,9 @@ import Drone from "@/assets/games/learn-vehicle/drone.webp"; // Placeholder
 import ZoneLand from "@/assets/games/learn-vehicle/road.webp";
 import ZoneWater from "@/assets/games/learn-vehicle/beach.webp";
 import ZoneAir from "@/assets/games/learn-vehicle/sky.webp";
+import { EntityData } from "@/types/game";
 
-export type VehicleCategory = "land" | "water" | "air";
-
-export interface VehicleData {
-  id: string;
-  name: string;
-  image: StaticImageData;
-  category: VehicleCategory;
-}
-
-export const VEHICLES: VehicleData[] = [
+export const VEHICLES: EntityData[] = [
   // Land Vehicles (Group 1)
   { id: "car", name: "Ô Tô", image: Car, category: "land" },
   { id: "motorbike", name: "Xe Máy", image: Motorbike, category: "land" },
@@ -135,14 +127,14 @@ export const GROUPS: GroupData[] = [
 ];
 
 // Helper to get vehicles for a specific group
-export function getVehiclesForGroup(groupId: string): VehicleData[] {
+export function getVehiclesForGroup(groupId: string): EntityData[] {
   const group = GROUPS.find((g) => g.id === groupId);
   if (!group) return [];
   return VEHICLES.filter((vehicle) => group.vehicles.includes(vehicle.id));
 }
 
 // Helper to get all vehicles
-export function getAllVehicles(): VehicleData[] {
+export function getAllVehicles(): EntityData[] {
   return VEHICLES;
 }
 

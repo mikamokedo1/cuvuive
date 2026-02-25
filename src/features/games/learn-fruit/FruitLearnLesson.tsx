@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { FruitData } from "./constants";
+import { EntityData } from "@/types/game";
 import { FruitCard } from "./FruitCard";
 import { BackLessonButton } from "@/components/games/BackLessonButton";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 
 interface FruitLearnLessonProps {
-  fruits: FruitData[];
+  fruits: EntityData[];
   onComplete: () => void;
 }
 

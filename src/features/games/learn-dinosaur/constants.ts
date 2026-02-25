@@ -28,17 +28,11 @@ import Mosasaurus from "@/assets/games/learn-dinosaur/mosasaurus.webp";
 import Ichthyosaurus from "@/assets/games/learn-dinosaur/ichthyosaurus.webp";
 import Quetzalcoatlus from "@/assets/games/learn-dinosaur/quetzalcoatlus.webp";
 import Archelon from "@/assets/games/learn-dinosaur/archelon.webp";
+import { EntityData } from "@/types/game";
 
 export type DinosaurCategory = "herbivore" | "carnivore" | "flying_sea";
 
-export interface DinosaurData {
-  id: string;
-  name: string;
-  image: StaticImageData;
-  category: DinosaurCategory;
-}
-
-export const DINOSAURS: DinosaurData[] = [
+export const DINOSAURS: EntityData[] = [
   // Herbivores (Group 1)
   { id: "triceratops", name: "Khủng long ba sừng", image: Triceratops, category: "herbivore" },
   { id: "stegosaurus", name: "Khủng long gai", image: Stegosaurus, category: "herbivore" },
@@ -94,12 +88,12 @@ export const GROUPS = [
   },
 ];
 
-export function getDinosaursForGroup(groupId: string): DinosaurData[] {
+export function getDinosaursForGroup(groupId: string): EntityData[] {
   const group = GROUPS.find((g) => g.id === groupId);
   if (!group) return [];
   return DINOSAURS.filter((dino) => group.dinosaurs.includes(dino.id));
 }
 
-export function getAllDinosaurs(): DinosaurData[] {
+export function getAllDinosaurs(): EntityData[] {
   return DINOSAURS;
 }

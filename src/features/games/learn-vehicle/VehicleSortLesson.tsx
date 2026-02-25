@@ -1,24 +1,25 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { VehicleData, VehicleCategory, ZONES } from "./constants";
+import { ZONES } from "./constants";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
 import Image from "next/image";
+import { EntityData } from "@/types/game";
 
 interface VehicleSortLessonProps {
-  vehicles: VehicleData[];
+  vehicles: EntityData[];
   onComplete: () => void;
   requiredCorrect?: number;
 }
 
 export function VehicleSortLesson({ vehicles, onComplete, requiredCorrect = 8 }: VehicleSortLessonProps) {
   const { speak } = useTextToSpeech();
-  const [currentVehicle, setCurrentVehicle] = useState<VehicleData | null>(null);
+  const [currentVehicle, setCurrentVehicle] = useState<EntityData | null>(null);
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
-  const [selectedZone, setSelectedZone] = useState<VehicleCategory | null>(null);
-  const [remainingVehicles, setRemainingVehicles] = useState<VehicleData[]>([]);
+  const [selectedZone, setSelectedZone] = useState<string | null>(null);
+  const [remainingVehicles, setRemainingVehicles] = useState<EntityData[]>([]);
 
   // Initialize game
   useEffect(() => {
@@ -40,7 +41,7 @@ export function VehicleSortLesson({ vehicles, onComplete, requiredCorrect = 8 }:
     }, 500);
   };
 
-  const handleZoneClick = (zoneId: VehicleCategory) => {
+  const handleZoneClick = (zoneId: string) => {
     if (!currentVehicle || feedback === "correct") return;
 
     setSelectedZone(zoneId);
@@ -81,7 +82,7 @@ export function VehicleSortLesson({ vehicles, onComplete, requiredCorrect = 8 }:
     }
   };
 
-  const getZoneName = (category: VehicleCategory): string => {
+  const getZoneName = (category: string) => {
     switch (category) {
       case "land":
         return "đường bộ";
@@ -153,7 +154,7 @@ export function VehicleSortLesson({ vehicles, onComplete, requiredCorrect = 8 }:
         {ZONES.map((zone) => (
           <div
             key={zone.id}
-            onClick={() => handleZoneClick(zone.id as VehicleCategory)}
+            onClick={() => handleZoneClick(zone.id as string)}
             className={`
               flex flex-col items-center justify-center gap-2 p-6 rounded-2xl cursor-pointer hover:scale-110 transition-all duration-300
               ${feedback === "wrong" ? "opacity-50" : ""}

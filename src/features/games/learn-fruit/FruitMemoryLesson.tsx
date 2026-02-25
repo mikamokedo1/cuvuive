@@ -1,14 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { FruitData } from "./constants";
+import { EntityData } from "@/types/game";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
 import { playButtonSound } from "@/libs/utils/playSound";
 import { CardFlip, Card } from "@/components/games/CardFlip";
 
 interface FruitMemoryLessonProps {
-  fruits: FruitData[];
+  fruits: EntityData[];
   onComplete: () => void;
   pairsCount?: number;
 }

@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { AnimalData } from "./constants";
+import { EntityData } from "@/types/game";
 import { AnimalCard } from "./AnimalCard";
 import { BackLessonButton } from "@/components/games/BackLessonButton";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 
 interface AnimalLearnLessonProps {
-  animals: AnimalData[];
+  animals: EntityData[];
   onComplete: () => void;
 }
 

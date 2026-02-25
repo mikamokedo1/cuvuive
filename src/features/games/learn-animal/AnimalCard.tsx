@@ -1,12 +1,12 @@
 "use client";
 
-import { AnimalData } from "./constants";
+import { EntityData } from "@/types/game";
 import Image from "next/image";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
 import { useEffect } from "react";
 
 interface AnimalCardProps {
-  animal: AnimalData;
+  animal: EntityData;
   active?: boolean;
   showName?: boolean;
   onClick?: () => void;

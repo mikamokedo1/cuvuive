@@ -3,10 +3,10 @@
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
 import Image from "next/image";
 import { useEffect } from "react";
-import { FoodData } from "./constants";
+import { EntityData } from "@/types/game";
 
 interface FoodCardProps {
-  food: FoodData;
+  food: EntityData;
   active?: boolean;
   showName?: boolean;
   onClick?: () => void;

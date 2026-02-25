@@ -28,17 +28,9 @@ import CayChuoi from "@/assets/games/learn-flower/cay_chuoi.png";
 import CayBuoi from "@/assets/games/learn-flower/cay_buoi.webp";
 import CayNhan from "@/assets/games/learn-flower/cay_nhan.webp";
 import CayMit from "@/assets/games/learn-flower/cay_mit.webp";
+import { EntityData } from "@/types/game";
 
-export type FlowerCategory = "common" | "tet" | "tree";
-
-export interface FlowerData {
-  id: string;
-  name: string;
-  image: StaticImageData;
-  category: FlowerCategory;
-}
-
-export const FLOWERS: FlowerData[] = [
+export const FLOWERS: EntityData[] = [
   // Group 1: Hoa Phổ Biến
   { id: "hoa_sen", name: "Hoa Sen", image: HoaSen, category: "common" },
   { id: "hoa_mai", name: "Hoa Mai", image: HoaMai, category: "common" },
@@ -94,12 +86,12 @@ export const GROUPS = [
   },
 ];
 
-export function getFlowersForGroup(groupId: string): FlowerData[] {
+export function getFlowersForGroup(groupId: string): EntityData[] {
   const group = GROUPS.find((g) => g.id === groupId);
   if (!group) return [];
-  return group.flowers.map((flowerId) => FLOWERS.find((f) => f.id === flowerId)).filter(Boolean) as FlowerData[];
+  return group.flowers.map((flowerId) => FLOWERS.find((f) => f.id === flowerId)).filter(Boolean) as EntityData[];
 }
 
-export function getAllFlowers(): FlowerData[] {
+export function getAllFlowers(): EntityData[] {
   return FLOWERS;
 }

@@ -10,6 +10,7 @@ import { GROUPS, getAnimalsForGroup } from "@/features/games/learn-animal/consta
 import { AnimalLearnLesson } from "@/features/games/learn-animal/AnimalLearnLesson";
 import { AnimalQuizLesson } from "@/features/games/learn-animal/AnimalQuizLesson";
 import { AnimalMemoryLesson } from "@/features/games/learn-animal/AnimalMemoryLesson";
+import { AnimalSpeakingLesson } from "@/features/games/learn-animal/AnimalSpeakingLesson";
 import { CheckingPermission } from "@/components/common/CheckingPermission";
 
 export default function LessonPage() {
@@ -30,8 +31,8 @@ export default function LessonPage() {
 
   const group = GROUPS.find((g) => g.id === groupId);
 
-  // Lesson order for learn-animal (3 lessons per group)
-  const LESSON_ORDER = ["lesson1", "lesson2", "lesson3"];
+  // Lesson order for learn-animal (4 lessons per group)
+  const LESSON_ORDER = ["lesson1", "lesson2", "lesson3", "lesson4"];
 
   useEffect(() => {
     const runAccessCheck = async () => {
@@ -120,6 +121,8 @@ export default function LessonPage() {
         return <AnimalQuizLesson animals={animals} onComplete={handleComplete} />;
       case "lesson3":
         return <AnimalMemoryLesson animals={animals} onComplete={handleComplete} />;
+      case "lesson4":
+        return <AnimalSpeakingLesson animals={animals} onComplete={handleComplete} />;
       default:
         return <div>Lesson not found</div>;
     }

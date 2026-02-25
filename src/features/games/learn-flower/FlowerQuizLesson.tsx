@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { FlowerData } from "./constants";
+import { EntityData } from "@/types/game";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
@@ -9,16 +9,16 @@ import Image from "next/image";
 import LoudSpeaker from "@/assets/games/loud-speaker.webp";
 
 interface FlowerQuizLessonProps {
-  flowers: FlowerData[];
+  flowers: EntityData[];
   onComplete: () => void;
   requiredWins?: number;
 }
 
 export function FlowerQuizLesson({ flowers, onComplete, requiredWins = 6 }: FlowerQuizLessonProps) {
   const { speak } = useTextToSpeech();
-  const [targetFlower, setTargetFlower] = useState<FlowerData | null>(null);
-  const prevTargetRef = useRef<FlowerData | null>(null);
-  const [options, setOptions] = useState<FlowerData[]>([]);
+  const [targetFlower, setTargetFlower] = useState<EntityData | null>(null);
+  const prevTargetRef = useRef<EntityData | null>(null);
+  const [options, setOptions] = useState<EntityData[]>([]);
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
 
@@ -50,7 +50,7 @@ export function FlowerQuizLesson({ flowers, onComplete, requiredWins = 6 }: Flow
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [flowers]);
 
-  const handleOptionClick = (selected: FlowerData) => {
+  const handleOptionClick = (selected: EntityData) => {
     if (!targetFlower) return;
     if (feedback === "correct") return;
 

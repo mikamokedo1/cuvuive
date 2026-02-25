@@ -2,13 +2,13 @@
 
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
 import { useState } from "react";
-import { FoodData } from "./constants";
+import { EntityData } from "@/types/game";
 import { FoodCard } from "./FoodCard";
 import { BackLessonButton } from "@/components/games/BackLessonButton";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 
 interface FoodLearnLessonProps {
-  foods: FoodData[];
+  foods: EntityData[];
   onComplete: () => void;
 }
 

@@ -29,15 +29,9 @@ import Monkey from "@/assets/games/learn-animal/monkey.webp";
 import Giraffe from "@/assets/games/learn-animal/giraffe.webp";
 import Bear from "@/assets/games/learn-animal/bear.webp";
 import Snake from "@/assets/games/learn-animal/snake.webp";
+import { EntityData } from "@/types/game";
 
-export interface AnimalData {
-  id: string;
-  name: string;
-  image: StaticImageData;
-  category: "farm" | "wild" | "ocean";
-}
-
-export const ANIMALS: AnimalData[] = [
+export const ANIMALS: EntityData[] = [
   // Farm Animals (Group 1)
   { id: "chicken", name: "Con Gà", image: Chicken, category: "farm" },
   { id: "duck", name: "Con Vịt", image: Duck, category: "farm" },
@@ -94,7 +88,7 @@ export const GROUPS = [
 ];
 
 // Helper to get animals for a specific group
-export function getAnimalsForGroup(groupId: string): AnimalData[] {
+export function getAnimalsForGroup(groupId: string): EntityData[] {
   const group = GROUPS.find((g) => g.id === groupId);
   if (!group) return [];
   return ANIMALS.filter((animal) => group.animals.includes(animal.id));

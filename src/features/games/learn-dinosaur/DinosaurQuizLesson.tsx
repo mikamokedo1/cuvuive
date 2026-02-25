@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { DinosaurData } from "./constants";
+import { EntityData } from "@/types/game";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
@@ -10,16 +10,16 @@ import LoudSpeaker from "@/assets/games/loud-speaker.webp";
 import { playButtonSound } from "@/libs/utils/playSound";
 
 interface DinosaurQuizLessonProps {
-  dinosaurs: DinosaurData[];
+  dinosaurs: EntityData[];
   onComplete: () => void;
   requiredWins?: number;
 }
 
 export function DinosaurQuizLesson({ dinosaurs, onComplete, requiredWins = 6 }: DinosaurQuizLessonProps) {
   const { speak } = useTextToSpeech();
-  const [targetDinosaur, setTargetDinosaur] = useState<DinosaurData | null>(null);
-  const prevTargetRef = useRef<DinosaurData | null>(null);
-  const [options, setOptions] = useState<DinosaurData[]>([]);
+  const [targetDinosaur, setTargetDinosaur] = useState<EntityData | null>(null);
+  const prevTargetRef = useRef<EntityData | null>(null);
+  const [options, setOptions] = useState<EntityData[]>([]);
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
 
@@ -58,7 +58,7 @@ export function DinosaurQuizLesson({ dinosaurs, onComplete, requiredWins = 6 }: 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dinosaurs]);
 
-  const handleOptionClick = (selected: DinosaurData) => {
+  const handleOptionClick = (selected: EntityData) => {
     if (!targetDinosaur) return;
     if (feedback === "correct") return;
 

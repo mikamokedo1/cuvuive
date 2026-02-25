@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { FlowerData } from "./constants";
+import { EntityData } from "@/types/game";
 import { FlowerCard } from "./FlowerCard";
 import { BackLessonButton } from "@/components/games/BackLessonButton";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 
 interface FlowerLearnLessonProps {
-  flowers: FlowerData[];
+  flowers: EntityData[];
   onComplete: () => void;
 }
 

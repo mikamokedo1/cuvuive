@@ -1,14 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { AnimalData } from "./constants";
+import { EntityData } from "@/types/game";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
 import { playButtonSound } from "@/libs/utils/playSound";
 import { CardFlip, Card } from "@/components/games/CardFlip";
 
 interface AnimalMemoryLessonProps {
-  animals: AnimalData[];
+  animals: EntityData[];
   onComplete: () => void;
   pairsCount?: number; // Number of unique animals to use (default 6)
 }

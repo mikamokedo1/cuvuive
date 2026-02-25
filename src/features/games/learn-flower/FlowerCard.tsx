@@ -1,12 +1,12 @@
 "use client";
 
-import { FlowerData } from "./constants";
+import { EntityData } from "@/types/game";
 import Image from "next/image";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
 import { useEffect } from "react";
 
 interface FlowerCardProps {
-  flower: FlowerData;
+  flower: EntityData;
   active?: boolean;
   showName?: boolean;
   onClick?: () => void;

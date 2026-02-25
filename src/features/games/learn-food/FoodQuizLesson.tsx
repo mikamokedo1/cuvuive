@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { FoodData } from "./constants";
+import { EntityData } from "@/types/game";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
@@ -10,16 +10,16 @@ import LoudSpeaker from "@/assets/games/loud-speaker.webp";
 import { playButtonSound } from "@/libs/utils/playSound";
 
 interface FoodQuizLessonProps {
-  foods: FoodData[];
+  foods: EntityData[];
   onComplete: () => void;
   requiredWins?: number;
 }
 
 export function FoodQuizLesson({ foods, onComplete, requiredWins = 6 }: FoodQuizLessonProps) {
   const { speak } = useTextToSpeech();
-  const [targetFood, setTargetFood] = useState<FoodData | null>(null);
-  const prevTargetRef = useRef<FoodData | null>(null);
-  const [options, setOptions] = useState<FoodData[]>([]);
+  const [targetFood, setTargetFood] = useState<EntityData | null>(null);
+  const prevTargetRef = useRef<EntityData | null>(null);
+  const [options, setOptions] = useState<EntityData[]>([]);
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
 
@@ -58,7 +58,7 @@ export function FoodQuizLesson({ foods, onComplete, requiredWins = 6 }: FoodQuiz
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [foods]);
 
-  const handleOptionClick = (selected: FoodData) => {
+  const handleOptionClick = (selected: EntityData) => {
     if (!targetFood) return;
     if (feedback === "correct") return;
 

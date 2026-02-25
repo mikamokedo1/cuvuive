@@ -1,5 +1,4 @@
 "use client";
-import { useEffect, useRef } from "react";
 import { ShapeData } from "./constants";
 import Image from "next/image";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";

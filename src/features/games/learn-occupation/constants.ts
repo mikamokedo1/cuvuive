@@ -48,16 +48,11 @@ import ToolDancer from "@/assets/games/learn-occupation/tool_dancer.webp";
 import ToolPhotographer from "@/assets/games/learn-occupation/tool_photographer.webp";
 import ToolAthlete from "@/assets/games/learn-occupation/tool_athlete.webp";
 import ToolAstronaut from "@/assets/games/learn-occupation/tool_astronaut.webp";
+import { EntityData } from "@/types/game";
 
-export type OccupationCategory = "community" | "medical" | "creative";
-
-export interface OccupationData {
-  id: string;
-  name: string;
-  image: StaticImageData;
+export interface OccupationData extends EntityData {
   toolImage: StaticImageData;
   toolName: string;
-  category: OccupationCategory;
 }
 
 export const OCCUPATIONS: OccupationData[] = [

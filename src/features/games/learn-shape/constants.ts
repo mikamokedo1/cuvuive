@@ -27,11 +27,9 @@ import ObjectTrapezium from "@/assets/games/learn-shape/object-trapezium.webp";
 import LogoGroup1 from "@/assets/games/learn-shape/learn-shape-group-1.webp";
 import LogoGroup2 from "@/assets/games/learn-shape/learn-shape-group-2.webp";
 import LogoGroup3 from "@/assets/games/learn-shape/learn-shape-group-3.webp";
+import { EntityData } from "@/types/game";
 
-export interface ShapeData {
-  id: string;
-  name: string;
-  image: StaticImageData;
+export interface ShapeData extends EntityData {
   objectImage: StaticImageData;
   objectName: string;
   isBasic: boolean;

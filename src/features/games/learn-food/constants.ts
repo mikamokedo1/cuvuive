@@ -29,17 +29,9 @@ import SuaChua from "@/assets/games/learn-food/sua_chua.webp";
 import BanhVong from "@/assets/games/learn-food/banh_vong.webp";
 import BanhQuy from "@/assets/games/learn-food/banh_quy.webp";
 import Traicay from "@/assets/games/learn-food/trai_cay.webp";
+import { EntityData } from "@/types/game";
 
-export type FoodCategory = "breakfast" | "main_dish" | "dessert";
-
-export interface FoodData {
-  id: string;
-  name: string;
-  image: StaticImageData;
-  category: FoodCategory;
-}
-
-export const FOODS: FoodData[] = [
+export const FOODS: EntityData[] = [
   // Breakfast (Group 1)
   { id: "banh_mi", name: "Bánh mì", image: BanhMi, category: "breakfast" },
   { id: "pho", name: "Phở", image: Pho, category: "breakfast" },
@@ -99,12 +91,12 @@ export const GROUPS = [
   },
 ];
 
-export function getFoodsForGroup(groupId: string): FoodData[] {
+export function getFoodsForGroup(groupId: string): EntityData[] {
   const group = GROUPS.find((g) => g.id === groupId);
   if (!group) return [];
   return FOODS.filter((food) => group.foods.includes(food.id));
 }
 
-export function getAllFoods(): FoodData[] {
+export function getAllFoods(): EntityData[] {
   return FOODS;
 }

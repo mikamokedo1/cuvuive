@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { OccupationData } from "./constants";
+import { EntityData } from "@/types/game";
 import { OccupationCard } from "./OccupationCard";
 import { BackLessonButton } from "@/components/games/BackLessonButton";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 
 interface OccupationLearnLessonProps {
-  occupations: OccupationData[];
+  occupations: EntityData[];
   onComplete: () => void;
 }
 

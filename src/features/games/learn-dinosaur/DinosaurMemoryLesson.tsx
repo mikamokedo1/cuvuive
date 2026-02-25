@@ -1,14 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { DinosaurData } from "./constants";
+import { EntityData } from "@/types/game";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
 import { playButtonSound } from "@/libs/utils/playSound";
 import { CardFlip, Card } from "@/components/games/CardFlip";
 
 interface DinosaurMemoryLessonProps {
-  dinosaurs: DinosaurData[];
+  dinosaurs: EntityData[];
   onComplete: () => void;
   pairsCount?: number;
 }

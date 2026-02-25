@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { FruitData } from "./constants";
+import { EntityData } from "@/types/game";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
@@ -9,16 +9,16 @@ import Image from "next/image";
 import LoudSpeaker from "@/assets/games/loud-speaker.webp";
 
 interface FruitQuizLessonProps {
-  fruits: FruitData[];
+  fruits: EntityData[];
   onComplete: () => void;
   requiredWins?: number;
 }
 
 export function FruitQuizLesson({ fruits, onComplete, requiredWins = 6 }: FruitQuizLessonProps) {
   const { speak } = useTextToSpeech();
-  const [targetFruit, setTargetFruit] = useState<FruitData | null>(null);
-  const prevTargetRef = useRef<FruitData | null>(null);
-  const [options, setOptions] = useState<FruitData[]>([]);
+  const [targetFruit, setTargetFruit] = useState<EntityData | null>(null);
+  const prevTargetRef = useRef<EntityData | null>(null);
+  const [options, setOptions] = useState<EntityData[]>([]);
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
 
@@ -50,7 +50,7 @@ export function FruitQuizLesson({ fruits, onComplete, requiredWins = 6 }: FruitQ
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fruits]);
 
-  const handleOptionClick = (selected: FruitData) => {
+  const handleOptionClick = (selected: EntityData) => {
     if (!targetFruit) return;
     if (feedback === "correct") return;
 

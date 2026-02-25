@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { VehicleData } from "./constants";
+import { EntityData } from "@/types/game";
 import { VehicleCard } from "./VehicleCard";
 import { BackLessonButton } from "@/components/games/BackLessonButton";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 
 interface VehicleLearnLessonProps {
-  vehicles: VehicleData[];
+  vehicles: EntityData[];
   onComplete: () => void;
 }
 
