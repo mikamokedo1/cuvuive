@@ -52,20 +52,20 @@ export default function GroupLessonsPage() {
     },
     {
       id: "lesson2",
+      title: "Tập nói",
+      icon: <Mic className="text-white w-6 h-6" />,
+      isPremium: true,
+    },
+    {
+      id: "lesson3",
       title: "Đây là con gì?",
       icon: <HelpCircle className="text-white w-6 h-6" />,
       isPremium: true,
     },
     {
-      id: "lesson3",
+      id: "lesson4",
       title: "Ghép đôi",
       icon: <Grid2X2 className="text-white w-6 h-6" />,
-      isPremium: true,
-    },
-    {
-      id: "lesson4",
-      title: "Tập nói",
-      icon: <Mic className="text-white w-6 h-6" />,
       isPremium: true,
     },
   ];

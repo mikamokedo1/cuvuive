@@ -192,9 +192,7 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
             Mình chưa nghe rõ, bé nói lại nhé!
           </p>
         ) : isListening ? (
-          <p className="text-xl md:text-2xl text-blue-500 font-medium animate-pulse text-center">
-            Bé hãy nói tên con vật nhé...
-          </p>
+          <p className="text-xl md:text-2xl text-blue-500 font-medium animate-pulse text-center">Bé hãy nói to...</p>
         ) : (
           <p className="text-xl md:text-2xl text-slate-400 font-medium text-center">Bấm vào chiếc mic để bắt đầu nói</p>
         )}

@@ -204,9 +204,9 @@ export const COURSES: CourseDef[] = [
         title: "Động vật nuôi",
         lessons: [
           { id: "lesson1", title: "Học tên động vật", isFree: true },
-          { id: "lesson2", title: "Đây là con gì?" },
-          { id: "lesson3", title: "Ghép đôi" },
-          { id: "lesson4", title: "Tập nói" },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Đây là con gì?" },
+          { id: "lesson4", title: "Ghép đôi" },
         ],
       },
       {
@@ -214,9 +214,9 @@ export const COURSES: CourseDef[] = [
         title: "Động vật hoang dã",
         lessons: [
           { id: "lesson1", title: "Học tên động vật", isFree: true },
-          { id: "lesson2", title: "Đây là con gì?" },
-          { id: "lesson3", title: "Ghép đôi" },
-          { id: "lesson4", title: "Tập nói" },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Đây là con gì?" },
+          { id: "lesson4", title: "Ghép đôi" },
         ],
       },
       {
@@ -224,9 +224,9 @@ export const COURSES: CourseDef[] = [
         title: "Động vật biển",
         lessons: [
           { id: "lesson1", title: "Học tên động vật", isFree: true },
-          { id: "lesson2", title: "Đây là con gì?" },
-          { id: "lesson3", title: "Ghép đôi" },
-          { id: "lesson4", title: "Tập nói" },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Đây là con gì?" },
+          { id: "lesson4", title: "Ghép đôi" },
         ],
       },
     ],

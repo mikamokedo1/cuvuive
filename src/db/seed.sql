@@ -235,16 +235,19 @@ ON CONFLICT (id) DO UPDATE SET
 INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) VALUES
   -- Group 1 (Farm Animals)
   ('learn-animal-g1-l1', 'lesson1', 'learn-animal-group1', 'learn-animal', 'Học tên động vật', true, 1),
-  ('learn-animal-g1-l2', 'lesson2', 'learn-animal-group1', 'learn-animal', 'Đây là con gì?', false, 2),
-  ('learn-animal-g1-l3', 'lesson3', 'learn-animal-group1', 'learn-animal', 'Nghe tiếng kêu', false, 3),
+  ('learn-animal-g1-l2', 'lesson2', 'learn-animal-group1', 'learn-animal', 'Tập nói', false, 2),
+  ('learn-animal-g1-l3', 'lesson3', 'learn-animal-group1', 'learn-animal', 'Đây là con gì?', false, 3),
+  ('learn-animal-g1-l4', 'lesson4', 'learn-animal-group1', 'learn-animal', 'Ghép đôi', false, 4),
   -- Group 2 (Wild Animals)
   ('learn-animal-g2-l1', 'lesson1', 'learn-animal-group2', 'learn-animal', 'Học tên động vật', true, 1),
-  ('learn-animal-g2-l2', 'lesson2', 'learn-animal-group2', 'learn-animal', 'Đây là con gì?', false, 2),
-  ('learn-animal-g2-l3', 'lesson3', 'learn-animal-group2', 'learn-animal', 'Nghe tiếng kêu', false, 3),
+  ('learn-animal-g2-l2', 'lesson2', 'learn-animal-group2', 'learn-animal', 'Tập nói', false, 2),
+  ('learn-animal-g2-l3', 'lesson3', 'learn-animal-group2', 'learn-animal', 'Đây là con gì?', false, 3),
+  ('learn-animal-g2-l4', 'lesson4', 'learn-animal-group2', 'learn-animal', 'Ghép đôi', false, 4),
   -- Group 3 (Ocean Animals)
   ('learn-animal-g3-l1', 'lesson1', 'learn-animal-group3', 'learn-animal', 'Học tên động vật', true, 1),
-  ('learn-animal-g3-l2', 'lesson2', 'learn-animal-group3', 'learn-animal', 'Đây là con gì?', false, 2),
-  ('learn-animal-g3-l3', 'lesson3', 'learn-animal-group3', 'learn-animal', 'Ghép đôi', false, 3)
+  ('learn-animal-g3-l2', 'lesson2', 'learn-animal-group3', 'learn-animal', 'Tập nói', false, 2),
+  ('learn-animal-g3-l3', 'lesson3', 'learn-animal-group3', 'learn-animal', 'Đây là con gì?', false, 3),
+  ('learn-animal-g3-l4', 'lesson4', 'learn-animal-group3', 'learn-animal', 'Ghép đôi', false, 4)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   is_free = EXCLUDED.is_free,

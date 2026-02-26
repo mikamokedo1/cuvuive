@@ -118,11 +118,11 @@ export default function LessonPage() {
       case "lesson1":
         return <AnimalLearnLesson animals={animals} onComplete={handleComplete} />;
       case "lesson2":
-        return <AnimalQuizLesson animals={animals} onComplete={handleComplete} />;
-      case "lesson3":
-        return <AnimalMemoryLesson animals={animals} onComplete={handleComplete} />;
-      case "lesson4":
         return <AnimalSpeakingLesson animals={animals} onComplete={handleComplete} />;
+      case "lesson3":
+        return <AnimalQuizLesson animals={animals} onComplete={handleComplete} />;
+      case "lesson4":
+        return <AnimalMemoryLesson animals={animals} onComplete={handleComplete} />;
       default:
         return <div>Lesson not found</div>;
     }
