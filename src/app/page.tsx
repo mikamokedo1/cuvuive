@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ActionButton } from "@/components/common/ActionButton";
 import TextTitle from "@/components/common/TextTitle";
 import Header from "@/components/layout/Header";
+import { WelcomeBackModal } from "@/components/common/WelcomeBackModal";
 
 // Assets
 import BgImage from "@/assets/bg.jpg";
@@ -109,6 +110,9 @@ export default function Home() {
 
       {/* Header */}
       <Header />
+
+      {/* Welcome Modal */}
+      <WelcomeBackModal />
 
       {/* Title */}
       <TextTitle>Hôm nay học gì?</TextTitle>

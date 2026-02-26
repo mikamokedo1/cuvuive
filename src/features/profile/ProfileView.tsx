@@ -10,13 +10,15 @@ import { CourseDef } from "@/libs/actions/courses";
 
 interface ProfileViewProps {
   courses: CourseDef[];
+  currentStreak: number;
+  activeDays: number[];
 }
 
 import { useProgress } from "@/context/ProgressContext";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 
-export function ProfileView({ courses }: ProfileViewProps) {
+export function ProfileView({ courses, currentStreak, activeDays }: ProfileViewProps) {
   const { user, isPremium } = useUser();
   const { allProgress } = useProgress();
   const router = useRouter();
@@ -73,7 +75,13 @@ export function ProfileView({ courses }: ProfileViewProps) {
 
       <div className="container mx-auto px-4 pt-4">
         <div className="max-w-4xl mx-auto">
-          <UserProfileHeader user={user} isPremium={isPremium} level={userLevel} />
+          <UserProfileHeader
+            user={user}
+            isPremium={isPremium}
+            level={userLevel}
+            currentStreak={currentStreak}
+            activeDays={activeDays}
+          />
 
           <div className="mt-12 mb-8">
             <LessonTitle tag="h1">Tiến độ học tập</LessonTitle>

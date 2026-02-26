@@ -7,8 +7,28 @@ export const users = pgTable("users", {
   email: text("email").notNull(),
   isPro: boolean("is_pro").default(false),
   subscriptionId: text("subscription_id"), // Stripe Subscription ID
+  currentStreak: integer("current_streak").default(0),
+  lastActiveDate: timestamp("last_active_date"),
   createdAt: timestamp("created_at").defaultNow(),
 });
+
+export const userActivityLogs = pgTable(
+  "user_activity_logs",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    date: timestamp("date").notNull(), // The exact day (start of day) the activity occurred
+  },
+  (table) => {
+    return {
+      uniqueUserDate: uniqueIndex("unique_user_date_idx").on(table.userId, table.date),
+    };
+  },
+);
 
 export const progress = pgTable("progress", {
   id: text("id")
