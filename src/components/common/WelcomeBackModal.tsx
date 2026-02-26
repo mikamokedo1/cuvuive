@@ -6,14 +6,12 @@ import { updateUserStreakAction, getUserWeeklyActivityAction } from "@/libs/acti
 import { useRouter } from "next/navigation";
 import { useProgress } from "@/context/ProgressContext";
 import { useMemo } from "react";
-import { Check } from "lucide-react";
-import { DAYS_OF_WEEK } from "@/libs/constants/dayOfWeek";
+import { Streak } from "../games/Streak";
 
 export function WelcomeBackModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [streak, setStreak] = useState(0);
   const [activeDays, setActiveDays] = useState<number[]>([]);
-  const [currentDayIndex, setCurrentDayIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const { allProgress } = useProgress();
@@ -30,8 +28,6 @@ export function WelcomeBackModal() {
   useEffect(() => {
     async function checkStreak() {
       try {
-        setCurrentDayIndex(new Date().getDay());
-
         // Parallel fetching
         const [streakResult, weeklyActivity] = await Promise.all([
           updateUserStreakAction(),
@@ -70,27 +66,7 @@ export function WelcomeBackModal() {
               : "Đừng bỏ lỡ chuỗi nhé!"}
         </p>
 
-        <div className="flex justify-between w-full px-2 mb-8 mt-2">
-          {DAYS_OF_WEEK.map((day) => {
-            const isActive = activeDays.includes(day.index);
-            const isToday = day.index === currentDayIndex;
-
-            return (
-              <div key={day.label} className="flex flex-col items-center gap-2">
-                <span className={`text-sm font-bold ${isToday ? "text-orange-500" : "text-gray-400"}`}>
-                  {day.label}
-                </span>
-                <div
-                  className={`w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-colors ${
-                    isActive ? "bg-[#FF9800] text-white shadow-md shadow-orange-200" : "bg-gray-200 text-transparent"
-                  }`}
-                >
-                  <Check size={24} strokeWidth={4} />
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        <Streak activeDays={activeDays} />
 
         <ActionButton
           variant="glossy"
