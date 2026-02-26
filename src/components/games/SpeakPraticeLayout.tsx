@@ -4,7 +4,6 @@ import { Mic, MicOff, AlertCircle } from "lucide-react";
 import Image from "next/image";
 import Loading from "../common/Loading";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
-import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
 import { useSpeechRecognition } from "@/libs/hooks/useSpeechRecognition";
 import { fuzzyMatchVietnamese } from "@/libs/utils/fuzzyMatch";
@@ -14,48 +13,87 @@ import { playButtonSound } from "@/libs/utils/playSound";
 interface SpeakPraticeLayoutProps {
   entities: EntityData[];
   onComplete: () => void;
-  requiredWins?: number;
 }
 
-const SpeakPraticeLayout = ({ entities, onComplete, requiredWins = 6 }: SpeakPraticeLayoutProps) => {
+const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) => {
   const { speak } = useTextToSpeech();
   const { isListening, transcript, interimTranscript, isSupported, startListening, stopListening, resetTranscript } =
     useSpeechRecognition("vi-VN");
 
-  const [targetEntity, setTargetEntity] = useState<EntityData | null>(null);
-  const prevTargetRef = useRef<EntityData | null>(null);
-  const [score, setScore] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [feedback, setFeedback] = useState<FeedbackType>(null);
   const [hasTried, setHasTried] = useState(false);
 
-  // Generate new question
-  const generateQuestion = () => {
-    if (entities.length === 0) return;
+  const targetEntity = entities[currentIndex];
 
-    // Pick a random target
-    const target = getRandomItem(entities, prevTargetRef.current);
-    prevTargetRef.current = target;
+  // Auto speak question when target changes
+  useEffect(() => {
+    if (!targetEntity) return;
 
-    setTargetEntity(target);
     setFeedback(null);
     setHasTried(false);
     resetTranscript();
 
     // Auto speak question after a short delay
-    setTimeout(() => {
-      speak(`${target.name}`);
+    const speakTimer = setTimeout(() => {
+      speak(`${targetEntity.name}`);
 
       // Auto-start microphone after TTS finishes (approx 1.5 seconds)
-      setTimeout(() => {
+      const listenTimer = setTimeout(() => {
         startListening();
       }, 1500);
+
+      return () => clearTimeout(listenTimer);
     }, 800);
+
+    return () => clearTimeout(speakTimer);
+  }, [currentIndex, targetEntity, speak, startListening, resetTranscript]);
+
+  const goToNextQuestion = () => {
+    if (currentIndex + 1 >= entities.length) {
+      onComplete();
+    } else {
+      setCurrentIndex((prev) => prev + 1);
+    }
   };
 
+  // Reset transcript if speaking for too long without correct answer
   useEffect(() => {
-    generateQuestion();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [entities]);
+    const currentText = (transcript + " " + interimTranscript).trim();
+    if (!isListening || !currentText || feedback === "correct") return;
+
+    const words = currentText.split(/\s+/);
+
+    // 1. Instant reset if too many words (>= 10)
+    if (words.length >= 10) {
+      speak("Thử lại nhé!");
+      setFeedback("wrong");
+      // Stop listening immediately, restart after TTS finishes
+      stopListening();
+
+      setTimeout(() => {
+        setFeedback(null);
+        resetTranscript();
+        startListening();
+      }, 2000);
+      return;
+    }
+
+    // 2. Time-based reset (2.5 seconds without a correct answer)
+    const resetTimer = setTimeout(() => {
+      speak("Thử lại nhé!");
+      setFeedback("wrong");
+      stopListening();
+
+      setTimeout(() => {
+        setFeedback(null);
+        resetTranscript();
+        startListening();
+      }, 2000);
+    }, 2500);
+
+    return () => clearTimeout(resetTimer);
+  }, [transcript, interimTranscript, isListening, feedback, speak, resetTranscript, startListening, stopListening]);
 
   // Handle speech result
   useEffect(() => {
@@ -66,16 +104,11 @@ const SpeakPraticeLayout = ({ entities, onComplete, requiredWins = 6 }: SpeakPra
       if (isCorrect) {
         // Correct
         playWinEffect(500);
+        speak("Giỏi quá!");
         setFeedback("correct");
 
         setTimeout(() => {
-          const newScore = score + 1;
-          setScore(newScore);
-          if (newScore >= requiredWins) {
-            onComplete();
-          } else {
-            generateQuestion();
-          }
+          goToNextQuestion();
         }, 2000);
       } else {
         // Wrong
@@ -140,15 +173,11 @@ const SpeakPraticeLayout = ({ entities, onComplete, requiredWins = 6 }: SpeakPra
           className={`
             relative w-3/4 h-3/4 transition-all duration-300
             ${feedback === "correct" ? "scale-110" : "hover:scale-105"}
+            ${isListening ? "cursor-not-allowed" : "cursor-pointer"}
           `}
-          onClick={() => speak(targetEntity.name)}
+          onClick={() => !isListening && speak(targetEntity.name)}
         >
-          <Image src={targetEntity.image} alt={targetEntity.name} fill className="object-contain cursor-pointer" />
-        </div>
-
-        {/* Name Tag */}
-        <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-white px-6 py-2 rounded-full shadow-lg border-2 border-slate-200 z-10 whitespace-nowrap">
-          <span className="text-2xl md:text-3xl font-display font-medium text-slate-800">{targetEntity.name}</span>
+          <Image src={targetEntity.image} alt={targetEntity.name} fill className="object-contain" />
         </div>
       </div>
 
