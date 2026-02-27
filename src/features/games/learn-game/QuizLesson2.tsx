@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { ActionButton } from "@/components/common/ActionButton";
-import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { NUMBER_NAMES_VI } from "@/libs/constants/numberPaths2";
 import { randomExcluding } from "@/libs/utils/randomNum";

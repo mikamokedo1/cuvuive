@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { ColorData } from "./constants";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { getRandomItem } from "@/libs/utils/randomQuestion";
-import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { FeedbackType } from "@/types/game";
 
 interface ColorQuizLessonProps {

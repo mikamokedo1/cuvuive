@@ -54,7 +54,6 @@ export const useTextToSpeech = (defaultLang: string = "vi"): UseTextToSpeechRetu
         const fallbackVoice = availableVoices.find((v) => v.lang.toLowerCase().startsWith(langLower));
 
         const defaultVoice = premiumVoice || fallbackVoice;
-
         // If no specific language match, fall back to the first available or keep current if valid
         if (defaultVoice) {
           setSelectedVoice((prev) => (prev?.name === defaultVoice.name ? prev : defaultVoice));

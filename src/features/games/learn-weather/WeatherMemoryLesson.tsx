@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { EntityData } from "@/types/game";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
-import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { playButtonSound } from "@/libs/utils/playSound";
 import { CardFlip, Card } from "@/components/games/CardFlip";
 

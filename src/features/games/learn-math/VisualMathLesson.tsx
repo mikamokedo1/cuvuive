@@ -5,7 +5,7 @@ import Image from "next/image";
 import { ThingImages } from "@/libs/constants/thingImages";
 import { MathOperator, generateMathQuestion, generateChoices } from "./constants";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
-import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { SymbolComponent } from "./ExplainMathLesson";
 import LoudSpeaker from "@/assets/games/loud-speaker.webp";
 import { FeedbackType } from "@/types/game";

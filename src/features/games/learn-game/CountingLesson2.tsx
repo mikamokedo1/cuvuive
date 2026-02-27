@@ -6,7 +6,7 @@ import { ThingImages } from "@/libs/constants/thingImages";
 import { randomNum, randomExcluding } from "@/libs/utils/randomNum";
 import Image from "next/image";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
-import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { NUMBER_NAMES_VI } from "@/libs/constants/numberPaths2";
 import { getThingImage } from "@/libs/constants/numberData";
 import { FeedbackType } from "@/types/game";

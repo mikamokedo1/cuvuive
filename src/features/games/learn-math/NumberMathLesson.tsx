@@ -4,7 +4,7 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import Image from "next/image";
 import { MathOperator, generateMathQuestion, generateChoices, SymbolToText } from "./constants";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
-import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { SymbolComponent } from "./ExplainMathLesson";
 import LoudSpeaker from "@/assets/games/loud-speaker.webp";
 import { FeedbackType } from "@/types/game";

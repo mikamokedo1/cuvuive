@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { OccupationData } from "./constants";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
-import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { playButtonSound } from "@/libs/utils/playSound";
 import Image from "next/image";

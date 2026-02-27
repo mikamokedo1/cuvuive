@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { playButtonSound } from "@/libs/utils/playSound";
-import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 import { ShapeData, SHAPES } from "./constants";
 import { SHAPE_PATHS, ShapePathData } from "@/libs/constants/shapePaths";

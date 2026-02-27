@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { ZONES } from "./constants";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
-import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import Image from "next/image";
 import { EntityData } from "@/types/game";
 import { FeedbackType } from "@/types/game";

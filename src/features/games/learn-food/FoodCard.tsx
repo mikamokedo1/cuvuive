@@ -1,6 +1,6 @@
 "use client";
 
-import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import Image from "next/image";
 import { useEffect } from "react";
 import { EntityData } from "@/types/game";

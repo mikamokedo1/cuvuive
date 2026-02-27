@@ -5,7 +5,7 @@ import { ShapeData } from "./constants";
 import NextImage from "next/image";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { getRandomItem } from "@/libs/utils/randomQuestion";
-import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { FeedbackType } from "@/types/game";
 
 interface ShapeMatchLessonProps {

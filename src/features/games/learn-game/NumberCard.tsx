@@ -3,7 +3,7 @@ import { playSound } from "@/libs/utils/playSound";
 import Image, { StaticImageData } from "next/image";
 import { useEffect } from "react";
 import { ThingImages } from "@/libs/constants/thingImages";
-import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 
 interface NumberCardProps {
   number: number;

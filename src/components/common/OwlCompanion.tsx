@@ -6,7 +6,7 @@ import { useOwl } from "@/context/OwlContext";
 import ownLearningImg from "@/assets/own-learning.webp";
 import { playSound } from "@/libs/utils/playSound";
 import { usePathname } from "next/navigation";
-import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 
 const DO_NOT_SHOW_PATHNAMES = ["/auth/update-password"];
 

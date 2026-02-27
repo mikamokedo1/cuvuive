@@ -1,7 +1,7 @@
 "use client";
 import { ShapeData } from "./constants";
 import Image from "next/image";
-import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 
 interface ShapeCardProps {
   shape: ShapeData;

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { useClickOutside } from "@/libs/hooks/useClickOutside";
+import { useClickOutside } from "@/hooks/useClickOutside";
 
 interface DropdownProps {
   trigger: React.ReactNode;

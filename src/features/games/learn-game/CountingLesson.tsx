@@ -9,7 +9,7 @@ import { playSound } from "@/libs/utils/playSound";
 import { SoundNumbers } from "./LearnLesson";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { MAP_INDEX_TO_COLOR } from "./QuizLesson";
-import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { FeedbackType } from "@/types/game";
 
 interface CountingLessonProps {

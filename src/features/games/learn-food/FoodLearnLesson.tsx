@@ -1,6 +1,6 @@
 "use client";
 
-import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { useState } from "react";
 import { EntityData } from "@/types/game";
 import { FoodCard } from "./FoodCard";

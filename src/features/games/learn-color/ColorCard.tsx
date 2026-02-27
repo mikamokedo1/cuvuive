@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { ColorData } from "./constants";
 import Image from "next/image";
-import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 
 interface ColorCardProps {
   color: ColorData;

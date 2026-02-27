@@ -2,7 +2,7 @@
 
 import { EntityData } from "@/types/game";
 import Image from "next/image";
-import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { useEffect } from "react";
 
 interface FlowerCardProps {

@@ -10,7 +10,7 @@ import SoundGreater from "@/assets/games/compare-quantity/sounds/dau-lon.mp3";
 import SoundLess from "@/assets/games/compare-quantity/sounds/dau-be.mp3";
 import SoundEqual from "@/assets/games/compare-quantity/sounds/dau-bang.mp3";
 import { playSound } from "@/libs/utils/playSound";
-import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { FeedbackType } from "@/types/game";
 
 export const MAP_COMPARE_SIGN_SOUND = {

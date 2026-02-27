@@ -6,7 +6,7 @@ import { ThingImages } from "@/libs/constants/thingImages";
 import { MathOperator, SymbolToText } from "./constants";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 import { BackLessonButton } from "@/components/games/BackLessonButton";
-import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 
 interface ExplainMathLessonProps {
   operator: MathOperator;

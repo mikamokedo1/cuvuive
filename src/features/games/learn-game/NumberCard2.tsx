@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useEffect } from "react";
 import { getThingImage } from "@/libs/constants/numberData";
 import { NUMBER_NAMES_VI } from "@/libs/constants/numberPaths2";
-import { useTextToSpeech } from "@/libs/hooks/useTextToSpeech";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 
 interface NumberCard2Props {
   number: number;
