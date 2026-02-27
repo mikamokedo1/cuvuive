@@ -17,7 +17,8 @@ INSERT INTO courses (id, title, description, thumbnail, sort_index) VALUES
   ('learn-dinosaur', 'Học khủng long', 'Khám phá thế giới của các loài khủng long.', '/assets/courses/dinosaurs.png', 9),
   ('learn-instrument', 'Học nhạc cụ', 'Bé làm quen với các loại nhạc cụ và âm thanh của chúng.', '/assets/courses/instruments.png', 10),
   ('learn-occupation', 'Học nghề nghiệp', 'Tìm hiểu về các nghề nghiệp phổ biến trong xã hội.', '/assets/courses/occupations.png', 11),
-  ('learn-flower', 'Học Hoa & Cây', 'Khám phá các loài hoa và cây quen thuộc ở Việt Nam.', '/assets/courses/flowers.png', 12)
+  ('learn-flower', 'Học Hoa & Cây', 'Khám phá các loài hoa và cây quen thuộc ở Việt Nam.', '/assets/courses/flowers.png', 12),
+  ('learn-weather', 'Học thời tiết', 'Bé làm quen với các hiện tượng thời tiết và khí hậu qua hình ảnh vui nhộn.', '/assets/courses/weather.png', 13)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   description = EXCLUDED.description,
@@ -135,6 +136,15 @@ INSERT INTO groups (id, slug, course_id, title, sort_index) VALUES
   ('learn-flower-group1', 'group1', 'learn-flower', 'Hoa phổ biến', 1),
   ('learn-flower-group2', 'group2', 'learn-flower', 'Hoa Tết & Trang trí', 2),
   ('learn-flower-group3', 'group3', 'learn-flower', 'Cây ăn quả', 3)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  sort_index = EXCLUDED.sort_index;
+
+-- Learn Weather Groups
+INSERT INTO groups (id, slug, course_id, title, sort_index) VALUES
+  ('learn-weather-group1', 'group1', 'learn-weather', 'Thời tiết cơ bản', 1),
+  ('learn-weather-group2', 'group2', 'learn-weather', 'Thời tiết đặc biệt', 2),
+  ('learn-weather-group3', 'group3', 'learn-weather', 'Mùa và khí hậu', 3)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   sort_index = EXCLUDED.sort_index;
@@ -367,6 +377,26 @@ INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) 
   ('learn-flower-g3-l1', 'lesson1', 'learn-flower-group3', 'learn-flower', 'Học tên cây', true, 1),
   ('learn-flower-g3-l2', 'lesson2', 'learn-flower-group3', 'learn-flower', 'Đây là gì?', false, 2),
   ('learn-flower-g3-l3', 'lesson3', 'learn-flower-group3', 'learn-flower', 'Ghép đôi', false, 3)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  is_free = EXCLUDED.is_free,
+  sort_index = EXCLUDED.sort_index;
+
+-- Learn Weather Lessons
+INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) VALUES
+  ('learn-weather-g1-l1', 'lesson1', 'learn-weather-group1', 'learn-weather', 'Học tên thời tiết', true, 1),
+  ('learn-weather-g1-l2', 'lesson2', 'learn-weather-group1', 'learn-weather', 'Tập nói', false, 2),
+  ('learn-weather-g1-l3', 'lesson3', 'learn-weather-group1', 'learn-weather', 'Đây là gì?', false, 3),
+  ('learn-weather-g1-l4', 'lesson4', 'learn-weather-group1', 'learn-weather', 'Ghép đôi', false, 4),
+  ('learn-weather-g2-l1', 'lesson1', 'learn-weather-group2', 'learn-weather', 'Học tên thời tiết', true, 1),
+  ('learn-weather-g2-l2', 'lesson2', 'learn-weather-group2', 'learn-weather', 'Tập nói', false, 2),
+  ('learn-weather-g2-l3', 'lesson3', 'learn-weather-group2', 'learn-weather', 'Đây là gì?', false, 3),
+  ('learn-weather-g2-l4', 'lesson4', 'learn-weather-group2', 'learn-weather', 'Ghép đôi', false, 4),
+  ('learn-weather-g3-l1', 'lesson1', 'learn-weather-group3', 'learn-weather', 'Học tên mùa', true, 1),
+  ('learn-weather-g3-l2', 'lesson2', 'learn-weather-group3', 'learn-weather', 'Tập nói', false, 2),
+  ('learn-weather-g3-l3', 'lesson3', 'learn-weather-group3', 'learn-weather', 'Đây là gì?', false, 3),
+  ('learn-weather-g3-l4', 'lesson4', 'learn-weather-group3', 'learn-weather', 'Ghép đôi', false, 4),
+  ('learn-weather-g3-l5', 'lesson5', 'learn-weather-group3', 'learn-weather', 'Mặc gì cho đúng mùa?', false, 5)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   is_free = EXCLUDED.is_free,

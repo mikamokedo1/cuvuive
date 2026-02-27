@@ -20,6 +20,7 @@ import GameDinosaurLogo from "@/assets/games/learn-dinosaur/logo.webp";
 import GameFoodLogo from "@/assets/games/learn-food/logo.webp";
 import GameFlowerLogo from "@/assets/games/learn-flower/logo.webp";
 import GameMathLogo from "@/assets/games/learn-math/logo.png";
+import GameWeatherLogo from "@/assets/games/learn-weather/logo.png";
 
 interface Game {
   id: string;
@@ -140,6 +141,13 @@ export default function Home() {
             href: "/games/learn-flower",
             color: "green",
             icon: GameFlowerLogo,
+          },
+          {
+            id: "learn-weather",
+            title: "Học thời tiết",
+            href: "/games/learn-weather",
+            color: "blue",
+            icon: GameWeatherLogo,
           },
         ]).map((game) => {
           const content = (

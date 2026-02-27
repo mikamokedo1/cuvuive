@@ -18,7 +18,7 @@ interface GameWrapGroups {
 export const GameWrapGroups = ({ logo, gameId, groups, title }: GameWrapGroups) => {
   const router = useRouter();
   const { isGroupUnlocked, isLoaded, allProgress } = useProgress();
-  console.log({ isLoaded, game: allProgress[gameId] });
+
   if (!isLoaded && !allProgress[gameId]) {
     return (
       <GameLayout showBackButton={false} backTo="/">

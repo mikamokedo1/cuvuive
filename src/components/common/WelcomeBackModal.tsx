@@ -66,7 +66,9 @@ export function WelcomeBackModal() {
               : "Đừng bỏ lỡ chuỗi nhé!"}
         </p>
 
-        <Streak activeDays={activeDays} />
+        <div className="mb-4">
+          <Streak activeDays={activeDays} />
+        </div>
 
         <ActionButton
           variant="glossy"

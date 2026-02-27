@@ -2,7 +2,7 @@ import os
 from PIL import Image
 from rembg import remove
 
-DIR = "src/assets/games/learn-math"
+DIR = "src/assets/games/learn-weather"
 
 for f in os.listdir(DIR):
     if f.endswith('.png'):

@@ -163,6 +163,19 @@ export const MAP_PATHNAME_TO_TEXT = {
   "/games/learn-math/group3": "Pé ôn lại 2 phép cộng trừ",
   "/games/learn-math/group3/lesson/lesson1": "Pé đếm hình và chọn số đúng",
   "/games/learn-math/group3/lesson/lesson2": "Pé làm phép cộng trừ với số",
+  "/games/learn-weather/group1/lesson/lesson1": "Pé học tên các hiện tượng thời tiết cơ bản",
+  "/games/learn-weather/group1/lesson/lesson2": "Pé tập nói tên thời tiết",
+  "/games/learn-weather/group1/lesson/lesson3": "Đây là hiện tượng thời tiết nào?",
+  "/games/learn-weather/group1/lesson/lesson4": "Pé tìm cặp hình giống nhau nhé",
+  "/games/learn-weather/group2/lesson/lesson1": "Pé khám phá các hiện tượng thời tiết đặc biệt",
+  "/games/learn-weather/group2/lesson/lesson2": "Pé tập nói tên thời tiết",
+  "/games/learn-weather/group2/lesson/lesson3": "Đây là hiện tượng thời tiết nào?",
+  "/games/learn-weather/group2/lesson/lesson4": "Pé tìm cặp hình giống nhau nhé",
+  "/games/learn-weather/group3/lesson/lesson1": "Pé học tên các mùa trong năm",
+  "/games/learn-weather/group3/lesson/lesson2": "Pé tập nói tên các mùa",
+  "/games/learn-weather/group3/lesson/lesson3": "Đây là mùa nào?",
+  "/games/learn-weather/group3/lesson/lesson4": "Pé tìm cặp hình giống nhau nhé",
+  "/games/learn-weather/group3/lesson/lesson5": "Pé chọn đồ vật phù hợp với mùa nhé",
 };
 
 interface OwlContextType {
