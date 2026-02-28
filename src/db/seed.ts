@@ -1,15 +1,14 @@
 import { config } from "dotenv";
 import { sql } from "drizzle-orm";
+import fs from "fs";
+import path from "path";
 config({ path: ".env.local" });
-
-// Use relative path for imports to avoid alias issues if not configured in tsx
-import { COURSES } from "../libs/constants/courses";
 
 async function seed() {
   const { db } = await import("./index");
   const { courses, groups, lessons, plans } = await import("./schema");
 
-  console.log("🌱 Seeding courses, groups, and lessons...");
+  console.log("🌱 Seeding courses, groups, and lessons from seed.sql...");
 
   try {
     // Clear existing data (lessons depend on groups, groups on courses)
@@ -18,49 +17,8 @@ async function seed() {
     await db.delete(courses);
     console.log("Deleted old course data");
 
-    for (const course of COURSES) {
-      console.log(`Inserting course: ${course.title}`);
-      await db.insert(courses).values({
-        id: course.id,
-        title: course.title,
-        description: course.description,
-        thumbnail: course.thumbnail,
-        sortIndex: 0, // You can add logic for index if needed
-      });
-
-      for (const group of course.groups) {
-        // Construct a unique ID for the group since we might have collisions with "group1" across courses if we didn't use composite keys
-        // But our schema says group.id is PK text.
-        // It's safer to generate a UUID or use composite-like unique string.
-        // Let's use `${course.id}-${group.id}` to be essentially unique and readable,
-        // OR just use a UUID.
-        // The URL uses `groupId` (slug). So we need to store the slug "group1".
-        // The table schema has `id` (PK) and `slug`.
-        // So `id` = UUID, `slug` = `group.id` (e.g. "group1").
-
-        const groupDbId = crypto.randomUUID();
-
-        await db.insert(groups).values({
-          id: groupDbId,
-          slug: group.id, // "group1"
-          courseId: course.id,
-          title: group.title,
-          sortIndex: 0,
-        });
-
-        for (const lesson of group.lessons) {
-          await db.insert(lessons).values({
-            id: crypto.randomUUID(),
-            slug: lesson.id, // "lesson1"
-            groupId: groupDbId,
-            courseId: course.id,
-            title: lesson.title,
-            isFree: lesson.isFree || false,
-            sortIndex: 0,
-          });
-        }
-      }
-    }
+    const sqlContent = fs.readFileSync(path.join(process.cwd(), "src/db/seed.sql"), "utf8");
+    await db.execute(sql.raw(sqlContent));
 
     console.log("✅ Courses seeded successfully");
 

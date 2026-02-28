@@ -93,12 +93,24 @@ export async function getCourse(courseId: string): Promise<CourseDef | null> {
 }
 
 export async function getCourseStructureAction() {
+  // Include the group so we can access its slug.
+  // The `progress` table stores group_id as the group SLUG (e.g. "group1"),
+  // so we must key the structure by slug, not by the DB UUID.
   const allLessons = await db.query.lessons.findMany({
     columns: {
       courseId: true,
-      groupId: true,
       slug: true,
     },
+    with: {
+      group: {
+        columns: { slug: true },
+      },
+    },
   });
-  return allLessons;
+
+  return allLessons.map((l) => ({
+    courseId: l.courseId,
+    groupSlug: l.group.slug, // "group1", "group2", …
+    lessonSlug: l.slug,
+  }));
 }

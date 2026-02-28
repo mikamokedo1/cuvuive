@@ -13,6 +13,8 @@ interface ProgressState {
 interface ProgressContextType {
   progress: ProgressState;
   allProgress: Record<string, ProgressState>;
+  courseStructure: Record<string, Record<string, number>>;
+  lastPlayedCourseId: string | null;
   markLessonComplete: (groupId: string, lessonId: string, courseId?: string) => void;
   isGroupUnlocked: (groupId: string, courseId?: string) => boolean;
   isLessonUnlocked: (groupId: string, lessonId: string, courseId?: string) => boolean;
@@ -21,8 +23,6 @@ interface ProgressContextType {
 
 const ProgressContext = createContext<ProgressContextType | undefined>(undefined);
 
-const STORAGE_KEY = "number-game-progress";
-
 export function ProgressProvider({ children }: { children: React.ReactNode }) {
   const { user } = useUser();
   const supabaseRef = useRef(createClient());
@@ -30,37 +30,9 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
 
   const [allProgress, setAllProgress] = useState<Record<string, ProgressState>>({});
   const [isLoaded, setIsLoaded] = useState(false);
+  const [lastPlayedCourseId, setLastPlayedCourseId] = useState<string | null>(null);
 
   const userId = user?.id;
-
-  // Load from local storage ONLY for anonymous users
-  useEffect(() => {
-    if (userId) {
-      // Logged-in user: reset state so we don't carry over another user's localStorage data.
-      // The Supabase fetch effect below will populate with the correct user's data.
-      setAllProgress({});
-      return;
-    }
-
-    // Anonymous user: load from localStorage
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        // Migration check: if old format (direct ProgressState), wrap it
-        if (parsed.completedLessons && !parsed["learn-numbers"]) {
-          setAllProgress({ "learn-numbers": parsed });
-        } else {
-          setAllProgress(parsed);
-        }
-      } catch (e) {
-        console.error("Failed to parse progress", e);
-      }
-    } else {
-      setAllProgress({});
-    }
-    setIsLoaded(true);
-  }, [userId]);
 
   const [courseStructure, setCourseStructure] = useState<Record<string, Record<string, number>>>({});
 
@@ -76,10 +48,10 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
           const structure: Record<string, Record<string, number>> = {};
           data.forEach((row) => {
             const cId = row.courseId;
-            const gId = row.groupId;
+            const gSlug = row.groupSlug; // use slug to match allProgress keys
             if (!structure[cId]) structure[cId] = {};
-            if (!structure[cId][gId]) structure[cId][gId] = 0;
-            structure[cId][gId]++;
+            if (!structure[cId][gSlug]) structure[cId][gSlug] = 0;
+            structure[cId][gSlug]++;
           });
           setCourseStructure(structure);
         } catch (err) {
@@ -92,21 +64,28 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
       setIsLoaded(false);
 
       try {
-        // Run both fetches in parallel
-        const [structureResult, progressResult] = await Promise.all([
+        // Run structure, progress, and last-played fetches in parallel
+        const [structureResult, progressResult, lastPlayedResult] = await Promise.all([
           import("@/libs/actions/courses").then(async (mod) => {
             const data = await mod.getCourseStructureAction();
             const structure: Record<string, Record<string, number>> = {};
             data.forEach((row) => {
               const cId = row.courseId;
-              const gId = row.groupId;
+              const gSlug = row.groupSlug; // use slug to match allProgress keys
               if (!structure[cId]) structure[cId] = {};
-              if (!structure[cId][gId]) structure[cId][gId] = 0;
-              structure[cId][gId]++;
+              if (!structure[cId][gSlug]) structure[cId][gSlug] = 0;
+              structure[cId][gSlug]++;
             });
             return structure;
           }),
           supabase.from("progress").select("course_id, group_id, lesson_id").eq("user_id", userId),
+          supabase
+            .from("progress")
+            .select("course_id")
+            .eq("user_id", userId)
+            .order("completed_at", { ascending: false })
+            .limit(1)
+            .maybeSingle(),
         ]);
 
         setCourseStructure(structureResult);
@@ -139,6 +118,11 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
         }
 
         setAllProgress(freshProgress);
+
+        // Set last played course
+        if (lastPlayedResult.data?.course_id) {
+          setLastPlayedCourseId(lastPlayedResult.data.course_id);
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -192,14 +176,10 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     completedLessons: {},
   };
 
-  // Save to local storage ONLY for anonymous users
-  useEffect(() => {
-    if (!userId) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(allProgress));
-    }
-  }, [allProgress, userId]);
-
   const markLessonComplete = async (groupId: string, lessonId: string, courseId: string = "learn-numbers") => {
+    // Optimistically update last played course
+    setLastPlayedCourseId(courseId);
+
     // 1. Optimistic update — only update completedLessons, groups are derived automatically
     setAllProgress((prevAll) => {
       const prevCourse = prevAll[courseId] || { completedGroups: [], completedLessons: {} };
@@ -308,6 +288,8 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
       value={{
         progress: progressWithGroups,
         allProgress: allProgressWithGroups,
+        courseStructure,
+        lastPlayedCourseId,
         markLessonComplete,
         isGroupUnlocked,
         isLessonUnlocked,

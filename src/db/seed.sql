@@ -18,7 +18,10 @@ INSERT INTO courses (id, title, description, thumbnail, sort_index) VALUES
   ('learn-instrument', 'Học nhạc cụ', 'Bé làm quen với các loại nhạc cụ và âm thanh của chúng.', '/assets/courses/instruments.png', 10),
   ('learn-occupation', 'Học nghề nghiệp', 'Tìm hiểu về các nghề nghiệp phổ biến trong xã hội.', '/assets/courses/occupations.png', 11),
   ('learn-flower', 'Học Hoa & Cây', 'Khám phá các loài hoa và cây quen thuộc ở Việt Nam.', '/assets/courses/flowers.png', 12),
-  ('learn-weather', 'Học thời tiết', 'Bé làm quen với các hiện tượng thời tiết và khí hậu qua hình ảnh vui nhộn.', '/assets/courses/weather.png', 13)
+  ('learn-weather', 'Học thời tiết', 'Bé làm quen với các hiện tượng thời tiết và khí hậu qua hình ảnh vui nhộn.', '/assets/courses/weather.png', 13),
+  ('learn-hygiene', 'Học vệ sinh cá nhân', 'Bé học giữ gìn vệ sinh và thói quen sạch sẽ gọn gàng.', '/assets/games/learn-hygiene/logo.png', 14),
+  ('learn-flag', 'Học cờ quốc gia', 'Bé nhận biết quốc kỳ các nước trên thế giới.', '/assets/games/learn-flag/logo.webp', 15),
+  ('learn-math', 'Học toán đơn giản', 'Bé học phép cộng và phép trừ với các con số đến 20.', '/assets/games/learn-math/logo.png', 16)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   description = EXCLUDED.description,
@@ -34,7 +37,8 @@ INSERT INTO groups (id, slug, course_id, title, sort_index) VALUES
   ('learn-numbers-group1', 'group1', 'learn-numbers', 'Làm quen 1-3', 1),
   ('learn-numbers-group2', 'group2', 'learn-numbers', 'Làm quen 4-6', 2),
   ('learn-numbers-group3', 'group3', 'learn-numbers', 'Làm quen 7-9', 3),
-  ('learn-numbers-group4', 'group4', 'learn-numbers', 'Luyện tập', 4)
+  ('learn-numbers-group4', 'group4', 'learn-numbers', 'Làm quen 10-20', 4),
+  ('learn-numbers-group5', 'group5', 'learn-numbers', 'Luyện tập', 5)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   sort_index = EXCLUDED.sort_index;
@@ -149,6 +153,34 @@ ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   sort_index = EXCLUDED.sort_index;
 
+-- Learn Hygiene Groups
+INSERT INTO groups (id, slug, course_id, title, sort_index) VALUES
+  ('learn-hygiene-group1', 'group1', 'learn-hygiene', 'Vệ sinh hàng ngày', 1),
+  ('learn-hygiene-group2', 'group2', 'learn-hygiene', 'Giữ gìn sức khoẻ', 2),
+  ('learn-hygiene-group3', 'group3', 'learn-hygiene', 'Sạch sẽ gọn gàng', 3)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  sort_index = EXCLUDED.sort_index;
+
+-- Learn Flag Groups
+INSERT INTO groups (id, slug, course_id, title, sort_index) VALUES
+  ('learn-flag-group1', 'group1', 'learn-flag', 'Châu Á', 1),
+  ('learn-flag-group2', 'group2', 'learn-flag', 'Châu Âu', 2),
+  ('learn-flag-group3', 'group3', 'learn-flag', 'Châu Mỹ', 3),
+  ('learn-flag-group4', 'group4', 'learn-flag', 'Khác', 4)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  sort_index = EXCLUDED.sort_index;
+
+-- Learn Math Groups
+INSERT INTO groups (id, slug, course_id, title, sort_index) VALUES
+  ('learn-math-group1', 'group1', 'learn-math', 'Phép Cộng', 1),
+  ('learn-math-group2', 'group2', 'learn-math', 'Phép Trừ', 2),
+  ('learn-math-group3', 'group3', 'learn-math', 'Luyện tập', 3)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  sort_index = EXCLUDED.sort_index;
+
 -- ============================================
 -- 3. INSERT LESSONS (lesson1 is FREE, rest are PREMIUM)
 -- ============================================
@@ -170,9 +202,14 @@ INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) 
   ('learn-numbers-g3-l2', 'lesson2', 'learn-numbers-group3', 'learn-numbers', 'Số nào đúng?', false, 2),
   ('learn-numbers-g3-l3', 'lesson3', 'learn-numbers-group3', 'learn-numbers', 'Đếm đồ vật', false, 3),
   ('learn-numbers-g3-l4', 'lesson4', 'learn-numbers-group3', 'learn-numbers', 'Ghép số', false, 4),
-  -- Group 4 (Practice)
-  ('learn-numbers-g4-l1', 'lesson1', 'learn-numbers-group4', 'learn-numbers', 'Luyện tập 1-9', true, 1),
-  ('learn-numbers-g4-l2', 'lesson2', 'learn-numbers-group4', 'learn-numbers', 'Trò chơi tổng hợp', false, 2)
+  -- Group 4 (10-20)
+  ('learn-numbers-g4-l1', 'lesson1', 'learn-numbers-group4', 'learn-numbers', 'Học số 10-20', true, 1),
+  ('learn-numbers-g4-l2', 'lesson2', 'learn-numbers-group4', 'learn-numbers', 'Số nào đúng?', false, 2),
+  ('learn-numbers-g4-l3', 'lesson3', 'learn-numbers-group4', 'learn-numbers', 'Đếm đồ vật', false, 3),
+  ('learn-numbers-g4-l4', 'lesson4', 'learn-numbers-group4', 'learn-numbers', 'Ghép số', false, 4),
+  -- Group 5 (Practice)
+  ('learn-numbers-g5-l1', 'lesson1', 'learn-numbers-group5', 'learn-numbers', 'Luyện tập', true, 1),
+  ('learn-numbers-g5-l2', 'lesson2', 'learn-numbers-group5', 'learn-numbers', 'Trò chơi tổng hợp', false, 2)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   is_free = EXCLUDED.is_free,
@@ -402,6 +439,65 @@ ON CONFLICT (id) DO UPDATE SET
   is_free = EXCLUDED.is_free,
   sort_index = EXCLUDED.sort_index;
 
+-- Learn Hygiene Lessons
+INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) VALUES
+  ('learn-hygiene-g1-l1', 'lesson1', 'learn-hygiene-group1', 'learn-hygiene', 'Học tên', true, 1),
+  ('learn-hygiene-g1-l2', 'lesson2', 'learn-hygiene-group1', 'learn-hygiene', 'Tập nói', false, 2),
+  ('learn-hygiene-g1-l3', 'lesson3', 'learn-hygiene-group1', 'learn-hygiene', 'Đúng hay Sai?', false, 3),
+  ('learn-hygiene-g1-l4', 'lesson4', 'learn-hygiene-group1', 'learn-hygiene', 'Sắp xếp thứ tự', false, 4),
+  ('learn-hygiene-g2-l1', 'lesson1', 'learn-hygiene-group2', 'learn-hygiene', 'Học tên', true, 1),
+  ('learn-hygiene-g2-l2', 'lesson2', 'learn-hygiene-group2', 'learn-hygiene', 'Tập nói', false, 2),
+  ('learn-hygiene-g2-l3', 'lesson3', 'learn-hygiene-group2', 'learn-hygiene', 'Đúng hay Sai?', false, 3),
+  ('learn-hygiene-g2-l4', 'lesson4', 'learn-hygiene-group2', 'learn-hygiene', 'Sắp xếp thứ tự', false, 4),
+  ('learn-hygiene-g3-l1', 'lesson1', 'learn-hygiene-group3', 'learn-hygiene', 'Học tên', true, 1),
+  ('learn-hygiene-g3-l2', 'lesson2', 'learn-hygiene-group3', 'learn-hygiene', 'Tập nói', false, 2),
+  ('learn-hygiene-g3-l3', 'lesson3', 'learn-hygiene-group3', 'learn-hygiene', 'Đúng hay Sai?', false, 3),
+  ('learn-hygiene-g3-l4', 'lesson4', 'learn-hygiene-group3', 'learn-hygiene', 'Sắp xếp thứ tự', false, 4)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  is_free = EXCLUDED.is_free,
+  sort_index = EXCLUDED.sort_index;
+
+-- Learn Flag Lessons
+INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) VALUES
+  ('learn-flag-g1-l1', 'lesson1', 'learn-flag-group1', 'learn-flag', 'Học tên quốc kỳ', true, 1),
+  ('learn-flag-g1-l2', 'lesson2', 'learn-flag-group1', 'learn-flag', 'Chọn quốc kỳ đúng', false, 2),
+  ('learn-flag-g1-l3', 'lesson3', 'learn-flag-group1', 'learn-flag', 'Lật hình ghi nhớ', false, 3),
+  ('learn-flag-g1-l4', 'lesson4', 'learn-flag-group1', 'learn-flag', 'Ghép hình', false, 4),
+  ('learn-flag-g2-l1', 'lesson1', 'learn-flag-group2', 'learn-flag', 'Học tên quốc kỳ', true, 1),
+  ('learn-flag-g2-l2', 'lesson2', 'learn-flag-group2', 'learn-flag', 'Chọn quốc kỳ đúng', false, 2),
+  ('learn-flag-g2-l3', 'lesson3', 'learn-flag-group2', 'learn-flag', 'Lật hình ghi nhớ', false, 3),
+  ('learn-flag-g2-l4', 'lesson4', 'learn-flag-group2', 'learn-flag', 'Ghép hình', false, 4),
+  ('learn-flag-g3-l1', 'lesson1', 'learn-flag-group3', 'learn-flag', 'Học tên quốc kỳ', true, 1),
+  ('learn-flag-g3-l2', 'lesson2', 'learn-flag-group3', 'learn-flag', 'Chọn quốc kỳ đúng', false, 2),
+  ('learn-flag-g3-l3', 'lesson3', 'learn-flag-group3', 'learn-flag', 'Lật hình ghi nhớ', false, 3),
+  ('learn-flag-g3-l4', 'lesson4', 'learn-flag-group3', 'learn-flag', 'Ghép hình', false, 4),
+  ('learn-flag-g4-l1', 'lesson1', 'learn-flag-group4', 'learn-flag', 'Học tên quốc kỳ', true, 1),
+  ('learn-flag-g4-l2', 'lesson2', 'learn-flag-group4', 'learn-flag', 'Chọn quốc kỳ đúng', false, 2),
+  ('learn-flag-g4-l3', 'lesson3', 'learn-flag-group4', 'learn-flag', 'Lật hình ghi nhớ', false, 3),
+  ('learn-flag-g4-l4', 'lesson4', 'learn-flag-group4', 'learn-flag', 'Ghép hình', false, 4)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  is_free = EXCLUDED.is_free,
+  sort_index = EXCLUDED.sort_index;
+
+-- Learn Math Lessons
+INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) VALUES
+  ('learn-math-g1-l1', 'lesson1', 'learn-math-group1', 'learn-math', 'Giải thích phép cộng', true, 1),
+  ('learn-math-g1-l2', 'lesson2', 'learn-math-group1', 'learn-math', 'Cộng bằng hình', false, 2),
+  ('learn-math-g1-l3', 'lesson3', 'learn-math-group1', 'learn-math', 'Cộng bằng số', false, 3),
+  ('learn-math-g1-l4', 'lesson4', 'learn-math-group1', 'learn-math', 'Tập viết dấu', false, 4),
+  ('learn-math-g2-l1', 'lesson1', 'learn-math-group2', 'learn-math', 'Giải thích phép trừ', true, 1),
+  ('learn-math-g2-l2', 'lesson2', 'learn-math-group2', 'learn-math', 'Trừ bằng hình', false, 2),
+  ('learn-math-g2-l3', 'lesson3', 'learn-math-group2', 'learn-math', 'Trừ bằng số', false, 3),
+  ('learn-math-g2-l4', 'lesson4', 'learn-math-group2', 'learn-math', 'Tập viết dấu', false, 4),
+  ('learn-math-g3-l1', 'lesson1', 'learn-math-group3', 'learn-math', 'Cộng trừ bằng hình', true, 1),
+  ('learn-math-g3-l2', 'lesson2', 'learn-math-group3', 'learn-math', 'Cộng trừ bằng số', false, 2)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  is_free = EXCLUDED.is_free,
+  sort_index = EXCLUDED.sort_index;
+
 -- ============================================
 -- VERIFY DATA
 -- ============================================
@@ -415,3 +511,4 @@ FROM lessons l
 JOIN groups g ON l.group_id = g.id
 JOIN courses c ON l.course_id = c.id
 ORDER BY c.sort_index, g.sort_index, l.sort_index;
+

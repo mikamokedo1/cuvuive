@@ -176,6 +176,18 @@ export const MAP_PATHNAME_TO_TEXT = {
   "/games/learn-weather/group3/lesson/lesson3": "Đây là mùa nào?",
   "/games/learn-weather/group3/lesson/lesson4": "Pé tìm cặp hình giống nhau nhé",
   "/games/learn-weather/group3/lesson/lesson5": "Pé chọn đồ vật phù hợp với mùa nhé",
+  "/games/learn-hygiene/group1/lesson/lesson1": "Pé học các thói quen vệ sinh hàng ngày",
+  "/games/learn-hygiene/group1/lesson/lesson2": "Pé tập nói tên thói quen vệ sinh",
+  "/games/learn-hygiene/group1/lesson/lesson3": "Pé chọn hành động đúng hoặc sai",
+  "/games/learn-hygiene/group1/lesson/lesson4": "Pé sắp xếp các bước cho đúng nhé",
+  "/games/learn-hygiene/group2/lesson/lesson1": "Pé học cách giữ gìn sức khoẻ",
+  "/games/learn-hygiene/group2/lesson/lesson2": "Pé tập nói tên thói quen sức khoẻ",
+  "/games/learn-hygiene/group2/lesson/lesson3": "Pé chọn hành động đúng hoặc sai",
+  "/games/learn-hygiene/group2/lesson/lesson4": "Pé sắp xếp các bước cho đúng nhé",
+  "/games/learn-hygiene/group3/lesson/lesson1": "Pé học cách giữ gìn sạch sẽ gọn gàng",
+  "/games/learn-hygiene/group3/lesson/lesson2": "Pé tập nói thói quen sạch sẽ",
+  "/games/learn-hygiene/group3/lesson/lesson3": "Pé chọn hành động đúng hoặc sai",
+  "/games/learn-hygiene/group3/lesson/lesson4": "Pé sắp xếp các bước cho đúng nhé",
 };
 
 interface OwlContextType {
