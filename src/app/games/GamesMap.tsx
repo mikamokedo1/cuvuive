@@ -53,7 +53,7 @@ const GROUPS: Group[] = [
   { id: "geography", title: "Địa Lý Tự Nhiên", icon: GeographyLogo },
   { id: "music", title: "Âm Nhạc", icon: MusicLogo },
   { id: "science", title: "Khoa Học", icon: ScienceLogo },
-  { id: "history", title: "Lịch Sử", icon: HistoryLogo },
+  // { id: "history", title: "Lịch Sử", icon: HistoryLogo },
   { id: "language", title: "Ngôn Ngữ", icon: LanguageLogo },
   { id: "math", title: "Toán Học", icon: MathLogo },
 ];
@@ -184,17 +184,6 @@ export function GamesMap({ courses }: GamesMapProps) {
                 } ${isActive ? "z-50" : "z-20"}`}
                 onClick={handleClick}
               >
-                {/* Last played indicator */}
-                {user && isLastPlayedGroup && !isActive && (
-                  <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center animate-bounce">
-                    <Image
-                      src={user?.user_metadata?.sex === "female" ? avatarGirl : avatarBoy}
-                      alt="User Avatar"
-                      className="w-8 h-8 rounded-full border-1 border-white shadow-md bg-blue-200 object-cover"
-                    />
-                  </div>
-                )}
-
                 {/* Group Icon */}
                 <div
                   className={`transition-all duration-300 drop-shadow-xl z-30 border-4 rounded-full bg-white relative ${
@@ -208,6 +197,16 @@ export function GamesMap({ courses }: GamesMapProps) {
                     alt={group.title}
                     className="w-24 h-24 sm:w-32 sm:h-32 object-contain drop-shadow-[0_10px_10px_rgba(0,0,0,0.15)]"
                   />
+                  {/* Last played indicator */}
+                  {user && isLastPlayedGroup && !isActive && (
+                    <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center animate-bounce">
+                      <Image
+                        src={user?.user_metadata?.sex === "female" ? avatarGirl : avatarBoy}
+                        alt="User Avatar"
+                        className="w-8 h-8 rounded-full border-1 border-white shadow-md bg-blue-200 object-cover"
+                      />
+                    </div>
+                  )}
                 </div>
 
                 {/* Child Games showing around the Group */}

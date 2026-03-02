@@ -24,6 +24,9 @@ import WearMask from "@/assets/games/learn-hygiene/wear-mask.png";
 // Import Clean & Tidy (Group 3)
 import FoldClothes from "@/assets/games/learn-hygiene/fold-clothes.png";
 import TidyToys from "@/assets/games/learn-hygiene/tidy-toys.png";
+import MessedToys from "@/assets/games/learn-hygiene/messed_toy.webp";
+import DirtyClothes from "@/assets/games/learn-hygiene/dirty_clothes.webp";
+import ThrowTrashWrong from "@/assets/games/learn-hygiene/throw-trash-wrong.webp";
 import ThrowTrash from "@/assets/games/learn-hygiene/throw-trash.png";
 import WipeTable from "@/assets/games/learn-hygiene/wipe-table.png";
 import WearShoes from "@/assets/games/learn-hygiene/wear-shoes.png";
@@ -52,35 +55,35 @@ import SeqTakeBath2 from "@/assets/games/learn-hygiene/seq_take_bath_2.png";
 import SeqTakeBath3 from "@/assets/games/learn-hygiene/seq_take_bath_3.png";
 import SeqTakeBath4 from "@/assets/games/learn-hygiene/seq_take_bath_4.png";
 
-import SeqWashFruit1 from "@/assets/games/learn-hygiene/seq_wash_fruit_1.png";
-import SeqWashFruit2 from "@/assets/games/learn-hygiene/seq_wash_fruit_2.png";
-import SeqWashFruit3 from "@/assets/games/learn-hygiene/seq_wash_fruit_3.png";
-import SeqWashFruit4 from "@/assets/games/learn-hygiene/seq_wash_fruit_4.png";
+import SeqWashFruit1 from "@/assets/games/learn-hygiene/seq_wash_fruit_1.webp";
+import SeqWashFruit2 from "@/assets/games/learn-hygiene/seq_wash_fruit_2.webp";
+import SeqWashFruit3 from "@/assets/games/learn-hygiene/seq_wash_fruit_3.webp";
+import SeqWashFruit4 from "@/assets/games/learn-hygiene/seq_wash_fruit_4.webp";
 
-import SeqCoverMouth1 from "@/assets/games/learn-hygiene/seq_cover_mouth_1.png";
-import SeqCoverMouth2 from "@/assets/games/learn-hygiene/seq_cover_mouth_2.png";
-import SeqCoverMouth3 from "@/assets/games/learn-hygiene/seq_cover_mouth_3.png";
-import SeqCoverMouth4 from "@/assets/games/learn-hygiene/seq_cover_mouth_4.png";
+import SeqCoverMouth1 from "@/assets/games/learn-hygiene/seq_cover_mouth_1.webp";
+import SeqCoverMouth2 from "@/assets/games/learn-hygiene/seq_cover_mouth_2.webp";
+import SeqCoverMouth3 from "@/assets/games/learn-hygiene/seq_cover_mouth_3.webp";
+import SeqCoverMouth4 from "@/assets/games/learn-hygiene/seq_cover_mouth_4.webp";
 
-import SeqWearMask1 from "@/assets/games/learn-hygiene/seq_wear_mask_1.png";
-import SeqWearMask2 from "@/assets/games/learn-hygiene/seq_wear_mask_2.png";
-import SeqWearMask3 from "@/assets/games/learn-hygiene/seq_wear_mask_3.png";
-import SeqWearMask4 from "@/assets/games/learn-hygiene/seq_wear_mask_4.png";
+import SeqWearMask1 from "@/assets/games/learn-hygiene/seq_wear_mask_1.webp";
+import SeqWearMask2 from "@/assets/games/learn-hygiene/seq_wear_mask_2.webp";
+import SeqWearMask3 from "@/assets/games/learn-hygiene/seq_wear_mask_3.webp";
+import SeqWearMask4 from "@/assets/games/learn-hygiene/seq_wear_mask_4.webp";
 
-import SeqFoldClothes1 from "@/assets/games/learn-hygiene/seq_fold_clothes_1.png";
-import SeqFoldClothes2 from "@/assets/games/learn-hygiene/seq_fold_clothes_2.png";
-import SeqFoldClothes3 from "@/assets/games/learn-hygiene/seq_fold_clothes_3.png";
-import SeqFoldClothes4 from "@/assets/games/learn-hygiene/seq_fold_clothes_4.png";
+import SeqFoldClothes1 from "@/assets/games/learn-hygiene/seq_fold_clothes_1.webp";
+import SeqFoldClothes2 from "@/assets/games/learn-hygiene/seq_fold_clothes_2.webp";
+import SeqFoldClothes3 from "@/assets/games/learn-hygiene/seq_fold_clothes_3.webp";
+import SeqFoldClothes4 from "@/assets/games/learn-hygiene/seq_fold_clothes_4.webp";
 
 import SeqThrowTrash1 from "@/assets/games/learn-hygiene/seq_throw_trash_1.png";
 import SeqThrowTrash2 from "@/assets/games/learn-hygiene/seq_throw_trash_2.png";
 import SeqThrowTrash3 from "@/assets/games/learn-hygiene/seq_throw_trash_3.png";
 import SeqThrowTrash4 from "@/assets/games/learn-hygiene/seq_throw_trash_4.png";
 
-import SeqTidyToys1 from "@/assets/games/learn-hygiene/seq_tidy_toys_1.png";
-import SeqTidyToys2 from "@/assets/games/learn-hygiene/seq_tidy_toys_2.png";
-import SeqTidyToys3 from "@/assets/games/learn-hygiene/seq_tidy_toys_3.png";
-import SeqTidyToys4 from "@/assets/games/learn-hygiene/seq_tidy_toys_4.png";
+import SeqTidyToys1 from "@/assets/games/learn-hygiene/seq_tidy_toys_1.webp";
+import SeqTidyToys2 from "@/assets/games/learn-hygiene/seq_tidy_toys_2.webp";
+import SeqTidyToys3 from "@/assets/games/learn-hygiene/seq_tidy_toys_3.webp";
+import SeqTidyToys4 from "@/assets/games/learn-hygiene/seq_tidy_toys_4.webp";
 
 import { EntityData } from "@/types/game";
 
@@ -205,9 +208,9 @@ export const RIGHT_WRONG_SCENARIOS: RightWrongScenario[] = [
   { id: "rw_tidy_1", text: "Pé gấp quần áo sau khi phơi khô", image: FoldClothes, isCorrect: true, category: "tidy" },
   { id: "rw_tidy_2", text: "Pé bỏ rác vào thùng rác", image: ThrowTrash, isCorrect: true, category: "tidy" },
   { id: "rw_tidy_3", text: "Pé dọn đồ chơi sau khi chơi xong", image: TidyToys, isCorrect: true, category: "tidy" },
-  { id: "rw_tidy_4", text: "Pé vứt rác xuống sàn nhà", image: ThrowTrash, isCorrect: false, category: "tidy" },
-  { id: "rw_tidy_5", text: "Pé mặc quần áo bẩn đi chơi", image: CleanClothes, isCorrect: false, category: "tidy" },
-  { id: "rw_tidy_6", text: "Pé để đồ chơi bừa bãi khắp nơi", image: TidyToys, isCorrect: false, category: "tidy" },
+  { id: "rw_tidy_4", text: "Pé vứt rác xuống sàn nhà", image: ThrowTrashWrong, isCorrect: false, category: "tidy" },
+  { id: "rw_tidy_5", text: "Pé mặc quần áo bẩn đi chơi", image: DirtyClothes, isCorrect: false, category: "tidy" },
+  { id: "rw_tidy_6", text: "Pé để đồ chơi bừa bãi khắp nơi", image: MessedToys, isCorrect: false, category: "tidy" },
 ];
 
 // Get scenarios for a specific group

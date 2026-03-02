@@ -15,6 +15,8 @@ import GameMathLogo from "@/assets/games/learn-math/logo.png";
 import GameWeatherLogo from "@/assets/games/learn-weather/logo.png";
 import GameFlagLogo from "@/assets/games/learn-flag/logo.webp";
 import GameHygieneLogo from "@/assets/games/learn-hygiene/logo.png";
+import GamePatternLogo from "@/assets/games/find-pattern/logo.png";
+import GameAlphabetLogo from "@/assets/games/learn-alphabet/logo.png";
 import { StaticImageData } from "next/image";
 import { GameGroupType } from "@/app/games/GamesMap";
 
@@ -677,6 +679,75 @@ export const COURSES: CourseDef[] = [
         lessons: [
           { id: "lesson1", title: "Cộng trừ bằng hình", isFree: true },
           { id: "lesson2", title: "Cộng trừ bằng số" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "find-pattern",
+    title: "Tìm Quy Luật",
+    description: "Bé học tìm quy luật qua các hình dạng và màu sắc vui nhộn.",
+    icon: GamePatternLogo,
+    type: "logic",
+    groups: [
+      {
+        id: "group1",
+        title: "Quy luật màu sắc",
+        lessons: [
+          { id: "lesson1", title: "Học quy luật", isFree: true },
+          { id: "lesson2", title: "Phần tiếp theo?" },
+          { id: "lesson3", title: "Điền vào chỗ trống" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Quy luật hình dạng",
+        lessons: [
+          { id: "lesson1", title: "Học quy luật", isFree: true },
+          { id: "lesson2", title: "Phần tiếp theo?" },
+          { id: "lesson3", title: "Điền vào chỗ trống" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "learn-alphabet",
+    title: "Bảng chữ cái",
+    description: "Bé học bảng chữ cái tiếng Việt qua hình ảnh và trò chơi.",
+    icon: GameAlphabetLogo,
+    type: "language",
+    groups: [
+      {
+        id: "group1",
+        title: "Nguyên âm",
+        lessons: [
+          { id: "lesson1", title: "Học chữ cái", isFree: true },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Tập viết" },
+          { id: "lesson4", title: "Chữ nào đúng?" },
+          { id: "lesson5", title: "Ghép đôi" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Phụ âm 1",
+        lessons: [
+          { id: "lesson1", title: "Học chữ cái", isFree: true },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Tập viết" },
+          { id: "lesson4", title: "Chữ nào đúng?" },
+          { id: "lesson5", title: "Ghép đôi" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Phụ âm 2",
+        lessons: [
+          { id: "lesson1", title: "Học chữ cái", isFree: true },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Tập viết" },
+          { id: "lesson4", title: "Chữ nào đúng?" },
+          { id: "lesson5", title: "Ghép đôi" },
         ],
       },
     ],

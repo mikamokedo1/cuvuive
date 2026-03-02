@@ -12,7 +12,7 @@ export default function GamesError({ error, reset }: { error: Error & { digest?:
     <div className="min-h-screen bg-gradient-to-b from-sky-50 to-blue-100 flex items-center justify-center p-6">
       <div className="max-w-md w-full text-center">
         {/* Sleeping owl */}
-        <div className="text-8xl mb-6">😴🦉</div>
+        <div className="text-8xl mb-6">😴</div>
 
         <h1 className="text-3xl font-display font-bold text-red-500 mb-3">Trò chơi bị lỗi rồi!</h1>
 
