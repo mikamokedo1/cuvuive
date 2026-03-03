@@ -227,6 +227,15 @@ export const MAP_PATHNAME_TO_TEXT = {
   "/games/maze-runner/group1/lesson/lesson1": "Pé hãy tìm đường đi qua mê cung đến ngôi sao nhé",
   "/games/maze-runner/group2/lesson/lesson1": "Mê cung này khó hơn rồi, pé cùng thử nhé",
   "/games/maze-runner/group3/lesson/lesson1": "Mê cung siêu khó đây, pé có dám thử không nào",
+  "/games/mix-color/group1/lesson/lesson1": "Pé xem các màu cơn bản pha với nhau ra màu gì nhé",
+  "/games/mix-color/group1/lesson/lesson2": "Pé hãy chọn hai màu nào pha với nhau để ra màu ở trên nhé",
+  "/games/mix-color/group1/lesson/lesson3": "Hai màu này pha với nhau ra màu gì? Pé chọn ở dưới nhé",
+  "/games/mix-color/group2/lesson/lesson1": "Pé xem các màu nâng cao pha với nhau ra màu gì nhé",
+  "/games/mix-color/group2/lesson/lesson2": "Pé hãy chọn hai màu nào pha với nhau để ra màu ở trên nhé",
+  "/games/mix-color/group2/lesson/lesson3": "Hai màu này pha với nhau ra màu gì? Pé chọn ở dưới nhé",
+  "/games/mix-color/group3/lesson/lesson1": "Pé ôn lại các cách pha màu nhé",
+  "/games/mix-color/group3/lesson/lesson2": "Pé hãy chọn hai màu nào pha với nhau để ra màu ở trên nhé",
+  "/games/mix-color/group3/lesson/lesson3": "Hai màu này pha với nhau ra màu gì? Pé chọn ở dưới nhé",
 };
 
 interface OwlContextType {
