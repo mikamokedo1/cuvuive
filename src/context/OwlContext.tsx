@@ -221,6 +221,9 @@ export const MAP_PATHNAME_TO_TEXT = {
   "/games/find-differences/group2/lesson/lesson3": "Pé hãy tìm 5 điểm khác biệt giữa hai bức tranh nhé",
   "/games/find-differences/group2/lesson/lesson4": "Pé hãy tìm 5 điểm khác biệt giữa hai bức tranh nhé",
   "/games/find-differences/group2/lesson/lesson5": "Pé hãy tìm 5 điểm khác biệt giữa hai bức tranh nhé",
+  "/games/odd-one-out/group1/lesson/lesson1": "Pé tìm hình có màu sắc khác biệt nhé",
+  "/games/odd-one-out/group2/lesson/lesson1": "Pé tìm hình có hình dạng khác biệt nhé",
+  "/games/odd-one-out/group3/lesson/lesson1": "Pé tìm hình không cùng loại với các hình còn lại nhé",
 };
 
 interface OwlContextType {

@@ -18,6 +18,7 @@ import GameHygieneLogo from "@/assets/games/learn-hygiene/logo.png";
 import GamePatternLogo from "@/assets/games/find-pattern/logo.png";
 import GameAlphabetLogo from "@/assets/games/learn-alphabet/logo.png";
 import GameFindDifferencesLogo from "@/assets/games/game-4-logo.webp";
+import GameOddOneOutLogo from "@/assets/games/odd-one-out/logo.png";
 import { StaticImageData } from "next/image";
 import { GameGroupType } from "@/app/games/GamesMap";
 
@@ -781,6 +782,30 @@ export const COURSES: CourseDef[] = [
           { id: "lesson4", title: "Khu rừng bí ẩn" },
           { id: "lesson5", title: "Tháp hoa hồng" },
         ],
+      },
+    ],
+  },
+  {
+    id: "odd-one-out",
+    title: "Tìm hình khác biệt",
+    description: "Bé luyện nhãn quan bằng cách tìm ra hình khác với các hình còn lại.",
+    icon: GameOddOneOutLogo,
+    type: "logic",
+    groups: [
+      {
+        id: "group1",
+        title: "Tìm màu khác biệt",
+        lessons: [{ id: "lesson1", title: "Tìm thử", isFree: true }],
+      },
+      {
+        id: "group2",
+        title: "Tìm hình khác biệt",
+        lessons: [{ id: "lesson1", title: "Tìm thử", isFree: true }],
+      },
+      {
+        id: "group3",
+        title: "Tìm hình khác loại",
+        lessons: [{ id: "lesson1", title: "Khác loại", isFree: true }],
       },
     ],
   },
