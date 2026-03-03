@@ -19,6 +19,7 @@ import GamePatternLogo from "@/assets/games/find-pattern/logo.png";
 import GameAlphabetLogo from "@/assets/games/learn-alphabet/logo.png";
 import GameFindDifferencesLogo from "@/assets/games/game-4-logo.webp";
 import GameOddOneOutLogo from "@/assets/games/odd-one-out/logo.png";
+import GameMazeRunnerLogo from "@/assets/games/maze-runner/logo.png";
 import { StaticImageData } from "next/image";
 import { GameGroupType } from "@/app/games/GamesMap";
 
@@ -687,7 +688,7 @@ export const COURSES: CourseDef[] = [
   },
   {
     id: "find-pattern",
-    title: "Tìm Quy Luật",
+    title: "Quy Luật",
     description: "Bé học tìm quy luật qua các hình dạng và màu sắc vui nhộn.",
     icon: GamePatternLogo,
     type: "logic",
@@ -756,7 +757,7 @@ export const COURSES: CourseDef[] = [
   },
   {
     id: "find-differences",
-    title: "Tìm điểm khác biệt",
+    title: "Điểm khác biệt",
     description: "Bé học cách quan sát và phát hiện ra chi tiết khác thường.",
     icon: GameFindDifferencesLogo,
     type: "logic",
@@ -787,7 +788,7 @@ export const COURSES: CourseDef[] = [
   },
   {
     id: "odd-one-out",
-    title: "Tìm hình khác biệt",
+    title: "Hình khác biệt",
     description: "Bé luyện nhãn quan bằng cách tìm ra hình khác với các hình còn lại.",
     icon: GameOddOneOutLogo,
     type: "logic",
@@ -806,6 +807,30 @@ export const COURSES: CourseDef[] = [
         id: "group3",
         title: "Tìm hình khác loại",
         lessons: [{ id: "lesson1", title: "Khác loại", isFree: true }],
+      },
+    ],
+  },
+  {
+    id: "maze-runner",
+    title: "Mê Cung",
+    description: "Bé điều hướng qua các mê cung để tìm ngôi sao.",
+    icon: GameMazeRunnerLogo,
+    type: "logic",
+    groups: [
+      {
+        id: "group1",
+        title: "Mê cung dễ",
+        lessons: [{ id: "lesson1", title: "Bắt đầu", isFree: true }],
+      },
+      {
+        id: "group2",
+        title: "Mê cung vừa",
+        lessons: [{ id: "lesson1", title: "Bắt đầu", isFree: true }],
+      },
+      {
+        id: "group3",
+        title: "Mê cung khó",
+        lessons: [{ id: "lesson1", title: "Bắt đầu", isFree: true }],
       },
     ],
   },

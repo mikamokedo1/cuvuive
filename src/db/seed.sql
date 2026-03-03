@@ -23,7 +23,8 @@ INSERT INTO courses (id, title, description, thumbnail, sort_index) VALUES
   ('learn-flag', 'Học cờ quốc gia', 'Bé nhận biết quốc kỳ các nước trên thế giới.', '/assets/games/learn-flag/logo.webp', 15),
   ('learn-math', 'Học toán đơn giản', 'Bé học phép cộng và phép trừ với các con số đến 20.', '/assets/games/learn-math/logo.png', 16),
   ('learn-alphabet', 'Bảng chữ cái', 'Bé học bảng chữ cái tiếng Việt qua hình ảnh và trò chơi.', '/assets/games/learn-alphabet/logo.png', 17),
-  ('odd-one-out', 'Tìm hình khác biệt', 'Bé luyện nhãn quan bằng cách tìm ra hình khác với các hình còn lại.', '/assets/games/odd-one-out/logo.png', 18)
+  ('odd-one-out', 'Tìm hình khác biệt', 'Bé luyện nhãn quan bằng cách tìm ra hình khác với các hình còn lại.', '/assets/games/odd-one-out/logo.png', 18),
+  ('maze-runner', 'Mê Cung Phiêu Lưu', 'Bé điều hướng qua các mê cung để tìm ngôi sao.', '/assets/games/maze-runner/logo.png', 19)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   description = EXCLUDED.description,
@@ -197,6 +198,15 @@ INSERT INTO groups (id, slug, course_id, title, sort_index) VALUES
   ('odd-one-out-group1', 'group1', 'odd-one-out', 'Tìm màu khác biệt', 1),
   ('odd-one-out-group2', 'group2', 'odd-one-out', 'Tìm hình khác biệt', 2),
   ('odd-one-out-group3', 'group3', 'odd-one-out', 'Tìm hình khác loại', 3)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  sort_index = EXCLUDED.sort_index;
+
+-- Maze Runner Groups
+INSERT INTO groups (id, slug, course_id, title, sort_index) VALUES
+  ('maze-runner-group1', 'group1', 'maze-runner', 'Mê cung dễ', 1),
+  ('maze-runner-group2', 'group2', 'maze-runner', 'Mê cung vừa', 2),
+  ('maze-runner-group3', 'group3', 'maze-runner', 'Mê cung khó', 3)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   sort_index = EXCLUDED.sort_index;
@@ -548,6 +558,16 @@ INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) 
   ('odd-one-out-g1-l1', 'lesson1', 'odd-one-out-group1', 'odd-one-out', 'Tìm thử', true, 1),
   ('odd-one-out-g2-l1', 'lesson1', 'odd-one-out-group2', 'odd-one-out', 'Tìm thử', true, 1),
   ('odd-one-out-g3-l1', 'lesson1', 'odd-one-out-group3', 'odd-one-out', 'Khác loại', true, 1)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  is_free = EXCLUDED.is_free,
+  sort_index = EXCLUDED.sort_index;
+
+-- Maze Runner Lessons
+INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) VALUES
+  ('maze-runner-g1-l1', 'lesson1', 'maze-runner-group1', 'maze-runner', 'Bắt đầu', true, 1),
+  ('maze-runner-g2-l1', 'lesson1', 'maze-runner-group2', 'maze-runner', 'Bắt đầu', true, 1),
+  ('maze-runner-g3-l1', 'lesson1', 'maze-runner-group3', 'maze-runner', 'Bắt đầu', true, 1)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   is_free = EXCLUDED.is_free,

@@ -224,6 +224,9 @@ export const MAP_PATHNAME_TO_TEXT = {
   "/games/odd-one-out/group1/lesson/lesson1": "Pé tìm hình có màu sắc khác biệt nhé",
   "/games/odd-one-out/group2/lesson/lesson1": "Pé tìm hình có hình dạng khác biệt nhé",
   "/games/odd-one-out/group3/lesson/lesson1": "Pé tìm hình không cùng loại với các hình còn lại nhé",
+  "/games/maze-runner/group1/lesson/lesson1": "Pé hãy tìm đường đi qua mê cung đến ngôi sao nhé",
+  "/games/maze-runner/group2/lesson/lesson1": "Mê cung này khó hơn rồi, pé cùng thử nhé",
+  "/games/maze-runner/group3/lesson/lesson1": "Mê cung siêu khó đây, pé có dám thử không nào",
 };
 
 interface OwlContextType {
