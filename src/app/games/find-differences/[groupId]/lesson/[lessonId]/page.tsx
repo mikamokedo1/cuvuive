@@ -109,7 +109,7 @@ export default function FDLessonPage() {
 
   return (
     <GameLayout backTo={`/games/find-differences/${groupId}`} title={lesson.title}>
-      <main className="flex flex-col items-center justify-center min-h-[70vh] w-full px-4 py-8">
+      <main>
         <DifferenceBoard
           originalImage={lesson.originalImage}
           modifiedImage={lesson.modifiedImage}

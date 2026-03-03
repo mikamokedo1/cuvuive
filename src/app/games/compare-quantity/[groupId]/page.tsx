@@ -9,7 +9,7 @@ import { BookOpen, Scale, Hash, PenTool, Dumbbell } from "lucide-react";
 
 // Assets
 import { ThingImages } from "@/libs/constants/thingImages";
-import { LessonCard } from "@/components/games/LessonCard";
+import { GameWrapLessons } from "@/components/layout/GameWrapLessons";
 
 // Group configurations
 const groupConfig: Record<
@@ -146,28 +146,12 @@ export default function GroupLessonsPage() {
   }
 
   return (
-    <GameLayout title={config.title} backTo="/games/compare-quantity">
-      <main className="w-full flex flex-col items-center">
-        <div className="w-full max-w-2xl px-4 flex flex-col items-center gap-6 pt-4">
-          {/* Lesson Cards */}
-          <div className="w-full space-y-4 pb-10">
-            {config.lessons.map((lesson, index) => {
-              const unlocked = isLessonUnlocked(groupId, lesson.id);
-              const isActive = index === activeIndex;
-
-              return (
-                <LessonCard
-                  key={lesson.id}
-                  lesson={lesson}
-                  unlocked={unlocked}
-                  isActive={isActive}
-                  onClick={handleLessonClick}
-                />
-              );
-            })}
-          </div>
-        </div>
-      </main>
-    </GameLayout>
+    <GameWrapLessons
+      gameId="compare-quantity"
+      lessons={config.lessons}
+      title={config.title}
+      activeIndex={activeIndex}
+      handleLessonClick={handleLessonClick}
+    />
   );
 }

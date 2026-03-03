@@ -199,7 +199,7 @@ function LessonPageContent({
 
   return (
     <GameLayout title={displayTitle} backTo={`/games/learn-color/${groupId}`}>
-      <main className="flex flex-col items-center justify-center w-full min-h-[60vh]">{Content}</main>
+      <main>{Content}</main>
 
       <CompletionModal
         isOpen={showModal}

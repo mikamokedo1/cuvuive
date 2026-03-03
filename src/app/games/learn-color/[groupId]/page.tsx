@@ -1,15 +1,11 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { GameLayout } from "@/components/layout/GameLayout";
 import { useProgress } from "@/context/ProgressContext";
 import { useAccess } from "@/context/AccessContext";
 import { BookOpen, HelpCircle, Palette } from "lucide-react";
-import { LessonTitle } from "@/components/games/LessonTitle";
-import { LessonCard } from "@/components/games/LessonCard";
+import { GameWrapLessons } from "@/components/layout/GameWrapLessons";
 import { GROUPS } from "@/features/games/learn-color/constants";
-import Image from "next/image";
-import GameLogo from "@/assets/games/learn-numbers/number-logo-1.webp"; // Placeholder
 
 export default function GroupLessonsPage() {
   const params = useParams();
@@ -104,35 +100,12 @@ export default function GroupLessonsPage() {
   }
 
   return (
-    <GameLayout title="" backTo="/games/learn-color">
-      <main className="w-full flex flex-col items-center">
-        <div className="w-full max-w-2xl px-4 flex flex-col items-center gap-6 pt-4">
-          <div className="text-center space-y-2">
-            <LessonTitle>{group.title}</LessonTitle>
-            {/* Placeholder for Group Logo */}
-            {/* <div className="relative w-60 h-24 mx-auto">
-               <Image src={GameLogo} alt="Group Logo" fill className="object-contain" priority />
-             </div> */}
-          </div>
-
-          <div className="w-full space-y-4 pb-10">
-            {lessons.map((lesson, index) => {
-              const unlocked = isLessonUnlocked(groupId, lesson.id, "learn-color");
-              const isActive = index === activeIndex;
-
-              return (
-                <LessonCard
-                  key={lesson.id}
-                  lesson={lesson}
-                  unlocked={unlocked}
-                  isActive={isActive}
-                  onClick={handleLessonClick}
-                />
-              );
-            })}
-          </div>
-        </div>
-      </main>
-    </GameLayout>
+    <GameWrapLessons
+      gameId="learn-color"
+      lessons={lessons}
+      title={group.title}
+      activeIndex={activeIndex}
+      handleLessonClick={handleLessonClick}
+    />
   );
 }

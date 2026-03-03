@@ -139,7 +139,7 @@ export default function WeatherLessonPage() {
 
   return (
     <GameLayout backTo={`/games/learn-weather/${groupId}`} title={group.title}>
-      <main className="flex flex-col items-center justify-center min-h-[60vh] w-full">{renderLesson()}</main>
+      <main>{renderLesson()}</main>
 
       <CompletionModal
         isOpen={showModal}

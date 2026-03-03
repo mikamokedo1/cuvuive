@@ -1,12 +1,10 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { GameLayout } from "@/components/layout/GameLayout";
 import { useProgress } from "@/context/ProgressContext";
 import { useAccess } from "@/context/AccessContext";
 import { BookOpen, HelpCircle, Grid2X2, Mic, Shirt } from "lucide-react";
-import { LessonTitle } from "@/components/games/LessonTitle";
-import { LessonCard } from "@/components/games/LessonCard";
+import { GameWrapLessons } from "@/components/layout/GameWrapLessons";
 import { GROUPS } from "@/features/games/learn-weather/constants";
 
 export default function WeatherGroupLessonsPage() {
@@ -98,31 +96,12 @@ export default function WeatherGroupLessonsPage() {
   }
 
   return (
-    <GameLayout title="" backTo="/games/learn-weather">
-      <main className="w-full flex flex-col items-center">
-        <div className="w-full max-w-2xl px-4 flex flex-col items-center gap-6 pt-4">
-          <div className="text-center space-y-2">
-            <LessonTitle>{group.title}</LessonTitle>
-          </div>
-
-          <div className="w-full space-y-4 pb-10">
-            {lessons.map((lesson, index) => {
-              const unlocked = isLessonUnlocked(groupId, lesson.id, "learn-weather");
-              const isActive = index === activeIndex;
-
-              return (
-                <LessonCard
-                  key={lesson.id}
-                  lesson={lesson}
-                  unlocked={unlocked}
-                  isActive={isActive}
-                  onClick={handleLessonClick}
-                />
-              );
-            })}
-          </div>
-        </div>
-      </main>
-    </GameLayout>
+    <GameWrapLessons
+      gameId="learn-weather"
+      lessons={lessons}
+      title={group.title}
+      activeIndex={activeIndex}
+      handleLessonClick={handleLessonClick}
+    />
   );
 }

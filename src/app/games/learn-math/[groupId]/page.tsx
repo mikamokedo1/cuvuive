@@ -1,13 +1,11 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { GameLayout } from "@/components/layout/GameLayout";
 import { useProgress } from "@/context/ProgressContext";
 import { useAccess } from "@/context/AccessContext";
 import { BookOpen, Eye, Hash, Pencil } from "lucide-react";
-
 import { GROUP_CONFIG } from "@/features/games/learn-math/constants";
-import { LessonCard } from "@/components/games/LessonCard";
+import { GameWrapLessons } from "@/components/layout/GameWrapLessons";
 
 // Map string icons to React components
 const iconMap: Record<string, React.ReactNode> = {
@@ -90,27 +88,12 @@ export default function GroupLessonsPage() {
   }
 
   return (
-    <GameLayout title={config.title} backTo="/games/learn-math">
-      <main className="w-full flex flex-col items-center">
-        <div className="w-full max-w-2xl px-4 flex flex-col items-center gap-6 pt-4">
-          <div className="w-full space-y-4 pb-10">
-            {config.lessons.map((lesson, index) => {
-              const unlocked = isLessonUnlocked(groupId, lesson.id);
-              const isActive = index === activeIndex;
-
-              return (
-                <LessonCard
-                  key={lesson.id}
-                  lesson={{ ...lesson, icon: iconMap[lesson.icon] }}
-                  unlocked={unlocked}
-                  isActive={isActive}
-                  onClick={handleLessonClick}
-                />
-              );
-            })}
-          </div>
-        </div>
-      </main>
-    </GameLayout>
+    <GameWrapLessons
+      gameId="learn-math"
+      lessons={config.lessons}
+      title={config.title}
+      activeIndex={activeIndex}
+      handleLessonClick={handleLessonClick}
+    />
   );
 }

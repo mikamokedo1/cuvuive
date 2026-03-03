@@ -166,7 +166,7 @@ export default function LessonPage() {
 
   return (
     <GameLayout backTo={`/games/learn-math/${groupId}`} title={LessonTitle}>
-      <main className="flex flex-col items-center justify-center w-full min-h-[60vh]">{LessonContent}</main>
+      <main>{LessonContent}</main>
 
       <CompletionModal
         isOpen={showModal}

@@ -7,6 +7,7 @@ import { Crown } from "lucide-react";
 
 // Assets
 import LogoLong from "@/assets/logo-long.webp";
+import LogoShort from "@/assets/logo.png";
 import avatarBoy from "@/assets/avatar-boy.webp";
 import avatarGirl from "@/assets/avatar-girl.webp";
 import { usePathname, useRouter } from "next/navigation";
@@ -15,12 +16,14 @@ import { useUser } from "@/context/UserContext";
 import { Dropdown } from "@/components/common/Dropdown";
 import { useAccess } from "@/context/AccessContext";
 import { User, Settings, MessageSquare, Trophy } from "lucide-react";
+import { useResponsive } from "@/hooks/useResponsive";
 
 const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
   const { user, handleLogout, isPremium } = useUser();
   const { setPaywallState } = useAccess();
+  const { isMobile } = useResponsive();
 
   const handleLogin = () => {
     setPaywallState({ isOpen: false, type: null, redirectUrl: pathname });
@@ -31,7 +34,7 @@ const Header = () => {
     <header className="w-full flex justify-between items-center mb-8 bg-[#F8EEDD] backdrop-blur-sm rounded-3xl shadow-xl px-6 border-4 border-white relative z-50">
       <Link href="/games" aria-label="Go to homepage">
         <Image
-          src={LogoLong}
+          src={isMobile ? LogoShort : LogoLong}
           alt="Cú Thông Minh Logo"
           className="cursor-pointer h-16 md:h-20 w-auto object-contain drop-shadow-md transition-transform duration-300 hover:scale-105"
         />

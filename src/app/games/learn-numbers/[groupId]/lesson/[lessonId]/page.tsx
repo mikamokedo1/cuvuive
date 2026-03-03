@@ -218,7 +218,7 @@ export default function LessonPage() {
 
   return (
     <GameLayout title={title} backTo={`/games/learn-numbers/${groupId}`}>
-      <main className="flex flex-col items-center justify-center w-full min-h-[60vh]">{Content}</main>
+      <main>{Content}</main>
 
       <CompletionModal
         isOpen={showModal}

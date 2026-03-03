@@ -124,7 +124,7 @@ export default function LessonPage() {
 
   return (
     <GameLayout backTo={`/games/learn-instrument/${groupId}`} title={group.title}>
-      <main className="flex flex-col items-center justify-center min-h-[60vh] w-full">{renderLesson()}</main>
+      <main>{renderLesson()}</main>
 
       <CompletionModal
         isOpen={showModal}

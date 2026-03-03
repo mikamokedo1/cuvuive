@@ -1,12 +1,11 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import Image, { StaticImageData } from "next/image";
-import { GameLayout } from "@/components/layout/GameLayout";
+import { StaticImageData } from "next/image";
 import { useProgress } from "@/context/ProgressContext";
 import { useAccess } from "@/context/AccessContext";
 import { BookOpen, HelpCircle, Calculator, PenTool } from "lucide-react";
-import { LessonTitle } from "@/components/games/LessonTitle";
+import { GameWrapLessons } from "@/components/layout/GameWrapLessons";
 
 // Assets
 import group1 from "@/assets/games/learn-numbers/number-logo-1.webp";
@@ -171,37 +170,12 @@ export default function GroupLessonsPage() {
   // If "Active" means "Expanded", we render that one differently.
 
   return (
-    <GameLayout title="" backTo="/games/learn-numbers">
-      <main className="w-full flex flex-col items-center">
-        {/* Custom Header Section */}
-        <div className="w-full max-w-2xl px-4 flex flex-col items-center gap-6 pt-4">
-          {/* Title Group */}
-          <div className="text-center space-y-2">
-            <LessonTitle>{config.title}</LessonTitle>
-            <div className="relative w-60 h-24 mx-auto">
-              <Image src={config.image} alt="Group Logo" fill className="object-contain" priority />
-            </div>
-          </div>
-
-          {/* Lesson Cards */}
-          <div className="w-full space-y-4 pb-10">
-            {lessons.map((lesson, index) => {
-              const unlocked = isLessonUnlocked(groupId, lesson.id);
-              const isActive = index === activeIndex;
-
-              return (
-                <LessonCard
-                  key={lesson.id}
-                  lesson={lesson}
-                  unlocked={unlocked}
-                  isActive={isActive}
-                  onClick={handleLessonClick}
-                />
-              );
-            })}
-          </div>
-        </div>
-      </main>
-    </GameLayout>
+    <GameWrapLessons
+      gameId="learn-numbers"
+      lessons={lessons}
+      title={config.title}
+      activeIndex={activeIndex}
+      handleLessonClick={handleLessonClick}
+    />
   );
 }

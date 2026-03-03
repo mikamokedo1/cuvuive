@@ -1,13 +1,11 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { GameLayout } from "@/components/layout/GameLayout";
 import { useProgress } from "@/context/ProgressContext";
 import { useAccess } from "@/context/AccessContext";
 import { BookOpen, HelpCircle, Puzzle } from "lucide-react";
-import { LessonTitle } from "@/components/games/LessonTitle";
-import { LessonCard } from "@/components/games/LessonCard";
 import { GROUPS } from "@/features/games/odd-one-out/constants";
+import { GameWrapLessons } from "@/components/layout/GameWrapLessons";
 
 export default function GroupLessonsPage() {
   const params = useParams();
@@ -68,31 +66,12 @@ export default function GroupLessonsPage() {
   }
 
   return (
-    <GameLayout title="" backTo="/games/odd-one-out">
-      <main className="w-full flex flex-col items-center">
-        <div className="w-full max-w-2xl px-4 flex flex-col items-center gap-6 pt-4">
-          <div className="text-center space-y-2">
-            <LessonTitle>{group.title}</LessonTitle>
-          </div>
-
-          <div className="w-full space-y-4 pb-10">
-            {lessons.map((lesson, index) => {
-              const unlocked = isLessonUnlocked(groupId, lesson.id, "odd-one-out");
-              const isActive = index === activeIndex;
-
-              return (
-                <LessonCard
-                  key={lesson.id}
-                  lesson={lesson}
-                  unlocked={unlocked}
-                  isActive={isActive}
-                  onClick={handleLessonClick}
-                />
-              );
-            })}
-          </div>
-        </div>
-      </main>
-    </GameLayout>
+    <GameWrapLessons
+      gameId="odd-one-out"
+      lessons={lessons}
+      title={group.title}
+      activeIndex={activeIndex}
+      handleLessonClick={handleLessonClick}
+    />
   );
 }
