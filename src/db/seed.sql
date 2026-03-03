@@ -25,7 +25,8 @@ INSERT INTO courses (id, title, description, thumbnail, sort_index) VALUES
   ('learn-alphabet', 'Bảng chữ cái', 'Bé học bảng chữ cái tiếng Việt qua hình ảnh và trò chơi.', '/assets/games/learn-alphabet/logo.png', 17),
   ('odd-one-out', 'Tìm hình khác biệt', 'Bé luyện nhãn quan bằng cách tìm ra hình khác với các hình còn lại.', '/assets/games/odd-one-out/logo.png', 18),
   ('maze-runner', 'Mê Cung Phiêu Lưu', 'Bé điều hướng qua các mê cung để tìm ngôi sao.', '/assets/games/maze-runner/logo.png', 19),
-  ('mix-color', 'Pha Màu', 'Bé học cách pha trộn màu sắc để tạo ra màu mới.', '/assets/games/learn-color/learn-color-logo-3.webp', 20)
+  ('mix-color', 'Pha Màu', 'Bé học cách pha trộn màu sắc để tạo ra màu mới.', '/assets/games/learn-color/learn-color-logo-3.webp', 20),
+  ('paint-picture', 'Tô Màu', 'Bé tô màu các hình vẽ dễ thương qua các trò chơi nghệ thuật.', '/assets/games/paint-picture/logo.png', 21)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   description = EXCLUDED.description,
@@ -216,7 +217,10 @@ ON CONFLICT (id) DO UPDATE SET
 INSERT INTO groups (id, slug, course_id, title, sort_index) VALUES
   ('mix-color-group1', 'group1', 'mix-color', 'Màu cơ bản', 1),
   ('mix-color-group2', 'group2', 'mix-color', 'Màu nâng cao', 2),
-  ('mix-color-group3', 'group3', 'mix-color', 'Luyện tập', 3)
+  ('mix-color-group3', 'group3', 'mix-color', 'Luyện tập', 3),
+  ('paint-picture-group1', 'group1', 'paint-picture', 'Động vật', 1),
+  ('paint-picture-group2', 'group2', 'paint-picture', 'Thiên nhiên', 2),
+  ('paint-picture-group3', 'group3', 'paint-picture', 'Đồ chơi', 3)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   sort_index = EXCLUDED.sort_index;
@@ -593,7 +597,13 @@ INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) 
   ('mix-color-g2-l3', 'lesson3', 'mix-color-group2', 'mix-color', 'Thử thách pha màu', false, 3),
   ('mix-color-g3-l1', 'lesson1', 'mix-color-group3', 'mix-color', 'Học pha màu', true, 1),
   ('mix-color-g3-l2', 'lesson2', 'mix-color-group3', 'mix-color', 'Pha màu nào?', false, 2),
-  ('mix-color-g3-l3', 'lesson3', 'mix-color-group3', 'mix-color', 'Thử thách pha màu', false, 3)
+  ('mix-color-g3-l3', 'lesson3', 'mix-color-group3', 'mix-color', 'Thử thách pha màu', false, 3),
+  ('paint-picture-g1-l1', 'lesson1', 'paint-picture-group1', 'paint-picture', 'Tô tự do', true, 1),
+  ('paint-picture-g1-l2', 'lesson2', 'paint-picture-group1', 'paint-picture', 'Hoạ Khám Phá', false, 2),
+  ('paint-picture-g2-l1', 'lesson1', 'paint-picture-group2', 'paint-picture', 'Tô tự do', true, 1),
+  ('paint-picture-g2-l2', 'lesson2', 'paint-picture-group2', 'paint-picture', 'Hoạ Khám Phá', false, 2),
+  ('paint-picture-g3-l1', 'lesson1', 'paint-picture-group3', 'paint-picture', 'Tô tự do', true, 1),
+  ('paint-picture-g3-l2', 'lesson2', 'paint-picture-group3', 'paint-picture', 'Hoạ Khám Phá', false, 2)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   is_free = EXCLUDED.is_free,

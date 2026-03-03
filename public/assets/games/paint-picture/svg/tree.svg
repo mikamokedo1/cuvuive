@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 350" width="400" height="350">
+  <!-- Trunk -->
+  <path id="trunk" d="M185,200 L175,320 L225,320 L215,200 Z" fill="#f0f0f0" stroke="#333" stroke-width="3" stroke-linejoin="round"/>
+  <!-- Crown (main foliage) -->
+  <circle id="crown" cx="200" cy="140" r="90" fill="#f0f0f0" stroke="#333" stroke-width="3"/>
+  <!-- Top foliage -->
+  <circle id="top-leaves" cx="200" cy="70" r="50" fill="#f0f0f0" stroke="#333" stroke-width="3"/>
+  <!-- Left branch foliage -->
+  <circle id="left-leaves" cx="140" cy="160" r="45" fill="#f0f0f0" stroke="#333" stroke-width="3"/>
+  <!-- Right branch foliage -->
+  <circle id="right-leaves" cx="260" cy="160" r="45" fill="#f0f0f0" stroke="#333" stroke-width="3"/>
+  <!-- Ground -->
+  <ellipse id="ground" cx="200" cy="330" rx="120" ry="15" fill="#f0f0f0" stroke="#333" stroke-width="2"/>
+  <!-- Small circles for apple hints -->
+  <circle cx="170" cy="130" r="8" fill="none" stroke="#333" stroke-width="1.5" opacity="0.3"/>
+  <circle cx="230" cy="120" r="8" fill="none" stroke="#333" stroke-width="1.5" opacity="0.3"/>
+  <circle cx="200" cy="160" r="8" fill="none" stroke="#333" stroke-width="1.5" opacity="0.3"/>
+</svg>
