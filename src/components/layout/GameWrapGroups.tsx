@@ -21,7 +21,7 @@ export const GameWrapGroups = ({ logo, gameId, groups, title }: GameWrapGroups) 
 
   if (!isLoaded && !allProgress[gameId]) {
     return (
-      <GameLayout showBackButton={false} backTo="/">
+      <GameLayout showBackButton={false} backTo="/games">
         <div className="flex flex-col items-center justify-center min-h-[60vh]">
           <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin" />
           <p className="mt-4 text-orange-600 font-bold">Đang tải dữ liệu..</p>
@@ -35,7 +35,7 @@ export const GameWrapGroups = ({ logo, gameId, groups, title }: GameWrapGroups) 
   };
 
   return (
-    <GameLayout showBackButton={false} backTo="/">
+    <GameLayout showBackButton={false} backTo="/games">
       <main className="w-full">
         <div className="w-full max-w-6xl mx-auto flex flex-col items-center justify-center relative mb-8 pt-4">
           <div className="relative w-24 h-24 md:w-48 md:h-48 mb-4">

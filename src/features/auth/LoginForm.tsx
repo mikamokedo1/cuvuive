@@ -53,10 +53,11 @@ export function LoginForm() {
         console.log("Login Success - Session established:", !!session);
 
         // Read redirect URL from context or sessionStorage fallback
-        const redirectUrl = paywallState.redirectUrl || getRedirectUrl() || "/";
+        const redirectUrl = paywallState.redirectUrl || getRedirectUrl() || "/games";
 
         // Prevent redirect loop
-        const target = redirectUrl.includes("/auth/login") || redirectUrl.includes("/auth/sign-up") ? "/" : redirectUrl;
+        const target =
+          redirectUrl.includes("/auth/login") || redirectUrl.includes("/auth/sign-up") ? "/games" : redirectUrl;
 
         // Clear redirect state
         clearRedirectUrl();

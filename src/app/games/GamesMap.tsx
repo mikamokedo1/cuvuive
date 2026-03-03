@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from "react";
 import Image, { StaticImageData } from "next/image";
-import Link from "next/link";
 import Header from "@/components/layout/Header";
 import { WelcomeBackModal } from "@/components/common/WelcomeBackModal";
 import { useClickOutside } from "@/hooks/useClickOutside";

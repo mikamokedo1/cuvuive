@@ -1,15 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import { X } from "lucide-react";
 import { ActionButton } from "@/components/common/ActionButton";
 import { updateUserStreakAction, getUserWeeklyActivityAction } from "@/libs/actions/user";
 import { useRouter } from "next/navigation";
 import { useProgress } from "@/context/ProgressContext";
-import { useMemo } from "react";
 import { Streak } from "../games/Streak";
 
 export function WelcomeBackModal() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [streak, setStreak] = useState(0);
   const [activeDays, setActiveDays] = useState<number[]>([]);
   const [loading, setLoading] = useState(true);
@@ -54,6 +54,14 @@ export function WelcomeBackModal() {
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60">
       <div className="relative w-full max-w-md rounded-3xl p-8 border-4 border-yellow-300 shadow-xl bg-[#FFF4E0] text-center flex flex-col items-center animate-in zoom-in-95 duration-200">
+        <button
+          onClick={() => setIsOpen(false)}
+          className="cursor-pointer absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-300 transition-colors text-gray-500 hover:text-gray-700"
+          aria-label="Đóng"
+        >
+          <X size={18} strokeWidth={3} />
+        </button>
+
         <div className="text-[80px] leading-none mb-6 origin-bottom animate-bounce drop-shadow-lg">🔥</div>
 
         <h2 className="text-3xl font-black text-gray-800 font-display mb-2">Chào mừng bé quay lại!</h2>

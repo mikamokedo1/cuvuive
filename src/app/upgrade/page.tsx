@@ -35,7 +35,7 @@ function calculateDiscount(basePrice: number, currentPrice: number, months: numb
 function UpgradeContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const nextUrl = searchParams.get("next") || "/";
+  const nextUrl = searchParams.get("next") || "/games";
   const [isLoading, setIsLoading] = useState<string | null>(null);
   const [plans, setPlans] = useState<Plan[]>([]);
   const [isFetchingPlans, setIsFetchingPlans] = useState(true);

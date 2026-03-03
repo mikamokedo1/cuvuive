@@ -47,6 +47,18 @@ export const metadata: Metadata = {
     title: "Cú Thông Minh - Vừa học vừa chơi",
     description: "Ứng dụng giáo dục tương tác giúp bé phát triển tư duy.",
   },
+  icons: {
+    icon: [
+      { url: "/icons/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icons/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: "/icons/apple-touch-icon.png",
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Cú Thông Minh",
+  },
 };
 
 export const viewport = {

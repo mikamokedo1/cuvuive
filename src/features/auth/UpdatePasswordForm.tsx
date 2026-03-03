@@ -40,7 +40,7 @@ export function UpdatePasswordForm() {
         setLoading(false);
       } else {
         alert("Đồi mật khẩu thành công! 🥳");
-        router.push("/");
+        router.push("/games");
         router.refresh();
       }
     },

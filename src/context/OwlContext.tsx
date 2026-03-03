@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 const HOME_SOUND = "/sounds/home.mp3";
 
 const MAP_PATHNAME_TO_SOUND: Record<string, string> = {
-  "/": HOME_SOUND,
+  "/games": HOME_SOUND,
   "/games/learn-numbers": HOME_SOUND,
   "/games/learn-numbers/group1": HOME_SOUND,
   "/games/learn-numbers/group2": HOME_SOUND,

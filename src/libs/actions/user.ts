@@ -125,12 +125,14 @@ export async function getUserWeeklyActivityAction(): Promise<number[]> {
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const dayOfWeek = today.getDay(); // 0 (Sunday) to 6 (Saturday)
 
-  // Calculate start of the week (Sunday)
+  // Calculate start of the week (Monday)
+  // If today is Sunday (0), go back 6 days; otherwise go back (dayOfWeek - 1) days
+  const diffToMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
   const startOfWeek = new Date(today);
-  startOfWeek.setDate(today.getDate() - dayOfWeek);
+  startOfWeek.setDate(today.getDate() - diffToMonday);
 
-  // End of week (Saturday)
-  const endOfWeek = new Date(today);
+  // End of week (Sunday)
+  const endOfWeek = new Date(startOfWeek);
   endOfWeek.setDate(startOfWeek.getDate() + 6);
 
   const logs = await db

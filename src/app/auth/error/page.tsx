@@ -65,7 +65,7 @@ export default function Page({ searchParams }: { searchParams: Promise<{ error: 
               </ActionButton>
             </Link>
 
-            <Link href="/" className="text-gray-400 font-medium hover:text-gray-600 transition-colors">
+            <Link href="/games" className="text-gray-400 font-medium hover:text-gray-600 transition-colors">
               Trở về trang chủ
             </Link>
           </div>
