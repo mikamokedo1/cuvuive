@@ -17,6 +17,7 @@ import GameFlagLogo from "@/assets/games/learn-flag/logo.webp";
 import GameHygieneLogo from "@/assets/games/learn-hygiene/logo.png";
 import GamePatternLogo from "@/assets/games/find-pattern/logo.png";
 import GameAlphabetLogo from "@/assets/games/learn-alphabet/logo.png";
+import GameFindDifferencesLogo from "@/assets/games/game-4-logo.webp";
 import { StaticImageData } from "next/image";
 import { GameGroupType } from "@/app/games/GamesMap";
 
@@ -748,6 +749,37 @@ export const COURSES: CourseDef[] = [
           { id: "lesson3", title: "Tập viết" },
           { id: "lesson4", title: "Chữ nào đúng?" },
           { id: "lesson5", title: "Ghép đôi" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "find-differences",
+    title: "Tìm điểm khác biệt",
+    description: "Bé học cách quan sát và phát hiện ra chi tiết khác thường.",
+    icon: GameFindDifferencesLogo,
+    type: "logic",
+    groups: [
+      {
+        id: "group1",
+        title: "Dễ",
+        lessons: [
+          { id: "lesson1", title: "Phòng khách vui nhộn", isFree: true },
+          { id: "lesson2", title: "Khu vườn thú vị" },
+          { id: "lesson3", title: "Bãi biển đầy nắng" },
+          { id: "lesson4", title: "Căn bếp ấm cúng" },
+          { id: "lesson5", title: "Sân chơi nhộn nhịp" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Trung bình",
+        lessons: [
+          { id: "lesson1", title: "Bầu trời đêm", isFree: false },
+          { id: "lesson2", title: "Thám hiểm vũ trụ" },
+          { id: "lesson3", title: "Đại dương sâu thẳm" },
+          { id: "lesson4", title: "Khu rừng bí ẩn" },
+          { id: "lesson5", title: "Tháp hoa hồng" },
         ],
       },
     ],

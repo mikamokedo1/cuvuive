@@ -211,6 +211,16 @@ export const MAP_PATHNAME_TO_TEXT = {
   "/games/learn-alphabet/group3/lesson/lesson3": "Pé tập viết chữ cái nhé",
   "/games/learn-alphabet/group3/lesson/lesson4": "Pé chọn chữ cái đúng nhé",
   "/games/learn-alphabet/group3/lesson/lesson5": "Pé ghép đôi các chữ cái đi nào",
+  "/games/find-differences/group1/lesson/lesson1": "Pé hãy tìm 3 điểm khác biệt giữa hai bức tranh nhé",
+  "/games/find-differences/group1/lesson/lesson2": "Pé hãy tìm 3 điểm khác biệt giữa hai bức tranh nhé",
+  "/games/find-differences/group1/lesson/lesson3": "Pé hãy tìm 3 điểm khác biệt giữa hai bức tranh nhé",
+  "/games/find-differences/group1/lesson/lesson4": "Pé hãy tìm 3 điểm khác biệt giữa hai bức tranh nhé",
+  "/games/find-differences/group1/lesson/lesson5": "Pé hãy tìm 3 điểm khác biệt giữa hai bức tranh nhé",
+  "/games/find-differences/group2/lesson/lesson1": "Pé hãy tìm 5 điểm khác biệt giữa hai bức tranh nhé",
+  "/games/find-differences/group2/lesson/lesson2": "Pé hãy tìm 5 điểm khác biệt giữa hai bức tranh nhé",
+  "/games/find-differences/group2/lesson/lesson3": "Pé hãy tìm 5 điểm khác biệt giữa hai bức tranh nhé",
+  "/games/find-differences/group2/lesson/lesson4": "Pé hãy tìm 5 điểm khác biệt giữa hai bức tranh nhé",
+  "/games/find-differences/group2/lesson/lesson5": "Pé hãy tìm 5 điểm khác biệt giữa hai bức tranh nhé",
 };
 
 interface OwlContextType {

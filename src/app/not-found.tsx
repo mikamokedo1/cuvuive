@@ -18,13 +18,13 @@ export default function NotFound() {
         <p className="text-lg text-gray-600 mb-8 font-sans">Trang này không tồn tại. Hãy quay về nhà nhé!</p>
 
         <Link
-          href="/"
+          href="/games"
           className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-xl font-bold text-white
-                     bg-gradient-to-b from-purple-400 to-purple-600
-                     shadow-[0_6px_0_#6b21a8,0_10px_20px_rgba(0,0,0,0.25)]
-                     hover:-translate-y-0.5 hover:brightness-105
-                     active:translate-y-1 active:brightness-95
-                     transition-all duration-150"
+                       bg-gradient-to-b from-lime-400 to-green-600
+                       shadow-[0_6px_0_#2f7d32,0_10px_20px_rgba(0,0,0,0.25)]
+                       hover:-translate-y-0.5 hover:brightness-105
+                       active:translate-y-1 active:brightness-95
+                       transition-all duration-150"
         >
           🏠 Về trang chủ
         </Link>
