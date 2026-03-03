@@ -9,7 +9,7 @@ import { useProgress } from "@/context/ProgressContext";
 import { Streak } from "../games/Streak";
 
 export function WelcomeBackModal() {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [streak, setStreak] = useState(0);
   const [activeDays, setActiveDays] = useState<number[]>([]);
   const [loading, setLoading] = useState(true);
