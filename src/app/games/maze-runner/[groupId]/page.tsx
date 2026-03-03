@@ -65,11 +65,13 @@ export default function GroupLessonsPage() {
   if (!isGroupCompleted && activeIndex === -1) {
     activeIndex = 0;
   }
-  <GameWrapLessons
-    gameId="learn-vehicle"
-    lessons={lessons}
-    title={group.title}
-    activeIndex={activeIndex}
-    handleLessonClick={handleLessonClick}
-  />;
+  return (
+    <GameWrapLessons
+      gameId="maze-runner"
+      lessons={lessons}
+      title={group.title}
+      activeIndex={activeIndex}
+      handleLessonClick={handleLessonClick}
+    />
+  );
 }
