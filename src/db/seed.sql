@@ -624,27 +624,37 @@ JOIN courses c ON l.course_id = c.id
 ORDER BY c.sort_index, g.sort_index, l.sort_index;
 
 
--- Nhận Biết Cảm Xúc
-INSERT INTO courses (id, "name", description, icon, type, sort_order) VALUES ('learn-emotion', 'Nhận Biết Cảm Xúc', 'Bé học cách nhận biết và gọi tên cảm xúc qua hình ảnh và tình huống kịch bản', '/assets/games/learn-emotion/logo.png', 'life_skill', 22) ON CONFLICT (id) DO NOTHING;
+-- Learn Emotion Course
+INSERT INTO courses (id, title, description, thumbnail, sort_index) VALUES
+  ('learn-emotion', 'Nhận Biết Cảm Xúc', 'Bé học cách nhận biết và gọi tên cảm xúc qua hình ảnh và tình huống kịch bản.', '/assets/games/learn-emotion/logo.png', 22)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  description = EXCLUDED.description,
+  thumbnail = EXCLUDED.thumbnail,
+  sort_index = EXCLUDED.sort_index;
 
-INSERT INTO course_groups (id, course_id, "name", description, sort_order) VALUES ('group1', 'learn-emotion', 'Cảm xúc cơ bản', 'Học các cảm xúc thường ngày', 1) ON CONFLICT (id, course_id) DO NOTHING;
-INSERT INTO course_groups (id, course_id, "name", description, sort_order) VALUES ('group2', 'learn-emotion', 'Cảm xúc nâng cao', 'Học các cảm xúc phức tạp hơn', 2) ON CONFLICT (id, course_id) DO NOTHING;
-INSERT INTO course_groups (id, course_id, "name", description, sort_order) VALUES ('group3', 'learn-emotion', 'Bé cảm thấy gì?', 'Nhận biết cảm xúc qua tình huống', 3) ON CONFLICT (id, course_id) DO NOTHING;
+-- Learn Emotion Groups
+INSERT INTO groups (id, slug, course_id, title, sort_index) VALUES
+  ('learn-emotion-group1', 'group1', 'learn-emotion', 'Cảm xúc cơ bản', 1),
+  ('learn-emotion-group2', 'group2', 'learn-emotion', 'Cảm xúc nâng cao', 2)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  sort_index = EXCLUDED.sort_index;
 
--- Group 1
-INSERT INTO lessons (id, course_id, group_id, "name", description, sort_order, is_free) VALUES ('lesson1', 'learn-emotion', 'group1', 'Học cảm xúc', 'Học các cảm xúc cơ bản', 1, true) ON CONFLICT (id, course_id, group_id) DO NOTHING;
-INSERT INTO lessons (id, course_id, group_id, "name", description, sort_order, is_free) VALUES ('lesson2', 'learn-emotion', 'group1', 'Tập nói', 'Luyện phát âm tên cảm xúc', 2, false) ON CONFLICT (id, course_id, group_id) DO NOTHING;
-INSERT INTO lessons (id, course_id, group_id, "name", description, sort_order, is_free) VALUES ('lesson3', 'learn-emotion', 'group1', 'Đúng hay Sai?', 'Đánh giá cảm xúc trong tình huống', 3, false) ON CONFLICT (id, course_id, group_id) DO NOTHING;
-INSERT INTO lessons (id, course_id, group_id, "name", description, sort_order, is_free) VALUES ('lesson4', 'learn-emotion', 'group1', 'Chọn cảm xúc đúng', 'Tìm cảm xúc phù hợp với kịch bản', 4, false) ON CONFLICT (id, course_id, group_id) DO NOTHING;
+-- Learn Emotion Lessons
+INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) VALUES
+  -- Group 1
+  ('learn-emotion-g1-l1', 'lesson1', 'learn-emotion-group1', 'learn-emotion', 'Học cảm xúc', true, 1),
+  ('learn-emotion-g1-l2', 'lesson2', 'learn-emotion-group1', 'learn-emotion', 'Tập nói', false, 2),
+  ('learn-emotion-g1-l3', 'lesson3', 'learn-emotion-group1', 'learn-emotion', 'Đúng hay Sai?', false, 3),
+  ('learn-emotion-g1-l4', 'lesson4', 'learn-emotion-group1', 'learn-emotion', 'Chọn cảm xúc đúng', false, 4),
+  -- Group 2
+  ('learn-emotion-g2-l1', 'lesson1', 'learn-emotion-group2', 'learn-emotion', 'Học cảm xúc', true, 1),
+  ('learn-emotion-g2-l2', 'lesson2', 'learn-emotion-group2', 'learn-emotion', 'Tập nói', false, 2),
+  ('learn-emotion-g2-l3', 'lesson3', 'learn-emotion-group2', 'learn-emotion', 'Đúng hay Sai?', false, 3),
+  ('learn-emotion-g2-l4', 'lesson4', 'learn-emotion-group2', 'learn-emotion', 'Chọn cảm xúc đúng', false, 4)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  is_free = EXCLUDED.is_free,
+  sort_index = EXCLUDED.sort_index;
 
--- Group 2
-INSERT INTO lessons (id, course_id, group_id, "name", description, sort_order, is_free) VALUES ('lesson1', 'learn-emotion', 'group2', 'Học cảm xúc', 'Học các cảm xúc nâng cao', 1, true) ON CONFLICT (id, course_id, group_id) DO NOTHING;
-INSERT INTO lessons (id, course_id, group_id, "name", description, sort_order, is_free) VALUES ('lesson2', 'learn-emotion', 'group2', 'Tập nói', 'Luyện phát âm tên cảm xúc', 2, false) ON CONFLICT (id, course_id, group_id) DO NOTHING;
-INSERT INTO lessons (id, course_id, group_id, "name", description, sort_order, is_free) VALUES ('lesson3', 'learn-emotion', 'group2', 'Đúng hay Sai?', 'Đánh giá cảm xúc trong tình huống', 3, false) ON CONFLICT (id, course_id, group_id) DO NOTHING;
-INSERT INTO lessons (id, course_id, group_id, "name", description, sort_order, is_free) VALUES ('lesson4', 'learn-emotion', 'group2', 'Chọn cảm xúc đúng', 'Tìm cảm xúc phù hợp với kịch bản', 4, false) ON CONFLICT (id, course_id, group_id) DO NOTHING;
-
--- Group 3
-INSERT INTO lessons (id, course_id, group_id, "name", description, sort_order, is_free) VALUES ('lesson1', 'learn-emotion', 'group3', 'Học cảm xúc', 'Học các cảm xúc nâng cao', 1, true) ON CONFLICT (id, course_id, group_id) DO NOTHING;
-INSERT INTO lessons (id, course_id, group_id, "name", description, sort_order, is_free) VALUES ('lesson2', 'learn-emotion', 'group3', 'Tập nói', 'Luyện phát âm tên cảm xúc', 2, false) ON CONFLICT (id, course_id, group_id) DO NOTHING;
-INSERT INTO lessons (id, course_id, group_id, "name", description, sort_order, is_free) VALUES ('lesson3', 'learn-emotion', 'group3', 'Đúng hay Sai?', 'Đánh giá cảm xúc trong tình huống', 3, false) ON CONFLICT (id, course_id, group_id) DO NOTHING;
-INSERT INTO lessons (id, course_id, group_id, "name", description, sort_order, is_free) VALUES ('lesson4', 'learn-emotion', 'group3', 'Chọn cảm xúc đúng', 'Tìm cảm xúc phù hợp với kịch bản', 4, false) ON CONFLICT (id, course_id, group_id) DO NOTHING;

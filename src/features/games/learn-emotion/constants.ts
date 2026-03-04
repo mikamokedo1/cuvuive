@@ -6,9 +6,9 @@ import LogoGroup2 from "@/assets/games/learn-emotion/group2.png";
 import LogoGroup3 from "@/assets/games/learn-emotion/group3.png";
 
 // Import Basic Emotions (Group 1)
-import Happy from "@/assets/games/learn-emotion/happy.png";
+import Happy from "@/assets/games/learn-emotion/happy.jpg";
 import Sad from "@/assets/games/learn-emotion/sad.png";
-import Angry from "@/assets/games/learn-emotion/angry.png";
+import Angry from "@/assets/games/learn-emotion/angry.jpg";
 import Scared from "@/assets/games/learn-emotion/scared.png";
 import Surprised from "@/assets/games/learn-emotion/surprised.png";
 import Love from "@/assets/games/learn-emotion/love.png";
@@ -27,6 +27,20 @@ import Focused from "@/assets/games/learn-emotion/focused.png";
 import Relaxed from "@/assets/games/learn-emotion/relaxed.png";
 
 import { EntityData } from "@/types/game";
+
+// Import Scenario Match Images
+import SmBasic1 from "@/assets/games/learn-emotion/scenarios/sm_basic_1.png";
+import SmBasic2 from "@/assets/games/learn-emotion/scenarios/sm_basic_2.png";
+import SmBasic3 from "@/assets/games/learn-emotion/scenarios/sm_basic_3.png";
+import SmBasic4 from "@/assets/games/learn-emotion/scenarios/sm_basic_4.png";
+import SmAdv1 from "@/assets/games/learn-emotion/scenarios/sm_adv_1.png";
+import SmAdv2 from "@/assets/games/learn-emotion/scenarios/sm_adv_2.png";
+import SmAdv3 from "@/assets/games/learn-emotion/scenarios/sm_adv_3.png";
+import SmAdv4 from "@/assets/games/learn-emotion/scenarios/sm_adv_4.png";
+import SmScen1 from "@/assets/games/learn-emotion/scenarios/sm_scen_1.png";
+import SmScen2 from "@/assets/games/learn-emotion/scenarios/sm_scen_2.png";
+import SmScen3 from "@/assets/games/learn-emotion/scenarios/sm_scen_3.png";
+import SmScen4 from "@/assets/games/learn-emotion/scenarios/sm_scen_4.png";
 
 export const EMOTION_ITEMS: EntityData[] = [
   // Basic Emotions (Group 1)
@@ -49,9 +63,6 @@ export const EMOTION_ITEMS: EntityData[] = [
   { id: "thoughtful", name: "Suy nghĩ", image: Thoughtful, category: "scenario" },
   { id: "focused", name: "Tập trung", image: Focused, category: "scenario" },
   { id: "relaxed", name: "Thư giãn", image: Relaxed, category: "scenario" },
-  { id: "happy_sz", name: "Vui vẻ", image: Happy, category: "scenario" },
-  { id: "surprised_sz", name: "Ngạc nhiên", image: Surprised, category: "scenario" },
-  { id: "sad_sz", name: "Buồn bã", image: Sad, category: "scenario" },
 ];
 
 export const GROUPS = [
@@ -67,17 +78,9 @@ export const GROUPS = [
     id: "group2",
     title: "Cảm xúc khác",
     description: "Học các cảm xúc phức tạp hơn",
-    items: ["shy", "proud", "worried", "jealous", "excited", "bored"],
+    items: ["shy", "proud", "worried", "jealous", "excited", "bored", "thoughtful", "focused", "relaxed"],
     logo: LogoGroup2,
     variant: "purple" as const,
-  },
-  {
-    id: "group3",
-    title: "Pé cảm thấy gì?",
-    description: "Nhận biết cảm xúc qua tình huống",
-    items: ["thoughtful", "focused", "relaxed", "happy_sz", "surprised_sz", "sad_sz"],
-    logo: LogoGroup3,
-    variant: "blue" as const,
   },
 ];
 
@@ -199,7 +202,7 @@ export const SCENARIO_MATCH_ACTIVITIES: ScenarioMatchActivity[] = [
   {
     id: "sm_basic_1",
     situationText: "Pé được bố đưa đi chơi nhà bóng.",
-    image: Happy, // Placeholder
+    image: SmBasic1,
     correctEmotionId: "happy",
     options: ["sad", "angry", "happy", "scared"],
     category: "basic",
@@ -207,7 +210,7 @@ export const SCENARIO_MATCH_ACTIVITIES: ScenarioMatchActivity[] = [
   {
     id: "sm_basic_2",
     situationText: "Chiếc xe đồ chơi yêu thích bị hỏng.",
-    image: Sad, // Placeholder
+    image: SmBasic2,
     correctEmotionId: "sad",
     options: ["happy", "sad", "surprised", "love"],
     category: "basic",
@@ -215,7 +218,7 @@ export const SCENARIO_MATCH_ACTIVITIES: ScenarioMatchActivity[] = [
   {
     id: "sm_basic_3",
     situationText: "Bỗng nhiên có tiếng sấm rất to.",
-    image: Scared, // Placeholder
+    image: SmBasic3,
     correctEmotionId: "scared",
     options: ["love", "angry", "happy", "scared"],
     category: "basic",
@@ -223,7 +226,7 @@ export const SCENARIO_MATCH_ACTIVITIES: ScenarioMatchActivity[] = [
   {
     id: "sm_basic_4",
     situationText: "Mở hộp quà sinh nhật ra thấy món đồ chơi ao ước.",
-    image: Surprised, // Placeholder
+    image: SmBasic4,
     correctEmotionId: "surprised",
     options: ["surprised", "sad", "angry", "scared"],
     category: "basic",
@@ -233,7 +236,7 @@ export const SCENARIO_MATCH_ACTIVITIES: ScenarioMatchActivity[] = [
   {
     id: "sm_adv_1",
     situationText: "Pé tự mình xếp xong một ngôi nhà lego khổng lồ.",
-    image: Proud, // Placeholder
+    image: SmAdv1,
     correctEmotionId: "proud",
     options: ["shy", "bored", "jealous", "proud"],
     category: "advanced",
@@ -241,7 +244,7 @@ export const SCENARIO_MATCH_ACTIVITIES: ScenarioMatchActivity[] = [
   {
     id: "sm_adv_2",
     situationText: "Lần đầu tiên đứng hát trước nhiều người lạ.",
-    image: Shy, // Placeholder
+    image: SmAdv2,
     correctEmotionId: "shy",
     options: ["shy", "excited", "proud", "angry"],
     category: "advanced",
@@ -249,7 +252,7 @@ export const SCENARIO_MATCH_ACTIVITIES: ScenarioMatchActivity[] = [
   {
     id: "sm_adv_3",
     situationText: "Ngày mai là ngày đi dã ngoại cùng cả lớp.",
-    image: Excited, // Placeholder
+    image: SmAdv3,
     correctEmotionId: "excited",
     options: ["bored", "worried", "excited", "jealous"],
     category: "advanced",
@@ -257,7 +260,7 @@ export const SCENARIO_MATCH_ACTIVITIES: ScenarioMatchActivity[] = [
   {
     id: "sm_adv_4",
     situationText: "Pé không mang bút màu đi học vẽ.",
-    image: Worried, // Placeholder
+    image: SmAdv4,
     correctEmotionId: "worried",
     options: ["proud", "worried", "excited", "happy"],
     category: "advanced",
@@ -267,34 +270,34 @@ export const SCENARIO_MATCH_ACTIVITIES: ScenarioMatchActivity[] = [
   {
     id: "sm_scen_1",
     situationText: "Pé đang cố gắng ghép bức tranh 100 mảnh.",
-    image: Focused, // Placeholder
+    image: SmScen1,
     correctEmotionId: "focused",
-    options: ["sad_sz", "focused", "relaxed", "happy_sz"],
-    category: "scenario",
+    options: ["sad", "focused", "relaxed", "happy"],
+    category: "advanced",
   },
   {
     id: "sm_scen_2",
     situationText: "Pé đang tắm nước ấm thơm mùi bọt xà phòng.",
-    image: Relaxed, // Placeholder
+    image: SmScen2,
     correctEmotionId: "relaxed",
-    options: ["surprised_sz", "focused", "thoughtful", "relaxed"],
-    category: "scenario",
+    options: ["surprised", "focused", "thoughtful", "relaxed"],
+    category: "advanced",
   },
   {
     id: "sm_scen_3",
     situationText: "Mẹ hỏi pé tối nay muốn ăn món gì.",
-    image: Thoughtful, // Placeholder
+    image: SmScen3,
     correctEmotionId: "thoughtful",
-    options: ["sad_sz", "thoughtful", "focused", "relaxed"],
-    category: "scenario",
+    options: ["sad", "thoughtful", "focused", "relaxed"],
+    category: "advanced",
   },
   {
     id: "sm_scen_4",
     situationText: "Thấy mẹ đi làm về, pé chạy ra đón.",
-    image: Happy, // Placeholder
-    correctEmotionId: "happy_sz",
-    options: ["happy_sz", "sad_sz", "thoughtful", "focused"],
-    category: "scenario",
+    image: SmScen4,
+    correctEmotionId: "happy",
+    options: ["happy", "sad", "thoughtful", "focused"],
+    category: "advanced",
   },
 ];
 
@@ -302,7 +305,6 @@ export function getScenarioMatchForGroup(groupId: string): ScenarioMatchActivity
   const categoryMap: Record<string, string> = {
     group1: "basic",
     group2: "advanced",
-    group3: "scenario",
   };
   const category = categoryMap[groupId];
   if (!category) return [];

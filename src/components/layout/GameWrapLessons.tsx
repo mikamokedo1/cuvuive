@@ -8,6 +8,8 @@ export interface LessonData {
   id: string;
   title: string;
   icon: React.ReactNode;
+  isPremium?: boolean;
+  color?: string;
 }
 
 interface GameWrapLessonsProps {

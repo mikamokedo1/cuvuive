@@ -605,7 +605,7 @@ export const COURSES: CourseDef[] = [
   },
   {
     id: "learn-emotion",
-    title: "Nhận Biết Cảm Xúc",
+    title: "Cảm Xúc",
     description: "Bé học cách nhận biết và gọi tên cảm xúc qua hình ảnh và tình huống kịch bản.",
     icon: GameEmotionLogo,
     type: "life-skill",
@@ -623,16 +623,6 @@ export const COURSES: CourseDef[] = [
       {
         id: "group2",
         title: "Cảm xúc khác",
-        lessons: [
-          { id: "lesson1", title: "Học cảm xúc", isFree: true },
-          { id: "lesson2", title: "Tập nói" },
-          { id: "lesson3", title: "Đúng hay Sai?" },
-          { id: "lesson4", title: "Chọn cảm xúc đúng" },
-        ],
-      },
-      {
-        id: "group3",
-        title: "Bé cảm thấy gì?",
         lessons: [
           { id: "lesson1", title: "Học cảm xúc", isFree: true },
           { id: "lesson2", title: "Tập nói" },

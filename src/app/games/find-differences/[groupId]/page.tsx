@@ -45,17 +45,15 @@ export default function GroupLessonsPage() {
     <Eye key="eye" className="text-white w-6 h-6" />,
   ];
 
-  const lessons = group.lessons.map((lesson, index) => {
-    return {
-      id: lesson.id,
-      title: lesson.title,
-      icon: iconsList[index % iconsList.length],
-      isPremium: index > 0, // lesson 1 is free, others are premium by default
-    };
-  });
+  const lessons = group.lessons.map((lesson, index) => ({
+    id: lesson.id,
+    title: lesson.title,
+    icon: iconsList[index % iconsList.length],
+    isPremium: index > 0,
+  }));
 
-  const findPatternProgress = allProgress["find-differences"] || { completedGroups: [], completedLessons: {} };
-  const isGroupCompleted = findPatternProgress.completedGroups.includes(groupId);
+  const findDifferencesProgress = allProgress["find-differences"] || { completedGroups: [], completedLessons: {} };
+  const isGroupCompleted = findDifferencesProgress.completedGroups.includes(groupId);
   let activeIndex = -1;
 
   if (!isGroupCompleted) {

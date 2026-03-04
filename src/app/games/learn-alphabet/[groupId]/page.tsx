@@ -1,93 +1,51 @@
 "use client";
 
-import { useParams, useRouter } from "next/navigation";
-import { useProgress } from "@/context/ProgressContext";
-import { useAccess } from "@/context/AccessContext";
 import { BookOpen, HelpCircle, Grid2X2, Mic, PenTool } from "lucide-react";
 import { GameWrapLessons } from "@/components/layout/GameWrapLessons";
 import { GROUPS } from "@/features/games/learn-alphabet/constants";
+import { useGroupLessons } from "@/hooks/useGroupLessons";
+
+const lessons = [
+  {
+    id: "lesson1",
+    title: "Học chữ cái",
+    icon: <BookOpen className="text-white w-6 h-6" />,
+    isPremium: false,
+  },
+  {
+    id: "lesson2",
+    title: "Tập nói",
+    icon: <Mic className="text-white w-6 h-6" />,
+    isPremium: true,
+  },
+  {
+    id: "lesson3",
+    title: "Tập viết",
+    icon: <PenTool className="text-white w-6 h-6" />,
+    isPremium: true,
+  },
+  {
+    id: "lesson4",
+    title: "Chữ nào đúng?",
+    icon: <HelpCircle className="text-white w-6 h-6" />,
+    isPremium: true,
+  },
+  {
+    id: "lesson5",
+    title: "Ghép đôi",
+    icon: <Grid2X2 className="text-white w-6 h-6" />,
+    isPremium: true,
+  },
+];
 
 export default function GroupLessonsPage() {
-  const params = useParams();
-  const router = useRouter();
-  const { isLessonUnlocked, allProgress } = useProgress();
-  const { checkAccess, showPaywall } = useAccess();
+  const { group, activeIndex, handleLessonClick } = useGroupLessons({
+    gameSlug: "learn-alphabet",
+    groups: GROUPS,
+    lessons,
+  });
 
-  const groupId = typeof params.groupId === "string" ? params.groupId : "";
-  const group = GROUPS.find((g) => g.id === groupId);
-
-  if (!group) {
-    return <div>Group not found</div>;
-  }
-
-  const handleLessonClick = async (lessonId: string) => {
-    if (!isLessonUnlocked(groupId, lessonId, "learn-alphabet")) {
-      return;
-    }
-
-    const access = await checkAccess("learn-alphabet", groupId, lessonId);
-
-    if (!access.userHasAccess) {
-      if (access.reason === "not_logged_in") {
-        showPaywall("login", `/games/learn-alphabet/${groupId}/lesson/${lessonId}`);
-      } else if (access.reason === "premium_required") {
-        showPaywall("premium", `/games/learn-alphabet/${groupId}/lesson/${lessonId}`);
-      }
-      return;
-    }
-
-    router.push(`/games/learn-alphabet/${groupId}/lesson/${lessonId}`);
-  };
-
-  const lessons = [
-    {
-      id: "lesson1",
-      title: "Học chữ cái",
-      icon: <BookOpen className="text-white w-6 h-6" />,
-      isPremium: false,
-    },
-    {
-      id: "lesson2",
-      title: "Tập nói",
-      icon: <Mic className="text-white w-6 h-6" />,
-      isPremium: true,
-    },
-    {
-      id: "lesson3",
-      title: "Tập viết",
-      icon: <PenTool className="text-white w-6 h-6" />,
-      isPremium: true,
-    },
-    {
-      id: "lesson4",
-      title: "Chữ nào đúng?",
-      icon: <HelpCircle className="text-white w-6 h-6" />,
-      isPremium: true,
-    },
-    {
-      id: "lesson5",
-      title: "Ghép đôi",
-      icon: <Grid2X2 className="text-white w-6 h-6" />,
-      isPremium: true,
-    },
-  ];
-
-  const learnAlphabetProgress = allProgress["learn-alphabet"] || { completedGroups: [], completedLessons: {} };
-  const isGroupCompleted = learnAlphabetProgress.completedGroups.includes(groupId);
-  let activeIndex = -1;
-
-  if (!isGroupCompleted) {
-    for (let i = lessons.length - 1; i >= 0; i--) {
-      if (isLessonUnlocked(groupId, lessons[i].id, "learn-alphabet")) {
-        activeIndex = i;
-        break;
-      }
-    }
-  }
-
-  if (!isGroupCompleted && activeIndex === -1) {
-    activeIndex = 0;
-  }
+  if (!group) return <div>Group not found</div>;
 
   return (
     <GameWrapLessons
