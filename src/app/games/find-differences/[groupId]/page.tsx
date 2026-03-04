@@ -25,7 +25,7 @@ export default function GroupLessonsPage() {
       return;
     }
 
-    const access = await checkAccess("find-differences", groupId, lessonId);
+    const access = checkAccess("find-differences", groupId, lessonId);
 
     if (!access.userHasAccess) {
       if (access.reason === "not_logged_in") {

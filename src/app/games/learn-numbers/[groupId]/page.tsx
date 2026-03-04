@@ -52,7 +52,7 @@ export default function GroupLessonsPage() {
     }
 
     // Step 2: Check access - lesson must be free OR user must be premium
-    const access = await checkAccess("learn-numbers", groupId, lessonId);
+    const access = checkAccess("learn-numbers", groupId, lessonId);
 
     if (!access.userHasAccess) {
       if (access.reason === "not_logged_in") {

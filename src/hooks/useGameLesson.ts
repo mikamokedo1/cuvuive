@@ -38,7 +38,7 @@ export function useGameLesson<G extends { id: string }>({ gameSlug, lessonOrder,
         return;
       }
 
-      const access = await checkAccess(gameSlug, groupId, lessonId);
+      const access = checkAccess(gameSlug, groupId, lessonId);
       if (!access.userHasAccess) {
         if (access.reason === "not_logged_in") {
           showPaywall("login", `/games/${gameSlug}/${groupId}/lesson/${lessonId}`);
@@ -79,7 +79,7 @@ export function useGameLesson<G extends { id: string }>({ gameSlug, lessonOrder,
     if (currentIdx < lessonOrder.length - 1) {
       const nextLessonId = lessonOrder[currentIdx + 1];
 
-      const access = await checkAccess(gameSlug, groupId, nextLessonId);
+      const access = checkAccess(gameSlug, groupId, nextLessonId);
       if (!access.userHasAccess) {
         if (access.reason === "not_logged_in") {
           showPaywall("login", `/games/${gameSlug}/${groupId}/lesson/${nextLessonId}`);

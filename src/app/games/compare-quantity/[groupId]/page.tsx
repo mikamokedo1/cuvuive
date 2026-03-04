@@ -112,7 +112,7 @@ export default function GroupLessonsPage() {
   const handleLessonClick = async (lessonId: string) => {
     if (!isLessonUnlocked(groupId, lessonId)) return;
 
-    const access = await checkAccess("compare-quantity", groupId, lessonId);
+    const access = checkAccess("compare-quantity", groupId, lessonId);
     if (!access.userHasAccess) {
       if (access.reason === "not_logged_in") {
         showPaywall("login", `/games/compare-quantity/${groupId}/lesson/${lessonId}`);

@@ -2,7 +2,8 @@
 
 import { createContext, useContext, useState, ReactNode, useCallback } from "react";
 import { useUser } from "./UserContext";
-import { checkLessonAccess, AccessCheckResult, AccessReason } from "@/libs/actions/access";
+import { AccessCheckResult, AccessReason } from "@/libs/actions/access";
+import { COURSES } from "@/libs/constants/courses";
 
 const REDIRECT_STORAGE_KEY = "auth_redirect_url";
 
@@ -30,7 +31,7 @@ type PaywallType = "login" | "premium";
 interface AccessContextType {
   isPremium: boolean;
   isLoggedIn: boolean;
-  checkAccess: (courseId: string, groupId: string, lessonId: string) => Promise<AccessCheckResult>;
+  checkAccess: (courseId: string, groupId: string, lessonId: string) => AccessCheckResult;
   showPaywall: (type: PaywallType, redirectUrl?: string) => void;
   hidePaywall: () => void;
   paywallState: { isOpen: boolean; type: PaywallType | null; redirectUrl: string | null };
@@ -54,10 +55,29 @@ export function AccessProvider({ children }: { children: ReactNode }) {
   const isLoggedIn = !!user;
 
   const checkAccess = useCallback(
-    async (courseId: string, groupId: string, lessonId: string): Promise<AccessCheckResult> => {
-      return await checkLessonAccess(courseId, groupId, lessonId);
+    (courseId: string, groupId: string, lessonId: string): AccessCheckResult => {
+      // Look up isFree from hardcoded COURSES constant (zero network cost)
+      const course = COURSES.find((c) => c.id === courseId);
+      const group = course?.groups.find((g) => g.id === groupId);
+      const lesson = group?.lessons.find((l) => l.id === lessonId);
+      const isFree = lesson?.isFree ?? false;
+
+      if (isFree) {
+        return { accessType: "free", userHasAccess: true, reason: null };
+      }
+
+      // Premium lesson: check using already-loaded user state (no server call)
+      if (!isLoggedIn) {
+        return { accessType: "premium", userHasAccess: false, reason: "not_logged_in" };
+      }
+
+      if (!isPremium) {
+        return { accessType: "premium", userHasAccess: false, reason: "premium_required" };
+      }
+
+      return { accessType: "premium", userHasAccess: true, reason: null };
     },
-    [],
+    [isLoggedIn, isPremium],
   );
 
   const showPaywall = useCallback((type: PaywallType, redirectUrl?: string) => {

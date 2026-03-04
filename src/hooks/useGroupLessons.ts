@@ -29,7 +29,7 @@ export function useGroupLessons<G extends { id: string; title: string }>({
       return;
     }
 
-    const access = await checkAccess(gameSlug, groupId, lessonId);
+    const access = checkAccess(gameSlug, groupId, lessonId);
 
     if (!access.userHasAccess) {
       if (access.reason === "not_logged_in") {

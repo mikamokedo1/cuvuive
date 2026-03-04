@@ -56,7 +56,7 @@ export default function GroupLessonsPage() {
   const handleLessonClick = async (lessonId: string) => {
     if (!isLessonUnlocked(groupId, lessonId)) return;
 
-    const access = await checkAccess("learn-math", groupId, lessonId);
+    const access = checkAccess("learn-math", groupId, lessonId);
     if (!access.userHasAccess) {
       if (access.reason === "not_logged_in") {
         showPaywall("login", `/games/learn-math/${groupId}/lesson/${lessonId}`);

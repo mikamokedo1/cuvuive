@@ -94,6 +94,43 @@ export async function checkLessonAccess(
 }
 
 /**
+ * Check if user has premium access (auth + subscription only, no course DB lookup).
+ * Use this when the caller already knows the lesson requires premium access
+ * (e.g. by checking the hardcoded COURSES constant client-side).
+ */
+export async function checkPremiumAccess(): Promise<AccessCheckResult> {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return {
+      accessType: "premium",
+      userHasAccess: false,
+      reason: "not_logged_in",
+    };
+  }
+
+  const isPro = await checkUserSubscription(user.id);
+
+  if (!isPro) {
+    return {
+      accessType: "premium",
+      userHasAccess: false,
+      reason: "premium_required",
+    };
+  }
+
+  return {
+    accessType: "premium",
+    userHasAccess: true,
+    reason: null,
+  };
+}
+
+/**
  * Get access config for all lessons in a course
  */
 export async function getCourseAccessConfig(courseId: string): Promise<LessonAccessConfig[]> {
