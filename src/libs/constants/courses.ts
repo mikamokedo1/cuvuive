@@ -22,6 +22,7 @@ import GameOddOneOutLogo from "@/assets/games/odd-one-out/logo.png";
 import GameMazeRunnerLogo from "@/assets/games/maze-runner/logo.png";
 import MixColorLogo from "@/assets/games/mix-color/logo.png";
 import PaintPictureLogo from "@/assets/games/paint-picture/logo.png";
+import GameEmotionLogo from "@/assets/games/learn-emotion/logo.png";
 import { StaticImageData } from "next/image";
 import { GameGroupType } from "@/app/games/GamesMap";
 
@@ -598,6 +599,45 @@ export const COURSES: CourseDef[] = [
           { id: "lesson2", title: "Tập nói" },
           { id: "lesson3", title: "Đúng hay Sai?" },
           { id: "lesson4", title: "Sắp xếp thứ tự" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "learn-emotion",
+    title: "Nhận Biết Cảm Xúc",
+    description: "Bé học cách nhận biết và gọi tên cảm xúc qua hình ảnh và tình huống kịch bản.",
+    icon: GameEmotionLogo,
+    type: "life-skill",
+    groups: [
+      {
+        id: "group1",
+        title: "Cảm xúc cơ bản",
+        lessons: [
+          { id: "lesson1", title: "Học cảm xúc", isFree: true },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Đúng hay Sai?" },
+          { id: "lesson4", title: "Chọn cảm xúc đúng" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Cảm xúc khác",
+        lessons: [
+          { id: "lesson1", title: "Học cảm xúc", isFree: true },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Đúng hay Sai?" },
+          { id: "lesson4", title: "Chọn cảm xúc đúng" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Bé cảm thấy gì?",
+        lessons: [
+          { id: "lesson1", title: "Học cảm xúc", isFree: true },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Đúng hay Sai?" },
+          { id: "lesson4", title: "Chọn cảm xúc đúng" },
         ],
       },
     ],

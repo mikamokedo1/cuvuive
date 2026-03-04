@@ -13,6 +13,7 @@ import { VisualCompareLesson } from "@/features/games/compare-game/VisualCompare
 import { NumberCompareLesson } from "@/features/games/compare-game/NumberCompareLesson";
 import { SymbolWritingLesson } from "@/features/games/compare-game/SymbolWritingLesson";
 import { MixedPracticeLesson } from "@/features/games/compare-game/MixedPracticeLesson";
+import { GameWrapGame } from "@/components/layout/GameWrapGame";
 
 const MAP_LESSON_TITLE: Record<string, { text: string; symbol: string }> = {
   greater: {
@@ -175,25 +176,16 @@ export default function LessonPage() {
     }
   }
 
-  if (!LessonContent) {
-    return (
-      <GameLayout backTo={`/games/compare-quantity/${groupId}`}>
-        <div className="text-center text-slate-500">Lesson not found</div>
-      </GameLayout>
-    );
-  }
-
   return (
-    <GameLayout backTo={`/games/compare-quantity/${groupId}`} title={LessonTitle}>
-      <main>{LessonContent}</main>
-
-      <CompletionModal
-        isOpen={showModal}
-        onNext={handleNextLesson}
-        currentLessonNum={isGroupDone ? groupId.replace("group", "") : currentLessonNum}
-        nextLessonNum={nextLessonNum ?? undefined}
-        isGroupComplete={isGroupDone}
-      />
-    </GameLayout>
+    <GameWrapGame
+      LessonContent={LessonContent}
+      LessonTitle={LessonTitle}
+      groupId={groupId}
+      showModal={showModal}
+      handleNextLesson={handleNextLesson}
+      currentLessonNum={currentLessonNum}
+      nextLessonNum={nextLessonNum}
+      isGroupDone={isGroupDone}
+    />
   );
 }

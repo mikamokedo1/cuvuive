@@ -236,6 +236,18 @@ export const MAP_PATHNAME_TO_TEXT = {
   "/games/mix-color/group3/lesson/lesson1": "Pé ôn lại các cách pha màu nhé",
   "/games/mix-color/group3/lesson/lesson2": "Pé hãy chọn hai màu nào pha với nhau để ra màu ở trên nhé",
   "/games/mix-color/group3/lesson/lesson3": "Hai màu này pha với nhau ra màu gì? Pé chọn ở dưới nhé",
+  "/games/learn-emotion/group1/lesson/lesson1": "Pé học tên các cảm xúc cơ bản",
+  "/games/learn-emotion/group1/lesson/lesson2": "Pé tập nói tên cảm xúc nhé",
+  "/games/learn-emotion/group1/lesson/lesson3": "Pé chọn cảm xúc đúng hoặc sai cho tình huống",
+  "/games/learn-emotion/group1/lesson/lesson4": "Pé chọn cảm xúc phù hợp với tình huống nhé",
+  "/games/learn-emotion/group2/lesson/lesson1": "Pé học tên các cảm xúc nâng cao",
+  "/games/learn-emotion/group2/lesson/lesson2": "Pé tập nói tên cảm xúc nhé",
+  "/games/learn-emotion/group2/lesson/lesson3": "Pé chọn cảm xúc đúng hoặc sai cho tình huống",
+  "/games/learn-emotion/group2/lesson/lesson4": "Pé chọn cảm xúc phù hợp với tình huống nhé",
+  "/games/learn-emotion/group3/lesson/lesson1": "Pé ôn tập lại các cảm xúc đã học",
+  "/games/learn-emotion/group3/lesson/lesson2": "Pé tập nói tên cảm xúc nhé",
+  "/games/learn-emotion/group3/lesson/lesson3": "Pé chọn cảm xúc đúng hoặc sai cho tình huống",
+  "/games/learn-emotion/group3/lesson/lesson4": "Pé chọn cảm xúc phù hợp với tình huống nhé",
 };
 
 interface OwlContextType {
