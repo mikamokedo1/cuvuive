@@ -2,15 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { GameLayout } from "@/components/layout/GameLayout";
 import { useProgress } from "@/context/ProgressContext";
 import { useAccess } from "@/context/AccessContext";
-import { CompletionModal } from "@/components/games/CompletionModal";
 import { GROUPS, COLORS } from "@/features/games/learn-color/constants";
 import { ColorLearnLesson } from "@/features/games/learn-color/ColorLearnLesson";
 import { ColorQuizLesson } from "@/features/games/learn-color/ColorQuizLesson";
 import { ColorImageMatchLesson } from "@/features/games/learn-color/ColorImageMatchLesson";
-import { CheckingPermission } from "@/components/common/CheckingPermission";
+import { GameWrapGame } from "@/components/layout/GameWrapGame";
 
 export default function LessonPage() {
   const params = useParams();
@@ -76,7 +74,6 @@ export default function LessonPage() {
       setIsGroupDone(false);
     } else {
       setIsGroupDone(true);
-      // Next group logic could be added here
       setNextLessonNum(null);
     }
 
@@ -107,107 +104,48 @@ export default function LessonPage() {
     }
   };
 
-  if (!isLoaded || isCheckingAccess) {
-    return <CheckingPermission path={`/games/learn-color/${groupId}`} />;
-  }
+  const groupColors = COLORS.filter((c) => group.colors.includes(c.id));
+  const requireWins = groupId === "group3" ? 12 : groupId === "group1" ? 6 : 8;
 
-  let Content = null;
-  let title = "";
+  let LessonContent = null;
+  let displayTitle = "";
 
-  // Filter colors for this group
-  // Assume group.colors contains color IDs
-  // Implementation note: we need to map IDs to actual ColorData objects.
-  // IMPORT COLORS from constants needed.
-  // Actually, I should import COLORS in this file too.
-
-  // Wait, I didn't import COLORS in the top block, I only imported GROUPS.
-  // I need to import COLORS.
-
-  // Re-map colors
-  // const groupColors = COLORS.filter(c => group.colors.includes(c.id));
-
-  // Since I can't edit the file content inside this `CodeContent` block dynamically (I'm writing it now),
-  // I will write the component logic properly assuming imports are present.
-
-  // BUT I need to fetch the COLORS data.
-  // I will assume I imported it. (I will add it to the import list).
-
-  switch (lessonId) {
-    case "lesson1":
-      title = "Học màu sắc";
-      // We need to resolve colors.
-      // Since I can't do complex logic outside component easily without double importing or such,
-      // I'll do it inside.
-      break;
-    case "lesson2":
-      title = "Màu nào đúng?";
-      break;
-    default:
-      Content = <div>Unknown Lesson</div>;
+  if (lessonId === "lesson1") {
+    displayTitle = "Học màu sắc";
+    LessonContent = (
+      <main>
+        <ColorLearnLesson colors={groupColors} onComplete={handleComplete} />
+      </main>
+    );
+  } else if (lessonId === "lesson2") {
+    displayTitle = "Tìm màu giống";
+    LessonContent = (
+      <main>
+        <ColorQuizLesson colors={groupColors} onComplete={handleComplete} requiredWins={requireWins} />
+      </main>
+    );
+  } else if (lessonId === "lesson3") {
+    displayTitle = "Hình gì màu gì?";
+    LessonContent = (
+      <main>
+        <ColorImageMatchLesson colors={groupColors} onComplete={handleComplete} requiredWins={requireWins} />
+      </main>
+    );
   }
 
   return (
-    <LessonPageContent
+    <GameWrapGame
+      LessonContent={LessonContent}
+      LessonTitle={displayTitle}
       groupId={groupId}
-      lessonId={lessonId}
-      title={title}
-      group={group}
-      onComplete={handleComplete}
+      gameSlug="learn-color"
       showModal={showModal}
       handleNextLesson={handleNextLesson}
       currentLessonNum={currentLessonNum}
       nextLessonNum={nextLessonNum}
       isGroupDone={isGroupDone}
+      isLoaded={isLoaded}
+      isCheckingAccess={isCheckingAccess}
     />
-  );
-}
-
-// Separate component to handle the content logic cleanly
-// COLORS imported at top
-
-function LessonPageContent({
-  groupId,
-  lessonId,
-  title,
-  group,
-  onComplete,
-  showModal,
-  handleNextLesson,
-  currentLessonNum,
-  nextLessonNum,
-  isGroupDone,
-}: any) {
-  const groupColors = COLORS.filter((c) => group.colors.includes(c.id));
-
-  const requireWins = groupId === "group3" ? 12 : groupId === "group1" ? 6 : 8;
-
-  let Content = null;
-  let displayTitle = title;
-
-  if (lessonId === "lesson1") {
-    displayTitle = "Học màu sắc";
-    Content = <ColorLearnLesson colors={groupColors} onComplete={onComplete} />;
-  } else if (lessonId === "lesson2") {
-    displayTitle = "Tìm màu giống";
-    Content = <ColorQuizLesson colors={groupColors} onComplete={onComplete} requiredWins={requireWins} />;
-  } else if (lessonId === "lesson3") {
-    displayTitle = "Hình gì màu gì?";
-    Content = <ColorImageMatchLesson colors={groupColors} onComplete={onComplete} requiredWins={requireWins} />;
-  } else {
-    Content = <div>Bài học không hợp lệ</div>;
-  }
-
-  return (
-    <GameLayout title={displayTitle} backTo={`/games/learn-color/${groupId}`}>
-      <main>{Content}</main>
-
-      <CompletionModal
-        isOpen={showModal}
-        onNext={handleNextLesson}
-        currentLessonNum={isGroupDone ? groupId.replace("group", "") : currentLessonNum}
-        nextLessonNum={nextLessonNum ?? undefined}
-        isGroupComplete={isGroupDone}
-      />
-    </GameLayout>
   );
 }

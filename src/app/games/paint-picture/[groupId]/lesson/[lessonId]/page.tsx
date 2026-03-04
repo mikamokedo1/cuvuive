@@ -2,14 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { GameLayout } from "@/components/layout/GameLayout";
 import { useProgress } from "@/context/ProgressContext";
 import { useAccess } from "@/context/AccessContext";
-import { CompletionModal } from "@/components/games/CompletionModal";
 import { GROUPS } from "@/features/games/paint-picture/constants";
 import { FreeColorLesson } from "@/features/games/paint-picture/FreeColorLesson";
 import { AIPaintLesson } from "@/features/games/paint-picture/AIPaintLesson";
-import { CheckingPermission } from "@/components/common/CheckingPermission";
+import { GameWrapGame } from "@/components/layout/GameWrapGame";
 
 export default function LessonPage() {
   const params = useParams();
@@ -102,79 +100,38 @@ export default function LessonPage() {
     }
   };
 
-  if (!isLoaded || isCheckingAccess) {
-    return <CheckingPermission path={`/games/paint-picture/${groupId}`} />;
-  }
-
+  let LessonContent = null;
   let title = "";
-  switch (lessonId) {
-    case "lesson1":
-      title = "Tô tự do";
-      break;
-    case "lesson2":
-      title = "Hoạ Khám Phá";
-      break;
-    default:
-      title = "Bài học";
+
+  if (lessonId === "lesson1") {
+    title = "Tô tự do";
+    LessonContent = (
+      <main>
+        <FreeColorLesson groupId={groupId} onComplete={handleComplete} />
+      </main>
+    );
+  } else if (lessonId === "lesson2") {
+    title = "Hoạ Khám Phá";
+    LessonContent = (
+      <main>
+        <AIPaintLesson groupId={groupId} onComplete={handleComplete} />
+      </main>
+    );
   }
 
   return (
-    <LessonPageContent
+    <GameWrapGame
+      LessonContent={LessonContent}
+      LessonTitle={title}
       groupId={groupId}
-      lessonId={lessonId}
-      title={title}
-      onComplete={handleComplete}
+      gameSlug="paint-picture"
       showModal={showModal}
       handleNextLesson={handleNextLesson}
       currentLessonNum={currentLessonNum}
       nextLessonNum={nextLessonNum}
       isGroupDone={isGroupDone}
+      isLoaded={isLoaded}
+      isCheckingAccess={isCheckingAccess}
     />
-  );
-}
-
-function LessonPageContent({
-  groupId,
-  lessonId,
-  title,
-  onComplete,
-  showModal,
-  handleNextLesson,
-  currentLessonNum,
-  nextLessonNum,
-  isGroupDone,
-}: {
-  groupId: string;
-  lessonId: string;
-  title: string;
-  onComplete: () => void;
-  showModal: boolean;
-  handleNextLesson: () => void;
-  currentLessonNum: number | string;
-  nextLessonNum: number | string | null;
-  isGroupDone: boolean;
-}) {
-  let Content = null;
-
-  if (lessonId === "lesson1") {
-    Content = <FreeColorLesson groupId={groupId} onComplete={onComplete} />;
-  } else if (lessonId === "lesson2") {
-    Content = <AIPaintLesson groupId={groupId} onComplete={onComplete} />;
-  } else {
-    Content = <div>Bài học không hợp lệ</div>;
-  }
-
-  return (
-    <GameLayout title={title} backTo={`/games/paint-picture/${groupId}`}>
-      <main>{Content}</main>
-
-      <CompletionModal
-        isOpen={showModal}
-        onNext={handleNextLesson}
-        currentLessonNum={isGroupDone ? groupId.replace("group", "") : currentLessonNum}
-        nextLessonNum={nextLessonNum ?? undefined}
-        isGroupComplete={isGroupDone}
-      />
-    </GameLayout>
   );
 }

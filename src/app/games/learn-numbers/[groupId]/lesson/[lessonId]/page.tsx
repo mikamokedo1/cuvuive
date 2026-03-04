@@ -1,13 +1,7 @@
 "use client";
 
-import { Metadata } from "next";
-
-// Note: In Next.js, metadata cannot be exported from a Client Component.
-// We should use a layout.tsx for metadata if needed.
-
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { GameLayout } from "@/components/layout/GameLayout";
 import { useProgress } from "@/context/ProgressContext";
 import { useAccess } from "@/context/AccessContext";
 import { LearnLesson } from "@/features/games/learn-game/LearnLesson";
@@ -18,8 +12,7 @@ import { LearnLesson2 } from "@/features/games/learn-game/LearnLesson2";
 import { QuizLesson2 } from "@/features/games/learn-game/QuizLesson2";
 import { CountingLesson2 } from "@/features/games/learn-game/CountingLesson2";
 import { WritingLesson2 } from "@/features/games/learn-game/WritingLesson2";
-import { CompletionModal } from "@/components/games/CompletionModal";
-import { CheckingPermission } from "@/components/common/CheckingPermission";
+import { GameWrapGame } from "@/components/layout/GameWrapGame";
 
 // Numbers for the new group4 (0 & 10-20)
 const GROUP4_NUMBERS = [0, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
@@ -212,21 +205,19 @@ export default function LessonPage() {
     }
   }
 
-  if (!isLoaded || isCheckingAccess) {
-    return <CheckingPermission path={`/games/learn-numbers/${groupId}`} />;
-  }
-
   return (
-    <GameLayout title={title} backTo={`/games/learn-numbers/${groupId}`}>
-      <main>{Content}</main>
-
-      <CompletionModal
-        isOpen={showModal}
-        onNext={handleNextLesson}
-        currentLessonNum={isGroupDone ? groupId.replace("group", "") : currentLessonNum}
-        nextLessonNum={nextLessonNum ?? undefined}
-        isGroupComplete={isGroupDone}
-      />
-    </GameLayout>
+    <GameWrapGame
+      LessonContent={<main>{Content}</main>}
+      LessonTitle={title}
+      groupId={groupId}
+      gameSlug="learn-numbers"
+      showModal={showModal}
+      handleNextLesson={handleNextLesson}
+      currentLessonNum={currentLessonNum}
+      nextLessonNum={nextLessonNum}
+      isGroupDone={isGroupDone}
+      isLoaded={isLoaded}
+      isCheckingAccess={isCheckingAccess}
+    />
   );
 }

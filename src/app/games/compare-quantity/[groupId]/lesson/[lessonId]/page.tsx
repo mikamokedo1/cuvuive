@@ -181,6 +181,7 @@ export default function LessonPage() {
       LessonContent={LessonContent}
       LessonTitle={LessonTitle}
       groupId={groupId}
+      gameSlug="compare-quantity"
       showModal={showModal}
       handleNextLesson={handleNextLesson}
       currentLessonNum={currentLessonNum}

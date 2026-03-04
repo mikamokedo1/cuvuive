@@ -2,15 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { GameLayout } from "@/components/layout/GameLayout";
 import { useProgress } from "@/context/ProgressContext";
 import { useAccess } from "@/context/AccessContext";
-import { CompletionModal } from "@/components/games/CompletionModal";
 import { GROUPS, MIXING_RULES } from "@/features/games/mix-color/constants";
 import { MixColorLearnLesson } from "@/features/games/mix-color/MixColorLearnLesson";
 import { MixColorQuizLesson } from "@/features/games/mix-color/MixColorQuizLesson";
 import { MixColorReverseQuizLesson } from "@/features/games/mix-color/MixColorReverseQuizLesson";
-import { CheckingPermission } from "@/components/common/CheckingPermission";
+import { GameWrapGame } from "@/components/layout/GameWrapGame";
 
 export default function LessonPage() {
   const params = useParams();
@@ -106,82 +104,48 @@ export default function LessonPage() {
     }
   };
 
-  if (!isLoaded || isCheckingAccess) {
-    return <CheckingPermission path={`/games/mix-color/${groupId}`} />;
-  }
+  const groupRules = MIXING_RULES.filter((r) => group.rules.includes(r.id));
+  const requireWins = groupId === "group3" ? 6 : 4;
 
+  let LessonContent = null;
   let title = "";
-  switch (lessonId) {
-    case "lesson1":
-      title = "Học pha màu";
-      break;
-    case "lesson2":
-      title = "Pha màu nào?";
-      break;
-    case "lesson3":
-      title = "Thử thách pha màu";
-      break;
-    default:
-      title = "Bài học";
+
+  if (lessonId === "lesson1") {
+    title = "Học pha màu";
+    LessonContent = (
+      <main>
+        <MixColorLearnLesson rules={groupRules} onComplete={handleComplete} />
+      </main>
+    );
+  } else if (lessonId === "lesson2") {
+    title = "Pha màu nào?";
+    LessonContent = (
+      <main>
+        <MixColorQuizLesson rules={groupRules} onComplete={handleComplete} requiredWins={requireWins} />
+      </main>
+    );
+  } else if (lessonId === "lesson3") {
+    title = "Thử thách pha màu";
+    LessonContent = (
+      <main>
+        <MixColorReverseQuizLesson rules={groupRules} onComplete={handleComplete} requiredWins={requireWins} />
+      </main>
+    );
   }
 
   return (
-    <LessonPageContent
+    <GameWrapGame
+      LessonContent={LessonContent}
+      LessonTitle={title}
       groupId={groupId}
-      lessonId={lessonId}
-      title={title}
-      group={group}
-      onComplete={handleComplete}
+      gameSlug="mix-color"
       showModal={showModal}
       handleNextLesson={handleNextLesson}
       currentLessonNum={currentLessonNum}
       nextLessonNum={nextLessonNum}
       isGroupDone={isGroupDone}
+      isLoaded={isLoaded}
+      isCheckingAccess={isCheckingAccess}
     />
-  );
-}
-
-function LessonPageContent({
-  groupId,
-  lessonId,
-  title,
-  group,
-  onComplete,
-  showModal,
-  handleNextLesson,
-  currentLessonNum,
-  nextLessonNum,
-  isGroupDone,
-}: any) {
-  const groupRules = MIXING_RULES.filter((r) => group.rules.includes(r.id));
-
-  // Determine required wins based on group and lesson
-  // group3 has more rules (practice all) so requires more wins
-  const requireWins = groupId === "group3" ? 6 : 4;
-
-  let Content = null;
-
-  if (lessonId === "lesson1") {
-    Content = <MixColorLearnLesson rules={groupRules} onComplete={onComplete} />;
-  } else if (lessonId === "lesson2") {
-    Content = <MixColorQuizLesson rules={groupRules} onComplete={onComplete} requiredWins={requireWins} />;
-  } else if (lessonId === "lesson3") {
-    Content = <MixColorReverseQuizLesson rules={groupRules} onComplete={onComplete} requiredWins={requireWins} />;
-  } else {
-    Content = <div>Bài học không hợp lệ</div>;
-  }
-
-  return (
-    <GameLayout title={title} backTo={`/games/mix-color/${groupId}`}>
-      <main>{Content}</main>
-
-      <CompletionModal
-        isOpen={showModal}
-        onNext={handleNextLesson}
-        currentLessonNum={isGroupDone ? groupId.replace("group", "") : currentLessonNum}
-        nextLessonNum={nextLessonNum ?? undefined}
-        isGroupComplete={isGroupDone}
-      />
-    </GameLayout>
   );
 }

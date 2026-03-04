@@ -1,11 +1,9 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { GameLayout } from "@/components/layout/GameLayout";
 import { useProgress } from "@/context/ProgressContext";
 import { useAccess } from "@/context/AccessContext";
 import { useEffect, useState } from "react";
-import { CompletionModal } from "@/components/games/CompletionModal";
 
 // Lesson Components
 import { ExplainMathLesson } from "@/features/games/learn-math/ExplainMathLesson";
@@ -14,6 +12,7 @@ import { NumberMathLesson } from "@/features/games/learn-math/NumberMathLesson";
 import { MixedMathLesson } from "@/features/games/learn-math/MixedMathLesson";
 import { SymbolWritingLesson } from "@/features/games/learn-math/SymbolWritingLesson";
 import { GROUP_CONFIG } from "@/features/games/learn-math/constants";
+import { GameWrapGame } from "@/components/layout/GameWrapGame";
 
 export default function LessonPage() {
   const params = useParams();
@@ -103,17 +102,6 @@ export default function LessonPage() {
     }
   };
 
-  // Loading state
-  if (hasAccess === null) {
-    return (
-      <GameLayout backTo={`/games/learn-math/${groupId}`}>
-        <div className="flex items-center justify-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-4 border-orange-500 border-t-transparent" />
-        </div>
-      </GameLayout>
-    );
-  }
-
   // No access - will redirect via paywall
   if (hasAccess === false) return null;
 
@@ -156,25 +144,19 @@ export default function LessonPage() {
     }
   }
 
-  if (!LessonContent) {
-    return (
-      <GameLayout backTo={`/games/learn-math/${groupId}`}>
-        <div className="text-center text-slate-500">Lesson not found</div>
-      </GameLayout>
-    );
-  }
-
   return (
-    <GameLayout backTo={`/games/learn-math/${groupId}`} title={LessonTitle}>
-      <main>{LessonContent}</main>
-
-      <CompletionModal
-        isOpen={showModal}
-        onNext={handleNextLesson}
-        currentLessonNum={isGroupDone ? groupId.replace("group", "") : currentLessonNum}
-        nextLessonNum={nextLessonNum ?? undefined}
-        isGroupComplete={isGroupDone}
-      />
-    </GameLayout>
+    <GameWrapGame
+      LessonContent={LessonContent}
+      LessonTitle={LessonTitle}
+      groupId={groupId}
+      gameSlug="learn-math"
+      showModal={showModal}
+      handleNextLesson={handleNextLesson}
+      currentLessonNum={currentLessonNum}
+      nextLessonNum={nextLessonNum}
+      isGroupDone={isGroupDone}
+      isLoaded={hasAccess !== null}
+      isCheckingAccess={hasAccess === null}
+    />
   );
 }

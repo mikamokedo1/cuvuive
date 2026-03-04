@@ -2,17 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { GameLayout } from "@/components/layout/GameLayout";
 import { useProgress } from "@/context/ProgressContext";
 import { useAccess } from "@/context/AccessContext";
-import { CompletionModal } from "@/components/games/CompletionModal";
 import { GROUPS, getItemsForGroup } from "@/features/games/learn-weather/constants";
 import { WeatherLearnLesson } from "@/features/games/learn-weather/WeatherLearnLesson";
 import { WeatherSpeakingLesson } from "@/features/games/learn-weather/WeatherSpeakingLesson";
 import { WeatherQuizLesson } from "@/features/games/learn-weather/WeatherQuizLesson";
 import { WeatherMemoryLesson } from "@/features/games/learn-weather/WeatherMemoryLesson";
 import { SeasonClothingLesson } from "@/features/games/learn-weather/SeasonClothingLesson";
-import { CheckingPermission } from "@/components/common/CheckingPermission";
+import { GameWrapGame } from "@/components/layout/GameWrapGame";
 
 export default function WeatherLessonPage() {
   const params = useParams();
@@ -111,10 +109,6 @@ export default function WeatherLessonPage() {
     }
   };
 
-  if (!isLoaded || isCheckingAccess) {
-    return <CheckingPermission path={`/games/learn-weather/${groupId}`} />;
-  }
-
   const items = getItemsForGroup(groupId);
 
   const renderLesson = () => {
@@ -131,23 +125,25 @@ export default function WeatherLessonPage() {
         if (groupId === "group3") {
           return <SeasonClothingLesson seasons={items} onComplete={handleComplete} />;
         }
-        return <div>Lesson not found</div>;
+        return null;
       default:
-        return <div>Lesson not found</div>;
+        return null;
     }
   };
 
   return (
-    <GameLayout backTo={`/games/learn-weather/${groupId}`} title={group.title}>
-      <main>{renderLesson()}</main>
-
-      <CompletionModal
-        isOpen={showModal}
-        onNext={handleNextLesson}
-        currentLessonNum={isGroupDone ? groupId.replace("group", "") : currentLessonNum}
-        nextLessonNum={nextLessonNum ?? undefined}
-        isGroupComplete={isGroupDone}
-      />
-    </GameLayout>
+    <GameWrapGame
+      LessonContent={<main>{renderLesson()}</main>}
+      LessonTitle={group.title}
+      groupId={groupId}
+      gameSlug="learn-weather"
+      showModal={showModal}
+      handleNextLesson={handleNextLesson}
+      currentLessonNum={currentLessonNum}
+      nextLessonNum={nextLessonNum}
+      isGroupDone={isGroupDone}
+      isLoaded={isLoaded}
+      isCheckingAccess={isCheckingAccess}
+    />
   );
 }

@@ -2,10 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { GameLayout } from "@/components/layout/GameLayout";
 import { useProgress } from "@/context/ProgressContext";
 import { useAccess } from "@/context/AccessContext";
-import { CompletionModal } from "@/components/games/CompletionModal";
 import {
   GROUPS,
   getEmotionsForGroup,
@@ -16,7 +14,7 @@ import { EmotionLearnLesson } from "@/features/games/learn-emotion/EmotionLearnL
 import { EmotionSpeakingLesson } from "@/features/games/learn-emotion/EmotionSpeakingLesson";
 import { EmotionRightWrongLesson } from "@/features/games/learn-emotion/EmotionRightWrongLesson";
 import { EmotionScenarioLesson } from "@/features/games/learn-emotion/EmotionScenarioLesson";
-import { CheckingPermission } from "@/components/common/CheckingPermission";
+import { GameWrapGame } from "@/components/layout/GameWrapGame";
 
 export default function LessonPage() {
   const params = useParams();
@@ -109,10 +107,6 @@ export default function LessonPage() {
     }
   };
 
-  if (!isLoaded || isCheckingAccess) {
-    return <CheckingPermission path={`/games/learn-emotion/${groupId}`} />;
-  }
-
   const items = getEmotionsForGroup(groupId);
   const scenarios = getScenariosForGroup(groupId);
   const scenarioMatches = getScenarioMatchForGroup(groupId);
@@ -128,21 +122,23 @@ export default function LessonPage() {
       case "lesson4":
         return <EmotionScenarioLesson activities={scenarioMatches} onComplete={handleComplete} />;
       default:
-        return <div>Lesson not found</div>;
+        return null;
     }
   };
 
   return (
-    <GameLayout backTo={`/games/learn-emotion/${groupId}`} title={group.title}>
-      <main>{renderLesson()}</main>
-
-      <CompletionModal
-        isOpen={showModal}
-        onNext={handleNextLesson}
-        currentLessonNum={isGroupDone ? groupId.replace("group", "") : currentLessonNum}
-        nextLessonNum={nextLessonNum ?? undefined}
-        isGroupComplete={isGroupDone}
-      />
-    </GameLayout>
+    <GameWrapGame
+      LessonContent={<main>{renderLesson()}</main>}
+      LessonTitle={group.title}
+      groupId={groupId}
+      gameSlug="learn-emotion"
+      showModal={showModal}
+      handleNextLesson={handleNextLesson}
+      currentLessonNum={currentLessonNum}
+      nextLessonNum={nextLessonNum}
+      isGroupDone={isGroupDone}
+      isLoaded={isLoaded}
+      isCheckingAccess={isCheckingAccess}
+    />
   );
 }

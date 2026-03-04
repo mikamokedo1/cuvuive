@@ -2,15 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { GameLayout } from "@/components/layout/GameLayout";
 import { useProgress } from "@/context/ProgressContext";
 import { useAccess } from "@/context/AccessContext";
-import { CompletionModal } from "@/components/games/CompletionModal";
 import { GROUPS, getFlowersForGroup } from "@/features/games/learn-flower/constants";
 import { FlowerLearnLesson } from "@/features/games/learn-flower/FlowerLearnLesson";
 import { FlowerQuizLesson } from "@/features/games/learn-flower/FlowerQuizLesson";
 import { FlowerMemoryLesson } from "@/features/games/learn-flower/FlowerMemoryLesson";
-import { CheckingPermission } from "@/components/common/CheckingPermission";
+import { GameWrapGame } from "@/components/layout/GameWrapGame";
 
 export default function LessonPage() {
   const params = useParams();
@@ -103,10 +101,6 @@ export default function LessonPage() {
     }
   };
 
-  if (!isLoaded || isCheckingAccess) {
-    return <CheckingPermission path={`/games/learn-flower/${groupId}`} />;
-  }
-
   const flowers = getFlowersForGroup(groupId);
 
   const renderLesson = () => {
@@ -118,21 +112,23 @@ export default function LessonPage() {
       case "lesson3":
         return <FlowerMemoryLesson flowers={flowers} onComplete={handleComplete} />;
       default:
-        return <div>Lesson not found</div>;
+        return null;
     }
   };
 
   return (
-    <GameLayout backTo={`/games/learn-flower/${groupId}`} title={group.title}>
-      <main>{renderLesson()}</main>
-
-      <CompletionModal
-        isOpen={showModal}
-        onNext={handleNextLesson}
-        currentLessonNum={isGroupDone ? groupId.replace("group", "") : currentLessonNum}
-        nextLessonNum={nextLessonNum ?? undefined}
-        isGroupComplete={isGroupDone}
-      />
-    </GameLayout>
+    <GameWrapGame
+      LessonContent={<main>{renderLesson()}</main>}
+      LessonTitle={group.title}
+      groupId={groupId}
+      gameSlug="learn-flower"
+      showModal={showModal}
+      handleNextLesson={handleNextLesson}
+      currentLessonNum={currentLessonNum}
+      nextLessonNum={nextLessonNum}
+      isGroupDone={isGroupDone}
+      isLoaded={isLoaded}
+      isCheckingAccess={isCheckingAccess}
+    />
   );
 }

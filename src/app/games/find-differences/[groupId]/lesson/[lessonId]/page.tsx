@@ -2,14 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { GameLayout } from "@/components/layout/GameLayout";
 import { useProgress } from "@/context/ProgressContext";
 import { useAccess } from "@/context/AccessContext";
-import { CompletionModal } from "@/components/games/CompletionModal";
-import { CheckingPermission } from "@/components/common/CheckingPermission";
 import { FIND_DIFFERENCES_DATA } from "@/features/games/find-differences/constans";
 import { DifferenceBoard } from "@/features/games/find-differences/DifferenceBoard";
 import { playSound } from "@/libs/utils/playSound";
+import { GameWrapGame } from "@/components/layout/GameWrapGame";
 
 export default function FDLessonPage() {
   const params = useParams();
@@ -103,30 +101,32 @@ export default function FDLessonPage() {
     }
   };
 
-  if (!isLoaded || isCheckingAccess) {
-    return <CheckingPermission path={`/games/find-differences/${groupId}`} />;
-  }
+  const LessonContent = (
+    <main>
+      <DifferenceBoard
+        originalImage={lesson.originalImage}
+        modifiedImage={lesson.modifiedImage}
+        differences={lesson.differences}
+        onFoundDifference={() => playSound("/sounds/correct.mp3")}
+        onWrongClick={() => playSound("/sounds/wrong.mp3")}
+        onAllFound={handleAllFound}
+      />
+    </main>
+  );
 
   return (
-    <GameLayout backTo={`/games/find-differences/${groupId}`} title={lesson.title}>
-      <main>
-        <DifferenceBoard
-          originalImage={lesson.originalImage}
-          modifiedImage={lesson.modifiedImage}
-          differences={lesson.differences}
-          onFoundDifference={() => playSound("/sounds/correct.mp3")}
-          onWrongClick={() => playSound("/sounds/wrong.mp3")}
-          onAllFound={handleAllFound}
-        />
-      </main>
-
-      <CompletionModal
-        isOpen={showModal}
-        onNext={handleNextLesson}
-        currentLessonNum={isGroupDone ? groupId.replace("group", "") : currentLessonNum}
-        nextLessonNum={nextLessonNum ?? undefined}
-        isGroupComplete={isGroupDone}
-      />
-    </GameLayout>
+    <GameWrapGame
+      LessonContent={LessonContent}
+      LessonTitle={lesson.title}
+      groupId={groupId}
+      gameSlug="find-differences"
+      showModal={showModal}
+      handleNextLesson={handleNextLesson}
+      currentLessonNum={currentLessonNum}
+      nextLessonNum={nextLessonNum}
+      isGroupDone={isGroupDone}
+      isLoaded={isLoaded}
+      isCheckingAccess={isCheckingAccess}
+    />
   );
 }

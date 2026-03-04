@@ -2,15 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { GameLayout } from "@/components/layout/GameLayout";
 import { useProgress } from "@/context/ProgressContext";
 import { useAccess } from "@/context/AccessContext";
-import { CompletionModal } from "@/components/games/CompletionModal";
 import { GROUPS } from "@/features/games/find-pattern/constants";
 import { PatternLearnLesson } from "@/features/games/find-pattern/PatternLearnLesson";
 import { PatternQuizLesson } from "@/features/games/find-pattern/PatternQuizLesson";
 import { PatternFillLesson } from "@/features/games/find-pattern/PatternFillLesson";
-import { CheckingPermission } from "@/components/common/CheckingPermission";
+import { GameWrapGame } from "@/components/layout/GameWrapGame";
 
 export default function LessonPage() {
   const params = useParams();
@@ -103,10 +101,6 @@ export default function LessonPage() {
     }
   };
 
-  if (!isLoaded || isCheckingAccess) {
-    return <CheckingPermission path={`/games/find-pattern/${groupId}`} />;
-  }
-
   const renderLesson = () => {
     switch (lessonId) {
       case "lesson1":
@@ -116,21 +110,23 @@ export default function LessonPage() {
       case "lesson3":
         return <PatternFillLesson groupId={groupId} onComplete={handleComplete} />;
       default:
-        return <div>Lesson not found</div>;
+        return null;
     }
   };
 
   return (
-    <GameLayout backTo={`/games/find-pattern/${groupId}`} title={group.title}>
-      <main>{renderLesson()}</main>
-
-      <CompletionModal
-        isOpen={showModal}
-        onNext={handleNextLesson}
-        currentLessonNum={isGroupDone ? groupId.replace("group", "") : currentLessonNum}
-        nextLessonNum={nextLessonNum ?? undefined}
-        isGroupComplete={isGroupDone}
-      />
-    </GameLayout>
+    <GameWrapGame
+      LessonContent={<main>{renderLesson()}</main>}
+      LessonTitle={group.title}
+      groupId={groupId}
+      gameSlug="find-pattern"
+      showModal={showModal}
+      handleNextLesson={handleNextLesson}
+      currentLessonNum={currentLessonNum}
+      nextLessonNum={nextLessonNum}
+      isGroupDone={isGroupDone}
+      isLoaded={isLoaded}
+      isCheckingAccess={isCheckingAccess}
+    />
   );
 }

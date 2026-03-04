@@ -2,10 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { GameLayout } from "@/components/layout/GameLayout";
 import { useProgress } from "@/context/ProgressContext";
 import { useAccess } from "@/context/AccessContext";
-import { CompletionModal } from "@/components/games/CompletionModal";
 import {
   GROUPS,
   getHygieneForGroup,
@@ -16,7 +14,7 @@ import { HygieneLearnLesson } from "@/features/games/learn-hygiene/HygieneLearnL
 import { HygieneSpeakingLesson } from "@/features/games/learn-hygiene/HygieneSpeakingLesson";
 import { HygieneRightWrongLesson } from "@/features/games/learn-hygiene/HygieneRightWrongLesson";
 import { HygieneSequenceLesson } from "@/features/games/learn-hygiene/HygieneSequenceLesson";
-import { CheckingPermission } from "@/components/common/CheckingPermission";
+import { GameWrapGame } from "@/components/layout/GameWrapGame";
 
 export default function LessonPage() {
   const params = useParams();
@@ -109,10 +107,6 @@ export default function LessonPage() {
     }
   };
 
-  if (!isLoaded || isCheckingAccess) {
-    return <CheckingPermission path={`/games/learn-hygiene/${groupId}`} />;
-  }
-
   const items = getHygieneForGroup(groupId);
   const scenarios = getScenariosForGroup(groupId);
   const sequences = getSequencesForGroup(groupId);
@@ -128,21 +122,23 @@ export default function LessonPage() {
       case "lesson4":
         return <HygieneSequenceLesson activities={sequences} onComplete={handleComplete} />;
       default:
-        return <div>Lesson not found</div>;
+        return null;
     }
   };
 
   return (
-    <GameLayout backTo={`/games/learn-hygiene/${groupId}`} title={group.title}>
-      <main>{renderLesson()}</main>
-
-      <CompletionModal
-        isOpen={showModal}
-        onNext={handleNextLesson}
-        currentLessonNum={isGroupDone ? groupId.replace("group", "") : currentLessonNum}
-        nextLessonNum={nextLessonNum ?? undefined}
-        isGroupComplete={isGroupDone}
-      />
-    </GameLayout>
+    <GameWrapGame
+      LessonContent={<main>{renderLesson()}</main>}
+      LessonTitle={group.title}
+      groupId={groupId}
+      gameSlug="learn-hygiene"
+      showModal={showModal}
+      handleNextLesson={handleNextLesson}
+      currentLessonNum={currentLessonNum}
+      nextLessonNum={nextLessonNum}
+      isGroupDone={isGroupDone}
+      isLoaded={isLoaded}
+      isCheckingAccess={isCheckingAccess}
+    />
   );
 }

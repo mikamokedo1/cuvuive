@@ -2,17 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { GameLayout } from "@/components/layout/GameLayout";
 import { useProgress } from "@/context/ProgressContext";
 import { useAccess } from "@/context/AccessContext";
-import { CompletionModal } from "@/components/games/CompletionModal";
 import { GROUPS, getLettersForGroup } from "@/features/games/learn-alphabet/constants";
 import { AlphabetLearnLesson } from "@/features/games/learn-alphabet/AlphabetLearnLesson";
 import { AlphabetQuizLesson } from "@/features/games/learn-alphabet/AlphabetQuizLesson";
 import { AlphabetMemoryLesson } from "@/features/games/learn-alphabet/AlphabetMemoryLesson";
 import { AlphabetSpeakingLesson } from "@/features/games/learn-alphabet/AlphabetSpeakingLesson";
 import { AlphabetWritingLesson } from "@/features/games/learn-alphabet/AlphabetWritingLesson";
-import { CheckingPermission } from "@/components/common/CheckingPermission";
+import { GameWrapGame } from "@/components/layout/GameWrapGame";
 
 export default function LessonPage() {
   const params = useParams();
@@ -105,10 +103,6 @@ export default function LessonPage() {
     }
   };
 
-  if (!isLoaded || isCheckingAccess) {
-    return <CheckingPermission path={`/games/learn-alphabet/${groupId}`} />;
-  }
-
   const letters = getLettersForGroup(groupId);
 
   // Check if this lesson was previously completed (for showing LetterSelector)
@@ -129,21 +123,23 @@ export default function LessonPage() {
       case "lesson5":
         return <AlphabetMemoryLesson letters={letters} onComplete={handleComplete} />;
       default:
-        return <div>Lesson not found</div>;
+        return null;
     }
   };
 
   return (
-    <GameLayout backTo={`/games/learn-alphabet/${groupId}`} title={group.title}>
-      <main>{renderLesson()}</main>
-
-      <CompletionModal
-        isOpen={showModal}
-        onNext={handleNextLesson}
-        currentLessonNum={isGroupDone ? groupId.replace("group", "") : currentLessonNum}
-        nextLessonNum={nextLessonNum ?? undefined}
-        isGroupComplete={isGroupDone}
-      />
-    </GameLayout>
+    <GameWrapGame
+      LessonContent={<main>{renderLesson()}</main>}
+      LessonTitle={group.title}
+      groupId={groupId}
+      gameSlug="learn-alphabet"
+      showModal={showModal}
+      handleNextLesson={handleNextLesson}
+      currentLessonNum={currentLessonNum}
+      nextLessonNum={nextLessonNum}
+      isGroupDone={isGroupDone}
+      isLoaded={isLoaded}
+      isCheckingAccess={isCheckingAccess}
+    />
   );
 }

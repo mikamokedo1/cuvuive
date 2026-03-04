@@ -7,6 +7,7 @@ interface GameWrapGameProps {
   LessonContent: React.ReactNode;
   LessonTitle: string;
   groupId: string;
+  gameSlug: string;
   showModal: boolean;
   handleNextLesson: () => void;
   currentLessonNum: number | string;
@@ -20,28 +21,29 @@ export const GameWrapGame = ({
   LessonContent,
   LessonTitle,
   groupId,
+  gameSlug,
   showModal,
   handleNextLesson,
   currentLessonNum,
   nextLessonNum,
   isGroupDone,
-  isLoaded,
+  isLoaded = true,
   isCheckingAccess,
 }: GameWrapGameProps) => {
   if (!isLoaded || isCheckingAccess) {
-    return <CheckingPermission path={`/games/learn-flag/${groupId}`} />;
+    return <CheckingPermission path={`/games/${gameSlug}/${groupId}`} />;
   }
 
   if (!LessonContent) {
     return (
-      <GameLayout backTo={`/games/compare-quantity/${groupId}`}>
+      <GameLayout backTo={`/games/${gameSlug}/${groupId}`}>
         <div className="text-center text-slate-500">Lesson not found</div>
       </GameLayout>
     );
   }
 
   return (
-    <GameLayout backTo={`/games/compare-quantity/${groupId}`} title={LessonTitle}>
+    <GameLayout backTo={`/games/${gameSlug}/${groupId}`} title={LessonTitle}>
       {LessonContent}
       <CompletionModal
         isOpen={showModal}

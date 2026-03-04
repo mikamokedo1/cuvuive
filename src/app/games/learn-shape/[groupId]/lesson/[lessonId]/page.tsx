@@ -2,16 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { GameLayout } from "@/components/layout/GameLayout";
 import { useProgress } from "@/context/ProgressContext";
 import { useAccess } from "@/context/AccessContext";
-import { CompletionModal } from "@/components/games/CompletionModal";
 import { GROUPS, SHAPES } from "@/features/games/learn-shape/constants";
 import { ShapeLearnLesson } from "@/features/games/learn-shape/ShapeLearnLesson";
 import { ShapeQuizLesson } from "@/features/games/learn-shape/ShapeQuizLesson";
 import { ShapeMatchLesson } from "@/features/games/learn-shape/ShapeMatchLesson";
 import { ShapePaintLesson } from "@/features/games/learn-shape/ShapePaintLesson";
-import { CheckingPermission } from "@/components/common/CheckingPermission";
+import { GameWrapGame } from "@/components/layout/GameWrapGame";
 
 export default function LessonPage() {
   const params = useParams();
@@ -108,69 +106,55 @@ export default function LessonPage() {
     }
   };
 
-  if (!isLoaded || isCheckingAccess) {
-    return <CheckingPermission path={`/games/learn-shape/${groupId}`} />;
+  const groupShapes = SHAPES.filter((s) => group.shapes.includes(s.id));
+  const requireWins = groupId === "group3" ? 10 : 5;
+
+  let LessonContent = null;
+  let displayTitle = "";
+
+  if (lessonId === "lesson1") {
+    displayTitle = "Học hình dạng";
+    LessonContent = (
+      <main>
+        <ShapeLearnLesson shapes={groupShapes} onComplete={handleComplete} />
+      </main>
+    );
+  } else if (lessonId === "lesson2") {
+    displayTitle = "Tìm hình giống";
+    LessonContent = (
+      <main>
+        <ShapeQuizLesson shapes={groupShapes} onComplete={handleComplete} requiredWins={requireWins} />
+      </main>
+    );
+  } else if (lessonId === "lesson3") {
+    displayTitle = "Vật gì hình gì?";
+    LessonContent = (
+      <main>
+        <ShapeMatchLesson shapes={groupShapes} onComplete={handleComplete} requiredWins={requireWins} />
+      </main>
+    );
+  } else if (lessonId === "lesson4") {
+    displayTitle = "Vẽ hình";
+    LessonContent = (
+      <main>
+        <ShapePaintLesson shapes={groupShapes} onComplete={handleComplete} />
+      </main>
+    );
   }
 
   return (
-    <LessonPageContent
+    <GameWrapGame
+      LessonContent={LessonContent}
+      LessonTitle={displayTitle}
       groupId={groupId}
-      lessonId={lessonId}
-      group={group}
-      onComplete={handleComplete}
+      gameSlug="learn-shape"
       showModal={showModal}
       handleNextLesson={handleNextLesson}
       currentLessonNum={currentLessonNum}
       nextLessonNum={nextLessonNum}
       isGroupDone={isGroupDone}
+      isLoaded={isLoaded}
+      isCheckingAccess={isCheckingAccess}
     />
-  );
-}
-
-function LessonPageContent({
-  groupId,
-  lessonId,
-  group,
-  onComplete,
-  showModal,
-  handleNextLesson,
-  currentLessonNum,
-  nextLessonNum,
-  isGroupDone,
-}: any) {
-  const groupShapes = SHAPES.filter((s) => group.shapes.includes(s.id));
-  const requireWins = groupId === "group3" ? 10 : 5;
-
-  let Content = null;
-  let displayTitle = "";
-
-  if (lessonId === "lesson1") {
-    displayTitle = "Học hình dạng";
-    Content = <ShapeLearnLesson shapes={groupShapes} onComplete={onComplete} />;
-  } else if (lessonId === "lesson2") {
-    displayTitle = "Tìm hình giống";
-    Content = <ShapeQuizLesson shapes={groupShapes} onComplete={onComplete} requiredWins={requireWins} />;
-  } else if (lessonId === "lesson3") {
-    displayTitle = "Vật gì hình gì?";
-    Content = <ShapeMatchLesson shapes={groupShapes} onComplete={onComplete} requiredWins={requireWins} />;
-  } else if (lessonId === "lesson4") {
-    displayTitle = "Vẽ hình";
-    Content = <ShapePaintLesson shapes={groupShapes} onComplete={onComplete} />;
-  } else {
-    Content = <div>Bài học không hợp lệ</div>;
-  }
-
-  return (
-    <GameLayout title={displayTitle} backTo={`/games/learn-shape/${groupId}`}>
-      <main>{Content}</main>
-
-      <CompletionModal
-        isOpen={showModal}
-        onNext={handleNextLesson}
-        currentLessonNum={isGroupDone ? groupId.replace("group", "") : currentLessonNum}
-        nextLessonNum={nextLessonNum ?? undefined}
-        isGroupComplete={isGroupDone}
-      />
-    </GameLayout>
   );
 }

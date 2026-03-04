@@ -2,16 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { GameLayout } from "@/components/layout/GameLayout";
 import { useProgress } from "@/context/ProgressContext";
 import { useAccess } from "@/context/AccessContext";
-import { CompletionModal } from "@/components/games/CompletionModal";
 import { GROUPS, getVehiclesForGroup, getAllVehicles } from "@/features/games/learn-vehicle/constants";
 import { VehicleLearnLesson } from "@/features/games/learn-vehicle/VehicleLearnLesson";
 import { VehicleQuizLesson } from "@/features/games/learn-vehicle/VehicleQuizLesson";
 import { VehicleMemoryLesson } from "@/features/games/learn-vehicle/VehicleMemoryLesson";
 import { VehicleSortLesson } from "@/features/games/learn-vehicle/VehicleSortLesson";
-import { CheckingPermission } from "@/components/common/CheckingPermission";
+import { GameWrapGame } from "@/components/layout/GameWrapGame";
 
 export default function LessonPage() {
   const params = useParams();
@@ -108,10 +106,6 @@ export default function LessonPage() {
     }
   };
 
-  if (!isLoaded || isCheckingAccess) {
-    return <CheckingPermission path={`/games/learn-vehicle/${groupId}`} />;
-  }
-
   // Get vehicles: For Group 4, use all vehicles. For others, use group-specific vehicles.
   const vehicles = isGroup4 ? getAllVehicles() : getVehiclesForGroup(groupId);
 
@@ -126,7 +120,7 @@ export default function LessonPage() {
         case "lesson3":
           return <VehicleSortLesson vehicles={vehicles} onComplete={handleComplete} />;
         default:
-          return <div>Lesson not found</div>;
+          return null;
       }
     } else {
       // Groups 1-3: Learn, Quiz, Memory (using group-specific vehicles)
@@ -138,22 +132,24 @@ export default function LessonPage() {
         case "lesson3":
           return <VehicleMemoryLesson vehicles={vehicles} onComplete={handleComplete} />;
         default:
-          return <div>Lesson not found</div>;
+          return null;
       }
     }
   };
 
   return (
-    <GameLayout backTo={`/games/learn-vehicle/${groupId}`} title={group.title}>
-      <main>{renderLesson()}</main>
-
-      <CompletionModal
-        isOpen={showModal}
-        onNext={handleNextLesson}
-        currentLessonNum={isGroupDone ? groupId.replace("group", "") : currentLessonNum}
-        nextLessonNum={nextLessonNum ?? undefined}
-        isGroupComplete={isGroupDone}
-      />
-    </GameLayout>
+    <GameWrapGame
+      LessonContent={<main>{renderLesson()}</main>}
+      LessonTitle={group.title}
+      groupId={groupId}
+      gameSlug="learn-vehicle"
+      showModal={showModal}
+      handleNextLesson={handleNextLesson}
+      currentLessonNum={currentLessonNum}
+      nextLessonNum={nextLessonNum}
+      isGroupDone={isGroupDone}
+      isLoaded={isLoaded}
+      isCheckingAccess={isCheckingAccess}
+    />
   );
 }
