@@ -285,26 +285,39 @@ export function pickRandomPatterns(groupId: string, count: number, excludeIds: s
 
 /**
  * Generate wrong options for a "what comes next" quiz.
- * Given the correct next item, return distractor items from the same group.
+ * - Group 1 (color patterns): same shape, different color
+ * - Group 2 (shape patterns): same color, different shape
  */
 export function generateDistractors(correctItem: PatternItem, groupId: string, count: number = 2): PatternItem[] {
-  const patterns = getPatternsForGroup(groupId);
-  const allItems = patterns.flatMap((p) => p.unit);
-
-  // Get unique items that are different from correct
-  const uniqueItems: PatternItem[] = [];
   const seen = new Set<string>();
   seen.add(`${correctItem.shape}-${correctItem.color.code}`);
+  const distractors: PatternItem[] = [];
 
-  for (const item of allItems) {
-    const key = `${item.shape}-${item.color.code}`;
-    if (!seen.has(key)) {
-      seen.add(key);
-      uniqueItems.push(item);
+  if (groupId === "group1") {
+    // Same shape, different colors
+    const availableColors = PATTERN_COLORS.filter((c) => c.code !== correctItem.color.code);
+    const shuffledColors = [...availableColors].sort(() => Math.random() - 0.5);
+    for (const color of shuffledColors) {
+      if (distractors.length >= count) break;
+      const key = `${correctItem.shape}-${color.code}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        distractors.push({ shape: correctItem.shape, color });
+      }
+    }
+  } else {
+    // Same color, different shapes
+    const availableShapes = PATTERN_SHAPES.filter((s) => s !== correctItem.shape);
+    const shuffledShapes = [...availableShapes].sort(() => Math.random() - 0.5);
+    for (const shape of shuffledShapes) {
+      if (distractors.length >= count) break;
+      const key = `${shape}-${correctItem.color.code}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        distractors.push({ shape, color: correctItem.color });
+      }
     }
   }
 
-  // Shuffle and take count
-  const shuffled = [...uniqueItems].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, count);
+  return distractors;
 }
