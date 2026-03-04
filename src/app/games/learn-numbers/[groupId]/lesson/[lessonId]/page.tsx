@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation";
-import { useProgress } from "@/context/ProgressContext";
-import { useAccess } from "@/context/AccessContext";
+import { useParams } from "next/navigation";
+import { useGameLesson } from "@/hooks/useGameLesson";
+import { GameWrapGame } from "@/components/layout/GameWrapGame";
+
 import { LearnLesson } from "@/features/games/learn-game/LearnLesson";
 import { QuizLesson } from "@/features/games/learn-game/QuizLesson";
 import { CountingLesson } from "@/features/games/learn-game/CountingLesson";
@@ -12,193 +12,99 @@ import { LearnLesson2 } from "@/features/games/learn-game/LearnLesson2";
 import { QuizLesson2 } from "@/features/games/learn-game/QuizLesson2";
 import { CountingLesson2 } from "@/features/games/learn-game/CountingLesson2";
 import { WritingLesson2 } from "@/features/games/learn-game/WritingLesson2";
-import { GameWrapGame } from "@/components/layout/GameWrapGame";
 
-// Numbers for the new group4 (0 & 10-20)
+// Numbers for group4 (0 & 10-20)
 const GROUP4_NUMBERS = [0, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 // All numbers for practice (group5)
 const GROUP5_NUMBERS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 
+const GROUPS = [
+  { id: "group1", title: "Số 1-3" },
+  { id: "group2", title: "Số 4-6" },
+  { id: "group3", title: "Số 7-9" },
+  { id: "group4", title: "Số 10-20" },
+  { id: "group5", title: "Luyện tập" },
+];
+
+const groupRanges: Record<string, [number, number]> = {
+  group1: [1, 3],
+  group2: [4, 6],
+  group3: [7, 9],
+};
+
 export default function LessonPage() {
   const params = useParams();
-  const router = useRouter();
-  const [showModal, setShowModal] = useState(false);
-  const [isCheckingAccess, setIsCheckingAccess] = useState(true);
-
-  const { isLoaded, isLessonUnlocked, markLessonComplete } = useProgress();
-  const { checkAccess, showPaywall } = useAccess();
-
-  const [currentLessonNum, setCurrentLessonNum] = useState<number | string>(1);
-  const [nextLessonNum, setNextLessonNum] = useState<number | string | null>(null);
-  const [isGroupDone, setIsGroupDone] = useState(false);
-
-  // Parse IDs
   const groupId = typeof params.groupId === "string" ? params.groupId : "";
-  const lessonId = typeof params.lessonId === "string" ? params.lessonId : "";
-
-  // Determine configuration
-  const groupRanges: Record<string, [number, number]> = {
-    group1: [1, 3],
-    group2: [4, 6],
-    group3: [7, 9],
-  };
-
-  const range = groupRanges[groupId];
-
-  // Groups 1-3 use range, groups 4-5 use the new number-array-based components
-  const isNewGroup = groupId === "group4" || groupId === "group5";
-
-  // Final check on mount/params change
-  useEffect(() => {
-    const runAccessCheck = async () => {
-      // Wait for progress to load from Supabase/Local
-      if (!isLoaded) return;
-
-      // 1. Progress Check (must complete previous lesson)
-      if (!isLessonUnlocked(groupId, lessonId)) {
-        router.push(`/games/learn-numbers/${groupId}`);
-        return;
-      }
-
-      // 2. Freemium Check (must be free or premium)
-      const access = await checkAccess("learn-numbers", groupId, lessonId);
-      if (!access.userHasAccess) {
-        if (access.reason === "not_logged_in") {
-          showPaywall("login", `/games/learn-numbers/${groupId}/lesson/${lessonId}`);
-        } else if (access.reason === "premium_required") {
-          showPaywall("premium", `/games/learn-numbers/${groupId}/lesson/${lessonId}`);
-        }
-        router.push(`/games/learn-numbers/${groupId}`);
-        return;
-      }
-
-      setIsCheckingAccess(false);
-    };
-
-    runAccessCheck();
-  }, [isLoaded, groupId, lessonId, isLessonUnlocked, checkAccess, showPaywall, router]);
-
-  if ((!range && !isNewGroup) || !groupId || !lessonId) {
-    return <div>Bài học không tồn tại</div>;
-  }
 
   // Group5 has 2 lessons, others have 4
   const LESSON_ORDER = groupId === "group5" ? ["lesson1", "lesson2"] : ["lesson1", "lesson2", "lesson3", "lesson4"];
-  const GROUPS_ORDER = ["group1", "group2", "group3", "group4", "group5"];
 
-  const handleComplete = () => {
-    markLessonComplete(groupId, lessonId, "learn-numbers");
+  const game = useGameLesson({ gameSlug: "learn-numbers", lessonOrder: LESSON_ORDER, groups: GROUPS });
 
-    // Determine next step
-    const currentIdx = LESSON_ORDER.indexOf(lessonId);
-    // Display numbers: lesson1 -> 1, lesson2 -> 2, etc.
-    setCurrentLessonNum(currentIdx + 1);
+  const range = groupRanges[game.groupId];
+  const isNewGroup = game.groupId === "group4" || game.groupId === "group5";
 
-    if (currentIdx < LESSON_ORDER.length - 1) {
-      // Has next lesson
-      setNextLessonNum(currentIdx + 2);
-      setIsGroupDone(false);
-    } else {
-      // Last lesson of group
-      setIsGroupDone(true);
-      // Next is next group?
-      const groupIdx = GROUPS_ORDER.indexOf(groupId);
-      if (groupIdx < GROUPS_ORDER.length - 1) {
-        setNextLessonNum(groupIdx + 2); // "Nhóm 2"
-      } else {
-        setNextLessonNum(null); // All done
-      }
-    }
-
-    setShowModal(true);
-  };
-
-  const handleNextLesson = async () => {
-    setShowModal(false);
-    const currentIdx = LESSON_ORDER.indexOf(lessonId);
-
-    if (currentIdx < LESSON_ORDER.length - 1) {
-      const nextLessonId = LESSON_ORDER[currentIdx + 1];
-
-      // Check access before navigating to next lesson
-      const access = await checkAccess("learn-numbers", groupId, nextLessonId);
-
-      if (!access.userHasAccess) {
-        if (access.reason === "not_logged_in") {
-          showPaywall("login", `/games/learn-numbers/${groupId}/lesson/${nextLessonId}`);
-        } else if (access.reason === "premium_required") {
-          showPaywall("premium", `/games/learn-numbers/${groupId}/lesson/${nextLessonId}`);
-        }
-        // Navigate back to group page instead of staying on completed lesson
-        router.push(`/games/learn-numbers/${groupId}`);
-        return;
-      }
-
-      router.push(`/games/learn-numbers/${groupId}/lesson/${nextLessonId}`);
-    } else {
-      // Group complete
-      // Always back to menu
-      router.push(`/games/learn-numbers`);
-    }
-  };
+  if ((!range && !isNewGroup) || !game.groupId || !game.lessonId) {
+    return <div>Bài học không tồn tại</div>;
+  }
 
   let Content = null;
   let title = "";
 
-  if (groupId === "group5") {
+  if (game.groupId === "group5") {
     // Practice group — uses new components with all numbers 0-20
-    switch (lessonId) {
+    switch (game.lessonId) {
       case "lesson1":
         title = "Số nào đúng?";
-        Content = <QuizLesson2 numbers={GROUP5_NUMBERS} onComplete={handleComplete} requiredWins={12} />;
+        Content = <QuizLesson2 numbers={GROUP5_NUMBERS} onComplete={game.handleComplete} requiredWins={12} />;
         break;
       case "lesson2":
         title = "Đếm và chọn";
-        Content = <CountingLesson2 numbers={GROUP5_NUMBERS} onComplete={handleComplete} requiredWins={12} />;
+        Content = <CountingLesson2 numbers={GROUP5_NUMBERS} onComplete={game.handleComplete} requiredWins={12} />;
         break;
       default:
         Content = <div>Unknown Lesson</div>;
     }
-  } else if (groupId === "group4") {
+  } else if (game.groupId === "group4") {
     // New group: 0 & 10-20 — uses new lesson components
-    switch (lessonId) {
+    switch (game.lessonId) {
       case "lesson1":
         title = "Học số 10-20";
-        Content = <LearnLesson2 numbers={GROUP4_NUMBERS} onComplete={handleComplete} />;
+        Content = <LearnLesson2 numbers={GROUP4_NUMBERS} onComplete={game.handleComplete} />;
         break;
       case "lesson2":
         title = "Số nào đúng?";
-        Content = <QuizLesson2 numbers={GROUP4_NUMBERS} onComplete={handleComplete} />;
+        Content = <QuizLesson2 numbers={GROUP4_NUMBERS} onComplete={game.handleComplete} />;
         break;
       case "lesson3":
         title = "Đếm và chọn";
-        Content = <CountingLesson2 numbers={GROUP4_NUMBERS} onComplete={handleComplete} />;
+        Content = <CountingLesson2 numbers={GROUP4_NUMBERS} onComplete={game.handleComplete} />;
         break;
       case "lesson4":
         title = "Tập viết số";
-        Content = <WritingLesson2 numbers={GROUP4_NUMBERS} onComplete={handleComplete} />;
+        Content = <WritingLesson2 numbers={GROUP4_NUMBERS} onComplete={game.handleComplete} />;
         break;
       default:
         Content = <div>Unknown Lesson</div>;
     }
   } else {
     // Regular groups (1-3) — uses original components with range
-    switch (lessonId) {
+    switch (game.lessonId) {
       case "lesson1":
         title = `Học số ${range![0]} - ${range![1]}`;
-        Content = <LearnLesson range={range!} onComplete={handleComplete} />;
+        Content = <LearnLesson range={range!} onComplete={game.handleComplete} />;
         break;
       case "lesson2":
         title = "Số nào đúng?";
-        Content = <QuizLesson range={range!} onComplete={handleComplete} />;
+        Content = <QuizLesson range={range!} onComplete={game.handleComplete} />;
         break;
       case "lesson3":
         title = "Đếm và chọn";
-        Content = <CountingLesson range={range!} onComplete={handleComplete} />;
+        Content = <CountingLesson range={range!} onComplete={game.handleComplete} />;
         break;
       case "lesson4":
         title = "Tập viết số";
-        Content = <WritingLesson range={range!} onComplete={handleComplete} />;
+        Content = <WritingLesson range={range!} onComplete={game.handleComplete} />;
         break;
       default:
         Content = <div>Unknown Lesson</div>;
@@ -209,15 +115,15 @@ export default function LessonPage() {
     <GameWrapGame
       LessonContent={<main>{Content}</main>}
       LessonTitle={title}
-      groupId={groupId}
+      groupId={game.groupId}
       gameSlug="learn-numbers"
-      showModal={showModal}
-      handleNextLesson={handleNextLesson}
-      currentLessonNum={currentLessonNum}
-      nextLessonNum={nextLessonNum}
-      isGroupDone={isGroupDone}
-      isLoaded={isLoaded}
-      isCheckingAccess={isCheckingAccess}
+      showModal={game.showModal}
+      handleNextLesson={game.handleNextLesson}
+      currentLessonNum={game.currentLessonNum}
+      nextLessonNum={game.nextLessonNum}
+      isGroupDone={game.isGroupDone}
+      isLoaded={game.isLoaded}
+      isCheckingAccess={game.isCheckingAccess}
     />
   );
 }

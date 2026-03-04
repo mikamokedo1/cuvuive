@@ -1,9 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
-import { useProgress } from "@/context/ProgressContext";
-import { useAccess } from "@/context/AccessContext";
+import { useGameLesson } from "@/hooks/useGameLesson";
 import { GROUPS, getVehiclesForGroup, getAllVehicles } from "@/features/games/learn-vehicle/constants";
 import { VehicleLearnLesson } from "@/features/games/learn-vehicle/VehicleLearnLesson";
 import { VehicleQuizLesson } from "@/features/games/learn-vehicle/VehicleQuizLesson";
@@ -11,126 +8,40 @@ import { VehicleMemoryLesson } from "@/features/games/learn-vehicle/VehicleMemor
 import { VehicleSortLesson } from "@/features/games/learn-vehicle/VehicleSortLesson";
 import { GameWrapGame } from "@/components/layout/GameWrapGame";
 
+const LESSON_ORDER = ["lesson1", "lesson2", "lesson3"];
+
 export default function LessonPage() {
-  const params = useParams();
-  const router = useRouter();
-  const [showModal, setShowModal] = useState(false);
-  const [isCheckingAccess, setIsCheckingAccess] = useState(true);
+  const game = useGameLesson({ gameSlug: "learn-vehicle", lessonOrder: LESSON_ORDER, groups: GROUPS });
 
-  const { isLoaded, isLessonUnlocked, markLessonComplete } = useProgress();
-  const { checkAccess, showPaywall } = useAccess();
-
-  const [currentLessonNum, setCurrentLessonNum] = useState<number | string>(1);
-  const [nextLessonNum, setNextLessonNum] = useState<number | string | null>(null);
-  const [isGroupDone, setIsGroupDone] = useState(false);
-
-  const groupId = typeof params.groupId === "string" ? params.groupId : "";
-  const lessonId = typeof params.lessonId === "string" ? params.lessonId : "";
-
-  const group = GROUPS.find((g) => g.id === groupId);
-  const isGroup4 = groupId === "group4";
-
-  // All groups have 3 lessons
-  const LESSON_ORDER = ["lesson1", "lesson2", "lesson3"];
-
-  useEffect(() => {
-    const runAccessCheck = async () => {
-      if (!isLoaded) return;
-
-      // 1. Progress Check
-      if (!isLessonUnlocked(groupId, lessonId, "learn-vehicle")) {
-        router.push(`/games/learn-vehicle/${groupId}`);
-        return;
-      }
-
-      // 2. Freemium Check
-      const access = await checkAccess("learn-vehicle", groupId, lessonId);
-      if (!access.userHasAccess) {
-        if (access.reason === "not_logged_in") {
-          showPaywall("login", `/games/learn-vehicle/${groupId}/lesson/${lessonId}`);
-        } else if (access.reason === "premium_required") {
-          showPaywall("premium", `/games/learn-vehicle/${groupId}/lesson/${lessonId}`);
-        }
-        router.push(`/games/learn-vehicle/${groupId}`);
-        return;
-      }
-
-      setIsCheckingAccess(false);
-    };
-
-    runAccessCheck();
-  }, [isLoaded, groupId, lessonId, isLessonUnlocked, checkAccess, showPaywall, router]);
-
-  if (!group || !lessonId) {
+  if (!game.group || !game.lessonId) {
     return <div>Bài học không tồn tại</div>;
   }
 
-  const handleComplete = () => {
-    markLessonComplete(groupId, lessonId, "learn-vehicle");
-
-    const currentIdx = LESSON_ORDER.indexOf(lessonId);
-    setCurrentLessonNum(currentIdx + 1);
-
-    if (currentIdx < LESSON_ORDER.length - 1) {
-      setNextLessonNum(currentIdx + 2);
-      setIsGroupDone(false);
-    } else {
-      setIsGroupDone(true);
-      setNextLessonNum(null);
-    }
-
-    setShowModal(true);
-  };
-
-  const handleNextLesson = async () => {
-    setShowModal(false);
-    const currentIdx = LESSON_ORDER.indexOf(lessonId);
-
-    if (currentIdx < LESSON_ORDER.length - 1) {
-      const nextLessonId = LESSON_ORDER[currentIdx + 1];
-
-      const access = await checkAccess("learn-vehicle", groupId, nextLessonId);
-      if (!access.userHasAccess) {
-        if (access.reason === "not_logged_in") {
-          showPaywall("login", `/games/learn-vehicle/${groupId}/lesson/${nextLessonId}`);
-        } else if (access.reason === "premium_required") {
-          showPaywall("premium", `/games/learn-vehicle/${groupId}/lesson/${nextLessonId}`);
-        }
-        router.push(`/games/learn-vehicle/${groupId}`);
-        return;
-      }
-
-      router.push(`/games/learn-vehicle/${groupId}/lesson/${nextLessonId}`);
-    } else {
-      router.push(`/games/learn-vehicle`);
-    }
-  };
-
-  // Get vehicles: For Group 4, use all vehicles. For others, use group-specific vehicles.
-  const vehicles = isGroup4 ? getAllVehicles() : getVehiclesForGroup(groupId);
+  const isGroup4 = game.groupId === "group4";
+  const vehicles = isGroup4 ? getAllVehicles() : getVehiclesForGroup(game.groupId);
 
   const renderLesson = () => {
     if (isGroup4) {
       // Group 4: Quiz, Memory, Sort (using ALL vehicles)
-      switch (lessonId) {
+      switch (game.lessonId) {
         case "lesson1":
-          return <VehicleQuizLesson vehicles={vehicles} onComplete={handleComplete} />;
+          return <VehicleQuizLesson vehicles={vehicles} onComplete={game.handleComplete} />;
         case "lesson2":
-          return <VehicleMemoryLesson vehicles={vehicles} onComplete={handleComplete} />;
+          return <VehicleMemoryLesson vehicles={vehicles} onComplete={game.handleComplete} />;
         case "lesson3":
-          return <VehicleSortLesson vehicles={vehicles} onComplete={handleComplete} />;
+          return <VehicleSortLesson vehicles={vehicles} onComplete={game.handleComplete} />;
         default:
           return null;
       }
     } else {
       // Groups 1-3: Learn, Quiz, Memory (using group-specific vehicles)
-      switch (lessonId) {
+      switch (game.lessonId) {
         case "lesson1":
-          return <VehicleLearnLesson vehicles={vehicles} onComplete={handleComplete} />;
+          return <VehicleLearnLesson vehicles={vehicles} onComplete={game.handleComplete} />;
         case "lesson2":
-          return <VehicleQuizLesson vehicles={vehicles} onComplete={handleComplete} />;
+          return <VehicleQuizLesson vehicles={vehicles} onComplete={game.handleComplete} />;
         case "lesson3":
-          return <VehicleMemoryLesson vehicles={vehicles} onComplete={handleComplete} />;
+          return <VehicleMemoryLesson vehicles={vehicles} onComplete={game.handleComplete} />;
         default:
           return null;
       }
@@ -140,16 +51,16 @@ export default function LessonPage() {
   return (
     <GameWrapGame
       LessonContent={<main>{renderLesson()}</main>}
-      LessonTitle={group.title}
-      groupId={groupId}
+      LessonTitle={game.group.title}
+      groupId={game.groupId}
       gameSlug="learn-vehicle"
-      showModal={showModal}
-      handleNextLesson={handleNextLesson}
-      currentLessonNum={currentLessonNum}
-      nextLessonNum={nextLessonNum}
-      isGroupDone={isGroupDone}
-      isLoaded={isLoaded}
-      isCheckingAccess={isCheckingAccess}
+      showModal={game.showModal}
+      handleNextLesson={game.handleNextLesson}
+      currentLessonNum={game.currentLessonNum}
+      nextLessonNum={game.nextLessonNum}
+      isGroupDone={game.isGroupDone}
+      isLoaded={game.isLoaded}
+      isCheckingAccess={game.isCheckingAccess}
     />
   );
 }

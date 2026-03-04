@@ -1,9 +1,8 @@
 "use client";
 
-import { useParams, useRouter } from "next/navigation";
-import { useProgress } from "@/context/ProgressContext";
-import { useAccess } from "@/context/AccessContext";
-import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { useGameLesson } from "@/hooks/useGameLesson";
+import { GameWrapGame } from "@/components/layout/GameWrapGame";
 
 // Lesson Components
 import { ExplainMathLesson } from "@/features/games/learn-math/ExplainMathLesson";
@@ -12,134 +11,63 @@ import { NumberMathLesson } from "@/features/games/learn-math/NumberMathLesson";
 import { MixedMathLesson } from "@/features/games/learn-math/MixedMathLesson";
 import { SymbolWritingLesson } from "@/features/games/learn-math/SymbolWritingLesson";
 import { GROUP_CONFIG } from "@/features/games/learn-math/constants";
-import { GameWrapGame } from "@/components/layout/GameWrapGame";
+
+const GROUPS = [
+  { id: "group1", title: "Phép cộng" },
+  { id: "group2", title: "Phép trừ" },
+  { id: "group3", title: "Luyện tập" },
+];
 
 export default function LessonPage() {
   const params = useParams();
-  const router = useRouter();
-  const { markLessonComplete, isLessonUnlocked } = useProgress();
-  const { checkAccess, showPaywall } = useAccess();
-
-  const [showModal, setShowModal] = useState(false);
-  const [hasAccess, setHasAccess] = useState<boolean | null>(null);
-
   const groupId = typeof params.groupId === "string" ? params.groupId : "";
-  const lessonId = typeof params.lessonId === "string" ? params.lessonId : "";
-
   const config = GROUP_CONFIG[groupId];
 
-  // Check access on mount
-  useEffect(() => {
-    const verifyAccess = async () => {
-      // 1. Progress Check (must complete previous lesson)
-      if (!isLessonUnlocked(groupId, lessonId, "learn-math")) {
-        router.push(`/games/learn-math/${groupId}`);
-        return;
-      }
+  // Dynamic lesson order based on config
+  const maxLessons = config?.lessons?.length ?? 4;
+  const LESSON_ORDER = Array.from({ length: maxLessons }, (_, i) => `lesson${i + 1}`);
 
-      const result = await checkAccess("learn-math", groupId, lessonId);
-      if (!result.userHasAccess) {
-        if (result.reason === "not_logged_in") {
-          showPaywall("login", `/games/learn-math/${groupId}/lesson/${lessonId}`);
-        } else {
-          showPaywall("premium", `/games/learn-math/${groupId}/lesson/${lessonId}`);
-        }
-        setHasAccess(false);
-      } else {
-        setHasAccess(true);
-      }
-    };
-    verifyAccess();
-  }, [groupId, lessonId, checkAccess, showPaywall, isLessonUnlocked, router]);
+  const game = useGameLesson({ gameSlug: "learn-math", lessonOrder: LESSON_ORDER, groups: GROUPS });
 
-  if (!config) {
-    return <div>Group not found</div>;
+  if (!config || !game.group || !game.lessonId) {
+    return <div>Bài học không tồn tại</div>;
   }
 
-  // Lesson order definition
-  const maxLessons = config.lessons.length;
-  const LESSON_ORDER = Array.from({ length: maxLessons }, (_, i) => `lesson${i + 1}`);
-  const GROUPS_ORDER = ["group1", "group2", "group3"];
-
-  const [currentLessonNum, setCurrentLessonNum] = useState<number | string>(1);
-  const [nextLessonNum, setNextLessonNum] = useState<number | string | null>(null);
-  const [isGroupDone, setIsGroupDone] = useState(false);
-
-  const handleComplete = () => {
-    markLessonComplete(groupId, lessonId, "learn-math");
-
-    const currentIdx = LESSON_ORDER.indexOf(lessonId);
-    setCurrentLessonNum(currentIdx + 1);
-
-    if (currentIdx < LESSON_ORDER.length - 1) {
-      // Has next lesson
-      setNextLessonNum(currentIdx + 2);
-      setIsGroupDone(false);
-    } else {
-      // Last lesson of group
-      setIsGroupDone(true);
-      const groupIdx = GROUPS_ORDER.indexOf(groupId);
-      if (groupIdx < GROUPS_ORDER.length - 1) {
-        setNextLessonNum(groupIdx + 2); // Show next group number
-      } else {
-        setNextLessonNum(null); // Course complete
-      }
-    }
-    setShowModal(true);
-  };
-
-  const handleNextLesson = async () => {
-    setShowModal(false);
-    const currentIdx = LESSON_ORDER.indexOf(lessonId);
-
-    if (currentIdx < LESSON_ORDER.length - 1) {
-      // Navigate to next lesson
-      const nextLessonId = LESSON_ORDER[currentIdx + 1];
-      router.push(`/games/learn-math/${groupId}/lesson/${nextLessonId}`);
-    } else {
-      // Navigate to next group -> always back to menu
-      router.push(`/games/learn-math`);
-    }
-  };
-
-  // No access - will redirect via paywall
-  if (hasAccess === false) return null;
-
   // Find current lesson title
-  const currentLessonDef = config.lessons.find((l) => l.id === lessonId);
+  const currentLessonDef = config.lessons.find((l) => l.id === game.lessonId);
   const LessonTitle = currentLessonDef ? currentLessonDef.title : "";
 
   // Render the appropriate lesson component
   let LessonContent = null;
 
-  if (groupId === "group3") {
+  if (game.groupId === "group3") {
     // Practice group: mixed operator
-    switch (lessonId) {
+    switch (game.lessonId) {
       case "lesson1":
-        LessonContent = <MixedMathLesson mode="visual" maxSum={config.maxSum} onComplete={handleComplete} />;
+        LessonContent = <MixedMathLesson mode="visual" maxSum={config.maxSum} onComplete={game.handleComplete} />;
         break;
       case "lesson2":
-        LessonContent = <MixedMathLesson mode="number" maxSum={config.maxSum} onComplete={handleComplete} />;
+        LessonContent = <MixedMathLesson mode="number" maxSum={config.maxSum} onComplete={game.handleComplete} />;
         break;
     }
   } else {
     // Addition & Subtraction groups
-    switch (lessonId) {
+    switch (game.lessonId) {
       case "lesson1":
-        LessonContent = <ExplainMathLesson operator={config.operator as any} onComplete={handleComplete} />;
+        LessonContent = <ExplainMathLesson operator={config.operator as any} onComplete={game.handleComplete} />;
         break;
       case "lesson2":
         LessonContent = (
-          <VisualMathLesson operator={config.operator} maxSum={config.maxSum} onComplete={handleComplete} />
+          <VisualMathLesson operator={config.operator} maxSum={config.maxSum} onComplete={game.handleComplete} />
         );
         break;
       case "lesson3":
         LessonContent = (
-          <NumberMathLesson operator={config.operator} maxSum={config.maxSum} onComplete={handleComplete} />
+          <NumberMathLesson operator={config.operator} maxSum={config.maxSum} onComplete={game.handleComplete} />
         );
         break;
       case "lesson4":
-        LessonContent = <SymbolWritingLesson operator={config.operator as any} onComplete={handleComplete} />;
+        LessonContent = <SymbolWritingLesson operator={config.operator as any} onComplete={game.handleComplete} />;
         break;
     }
   }
@@ -148,15 +76,15 @@ export default function LessonPage() {
     <GameWrapGame
       LessonContent={LessonContent}
       LessonTitle={LessonTitle}
-      groupId={groupId}
+      groupId={game.groupId}
       gameSlug="learn-math"
-      showModal={showModal}
-      handleNextLesson={handleNextLesson}
-      currentLessonNum={currentLessonNum}
-      nextLessonNum={nextLessonNum}
-      isGroupDone={isGroupDone}
-      isLoaded={hasAccess !== null}
-      isCheckingAccess={hasAccess === null}
+      showModal={game.showModal}
+      handleNextLesson={game.handleNextLesson}
+      currentLessonNum={game.currentLessonNum}
+      nextLessonNum={game.nextLessonNum}
+      isGroupDone={game.isGroupDone}
+      isLoaded={game.isLoaded}
+      isCheckingAccess={game.isCheckingAccess}
     />
   );
 }
