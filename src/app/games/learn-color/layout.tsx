@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Học Màu Sắc - Cú Vui Vẻ",
+  title: "Học Màu Sắc - Cú Thông Minh",
   description: "Bé học nhận biết màu sắc qua các trò chơi thú vị",
 };
 

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Học Nghề Nghiệp | Cú Vui Vẻ",
+  title: "Học Nghề Nghiệp | Cú Thông Minh",
   description: "Học các nghề nghiệp: cộng đồng, y tế, nghệ thuật",
 };
 

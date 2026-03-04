@@ -41,6 +41,9 @@ const MAP_PATHNAME_TO_SOUND: Record<string, string> = {
 };
 
 export const MAP_PATHNAME_TO_TEXT = {
+  "/": "Chào mừng pé đến với Cú Thông Minh",
+  "/privacy": "Chính sách bảo mật",
+  "/terms": "Điều khoản sử dụng",
   "/games/compare-quantity/group1/lesson/lesson2": "Bên trái nhiều đồ vật hơn bên phải, Pé chọn dấu lớn nhé",
   "/games/compare-quantity/group2/lesson/lesson2": "Bên trái ít đồ vật hơn bên phải, Pé chọn dấu Pé nhé",
   "/games/compare-quantity/group3/lesson/lesson2": "Bên trái và bên phải có số đồ vật bằng nhau, Pé chọn dấu bằng nhé",

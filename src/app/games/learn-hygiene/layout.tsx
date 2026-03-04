@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Học Vệ Sinh Cá Nhân | Cú Vui Vẻ",
+  title: "Học Vệ Sinh Cá Nhân | Cú Thông Minh",
   description: "Bé học các thói quen vệ sinh cá nhân tốt qua hình ảnh và trò chơi",
 };
 

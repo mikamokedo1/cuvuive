@@ -117,7 +117,7 @@ export function SignupForm() {
       {/* Right Side - Signup Form */}
       <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center bg-white relative">
         <div className="text-center mb-6">
-          <h1 className="text-4xl text-purple-600 font-display mb-2 drop-shadow-sm">Đăng Ký</h1>
+          <h1 className="text-4xl text-[#D97706] font-display mb-2 drop-shadow-sm">Đăng Ký</h1>
           <p className="text-gray-500 font-medium">Tạo tài khoản học tập cho bé</p>
         </div>
 
@@ -336,7 +336,7 @@ export function SignupForm() {
           <ActionButton
             type="submit"
             variant="glossy"
-            color="purple"
+            color="orange"
             className="w-full py-4 text-xl uppercase tracking-wider shadow-lg hover:shadow-xl mt-2"
             disabled={loading}
           >
@@ -347,7 +347,7 @@ export function SignupForm() {
         <div className="text-center mt-6">
           <p className="text-gray-500 font-medium">
             Đã có tài khoản?{" "}
-            <Link href="/auth/login" className="text-purple-600 font-bold hover:underline">
+            <Link href="/auth/login" className="text-[#D97706] font-bold hover:underline">
               Đăng nhập ngay
             </Link>
           </p>

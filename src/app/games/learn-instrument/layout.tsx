@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Học Nhạc Cụ | Cú Vui Vẻ",
+  title: "Học Nhạc Cụ | Cú Thông Minh",
   description: "Học các loại nhạc cụ: dây, gõ, hơi",
 };
 
