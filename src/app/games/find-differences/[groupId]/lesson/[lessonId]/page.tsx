@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 import { useGameLesson } from "@/hooks/useGameLesson";
 import { FIND_DIFFERENCES_DATA } from "@/features/games/find-differences/constans";
 import { DifferenceBoard } from "@/features/games/find-differences/DifferenceBoard";
-import { playSound } from "@/libs/utils/playSound";
+import { playCorrectSound, playSound, playWrongSound } from "@/libs/utils/playSound";
 import { GameWrapGame } from "@/components/layout/GameWrapGame";
 
 export default function FDLessonPage() {
@@ -28,7 +28,7 @@ export default function FDLessonPage() {
   }
 
   const handleAllFound = () => {
-    playSound("/sounds/correct.mp3");
+    playCorrectSound();
     game.handleComplete();
   };
 
@@ -38,8 +38,8 @@ export default function FDLessonPage() {
         originalImage={lesson.originalImage}
         modifiedImage={lesson.modifiedImage}
         differences={lesson.differences}
-        onFoundDifference={() => playSound("/sounds/correct.mp3")}
-        onWrongClick={() => playSound("/sounds/wrong.mp3")}
+        onFoundDifference={() => playCorrectSound()}
+        onWrongClick={() => playWrongSound()}
         onAllFound={handleAllFound}
       />
     </main>

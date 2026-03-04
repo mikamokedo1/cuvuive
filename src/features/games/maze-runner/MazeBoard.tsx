@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { getMaze, MazeData, MazeCell } from "./constants";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
-import { playButtonSound, playSound } from "@/libs/utils/playSound";
+import { playButtonSound, playSound, playWrongSound } from "@/libs/utils/playSound";
 import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight, Star } from "lucide-react";
 
 interface MazeBoardProps {
@@ -78,7 +78,7 @@ export function MazeBoard({ groupId, onComplete }: MazeBoardProps) {
   const move = useCallback(
     (dir: Direction) => {
       if (!canMove(dir) || !maze) {
-        playSound("/sounds/wrong.mp3");
+        playWrongSound();
         return;
       }
 

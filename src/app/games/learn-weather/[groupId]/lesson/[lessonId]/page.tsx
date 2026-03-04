@@ -50,7 +50,7 @@ export default function WeatherLessonPage() {
 
   return (
     <GameWrapGame
-      LessonContent={<main>{renderLesson()}</main>}
+      LessonContent={renderLesson()}
       LessonTitle={game.group.title}
       groupId={game.groupId}
       gameSlug="learn-weather"

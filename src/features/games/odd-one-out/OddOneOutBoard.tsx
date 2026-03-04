@@ -6,7 +6,7 @@ import { OddOneOutPuzzle, OddOneOutImagePuzzle, generatePuzzle, PatternItem, Ima
 import { PatternShape } from "@/features/games/find-pattern/PatternShape";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
-import { playButtonSound, playSound } from "@/libs/utils/playSound";
+import { playButtonSound, playSound, playWrongSound } from "@/libs/utils/playSound";
 import { FeedbackType } from "@/types/game";
 
 interface OddOneOutBoardProps {
@@ -88,7 +88,7 @@ export function OddOneOutBoard({ groupId, onComplete }: OddOneOutBoardProps) {
         }
       }, 1500);
     } else {
-      playSound("/sounds/wrong.mp3");
+      playWrongSound();
       speak("Chưa đúng, thử lại nhé!");
       setFeedback("wrong");
       setTimeout(() => setFeedback(null), 1000);

@@ -36,7 +36,7 @@ export default function LessonPage() {
 
   return (
     <GameWrapGame
-      LessonContent={<main>{renderLesson()}</main>}
+      LessonContent={renderLesson()}
       LessonTitle={game.group.title}
       groupId={game.groupId}
       gameSlug="learn-flag"

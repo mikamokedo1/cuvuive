@@ -277,7 +277,7 @@ export const SEQUENCE_ACTIVITIES: SequenceActivity[] = [
   {
     id: "seq_wear_mask",
     title: "Đeo khẩu trang",
-    steps: ["Lấy khẩu trang", "Đeo lên mặt", "Che kín mũi miệng", "Móc dây tai"],
+    steps: ["Lấy khẩu trang", "Đeo lên mặt", "Móc dây tai", "Che kín mũi miệng"],
     stepImages: [SeqWearMask1, SeqWearMask2, SeqWearMask3, SeqWearMask4],
     category: "healthy",
   },
