@@ -6,6 +6,7 @@ import { AlphabetCard } from "./AlphabetCard";
 import { BackLessonButton } from "@/components/games/BackLessonButton";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 import { LetterSelector } from "./LetterSelector";
+import { useSwipe } from "@/hooks/useSwipe";
 
 interface AlphabetLearnLessonProps {
   letters: LetterData[];
@@ -30,11 +31,13 @@ export function AlphabetLearnLesson({ letters, onComplete, isReviewMode = false 
     }
   };
 
+  const swipeRef = useSwipe({ onSwipeLeft: handleNext, onSwipeRight: handlePrev });
+
   const isLast = currentIndex === letters.length - 1;
   const currentLetter = letters[currentIndex];
 
   return (
-    <div className="flex flex-col items-center gap-6 md:gap-8 w-full max-w-4xl px-4">
+    <div ref={swipeRef} className="flex flex-col items-center gap-6 md:gap-8 w-full max-w-4xl px-4">
       {/* Letter Display */}
       <div className="flex items-center justify-center w-full min-h-[300px]">
         <AlphabetCard letter={currentLetter} active={true} showName={true} />

@@ -5,6 +5,7 @@ import { MixingRule } from "./constants";
 import { BackLessonButton } from "@/components/games/BackLessonButton";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
+import { useSwipe } from "@/hooks/useSwipe";
 import LoudSpeaker from "@/assets/games/loud-speaker.webp";
 import Image from "next/image";
 
@@ -38,8 +39,10 @@ export function MixColorLearnLesson({ rules, onComplete }: MixColorLearnLessonPr
     speak(`Màu ${currentRule.color1.name} pha với màu ${currentRule.color2.name} thành màu ${currentRule.result.name}`);
   }, [currentIndex]);
 
+  const swipeRef = useSwipe({ onSwipeLeft: handleNext, onSwipeRight: handlePrev });
+
   return (
-    <div className="flex flex-col items-center gap-6 md:gap-12 w-full max-w-4xl px-4">
+    <div ref={swipeRef} className="flex flex-col items-center gap-6 md:gap-12 w-full max-w-4xl px-4">
       {/* Visual Display */}
       <div
         className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 w-full min-h-[300px] cursor-pointer"

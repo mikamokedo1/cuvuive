@@ -5,6 +5,7 @@ import { EntityData } from "@/types/game";
 import { AnimalCard } from "./AnimalCard";
 import { BackLessonButton } from "@/components/games/BackLessonButton";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
+import { useSwipe } from "@/hooks/useSwipe";
 
 interface AnimalLearnLessonProps {
   animals: EntityData[];
@@ -28,11 +29,13 @@ export function AnimalLearnLesson({ animals, onComplete }: AnimalLearnLessonProp
     }
   };
 
+  const swipeRef = useSwipe({ onSwipeLeft: handleNext, onSwipeRight: handlePrev });
+
   const isLast = currentIndex === animals.length - 1;
   const currentAnimal = animals[currentIndex];
 
   return (
-    <div className="flex flex-col items-center gap-6 md:gap-8 w-full max-w-4xl px-4">
+    <div ref={swipeRef} className="flex flex-col items-center gap-6 md:gap-8 w-full max-w-4xl px-4">
       {/* Animal Display */}
       <div className="flex items-center justify-center w-full min-h-[300px]">
         <AnimalCard animal={currentAnimal} active={true} showName={true} />

@@ -16,6 +16,7 @@ import Sound9 from "@/assets/games/learn-numbers/sound/number-9.mp3";
 import { ThingImages } from "@/libs/constants/thingImages";
 import { BackLessonButton } from "@/components/games/BackLessonButton";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
+import { useSwipe } from "@/hooks/useSwipe";
 
 export const SoundNumbers = [Sound1, Sound2, Sound3, Sound4, Sound5, Sound6, Sound7, Sound8, Sound9];
 
@@ -104,10 +105,12 @@ export function LearnLesson({ range, onComplete }: LearnLessonProps) {
     }
   };
 
+  const swipeRef = useSwipe({ onSwipeLeft: handleNext, onSwipeRight: handlePrev });
+
   const isLast = currentNumber === end;
 
   return (
-    <div className="flex flex-col items-center gap-6 md:gap-8 w-full max-w-4xl">
+    <div ref={swipeRef} className="flex flex-col items-center gap-6 md:gap-8 w-full max-w-4xl">
       {/* Progress Indicator */}
       <div className="flex items-center justify-center gap-4 md:gap-16 w-full">
         {/* Number Display */}

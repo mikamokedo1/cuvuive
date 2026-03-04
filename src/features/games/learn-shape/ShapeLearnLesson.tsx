@@ -5,6 +5,7 @@ import { ShapeData } from "./constants";
 import { ShapeCard } from "./ShapeCard";
 import { BackLessonButton } from "@/components/games/BackLessonButton";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
+import { useSwipe } from "@/hooks/useSwipe";
 
 interface ShapeLearnLessonProps {
   shapes: ShapeData[];
@@ -28,11 +29,13 @@ export function ShapeLearnLesson({ shapes, onComplete }: ShapeLearnLessonProps) 
     }
   };
 
+  const swipeRef = useSwipe({ onSwipeLeft: handleNext, onSwipeRight: handlePrev });
+
   const isLast = currentIndex === shapes.length - 1;
   const currentShape = shapes[currentIndex];
 
   return (
-    <div className="flex flex-col items-center gap-6 md:gap-8 w-full max-w-4xl px-4">
+    <div ref={swipeRef} className="flex flex-col items-center gap-6 md:gap-8 w-full max-w-4xl px-4">
       {/* Shape Display */}
       <div className="flex items-center justify-center w-full min-h-[300px]">
         <ShapeCard shape={currentShape} active={true} showName={true} />

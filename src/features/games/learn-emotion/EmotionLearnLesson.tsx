@@ -6,6 +6,7 @@ import { EmotionCard } from "./EmotionCard";
 import { BackLessonButton } from "@/components/games/BackLessonButton";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
+import { useSwipe } from "@/hooks/useSwipe";
 
 interface EmotionLearnLessonProps {
   items: EntityData[];
@@ -35,11 +36,13 @@ export function EmotionLearnLesson({ items, onComplete }: EmotionLearnLessonProp
     speak(item.name);
   }, [currentIndex]);
 
+  const swipeRef = useSwipe({ onSwipeLeft: handleNext, onSwipeRight: handlePrev });
+
   const isLast = currentIndex === items.length - 1;
   const currentItem = items[currentIndex];
 
   return (
-    <div className="flex flex-col items-center gap-6 md:gap-8 w-full max-w-4xl px-4">
+    <div ref={swipeRef} className="flex flex-col items-center gap-6 md:gap-8 w-full max-w-4xl px-4">
       {/* Item Display */}
       <div className="flex items-center justify-center w-full min-h-[300px]">
         <EmotionCard item={currentItem} active={true} showName={true} />

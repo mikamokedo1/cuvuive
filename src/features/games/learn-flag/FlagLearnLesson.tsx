@@ -5,6 +5,7 @@ import { EntityData } from "@/types/game";
 import { FlagCard } from "./FlagCard";
 import { BackLessonButton } from "@/components/games/BackLessonButton";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
+import { useSwipe } from "@/hooks/useSwipe";
 
 interface FlagLearnLessonProps {
   flags: EntityData[];
@@ -28,11 +29,13 @@ export function FlagLearnLesson({ flags, onComplete }: FlagLearnLessonProps) {
     }
   };
 
+  const swipeRef = useSwipe({ onSwipeLeft: handleNext, onSwipeRight: handlePrev });
+
   const isLast = currentIndex === flags.length - 1;
   const currentFlag = flags[currentIndex];
 
   return (
-    <div className="flex flex-col items-center gap-6 md:gap-8 w-full max-w-4xl px-4">
+    <div ref={swipeRef} className="flex flex-col items-center gap-6 md:gap-8 w-full max-w-4xl px-4">
       {/* Flag Display */}
       <div className="flex items-center justify-center w-full min-h-[300px]">
         <FlagCard animal={currentFlag} active={true} />

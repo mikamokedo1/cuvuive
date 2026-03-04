@@ -5,6 +5,7 @@ import { EntityData } from "@/types/game";
 import { DinosaurCard } from "./DinosaurCard";
 import { BackLessonButton } from "@/components/games/BackLessonButton";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
+import { useSwipe } from "@/hooks/useSwipe";
 
 interface DinosaurLearnLessonProps {
   dinosaurs: EntityData[];
@@ -28,11 +29,13 @@ export function DinosaurLearnLesson({ dinosaurs, onComplete }: DinosaurLearnLess
     }
   };
 
+  const swipeRef = useSwipe({ onSwipeLeft: handleNext, onSwipeRight: handlePrev });
+
   const isLast = currentIndex === dinosaurs.length - 1;
   const currentDinosaur = dinosaurs[currentIndex];
 
   return (
-    <div className="flex flex-col items-center gap-6 md:gap-8 w-full max-w-4xl px-4">
+    <div ref={swipeRef} className="flex flex-col items-center gap-6 md:gap-8 w-full max-w-4xl px-4">
       {/* Dinosaur Display */}
       <div className="flex items-center justify-center w-full min-h-[300px]">
         <DinosaurCard dinosaur={currentDinosaur} active={true} showName={true} />

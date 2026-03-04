@@ -5,6 +5,7 @@ import { ColorData } from "./constants";
 import { ColorCard } from "./ColorCard";
 import { BackLessonButton } from "@/components/games/BackLessonButton";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
+import { useSwipe } from "@/hooks/useSwipe";
 
 interface ColorLearnLessonProps {
   colors: ColorData[];
@@ -28,11 +29,13 @@ export function ColorLearnLesson({ colors, onComplete }: ColorLearnLessonProps) 
     }
   };
 
+  const swipeRef = useSwipe({ onSwipeLeft: handleNext, onSwipeRight: handlePrev });
+
   const isLast = currentIndex === colors.length - 1;
   const currentColor = colors[currentIndex];
 
   return (
-    <div className="flex flex-col items-center gap-6 md:gap-8 w-full max-w-4xl px-4">
+    <div ref={swipeRef} className="flex flex-col items-center gap-6 md:gap-8 w-full max-w-4xl px-4">
       {/* Progress Dots? Optional */}
 
       {/* Color Display */}

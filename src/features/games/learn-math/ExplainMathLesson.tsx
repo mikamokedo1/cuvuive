@@ -7,6 +7,7 @@ import { MathOperator, SymbolToText } from "./constants";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 import { BackLessonButton } from "@/components/games/BackLessonButton";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
+import { useSwipe } from "@/hooks/useSwipe";
 
 interface ExplainMathLessonProps {
   operator: MathOperator;
@@ -94,6 +95,8 @@ export function ExplainMathLesson({ operator, onComplete }: ExplainMathLessonPro
     }
   };
 
+  const swipeRef = useSwipe({ onSwipeLeft: handleNext, onSwipeRight: handleBack });
+
   useEffect(() => {
     if (phase === "intro") {
       speak(SymbolToText(symbol));
@@ -116,7 +119,7 @@ export function ExplainMathLesson({ operator, onComplete }: ExplainMathLessonPro
   // --- INTRO ---
   if (phase === "intro") {
     return (
-      <div className="flex flex-col items-center gap-8 w-full max-w-lg px-4">
+      <div ref={swipeRef} className="flex flex-col items-center gap-8 w-full max-w-lg px-4">
         <SymbolComponent symbol={symbol} />
         <div className="flex items-center gap-6">
           <NextLessonButton onClick={handleNext} isLast={false} />
@@ -132,7 +135,7 @@ export function ExplainMathLesson({ operator, onComplete }: ExplainMathLessonPro
   const cardShadow = operator === "add" ? "shadow-green-100/50" : "shadow-orange-100/50";
 
   return (
-    <div className="flex flex-col items-center gap-6 w-full max-w-md px-4">
+    <div ref={swipeRef} className="flex flex-col items-center gap-6 w-full max-w-md px-4">
       {/* Main card */}
       <div
         className={`bg-white rounded-[32px] p-6 border-4 ${cardBorder} shadow-2xl ${cardShadow} w-full transition-all`}

@@ -6,6 +6,7 @@ import { PatternShape } from "./PatternShape";
 import { BackLessonButton } from "@/components/games/BackLessonButton";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
+import { useSwipe } from "@/hooks/useSwipe";
 
 interface PatternLearnLessonProps {
   groupId: string;
@@ -68,8 +69,24 @@ export function PatternLearnLesson({ groupId, onComplete }: PatternLearnLessonPr
 
   const isLast = currentIndex === patterns.length - 1;
 
+  const handleSwipeLeft = () => {
+    if (temporaryDisableNext) return;
+    if (isFullyRevealed) {
+      handleNext();
+    } else {
+      handleRevealNext();
+    }
+  };
+
+  const handleSwipeRight = () => {
+    if (temporaryDisableNext) return;
+    handlePrev();
+  };
+
+  const swipeRef = useSwipe({ onSwipeLeft: handleSwipeLeft, onSwipeRight: handleSwipeRight });
+
   return (
-    <div className="flex flex-col items-center gap-6 w-full max-w-4xl px-4">
+    <div ref={swipeRef} className="flex flex-col items-center gap-6 w-full max-w-4xl px-4">
       {/* Pattern Display */}
       <div className="bg-white p-8 md:p-12 rounded-3xl border-4 shadow-xl mb-4 md:mb-8 border-blue-200">
         <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4 min-h-[80px]">

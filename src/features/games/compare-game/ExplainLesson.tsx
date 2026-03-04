@@ -12,6 +12,7 @@ import SoundLess from "@/assets/games/compare-quantity/sounds/dau-be.mp3";
 import SoundEqual from "@/assets/games/compare-quantity/sounds/dau-bang.mp3";
 import { playSound } from "@/libs/utils/playSound";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
+import { useSwipe } from "@/hooks/useSwipe";
 
 interface ExplainLessonProps {
   comparisonType: "greater" | "less" | "equal";
@@ -150,11 +151,14 @@ export function ExplainLesson({ comparisonType, onComplete }: ExplainLessonProps
       setCurrentIndex((prev) => prev - 1);
     }
   };
+
+  const swipeRef = useSwipe({ onSwipeLeft: handleNext, onSwipeRight: handlePrev });
+
   // Use different icons for left vs right
   const IconIndex = currentIndex % ThingImages.length;
 
   return (
-    <div className="flex flex-col items-center gap-6 w-full max-w-4xl">
+    <div ref={swipeRef} className="flex flex-col items-center gap-6 w-full max-w-4xl">
       <div className="bg-white/90 rounded-3xl p-4 md:p-8 shadow-xl border-4 border-yellow-200 w-full overflow-hidden">
         <div className="flex items-center justify-center gap-2 md:gap-8">
           {/* Left Group */}
