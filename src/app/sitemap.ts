@@ -1,27 +1,38 @@
 import { MetadataRoute } from "next";
+import fs from "fs";
+import path from "path";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://cuthongminh.vn"; // Replace with your actual domain
+  const baseUrl = "https://cuthongminh.com";
 
-  return [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/games/learn-numbers`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/games/compare-quantity`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    // Add more routes as needed
+  const staticRoutes: MetadataRoute.Sitemap = [
+    { url: baseUrl, lastModified: new Date(), changeFrequency: "weekly", priority: 1 },
+    { url: `${baseUrl}/games`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
+    { url: `${baseUrl}/privacy`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.5 },
+    { url: `${baseUrl}/terms`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.5 },
+    { url: `${baseUrl}/feedback`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 },
   ];
+
+  // Dynamically get all game routes
+  const gamesDir = path.join(process.cwd(), "src/app/games");
+  let gameRoutes: MetadataRoute.Sitemap = [];
+
+  try {
+    const gameFolders = fs.readdirSync(gamesDir).filter((file) => {
+      const isDir = fs.statSync(path.join(gamesDir, file)).isDirectory();
+      // Filter out Next.js special folders like [groupId]
+      return isDir && !file.startsWith("[") && !file.startsWith(".");
+    });
+
+    gameRoutes = gameFolders.map((game) => ({
+      url: `${baseUrl}/games/${game}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    }));
+  } catch (error) {
+    console.error("Error generating sitemap for games:", error);
+  }
+
+  return [...staticRoutes, ...gameRoutes];
 }

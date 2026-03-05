@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useUser } from "./UserContext";
 import { createClient } from "@/libs/supabase/client";
 import { generateUUID } from "@/libs/utils/uuid";
@@ -22,6 +22,10 @@ interface ProgressContextType {
 }
 
 const ProgressContext = createContext<ProgressContextType | undefined>(undefined);
+
+// Hoisted regex patterns used in unlock checks — avoids creating new RegExp every call
+const GROUP_ID_REGEX = /^group(\d+)$/;
+const LESSON_ID_REGEX = /^lesson(\d+)$/;
 
 export function ProgressProvider({ children }: { children: React.ReactNode }) {
   const { user } = useUser();
@@ -242,7 +246,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     const completedGroups = derivedCompletedGroups[courseId] || [];
 
     // Generic check for groupN pattern
-    const match = groupId.match(/^group(\d+)$/);
+    const match = groupId.match(GROUP_ID_REGEX);
     if (match) {
       const groupNum = parseInt(match[1], 10);
       // group1 is always unlocked
@@ -269,7 +273,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     if (completedInGroup.includes(lessonId)) return true;
 
     // Generic check for lessonN pattern
-    const match = lessonId.match(/^lesson(\d+)$/);
+    const match = lessonId.match(LESSON_ID_REGEX);
     if (match) {
       const lessonNum = parseInt(match[1], 10);
       // lesson1 is always unlocked (if group is unlocked)
@@ -283,22 +287,21 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     return false;
   };
 
-  return (
-    <ProgressContext.Provider
-      value={{
-        progress: progressWithGroups,
-        allProgress: allProgressWithGroups,
-        courseStructure,
-        lastPlayedCourseId,
-        markLessonComplete,
-        isGroupUnlocked,
-        isLessonUnlocked,
-        isLoaded,
-      }}
-    >
-      {children}
-    </ProgressContext.Provider>
+  const contextValue = useMemo(
+    () => ({
+      progress: progressWithGroups,
+      allProgress: allProgressWithGroups,
+      courseStructure,
+      lastPlayedCourseId,
+      markLessonComplete,
+      isGroupUnlocked,
+      isLessonUnlocked,
+      isLoaded,
+    }),
+    [progressWithGroups, allProgressWithGroups, courseStructure, lastPlayedCourseId, isLoaded],
   );
+
+  return <ProgressContext.Provider value={contextValue}>{children}</ProgressContext.Provider>;
 }
 
 export function useProgress() {

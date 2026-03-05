@@ -21,9 +21,10 @@ import GameAlphabetLogo from "@/assets/games/learn-alphabet/logo.png";
 import GameFindDifferencesLogo from "@/assets/games/game-4-logo.webp";
 import GameOddOneOutLogo from "@/assets/games/odd-one-out/logo.png";
 import GameMazeRunnerLogo from "@/assets/games/maze-runner/logo.png";
-import MixColorLogo from "@/assets/games/mix-color/logo.png";
 import PaintPictureLogo from "@/assets/games/paint-picture/logo.png";
 import GameEmotionLogo from "@/assets/games/learn-emotion/logo.png";
+import MixColorLogo from "@/assets/games/learn-color-color.webp"; // Using placeholder
+import GameCostumeLogo from "@/assets/games/learn-costume/logo.png";
 import { StaticImageData } from "next/image";
 import { GameGroupType } from "@/libs/constants/groups";
 
@@ -717,6 +718,45 @@ export const COURSES: CourseDef[] = [
           { id: "lesson2", title: "Đây là đâu?" },
           { id: "lesson3", title: "Ghép đôi" },
           { id: "lesson4", title: "Xếp hình" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "learn-costume",
+    title: "Trang Phục Thế Giới",
+    description: "Bé tìm hiểu về trang phục truyền thống của các quốc gia trên thế giới.",
+    icon: GameCostumeLogo,
+    type: "geography",
+    groups: [
+      {
+        id: "group1",
+        title: "Châu Á",
+        lessons: [
+          { id: "lesson1", title: "Học trang phục", isFree: true },
+          { id: "lesson2", title: "Trang phục nước nào?" },
+          { id: "lesson3", title: "Mặc Đúng Cho Bạn" },
+          { id: "lesson4", title: "Ghép đôi" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Châu Âu",
+        lessons: [
+          { id: "lesson1", title: "Học trang phục", isFree: true },
+          { id: "lesson2", title: "Trang phục nước nào?" },
+          { id: "lesson3", title: "Mặc Đúng Cho Bạn" },
+          { id: "lesson4", title: "Ghép đôi" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Châu Mỹ & Khác",
+        lessons: [
+          { id: "lesson1", title: "Học trang phục", isFree: true },
+          { id: "lesson2", title: "Trang phục nước nào?" },
+          { id: "lesson3", title: "Mặc Đúng Cho Bạn" },
+          { id: "lesson4", title: "Ghép đôi" },
         ],
       },
     ],

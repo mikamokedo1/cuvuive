@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Baloo_2, Nunito_Sans } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import { OwlProvider } from "@/context/OwlContext";
 import { OwlCompanion } from "@/components/common/OwlCompanion";
@@ -30,6 +31,10 @@ const nunitoSans = Nunito_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://cuthongminh.com"),
+  alternates: {
+    canonical: "/",
+  },
   title: "Cú Thông Minh - Vừa học vừa chơi | Ứng dụng học tập cho bé",
   description:
     "Cú Thông Minh là ứng dụng giáo dục tương tác giúp bé vừa học vừa chơi, phát triển tư duy toán học và ngôn ngữ một cách tự nhiên.",
@@ -37,10 +42,18 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Cú Thông Minh - Vừa học vừa chơi",
     description: "Ứng dụng giáo dục tương tác giúp bé phát triển tư duy.",
-    url: "https://cuthongminh.vn",
+    url: "https://cuthongminh.com",
     siteName: "Cú Thông Minh",
     locale: "vi_VN",
     type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Cú Thông Minh - Ứng dụng học tập cho bé",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -89,6 +102,9 @@ export default async function RootLayout({
           </AccessProvider>
         </UserProvider>
       </body>
+      {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+      )}
     </html>
   );
 }

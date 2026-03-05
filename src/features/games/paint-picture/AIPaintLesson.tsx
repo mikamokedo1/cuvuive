@@ -165,7 +165,7 @@ export function AIPaintLesson({ groupId, onComplete }: AIPaintLessonProps) {
     const dataUrl = exportCanvas.toDataURL("image/jpeg", 0.9);
 
     const link = document.createElement("a");
-    link.download = `Cuvuive-Tomau-${groupId}-${Date.now()}.jpg`;
+    link.download = `Cuthongminh-Tomau-${groupId}-${Date.now()}.jpg`;
     link.href = dataUrl;
     link.click();
 

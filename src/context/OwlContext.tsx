@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
+import React, { createContext, useContext, useState, useMemo, ReactNode, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
 // Use string paths to public directory instead of static imports.
@@ -289,11 +289,12 @@ export const OwlProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [pathname]);
 
-  return (
-    <OwlContext.Provider value={{ sound, setSound, isHappy, setIsHappy, textSpeak, setTextSpeak }}>
-      {children}
-    </OwlContext.Provider>
+  const contextValue = useMemo(
+    () => ({ sound, setSound, isHappy, setIsHappy, textSpeak, setTextSpeak }),
+    [sound, isHappy, textSpeak],
   );
+
+  return <OwlContext.Provider value={contextValue}>{children}</OwlContext.Provider>;
 };
 
 export const useOwl = () => {

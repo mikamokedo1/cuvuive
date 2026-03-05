@@ -2,7 +2,7 @@
 
 import { createClient } from "@/libs/supabase/client";
 import { User } from "@supabase/supabase-js";
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import { createContext, useContext, useEffect, useMemo, useRef, useState, ReactNode } from "react";
 import { getSubscriptionDetailsAction } from "@/libs/actions/user";
 
 interface UserContextType {
@@ -25,7 +25,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [premiumEndDate, setPremiumEndDate] = useState<Date | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showMissingInfoModal, setShowMissingInfoModal] = useState(false);
-  const supabase = createClient();
+  const supabaseRef = useRef(createClient());
+  const supabase = supabaseRef.current;
 
   const refreshSubscription = async () => {
     try {
@@ -110,23 +111,22 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     setPremiumEndDate(null);
   };
 
-  return (
-    <UserContext.Provider
-      value={{
-        user,
-        isLoading,
-        showMissingInfoModal,
-        setShowMissingInfoModal,
-        checkMissingInfo,
-        isPremium,
-        premiumEndDate,
-        refreshSubscription,
-        handleLogout,
-      }}
-    >
-      {children}
-    </UserContext.Provider>
+  const contextValue = useMemo(
+    () => ({
+      user,
+      isLoading,
+      showMissingInfoModal,
+      setShowMissingInfoModal,
+      checkMissingInfo,
+      isPremium,
+      premiumEndDate,
+      refreshSubscription,
+      handleLogout,
+    }),
+    [user, isLoading, showMissingInfoModal, isPremium, premiumEndDate],
   );
+
+  return <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>;
 };
 
 export const useUser = () => {

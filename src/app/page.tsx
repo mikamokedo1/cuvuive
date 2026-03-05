@@ -7,13 +7,30 @@ import LogoShort from "@/assets/logo.png";
 import { TestimonialSlider } from "@/components/common/TestimonialSlider";
 
 export default function Home() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: "Cú Thông Minh",
+    url: "https://cuthongminh.com",
+    description:
+      "Ứng dụng giáo dục tương tác giúp bé vừa học vừa chơi, phát triển tư duy toán học và ngôn ngữ một cách tự nhiên.",
+    applicationCategory: "EducationalApplication",
+    operatingSystem: "All",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "VND",
+    },
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 font-[family-name:var(--font-nunito-sans)] overflow-x-hidden">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {/* Navigation */}
       <nav className="container mx-auto px-6 py-4 flex justify-between items-center relative z-10 pt-6">
         <Link href="/">
-          <Image className="md:block hidden" src={LogoLong} alt="Logo" width={256} height={56} />
-          <Image className="md:hidden" src={LogoShort} alt="Logo" width={56} height={56} />
+          <Image className="md:block hidden" src={LogoLong} alt="Logo" width={256} height={56} priority />
+          <Image className="md:hidden" src={LogoShort} alt="Logo" width={56} height={56} priority />
         </Link>
         <div className="flex items-center gap-4">
           <Link

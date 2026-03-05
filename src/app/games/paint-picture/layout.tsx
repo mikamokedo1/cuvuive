@@ -1,8 +1,8 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Tô Màu - Cú Thông Minh",
-  description: "Bé tô màu các hình vẽ dễ thương qua các trò chơi thú vị",
+  title: "Vẽ Tranh | Cú Thông Minh",
+  description: "Bé phát huy khả năng sáng tạo qua các bức tranh sinh động",
 };
 
 export default function PaintPictureLayout({ children }: { children: React.ReactNode }) {

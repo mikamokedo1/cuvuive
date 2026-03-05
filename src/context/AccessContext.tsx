@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode, useCallback } from "react";
+import { createContext, useContext, useState, useMemo, ReactNode, useCallback } from "react";
 import { useUser } from "./UserContext";
 import { AccessCheckResult, AccessReason } from "@/libs/actions/access";
 import { COURSES } from "@/libs/constants/courses";
@@ -90,21 +90,20 @@ export function AccessProvider({ children }: { children: ReactNode }) {
     setPaywallState({ isOpen: false, type: null, redirectUrl: null });
   }, []);
 
-  return (
-    <AccessContext.Provider
-      value={{
-        isPremium,
-        isLoggedIn,
-        checkAccess,
-        showPaywall,
-        hidePaywall,
-        paywallState,
-        setPaywallState,
-      }}
-    >
-      {children}
-    </AccessContext.Provider>
+  const contextValue = useMemo(
+    () => ({
+      isPremium,
+      isLoggedIn,
+      checkAccess,
+      showPaywall,
+      hidePaywall,
+      paywallState,
+      setPaywallState,
+    }),
+    [isPremium, isLoggedIn, checkAccess, showPaywall, hidePaywall, paywallState],
   );
+
+  return <AccessContext.Provider value={contextValue}>{children}</AccessContext.Provider>;
 }
 
 export function useAccess() {
