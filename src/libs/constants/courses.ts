@@ -14,6 +14,7 @@ import GameFlowerLogo from "@/assets/games/learn-flower/logo.webp";
 import GameMathLogo from "@/assets/games/learn-math/logo.png";
 import GameWeatherLogo from "@/assets/games/learn-weather/logo.png";
 import GameFlagLogo from "@/assets/games/learn-flag/logo.webp";
+import GameLandmarkLogo from "@/assets/games/learn-landmark/logo.png";
 import GameHygieneLogo from "@/assets/games/learn-hygiene/logo.png";
 import GamePatternLogo from "@/assets/games/find-pattern/logo.png";
 import GameAlphabetLogo from "@/assets/games/learn-alphabet/logo.png";
@@ -24,7 +25,7 @@ import MixColorLogo from "@/assets/games/mix-color/logo.png";
 import PaintPictureLogo from "@/assets/games/paint-picture/logo.png";
 import GameEmotionLogo from "@/assets/games/learn-emotion/logo.png";
 import { StaticImageData } from "next/image";
-import { GameGroupType } from "@/app/games/GamesMap";
+import { GameGroupType } from "@/libs/constants/groups";
 
 export interface LessonDef {
   id: string;
@@ -677,6 +678,45 @@ export const COURSES: CourseDef[] = [
           { id: "lesson2", title: "Chọn quốc kỳ đúng" },
           { id: "lesson3", title: "Lật hình ghi nhớ" },
           { id: "lesson4", title: "Ghép hình" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "learn-landmark",
+    title: "Địa Danh Nổi Tiếng",
+    description: "Bé nhận biết các địa danh nổi tiếng trên thế giới.",
+    icon: GameLandmarkLogo,
+    type: "geography",
+    groups: [
+      {
+        id: "group1",
+        title: "Châu Á",
+        lessons: [
+          { id: "lesson1", title: "Học địa danh", isFree: true },
+          { id: "lesson2", title: "Đây là đâu?" },
+          { id: "lesson3", title: "Ghép đôi" },
+          { id: "lesson4", title: "Xếp hình" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Châu Âu",
+        lessons: [
+          { id: "lesson1", title: "Học địa danh", isFree: true },
+          { id: "lesson2", title: "Đây là đâu?" },
+          { id: "lesson3", title: "Ghép đôi" },
+          { id: "lesson4", title: "Xếp hình" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Châu Mỹ & Khác",
+        lessons: [
+          { id: "lesson1", title: "Học địa danh", isFree: true },
+          { id: "lesson2", title: "Đây là đâu?" },
+          { id: "lesson3", title: "Ghép đôi" },
+          { id: "lesson4", title: "Xếp hình" },
         ],
       },
     ],
