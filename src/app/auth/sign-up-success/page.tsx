@@ -28,10 +28,10 @@ export default function Page() {
             <p className="text-gray-500 font-medium text-lg">Chúc mừng bé đã gia nhập Cú Thông Minh🎉</p>
           </div>
 
-          <div className="bg-green-50 rounded-xl p-6 mb-8 border-2 border-green-100">
+          {/* <div className="bg-green-50 rounded-xl p-6 mb-8 border-2 border-green-100">
             <p className="text-gray-700 mb-2">Chúng tôi đã gửi email xác nhận đến hộp thư của bạn.</p>
             <p className="text-gray-600 text-sm">Vui lòng kiểm tra email và bấm vào liên kết để kích hoạt tài khoản.</p>
-          </div>
+          </div> */}
 
           <Link href="/auth/login" className="w-full block">
             <ActionButton

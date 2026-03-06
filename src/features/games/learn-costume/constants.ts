@@ -32,6 +32,7 @@ import WornDirndl from "@/assets/games/learn-costume/character_dirndl.png";
 import ImgFlamenco from "@/assets/games/learn-costume/flamenco.png";
 import ImgSarafan from "@/assets/games/learn-costume/sarafan.png";
 import WornSarafan from "@/assets/games/learn-costume/character_sarafan.png";
+import ImgKlompen from "@/assets/games/learn-costume/klompen.png";
 
 import { EntityData } from "@/types/game";
 
@@ -65,7 +66,7 @@ export const COSTUMES: CostumeData[] = [
     category: "Tây Ban Nha",
   },
   { id: "sarafan", name: "Sarafan", image: ImgSarafan, wornImage: WornSarafan, category: "Nga" },
-  { id: "klompen", name: "Klompen", image: PlaceholderCostume, wornImage: PlaceholderCharacter, category: "Hà Lan" },
+  { id: "klompen", name: "Klompen", image: ImgKlompen, wornImage: PlaceholderCharacter, category: "Hà Lan" },
   {
     id: "fustanella",
     name: "Fustanella",

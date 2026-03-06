@@ -66,6 +66,7 @@ export function TestimonialSlider() {
         <button
           onClick={() => setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)}
           className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-orange-500 shadow-md hover:bg-orange-500 hover:text-white transition-colors duration-200 border border-orange-100"
+          aria-label="Xem nhận xét trước đó"
         >
           <ChevronLeft className="w-6 h-6" />
         </button>
@@ -75,8 +76,9 @@ export function TestimonialSlider() {
             <button
               key={i}
               onClick={() => setCurrentTestimonial(i)}
-              className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                i === currentTestimonial ? "bg-orange-500 w-6" : "bg-orange-200 hover:bg-orange-300"
+              aria-label={`Chuyển đến nhận xét ${i + 1}`}
+              className={`w-3 h-3 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 ${
+                i === currentTestimonial ? "bg-orange-500 w-8" : "bg-orange-200 hover:bg-orange-300"
               }`}
             />
           ))}
@@ -85,6 +87,7 @@ export function TestimonialSlider() {
         <button
           onClick={() => setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)}
           className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-orange-500 shadow-md hover:bg-orange-500 hover:text-white transition-colors duration-200 border border-orange-100"
+          aria-label="Xem nhận xét tiếp theo"
         >
           <ChevronRight className="w-6 h-6" />
         </button>

@@ -95,10 +95,11 @@ export function GamesMap({ courses }: GamesMapProps) {
           fill
           className="absolute inset-0 w-full h-full object-cover rounded-[2rem] shadow-2xl border-[6px] border-white/80 -z-10"
           priority
+          fetchPriority="high"
           sizes="(max-width: 1024px) 100vw, 1024px"
         />
         <div className="flex flex-wrap justify-center gap-x-10 md:gap-x-20 gap-y-10 relative z-20 w-full h-full">
-          {GROUPS.map((group) => {
+          {GROUPS.map((group, i) => {
             const isActive = activeGroupId === group.id;
             const isAnotherGroupActive = activeGroupId !== null && !isActive;
             const groupGames = COURSES.filter((g) => g.type === group.id);
@@ -155,6 +156,8 @@ export function GamesMap({ courses }: GamesMapProps) {
                   <Image
                     src={group.icon}
                     alt={group.title}
+                    priority={i < 3} // Prioritize first few icons for LCP
+                    sizes="(max-width: 640px) 96px, 128px"
                     className="w-24 h-24 sm:w-32 sm:h-32 object-contain drop-shadow-[0_10px_10px_rgba(0,0,0,0.15)]"
                   />
                   {/* Last played indicator */}
@@ -203,6 +206,7 @@ export function GamesMap({ courses }: GamesMapProps) {
                               src={game.icon}
                               alt={game.title}
                               fill
+                              sizes="(max-width: 640px) 64px, 80px"
                               className="object-contain p-1 drop-shadow-sm"
                             />
                             {/* Star badge */}
@@ -210,7 +214,13 @@ export function GamesMap({ courses }: GamesMapProps) {
                               <div
                                 className={` absolute -top-4 left-1/2 -translate-x-1/2 w-7 h-7 z-10 ${status === "done" ? "" : "grayscale-[100%]"}`}
                               >
-                                <Image src={star} alt="completed" fill className="object-contain drop-shadow-md" />
+                                <Image
+                                  src={star}
+                                  alt="completed"
+                                  fill
+                                  sizes="28px"
+                                  className="object-contain drop-shadow-md"
+                                />
                               </div>
                             )}
                           </div>
