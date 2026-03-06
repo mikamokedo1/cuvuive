@@ -1,10 +1,14 @@
 import Link from "next/link";
 import { ArrowRight, Brain, Sparkles, Trophy, Shield, Heart, Gamepad2, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { GROUPS } from "@/libs/constants/groups";
 import LogoLong from "@/assets/logo-long.webp";
 import LogoShort from "@/assets/logo.png";
-import { TestimonialSlider } from "@/components/common/TestimonialSlider";
+
+const TestimonialSlider = dynamic(() =>
+  import("@/components/common/TestimonialSlider").then((mod) => mod.TestimonialSlider),
+);
 
 export default function Home() {
   const jsonLd = {
@@ -35,7 +39,7 @@ export default function Home() {
         <div className="flex items-center gap-4">
           <Link
             href="/games"
-            className="px-6 py-2.5 bg-[#FF9C01] hover:bg-orange-500 text-white font-bold rounded-full shadow-[0_4px_14px_0_rgba(255,156,1,0.39)] hover:shadow-[0_6px_20px_rgba(255,156,1,0.23)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
+            className="px-6 py-3 bg-[#FF9C01] hover:bg-orange-500 text-slate-900 font-bold rounded-full shadow-[0_4px_14px_0_rgba(255,156,1,0.39)] hover:shadow-[0_6px_20px_rgba(255,156,1,0.23)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
           >
             Bắt đầu khám phá
           </Link>
@@ -51,14 +55,14 @@ export default function Home() {
           <div className="absolute -bottom-8 left-1/3 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-4000 transform-gpu will-change-transform"></div>
 
           <div className="container mx-auto px-6 relative z-10 text-center flex flex-col items-center">
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-orange-100 text-[#FF9C01] font-bold text-sm mb-10 shadow-sm border border-orange-200/50 hover:bg-orange-200 transition-colors cursor-default">
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-orange-100 text-orange-600 font-bold text-sm mb-10 shadow-sm border border-orange-200/50 hover:bg-orange-200 transition-colors cursor-default">
               <Sparkles className="w-4 h-4" />
               <span>Nền tảng học mà chơi số 1 cho bé</span>
             </div>
 
             <h1 className="text-5xl md:text-7xl lg:text-[5rem] font-extrabold font-[family-name:var(--font-baloo-2)] text-slate-900 leading-[1.1] mb-8 max-w-5xl mx-auto tracking-tight">
               Cùng bé yêu khám phá <br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF9C01] to-red-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-500">
                 thế giới tri thức vui nhộn
               </span>
             </h1>
@@ -71,7 +75,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
               <Link
                 href="/auth/sign-up"
-                className="w-full sm:w-auto px-8 py-4 bg-[#FF9C01] hover:bg-orange-500 text-white font-bold rounded-full group flex items-center justify-center gap-3 text-lg shadow-[0_8px_30px_rgb(255,156,1,0.3)] hover:shadow-[0_8px_30px_rgb(255,156,1,0.4)] hover:-translate-y-1 active:translate-y-0 transition-all duration-300"
+                className="w-full sm:w-auto px-8 py-4 bg-[#FF9C01] hover:bg-orange-500 text-slate-900 font-bold rounded-full group flex items-center justify-center gap-3 text-lg shadow-[0_8px_30px_rgb(255,156,1,0.3)] hover:shadow-[0_8px_30px_rgb(255,156,1,0.4)] hover:-translate-y-1 active:translate-y-0 transition-all duration-300"
               >
                 Trải nghiệm ngay
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -95,7 +99,7 @@ export default function Home() {
           <div className="container mx-auto px-6">
             <div className="text-center mb-20">
               <h2 className="text-4xl md:text-5xl font-bold font-[family-name:var(--font-baloo-2)] text-slate-900 mb-6 tracking-tight">
-                Lợi ích khi là <span className="text-[#FF9C01]">Cú Thông Minh</span>
+                Lợi ích khi là <span className="text-orange-500">Cú Thông Minh</span>
               </h2>
               <p className="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
                 Ứng dụng được thiết kế kỹ lưỡng dựa trên phương pháp giáo dục sớm, phù hợp với tâm lý trẻ nhỏ.
@@ -184,7 +188,13 @@ export default function Home() {
                   >
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
                     <div className="relative w-20 h-20 sm:w-24 sm:h-24 mb-4 transform group-hover:scale-110 group-hover:-translate-y-2 transition-transform duration-300 drop-shadow-md">
-                      <Image src={group.icon} alt={group.title} fill className="object-contain" />
+                      <Image
+                        src={group.icon}
+                        alt={group.title}
+                        fill
+                        sizes="(max-width: 640px) 96px, 128px"
+                        className="object-contain"
+                      />
                     </div>
                     <span className="font-bold text-xl sm:text-2xl font-[family-name:var(--font-baloo-2)] text-center drop-shadow-md leading-tight mb-2">
                       {group.title}
@@ -211,7 +221,7 @@ export default function Home() {
           <div className="container mx-auto px-6 max-w-5xl">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold font-[family-name:var(--font-baloo-2)] text-slate-900 mb-6 tracking-tight">
-                Phụ huynh nói gì về <span className="text-[#FF9C01]">Cú Thông Minh</span>?
+                Phụ huynh nói gì về <span className="text-orange-500">Cú Thông Minh</span>?
               </h2>
               <p className="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
                 Hàng ngàn gia đình đã tin công ứng dụng để làm bạn đồng hành cùng bé mỗi ngày.
@@ -236,7 +246,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 href="/auth/sign-up"
-                className="w-full sm:w-auto px-10 py-5 bg-white text-[#FF9C01] font-bold rounded-full text-lg md:text-xl shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300"
+                className="w-full sm:w-auto px-10 py-5 bg-white text-slate-900 font-bold rounded-full text-lg md:text-xl shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300"
               >
                 Đăng ký tài khoản miễn phí
               </Link>

@@ -77,10 +77,14 @@ export function TestimonialSlider() {
               key={i}
               onClick={() => setCurrentTestimonial(i)}
               aria-label={`Chuyển đến nhận xét ${i + 1}`}
-              className={`w-3 h-3 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 ${
-                i === currentTestimonial ? "bg-orange-500 w-8" : "bg-orange-200 hover:bg-orange-300"
-              }`}
-            />
+              className="p-2 cursor-pointer outline-none touch-manipulation group"
+            >
+              <div
+                className={`w-3 h-3 rounded-full transition-all duration-300 group-focus-visible:ring-4 group-focus-visible:ring-orange-300 ${
+                  i === currentTestimonial ? "bg-orange-500 w-8" : "bg-orange-200 hover:bg-orange-300"
+                }`}
+              />
+            </button>
           ))}
         </div>
 
