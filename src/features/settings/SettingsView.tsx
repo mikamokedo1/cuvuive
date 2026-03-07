@@ -59,9 +59,37 @@ export function SettingsView() {
           router.refresh();
         }, 500);
       }
-      setLoading(false);
     },
   });
+
+  const handleDeleteAccount = async () => {
+    setLoading(true);
+    setGeneralError(null);
+    setSuccessMessage(null);
+
+    try {
+      const response = await fetch("/api/user/delete", {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete account");
+      }
+
+      await supabase.auth.signOut();
+      setSuccessMessage("Tài khoản đã được xóa thành công. Đang chuyển hướng...");
+
+      // Delay to let user see the message, then redirect
+      setTimeout(() => {
+        router.push("/");
+        router.refresh();
+      }, 1500);
+    } catch (error) {
+      console.error(error);
+      setGeneralError("Đã có lỗi xảy ra khi xóa tài khoản. Vui lòng thử lại sau.");
+      setLoading(false);
+    }
+  };
 
   if (!user) {
     return (
@@ -283,6 +311,24 @@ export function SettingsView() {
                 {loading ? "Đang lưu..." : "Lưu Thay Đổi"}
               </ActionButton>
             </form>
+            <div className="mt-8 pt-6 border-t border-gray-100 flex flex-col items-center">
+              <button
+                type="button"
+                onClick={() => {
+                  if (
+                    window.confirm(
+                      "CẢNH BÁO: Hành động này sẽ xóa vĩnh viễn tài khoản và toàn bộ dữ liệu học tập của bé. Bạn có chắc chắn muốn xóa không?",
+                    )
+                  ) {
+                    handleDeleteAccount();
+                  }
+                }}
+                disabled={loading}
+                className="text-red-500 hover:text-red-600 font-semibold text-sm underline underline-offset-4 transition-colors p-2"
+              >
+                Xóa Tài Khoản (Delete Account)
+              </button>
+            </div>
           </div>
         </div>
       </div>

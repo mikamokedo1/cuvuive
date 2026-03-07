@@ -100,27 +100,50 @@ export default function PrivacyPage() {
           </ul>
 
           <h2 className="text-2xl font-bold mt-10 mb-4 border-b pb-2">5. Thời gian lưu trữ dữ liệu</h2>
-          <p className="text-slate-600">
+          <p className="text-slate-600" id="delete-data">
             Dữ liệu cá nhân và lịch sử học tập sẽ được lưu trữ an toàn trên hệ thống máy chủ của chúng tôi trong suốt
             quá trình tài khoản vẫn còn hiệu lực (chưa bị xóa). Bạn có quyền yêu cầu xóa toàn bộ dữ liệu hoặc xóa tài
             khoản vĩnh viễn bất kỳ lúc nào thông qua phần Cài đặt trong ứng dụng.
           </p>
 
-          <h2 className="text-2xl font-bold mt-10 mb-4 border-b pb-2">6. Quyền của phụ huynh</h2>
+          <h2 className="text-2xl font-bold mt-10 mb-4 border-b pb-2">6. Hướng Dẫn Xóa Dữ Liệu (User Data Deletion)</h2>
+          <p className="text-slate-600">
+            Người dùng (bao gồm cả những người đăng nhập thông qua Facebook hoặc các nền tảng khác) có toàn quyền yêu
+            cầu xóa tài khoản và xóa mọi dữ liệu cá nhân bất kỳ lúc nào. Để thực hiện, vui lòng làm theo một trong các
+            cách sau:
+          </p>
+          <ul className="space-y-2 text-slate-600">
+            <li>
+              <strong>Trong ứng dụng:</strong> Đăng nhập vào ứng dụng Cú Thông Minh, truy cập phần{" "}
+              <strong>Cài đặt</strong> và chọn <strong>Xóa Tài Khoản</strong>. Dữ liệu sẽ được xóa hoàn toàn.
+            </li>
+            <li>
+              <strong>Qua Facebook:</strong> Đi tới Cài đặt & Quyền riêng tư trên Facebook &gt; Cài đặt &gt; Ứng dụng và
+              Trang web &gt; Tìm Cú Thông Minh và chọn <strong>Gỡ</strong>. Sau đó, bạn có thể nhấp vào{" "}
+              <em>Gửi yêu cầu xóa dữ liệu</em>.
+            </li>
+            <li>
+              <strong>Qua Email:</strong> Gửi email đến <strong>hotro@cuthongminh.com</strong> với tiêu đề{" "}
+              <em>"Yêu cầu xóa dữ liệu cá nhân (Data Deletion Request)"</em> kèm địa chỉ email đăng ký tài khoản của
+              bạn. Chúng tôi sẽ xác nhận và xóa dữ liệu trong vòng tối đa 3 ngày làm việc.
+            </li>
+          </ul>
+
+          <h2 className="text-2xl font-bold mt-10 mb-4 border-b pb-2">7. Quyền của phụ huynh</h2>
           <ul className="space-y-2 text-slate-600">
             <li>Xem lại toàn bộ thông tin cá nhân mà chúng tôi đã thu thập từ gia đình.</li>
             <li>Yêu cầu chúng tôi xóa dữ liệu liên quan đến trẻ hoặc tài khoản của bạn.</li>
             <li>Từ chối bất kỳ sự thu thập hoặc sử dụng thông tin mới nào trong tương lai.</li>
           </ul>
 
-          <h2 className="text-2xl font-bold mt-10 mb-4 border-b pb-2">7. Thay đổi Chính sách Bảo mật</h2>
+          <h2 className="text-2xl font-bold mt-10 mb-4 border-b pb-2">8. Thay đổi Chính sách Bảo mật</h2>
           <p className="text-slate-600">
             Chúng tôi có thể cập nhật Chính sách Bảo mật này theo thời gian do các thay đổi về tính năng, luật pháp hoặc
             sự phát triển của công nghệ. Mọi thay đổi lớn sẽ được thông báo rõ ràng bằng email hoặc thông báo trực tiếp
             khi phụ huynh mở ứng dụng.
           </p>
 
-          <h2 className="text-2xl font-bold mt-10 mb-4 border-b pb-2">8. Liên hệ</h2>
+          <h2 className="text-2xl font-bold mt-10 mb-4 border-b pb-2">9. Liên hệ</h2>
           <p className="text-slate-600">
             Nếu có bất kỳ thắc mắc nào về Chính sách Bảo mật, vui lòng liên hệ với chúng tôi:
           </p>
