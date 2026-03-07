@@ -12,17 +12,25 @@ import avatarBoy from "@/assets/avatar-boy.webp";
 import avatarGirl from "@/assets/avatar-girl.webp";
 //main bg
 import BgImage from "@/assets/bg-games-home.webp";
-import { GameGroupType, Group, GROUPS } from "@/libs/constants/groups";
-import { COURSES } from "@/libs/constants/courses";
+import { GameGroupType, Group } from "@/libs/constants/groups";
 import { playButtonSound } from "@/libs/utils/playSound";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/context/UserContext";
 
-interface GamesMapProps {
-  courses: CourseDef[];
+interface LeanCourse {
+  id: string;
+  title: string;
+  icon: StaticImageData;
+  type: string;
 }
 
-export function GamesMap({ courses }: GamesMapProps) {
+interface GamesMapProps {
+  courses: CourseDef[]; // Server fetched progress data
+  staticCourses: LeanCourse[]; // Lean constants data without heavy lessons
+  groups: Group[];
+}
+
+export function GamesMap({ courses, staticCourses, groups }: GamesMapProps) {
   const { user } = useUser();
   const router = useRouter();
   const [activeGroupId, setActiveGroupId] = useState<string | null>(null);
@@ -32,7 +40,7 @@ export function GamesMap({ courses }: GamesMapProps) {
 
   // Find which group type the last played game belongs to
   const lastPlayedGroupType = lastPlayedCourseId
-    ? COURSES.find((c) => c.id === lastPlayedCourseId)?.type || null
+    ? staticCourses.find((c) => c.id === lastPlayedCourseId)?.type || null
     : null;
 
   /**
@@ -99,10 +107,10 @@ export function GamesMap({ courses }: GamesMapProps) {
           sizes="(max-width: 1024px) 100vw, 1024px"
         />
         <div className="flex flex-wrap justify-center gap-x-10 md:gap-x-20 gap-y-10 relative z-20 w-full h-full">
-          {GROUPS.map((group, i) => {
+          {groups.map((group, i) => {
             const isActive = activeGroupId === group.id;
             const isAnotherGroupActive = activeGroupId !== null && !isActive;
-            const groupGames = COURSES.filter((g) => g.type === group.id);
+            const groupGames = staticCourses.filter((g) => g.type === group.id);
             const radius = 130;
             const isLastPlayedGroup = lastPlayedGroupType === group.id;
 
@@ -156,8 +164,8 @@ export function GamesMap({ courses }: GamesMapProps) {
                   <Image
                     src={group.icon}
                     alt={group.title}
-                    priority={i < 3} // Prioritize first few icons for LCP
-                    sizes="(max-width: 640px) 96px, 128px"
+                    priority={i < 4} // Prioritize first few icons for LCP
+                    sizes="(max-width: 640px) 72px, 128px"
                     className="w-24 h-24 sm:w-32 sm:h-32 object-contain drop-shadow-[0_10px_10px_rgba(0,0,0,0.15)]"
                   />
                   {/* Last played indicator */}

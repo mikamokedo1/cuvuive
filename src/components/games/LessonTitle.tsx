@@ -7,7 +7,7 @@ export const LessonTitle = ({
 }) => {
   const Tag = tag;
   return (
-    <Tag className="text-3xl md:text-6xl text-orange-500 font-display font-bold text-center drop-shadow-sm text-center">
+    <Tag className="text-2xl md:text-6xl text-orange-500 font-display font-bold text-center drop-shadow-sm text-center">
       {children}
     </Tag>
   );

@@ -109,7 +109,7 @@ export function SignupForm() {
             alt="Owl Companion"
             width={280}
             height={280}
-            className="drop-shadow-2xl animate-bounce-subtle mx-auto transform hover:scale-105 transition-transform duration-300"
+            className="w-[200px] md:w-[280px] drop-shadow-2xl animate-bounce-subtle mx-auto transform hover:scale-105 transition-transform duration-300"
           />
         </div>
       </div>

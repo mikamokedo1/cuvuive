@@ -49,10 +49,10 @@ export default function Home() {
       <main>
         {/* Hero Section */}
         <header className="relative pt-20 pb-32 lg:pt-32 lg:pb-40 overflow-hidden">
-          {/* Background decorations */}
-          <div className="absolute top-20 left-10 w-72 h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob transform-gpu will-change-transform"></div>
-          <div className="absolute top-40 right-10 w-72 h-72 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-2000 transform-gpu will-change-transform"></div>
-          <div className="absolute -bottom-8 left-1/3 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-4000 transform-gpu will-change-transform"></div>
+          {/* Background decorations - Hidden on mobile for GPU performance */}
+          <div className="hidden md:block absolute top-20 left-10 w-72 h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob transform-gpu will-change-transform"></div>
+          <div className="hidden md:block absolute top-40 right-10 w-72 h-72 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-2000 transform-gpu will-change-transform"></div>
+          <div className="hidden md:block absolute -bottom-8 left-1/3 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-4000 transform-gpu will-change-transform"></div>
 
           <div className="container mx-auto px-6 relative z-10 text-center flex flex-col items-center">
             <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-orange-100 text-orange-600 font-bold text-sm mb-10 shadow-sm border border-orange-200/50 hover:bg-orange-200 transition-colors cursor-default">
@@ -154,8 +154,9 @@ export default function Home() {
           id="games"
           className="py-24 relative overflow-hidden bg-slate-900 rounded-[3rem] mx-2 lg:mx-8 my-8 shadow-2xl"
         >
-          <div className="absolute inset-0 bg-[url('/patterns/stardust.png')] opacity-20 mix-blend-overlay"></div>
-          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-br from-indigo-500/20 to-purple-500/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3"></div>
+          {/* Background patterns - simplified for mobile performance */}
+          <div className="absolute inset-0 bg-[url('/patterns/stardust.png')] opacity-10 md:opacity-20 md:mix-blend-overlay"></div>
+          <div className="hidden md:block absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-br from-indigo-500/20 to-purple-500/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3"></div>
           <div className="container mx-auto px-6 relative z-10 text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 text-white/90 font-bold mb-6 backdrop-blur-md">
               <Trophy className="w-4 h-4 text-yellow-400" />
@@ -234,7 +235,7 @@ export default function Home() {
 
         {/* CTA Section */}
         <section className="py-24 relative overflow-hidden bg-gradient-to-br from-[#FF9C01] to-orange-500">
-          <div className="absolute inset-0 bg-[url('/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
+          <div className="absolute inset-0 bg-[url('/patterns/cubes.png')] opacity-5 md:opacity-10 md:mix-blend-overlay"></div>
           <div className="container mx-auto px-6 relative z-10 text-center text-white">
             <h2 className="text-4xl md:text-6xl font-extrabold font-[family-name:var(--font-baloo-2)] mb-8 tracking-tight drop-shadow-md">
               Khơi dậy tiềm năng cùng bé

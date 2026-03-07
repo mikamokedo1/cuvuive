@@ -33,7 +33,7 @@ export default function FDLessonPage() {
   };
 
   const LessonContent = (
-    <main>
+    <main className="w-full h-full flex items-center justify-center flex-1">
       <DifferenceBoard
         originalImage={lesson.originalImage}
         modifiedImage={lesson.modifiedImage}
