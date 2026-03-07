@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  cuthongminh-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cuthongminh_web
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+    env_file:
+      - .env.production

@@ -43,10 +43,10 @@ export function CostumeLearnLesson({ costumes, onComplete }: CostumeLearnLessonP
   }, [currentIndex, currentCostume, speak]);
 
   return (
-    <div ref={swipeRef} className="flex flex-col items-center gap-6 md:gap-8 w-full max-w-4xl px-4 py-8">
+    <div ref={swipeRef} className="flex flex-col items-center gap-6 md:gap-8 w-full max-w-5xl px-4 py-8">
       {/* Costume Display */}
-      <div className="flex items-center justify-center w-full max-w-[240px] md:max-w-xs mt-4">
-        <CostumeCard costume={currentCostume} isFlipped={true} />
+      <div className="flex items-center justify-center w-full mt-4">
+        <CostumeCard costume={currentCostume} />
       </div>
       {/* Controls */}
       <div className="flex items-center gap-6 mt-8">

@@ -1,158 +1,140 @@
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { CostumeData } from "./constants";
-import { playButtonSound } from "@/libs/utils/playSound";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
+import { playButtonSound } from "@/libs/utils/playSound";
+import { CardFlip, Card } from "@/components/games/CardFlip";
 
 interface CostumeMemoryLessonProps {
   costumes: CostumeData[];
   onComplete: () => void;
-  pairsCount?: number; // How many pairs to show
-}
-
-interface CardType {
-  id: string; // Unique ID for the card instance
-  costumeId: string; // The ID of the costume it represents
-  content: string | undefined; // Image URL or Text to display
-  type: "image" | "text"; // Type of content
-  isFlipped: boolean;
-  isMatched: boolean;
+  pairsCount?: number; // Number of unique costumes to use (default 6)
 }
 
 export function CostumeMemoryLesson({ costumes, onComplete, pairsCount = 6 }: CostumeMemoryLessonProps) {
-  const [cards, setCards] = useState<CardType[]>([]);
-  const [flippedCards, setFlippedCards] = useState<number[]>([]);
-  const [matches, setMatches] = useState(0);
+  const { speak } = useTextToSpeech();
+  const [cards, setCards] = useState<Card[]>([]);
+  const [flippedCards, setFlippedCards] = useState<string[]>([]);
+  const [matchedPairs, setMatchedPairs] = useState(0);
+  const [moves, setMoves] = useState(0);
   const [isLocked, setIsLocked] = useState(false);
-  useEffect(() => {
-    // Select pairsCount random costumes
-    const shuffledCostumes = [...costumes].sort(() => 0.5 - Math.random()).slice(0, pairsCount);
 
-    // Create a pair for each costume: one image, one text (name + country)
-    const newCards: CardType[] = [];
-    shuffledCostumes.forEach((costume) => {
-      newCards.push({
-        id: `${costume.id}-img`,
-        costumeId: costume.id,
-        content: costume.image ? (costume.image as any).src : "", // Need string for image source or handle static import
-        type: "image",
+  // Initialize game
+  useEffect(() => {
+    initializeGame();
+    speak("Lật thẻ để tìm cặp trang phục giống nhau!");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [costumes]);
+
+  const initializeGame = () => {
+    // Pick random costumes for the game
+    const shuffledCostumes = [...costumes].sort(() => Math.random() - 0.5);
+    const selectedCostumes = shuffledCostumes.slice(0, Math.min(pairsCount, costumes.length));
+
+    // Create pairs
+    const cardPairs: Card[] = [];
+    selectedCostumes.forEach((costume, index) => {
+      cardPairs.push({
+        id: `${costume.id}-a-${index}`,
+        data: costume,
         isFlipped: false,
         isMatched: false,
       });
-      newCards.push({
-        id: `${costume.id}-txt`,
-        costumeId: costume.id,
-        content: `${costume.name}\n(${costume.category})`,
-        type: "text",
+      cardPairs.push({
+        id: `${costume.id}-b-${index}`,
+        data: costume,
         isFlipped: false,
         isMatched: false,
       });
     });
 
-    // Shuffle the cards
-    newCards.sort(() => 0.5 - Math.random());
-    setCards(newCards);
-  }, [costumes, pairsCount]);
+    // Shuffle cards
+    const shuffledCards = cardPairs.sort(() => Math.random() - 0.5);
+    setCards(shuffledCards);
+    setFlippedCards([]);
+    setMatchedPairs(0);
+    setMoves(0);
+  };
 
-  const handleCardClick = (index: number) => {
+  const handleCardClick = (cardId: string) => {
+    // Ignore if locked, already flipped, or matched
     if (isLocked) return;
-    if (cards[index].isFlipped || cards[index].isMatched) return;
-
-    const newCards = [...cards];
-    newCards[index].isFlipped = true;
-    setCards(newCards);
-
-    const newFlippedCards = [...flippedCards, index];
-    setFlippedCards(newFlippedCards);
-
     playButtonSound();
+    const card = cards.find((c) => c.id === cardId);
+    if (!card || card.isFlipped || card.isMatched) return;
 
-    if (newFlippedCards.length === 2) {
+    // Ignore if already flipped 2 cards
+    if (flippedCards.length >= 2) return;
+
+    // Flip the card
+    const newFlipped = [...flippedCards, cardId];
+    setFlippedCards(newFlipped);
+
+    setCards((prev) => prev.map((c) => (c.id === cardId ? { ...c, isFlipped: true } : c)));
+
+    // Speak costume name
+    speak(card.data.name);
+
+    // Check for match when 2 cards are flipped
+    if (newFlipped.length === 2) {
+      setMoves((prev) => prev + 1);
       setIsLocked(true);
-      const [firstIndex, secondIndex] = newFlippedCards;
 
-      if (cards[firstIndex].costumeId === cards[secondIndex].costumeId) {
-        // Match
+      const [firstId, secondId] = newFlipped;
+      const firstCard = cards.find((c) => c.id === firstId);
+      const secondCard = cards.find((c) => c.id === secondId);
+
+      if (firstCard && secondCard && firstCard.data.id === secondCard.data.id) {
+        // Match found!
         setTimeout(() => {
-          const matchedCards = [...cards];
-          matchedCards[firstIndex].isMatched = true;
-          matchedCards[secondIndex].isMatched = true;
-          setCards(matchedCards);
+          speak("Đúng rồi!");
+          setCards((prev) => prev.map((c) => (c.id === firstId || c.id === secondId ? { ...c, isMatched: true } : c)));
+          setMatchedPairs((prev) => {
+            const newCount = prev + 1;
+            // Check win condition
+            if (newCount >= Math.min(pairsCount, costumes.length)) {
+              setTimeout(() => {
+                speak("Tuyệt vời! Bạn đã hoàn thành!");
+                playWinEffect(1000);
+                setTimeout(onComplete, 2000);
+              }, 500);
+            }
+            return newCount;
+          });
           setFlippedCards([]);
           setIsLocked(false);
-          setMatches((m) => m + 1);
-          playWinEffect(0);
-
-          if (matches + 1 === pairsCount) {
-            setTimeout(onComplete, 1500);
-          }
-        }, 1000);
+        }, 600);
       } else {
-        // No match
+        // No match - flip back
         setTimeout(() => {
-          const resetCards = [...cards];
-          resetCards[firstIndex].isFlipped = false;
-          resetCards[secondIndex].isFlipped = false;
-          setCards(resetCards);
+          speak("Thử lại nhé");
+          setCards((prev) => prev.map((c) => (c.id === firstId || c.id === secondId ? { ...c, isFlipped: false } : c)));
           setFlippedCards([]);
           setIsLocked(false);
-        }, 1500);
+        }, 1000);
       }
     }
   };
 
+  const totalPairs = Math.min(pairsCount, costumes.length);
+
   return (
-    <div className="flex flex-col items-center justify-center max-w-4xl mx-auto w-full px-4 h-full py-8">
-      <div className="text-center mb-6">
-        <h2 className="text-2xl md:text-3xl font-bold text-slate-700">Tìm cặp giống nhau</h2>
-        <p className="text-slate-500 mt-2">Ghép trang phục với tên của chúng</p>
+    <div className="flex flex-col items-center gap-6 w-full max-w-4xl px-4">
+      {/* Progress & Stats */}
+      <div className="flex items-center gap-6 text-lg font-bold">
+        <div className="bg-green-100 text-green-700 px-4 py-2 rounded-full">
+          Cặp: {matchedPairs}/{totalPairs}
+        </div>
+        <div className="bg-blue-100 text-blue-700 px-4 py-2 rounded-full">Lượt: {moves}</div>
       </div>
 
-      <div className="grid grid-cols-3 md:grid-cols-4 gap-3 md:gap-4 w-full max-w-2xl">
-        {cards.map((card, index) => (
-          <div
-            key={card.id}
-            onClick={() => handleCardClick(index)}
-            className="relative aspect-square cursor-pointer preserve-3d transition-transform duration-500"
-            style={{
-              transform: card.isFlipped || card.isMatched ? "rotateY(180deg)" : "rotateY(0)",
-            }}
-          >
-            {/* Front of card (Hidden, showing ? mark) */}
-            <div
-              className={`absolute inset-0 backface-hidden bg-white rounded-xl md:rounded-2xl shadow-sm border-2 md:border-4 border-indigo-100 flex items-center justify-center ${
-                card.isMatched ? "opacity-0" : "opacity-100"
-              } transition-opacity duration-300`}
-            >
-              <span className="text-2xl md:text-4xl text-indigo-300 font-bold">?</span>
-            </div>
+      {/* Cards Grid */}
+      <div className="grid grid-cols-3 sm:grid-cols-4 gap-3 sm:gap-4 w-full max-w-2xl">
+        {cards.map((card) => {
+          const isRevealed = card.isFlipped || card.isMatched;
 
-            {/* Back of card (Revealed content) */}
-            <div
-              className={`absolute inset-0 backface-hidden rotate-y-180 rounded-xl md:rounded-2xl shadow-[0_0_15px_rgba(79,70,229,0.1)] border-2 md:border-4 flex items-center justify-center overflow-hidden
-              ${card.isMatched ? "bg-green-50 border-green-200" : "bg-white border-indigo-200"}`}
-            >
-              {card.type === "image" ? (
-                <div className="relative w-full h-full p-2 md:p-4">
-                  {/* use next/image component for the source from memory */}
-                  <Image
-                    src={costumes.find((c) => c.id === card.costumeId)?.image!}
-                    alt=""
-                    fill
-                    className="object-contain"
-                    sizes="25vw"
-                  />
-                </div>
-              ) : (
-                <div className="text-center p-2">
-                  <span className="text-sm md:text-lg font-bold text-slate-700 leading-tight whitespace-pre-line block">
-                    {card.content}
-                  </span>
-                </div>
-              )}
-            </div>
-          </div>
-        ))}
+          return <CardFlip key={card.id} card={card} isRevealed={isRevealed} handleCardClick={handleCardClick} />;
+        })}
       </div>
     </div>
   );

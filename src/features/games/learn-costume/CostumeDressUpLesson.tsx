@@ -138,26 +138,6 @@ export function CostumeDressUpLesson({ costumes, onComplete }: CostumeDressUpLes
       onTouchEnd={handleDragEnd}
       onMouseLeave={handleDragEnd}
     >
-      {/* Progress and Prompt */}
-      <div className="text-center w-full mb-4">
-        <div className="flex items-center justify-center gap-2 mb-2">
-          {Array.from({ length: totalRounds }).map((_, idx) => (
-            <div
-              key={idx}
-              className={`h-2 w-8 md:w-12 rounded-full transition-colors ${
-                idx < currentRound ? "bg-green-500" : idx === currentRound ? "bg-indigo-500" : "bg-slate-200"
-              }`}
-            />
-          ))}
-        </div>
-
-        <div className="bg-white px-6 py-3 rounded-2xl shadow-sm inline-block border-2 border-indigo-100">
-          <h2 className="text-xl md:text-2xl font-bold text-slate-700 flex items-center justify-center gap-2">
-            Mặc trang phục <span className="text-indigo-600">{currentTarget.category}</span>
-          </h2>
-        </div>
-      </div>
-
       {/* Character Area */}
       <div className="flex-1 w-full flex items-center justify-center relative mb-8">
         <div
@@ -197,25 +177,6 @@ export function CostumeDressUpLesson({ costumes, onComplete }: CostumeDressUpLes
             <div className="absolute inset-[-10px] rounded-[3rem] border-4 border-dashed border-indigo-400 opacity-50 animate-pulse pointer-events-none"></div>
           )}
         </div>
-
-        <AnimatePresence>
-          {isMatched && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5, y: -20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              className="absolute top-1/4 right-0 md:right-1/4 z-10"
-            >
-              <div className="bg-green-500 text-white p-3 md:p-4 rounded-3xl shadow-lg flex items-center gap-2">
-                <Check className="w-6 h-6 md:w-8 md:h-8" />
-                <div>
-                  <div className="font-bold text-base md:text-lg">{currentTarget.name}</div>
-                  <div className="text-xs md:text-sm bg-green-600 rounded-full px-2 mt-1">{currentTarget.category}</div>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </div>
 
       {/* Options Tray */}
