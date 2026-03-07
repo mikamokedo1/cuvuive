@@ -47,7 +47,7 @@ export function OddOneOutBoard({ groupId, onComplete }: OddOneOutBoardProps) {
 
     // Play group-specific instruction on first render, then short prompt after
     setTimeout(() => {
-      speak(score === 0 ? "Hình nào khác biệt nhỉ?" : "Tiếp tục nào!");
+      speak(score === 0 ? "Hình nào khác biệt?" : "Tiếp tục nào!");
     }, 500);
 
     // Help the kid out if they take too long (5s)

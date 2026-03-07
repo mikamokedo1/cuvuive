@@ -25,7 +25,7 @@ export const GameLayout = ({ children, title, backTo, showBackButton = true }: G
       <Image src={BgImage} alt="Background" fill className="object-cover -z-10" priority />
 
       {/* Header / Nav */}
-      <div className="w-full max-w-6xl mx-auto flex items-center justify-between mb-6">
+      <div className="w-full max-w-6xl mx-auto flex items-center justify-between mb-10">
         {showBackButton && (
           <ActionButton
             variant="glossy"
@@ -45,7 +45,7 @@ export const GameLayout = ({ children, title, backTo, showBackButton = true }: G
         <div className="w-16" />
       </div>
 
-      <div className="flex-1 w-full max-w-6xl mx-auto flex flex-col items-center justify-center">{children}</div>
+      <div className="flex-1 w-full max-w-6xl mx-auto flex flex-col items-center">{children}</div>
     </div>
   );
 };

@@ -107,7 +107,7 @@ export function OccupationMatchLesson({ occupations, onComplete, requiredWins = 
       </div>
 
       {/* Tool Options */}
-      <div className="grid grid-cols-3 gap-4 md:gap-8 w-full max-w-2xl justify-items-center mt-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 md:gap-10 w-full max-w-3xl justify-items-center mt-8">
         {toolOptions.map((option) => {
           const isSelected = selectedId === option.id;
           const isCorrectAnswer = feedback === "correct" && option.id === targetOccupation.id;

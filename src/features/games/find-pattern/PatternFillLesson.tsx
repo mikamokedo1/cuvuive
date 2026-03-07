@@ -115,7 +115,7 @@ export function PatternFillLesson({ groupId, onComplete, requiredWins = 6 }: Pat
       </div>
 
       {/* Options */}
-      <div className="flex items-center justify-center gap-6 md:gap-10">
+      <div className="flex items-center justify-center gap-6 md:gap-10 flex-wrap">
         {options.map((option, i) => (
           <button
             key={i}
