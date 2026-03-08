@@ -124,7 +124,7 @@ export function SettingsView() {
                   className="drop-shadow-lg object-contain"
                 />
               </div>
-              <h2 className="text-2xl text-purple-600 font-display mb-2 drop-shadow-sm">Cài Đặt Tài Khoản</h2>
+              <h2 className="text-2xl text-orange-600 font-display mb-2 drop-shadow-sm">Cài Đặt Tài Khoản</h2>
               <p className="text-gray-500 font-medium text-sm">Cập nhật thông tin của bé yêu nhé!</p>
             </div>
 

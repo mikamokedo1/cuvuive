@@ -34,5 +34,32 @@ export default function sitemap(): MetadataRoute.Sitemap {
     console.error("Error generating sitemap for games:", error);
   }
 
-  return [...staticRoutes, ...gameRoutes];
+  // Dynamically get all blog routes
+  const blogsDir = path.join(process.cwd(), "content/blogs");
+  let blogRoutes: MetadataRoute.Sitemap = [];
+
+  try {
+    if (fs.existsSync(blogsDir)) {
+      const blogFiles = fs.readdirSync(blogsDir).filter((file) => file.endsWith(".mdx"));
+
+      blogRoutes = blogFiles.map((file) => {
+        const slug = file.replace(/\.mdx$/, "");
+        return {
+          url: `${baseUrl}/blogs/${slug}`,
+          lastModified: new Date(),
+          changeFrequency: "weekly",
+          priority: 0.7,
+        };
+      });
+    }
+  } catch (error) {
+    console.error("Error generating sitemap for blogs:", error);
+  }
+
+  // Also add the main /blogs listing page
+  const blogListingRoute: MetadataRoute.Sitemap = [
+    { url: `${baseUrl}/blogs`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 },
+  ];
+
+  return [...staticRoutes, ...gameRoutes, ...blogListingRoute, ...blogRoutes];
 }

@@ -1,9 +1,6 @@
-import Link from "next/link";
-import { ArrowLeft, ShieldCheck } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 import type { Metadata } from "next";
-import LogoLong from "@/assets/logo-long.webp";
-import LogoShort from "@/assets/logo.png";
-import Image from "next/image";
+import { HeaderHome } from "@/components/layout/HeaderHome";
 
 export const metadata: Metadata = {
   title: "Chính sách bảo mật | Cú Thông Minh",
@@ -13,15 +10,7 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   return (
     <div className="min-h-screen bg-slate-50 font-[family-name:var(--font-nunito-sans)]">
-      {/* Navigation Bar Minimal */}
-      <nav className="border-b border-slate-200 bg-white sticky top-0 z-50">
-        <div className="container mx-auto px-6 h-20 flex items-center justify-between">
-          <Link href="/">
-            <Image className="md:block hidden" src={LogoLong} alt="Logo" width={256} height={56} />
-            <Image className="md:hidden" src={LogoShort} alt="Logo" width={56} height={56} />
-          </Link>
-        </div>
-      </nav>
+      <HeaderHome />
 
       {/* Main Content */}
       <main className="container mx-auto px-6 py-12 md:py-20 max-w-4xl">

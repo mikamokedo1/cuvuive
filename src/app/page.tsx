@@ -3,8 +3,8 @@ import { ArrowRight, Brain, Sparkles, Trophy, Shield, Heart, Gamepad2, CheckCirc
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { GROUPS } from "@/libs/constants/groups";
-import LogoLong from "@/assets/logo-long.webp";
-import LogoShort from "@/assets/logo.png";
+import { Footer } from "@/components/layout/Footer";
+import { HeaderHome } from "@/components/layout/HeaderHome";
 
 const TestimonialSlider = dynamic(() =>
   import("@/components/common/TestimonialSlider").then((mod) => mod.TestimonialSlider),
@@ -31,20 +31,7 @@ export default function Home() {
     <div className="min-h-screen bg-slate-50 font-[family-name:var(--font-nunito-sans)] overflow-x-hidden">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {/* Navigation */}
-      <nav className="container mx-auto px-6 py-4 flex justify-between items-center relative z-10 pt-6">
-        <Link href="/">
-          <Image className="md:block hidden" src={LogoLong} alt="Logo" width={256} height={56} priority />
-          <Image className="md:hidden" src={LogoShort} alt="Logo" width={56} height={56} priority />
-        </Link>
-        <div className="flex items-center gap-4">
-          <Link
-            href="/games"
-            className="px-6 py-3 bg-[#FF9C01] hover:bg-orange-500 text-slate-900 font-bold rounded-full shadow-[0_4px_14px_0_rgba(255,156,1,0.39)] hover:shadow-[0_6px_20px_rgba(255,156,1,0.23)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
-          >
-            Bắt đầu khám phá
-          </Link>
-        </div>
-      </nav>
+      <HeaderHome />
 
       <main>
         {/* Hero Section */}
@@ -272,27 +259,7 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white py-12 border-t border-slate-100">
-        <div className="container mx-auto px-6 flex flex-col md:flex-row gap-8 items-center justify-between font-medium">
-          <Image src={LogoLong} alt="Logo" width={256} height={56} />
-
-          <div className="text-slate-500 text-center md:text-left text-sm">
-            &copy; {new Date().getFullYear()} Cú Thông Minh. Bản quyền thuộc về Cú Thông Minh Educational.
-          </div>
-
-          <div className="flex gap-6 text-slate-500 text-sm">
-            <Link href="/privacy" className="hover:text-[#FF9C01] font-semibold transition-colors block py-2">
-              Chính sách bảo mật
-            </Link>
-            <Link href="/terms" className="hover:text-[#FF9C01] font-semibold transition-colors block py-2">
-              Điều khoản
-            </Link>
-            <Link href="/feedback" className="hover:text-[#FF9C01] font-semibold transition-colors block py-2">
-              Hỗ trợ
-            </Link>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
