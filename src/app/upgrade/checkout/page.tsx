@@ -8,8 +8,10 @@ import { ActionButton } from "@/components/common/ActionButton";
 import { Loader2, CheckCircle2 } from "lucide-react";
 import confetti from "canvas-confetti";
 import owlHi from "@/assets/games/common/owl-say-hi.webp";
+import { useUser } from "@/context/UserContext";
 
 function CheckoutContent() {
+  const { refreshSubscription } = useUser();
   const router = useRouter();
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId");
@@ -113,6 +115,11 @@ function CheckoutContent() {
     }, 250);
   };
 
+  const handleBack = async () => {
+    await refreshSubscription();
+    router.push("/games");
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-sky-100 flex flex-col items-center justify-center">
@@ -155,12 +162,7 @@ function CheckoutContent() {
               <p className="text-lg text-gray-600 mb-8 font-semibold">
                 Cảm ơn bạn. Tài khoản Premium đã được kích hoạt. Chúc bé học thật vui!
               </p>
-              <ActionButton
-                onClick={() => router.push("/games")}
-                variant="glossy"
-                color="green"
-                className="px-8 py-3 text-lg"
-              >
+              <ActionButton onClick={handleBack} variant="glossy" color="green" className="px-8 py-3 text-lg">
                 Bắt Đầu Học Ngay
               </ActionButton>
             </div>
