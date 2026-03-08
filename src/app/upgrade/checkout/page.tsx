@@ -53,7 +53,7 @@ function CheckoutContent() {
           setOrderInfo({ amount: data.amount, cartCode: data.cartCode });
         } else {
           // Fallback to construct it
-          setOrderInfo({ amount: 0, cartCode: `CUVUIVE${orderId}` });
+          setOrderInfo({ amount: 0, cartCode: `SEVQR${orderId}` });
         }
       } catch (err) {
         console.error(err);

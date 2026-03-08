@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
     // Let's insert a row first, then update it with the cartCode = `CUVUIVE${id}`
 
     // Start with a temporary cartCode just to fulfill the NOT NULL constraint
-    const tempCartCode = `TMP_${Date.now()}`;
+    const tempCartCode = `TMP_SEVQR_${Date.now()}`;
 
     const [newOrder] = await db
       .insert(orders)
@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
       .returning();
 
     // Now update the order with the friendly cartCode mapping back to the order ID
-    const finalCartCode = `CUVUIVE${newOrder.id}`;
+    const finalCartCode = `SEVQR${newOrder.id}`;
 
     const [finalOrder] = await db
       .update(orders)

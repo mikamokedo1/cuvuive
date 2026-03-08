@@ -28,10 +28,10 @@ export async function POST(request: NextRequest) {
     }
 
     // 3. Extract Order ID from description
-    // Look for our specific cart code prefix "CUVUIVE" followed by digits
-    const match = description.match(/CUVUIVE(\d+)/i);
+    // Look for our specific cart code prefix "SEVQR" followed by digits
+    const match = description.match(/SEVQR(\d+)/i);
     if (!match) {
-      console.log("No matching CUVUIVE order code found in transfer description.");
+      console.log("No matching SEVQR order code found in transfer description.");
       return NextResponse.json({ success: true, message: "Ignored: No order code" });
     }
 
