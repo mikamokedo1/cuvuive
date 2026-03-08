@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, integer, boolean, uniqueIndex } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, integer, boolean, uniqueIndex, serial } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 
 export const users = pgTable("users", {
@@ -135,8 +135,23 @@ export const subscriptions = pgTable("subscriptions", {
   status: text("status").notNull(), // "active", "cancelled", "expired"
   startDate: timestamp("start_date").defaultNow(),
   endDate: timestamp("end_date"),
-  paymentProvider: text("payment_provider"), // "vnpay", "manual"
+  paymentProvider: text("payment_provider"), // "vnpay", "manual", "sepay"
   transactionId: text("transaction_id"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const orders = pgTable("orders", {
+  // Using serial for a short ID that's easy to embed in standard bank transfer descriptions
+  id: serial("id").primaryKey(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id),
+  planId: text("plan_id")
+    .notNull()
+    .references(() => plans.id),
+  amount: integer("amount").notNull(),
+  status: text("status").notNull().default("pending"), // "pending", "paid", "cancelled"
+  cartCode: text("cart_code").notNull(), // e.g. "CUVUIVE1045"
   createdAt: timestamp("created_at").defaultNow(),
 });
 

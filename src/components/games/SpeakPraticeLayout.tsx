@@ -1,11 +1,12 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { Mic, MicOff, AlertCircle } from "lucide-react";
+import { Mic, MicOff, AlertCircle, Settings } from "lucide-react";
 import Image from "next/image";
 import Loading from "../common/Loading";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
+import { useMicrophonePermission } from "@/hooks/useMicrophonePermission";
 import { fuzzyMatchVietnamese } from "@/libs/utils/fuzzyMatch";
 import { EntityData, FeedbackType } from "@/types/game";
 import { playButtonSound } from "@/libs/utils/playSound";
@@ -19,6 +20,7 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
   const { speak } = useTextToSpeech();
   const { isListening, transcript, interimTranscript, isSupported, startListening, stopListening, resetTranscript } =
     useSpeechRecognition("vi-VN");
+  const { status: micStatus, requestPermission } = useMicrophonePermission();
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [feedback, setFeedback] = useState<FeedbackType>(null);
@@ -162,13 +164,89 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
 
   if (!isSupported) {
     return (
-      <div className="flex flex-col items-center justify-center p-8 bg-orange-50 rounded-3xl border-4 border-orange-200 text-center max-w-lg mt-10">
-        <AlertCircle className="w-16 h-16 text-orange-400 mb-4" />
-        <h2 className="text-2xl font-bold text-orange-600 mb-2">Trình duyệt không hỗ trợ</h2>
-        <p className="text-orange-800 text-lg">
-          Tiếc quá, trình duyệt của bạn không hỗ trợ tính năng nhận diện giọng nói. Bạn hãy thử mở bằng{" "}
-          <b>Google Chrome</b> hoặc <b>Safari</b> nhé!
+      <div className="flex flex-col items-center justify-center p-8 bg-orange-50 rounded-3xl border-4 border-orange-200 text-center max-w-lg mt-10 gap-4">
+        <AlertCircle className="w-16 h-16 text-orange-400" />
+        <h2 className="text-2xl font-bold text-orange-600">Không thể sử dụng giọng nói</h2>
+        <p className="text-orange-800 text-lg leading-relaxed">
+          Trình duyệt hiện tại không hỗ trợ tính năng nhận diện giọng nói. Hãy thử các cách sau:
         </p>
+        <div className="bg-white rounded-2xl p-4 border-2 border-orange-100 text-left w-full space-y-3">
+          <div>
+            <p className="font-semibold text-orange-700">1. Mở bằng Safari 🧭</p>
+            <p className="text-slate-600 text-base">
+              Nếu bạn đang mở từ Facebook, Zalo, hoặc ứng dụng khác, hãy bấm <b>&quot;Mở trong Safari&quot;</b> hoặc
+              copy link và dán vào Safari.
+            </p>
+          </div>
+          <div>
+            <p className="font-semibold text-orange-700">2. Bật tính năng Đọc chính tả 🎙️</p>
+            <p className="text-slate-600 text-base">
+              Vào <b>Cài đặt</b> → <b>Cài đặt chung</b> → <b>Bàn phím</b> → Bật <b>Đọc chính tả</b>
+            </p>
+          </div>
+          <div>
+            <p className="font-semibold text-orange-700">3. Cập nhật iOS 📲</p>
+            <p className="text-slate-600 text-base">Tính năng này yêu cầu iOS 14.5 trở lên.</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Microphone permission gate
+  if (micStatus !== "granted") {
+    return (
+      <div className="flex flex-col items-center justify-center p-8 bg-blue-50 rounded-3xl border-4 border-blue-200 text-center max-w-lg mt-10 gap-6">
+        {micStatus === "denied" ? (
+          <>
+            <Settings className="w-16 h-16 text-orange-400" />
+            <h2 className="text-2xl font-bold text-orange-600">Cần bật quyền micro 🎤</h2>
+            <p className="text-orange-800 text-lg leading-relaxed">
+              Bạn đã chặn quyền truy cập micro trước đó. Để chơi trò này, bạn cần bật lại trong cài đặt trình duyệt:
+            </p>
+            <div className="bg-white rounded-2xl p-4 border-2 border-orange-100 text-left w-full">
+              <p className="font-semibold text-orange-700 mb-2">📱 Trên iPhone (Safari):</p>
+              <p className="text-slate-600 text-base mb-3">
+                Vào <b>Cài đặt</b> → <b>Safari</b> → <b>Micro</b> → <b>Cho phép</b>
+              </p>
+              <p className="font-semibold text-orange-700 mb-2">💻 Trên máy tính (Chrome):</p>
+              <p className="text-slate-600 text-base">
+                Bấm vào biểu tượng 🔒 trên thanh địa chỉ → <b>Micro</b> → <b>Cho phép</b>
+              </p>
+            </div>
+            <button
+              onClick={requestPermission}
+              className="bg-blue-500 hover:bg-blue-400 active:scale-95 text-white font-bold text-lg px-8 py-4 rounded-2xl shadow-lg transition-all duration-200"
+            >
+              🔄 Thử lại
+            </button>
+          </>
+        ) : (
+          <>
+            <div className="w-24 h-24 bg-blue-500 rounded-full flex items-center justify-center shadow-xl">
+              <Mic className="w-12 h-12 text-white" />
+            </div>
+            <h2 className="text-2xl font-bold text-blue-700">Cho phép sử dụng micro 🎤</h2>
+            <p className="text-blue-800 text-lg leading-relaxed">
+              Trò chơi này cần nghe giọng nói của bé. Bấm nút bên dưới và chọn <b>&quot;Cho phép&quot;</b> khi trình
+              duyệt hỏi nhé!
+            </p>
+            <button
+              onClick={requestPermission}
+              disabled={micStatus === "requesting"}
+              className={`
+                font-bold text-lg px-8 py-4 rounded-2xl shadow-lg transition-all duration-200
+                ${
+                  micStatus === "requesting"
+                    ? "bg-blue-300 cursor-wait text-white"
+                    : "bg-green-500 hover:bg-green-400 active:scale-95 text-white"
+                }
+              `}
+            >
+              {micStatus === "requesting" ? "Đang chờ..." : "✅ Bắt đầu"}
+            </button>
+          </>
+        )}
       </div>
     );
   }

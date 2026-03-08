@@ -57,13 +57,28 @@ function UpgradeContent() {
 
   const handleUpgrade = async (packageId: string) => {
     setIsLoading(packageId);
-    // Simulate upgrade process
-    // TODO: Call actual upgrade action or open payment gateway
-    setTimeout(() => {
-      toast.success("Nâng cấp thành công! Chào mừng Premium Member.");
+
+    try {
+      const response = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ planCode: packageId }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Không thể tạo đơn hàng");
+      }
+
+      // Redirect to the checkout page with the newly created order ID
+      router.push(`/upgrade/checkout?orderId=${data.order.id}`);
+    } catch (error: any) {
+      toast.error(error.message || "Đã xảy ra lỗi, vui lòng thử lại sau.");
+      console.error("Order creation error:", error);
+    } finally {
       setIsLoading(null);
-      router.push(nextUrl);
-    }, 1500);
+    }
   };
 
   if (isFetchingPlans) {
