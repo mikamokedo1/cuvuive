@@ -23,6 +23,19 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
   const [currentIndex, setCurrentIndex] = useState(0);
   const [feedback, setFeedback] = useState<FeedbackType>(null);
   const [hasTried, setHasTried] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(
+        typeof window !== "undefined" &&
+          (window.innerWidth <= 768 || "ontouchstart" in window || navigator.maxTouchPoints > 0),
+      );
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const targetEntity = entities[currentIndex];
 
@@ -39,15 +52,18 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
       speak(`${targetEntity.name}`);
 
       // Auto-start microphone after TTS finishes (approx 1.5 seconds)
-      const listenTimer = setTimeout(() => {
-        startListening();
-      }, 1500);
+      // Only auto-start on desktop. On mobile, require explicit user tap.
+      if (!isMobile) {
+        const listenTimer = setTimeout(() => {
+          startListening();
+        }, 1500);
 
-      return () => clearTimeout(listenTimer);
+        return () => clearTimeout(listenTimer);
+      }
     }, 800);
 
     return () => clearTimeout(speakTimer);
-  }, [currentIndex, targetEntity, speak, startListening, resetTranscript]);
+  }, [currentIndex, targetEntity, speak, startListening, resetTranscript, isMobile]);
 
   const goToNextQuestion = () => {
     if (currentIndex + 1 >= entities.length) {
@@ -74,7 +90,7 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
       setTimeout(() => {
         setFeedback(null);
         resetTranscript();
-        startListening();
+        if (!isMobile) startListening();
       }, 2000);
       return;
     }
@@ -88,12 +104,22 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
       setTimeout(() => {
         setFeedback(null);
         resetTranscript();
-        startListening();
+        if (!isMobile) startListening();
       }, 2000);
     }, 2500);
 
     return () => clearTimeout(resetTimer);
-  }, [transcript, interimTranscript, isListening, feedback, speak, resetTranscript, startListening, stopListening]);
+  }, [
+    transcript,
+    interimTranscript,
+    isListening,
+    feedback,
+    speak,
+    resetTranscript,
+    startListening,
+    stopListening,
+    isMobile,
+  ]);
 
   // Handle speech result
   useEffect(() => {
@@ -118,12 +144,12 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
           setFeedback(null);
           resetTranscript();
           // Auto-start microphone again after "Thử lại nhé"
-          startListening();
+          if (!isMobile) startListening();
         }, 2000);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isListening, transcript, targetEntity, feedback]);
+  }, [isListening, transcript, targetEntity, feedback, isMobile]);
 
   const handleMicClick = () => {
     playButtonSound();

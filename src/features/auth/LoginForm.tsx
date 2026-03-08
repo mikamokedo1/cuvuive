@@ -120,14 +120,14 @@ export function LoginForm() {
             Đăng nhập bằng Google
           </button>
 
-          <button
+          {/* <button
             type="button"
             onClick={() => handleSocialLogin("facebook")}
             className="cursor-pointer w-full flex items-center justify-center gap-3 bg-[#1877F2] text-white font-bold py-3 rounded-xl hover:bg-[#166FE5] transition-all shadow-md active:scale-[0.98]"
           >
             <FacebookIcon className="w-6 h-6" />
             Đăng nhập bằng Facebook
-          </button>
+          </button> */}
         </div>
 
         <div className="relative mb-6">

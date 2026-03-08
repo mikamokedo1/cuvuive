@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 
 // Add types for SpeechRecognition since they aren't built-in
 interface SpeechRecognitionEvent extends Event {
@@ -56,22 +56,64 @@ export function useSpeechRecognition(lang: string = "vi-VN"): UseSpeechRecogniti
   const [error, setError] = useState<string | null>(null);
 
   const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const langRef = useRef(lang);
 
+  // Keep lang ref in sync
+  useEffect(() => {
+    langRef.current = lang;
+  }, [lang]);
+
+  // Check support on mount
   useEffect(() => {
     if (typeof window === "undefined") return;
-
-    // Initialize speech recognition
     const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognitionAPI) {
+      setIsSupported(false);
+    }
+  }, []);
 
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (recognitionRef.current) {
+        try {
+          recognitionRef.current.abort();
+        } catch {
+          // ignore error on unmount
+        }
+        recognitionRef.current = null;
+      }
+    };
+  }, []);
+
+  const startListening = useCallback(() => {
+    if (typeof window === "undefined") return;
+
+    const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognitionAPI) {
       setIsSupported(false);
       return;
     }
 
+    // Abort any existing instance first (critical for iOS Safari)
+    if (recognitionRef.current) {
+      try {
+        recognitionRef.current.abort();
+      } catch {
+        // ignore
+      }
+      recognitionRef.current = null;
+    }
+
+    // Create a fresh instance each time (iOS Safari requires this)
     const recognition = new SpeechRecognitionAPI();
-    recognition.continuous = false; // Stop automatically when the user stops speaking
-    recognition.interimResults = true; // Give results while speaking
-    recognition.lang = lang;
+    recognition.continuous = false;
+    recognition.interimResults = true;
+    recognition.lang = langRef.current;
+
+    setError(null);
+    setTranscript("");
+    setInterimTranscript("");
 
     recognition.onstart = () => {
       setIsListening(true);
@@ -97,8 +139,10 @@ export function useSpeechRecognition(lang: string = "vi-VN"): UseSpeechRecogniti
     };
 
     recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
-      console.error("Speech recognition error", event.error);
-      if (event.error !== "no-speech") {
+      console.error("Speech recognition error:", event.error);
+      // "no-speech" is not a real error, just means the user didn't say anything
+      // "aborted" happens when we intentionally abort, also not a real error
+      if (event.error !== "no-speech" && event.error !== "aborted") {
         setError(event.error);
       }
       setIsListening(false);
@@ -110,28 +154,11 @@ export function useSpeechRecognition(lang: string = "vi-VN"): UseSpeechRecogniti
 
     recognitionRef.current = recognition;
 
-    return () => {
-      if (recognitionRef.current) {
-        try {
-          recognitionRef.current.stop();
-        } catch (e) {
-          // ignore error on unmount
-        }
-      }
-    };
-  }, [lang]);
-
-  const startListening = useCallback(() => {
-    setError(null);
-    setTranscript("");
-    setInterimTranscript("");
-
-    if (recognitionRef.current) {
-      try {
-        recognitionRef.current.start();
-      } catch (e) {
-        console.error("Speech recognition is already started");
-      }
+    try {
+      recognition.start();
+    } catch (e) {
+      console.error("Failed to start speech recognition:", e);
+      setIsListening(false);
     }
   }, []);
 
@@ -139,7 +166,7 @@ export function useSpeechRecognition(lang: string = "vi-VN"): UseSpeechRecogniti
     if (recognitionRef.current) {
       try {
         recognitionRef.current.stop();
-      } catch (e) {
+      } catch {
         // ignore
       }
     }

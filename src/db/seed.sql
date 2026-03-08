@@ -658,3 +658,34 @@ ON CONFLICT (id) DO UPDATE SET
   is_free = EXCLUDED.is_free,
   sort_index = EXCLUDED.sort_index;
 
+-- Learn Clock Course
+INSERT INTO courses (id, title, description, thumbnail, sort_index) VALUES
+  ('learn-clock', 'Học Xem Đồng Hồ', 'Bé học cách xem đồng hồ kim và đồng hồ điện tử.', '/assets/games/learn-clock/logo.png', 23)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  description = EXCLUDED.description,
+  thumbnail = EXCLUDED.thumbnail,
+  sort_index = EXCLUDED.sort_index;
+
+-- Learn Clock Groups
+INSERT INTO groups (id, slug, course_id, title, sort_index) VALUES
+  ('learn-clock-group1', 'group1', 'learn-clock', 'Đồng hồ kim', 1),
+  ('learn-clock-group2', 'group2', 'learn-clock', 'Đồng hồ điện tử', 2)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  sort_index = EXCLUDED.sort_index;
+
+-- Learn Clock Lessons
+INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) VALUES
+  -- Group 1
+  ('learn-clock-g1-l1', 'lesson1', 'learn-clock-group1', 'learn-clock', 'Làm quen đồng hồ kim', true, 1),
+  ('learn-clock-g1-l2', 'lesson2', 'learn-clock-group1', 'learn-clock', 'Chọn đúng giờ', false, 2),
+  ('learn-clock-g1-l3', 'lesson3', 'learn-clock-group1', 'learn-clock', 'Chỉnh kim đồng hồ', false, 3),
+  -- Group 2
+  ('learn-clock-g2-l1', 'lesson1', 'learn-clock-group2', 'learn-clock', 'Làm quen đồng hồ', true, 1),
+  ('learn-clock-g2-l2', 'lesson2', 'learn-clock-group2', 'learn-clock', 'Chọn đúng giờ', false, 2)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  is_free = EXCLUDED.is_free,
+  sort_index = EXCLUDED.sort_index;
+

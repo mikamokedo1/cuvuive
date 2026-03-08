@@ -25,6 +25,7 @@ import PaintPictureLogo from "@/assets/games/paint-picture/logo.png";
 import GameEmotionLogo from "@/assets/games/learn-emotion/logo.png";
 import MixColorLogo from "@/assets/games/learn-color-color.webp"; // Using placeholder
 import GameCostumeLogo from "@/assets/games/learn-costume/logo.png";
+import GameClockLogo from "@/assets/games/learn-clock/logo-main.png";
 import { StaticImageData } from "next/image";
 import { GameGroupType } from "@/libs/constants/groups";
 
@@ -1011,6 +1012,32 @@ export const COURSES: CourseDef[] = [
         lessons: [
           { id: "lesson1", title: "Tô tự do", isFree: true },
           { id: "lesson2", title: "Hoạ Khám Phá" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "learn-clock",
+    title: "Xem Đồng Hồ",
+    description: "Bé học cách xem đồng hồ kim và đồng hồ điện tử.",
+    icon: GameClockLogo,
+    type: "life-skill",
+    groups: [
+      {
+        id: "group1",
+        title: "Đồng hồ kim",
+        lessons: [
+          { id: "lesson1", title: "Làm quen đồng hồ", isFree: true },
+          { id: "lesson2", title: "Chọn đúng giờ" },
+          { id: "lesson3", title: "Chỉnh kim đồng hồ" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Đồng hồ điện tử",
+        lessons: [
+          { id: "lesson1", title: "Làm quen đồng hồ", isFree: true },
+          { id: "lesson2", title: "Chọn đúng giờ" },
         ],
       },
     ],

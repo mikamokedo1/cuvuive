@@ -130,7 +130,7 @@ export function SignupForm() {
             <GoogleIcon className="w-6 h-6" />
             Đăng ký bằng Google
           </button>
-
+          {/* 
           <button
             type="button"
             onClick={() => handleSocialLogin("facebook")}
@@ -138,7 +138,7 @@ export function SignupForm() {
           >
             <FacebookIcon className="w-6 h-6" />
             Đăng ký bằng Facebook
-          </button>
+          </button> */}
         </div>
 
         <div className="relative mb-6">
