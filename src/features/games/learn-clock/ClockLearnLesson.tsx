@@ -43,6 +43,13 @@ export function ClockLearnLesson({ type, onComplete }: ClockLearnLessonProps) {
     }
   };
 
+  useEffect(() => {
+    const currentItem = items[currentIndex];
+    if (currentItem) {
+      speak(timeToText(currentItem.hours, currentItem.minutes));
+    }
+  }, [currentIndex]);
+
   const swipeRef = useSwipe({ onSwipeLeft: handleNext, onSwipeRight: handlePrev });
 
   if (items.length === 0) return null;
@@ -70,9 +77,6 @@ export function ClockLearnLesson({ type, onComplete }: ClockLearnLessonProps) {
               onClick={() => speak(timeToText(currentItem.hours, currentItem.minutes))}
             />
           )}
-        </div>
-        <div className="text-3xl md:text-5xl font-extrabold text-blue-800 bg-white px-10 py-5 rounded-3xl shadow-md border-4 border-blue-200 uppercase tracking-wide">
-          {timeToText(currentItem.hours, currentItem.minutes)}
         </div>
       </div>
 

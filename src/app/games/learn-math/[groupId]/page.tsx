@@ -28,17 +28,19 @@ export default function GroupLessonsPage() {
   };
 
   const groupId = typeof params.groupId === "string" ? params.groupId : "";
-  const config = GROUP_CONFIG[groupId];
-  config.lessons = config.lessons.map((lesson: any) => {
+  const baseConfig = GROUP_CONFIG[groupId];
+
+  if (!baseConfig) {
+    return <div>Group not found</div>;
+  }
+
+  // Create a safe copy of lessons to avoid mutating GROUP_CONFIG
+  const lessons = baseConfig.lessons.map((lesson: any) => {
     return {
       ...lesson,
       icon: iconMap[lesson.icon],
     };
   });
-
-  if (!config) {
-    return <div>Group not found</div>;
-  }
 
   // Helper to check group unlock
   const isGroupUnlocked = (gId: string) => {
@@ -80,8 +82,8 @@ export default function GroupLessonsPage() {
   let activeIndex = -1;
 
   if (!isGroupCompleted) {
-    for (let i = config.lessons.length - 1; i >= 0; i--) {
-      if (isLessonUnlocked(groupId, config.lessons[i].id)) {
+    for (let i = lessons.length - 1; i >= 0; i--) {
+      if (isLessonUnlocked(groupId, lessons[i].id)) {
         activeIndex = i;
         break;
       }
@@ -96,8 +98,8 @@ export default function GroupLessonsPage() {
   return (
     <GameWrapLessons
       gameId="learn-math"
-      lessons={config.lessons}
-      title={config.title}
+      lessons={lessons}
+      title={baseConfig.title}
       activeIndex={activeIndex}
       handleLessonClick={handleLessonClick}
     />

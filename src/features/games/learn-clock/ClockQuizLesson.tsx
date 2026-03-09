@@ -31,27 +31,30 @@ export function ClockQuizLesson({ type, onComplete }: ClockQuizLessonProps) {
   const handleSelect = (option: TimeScenario) => {
     if (selectedOption !== null) return; // Prevent double click
     setSelectedOption(option);
+    speak(timeToText(option.hours, option.minutes));
 
-    const currentQ = items[currentIndex].question;
-    const isCorrect = option.hours === currentQ.hours && option.minutes === currentQ.minutes;
+    setTimeout(() => {
+      const currentQ = items[currentIndex].question;
+      const isCorrect = option.hours === currentQ.hours && option.minutes === currentQ.minutes;
 
-    if (isCorrect) {
-      playCorrectSound();
-      playWinEffect(0);
-      setTimeout(() => {
-        setSelectedOption(null);
-        if (currentIndex < items.length - 1) {
-          setCurrentIndex(currentIndex + 1);
-        } else {
-          onComplete();
-        }
-      }, 1500);
-    } else {
-      playWrongSound();
-      setTimeout(() => {
-        setSelectedOption(null);
-      }, 1000); // give them another chance after 1s
-    }
+      if (isCorrect) {
+        playCorrectSound();
+        playWinEffect(0);
+        setTimeout(() => {
+          setSelectedOption(null);
+          if (currentIndex < items.length - 1) {
+            setCurrentIndex(currentIndex + 1);
+          } else {
+            onComplete();
+          }
+        }, 1500);
+      } else {
+        playWrongSound();
+        setTimeout(() => {
+          setSelectedOption(null);
+        }, 1000); // give them another chance after 1s
+      }
+    }, 1000);
   };
 
   if (items.length === 0) return null;
@@ -67,14 +70,14 @@ export function ClockQuizLesson({ type, onComplete }: ClockQuizLessonProps) {
             hours={currentItem.question.hours}
             minutes={currentItem.question.minutes}
             size={280}
-            onClick={() => speak(timeToText(currentItem.question.hours, currentItem.question.minutes))}
+            // onClick={() => speak(timeToText(currentItem.question.hours, currentItem.question.minutes))}
           />
         ) : (
           <DigitalClock
             hours={currentItem.question.hours}
             minutes={currentItem.question.minutes}
             size="lg"
-            onClick={() => speak(timeToText(currentItem.question.hours, currentItem.question.minutes))}
+            // onClick={() => speak(timeToText(currentItem.question.hours, currentItem.question.minutes))}
           />
         )}
       </div>

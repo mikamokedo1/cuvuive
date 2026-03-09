@@ -9,6 +9,7 @@ export interface Lesson {
   id: string;
   title: string;
   icon: React.ReactNode;
+  hideIcon?: boolean;
 }
 
 interface LessonCardProps {
@@ -29,9 +30,11 @@ export const LessonCard = ({ lesson, unlocked, isActive, onClick }: LessonCardPr
       >
         <div className="flex items-center justify-between relative z-10">
           <div className="flex flex-col gap-3">
-            <div className="w-14 h-14 bg-[#2C9AFF] rounded-2xl flex items-center justify-center shadow-[0_4px_0_#1a7ccf]">
-              {lesson.icon}
-            </div>
+            {!lesson.hideIcon && lesson.icon && (
+              <div className="w-14 h-14 bg-[#2C9AFF] rounded-2xl flex items-center justify-center shadow-[0_4px_0_#1a7ccf]">
+                {lesson.icon}
+              </div>
+            )}
             <h3 className="text-xl font-bold text-[#FF6B00]">{lesson.title}</h3>
           </div>
           <div className="relative w-32 h-32 z-0">
@@ -59,7 +62,9 @@ export const LessonCard = ({ lesson, unlocked, isActive, onClick }: LessonCardPr
       onClick={() => onClick(lesson.id)}
     >
       <div className="flex items-center gap-4 flex-1">
-        <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-green-500">{lesson.icon}</div>
+        {!lesson.hideIcon && lesson.icon && (
+          <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-green-500">{lesson.icon}</div>
+        )}
         <div className="flex flex-col">
           <h3 className={cn("text-lg font-bold", unlocked ? "text-slate-700" : "text-slate-400")}>{lesson.title}</h3>
           {!unlocked && <p className="text-slate-400 text-xs font-semibold">Đang khóa</p>}
