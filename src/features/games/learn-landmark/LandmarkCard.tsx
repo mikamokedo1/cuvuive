@@ -45,7 +45,6 @@ export function LandmarkCard({ landmark, active = false, onClick }: LandmarkCard
       </div>
 
       {/* Landmark Name */}
-      <div className="text-2xl md:text-3xl font-bold text-center text-gray-800 drop-shadow-sm">{landmark.name}</div>
     </div>
   );
 }

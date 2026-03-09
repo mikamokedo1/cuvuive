@@ -10,6 +10,8 @@ const TestimonialSlider = dynamic(() =>
   import("@/components/common/TestimonialSlider").then((mod) => mod.TestimonialSlider),
 );
 
+const LatestBlogs = dynamic(() => import("@/components/blog/LatestBlogs"));
+
 export default function Home() {
   const jsonLd = {
     "@context": "https://schema.org",
@@ -184,9 +186,10 @@ export default function Home() {
                 ][i % 8];
 
                 return (
-                  <div
+                  <Link
                     key={group.id}
-                    className={`aspect-square sm:aspect-auto sm:h-64 rounded-3xl bg-gradient-to-br ${bgGradient} p-6 flex flex-col items-center justify-center text-white hover:scale-[1.03] transition-transform duration-300 cursor-pointer shadow-lg hover:shadow-2xl relative overflow-hidden group`}
+                    href={`/${group.slug}`}
+                    className={`aspect-square sm:aspect-auto sm:h-64 rounded-3xl bg-gradient-to-br ${bgGradient} p-6 flex flex-col items-center justify-center text-white hover:scale-[1.03] transition-transform duration-300 shadow-lg hover:shadow-2xl relative overflow-hidden group`}
                   >
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
                     <div className="relative w-20 h-20 sm:w-24 sm:h-24 mb-4 transform group-hover:scale-110 group-hover:-translate-y-2 transition-transform duration-300 drop-shadow-md">
@@ -201,7 +204,7 @@ export default function Home() {
                     <span className="font-bold text-xl sm:text-2xl font-[family-name:var(--font-baloo-2)] text-center drop-shadow-md leading-tight mb-2">
                       {group.title}
                     </span>
-                  </div>
+                  </Link>
                 );
               })}
             </div>
@@ -217,6 +220,9 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* Latest Blogs Section */}
+        <LatestBlogs />
 
         {/* Testimonial / Social Proof (Slider) */}
         <section className="py-24 bg-white relative">

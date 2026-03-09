@@ -25,17 +25,18 @@ export type GameGroupType =
 export interface Group {
   id: GameGroupType;
   title: string;
+  slug: string;
   icon: StaticImageData;
 }
 
 export const GROUPS: Group[] = [
-  { id: "logic", title: "Tư Duy", icon: LogicLogo },
-  { id: "art", title: "Mỹ Thuật", icon: ArtLogo },
-  { id: "life-skill", title: "Kỹ Năng Sống", icon: LifeSkillLogo },
-  { id: "geography", title: "Địa Lý Tự Nhiên", icon: GeographyLogo },
-  { id: "music", title: "Âm Nhạc", icon: MusicLogo },
-  { id: "science", title: "Khoa Học", icon: ScienceLogo },
+  { id: "logic", title: "Tư Duy", slug: "tro-choi-tu-duy", icon: LogicLogo },
+  { id: "art", title: "Mỹ Thuật", slug: "tro-choi-my-thuat", icon: ArtLogo },
+  { id: "life-skill", title: "Kỹ Năng Sống", slug: "ky-nang-song", icon: LifeSkillLogo },
+  { id: "geography", title: "Địa Lý Tự Nhiên", slug: "dia-ly-tu-nhien", icon: GeographyLogo },
+  { id: "music", title: "Âm Nhạc", slug: "am-nhac", icon: MusicLogo },
+  { id: "science", title: "Khoa Học", slug: "khoa-hoc", icon: ScienceLogo },
   // { id: "history", title: "Lịch Sử", icon: HistoryLogo },
-  { id: "language", title: "Ngôn Ngữ", icon: LanguageLogo },
-  { id: "math", title: "Toán Học", icon: MathLogo },
+  { id: "language", title: "Ngôn Ngữ", slug: "hoc-tieng-viet-cho-be", icon: LanguageLogo },
+  { id: "math", title: "Toán Học", slug: "tro-choi-toan-hoc", icon: MathLogo },
 ];

@@ -29,6 +29,12 @@ export default function GroupLessonsPage() {
 
   const groupId = typeof params.groupId === "string" ? params.groupId : "";
   const config = GROUP_CONFIG[groupId];
+  config.lessons = config.lessons.map((lesson: any) => {
+    return {
+      ...lesson,
+      icon: iconMap[lesson.icon],
+    };
+  });
 
   if (!config) {
     return <div>Group not found</div>;

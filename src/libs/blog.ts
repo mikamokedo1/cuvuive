@@ -99,3 +99,20 @@ export async function getAllPosts(): Promise<BlogPost[]> {
     return [];
   }
 }
+/**
+ * Gets paginated blog posts
+ */
+export async function getPaginatedPosts(
+  page: number = 1,
+  limit: number = 6,
+): Promise<{ posts: BlogPost[]; total: number }> {
+  const allPosts = await getAllPosts();
+  const total = allPosts.length;
+  const offset = (page - 1) * limit;
+  const paginatedPosts = allPosts.slice(offset, offset + limit);
+
+  return {
+    posts: paginatedPosts,
+    total,
+  };
+}
