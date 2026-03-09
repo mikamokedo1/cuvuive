@@ -26,7 +26,7 @@ export default function GlobalError({ error, reset }: { error: Error & { digest?
                      active:translate-y-1 active:brightness-95
                      transition-all duration-150 cursor-pointer"
         >
-          🔄 Thử lại
+          Thử lại
         </button>
       </div>
     </div>

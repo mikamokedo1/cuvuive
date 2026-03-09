@@ -17,13 +17,27 @@ export default function Home() {
     name: "Cú Thông Minh",
     url: "https://cuthongminh.com",
     description:
-      "Ứng dụng giáo dục tương tác giúp bé vừa học vừa chơi, phát triển tư duy toán học và ngôn ngữ một cách tự nhiên.",
+      "Ứng dụng giáo dục tương tác giúp bé vừa học vừa chơi, phát triển tư duy toán học và ngôn ngữ một cách tự nhiên qua hàng trăm trò chơi trực quan.",
     applicationCategory: "EducationalApplication",
+    genre: "Educational",
+    browserRequirements: "Requires JavaScript",
+    softwareVersion: "1.2.0",
     operatingSystem: "All",
     offers: {
       "@type": "Offer",
       price: "0",
       priceCurrency: "VND",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Cú Thông Minh",
+      logo: "https://cuthongminh.com/icons/favicon-32x32.png",
+    },
+    screenshot: "https://cuthongminh.com/og-image.png",
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      reviewCount: "1280",
     },
   };
 

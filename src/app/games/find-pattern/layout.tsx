@@ -1,10 +1,30 @@
 import { Metadata } from "next";
+import { GameSchema } from "@/components/common/GameSchema";
+import GamePatternLogo from "@/assets/games/find-pattern/logo.png";
 
 export const metadata: Metadata = {
   title: "Tìm Quy Luật | Cú Thông Minh",
   description: "Bé học tìm quy luật qua các hình dạng và màu sắc vui nhộn.",
+  openGraph: {
+    title: "Tìm Quy Luật | Cú Thông Minh",
+    description: "Phát triển tư duy logic qua trò chơi tìm quy luật.",
+    type: "website",
+    images: [
+      {
+        url: GamePatternLogo.src,
+        width: 1200,
+        height: 630,
+        alt: "Tìm Quy Luật | Cú Thông Minh",
+      },
+    ],
+  },
 };
 
 export default function FindPatternLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  return (
+    <>
+      <GameSchema courseId="find-pattern" />
+      {children}
+    </>
+  );
 }

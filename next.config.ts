@@ -4,6 +4,16 @@ const nextConfig: NextConfig = {
   /* config options here */
   output: "standalone",
   reactCompiler: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "vnlppyavpkuerviyszxg.supabase.co",
+        port: "",
+        pathname: "/storage/v1/object/public/**",
+      },
+    ],
+  },
   experimental: {
     optimizePackageImports: ["lucide-react", "framer-motion"],
   },

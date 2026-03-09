@@ -12,9 +12,6 @@ import { ProgressProvider } from "@/context/ProgressContext";
 import { PlayTimerProvider } from "@/context/PlayTimerContext";
 import { PlayTimerListener } from "@/features/parental/PlayTimerListener";
 
-import { createClient } from "@/libs/supabase/server";
-import { checkUserSubscription } from "@/libs/subscription";
-
 // Configure fonts
 const baloo2 = Baloo_2({
   subsets: ["vietnamese", "latin"],
@@ -40,8 +37,9 @@ export const metadata: Metadata = {
     "Cú Thông Minh là ứng dụng giáo dục tương tác giúp bé vừa học vừa chơi, phát triển tư duy toán học và ngôn ngữ một cách tự nhiên.",
   keywords: ["bé học toán", "học đếm", "giáo dục sớm", "trò chơi trí tuệ cho bé", "cú thông minh"],
   openGraph: {
-    title: "Cú Thông Minh - Vừa học vừa chơi",
-    description: "Ứng dụng giáo dục tương tác giúp bé phát triển tư duy.",
+    title: "Cú Thông Minh - Vừa học vừa chơi | Ứng dụng học tập cho bé",
+    description:
+      "Cú Thông Minh là nền tảng học mà chơi số 1 cho bé từ 3-8 tuổi, giúp bé phát triển tư duy toán học và ngôn ngữ.",
     url: "https://cuthongminh.com",
     siteName: "Cú Thông Minh",
     locale: "vi_VN",
@@ -58,7 +56,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Cú Thông Minh - Vừa học vừa chơi",
-    description: "Ứng dụng giáo dục tương tác giúp bé phát triển tư duy.",
+    description: "Ứng dụng giáo dục tương tác giúp bé phát triển tư duy toàn diện qua hàng trăm trò chơi lý thú.",
   },
   icons: {
     icon: [
@@ -83,8 +81,49 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const orgJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Cú Thông Minh",
+    url: "https://cuthongminh.com",
+    logo: "https://cuthongminh.com/icons/favicon-32x32.png",
+    description: "Nền tảng học tập tương tác cho bé từ 3-8 tuổi.",
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: "+84-888-222-293",
+      contactType: "customer service",
+      areaServed: "VN",
+      availableLanguage: "Vietnamese",
+    },
+    sameAs: ["https://www.facebook.com/cuthongminh", "https://www.youtube.com/@cuthongminh"],
+  };
+
+  const websiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Cú Thông Minh",
+    url: "https://cuthongminh.com",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: "https://cuthongminh.com/games?q={search_term_string}",
+      "query-input": "required name=search_term_string",
+    },
+  };
+
   return (
     <html lang="vi">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+          key="org-jsonld"
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+          key="website-jsonld"
+        />
+      </head>
       <body className={`${baloo2.variable} ${nunitoSans.variable} antialiased`} suppressHydrationWarning>
         <UserProvider>
           <AccessProvider>

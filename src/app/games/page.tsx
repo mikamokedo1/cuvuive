@@ -22,5 +22,32 @@ export default async function GamesPage() {
     type: course.type,
   }));
 
-  return <GamesMap courses={courses} staticCourses={staticCourses} groups={GROUPS} />;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Kho Trò Chơi Giáo Dục - Cú Thông Minh",
+    description:
+      "Hơn 20+ trò chơi giáo dục tương tác giúp bé phát triển trí tuệ toàn diện: Toán học, Âm nhạc, Động vật, Địa lý.",
+    url: "https://cuthongminh.com/games",
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: COURSES.map((course, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+          "@type": "CreativeWork",
+          name: course.title,
+          description: course.description,
+          url: `https://cuthongminh.com/games/${course.id}`,
+        },
+      })),
+    },
+  };
+
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <GamesMap courses={courses} staticCourses={staticCourses} groups={GROUPS} />
+    </>
+  );
 }
