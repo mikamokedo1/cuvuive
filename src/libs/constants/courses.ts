@@ -27,9 +27,9 @@ import MixColorLogo from "@/assets/games/learn-color-color.webp"; // Using place
 import GameCostumeLogo from "@/assets/games/learn-costume/logo.png";
 import GameClockLogo from "@/assets/games/learn-clock/logo-main.png";
 import MiniPianoLogo from "@/assets/games/mini-piano/logo.png";
-import CreativeGroupLogo from "@/assets/games/learn-instrument/group1.webp"; // Using placeholder for now
-import MusicianGroupLogo from "@/assets/games/learn-instrument/group2.webp";
-import EarGroupLogo from "@/assets/games/learn-instrument/group3.webp";
+import CreativeGroupLogo from "@/assets/games/mini-piano/group1.png";
+import MusicianGroupLogo from "@/assets/games/mini-piano/group2.png";
+import EarGroupLogo from "@/assets/games/mini-piano/group3.png";
 import { StaticImageData } from "next/image";
 import { GameGroupType } from "@/libs/constants/groups";
 
@@ -1058,13 +1058,11 @@ export const COURSES: CourseDef[] = [
     groups: [
       {
         id: "creative-sounds",
-        title: "Sáng Tạo Âm Thanh",
+        title: "Học đàn",
         description: "Khám phá các âm thanh vui nhộn",
         logo: CreativeGroupLogo,
         variant: "green",
-        lessons: [
-          { id: "classic-piano", title: "Piano cổ điển", isFree: true },
-        ],
+        lessons: [{ id: "classic-piano", title: "Piano cổ điển", isFree: true }],
       },
       {
         id: "mini-musician",
@@ -1079,7 +1077,6 @@ export const COURSES: CourseDef[] = [
           { id: "ba-oi-ba", title: "Bà ơi bà" },
           { id: "doi-ken-ti-hon", title: "Đội kèn tí hon" },
         ],
-
       },
       {
         id: "ear-training",
