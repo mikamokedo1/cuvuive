@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { COURSES } from "@/libs/constants/courses";
 import CreativeLesson from "@/features/games/mini-piano/CreativeLesson";
@@ -10,6 +11,7 @@ import Header from "@/components/layout/Header";
 import { ArrowLeft } from "lucide-react";
 import { useProgress } from "@/context/ProgressContext";
 import { ActionButton } from "@/components/common/ActionButton";
+import { CompletionModal } from "@/components/games/CompletionModal";
 
 export default function MiniPianoGamePage() {
     const params = useParams();
@@ -19,8 +21,23 @@ export default function MiniPianoGamePage() {
     const groupId = params.groupId as string;
     const lessonId = params.lessonId as string;
 
+    const [showComplete, setShowComplete] = useState(false);
+
+    const course = COURSES.find((c) => c.id === "mini-piano");
+    const group = course?.groups.find((g) => g.id === groupId);
+    const lessons = group?.lessons || [];
+    const lessonIndex = lessons.findIndex((l) => l.id === lessonId);
+
+    const currentLessonNum = lessonIndex + 1;
+    const isLastLesson = lessonIndex === lessons.length - 1;
+    const nextLessonNum = isLastLesson ? undefined : lessonIndex + 2;
+
     const handleComplete = () => {
         markLessonComplete(groupId, lessonId, "mini-piano");
+        setShowComplete(true);
+    };
+
+    const handleNext = () => {
         router.push(`/games/mini-piano/${groupId}`);
     };
 
@@ -62,6 +79,15 @@ export default function MiniPianoGamePage() {
                     )}
                 </div>
             </div>
+
+            <CompletionModal
+                isOpen={showComplete}
+                onNext={handleNext}
+                currentLessonNum={currentLessonNum}
+                nextLessonNum={nextLessonNum}
+                isGroupComplete={isLastLesson}
+            />
+
 
             {/* Decorative elements */}
             <div className="absolute top-20 -left-10 w-40 h-40 bg-blue-300/20 rounded-full blur-3xl" />
