@@ -9,6 +9,7 @@ import RepeatMelodyLesson from "@/features/games/mini-piano/RepeatMelodyLesson";
 import Header from "@/components/layout/Header";
 import { ArrowLeft } from "lucide-react";
 import { useProgress } from "@/context/ProgressContext";
+import { ActionButton } from "@/components/common/ActionButton";
 
 export default function MiniPianoGamePage() {
     const params = useParams();
@@ -24,17 +25,22 @@ export default function MiniPianoGamePage() {
     };
 
     return (
-        <main className="min-h-screen bg-gradient-to-br from-pink-100 via-blue-100 to-yellow-100 relative overflow-hidden">
+        <main className="min-h-screen bg-gradient-to-br from-pink-100 via-blue-100 to-yellow-100 relative overflow-hidden py-6 px-4 flex flex-col">
             <Header />
 
-            <div className="container mx-auto px-4 pt-8 pb-20 relative z-10">
-                <button
-                    onClick={() => router.push(`/games/mini-piano/${groupId}`)}
-                    className="mb-8 flex items-center gap-2 bg-white/90 hover:bg-white text-blue-600 px-6 py-3 rounded-full shadow-lg font-bold transition-all hover:scale-105 active:scale-95 group"
-                >
-                    <ArrowLeft className="text-2xl group-hover:-translate-x-1 transition-transform" />
-                    <span>Quay lại danh sách bài học</span>
-                </button>
+            <div className="flex-1 w-full max-w-6xl mx-auto flex flex-col items-center relative z-10 text-center">
+                <div className="w-full flex justify-start mb-8">
+                    <ActionButton
+                        variant="glossy"
+                        color="orange"
+                        size="auto"
+                        className="px-4 py-2 rounded-xl flex items-center gap-2"
+                        onClick={() => router.push(`/games/mini-piano/${groupId}`)}
+                    >
+                        <ArrowLeft size={20} className="text-white" />
+                        <span className="text-white font-bold">Quay lại</span>
+                    </ActionButton>
+                </div>
 
                 <div className="flex flex-col items-center">
                     {groupId === "creative-sounds" && <CreativeLesson lessonId={lessonId} />}

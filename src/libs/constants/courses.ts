@@ -1064,8 +1064,6 @@ export const COURSES: CourseDef[] = [
         variant: "green",
         lessons: [
           { id: "classic-piano", title: "Piano cổ điển", isFree: true },
-          { id: "animal-piano", title: "Tiếng thú vui nhộn" },
-          { id: "funny-sounds", title: "Âm thanh kỳ thú" },
         ],
       },
       {

@@ -81,7 +81,7 @@ export default function RepeatMelodyLesson({ onComplete }: RepeatMelodyLessonPro
     };
 
     return (
-        <div className="w-full max-w-6xl mx-auto px-4 py-8">
+        <div className="w-full">
             <div className="text-center mb-12">
                 <h2 className="text-4xl font-black text-purple-600 mb-4">Lặp lại giai điệu</h2>
                 <div className="flex justify-center gap-4">
@@ -94,7 +94,7 @@ export default function RepeatMelodyLesson({ onComplete }: RepeatMelodyLessonPro
             <div className="bg-[#4a4a4a] p-4 sm:p-8 rounded-[2rem] shadow-2xl border-t-[10px] border-[#333]">
                 <div className="flex justify-center gap-1 sm:gap-2">
                     {PIANO_NOTES.map((note) => (
-                        <div key={note.note} onClick={() => handleKeyTap(note.note)} className="w-full">
+                        <div key={note.note} onClick={() => handleKeyTap(note.note)} className="flex-1 min-w-0">
                             <PianoKey
                                 {...note}
                                 isHighlighted={!isPlayingMelody && playerSequence.length < melody.length && false} // No auto-highlight in this mode
