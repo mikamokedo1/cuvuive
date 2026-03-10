@@ -6,6 +6,7 @@ import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { FeedbackType } from "@/types/game";
+import { playWrongSound } from "@/libs/utils/playSound";
 
 interface ColorQuizLessonProps {
   colors: ColorData[];
@@ -72,6 +73,7 @@ export function ColorQuizLesson({ colors, onComplete, requiredWins = 5 }: ColorQ
       }, 1000);
     } else {
       // Wrong
+      playWrongSound();
       setFeedback("wrong");
       setTimeout(() => setFeedback(null), 600);
     }

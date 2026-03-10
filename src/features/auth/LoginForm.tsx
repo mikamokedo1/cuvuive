@@ -50,7 +50,6 @@ export function LoginForm() {
         const {
           data: { session },
         } = await supabase.auth.getSession();
-        console.log("Login Success - Session established:", !!session);
 
         // Read redirect URL from context or sessionStorage fallback
         const redirectUrl = paywallState.redirectUrl || getRedirectUrl() || "/games";

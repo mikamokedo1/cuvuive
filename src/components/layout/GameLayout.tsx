@@ -25,25 +25,27 @@ export const GameLayout = ({ children, title, backTo, showBackButton = true }: G
       <Image src={BgImage} alt="Background" fill className="object-cover -z-10" priority />
 
       {/* Header / Nav */}
-      <div className="w-full max-w-6xl mx-auto flex items-center justify-between mb-10">
-        {showBackButton && (
-          <ActionButton
-            variant="glossy"
-            color="orange"
-            size="auto"
-            className="px-4 py-2 rounded-xl flex items-center gap-2"
-            onClick={() => (backTo ? router.push(backTo) : router.back())}
-          >
-            <ArrowLeft size={20} className="text-white" />
-            <span className="text-white font-bold hidden sm:block">Quay lại</span>
-          </ActionButton>
-        )}
+      {(showBackButton || title) && (
+        <div className="w-full max-w-6xl mx-auto flex items-center justify-between mb-10">
+          {showBackButton && (
+            <ActionButton
+              variant="glossy"
+              color="orange"
+              size="auto"
+              className="px-4 py-2 rounded-xl flex items-center gap-2"
+              onClick={() => (backTo ? router.push(backTo) : router.back())}
+            >
+              <ArrowLeft size={20} className="text-white" />
+              <span className="text-white font-bold hidden sm:block">Quay lại</span>
+            </ActionButton>
+          )}
 
-        {title && <LessonTitle>{title}</LessonTitle>}
+          {title && <LessonTitle>{title}</LessonTitle>}
 
-        {/* Placeholder for settings/sound toggle */}
-        <div className="w-16" />
-      </div>
+          {/* Placeholder for settings/sound toggle */}
+          <div className="w-16" />
+        </div>
+      )}
 
       <div className="flex-1 w-full max-w-6xl mx-auto flex flex-col items-center">{children}</div>
     </div>

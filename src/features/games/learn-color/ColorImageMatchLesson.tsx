@@ -8,6 +8,7 @@ import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { FeedbackType } from "@/types/game";
+import { playWrongSound } from "@/libs/utils/playSound";
 
 interface ColorImageMatchLessonProps {
   colors: ColorData[];
@@ -69,10 +70,17 @@ export function ColorImageMatchLesson({ colors, onComplete, requiredWins = 5 }: 
         }
       }, 1000);
     } else {
+      playWrongSound();
       setFeedback("wrong");
       setTimeout(() => setFeedback(null), 600);
     }
   };
+
+  useEffect(() => {
+    if (targetColor) {
+      speak(`${targetColor.imageName} màu gì`);
+    }
+  }, [targetColor]);
 
   if (!targetColor) return <div>Loading...</div>;
 

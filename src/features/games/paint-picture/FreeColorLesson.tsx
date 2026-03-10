@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ColoringCanvas } from "./ColoringCanvas";
 import { ColoringImage, ALL_IMAGES } from "./constants";
-import { ChevronRight, ChevronLeft } from "lucide-react";
+import { ChevronRight, ChevronLeft, CheckCircle2 } from "lucide-react";
 
 interface FreeColorLessonProps {
   groupId: string;
@@ -22,19 +22,11 @@ export function FreeColorLesson({ groupId, onComplete }: FreeColorLessonProps) {
   }
 
   const handleImageComplete = () => {
+    if (completedImages.has(currentIndex)) return;
+
     const newCompleted = new Set(completedImages);
     newCompleted.add(currentIndex);
     setCompletedImages(newCompleted);
-
-    if (newCompleted.size === images.length) {
-      onComplete();
-    } else {
-      // Move to next uncompleted image
-      const nextIndex = images.findIndex((_, i) => !newCompleted.has(i) && i > currentIndex);
-      if (nextIndex !== -1) {
-        setCurrentIndex(nextIndex);
-      }
-    }
   };
 
   return (
@@ -68,8 +60,11 @@ export function FreeColorLesson({ groupId, onComplete }: FreeColorLessonProps) {
         </div>
 
         <button
-          onClick={() => setCurrentIndex(Math.min(images.length - 1, currentIndex + 1))}
-          disabled={currentIndex === images.length - 1}
+          onClick={() => {
+            currentIndex === images.length - 1
+              ? onComplete()
+              : setCurrentIndex(Math.min(images.length - 1, currentIndex + 1));
+          }}
           className="p-2 rounded-full bg-orange-100 disabled:opacity-30 hover:bg-orange-200 transition-colors"
         >
           <ChevronRight className="w-5 h-5 text-orange-600" />
@@ -83,6 +78,16 @@ export function FreeColorLesson({ groupId, onComplete }: FreeColorLessonProps) {
         regions={currentImage.regions}
         onComplete={handleImageComplete}
       />
+
+      {completedImages.size === images.length && (
+        <button
+          onClick={onComplete}
+          className="mt-4 flex items-center justify-center gap-2 w-full max-w-sm px-6 py-4 bg-gradient-to-r from-green-400 to-emerald-500 text-white font-bold rounded-3xl shadow-xl hover:scale-105 active:scale-95 transition-all text-xl mx-auto animate-bounce"
+        >
+          <CheckCircle2 className="w-8 h-8" />
+          <span>Hoàn Thành Bài Tập</span>
+        </button>
+      )}
     </div>
   );
 }

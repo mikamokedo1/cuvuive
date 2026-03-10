@@ -42,7 +42,6 @@ export function PatternQuizLesson({ groupId, onComplete, requiredWins = 6 }: Pat
 
     // Generate options: correct + 2 distractors
     const distractors = generateDistractors(answer, groupId, 3);
-    console.log(distractors);
     const allOptions = [answer, ...distractors].sort(() => Math.random() - 0.5);
     setOptions(allOptions);
     setFeedback(null);
@@ -81,7 +80,6 @@ export function PatternQuizLesson({ groupId, onComplete, requiredWins = 6 }: Pat
       setTimeout(() => setFeedback(null), 1000);
     }
   };
-  console.log(options);
   if (!currentPattern || !correctAnswer) return <div>Loading...</div>;
 
   return (

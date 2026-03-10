@@ -98,13 +98,13 @@ export const SONGS = {
       "F", // Happy birthday to you
       "C",
       "C",
-      "C2",
+      "C",
       "A",
       "F",
       "E",
       "D", // Happy birthday dear...
-      "A#",
-      "A#",
+      "A",
+      "A",
       "A",
       "F",
       "G",

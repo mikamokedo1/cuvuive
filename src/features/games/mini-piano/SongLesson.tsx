@@ -19,7 +19,7 @@ export default function SongLesson({ songId, onComplete }: SongLessonProps) {
 
   useEffect(() => {
     if (song) {
-      speak(`Hãy chơi bài hát ${song.title} theo hướng dẫn nhé!`);
+      speak(`Hãy chơi bài hát ${song.title}`);
     }
   }, [song, speak]);
 
@@ -27,7 +27,6 @@ export default function SongLesson({ songId, onComplete }: SongLessonProps) {
     if (note === song.notes[currentIndex]) {
       if (currentIndex === song.notes.length - 1) {
         playWinEffect(500);
-        speak(" Tuyệt vời! Bạn đã hoàn thành bài hát!");
         setTimeout(() => {
           onComplete();
         }, 1000);
@@ -35,9 +34,7 @@ export default function SongLesson({ songId, onComplete }: SongLessonProps) {
         setCurrentIndex(currentIndex + 1);
       }
     } else {
-      // Wrong note
       playWrongSound();
-      speak("Thử lại nhé!");
     }
   };
 

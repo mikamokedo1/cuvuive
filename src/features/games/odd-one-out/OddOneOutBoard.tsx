@@ -19,7 +19,6 @@ export function OddOneOutBoard({ groupId, onComplete }: OddOneOutBoardProps) {
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState<FeedbackType>(null);
   const [puzzle, setPuzzle] = useState<OddOneOutPuzzle | OddOneOutImagePuzzle | null>(null);
-  const [showHint, setShowHint] = useState(false);
   const hintTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const isGroup3 = groupId === "group3";
@@ -41,7 +40,6 @@ export function OddOneOutBoard({ groupId, onComplete }: OddOneOutBoardProps) {
       oddIndex: newOddIndex,
     });
     setFeedback(null);
-    setShowHint(false);
 
     if (hintTimeoutRef.current) clearTimeout(hintTimeoutRef.current);
 
@@ -49,11 +47,6 @@ export function OddOneOutBoard({ groupId, onComplete }: OddOneOutBoardProps) {
     setTimeout(() => {
       speak(score === 0 ? "Hình nào khác biệt?" : "Tiếp tục nào!");
     }, 500);
-
-    // Help the kid out if they take too long (5s)
-    hintTimeoutRef.current = setTimeout(() => {
-      setShowHint(true);
-    }, 5000);
   };
 
   useEffect(() => {
@@ -69,7 +62,6 @@ export function OddOneOutBoard({ groupId, onComplete }: OddOneOutBoardProps) {
 
     if (hintTimeoutRef.current) {
       clearTimeout(hintTimeoutRef.current);
-      setShowHint(false);
     }
 
     if (index === puzzle.oddIndex) {
@@ -117,7 +109,6 @@ export function OddOneOutBoard({ groupId, onComplete }: OddOneOutBoardProps) {
       >
         {puzzle.items.map((item, index) => {
           const isCorrectAnswer = index === puzzle.oddIndex;
-          const isHinted = showHint && isCorrectAnswer;
           const isSuccess = feedback === "correct" && isCorrectAnswer;
 
           const isImageItem = "image" in item;
@@ -132,12 +123,11 @@ export function OddOneOutBoard({ groupId, onComplete }: OddOneOutBoardProps) {
                 border-4 bg-white shadow-lg overflow-hidden
                 transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer
                 ${isSuccess ? "border-green-500 bg-green-50 scale-110 z-10" : "border-gray-100 hover:border-blue-300"}
-                ${isHinted ? "animate-pulse border-yellow-400 shadow-[0_0_20px_rgba(250,204,21,0.5)]" : ""}
                 ${feedback === "wrong" ? "opacity-90" : ""}
                 ${itemCount === 3 && index === 2 ? "col-span-2 lg:col-span-1" : ""}
               `}
             >
-              <div className={`relative ${isHinted ? "animate-bounce" : ""} ${isSuccess ? "animate-bounce-in" : ""}`}>
+              <div className={`relative ${isSuccess ? "animate-bounce-in" : ""}`}>
                 {isImageItem ? (
                   <div className={`relative ${svgClass}`}>
                     <Image

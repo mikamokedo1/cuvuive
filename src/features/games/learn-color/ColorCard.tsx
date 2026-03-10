@@ -11,28 +11,14 @@ interface ColorCardProps {
 }
 
 export function ColorCard({ color, active = false, onClick, showName = true }: ColorCardProps) {
-  const audioRef = useRef<HTMLAudioElement | null>(null);
   const { speak } = useTextToSpeech();
 
   useEffect(() => {
-    if (active && color.audio) {
-      playSound();
-    }
-  }, [active, color.id]);
-
-  const playSound = () => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = 0;
-      audioRef.current.play().catch((e) => console.log("Audio play failed", e));
-    }
-  };
+    speak(color.name);
+  }, [color.id]);
 
   return (
     <div
-      onClick={() => {
-        playSound();
-        onClick?.();
-      }}
       className={`
         relative flex flex-col items-center justify-center gap-6
         transform transition-all duration-300

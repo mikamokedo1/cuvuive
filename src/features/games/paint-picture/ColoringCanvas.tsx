@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { COLOR_PALETTE, ColorRegion } from "./constants";
-import { Eraser, RotateCcw } from "lucide-react";
+import { Eraser, RotateCcw, Camera } from "lucide-react";
 
 interface ColoringCanvasProps {
   svgPath: string;
@@ -13,12 +13,14 @@ interface ColoringCanvasProps {
 }
 
 export function ColoringCanvas({ svgPath, regions, guideColors, onComplete, showGuide = false }: ColoringCanvasProps) {
+  const svgWrapperRef = useRef<HTMLDivElement>(null);
   const [svgContent, setSvgContent] = useState<string>("");
   const [filledRegions, setFilledRegions] = useState<Record<string, string>>({});
   const [selectedColor, setSelectedColor] = useState<string>(COLOR_PALETTE[0].hex);
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
   const [isEraser, setIsEraser] = useState(false);
   const [feedback, setFeedback] = useState<Record<string, "correct" | "wrong">>({});
+  const [isCompleted, setIsCompleted] = useState(false);
 
   const regionIds = regions.map((r) => r.id);
 
@@ -32,22 +34,26 @@ export function ColoringCanvas({ svgPath, regions, guideColors, onComplete, show
 
   // Check completion
   const checkCompletion = useCallback(() => {
+    if (isCompleted) return;
+
     if (guideColors) {
       // Guide mode: all regions must match
       const allCorrect = regionIds.every((id) => {
         return filledRegions[id] && filledRegions[id].toUpperCase() === guideColors[id]?.toUpperCase();
       });
       if (allCorrect) {
+        setIsCompleted(true);
         setTimeout(onComplete, 500);
       }
     } else {
       // Free mode: all regions must have a color
       const allFilled = regionIds.every((id) => filledRegions[id]);
       if (allFilled) {
+        setIsCompleted(true);
         setTimeout(onComplete, 500);
       }
     }
-  }, [filledRegions, guideColors, regionIds, onComplete]);
+  }, [filledRegions, guideColors, regionIds, onComplete, isCompleted]);
 
   useEffect(() => {
     checkCompletion();
@@ -88,6 +94,63 @@ export function ColoringCanvas({ svgPath, regions, guideColors, onComplete, show
     setFilledRegions({});
     setFeedback({});
     setSelectedRegion(null);
+    setIsCompleted(false);
+  };
+
+  const handleSavePhoto = () => {
+    const svgElement = svgWrapperRef.current?.querySelector("svg");
+    if (!svgElement) return;
+
+    // Get width and height to maintain aspect ratio
+    const viewBox = svgElement.getAttribute("viewBox");
+    let width = 800;
+    let height = 600;
+
+    if (viewBox) {
+      const parts = viewBox.split(/[ ,\t]+/);
+      if (parts.length === 4) {
+        width = parseFloat(parts[2]);
+        height = parseFloat(parts[3]);
+      }
+    } else {
+      width = svgElement.clientWidth || 800;
+      height = svgElement.clientHeight || 600;
+    }
+
+    // Clone the SVG element so we don't modify the DOM
+    const clone = svgElement.cloneNode(true) as SVGElement;
+    // Ensure width and height are set for the image conversion
+    clone.setAttribute("width", width.toString());
+    clone.setAttribute("height", height.toString());
+
+    const svgData = new XMLSerializer().serializeToString(clone);
+    const svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+    const url = URL.createObjectURL(svgBlob);
+
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      // Scale up for better quality
+      const scale = 2;
+      canvas.width = width * scale;
+      canvas.height = height * scale;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+
+      // White background
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+      const dataUrl = canvas.toDataURL("image/jpeg", 0.9);
+      const link = document.createElement("a");
+      link.download = `Cuthongminh-Tomau-${Date.now()}.jpg`;
+      link.href = dataUrl;
+      link.click();
+      URL.revokeObjectURL(url);
+    };
+    img.src = url;
   };
 
   // Process SVG to add interactivity
@@ -143,6 +206,7 @@ export function ColoringCanvas({ svgPath, regions, guideColors, onComplete, show
 
       {/* SVG Canvas */}
       <div
+        ref={svgWrapperRef}
         className="relative bg-white rounded-2xl shadow-lg border-4 border-orange-200 p-4 w-full aspect-[4/3] flex items-center justify-center overflow-hidden cursor-pointer"
         onClick={(e) => {
           const target = e.target as SVGElement;
@@ -202,6 +266,17 @@ export function ColoringCanvas({ svgPath, regions, guideColors, onComplete, show
             title="Làm lại"
           >
             <RotateCcw className="w-5 h-5 text-red-500" />
+          </button>
+
+          <div className="w-px h-10 bg-gray-300 mx-1 md:mx-2" />
+
+          {/* Chụp Ảnh */}
+          <button
+            onClick={handleSavePhoto}
+            className="flex items-center gap-2 bg-gradient-to-r from-green-400 to-emerald-500 text-white px-3 md:px-4 py-2 rounded-xl shadow-md hover:scale-105 transition-transform active:scale-95 font-bold h-10 md:h-12"
+          >
+            <Camera className="w-5 h-5" />
+            <span className="hidden sm:inline">Chụp Ảnh</span>
           </button>
         </div>
       </div>
