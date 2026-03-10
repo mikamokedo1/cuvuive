@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { HeaderHome } from "@/components/layout/HeaderHome";
 import { Footer } from "@/components/layout/Footer";
-import { Brain, Heart, Sparkles, Users, Gamepad2, Rocket, ShieldCheck, MessageSquareHeart } from "lucide-react";
+import { Brain, Heart, BookOpenText, Users, Gamepad2, Rocket, ShieldCheck, MessageSquareHeart } from "lucide-react";
 import LogoLong from "@/assets/logo.png";
 
 export const metadata = {
@@ -26,7 +26,7 @@ export default function AboutUsPage() {
             <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
               <div className="lg:w-1/2 text-center lg:text-left">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-100 text-orange-600 font-bold text-sm mb-6 border border-orange-200">
-                  <Sparkles className="w-4 h-4" />
+                  <BookOpenText className="w-4 h-4" />
                   <span>Câu chuyện của chúng tôi</span>
                 </div>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold font-[family-name:var(--font-baloo-2)] text-slate-900 leading-tight mb-8">

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Brain, Sparkles, Trophy, Shield, Heart, Gamepad2, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Brain, BookOpen, Trophy, Shield, Heart, Gamepad2, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { GROUPS } from "@/libs/constants/groups";
@@ -59,7 +59,7 @@ export default function Home() {
 
           <div className="container mx-auto px-6 relative z-10 text-center flex flex-col items-center">
             <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-orange-100 text-orange-600 font-bold text-sm mb-10 shadow-sm border border-orange-200/50 hover:bg-orange-200 transition-colors cursor-default">
-              <Sparkles className="w-4 h-4" />
+              <BookOpen className="w-4 h-4" />
               <span>Nền tảng học mà chơi số 1 cho bé</span>
             </div>
 

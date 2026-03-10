@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, integer, boolean, uniqueIndex, serial } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, integer, boolean, uniqueIndex, serial, index, pgEnum } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 
 export const users = pgTable("users", {
@@ -8,9 +8,12 @@ export const users = pgTable("users", {
   isPro: boolean("is_pro").default(false),
   subscriptionId: text("subscription_id"), // Stripe Subscription ID
   currentStreak: integer("current_streak").default(0),
-  lastActiveDate: timestamp("last_active_date"),
-  createdAt: timestamp("created_at").defaultNow(),
+  lastActiveDate: timestamp("last_active_date", { withTimezone: true }),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
 });
+
+export const subscriptionStatusEnum = pgEnum("subscription_status", ["active", "cancelled", "expired"]);
+export const orderStatusEnum = pgEnum("order_status", ["pending", "paid", "cancelled"]);
 
 export const userActivityLogs = pgTable(
   "user_activity_logs",
@@ -21,7 +24,7 @@ export const userActivityLogs = pgTable(
     userId: text("user_id")
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
-    date: timestamp("date").notNull(), // The exact day (start of day) the activity occurred
+    date: timestamp("date", { withTimezone: true }).notNull(), // The exact day (start of day) the activity occurred
   },
   (table) => {
     return {
@@ -30,19 +33,28 @@ export const userActivityLogs = pgTable(
   },
 );
 
-export const progress = pgTable("progress", {
-  id: text("id")
-    .primaryKey()
-    .$defaultFn(() => crypto.randomUUID()),
-  userId: text("user_id")
-    .notNull()
-    .references(() => users.id),
-  courseId: text("course_id").notNull().default("learn-numbers"),
-  groupId: text("group_id").notNull(), // e.g., "group1"
-  lessonId: text("lesson_id").notNull(), // e.g., "lesson1"
-  score: integer("score").default(0),
-  completedAt: timestamp("completed_at").defaultNow(),
-});
+export const progress = pgTable(
+  "progress",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    courseId: text("course_id").notNull().default("learn-numbers"),
+    groupId: text("group_id").notNull(), // e.g., "group1"
+    lessonId: text("lesson_id").notNull(), // e.g., "lesson1"
+    score: integer("score").default(0),
+    completedAt: timestamp("completed_at", { withTimezone: true }).defaultNow(),
+  },
+  (table) => {
+    return {
+      userIdIdx: index("progress_user_id_idx").on(table.userId),
+      progressLookupIdx: index("progress_lookup_idx").on(table.userId, table.courseId, table.groupId, table.lessonId),
+    };
+  },
+);
 
 // Courses, Groups, and Lessons
 export const courses = pgTable("courses", {
@@ -57,15 +69,23 @@ export const coursesRelations = relations(courses, ({ many }) => ({
   groups: many(groups),
 }));
 
-export const groups = pgTable("groups", {
-  id: text("id").primaryKey(), // UUID
-  slug: text("slug").notNull(), // e.g., "group1"
-  courseId: text("course_id")
-    .notNull()
-    .references(() => courses.id, { onDelete: "cascade" }),
-  title: text("title").notNull(),
-  sortIndex: integer("sort_index").default(0),
-});
+export const groups = pgTable(
+  "groups",
+  {
+    id: text("id").primaryKey(), // UUID
+    slug: text("slug").notNull(), // e.g., "group1"
+    courseId: text("course_id")
+      .notNull()
+      .references(() => courses.id, { onDelete: "cascade" }),
+    title: text("title").notNull(),
+    sortIndex: integer("sort_index").default(0),
+  },
+  (table) => {
+    return {
+      courseSlugIdx: index("groups_course_slug_idx").on(table.courseId, table.slug),
+    };
+  },
+);
 
 export const groupsRelations = relations(groups, ({ one, many }) => ({
   course: one(courses, {
@@ -94,6 +114,7 @@ export const lessons = pgTable(
     return {
       // Ensure unique lesson slugs within a group
       uniqueLessonSlug: uniqueIndex("unique_lesson_slug_idx").on(table.groupId, table.slug),
+      courseIdIdx: index("lessons_course_id_idx").on(table.courseId),
     };
   },
 );
@@ -122,48 +143,74 @@ export const plans = pgTable("plans", {
   description: text("description"),
 });
 
-export const subscriptions = pgTable("subscriptions", {
-  id: text("id")
-    .primaryKey()
-    .$defaultFn(() => crypto.randomUUID()),
-  userId: text("user_id")
-    .notNull()
-    .references(() => users.id),
-  planId: text("plan_id")
-    .notNull()
-    .references(() => plans.id),
-  status: text("status").notNull(), // "active", "cancelled", "expired"
-  startDate: timestamp("start_date").defaultNow(),
-  endDate: timestamp("end_date"),
-  paymentProvider: text("payment_provider"), // "vnpay", "manual", "sepay"
-  transactionId: text("transaction_id"),
-  createdAt: timestamp("created_at").defaultNow(),
-});
+export const subscriptions = pgTable(
+  "subscriptions",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    planId: text("plan_id")
+      .notNull()
+      .references(() => plans.id, { onDelete: "cascade" }),
+    status: subscriptionStatusEnum("status").notNull(), // "active", "cancelled", "expired"
+    startDate: timestamp("start_date", { withTimezone: true }).defaultNow(),
+    endDate: timestamp("end_date", { withTimezone: true }),
+    paymentProvider: text("payment_provider"), // "vnpay", "manual", "sepay"
+    transactionId: text("transaction_id"),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
+  },
+  (table) => {
+    return {
+      userStatusDateIdx: index("subscriptions_user_status_date_idx").on(table.userId, table.status, table.endDate),
+      planIdIdx: index("subscriptions_plan_id_idx").on(table.planId),
+    };
+  },
+);
 
-export const orders = pgTable("orders", {
-  // Using serial for a short ID that's easy to embed in standard bank transfer descriptions
-  id: serial("id").primaryKey(),
-  userId: text("user_id")
-    .notNull()
-    .references(() => users.id),
-  planId: text("plan_id")
-    .notNull()
-    .references(() => plans.id),
-  amount: integer("amount").notNull(),
-  status: text("status").notNull().default("pending"), // "pending", "paid", "cancelled"
-  cartCode: text("cart_code").notNull(), // e.g. "CUVUIVE1045"
-  createdAt: timestamp("created_at").defaultNow(),
-});
+export const orders = pgTable(
+  "orders",
+  {
+    // Using serial for a short ID that's easy to embed in standard bank transfer descriptions
+    id: serial("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    planId: text("plan_id")
+      .notNull()
+      .references(() => plans.id, { onDelete: "cascade" }),
+    amount: integer("amount").notNull(),
+    status: orderStatusEnum("status").notNull().default("pending"), // "pending", "paid", "cancelled"
+    cartCode: text("cart_code").notNull(), // e.g. "CUVUIVE1045"
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
+  },
+  (table) => {
+    return {
+      userIdIdx: index("orders_user_id_idx").on(table.userId),
+      planIdIdx: index("orders_plan_id_idx").on(table.planId),
+    };
+  },
+);
 
-export const feedbacks = pgTable("feedbacks", {
-  id: text("id")
-    .primaryKey()
-    .$defaultFn(() => crypto.randomUUID()),
-  userId: text("user_id").references(() => users.id), // Nullable for guest feedback
-  title: text("title").notNull(),
-  description: text("description").notNull(),
-  email: text("email").notNull(),
-  phone: text("phone"), // Optional
-  isResponded: boolean("is_responded").default(false),
-  createdAt: timestamp("created_at").defaultNow(),
-});
+export const feedbacks = pgTable(
+  "feedbacks",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: text("user_id").references(() => users.id), // Nullable for guest feedback
+    title: text("title").notNull(),
+    description: text("description").notNull(),
+    email: text("email").notNull(),
+    phone: text("phone"), // Optional
+    isResponded: boolean("is_responded").default(false),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
+  },
+  (table) => {
+    return {
+      userIdIdx: index("feedbacks_user_id_idx").on(table.userId),
+    };
+  },
+);
