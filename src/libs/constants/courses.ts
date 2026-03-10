@@ -26,6 +26,10 @@ import GameEmotionLogo from "@/assets/games/learn-emotion/logo.png";
 import MixColorLogo from "@/assets/games/learn-color-color.webp"; // Using placeholder
 import GameCostumeLogo from "@/assets/games/learn-costume/logo.png";
 import GameClockLogo from "@/assets/games/learn-clock/logo-main.png";
+import MiniPianoLogo from "@/assets/games/mini-piano/logo.png";
+import CreativeGroupLogo from "@/assets/games/mini-piano/group1.png";
+import MusicianGroupLogo from "@/assets/games/mini-piano/group2.png";
+import EarGroupLogo from "@/assets/games/mini-piano/group3.png";
 import { StaticImageData } from "next/image";
 import { GameGroupType } from "@/libs/constants/groups";
 
@@ -39,6 +43,9 @@ export interface GroupDef {
   id: string;
   title: string;
   lessons: LessonDef[];
+  description?: string;
+  logo?: StaticImageData;
+  variant?: "green" | "orange" | "purple" | "blue";
 }
 
 export interface CourseDef {
@@ -1038,6 +1045,48 @@ export const COURSES: CourseDef[] = [
         lessons: [
           { id: "lesson1", title: "Làm quen đồng hồ", isFree: true },
           { id: "lesson2", title: "Chọn đúng giờ" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "mini-piano",
+    title: "Đàn Piano Tí Hon",
+    description: "Bé học chơi đàn và khám phá âm thanh cùng các bài hát vui nhộn.",
+    icon: MiniPianoLogo,
+    type: "music",
+    groups: [
+      {
+        id: "creative-sounds",
+        title: "Học đàn",
+        description: "Khám phá các âm thanh vui nhộn",
+        logo: CreativeGroupLogo,
+        variant: "green",
+        lessons: [{ id: "classic-piano", title: "Piano cổ điển", isFree: true }],
+      },
+      {
+        id: "mini-musician",
+        title: "Nhạc Công Nhí",
+        description: "Học chơi các bài hát đơn giản",
+        logo: MusicianGroupLogo,
+        variant: "orange",
+        lessons: [
+          { id: "kia-con-buom-vang", title: "Kìa con bướm vàng", isFree: true },
+          { id: "happy-birthday", title: "Chúc mừng sinh nhật" },
+          { id: "ngoi-sao-lap-lanh", title: "Ngôi sao lấp lánh" },
+          { id: "ba-oi-ba", title: "Bà ơi bà" },
+          { id: "doi-ken-ti-hon", title: "Đội kèn tí hon" },
+        ],
+      },
+      {
+        id: "ear-training",
+        title: "Đôi Tai Tinh Anh",
+        description: "Thử thách trí nhớ âm thanh",
+        logo: EarGroupLogo,
+        variant: "purple",
+        lessons: [
+          { id: "find-the-note", title: "Tìm nốt nhạc đúng", isFree: true },
+          { id: "repeat-melody", title: "Lặp lại giai điệu" },
         ],
       },
     ],

@@ -4,6 +4,7 @@ import React, { createContext, useCallback, useContext, useEffect, useMemo, useR
 import { useUser } from "./UserContext";
 import { createClient } from "@/libs/supabase/client";
 import { generateUUID } from "@/libs/utils/uuid";
+import { COURSES } from "@/libs/constants/courses";
 
 interface ProgressState {
   completedGroups: string[];
@@ -148,7 +149,13 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
 
       Object.keys(courseProgress.completedLessons).forEach((groupId) => {
         const completedCount = courseProgress.completedLessons[groupId].length;
-        const requiredCount = courseStruct[groupId] || 3;
+
+        let requiredCount = courseStruct[groupId];
+        if (requiredCount === undefined) {
+          const course = COURSES.find((c) => c.id === courseId);
+          const group = course?.groups.find((g) => g.id === groupId);
+          requiredCount = group?.lessons.length || 3;
+        }
 
         if (completedCount > 0 && completedCount >= requiredCount) {
           completed.push(groupId);
@@ -242,49 +249,39 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
   };
 
   const isGroupUnlocked = (groupId: string, courseId: string = "learn-numbers") => {
-    // Use derived completed groups
+    const course = COURSES.find((c) => c.id === courseId);
+    if (!course) return true; // Default to unlocked if course not found in constants
+
+    const groupIndex = course.groups.findIndex((g) => g.id === groupId);
+    if (groupIndex === 0) return true; // First group is always unlocked
+    if (groupIndex === -1) return false; // Group not found in this course
+
+    const prevGroupId = course.groups[groupIndex - 1].id;
     const completedGroups = derivedCompletedGroups[courseId] || [];
-
-    // Generic check for groupN pattern
-    const match = groupId.match(GROUP_ID_REGEX);
-    if (match) {
-      const groupNum = parseInt(match[1], 10);
-      // group1 is always unlocked
-      if (groupNum === 1) return true;
-
-      // groupN requires group(N-1) to be completed
-      const prevGroupId = `group${groupNum - 1}`;
-      return completedGroups.includes(prevGroupId);
-    }
-
-    // Fallback for non-standard IDs
-    return false;
+    return completedGroups.includes(prevGroupId);
   };
 
   const isLessonUnlocked = (groupId: string, lessonId: string, courseId: string = "learn-numbers") => {
-    // Lesson logic:
-    // Pass courseId to isGroupUnlocked
     if (!isGroupUnlocked(groupId, courseId)) return false;
+
+    const course = COURSES.find((c) => c.id === courseId);
+    if (!course) return true;
+
+    const group = course.groups.find((g) => g.id === groupId);
+    if (!group) return false;
+
+    const lessonIndex = group.lessons.findIndex((l) => l.id === lessonId);
+    if (lessonIndex === 0) return true; // First lesson in group is always unlocked
+    if (lessonIndex === -1) return false; // Lesson not found in this group
 
     const courseProgress = allProgress[courseId] || { completedLessons: {} };
     const completedInGroup = courseProgress.completedLessons[groupId] || [];
 
-    // If lesson is already completed, it is effectively unlocked (can replay)
+    // If lesson is already completed, it is effectively unlocked
     if (completedInGroup.includes(lessonId)) return true;
 
-    // Generic check for lessonN pattern
-    const match = lessonId.match(LESSON_ID_REGEX);
-    if (match) {
-      const lessonNum = parseInt(match[1], 10);
-      // lesson1 is always unlocked (if group is unlocked)
-      if (lessonNum === 1) return true;
-
-      // lessonN requires lesson(N-1) to be completed
-      const prevLessonId = `lesson${lessonNum - 1}`;
-      return completedInGroup.includes(prevLessonId);
-    }
-
-    return false;
+    const prevLessonId = group.lessons[lessonIndex - 1].id;
+    return completedInGroup.includes(prevLessonId);
   };
 
   const contextValue = useMemo(
