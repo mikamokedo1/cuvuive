@@ -6,6 +6,8 @@ import { PIANO_NOTES } from "./constants";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 
+import { Volume2 } from "lucide-react";
+
 interface RepeatMelodyLessonProps {
     onComplete: () => void;
 }
@@ -84,10 +86,24 @@ export default function RepeatMelodyLesson({ onComplete }: RepeatMelodyLessonPro
         <div className="w-full">
             <div className="text-center mb-12">
                 <h2 className="text-4xl font-black text-purple-600 mb-4">Lặp lại giai điệu</h2>
-                <div className="flex justify-center gap-4">
+                <div className="flex justify-center items-center gap-4">
                     <div className="bg-white px-8 py-4 rounded-3xl shadow-lg border-4 border-purple-200">
                         <span className="text-2xl font-bold text-purple-800">Điểm: {score}/3</span>
                     </div>
+
+                    <button
+                        onClick={() => playMelody(melody)}
+                        disabled={isPlayingMelody}
+                        className={`
+                            flex items-center gap-2 px-6 py-4 rounded-3xl shadow-lg border-4 transition-all
+                            ${isPlayingMelody
+                                ? "bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed"
+                                : "bg-white border-purple-200 text-purple-600 hover:scale-105 active:scale-95 hover:bg-purple-50"}
+                        `}
+                    >
+                        <Volume2 className={`w-6 h-6 ${isPlayingMelody ? "animate-pulse" : ""}`} />
+                        <span className="text-xl font-bold">Nghe lại</span>
+                    </button>
                 </div>
             </div>
 
