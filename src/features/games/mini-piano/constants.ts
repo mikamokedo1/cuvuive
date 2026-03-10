@@ -44,23 +44,23 @@ export const SOUND_SETS = {
 export const SONGS = {
     "kia-con-buom-vang": {
         title: "Kìa con bướm vàng",
-        notes: ["C", "D", "E", "C", "C", "D", "E", "C", "E", "F", "G", "E", "F", "G"],
+        notes: ["C", "D", "E", "C", "C", "D", "E", "C", "E", "F", "G", "E", "F", "G", "G", "A", "G", "F", "E", "C", "G", "A", "G", "F", "E", "C"],
     },
     "happy-birthday": {
         title: "Chúc mừng sinh nhật",
-        notes: ["C", "C", "D", "C", "F", "E", "C", "C", "D", "C", "G", "F"],
+        notes: ["C", "C", "D", "C", "F", "E", "C", "C", "D", "C", "G", "F", "C", "C", "C2", "A", "F", "E", "D"],
     },
     "ngoi-sao-lap-lanh": {
         title: "Ngôi sao lấp lánh",
-        notes: ["C", "C", "G", "G", "A", "A", "G", "F", "F", "E", "E", "D", "D", "C"],
+        notes: ["C", "C", "G", "G", "A", "A", "G", "F", "F", "E", "E", "D", "D", "C", "G", "G", "F", "F", "E", "E", "D", "G", "G", "F", "F", "E", "E", "D"],
     },
     "ba-oi-ba": {
         title: "Bà ơi bà",
-        notes: ["G", "E", "G", "A", "G", "E", "G", "A", "G", "E", "D", "C", "D", "E"],
+        notes: ["G", "E", "G", "A", "G", "E", "G", "A", "G", "E", "D", "C", "D", "E", "G", "E", "G", "A", "G", "E", "G", "A", "G", "E", "D", "C"],
     },
     "doi-ken-ti-hon": {
         title: "Đội kèn tí hon",
-        notes: ["C", "D", "E", "C", "D", "E", "G", "G", "E", "D", "C"],
+        notes: ["C", "D", "E", "C", "D", "E", "G", "G", "E", "D", "C", "D", "E", "G", "G", "E", "D", "C"],
     },
 };
 
