@@ -5,6 +5,7 @@ import PianoKey from "./PianoKey";
 import { PIANO_NOTES, SONGS } from "./constants";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
+import { playWrongSound } from "@/libs/utils/playSound";
 
 interface SongLessonProps {
   songId: string;
@@ -35,7 +36,8 @@ export default function SongLesson({ songId, onComplete }: SongLessonProps) {
       }
     } else {
       // Wrong note
-      speak(" Chưa đúng rồi, thử lại nhé!");
+      playWrongSound();
+      speak("Thử lại nhé!");
     }
   };
 

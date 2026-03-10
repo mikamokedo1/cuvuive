@@ -6,6 +6,7 @@ import { PIANO_NOTES } from "./constants";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { playNoteSound } from "./utils/audioUtils";
+import { playCorrectSound, playWrongSound } from "@/libs/utils/playSound";
 
 import { Volume2 } from "lucide-react";
 
@@ -63,7 +64,7 @@ export default function RepeatMelodyLesson({ onComplete }: RepeatMelodyLessonPro
             setPlayerSequence(newSequence);
 
             if (newSequence.length === melody.length) {
-                playWinEffect(500);
+                playCorrectSound();
                 speak("Giỏi quá! Bạn đã lặp lại đúng giai điệu!");
 
                 setTimeout(() => {
@@ -77,7 +78,8 @@ export default function RepeatMelodyLesson({ onComplete }: RepeatMelodyLessonPro
                 }, 2000);
             }
         } else {
-            speak("Chưa đúng rồi, hãy nghe lại nhé!");
+            playWrongSound();
+            speak("Hãy nghe lại nhé!");
             setPlayerSequence([]);
             setTimeout(() => playMelody(melody), 1000);
         }
