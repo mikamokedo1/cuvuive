@@ -1075,7 +1075,11 @@ export const COURSES: CourseDef[] = [
         lessons: [
           { id: "kia-con-buom-vang", title: "Kìa con bướm vàng", isFree: true },
           { id: "happy-birthday", title: "Chúc mừng sinh nhật" },
+          { id: "ngoi-sao-lap-lanh", title: "Ngôi sao lấp lánh" },
+          { id: "ba-oi-ba", title: "Bà ơi bà" },
+          { id: "doi-ken-ti-hon", title: "Đội kèn tí hon" },
         ],
+
       },
       {
         id: "ear-training",

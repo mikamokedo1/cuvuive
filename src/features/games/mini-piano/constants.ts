@@ -50,4 +50,17 @@ export const SONGS = {
         title: "Chúc mừng sinh nhật",
         notes: ["C", "C", "D", "C", "F", "E", "C", "C", "D", "C", "G", "F"],
     },
+    "ngoi-sao-lap-lanh": {
+        title: "Ngôi sao lấp lánh",
+        notes: ["C", "C", "G", "G", "A", "A", "G", "F", "F", "E", "E", "D", "D", "C"],
+    },
+    "ba-oi-ba": {
+        title: "Bà ơi bà",
+        notes: ["G", "E", "G", "A", "G", "E", "G", "A", "G", "E", "D", "C", "D", "E"],
+    },
+    "doi-ken-ti-hon": {
+        title: "Đội kèn tí hon",
+        notes: ["C", "D", "E", "C", "D", "E", "G", "G", "E", "D", "C"],
+    },
 };
+
