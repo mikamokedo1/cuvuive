@@ -5,6 +5,7 @@ import PianoKey from "./PianoKey";
 import { PIANO_NOTES } from "./constants";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
+import { playNoteSound } from "./utils/audioUtils";
 
 import { Volume2 } from "lucide-react";
 
@@ -36,11 +37,11 @@ export default function RepeatMelodyLesson({ onComplete }: RepeatMelodyLessonPro
 
         for (let i = 0; i < sequence.length; i++) {
             await new Promise(resolve => setTimeout(resolve, 800));
-            // We can't easily trigger the sound from here without refactoring PianoKey, 
-            // but we can at least show visual feedback if we had refs.
-            // For now, let's just speak the notes to represent the "melody" for the kid.
+            // Play actual sound instead of name
             const noteObj = PIANO_NOTES.find(n => n.note === sequence[i]);
-            speak(noteObj?.label || "");
+            if (noteObj) {
+                playNoteSound(noteObj.freq);
+            }
         }
 
         setTimeout(() => {

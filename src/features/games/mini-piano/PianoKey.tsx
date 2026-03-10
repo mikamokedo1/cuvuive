@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
+import { playNoteSound } from "./utils/audioUtils";
 
 interface PianoKeyProps {
     note: string;
@@ -29,21 +30,7 @@ export default function PianoKey({
 
     const playSound = () => {
         if (soundSet === "classic") {
-            const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
-            const oscillator = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-
-            oscillator.type = "sine";
-            oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
-
-            gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 1);
-
-            oscillator.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-
-            oscillator.start();
-            oscillator.stop(audioCtx.currentTime + 1);
+            playNoteSound(freq);
         } else if (animalSound) {
             speak(animalSound);
         }
