@@ -94,12 +94,12 @@ export default function RepeatMelodyLesson({ onComplete }: RepeatMelodyLessonPro
             <div className="bg-[#4a4a4a] p-4 sm:p-8 rounded-[2rem] shadow-2xl border-t-[10px] border-[#333]">
                 <div className="flex justify-center gap-1 sm:gap-2">
                     {PIANO_NOTES.map((note) => (
-                        <div key={note.note} onClick={() => handleKeyTap(note.note)} className="flex-1 min-w-0">
-                            <PianoKey
-                                {...note}
-                                isHighlighted={!isPlayingMelody && playerSequence.length < melody.length && false} // No auto-highlight in this mode
-                            />
-                        </div>
+                        <PianoKey
+                            key={note.note}
+                            {...note}
+                            isHighlighted={!isPlayingMelody && playerSequence.length < melody.length && false} // No auto-highlight in this mode
+                            onClick={handleKeyTap}
+                        />
                     ))}
                 </div>
             </div>

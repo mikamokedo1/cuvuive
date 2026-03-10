@@ -11,9 +11,19 @@ interface PianoKeyProps {
     soundSet?: string;
     animalSound?: string;
     isHighlighted?: boolean;
+    onClick?: (note: string) => void;
 }
 
-export default function PianoKey({ note, freq, color, label, soundSet = "classic", animalSound, isHighlighted }: PianoKeyProps) {
+export default function PianoKey({
+    note,
+    freq,
+    color,
+    label,
+    soundSet = "classic",
+    animalSound,
+    isHighlighted,
+    onClick
+}: PianoKeyProps) {
     const [isActive, setIsActive] = useState(false);
     const { speak } = useTextToSpeech();
 
@@ -41,13 +51,16 @@ export default function PianoKey({ note, freq, color, label, soundSet = "classic
         // Visual feedback
         setIsActive(true);
         setTimeout(() => setIsActive(false), 200);
+
+        // Call parent handler
+        if (onClick) onClick(note);
     };
 
     return (
         <div
             onClick={playSound}
             className={`
-        relative w-full h-[280px] sm:h-[350px] rounded-b-2xl cursor-pointer 
+        relative flex-1 min-w-0 h-[280px] sm:h-[350px] rounded-b-2xl cursor-pointer 
         transition-all duration-100 flex flex-col items-center justify-end pb-8
         shadow-[inset_0_-8px_10px_rgba(0,0,0,0.1),0_10px_15px_rgba(0,0,0,0.1)]
         ${color} 
@@ -62,8 +75,8 @@ export default function PianoKey({ note, freq, color, label, soundSet = "classic
                 </div>
             )}
 
-            <div className="bg-white/30 backdrop-blur-sm px-3 py-1 sm:px-4 sm:py-2 rounded-full mb-4 z-20">
-                <span className="text-white text-xl sm:text-2xl font-black drop-shadow-md select-none">
+            <div className="bg-white/30 backdrop-blur-sm w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center rounded-full mb-4 z-20 shadow-sm border border-white/20">
+                <span className="text-white text-xl sm:text-2xl font-black drop-shadow-md select-none leading-none">
                     {label}
                 </span>
             </div>
