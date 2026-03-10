@@ -42,24 +42,24 @@ export default function MiniPianoGamePage() {
     };
 
     return (
-        <main className="min-h-screen bg-gradient-to-br from-pink-100 via-blue-100 to-yellow-100 relative overflow-hidden py-6 px-4 flex flex-col">
+        <main className="min-h-screen bg-gradient-to-br from-pink-100 via-blue-100 to-yellow-100 relative overflow-hidden py-4 sm:py-6 px-3 sm:px-4 flex flex-col">
             <Header />
 
             <div className="flex-1 w-full max-w-6xl mx-auto flex flex-col items-center relative z-10 text-center">
-                <div className="w-full flex justify-start mb-8">
+                <div className="w-full flex justify-start mb-4 sm:mb-8">
                     <ActionButton
                         variant="glossy"
                         color="orange"
                         size="auto"
-                        className="px-4 py-2 rounded-xl flex items-center gap-2"
+                        className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl flex items-center gap-1.5 sm:gap-2"
                         onClick={() => router.push(`/games/mini-piano/${groupId}`)}
                     >
-                        <ArrowLeft size={20} className="text-white" />
-                        <span className="text-white font-bold">Quay lại</span>
+                        <ArrowLeft size={18} className="text-white" />
+                        <span className="text-white text-sm sm:text-base font-bold">Quay lại</span>
                     </ActionButton>
                 </div>
 
-                <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center w-full">
                     {groupId === "creative-sounds" && <CreativeLesson lessonId={lessonId} />}
                     {groupId === "mini-musician" && <SongLesson songId={lessonId} onComplete={handleComplete} />}
                     {groupId === "ear-training" && (
@@ -72,7 +72,7 @@ export default function MiniPianoGamePage() {
                     {groupId === "creative-sounds" && (
                         <button
                             onClick={handleComplete}
-                            className="mt-12 bg-green-500 hover:bg-green-600 text-white px-10 py-4 rounded-full font-black text-xl shadow-xl transition-all hover:scale-105 active:scale-95"
+                            className="mt-8 sm:mt-12 bg-green-500 hover:bg-green-600 text-white px-8 sm:px-10 py-3 sm:py-4 rounded-full font-black text-lg sm:text-xl shadow-xl transition-all hover:scale-105 active:scale-95"
                         >
                             Hoàn thành bài học!
                         </button>

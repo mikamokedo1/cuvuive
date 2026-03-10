@@ -57,27 +57,29 @@ export default function ChallengeLesson({ lessonId, onComplete }: ChallengeLesso
         }
     };
 
+    if (!targetNote) return null;
+
     return (
         <div className="w-full">
-            <div className="text-center mb-12">
-                <h2 className="text-4xl font-black text-blue-600 mb-4">Đố bé nốt nào là {targetNote?.label}?</h2>
-                <div className="flex justify-center items-center gap-4">
-                    <div className="bg-white px-8 py-4 rounded-3xl shadow-lg border-4 border-blue-200">
-                        <span className="text-2xl font-bold text-blue-800">Điểm: {score}/3</span>
+            <div className="text-center mb-6 sm:mb-12">
+                <h2 className="text-2xl sm:text-4xl font-black text-blue-600 mb-3 sm:mb-4">Đố bé nốt nào là {targetNote?.label}?</h2>
+                <div className="flex justify-center items-center gap-2 sm:gap-4">
+                    <div className="bg-white px-4 sm:px-8 py-2 sm:py-4 rounded-2xl sm:rounded-3xl shadow-lg border-2 sm:border-4 border-blue-200">
+                        <span className="text-lg sm:text-2xl font-bold text-blue-800">Điểm: {score}/3</span>
                     </div>
 
                     <button
                         onClick={() => speak(`Hãy tìm nốt ${targetNote.label} nào!`)}
-                        className="flex items-center gap-2 bg-white px-6 py-4 rounded-3xl shadow-lg border-4 border-blue-200 text-blue-600 transition-all hover:scale-105 active:scale-95 hover:bg-blue-50"
+                        className="flex items-center gap-1.5 sm:gap-2 bg-white px-4 sm:px-6 py-2 sm:py-4 rounded-2xl sm:rounded-3xl shadow-lg border-2 sm:border-4 border-blue-200 text-blue-600 transition-all hover:scale-105 active:scale-95 hover:bg-blue-50"
                     >
-                        <Volume2 className="w-6 h-6" />
-                        <span className="text-xl font-bold">Nghe lại</span>
+                        <Volume2 className="w-5 h-5 sm:w-6 sm:h-6" />
+                        <span className="text-lg sm:text-xl font-bold">Nghe lại</span>
                     </button>
                 </div>
             </div>
 
-            <div className="bg-[#4a4a4a] p-4 sm:p-8 rounded-[2rem] shadow-2xl border-t-[10px] border-[#333]">
-                <div className="flex justify-center gap-1 sm:gap-2">
+            <div className="bg-[#4a4a4a] p-2 sm:p-8 rounded-[1.5rem] sm:rounded-[2rem] shadow-2xl border-t-[6px] sm:border-t-[10px] border-[#333]">
+                <div className="flex justify-center gap-0.5 sm:gap-2">
                     {PIANO_NOTES.map((note) => (
                         <PianoKey
                             key={note.note}
