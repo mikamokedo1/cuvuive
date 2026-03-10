@@ -29,6 +29,7 @@ export const CardFlip = ({ card, isRevealed, handleCardClick }: CardFlipProps) =
         className="relative w-full h-full transition-transform duration-500 ease-in-out"
         style={{
           transformStyle: "preserve-3d",
+          WebkitTransformStyle: "preserve-3d" as any,
           transform: isRevealed ? "rotateY(180deg)" : "rotateY(0deg)",
         }}
       >
@@ -38,6 +39,8 @@ export const CardFlip = ({ card, isRevealed, handleCardClick }: CardFlipProps) =
           style={{
             backfaceVisibility: "hidden",
             WebkitBackfaceVisibility: "hidden",
+            transform: "rotateY(0deg)",
+            WebkitTransform: "rotateY(0deg)",
             background: "linear-gradient(135deg, #7DD8F5 0%, #42B4E6 40%, #3AA3D6 60%, #5DC5EE 100%)",
             border: "3px solid rgba(255,255,255,0.35)",
             boxShadow:
@@ -100,6 +103,7 @@ export const CardFlip = ({ card, isRevealed, handleCardClick }: CardFlipProps) =
             backfaceVisibility: "hidden",
             WebkitBackfaceVisibility: "hidden",
             transform: "rotateY(180deg)",
+            WebkitTransform: "rotateY(180deg)",
           }}
         >
           <div className="relative w-full h-3/4">

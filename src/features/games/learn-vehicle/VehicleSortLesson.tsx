@@ -151,17 +151,17 @@ export function VehicleSortLesson({ vehicles, onComplete, requiredCorrect = 8 }:
       </div>
 
       {/* Drop Zones */}
-      <div className="grid grid-cols-3 gap-4 w-full max-w-2xl mt-4">
+      <div className="grid grid-cols-3 gap-2 sm:gap-4 w-full max-w-2xl mt-4">
         {ZONES.map((zone) => (
           <div
             key={zone.id}
             onClick={() => handleZoneClick(zone.id as string)}
             className={`
-              flex flex-col items-center justify-center gap-2 p-6 rounded-2xl cursor-pointer hover:scale-110 transition-all duration-300
+              flex flex-col items-center justify-center p-2 sm:p-4 md:p-6 rounded-2xl cursor-pointer hover:scale-105 sm:hover:scale-110 transition-all duration-300
               ${feedback === "wrong" ? "opacity-50" : ""}
             `}
           >
-            <div className="relative w-48 h-48">
+            <div className="relative w-full aspect-square">
               <Image src={zone.image} alt={zone.name} fill className="object-contain rounded-2xl" />
             </div>
           </div>
