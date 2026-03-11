@@ -30,9 +30,11 @@ export interface LineConnectLevel {
   cols: number;
   dots: {
     color: string;
-    positions: [number, number][]; // exactly two [r, c]
+    positions: [Point, Point];
   }[];
 }
+
+type Point = [number, number];
 
 // ═══════════════════════════════════════════
 // Maze Generator (Recursive Backtracking / DFS)
@@ -158,8 +160,90 @@ export function getMaze(groupId: string, index: number): MazeData {
 }
 
 // ═══════════════════════════════════════════
-// Line Connect Levels
+// Line Connect Levels & Generator
 // ═══════════════════════════════════════════
+
+export const DOT_COLORS = [
+  "#ef4444", // Red
+  "#3b82f6", // Blue
+  "#22c55e", // Green
+  "#eab308", // Yellow
+  "#a855f7", // Purple
+  "#f97316", // Orange
+  "#ec4899", // Pink
+  "#06b6d4", // Cyan
+  "#8b5cf6", // Violet
+  "#10b981", // Emerald
+];
+
+export function generateLineConnectLevel(rows: number, cols: number, numDots: number): LineConnectLevel {
+  const grid: (number | null)[][] = Array.from({ length: rows }, () => Array(cols).fill(null));
+  const paths: [number, number][][] = [];
+
+  // 1. Pick starting points
+  const emptyCells: [number, number][] = [];
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) emptyCells.push([r, c]);
+  }
+
+  // Shuffle empty cells
+  for (let i = emptyCells.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [emptyCells[i], emptyCells[j]] = [emptyCells[j], emptyCells[i]];
+  }
+
+  for (let i = 0; i < numDots && i < emptyCells.length; i++) {
+    const [r, c] = emptyCells[i];
+    grid[r][c] = i;
+    paths.push([[r, c]]);
+  }
+
+  // 2. Grow paths randomly
+  let changed = true;
+  while (changed) {
+    changed = false;
+    const pathIndices = Array.from({ length: paths.length }, (_, i) => i);
+    // Shuffle growth order
+    for (let i = pathIndices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [pathIndices[i], pathIndices[j]] = [pathIndices[j], pathIndices[i]];
+    }
+
+    for (const idx of pathIndices) {
+      const path = paths[idx];
+      const last = path[path.length - 1];
+      const neighbors: [number, number][] = [
+        [last[0] - 1, last[1]],
+        [last[0] + 1, last[1]],
+        [last[0], last[1] - 1],
+        [last[0], last[1] + 1],
+      ].filter(([nr, nc]) => nr >= 0 && nr < rows && nc >= 0 && nc < cols && grid[nr][nc] === null) as [number, number][];
+
+      if (neighbors.length > 0) {
+        const next = neighbors[Math.floor(Math.random() * neighbors.length)];
+        grid[next[0]][next[1]] = idx;
+        path.push(next);
+        changed = true;
+      }
+    }
+  }
+
+  // 3. Prepare final dots
+  const activeDots = paths
+    .filter((p) => p.length >= 2) // Must have at least two points
+    .slice(0, numDots)
+    .map((p, i) => ({
+      color: DOT_COLORS[i % DOT_COLORS.length],
+      positions: [p[0], p[p.length - 1]] as [Point, Point],
+    }));
+
+  // If we couldn't generate enough paths, retry once with smaller count or simpler grid
+  if (activeDots.length < Math.min(numDots, 2)) {
+    return generateLineConnectLevel(rows, cols, Math.max(2, numDots - 1));
+  }
+
+  return { rows, cols, dots: activeDots };
+}
 
 export const LINE_CONNECT_LEVELS: LineConnectLevel[] = [
   {

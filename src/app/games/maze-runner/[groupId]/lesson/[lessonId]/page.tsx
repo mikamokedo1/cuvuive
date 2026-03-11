@@ -18,8 +18,15 @@ export default function LessonPage() {
 
   const renderLesson = () => {
     if (game.lessonId === "lesson1") {
-      if (isLineConnectGroup(game.groupId)) {
-        return <LineConnectBoard onComplete={game.handleComplete} />;
+      if (game.groupId === "group4") {
+        return (
+          <LineConnectBoard
+            lessonId={game.lessonId}
+            onComplete={async () => {
+              await game.handleComplete();
+            }}
+          />
+        );
       }
       return <MazeBoard groupId={game.groupId} onComplete={game.handleComplete} />;
     }

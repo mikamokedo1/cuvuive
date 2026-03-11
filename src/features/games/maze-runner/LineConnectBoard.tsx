@@ -1,38 +1,56 @@
 "use client";
 
 import { useState, useCallback, useEffect, useRef } from "react";
-import { LINE_CONNECT_LEVELS, LineConnectLevel } from "./constants";
+import { LINE_CONNECT_LEVELS, LineConnectLevel, generateLineConnectLevel } from "./constants";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { playButtonSound, playCorrectSound, playWrongSound } from "@/libs/utils/playSound";
 
 interface LineConnectBoardProps {
   onComplete: () => void;
+  lessonId: string;
 }
 
 type Point = [number, number]; // [r, c]
 
-export function LineConnectBoard({ onComplete }: LineConnectBoardProps) {
+export function LineConnectBoard({ onComplete, lessonId }: LineConnectBoardProps) {
   const { speak } = useTextToSpeech();
   const [levelIndex, setLevelIndex] = useState(0);
-  const [level, setLevel] = useState<LineConnectLevel>(LINE_CONNECT_LEVELS[0]);
+  const [level, setLevel] = useState<LineConnectLevel | null>(null);
   const [lines, setLines] = useState<{ [color: string]: Point[] }>({});
   const [drawingColor, setDrawingColor] = useState<string | null>(null);
   const [isWinning, setIsWinning] = useState(false);
   const [currentLine, setCurrentLine] = useState<Point[]>([]);
   const boardRef = useRef<HTMLDivElement>(null);
 
+  const getDifficulty = useCallback((index: number) => {
+    if (index < 3) return { rows: 4, cols: 4, dots: 3 + Math.floor(index / 1.5) };
+    if (index < 6) return { rows: 5, cols: 5, dots: 4 + (index % 2) };
+    if (index < 10) return { rows: 6, cols: 6, dots: 5 + Math.floor((index - 6) / 2) };
+    if (index < 15) return { rows: 7, cols: 7, dots: 6 + Math.floor((index - 10) / 2) };
+    return { rows: 8, cols: 8, dots: 7 + Math.min(3, Math.floor((index - 15) / 3)) };
+  }, []);
+
   useEffect(() => {
-    setLevel(LINE_CONNECT_LEVELS[levelIndex]);
+    const lessonOffset = lessonId === "lesson1" ? 0 : lessonId === "lesson2" ? 6 : 10;
+    const effectiveIndex = levelIndex + lessonOffset;
+    
+    const diff = getDifficulty(effectiveIndex);
+    const newLevel = generateLineConnectLevel(diff.rows, diff.cols, diff.dots);
+    setLevel(newLevel);
     setLines({});
     setDrawingColor(null);
     setCurrentLine([]);
     setIsWinning(false);
-    speak(levelIndex === 0 ? "Hãy nối các cặp màu giống nhau nhé!" : "Tiếp tục nào!");
-  }, [levelIndex, speak]);
+    
+    const introText = levelIndex === 0 
+      ? (lessonId === "lesson1" ? "Hãy nối các cặp màu giống nhau nhé!" : "Thử thách khó hơn cho bạn đây!")
+      : "Tiếp tục nào!";
+    speak(introText);
+  }, [levelIndex, lessonId, speak, getDifficulty]);
 
   const getCellFromEvent = (e: React.PointerEvent | PointerEvent) => {
-    if (!boardRef.current) return null;
+    if (!boardRef.current || !level) return null;
     const rect = boardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
@@ -46,6 +64,7 @@ export function LineConnectBoard({ onComplete }: LineConnectBoardProps) {
   };
 
   const isDotAt = (r: number, c: number) => {
+    if (!level) return null;
     return level.dots.find((d) => d.positions.some((p) => p[0] === r && p[1] === c));
   };
 
@@ -96,7 +115,7 @@ export function LineConnectBoard({ onComplete }: LineConnectBoardProps) {
     if (occupiedColor && occupiedColor !== drawingColor) return;
 
     // If it's the dot of another color
-    const otherDot = level.dots.find(d => 
+    const otherDot = level?.dots.find(d => 
       d.color !== drawingColor && d.positions.some(p => p[0] === r && p[1] === c)
     );
     if (otherDot) return;
@@ -149,7 +168,7 @@ export function LineConnectBoard({ onComplete }: LineConnectBoardProps) {
 
   // Check win condition
   useEffect(() => {
-    if (isWinning) return;
+    if (isWinning || !level) return;
     const allConnected = level.dots.every(d => lines[d.color]);
     if (allConnected && level.dots.length > 0) {
       setIsWinning(true);
@@ -165,7 +184,9 @@ export function LineConnectBoard({ onComplete }: LineConnectBoardProps) {
     }
   }, [lines, level, levelIndex, onComplete, speak, isWinning]);
 
-  const cellSize = level.cols <= 4 ? 70 : level.cols <= 5 ? 60 : 50;
+  if (!level) return <div className="text-orange-500 font-bold">Đang tạo thử thách...</div>;
+
+  const cellSize = level.cols <= 4 ? 70 : level.cols <= 5 ? 60 : level.cols <= 6 ? 50 : 40;
   const boardWidth = level.cols * cellSize;
   const boardHeight = level.rows * cellSize;
 
