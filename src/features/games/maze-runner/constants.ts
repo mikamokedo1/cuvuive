@@ -25,6 +25,15 @@ export interface MazeData {
   goal: [number, number]; // [row, col]
 }
 
+export interface LineConnectLevel {
+  rows: number;
+  cols: number;
+  dots: {
+    color: string;
+    positions: [number, number][]; // exactly two [r, c]
+  }[];
+}
+
 // ═══════════════════════════════════════════
 // Maze Generator (Recursive Backtracking / DFS)
 // ═══════════════════════════════════════════
@@ -149,6 +158,50 @@ export function getMaze(groupId: string, index: number): MazeData {
 }
 
 // ═══════════════════════════════════════════
+// Line Connect Levels
+// ═══════════════════════════════════════════
+
+export const LINE_CONNECT_LEVELS: LineConnectLevel[] = [
+  {
+    rows: 4,
+    cols: 4,
+    dots: [
+      { color: "#ef4444", positions: [[0, 0], [3, 0]] }, // Red
+      { color: "#3b82f6", positions: [[0, 1], [3, 1]] }, // Blue
+      { color: "#22c55e", positions: [[0, 2], [3, 2]] }, // Green
+      { color: "#eab308", positions: [[0, 3], [3, 3]] }, // Yellow
+    ],
+  },
+  {
+    rows: 5,
+    cols: 5,
+    dots: [
+      { color: "#ef4444", positions: [[0, 0], [0, 4]] },
+      { color: "#3b82f6", positions: [[1, 0], [1, 4]] },
+      { color: "#22c55e", positions: [[2, 0], [2, 4]] },
+      { color: "#eab308", positions: [[3, 0], [3, 4]] },
+      { color: "#a855f7", positions: [[4, 0], [4, 4]] },
+    ],
+  },
+  {
+    rows: 6,
+    cols: 6,
+    dots: [
+      { color: "#ef4444", positions: [[0, 0], [5, 0]] }, // Red
+      { color: "#3b82f6", positions: [[1, 1], [4, 1]] }, // Blue
+      { color: "#22c55e", positions: [[1, 2], [4, 2]] }, // Green
+      { color: "#eab308", positions: [[1, 3], [4, 3]] }, // Yellow
+      { color: "#a855f7", positions: [[1, 4], [4, 4]] }, // Purple
+      { color: "#f97316", positions: [[0, 5], [5, 5]] }, // Orange
+    ],
+  },
+];
+
+export function isLineConnectGroup(groupId: string): boolean {
+  return groupId === "group4";
+}
+
+// ═══════════════════════════════════════════
 // Groups
 // ═══════════════════════════════════════════
 
@@ -173,5 +226,12 @@ export const GROUPS: GroupData[] = [
     description: "Mê cung 7×7 để thử thách tư duy",
     logo: LogoGroup3,
     variant: "purple" as const,
+  },
+  {
+    id: "group4",
+    title: "Nối điểm",
+    description: "Nối các cặp màu giống nhau",
+    logo: LogoGroup1, // Placeholder
+    variant: "blue" as const,
   },
 ];

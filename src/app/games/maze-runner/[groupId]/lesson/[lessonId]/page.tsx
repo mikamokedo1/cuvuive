@@ -3,7 +3,9 @@
 import { useGameLesson } from "@/hooks/useGameLesson";
 import { GROUPS } from "@/features/games/maze-runner/constants";
 import { MazeBoard } from "@/features/games/maze-runner/MazeBoard";
+import { LineConnectBoard } from "@/features/games/maze-runner/LineConnectBoard";
 import { GameWrapGame } from "@/components/layout/GameWrapGame";
+import { isLineConnectGroup } from "@/features/games/maze-runner/constants";
 
 const LESSON_ORDER = ["lesson1"];
 
@@ -16,6 +18,9 @@ export default function LessonPage() {
 
   const renderLesson = () => {
     if (game.lessonId === "lesson1") {
+      if (isLineConnectGroup(game.groupId)) {
+        return <LineConnectBoard onComplete={game.handleComplete} />;
+      }
       return <MazeBoard groupId={game.groupId} onComplete={game.handleComplete} />;
     }
     return null;

@@ -952,6 +952,11 @@ export const COURSES: CourseDef[] = [
         title: "Mê cung khó",
         lessons: [{ id: "lesson1", title: "Bắt đầu", isFree: true }],
       },
+      {
+        id: "group4",
+        title: "Nối điểm",
+        lessons: [{ id: "lesson1", title: "Bắt đầu", isFree: true }],
+      },
     ],
   },
   {
