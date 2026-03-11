@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { Camera, Eraser, RotateCcw } from "lucide-react";
 import { AI_BACKGROUNDS, COLOR_PALETTE } from "./constants";
 
@@ -216,11 +217,13 @@ export function AIPaintLesson({ groupId, onComplete }: AIPaintLessonProps) {
         className="relative w-full aspect-[4/3] md:aspect-video bg-white rounded-2xl shadow-lg border-4 border-orange-200 overflow-hidden touch-none"
       >
         {/* Background Image */}
-        <img
+        <Image
           ref={imgRef}
           src={backgroundImage}
           alt="Coloring Base"
-          className="absolute inset-0 w-full h-full object-contain pointer-events-none opacity-50"
+          fill
+          priority
+          className="object-contain pointer-events-none opacity-50"
         />
 
         {/* Drawing Surface */}

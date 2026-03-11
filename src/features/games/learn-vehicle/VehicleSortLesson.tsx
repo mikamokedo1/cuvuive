@@ -38,7 +38,7 @@ export function VehicleSortLesson({ vehicles, onComplete, requiredCorrect = 8 }:
     setSelectedZone(null);
 
     setTimeout(() => {
-      speak("Xe này đi ở đâu? Kéo thả vào đúng vị trí nhé!");
+      speak("Xe này đi ở đâu");
     }, 500);
   };
 
@@ -134,7 +134,7 @@ export function VehicleSortLesson({ vehicles, onComplete, requiredCorrect = 8 }:
           ${feedback === "wrong" ? "border-red-400 animate-shake" : ""}
           ${!feedback ? "border-gray-200" : ""}
         `}
-        onClick={() => speak(currentVehicle.name)}
+        onClick={() => speak(`xe ${currentVehicle.name} đi ở đâu`)}
       >
         <Image
           src={currentVehicle.image}

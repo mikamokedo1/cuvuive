@@ -24,10 +24,10 @@ export function OddOneOutBoard({ groupId, onComplete }: OddOneOutBoardProps) {
   const isGroup3 = groupId === "group3";
   const requiredWins = isGroup3 ? 10 : 5;
 
-  const prepareNextPuzzle = () => {
+  const prepareNextPuzzle = (currentScore: number = score) => {
     const itemCount = 4;
     // Pass the next puzzle index (equal to current score) so Group 3 loops correctly without duplicates immediately
-    const newPuzzle = generatePuzzle(groupId, itemCount, score);
+    const newPuzzle = generatePuzzle(groupId, itemCount, currentScore);
     // Shuffle the items to randomize the position of the odd one out
     const shuffledItems = [...newPuzzle.items].map((item, index) => ({ item, originalIndex: index }));
     shuffledItems.sort(() => Math.random() - 0.5);
@@ -76,7 +76,7 @@ export function OddOneOutBoard({ groupId, onComplete }: OddOneOutBoardProps) {
         if (newScore >= requiredWins) {
           onComplete();
         } else {
-          prepareNextPuzzle();
+          prepareNextPuzzle(newScore);
         }
       }, 1500);
     } else {

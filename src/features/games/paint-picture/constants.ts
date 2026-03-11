@@ -162,9 +162,9 @@ export const ALL_IMAGES: Record<string, ColoringImage[]> = {
 };
 
 export const AI_BACKGROUNDS: Record<string, string> = {
-  group1: "/assets/games/paint-picture/ai/animal.png",
-  group2: "/assets/games/paint-picture/ai/nature.png",
-  group3: "/assets/games/paint-picture/ai/toys.png",
+  group1: "/assets/games/paint-picture/ai/animal.webp",
+  group2: "/assets/games/paint-picture/ai/nature.webp",
+  group3: "/assets/games/paint-picture/ai/toys.webp",
 };
 
 export interface GroupData {

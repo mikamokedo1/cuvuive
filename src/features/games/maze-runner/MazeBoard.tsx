@@ -5,7 +5,9 @@ import { getMaze, MazeData, MazeCell } from "./constants";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { playButtonSound, playSound, playWrongSound } from "@/libs/utils/playSound";
-import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight, Star } from "lucide-react";
+import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from "lucide-react";
+import Image from "next/image";
+import phoMaiImg from "@/assets/games/maze-runner/pho_mai.webp";
 
 interface MazeBoardProps {
   groupId: string;
@@ -41,7 +43,7 @@ export function MazeBoard({ groupId, onComplete }: MazeBoardProps) {
       hintTimeoutRef.current = setTimeout(() => setShowHint(true), 8000);
 
       setTimeout(() => {
-        speak(index === 0 ? "Hãy tìm đường đến ngôi sao nhé!" : "Tiếp tục nào!");
+        speak(index === 0 ? "Hãy tìm đường đến miếng phô mai nhé!" : "Tiếp tục nào!");
       }, 500);
     },
     [groupId, speak],
@@ -222,10 +224,10 @@ export function MazeBoard({ groupId, onComplete }: MazeBoardProps) {
                     backgroundColor: isStart && !isPlayer ? "#e0f2fe" : isGoal ? "#fef9c3" : "#f8fafc",
                   }}
                 >
-                  {/* Goal star */}
+                  {/* Goal cheese */}
                   {isGoal && !isPlayer && (
                     <div className="absolute inset-0 flex items-center justify-center animate-pulse">
-                      <Star className="w-6 h-6 text-yellow-500 fill-yellow-400" />
+                      <Image src={phoMaiImg} alt="Phô mai" className="w-8 h-8 object-contain drop-shadow-sm" />
                     </div>
                   )}
 

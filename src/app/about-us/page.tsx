@@ -45,7 +45,7 @@ export default function AboutUsPage() {
                   <div className="absolute inset-0 bg-gradient-to-tr from-orange-400 to-red-400 rounded-[3rem] rotate-3 blur-2xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
                   <div className="relative rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white transition-transform duration-500 group-hover:scale-[1.02]">
                     <Image
-                      src="/images/about-hero.png"
+                      src="/images/about-hero.webp"
                       alt="Cú Thông Minh Team - Teachers, Parents and Kids"
                       width={500}
                       height={500}
