@@ -23,6 +23,7 @@ import GameOddOneOutLogo from "@/assets/games/odd-one-out/logo.png";
 import GameMazeRunnerLogo from "@/assets/games/maze-runner/logo.png";
 import PaintPictureLogo from "@/assets/games/paint-picture/logo.png";
 import GameEmotionLogo from "@/assets/games/learn-emotion/logo.png";
+import GameLearnTonesLogo from "@/assets/games/learn-tones/logo.png";
 import MixColorLogo from "@/assets/games/learn-color-color.webp"; // Using placeholder
 import GameCostumeLogo from "@/assets/games/learn-costume/logo.png";
 import GameClockLogo from "@/assets/games/learn-clock/logo-main.png";
@@ -58,6 +59,65 @@ export interface CourseDef {
 }
 
 export const COURSES: CourseDef[] = [
+  {
+    id: "learn-tones",
+    title: "Học Dấu Tiếng Việt",
+    description: "Bé học nhận biết và phát âm các dấu thanh trong tiếng Việt.",
+    icon: GameLearnTonesLogo,
+    type: "language",
+    groups: [
+      {
+        id: "group_sac",
+        title: "Thanh Sắc",
+        lessons: [
+          { id: "lesson1", title: "Học dấu", isFree: true },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Tập viết" },
+          { id: "lesson4", title: "Chữ nào đúng" },
+        ],
+      },
+      {
+        id: "group_huyen",
+        title: "Thanh Huyền",
+        lessons: [
+          { id: "lesson1", title: "Học dấu", isFree: true },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Tập viết" },
+          { id: "lesson4", title: "Chữ nào đúng" },
+        ],
+      },
+      {
+        id: "group_hoi",
+        title: "Thanh Hỏi",
+        lessons: [
+          { id: "lesson1", title: "Học dấu", isFree: true },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Tập viết" },
+          { id: "lesson4", title: "Chữ nào đúng" },
+        ],
+      },
+      {
+        id: "group_nga",
+        title: "Thanh Ngã",
+        lessons: [
+          { id: "lesson1", title: "Học dấu", isFree: true },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Tập viết" },
+          { id: "lesson4", title: "Chữ nào đúng" },
+        ],
+      },
+      {
+        id: "group_nang",
+        title: "Thanh Nặng",
+        lessons: [
+          { id: "lesson1", title: "Học dấu", isFree: true },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Tập viết" },
+          { id: "lesson4", title: "Chữ nào đúng" },
+        ],
+      },
+    ],
+  },
   {
     id: "learn-numbers",
     title: "Đếm số",

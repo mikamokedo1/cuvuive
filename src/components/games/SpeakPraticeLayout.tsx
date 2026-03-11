@@ -111,22 +111,14 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
     }, 2500);
 
     return () => clearTimeout(resetTimer);
-  }, [
-    transcript,
-    interimTranscript,
-    isListening,
-    feedback,
-    speak,
-    resetTranscript,
-    startListening,
-    stopListening,
-  ]);
+  }, [transcript, interimTranscript, isListening, feedback, speak, resetTranscript, startListening, stopListening]);
 
   // Handle speech result
   useEffect(() => {
     if (!isListening && transcript && targetEntity && !feedback) {
       setHasTried(true);
-      const isCorrect = fuzzyMatchVietnamese(transcript, targetEntity.name);
+      const matchTarget = targetEntity.acceptedAnswer || targetEntity.name;
+      const isCorrect = fuzzyMatchVietnamese(transcript, matchTarget);
 
       if (isCorrect) {
         // Correct
@@ -280,25 +272,36 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
           `}
           onClick={() => !isListening && speak(targetEntity.name)}
         >
-          <Image src={targetEntity.image} alt={targetEntity.name} fill className="object-contain" />
+          {targetEntity.textRepresent ? (
+            <p className="text-8xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 leading-none text-center">
+              {targetEntity.textRepresent}
+            </p>
+          ) : (
+            <Image src={targetEntity.image} alt={targetEntity.name} fill className="object-contain" />
+          )}
         </div>
       </div>
 
       {/* Transcript Display Area */}
       <div className="h-16 flex items-center justify-center w-full px-4">
-        {displayTranscript ? (
-          <p className="text-2xl md:text-3xl font-medium text-slate-700 text-center animate-fade-in">
-            "{displayTranscript}"
-          </p>
-        ) : hasTried && feedback === "wrong" ? (
-          <p className="text-xl md:text-2xl text-orange-500 font-medium animate-fade-in text-center">
-            Mình chưa nghe rõ, bé nói lại nhé!
-          </p>
-        ) : isListening ? (
-          <p className="text-xl md:text-2xl text-blue-500 font-medium animate-pulse text-center">Bé hãy nói to...</p>
-        ) : (
-          <p className="text-xl md:text-2xl text-slate-400 font-medium text-center">Bấm vào chiếc mic để bắt đầu nói</p>
-        )}
+        {
+          // displayTranscript ? (
+          //   <p className="text-2xl md:text-3xl font-medium text-slate-700 text-center animate-fade-in">
+          //     "{displayTranscript}"
+          //   </p>
+          // ) :
+          hasTried && feedback === "wrong" ? (
+            <p className="text-xl md:text-2xl text-orange-500 font-medium animate-fade-in text-center">
+              Mình chưa nghe rõ, bé nói lại nhé!
+            </p>
+          ) : isListening ? (
+            <p className="text-xl md:text-2xl text-blue-500 font-medium animate-pulse text-center">Bé hãy nói to...</p>
+          ) : (
+            <p className="text-xl md:text-2xl text-slate-400 font-medium text-center">
+              Bấm vào chiếc mic để bắt đầu nói
+            </p>
+          )
+        }
       </div>
 
       {/* Microphone Control */}
