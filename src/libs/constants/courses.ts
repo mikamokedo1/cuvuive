@@ -21,7 +21,7 @@ import GameAlphabetLogo from "@/assets/games/learn-alphabet/logo.png";
 import GameFindDifferencesLogo from "@/assets/games/game-4-logo.webp";
 import GameOddOneOutLogo from "@/assets/games/odd-one-out/logo.png";
 import GameMazeRunnerLogo from "@/assets/games/maze-runner/logo.png";
-import PaintPictureLogo from "@/assets/games/paint-picture/logo.png";
+import PaintPictureLogo from "@/assets/games/paint-picture/logo.webp";
 import GameEmotionLogo from "@/assets/games/learn-emotion/logo.png";
 import GameLearnTonesLogo from "@/assets/games/learn-tones/logo.png";
 import MixColorLogo from "@/assets/games/learn-color-color.webp"; // Using placeholder

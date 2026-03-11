@@ -377,7 +377,7 @@ export function ToneWritingLesson({ words, onComplete, requiredWins = 4 }: ToneW
 
       {/* Bottom Controls */}
       <div className="flex items-center gap-6 mt-2">
-        <NextLessonButton onClick={handleNext} disabled={!isSuccess} />
+        <NextLessonButton onClick={handleNext} disabled={!isSuccess} isLast={wins + 1 >= requiredWins} />
       </div>
     </div>
   );

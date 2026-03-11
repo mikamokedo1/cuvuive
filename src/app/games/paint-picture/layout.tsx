@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import PaintPictureLogo from "@/assets/games/paint-picture/logo.png";
+import PaintPictureLogo from "@/assets/games/paint-picture/logo.webp";
 
 export const metadata: Metadata = {
   title: "Vẽ Tranh | Cú Thông Minh",
