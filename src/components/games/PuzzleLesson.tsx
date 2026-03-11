@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { EntityData } from "@/types/game";
 import Image from "next/image";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { playButtonSound } from "@/libs/utils/playSound";
 import Loading from "../common/Loading";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface PuzzleLessonProps {
   dataItems: EntityData[];
@@ -26,10 +27,14 @@ export function PuzzleLesson({ dataItems, onComplete, titleItem }: PuzzleLessonP
   const [hoveredSlot, setHoveredSlot] = useState<number | null>(null);
   const [isCompleting, setIsCompleting] = useState(false);
 
+  const slotRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const cachedSlotRects = useRef<{ index: number; rect: DOMRect }[]>([]);
+
   const generatePuzzle = () => {
     if (dataItems.length === 0 || currentIndex >= dataItems.length) return;
     setPlacedPieces([]);
     setIsCompleting(false);
+    slotRefs.current = Array(PIECE_COUNT).fill(null);
 
     // Create pieces [0, 1, 2, 3] and shuffle their initial display positions
     const initialPieces = [0, 1, 2, 3].map((i) => ({ id: i, position: Math.random() }));
@@ -44,28 +49,59 @@ export function PuzzleLesson({ dataItems, onComplete, titleItem }: PuzzleLessonP
     generatePuzzle();
   }, [dataItems, currentIndex]);
 
-  const handleDragStart = (e: React.DragEvent, id: number) => {
+  const handleDragStart = (id: number) => {
     setDraggedPiece(id);
     playButtonSound();
+
+    // Cache slot rectangles at the start of drag
+    cachedSlotRects.current = slotRefs.current
+      .map((ref, index) => ({
+        index,
+        rect: ref?.getBoundingClientRect() || ({} as DOMRect),
+      }))
+      .filter((item) => !placedPieces.includes(item.index));
   };
 
-  const handleDragOver = (e: React.DragEvent, slotId: number) => {
-    e.preventDefault(); // Necessary to allow dropping
-    if (hoveredSlot !== slotId && !placedPieces.includes(slotId)) {
-      setHoveredSlot(slotId);
+  const handleDragUpdate = (info: { point: { x: number; y: number } }) => {
+    let foundSlot: number | null = null;
+    for (const { index, rect } of cachedSlotRects.current) {
+      if (
+        info.point.x >= rect.left &&
+        info.point.x <= rect.right &&
+        info.point.y >= rect.top &&
+        info.point.y <= rect.bottom
+      ) {
+        foundSlot = index;
+        break;
+      }
+    }
+
+    if (foundSlot !== hoveredSlot) {
+      setHoveredSlot(foundSlot);
     }
   };
 
-  const handleDragLeave = () => {
-    setHoveredSlot(null);
-  };
+  const handleDragEnd = (info: { point: { x: number; y: number } }, id: number) => {
+    let slotId: number | null = null;
+    for (const { index, rect } of cachedSlotRects.current) {
+      if (
+        info.point.x >= rect.left &&
+        info.point.x <= rect.right &&
+        info.point.y >= rect.top &&
+        info.point.y <= rect.bottom
+      ) {
+        slotId = index;
+        break;
+      }
+    }
 
-  const handleDrop = (e: React.DragEvent, slotId: number) => {
-    e.preventDefault();
     setHoveredSlot(null);
-    if (draggedPiece === null) return;
+    setDraggedPiece(null);
+    cachedSlotRects.current = [];
 
-    if (draggedPiece === slotId) {
+    if (slotId === null) return;
+
+    if (id === slotId) {
       // Correct placement
       playButtonSound();
       const newPlaced = [...placedPieces, slotId];
@@ -84,13 +120,12 @@ export function PuzzleLesson({ dataItems, onComplete, titleItem }: PuzzleLessonP
           } else {
             setCurrentIndex(nextIndex);
           }
-        }, 2000); // 2 second delay to let animation finish fully
+        }, 2000);
       }
     } else {
       // Wrong placement
       speak("Chưa đúng chỗ rồi!");
     }
-    setDraggedPiece(null);
   };
 
   const targetItem = dataItems[currentIndex];
@@ -100,7 +135,7 @@ export function PuzzleLesson({ dataItems, onComplete, titleItem }: PuzzleLessonP
   const bgUrl = typeof targetItem.image === "string" ? targetItem.image : targetItem.image.src;
 
   return (
-    <div className="flex flex-col items-center gap-8 w-full max-w-4xl px-4 overflow-hidden">
+    <div className="flex flex-col items-center gap-8 w-full max-w-4xl px-4 select-none">
       {/* Target Preview */}
       <div className="flex flex-col items-center z-10">
         <div
@@ -116,36 +151,37 @@ export function PuzzleLesson({ dataItems, onComplete, titleItem }: PuzzleLessonP
       <div className="flex flex-col md:flex-row gap-12 items-center justify-center w-full relative z-0">
         {/* Available Pieces */}
         <div
-          className={`flex flex-wrap gap-4 justify-center md:w-1/2 transition-all duration-700 ${isCompleting ? "opacity-0 scale-75 pointer-events-none" : "opacity-100 scale-100"}`}
+          className={`flex flex-wrap gap-4 justify-center md:w-1/2 transition-all duration-700 relative z-20 ${isCompleting ? "opacity-0 scale-75 pointer-events-none" : "opacity-100 scale-100"}`}
         >
-          {pieces.map((piece) => {
-            if (placedPieces.includes(piece.id))
+          <AnimatePresence>
+            {pieces.map((piece) => {
+              if (placedPieces.includes(piece.id))
+                return (
+                  <div key={`empty-${piece.id}`} className="w-[120px] h-[80px] md:w-[150px] md:h-[100px] opacity-0" />
+                );
               return (
-                <div key={`empty-${piece.id}`} className="w-[120px] h-[80px] md:w-[150px] md:h-[100px] opacity-0" />
+                <motion.div
+                  key={piece.id}
+                  drag
+                  dragSnapToOrigin
+                  onDragStart={() => handleDragStart(piece.id)}
+                  onDrag={(_, info) => handleDragUpdate(info)}
+                  onDragEnd={(_, info) => handleDragEnd(info, piece.id)}
+                  whileDrag={{ scale: 1.1, zIndex: 100 }}
+                  className="relative w-[120px] h-[80px] md:w-[150px] md:h-[100px] cursor-grab active:cursor-grabbing hover:scale-105 transition-transform bg-white rounded-lg shadow-md border-2 border-gray-200 overflow-hidden bg-no-repeat"
+                  style={{
+                    backgroundImage: `url(${bgUrl})`,
+                    backgroundSize: "200% 200%",
+                    backgroundPosition: `${(piece.id % 2) * 100}% ${Math.floor(piece.id / 2) * 100}%`,
+                  }}
+                />
               );
-            return (
-              <div
-                key={piece.id}
-                draggable
-                onDragStart={(e) => handleDragStart(e, piece.id)}
-                onDragEnd={() => {
-                  setDraggedPiece(null);
-                  setHoveredSlot(null);
-                }}
-                className="relative w-[120px] h-[80px] md:w-[150px] md:h-[100px] cursor-pointer hover:scale-105 transition-transform bg-white rounded-lg shadow-md border-2 border-gray-200 overflow-hidden bg-no-repeat"
-                style={{
-                  backgroundImage: `url(${bgUrl})`,
-                  backgroundSize: "200% 200%",
-                  backgroundPosition: `${(piece.id % 2) * 100}% ${Math.floor(piece.id / 2) * 100}%`,
-                }}
-              />
-            );
-          })}
+            })}
+          </AnimatePresence>
         </div>
 
-        {/* Puzzle Board */}
         <div
-          className={`grid grid-cols-2 gap-1 bg-gray-200 p-2 border-4 border-gray-300 rounded-xl shadow-inner shrink-0 h-fit transition-all duration-1000 ease-in-out ${
+          className={`grid grid-cols-2 gap-1 bg-gray-200 p-2 border-4 border-gray-300 rounded-xl shadow-inner shrink-0 h-fit transition-all duration-1000 ease-in-out relative z-10 ${
             isCompleting
               ? "opacity-0 scale-50 -translate-y-32 md:-translate-y-48 pointer-events-none rotate-12"
               : "opacity-100 scale-100 translate-y-0"
@@ -156,9 +192,9 @@ export function PuzzleLesson({ dataItems, onComplete, titleItem }: PuzzleLessonP
             return (
               <div
                 key={slot}
-                onDragOver={(e) => handleDragOver(e, slot)}
-                onDragLeave={handleDragLeave}
-                onDrop={(e) => handleDrop(e, slot)}
+                ref={(el) => {
+                  slotRefs.current[slot] = el;
+                }}
                 className={`relative w-[120px] h-[80px] md:w-[150px] md:h-[100px] border-2 transition-all duration-200 rounded overflow-hidden ${
                   isHovered
                     ? "border-blue-500 bg-blue-100 scale-105 shadow-md z-10 border-solid"
