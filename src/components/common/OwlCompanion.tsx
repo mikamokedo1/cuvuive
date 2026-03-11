@@ -88,6 +88,8 @@ export const OwlCompanion = () => {
             height={128}
             className="object-contain w-full h-full"
             draggable={false}
+            priority
+            sizes="(max-width: 768px) 80px, 128px"
           />
         </div>
 

@@ -7,8 +7,15 @@ const Loading = () => {
   return (
     <div className="flex items-center justify-center h-screen w-full bg-gray-100">
       <div className="relative -mt-20">
-        <div className="w-30 h-40">
-          <Image src={OwnLearning} alt="own-learning" fill className="object-contain animate-bounce" />
+        <div className="w-32 h-40">
+          <Image
+            src={OwnLearning}
+            alt="own-learning"
+            fill
+            className="object-contain animate-bounce"
+            priority
+            sizes="(max-width: 768px) 128px, 160px"
+          />
         </div>
         {/* <div className="w-40 h-20">
           <Image src={loadingIcon} alt="loading-icon" fill className="object-contain" />

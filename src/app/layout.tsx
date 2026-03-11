@@ -70,6 +70,17 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
     title: "Cú Thông Minh",
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export const viewport = {
@@ -86,7 +97,12 @@ export default async function RootLayout({
     "@type": "Organization",
     name: "Cú Thông Minh",
     url: "https://cuthongminh.com",
-    logo: "https://cuthongminh.com/icons/favicon-32x32.png",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://cuthongminh.com/icons/favicon-32x32.png",
+      width: "32",
+      height: "32",
+    },
     description: "Nền tảng học tập tương tác cho bé từ 3-8 tuổi.",
     contactPoint: {
       "@type": "ContactPoint",

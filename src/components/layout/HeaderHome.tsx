@@ -7,8 +7,8 @@ export const HeaderHome = () => {
   return (
     <nav className="container mx-auto px-6 py-4 flex justify-between items-center relative z-10 pt-6">
       <Link href="/">
-        <Image className="md:block hidden" src={LogoLong} alt="Logo" width={256} height={56} priority />
-        <Image className="md:hidden" src={LogoShort} alt="Logo" width={56} height={56} priority />
+        <Image className="md:block hidden" src={LogoLong} alt="Cú Thông Minh - Nền tảng học và chơi cho bé" width={256} height={56} priority />
+        <Image className="md:hidden" src={LogoShort} alt="Cú Thông Minh Logo" width={56} height={56} priority />
       </Link>
       <div className="flex items-center gap-4">
         <Link

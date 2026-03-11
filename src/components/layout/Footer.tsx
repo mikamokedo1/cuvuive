@@ -9,7 +9,7 @@ export function Footer() {
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row gap-12 items-start justify-between mb-12">
           <div className="flex flex-col gap-6 max-w-xs text-center md:text-left">
-            <Image src={LogoLong} alt="Logo" width={220} height={48} className="mx-auto md:mx-0" />
+            <Image src={LogoLong} alt="Cú Thông Minh - Trang chủ" width={220} height={48} className="mx-auto md:mx-0" />
             <p className="text-slate-500 text-sm leading-relaxed">
               Nền tảng học mà chơi số 1 cho bé, giúp con phát triển tư duy toàn diện qua những bài học sáng tạo.
             </p>

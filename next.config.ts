@@ -22,7 +22,7 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
   },
   experimental: {
-    optimizePackageImports: ["lucide-react", "framer-motion"],
+    optimizePackageImports: ["lucide-react", "framer-motion", "react-hot-toast", "clsx", "class-variance-authority"],
   },
   webpack: (config) => {
     config.module.rules.push({

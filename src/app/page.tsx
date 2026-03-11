@@ -197,7 +197,7 @@ export default function Home() {
                         src={group.icon}
                         alt={group.title}
                         fill
-                        sizes="(max-width: 640px) 96px, 128px"
+                        sizes="(max-width: 640px) 80px, (max-width: 1024px) 100px, 120px"
                         className="object-contain"
                       />
                     </div>
