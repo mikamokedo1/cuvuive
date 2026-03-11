@@ -50,8 +50,7 @@ const Header = () => {
                 aria-label="User menu"
               >
                 <div className="relative">
-                  <Image
-                    src={user?.user_metadata?.sex === "female" ? avatarGirl : avatarBoy}
+                  <Image width={56} height={56} src={user?.user_metadata?.sex === "female" ? avatarGirl : avatarBoy}
                     alt="User Avatar"
                     className="w-14 h-14 rounded-full border-4 border-white shadow-md bg-blue-200 object-cover"
                   />

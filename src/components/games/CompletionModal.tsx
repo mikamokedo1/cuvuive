@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { ActionButton } from "@/components/common/ActionButton";
-import owlSayHi from "@/assets/games/common/owl-say-hi.webp";
-import star from "@/assets/games/star.webp";
+const owlSayHi = "https://assets.cuthongminh.com/games/common/owl-say-hi.webp";
+const star = "https://assets.cuthongminh.com/games/star.webp";
 import { useEffect } from "react";
 import { playSound } from "@/libs/utils/playSound";
-import WinSound from "@/assets/games/common/sounds/win.mp3";
+const WinSound = "https://assets.cuthongminh.com/games/common/sounds/win.mp3";
 
 interface CompletionModalProps {
   isOpen: boolean;

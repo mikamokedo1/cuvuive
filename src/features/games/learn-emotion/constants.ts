@@ -1,46 +1,46 @@
 import { StaticImageData } from "next/image";
 
 // Import group logos
-import LogoGroup1 from "@/assets/games/learn-emotion/group1.webp";
-import LogoGroup2 from "@/assets/games/learn-emotion/group2.webp";
-import LogoGroup3 from "@/assets/games/learn-emotion/group3.webp";
+const LogoGroup1 = "https://assets.cuthongminh.com/games/learn-emotion/group1.webp";
+const LogoGroup2 = "https://assets.cuthongminh.com/games/learn-emotion/group2.webp";
+const LogoGroup3 = "https://assets.cuthongminh.com/games/learn-emotion/group3.webp";
 
 // Import Basic Emotions (Group 1)
-import Happy from "@/assets/games/learn-emotion/happy.jpg";
-import Sad from "@/assets/games/learn-emotion/sad.webp";
-import Angry from "@/assets/games/learn-emotion/angry.jpg";
-import Scared from "@/assets/games/learn-emotion/scared.webp";
-import Surprised from "@/assets/games/learn-emotion/surprised.webp";
-import Love from "@/assets/games/learn-emotion/love.webp";
+const Happy = "https://assets.cuthongminh.com/games/learn-emotion/happy.jpg";
+const Sad = "https://assets.cuthongminh.com/games/learn-emotion/sad.webp";
+const Angry = "https://assets.cuthongminh.com/games/learn-emotion/angry.jpg";
+const Scared = "https://assets.cuthongminh.com/games/learn-emotion/scared.webp";
+const Surprised = "https://assets.cuthongminh.com/games/learn-emotion/surprised.webp";
+const Love = "https://assets.cuthongminh.com/games/learn-emotion/love.webp";
 
 // Import Advanced Emotions (Group 2)
-import Shy from "@/assets/games/learn-emotion/shy.webp";
-import Proud from "@/assets/games/learn-emotion/proud.webp";
-import Worried from "@/assets/games/learn-emotion/worried.webp";
-import Jealous from "@/assets/games/learn-emotion/jealous.webp";
-import Excited from "@/assets/games/learn-emotion/excited.webp";
-import Bored from "@/assets/games/learn-emotion/bored.webp";
+const Shy = "https://assets.cuthongminh.com/games/learn-emotion/shy.webp";
+const Proud = "https://assets.cuthongminh.com/games/learn-emotion/proud.webp";
+const Worried = "https://assets.cuthongminh.com/games/learn-emotion/worried.webp";
+const Jealous = "https://assets.cuthongminh.com/games/learn-emotion/jealous.webp";
+const Excited = "https://assets.cuthongminh.com/games/learn-emotion/excited.webp";
+const Bored = "https://assets.cuthongminh.com/games/learn-emotion/bored.webp";
 
 // Import Scenario Emotions (Group 3) - using some created + thoughtful/focused/relaxed
-import Thoughtful from "@/assets/games/learn-emotion/thoughtful.webp";
-import Focused from "@/assets/games/learn-emotion/focused.webp";
-import Relaxed from "@/assets/games/learn-emotion/relaxed.webp";
+const Thoughtful = "https://assets.cuthongminh.com/games/learn-emotion/thoughtful.webp";
+const Focused = "https://assets.cuthongminh.com/games/learn-emotion/focused.webp";
+const Relaxed = "https://assets.cuthongminh.com/games/learn-emotion/relaxed.webp";
 
 import { EntityData } from "@/types/game";
 
 // Import Scenario Match Images
-import SmBasic1 from "@/assets/games/learn-emotion/scenarios/sm_basic_1.webp";
-import SmBasic2 from "@/assets/games/learn-emotion/scenarios/sm_basic_2.webp";
-import SmBasic3 from "@/assets/games/learn-emotion/scenarios/sm_basic_3.webp";
-import SmBasic4 from "@/assets/games/learn-emotion/scenarios/sm_basic_4.webp";
-import SmAdv1 from "@/assets/games/learn-emotion/scenarios/sm_adv_1.webp";
-import SmAdv2 from "@/assets/games/learn-emotion/scenarios/sm_adv_2.webp";
-import SmAdv3 from "@/assets/games/learn-emotion/scenarios/sm_adv_3.webp";
-import SmAdv4 from "@/assets/games/learn-emotion/scenarios/sm_adv_4.webp";
-import SmScen1 from "@/assets/games/learn-emotion/scenarios/sm_scen_1.webp";
-import SmScen2 from "@/assets/games/learn-emotion/scenarios/sm_scen_2.webp";
-import SmScen3 from "@/assets/games/learn-emotion/scenarios/sm_scen_3.webp";
-import SmScen4 from "@/assets/games/learn-emotion/scenarios/sm_scen_4.webp";
+const SmBasic1 = "https://assets.cuthongminh.com/games/learn-emotion/scenarios/sm_basic_1.webp";
+const SmBasic2 = "https://assets.cuthongminh.com/games/learn-emotion/scenarios/sm_basic_2.webp";
+const SmBasic3 = "https://assets.cuthongminh.com/games/learn-emotion/scenarios/sm_basic_3.webp";
+const SmBasic4 = "https://assets.cuthongminh.com/games/learn-emotion/scenarios/sm_basic_4.webp";
+const SmAdv1 = "https://assets.cuthongminh.com/games/learn-emotion/scenarios/sm_adv_1.webp";
+const SmAdv2 = "https://assets.cuthongminh.com/games/learn-emotion/scenarios/sm_adv_2.webp";
+const SmAdv3 = "https://assets.cuthongminh.com/games/learn-emotion/scenarios/sm_adv_3.webp";
+const SmAdv4 = "https://assets.cuthongminh.com/games/learn-emotion/scenarios/sm_adv_4.webp";
+const SmScen1 = "https://assets.cuthongminh.com/games/learn-emotion/scenarios/sm_scen_1.webp";
+const SmScen2 = "https://assets.cuthongminh.com/games/learn-emotion/scenarios/sm_scen_2.webp";
+const SmScen3 = "https://assets.cuthongminh.com/games/learn-emotion/scenarios/sm_scen_3.webp";
+const SmScen4 = "https://assets.cuthongminh.com/games/learn-emotion/scenarios/sm_scen_4.webp";
 
 export const EMOTION_ITEMS: EntityData[] = [
   // Basic Emotions (Group 1)
@@ -95,7 +95,7 @@ export function getEmotionsForGroup(groupId: string): EntityData[] {
 export interface RightWrongScenario {
   id: string;
   text: string;
-  image: StaticImageData;
+  image: string | StaticImageData;
   isCorrect: boolean;
   category: string;
 }
@@ -191,7 +191,7 @@ export function getScenariosForGroup(groupId: string): RightWrongScenario[] {
 export interface ScenarioMatchActivity {
   id: string;
   situationText: string;
-  image: StaticImageData;
+  image: string | StaticImageData;
   correctEmotionId: string;
   options: string[]; // array of emotion ids (4 items including correct one)
   category: string;

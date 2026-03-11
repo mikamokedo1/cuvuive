@@ -9,7 +9,7 @@ import { GroupData } from "@/features/games/learn-vehicle/constants";
 import { StaticImageData } from "next/image";
 
 interface GameWrapGroups {
-  logo: StaticImageData;
+  logo: string | StaticImageData;
   gameId: string;
   groups: GroupData[];
   title: string;

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import GameLandmarkLogo from "@/assets/games/learn-landmark/logo.webp";
+const GameLandmarkLogo = "https://assets.cuthongminh.com/games/learn-landmark/logo.webp";
 
 export const metadata: Metadata = {
   title: "Học Địa Danh | Cú Thông Minh",
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: GameLandmarkLogo.src,
+        url: GameLandmarkLogo,
         width: 630,
         height: 630,
         alt: "Học Địa Danh | Cú Thông Minh",

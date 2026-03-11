@@ -1,36 +1,36 @@
 import { StaticImageData } from "next/image";
 
 // Import images
-import Circle from "@/assets/games/learn-shape/circle.webp";
-import Square from "@/assets/games/learn-shape/square.webp";
-import Triangle from "@/assets/games/learn-shape/triangle.webp";
-import Rectangle from "@/assets/games/learn-shape/rectangle.webp";
-import Hexagon from "@/assets/games/learn-shape/hexagon.webp";
-import Star from "@/assets/games/learn-shape/star.webp";
-import Heart from "@/assets/games/learn-shape/heart.webp";
-import Diamond from "@/assets/games/learn-shape/diamond.webp";
-import Oval from "@/assets/games/learn-shape/oval.webp";
-import Trapezium from "@/assets/games/learn-shape/trapezium.webp";
+const Circle = "https://assets.cuthongminh.com/games/learn-shape/circle.webp";
+const Square = "https://assets.cuthongminh.com/games/learn-shape/square.webp";
+const Triangle = "https://assets.cuthongminh.com/games/learn-shape/triangle.webp";
+const Rectangle = "https://assets.cuthongminh.com/games/learn-shape/rectangle.webp";
+const Hexagon = "https://assets.cuthongminh.com/games/learn-shape/hexagon.webp";
+const Star = "https://assets.cuthongminh.com/games/learn-shape/star.webp";
+const Heart = "https://assets.cuthongminh.com/games/learn-shape/heart.webp";
+const Diamond = "https://assets.cuthongminh.com/games/learn-shape/diamond.webp";
+const Oval = "https://assets.cuthongminh.com/games/learn-shape/oval.webp";
+const Trapezium = "https://assets.cuthongminh.com/games/learn-shape/trapezium.webp";
 
-import ObjectCircle from "@/assets/games/learn-shape/object-circle.webp";
-import ObjectSquare from "@/assets/games/learn-shape/object-square.webp";
-import ObjectTriangle from "@/assets/games/learn-shape/object-triangle.webp";
-import ObjectRectangle from "@/assets/games/learn-shape/object-rectangle.webp";
-import ObjectHexagon from "@/assets/games/learn-shape/object-hexagon.webp";
-import ObjectStar from "@/assets/games/learn-shape/object-star.webp";
-import ObjectHeart from "@/assets/games/learn-shape/object-heart.webp";
-import ObjectDiamond from "@/assets/games/learn-shape/object-diamond.webp";
-import ObjectOval from "@/assets/games/learn-shape/object-oval.webp";
-import ObjectTrapezium from "@/assets/games/learn-shape/object-trapezium.webp";
+const ObjectCircle = "https://assets.cuthongminh.com/games/learn-shape/object-circle.webp";
+const ObjectSquare = "https://assets.cuthongminh.com/games/learn-shape/object-square.webp";
+const ObjectTriangle = "https://assets.cuthongminh.com/games/learn-shape/object-triangle.webp";
+const ObjectRectangle = "https://assets.cuthongminh.com/games/learn-shape/object-rectangle.webp";
+const ObjectHexagon = "https://assets.cuthongminh.com/games/learn-shape/object-hexagon.webp";
+const ObjectStar = "https://assets.cuthongminh.com/games/learn-shape/object-star.webp";
+const ObjectHeart = "https://assets.cuthongminh.com/games/learn-shape/object-heart.webp";
+const ObjectDiamond = "https://assets.cuthongminh.com/games/learn-shape/object-diamond.webp";
+const ObjectOval = "https://assets.cuthongminh.com/games/learn-shape/object-oval.webp";
+const ObjectTrapezium = "https://assets.cuthongminh.com/games/learn-shape/object-trapezium.webp";
 
 // Placeholder logos for groups (using shape images for now)
-import LogoGroup1 from "@/assets/games/learn-shape/learn-shape-group-1.webp";
-import LogoGroup2 from "@/assets/games/learn-shape/learn-shape-group-2.webp";
-import LogoGroup3 from "@/assets/games/learn-shape/learn-shape-group-3.webp";
+const LogoGroup1 = "https://assets.cuthongminh.com/games/learn-shape/learn-shape-group-1.webp";
+const LogoGroup2 = "https://assets.cuthongminh.com/games/learn-shape/learn-shape-group-2.webp";
+const LogoGroup3 = "https://assets.cuthongminh.com/games/learn-shape/learn-shape-group-3.webp";
 import { EntityData } from "@/types/game";
 
 export interface ShapeData extends EntityData {
-  objectImage: StaticImageData;
+  objectImage: string | StaticImageData;
   objectName: string;
   isBasic: boolean;
 }

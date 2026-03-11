@@ -8,9 +8,9 @@ import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 import { LetterData } from "./constants";
 import { LetterSelector } from "./LetterSelector";
-import Easer from "@/assets/games/common/earser.webp";
-import Pen from "@/assets/games/pen.webp";
-import LoudSpeaker from "@/assets/games/loud-speaker.webp";
+const Easer = "https://assets.cuthongminh.com/games/common/earser.webp";
+const Pen = "https://assets.cuthongminh.com/games/pen.webp";
+const LoudSpeaker = "https://assets.cuthongminh.com/games/loud-speaker.webp";
 
 interface AlphabetWritingLessonProps {
   letters: LetterData[];
@@ -294,7 +294,7 @@ export function AlphabetWritingLesson({ letters, onComplete, isReviewMode = fals
             onClick={clearDrawing}
             onMouseEnter={playButtonSound}
           >
-            <Image src={Easer} alt="Eraser" className="w-12 h-12" />
+            <Image width={48} height={48} src={Easer} alt="Eraser" className="w-12 h-12" />
           </button>
         )}
 
@@ -304,7 +304,7 @@ export function AlphabetWritingLesson({ letters, onComplete, isReviewMode = fals
           onClick={() => speak(`chữ ${currentLetter.letter}`)}
           onMouseEnter={playButtonSound}
         >
-          <Image src={LoudSpeaker} alt="Speaker" className="w-12 h-10" />
+          <Image width={48} height={40} src={LoudSpeaker} alt="Speaker" className="w-12 h-10" />
         </button>
       </div>
 

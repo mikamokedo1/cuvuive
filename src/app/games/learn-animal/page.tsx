@@ -1,5 +1,5 @@
 import { GROUPS } from "@/features/games/learn-animal/constants";
-import GameAnimalLogo from "@/assets/games/learn-animal/logo.webp";
+const GameAnimalLogo = "https://assets.cuthongminh.com/games/learn-animal/logo.webp";
 import { GameWrapGroups } from "@/components/layout/GameWrapGroups";
 
 export default function LearnAnimalPage() {

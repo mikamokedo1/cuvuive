@@ -2,28 +2,28 @@ import { StaticImageData } from "next/image";
 import { EntityData } from "@/types/game";
 
 // Import game logo and group logos
-import LogoGroup1 from "@/assets/games/learn-tones/group1.webp";
-import LogoGroup2 from "@/assets/games/learn-tones/group2.webp";
-import LogoGroup3 from "@/assets/games/learn-tones/group3.webp";
-import LogoGroup4 from "@/assets/games/learn-tones/group4.webp";
-import LogoGroup5 from "@/assets/games/learn-tones/group5.webp";
+const LogoGroup1 = "https://assets.cuthongminh.com/games/learn-tones/group1.webp";
+const LogoGroup2 = "https://assets.cuthongminh.com/games/learn-tones/group2.webp";
+const LogoGroup3 = "https://assets.cuthongminh.com/games/learn-tones/group3.webp";
+const LogoGroup4 = "https://assets.cuthongminh.com/games/learn-tones/group4.webp";
+const LogoGroup5 = "https://assets.cuthongminh.com/games/learn-tones/group5.webp";
 
 // Import words (reusing existing assets)
-import ImgLa from "@/assets/games/learn-tones/words/la.webp";
-import ImgRan from "@/assets/games/learn-animal/snake.webp";
-import ImgTao from "@/assets/games/learn-fruit/apple.webp";
-import ImgBo from "@/assets/games/learn-animal/cow.webp";
-import ImgRua from "@/assets/games/learn-animal/turtle.webp";
-import ImgMeo from "@/assets/games/learn-animal/cat.webp";
-import ImgTiger from "@/assets/games/learn-animal/tiger.webp";
-import ImgPho from "@/assets/games/learn-food/pho.webp";
-import ImgKhi from "@/assets/games/learn-animal/monkey.webp";
-import ImgBao from "@/assets/games/learn-weather/bao.webp";
-import ImgVit from "@/assets/games/learn-animal/duck.webp";
-import ImgNghi from "@/assets/games/learn-emotion/thoughtful.webp";
-import ImgHoc from "@/assets/games/learn-tones/words/hoc.webp";
-import ImgHat from "@/assets/games/learn-tones/words/hat.webp";
-import ImgNga from "@/assets/games/learn-tones/words/nga.webp";
+const ImgLa = "https://assets.cuthongminh.com/games/learn-tones/words/la.webp";
+const ImgRan = "https://assets.cuthongminh.com/games/learn-animal/snake.webp";
+const ImgTao = "https://assets.cuthongminh.com/games/learn-fruit/apple.webp";
+const ImgBo = "https://assets.cuthongminh.com/games/learn-animal/cow.webp";
+const ImgRua = "https://assets.cuthongminh.com/games/learn-animal/turtle.webp";
+const ImgMeo = "https://assets.cuthongminh.com/games/learn-animal/cat.webp";
+const ImgTiger = "https://assets.cuthongminh.com/games/learn-animal/tiger.webp";
+const ImgPho = "https://assets.cuthongminh.com/games/learn-food/pho.webp";
+const ImgKhi = "https://assets.cuthongminh.com/games/learn-animal/monkey.webp";
+const ImgBao = "https://assets.cuthongminh.com/games/learn-weather/bao.webp";
+const ImgVit = "https://assets.cuthongminh.com/games/learn-animal/duck.webp";
+const ImgNghi = "https://assets.cuthongminh.com/games/learn-emotion/thoughtful.webp";
+const ImgHoc = "https://assets.cuthongminh.com/games/learn-tones/words/hoc.webp";
+const ImgHat = "https://assets.cuthongminh.com/games/learn-tones/words/hat.webp";
+const ImgNga = "https://assets.cuthongminh.com/games/learn-tones/words/nga.webp";
 
 export type ToneType = "ngang" | "sac" | "huyen" | "hoi" | "nga" | "nang";
 
@@ -184,7 +184,7 @@ export interface GroupData {
   id: string;
   title: string;
   description: string;
-  logo: StaticImageData;
+  logo: string | StaticImageData;
   variant: "green" | "blue" | "purple" | "orange";
   tones: ToneType[];
 }

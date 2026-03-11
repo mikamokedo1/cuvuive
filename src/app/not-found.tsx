@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import OwlSleep from "@/assets/games/owl-sleep.webp";
+const OwlSleep = "https://assets.cuthongminh.com/games/owl-sleep.webp";
 
 export default function NotFound() {
   return (

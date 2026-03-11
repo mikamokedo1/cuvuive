@@ -1,5 +1,5 @@
 import { GROUPS } from "@/features/games/find-pattern/constants";
-import GamePatternLogo from "@/assets/games/find-pattern/logo.webp";
+const GamePatternLogo = "https://assets.cuthongminh.com/games/find-pattern/logo.webp";
 import { GameWrapGroups } from "@/components/layout/GameWrapGroups";
 
 export default function FindPatternPage() {

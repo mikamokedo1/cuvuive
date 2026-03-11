@@ -7,7 +7,7 @@ import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { playButtonSound, playSound, playWrongSound } from "@/libs/utils/playSound";
 import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from "lucide-react";
 import Image from "next/image";
-import phoMaiImg from "@/assets/games/maze-runner/pho_mai.webp";
+const phoMaiImg = "https://assets.cuthongminh.com/games/maze-runner/pho_mai.webp";
 
 interface MazeBoardProps {
   groupId: string;
@@ -227,7 +227,7 @@ export function MazeBoard({ groupId, onComplete }: MazeBoardProps) {
                   {/* Goal cheese */}
                   {isGoal && !isPlayer && (
                     <div className="absolute inset-0 flex items-center justify-center animate-pulse">
-                      <Image src={phoMaiImg} alt="Phô mai" className="w-8 h-8 object-contain drop-shadow-sm" />
+                      <Image width={32} height={32} src={phoMaiImg} alt="Phô mai" className="w-8 h-8 object-contain drop-shadow-sm" />
                     </div>
                   )}
 

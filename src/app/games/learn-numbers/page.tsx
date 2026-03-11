@@ -1,8 +1,8 @@
-import group1 from "@/assets/games/learn-numbers/number-logo-1.webp";
-import group2 from "@/assets/games/learn-numbers/number-logo-2.webp";
-import group3 from "@/assets/games/learn-numbers/number-logo-3.webp";
-import group4 from "@/assets/games/learn-numbers/number-logo-4.webp";
-import group5 from "@/assets/games/compare-quantity/compare-quantity-logo-4.webp";
+const group1 = "https://assets.cuthongminh.com/games/learn-numbers/number-logo-1.webp";
+const group2 = "https://assets.cuthongminh.com/games/learn-numbers/number-logo-2.webp";
+const group3 = "https://assets.cuthongminh.com/games/learn-numbers/number-logo-3.webp";
+const group4 = "https://assets.cuthongminh.com/games/learn-numbers/number-logo-4.webp";
+const group5 = "https://assets.cuthongminh.com/games/compare-quantity/compare-quantity-logo-4.webp";
 import { GameWrapGroups } from "@/components/layout/GameWrapGroups";
 
 const GROUPS = [

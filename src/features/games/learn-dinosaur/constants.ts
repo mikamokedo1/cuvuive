@@ -1,33 +1,33 @@
 import { StaticImageData } from "next/image";
 
 // Import group logos
-import LogoGroup1 from "@/assets/games/learn-dinosaur/group1.webp";
-import LogoGroup2 from "@/assets/games/learn-dinosaur/group2.webp";
-import LogoGroup3 from "@/assets/games/learn-dinosaur/group3.webp";
+const LogoGroup1 = "https://assets.cuthongminh.com/games/learn-dinosaur/group1.webp";
+const LogoGroup2 = "https://assets.cuthongminh.com/games/learn-dinosaur/group2.webp";
+const LogoGroup3 = "https://assets.cuthongminh.com/games/learn-dinosaur/group3.webp";
 
 // Import Herbivores (Group 1)
-import Triceratops from "@/assets/games/learn-dinosaur/triceratops.webp";
-import Stegosaurus from "@/assets/games/learn-dinosaur/stegosaurus.webp";
-import Brachiosaurus from "@/assets/games/learn-dinosaur/brachiosaurus.webp";
-import Ankylosaurus from "@/assets/games/learn-dinosaur/ankylosaurus.webp";
-import Parasaurolophus from "@/assets/games/learn-dinosaur/parasaurolophus.webp";
-import Diplodocus from "@/assets/games/learn-dinosaur/diplodocus.webp";
+const Triceratops = "https://assets.cuthongminh.com/games/learn-dinosaur/triceratops.webp";
+const Stegosaurus = "https://assets.cuthongminh.com/games/learn-dinosaur/stegosaurus.webp";
+const Brachiosaurus = "https://assets.cuthongminh.com/games/learn-dinosaur/brachiosaurus.webp";
+const Ankylosaurus = "https://assets.cuthongminh.com/games/learn-dinosaur/ankylosaurus.webp";
+const Parasaurolophus = "https://assets.cuthongminh.com/games/learn-dinosaur/parasaurolophus.webp";
+const Diplodocus = "https://assets.cuthongminh.com/games/learn-dinosaur/diplodocus.webp";
 
 // Import Carnivores (Group 2)
-import TRex from "@/assets/games/learn-dinosaur/trex.webp";
-import Velociraptor from "@/assets/games/learn-dinosaur/velociraptor.webp";
-import Spinosaurus from "@/assets/games/learn-dinosaur/spinosaurus.webp";
-import Allosaurus from "@/assets/games/learn-dinosaur/allosaurus.webp";
-import Carnotaurus from "@/assets/games/learn-dinosaur/carnotaurus.webp";
-import Dilophosaurus from "@/assets/games/learn-dinosaur/dilophosaurus.webp";
+const TRex = "https://assets.cuthongminh.com/games/learn-dinosaur/trex.webp";
+const Velociraptor = "https://assets.cuthongminh.com/games/learn-dinosaur/velociraptor.webp";
+const Spinosaurus = "https://assets.cuthongminh.com/games/learn-dinosaur/spinosaurus.webp";
+const Allosaurus = "https://assets.cuthongminh.com/games/learn-dinosaur/allosaurus.webp";
+const Carnotaurus = "https://assets.cuthongminh.com/games/learn-dinosaur/carnotaurus.webp";
+const Dilophosaurus = "https://assets.cuthongminh.com/games/learn-dinosaur/dilophosaurus.webp";
 
 // Import Flying & Sea (Group 3)
-import Pteranodon from "@/assets/games/learn-dinosaur/pteranodon.webp";
-import Plesiosaurus from "@/assets/games/learn-dinosaur/plesiosaurus.webp";
-import Mosasaurus from "@/assets/games/learn-dinosaur/mosasaurus.webp";
-import Ichthyosaurus from "@/assets/games/learn-dinosaur/ichthyosaurus.webp";
-import Quetzalcoatlus from "@/assets/games/learn-dinosaur/quetzalcoatlus.webp";
-import Archelon from "@/assets/games/learn-dinosaur/archelon.webp";
+const Pteranodon = "https://assets.cuthongminh.com/games/learn-dinosaur/pteranodon.webp";
+const Plesiosaurus = "https://assets.cuthongminh.com/games/learn-dinosaur/plesiosaurus.webp";
+const Mosasaurus = "https://assets.cuthongminh.com/games/learn-dinosaur/mosasaurus.webp";
+const Ichthyosaurus = "https://assets.cuthongminh.com/games/learn-dinosaur/ichthyosaurus.webp";
+const Quetzalcoatlus = "https://assets.cuthongminh.com/games/learn-dinosaur/quetzalcoatlus.webp";
+const Archelon = "https://assets.cuthongminh.com/games/learn-dinosaur/archelon.webp";
 import { EntityData } from "@/types/game";
 
 export type DinosaurCategory = "herbivore" | "carnivore" | "flying_sea";

@@ -6,7 +6,7 @@ import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import Image from "next/image";
-import LoudSpeaker from "@/assets/games/loud-speaker.webp";
+const LoudSpeaker = "https://assets.cuthongminh.com/games/loud-speaker.webp";
 import { FeedbackType } from "@/types/game";
 import { QuizzLesson } from "@/components/games/QuizLesson";
 

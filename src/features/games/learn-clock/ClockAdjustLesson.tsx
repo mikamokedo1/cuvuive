@@ -6,7 +6,7 @@ import { AnalogClock } from "./components/AnalogClock";
 import { playCorrectSound } from "@/libs/utils/playSound";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
-import LoudSpeaker from "@/assets/games/loud-speaker.webp";
+const LoudSpeaker = "https://assets.cuthongminh.com/games/loud-speaker.webp";
 import Image from "next/image";
 
 interface ClockAdjustLessonProps {
@@ -67,7 +67,7 @@ export function ClockAdjustLesson({ onComplete }: ClockAdjustLessonProps) {
           onClick={() => speak(`Chỉnh đồng hồ thành ${timeToText(currentQ.hours, currentQ.minutes)}`)}
           className="cursor-pointer hover:scale-105 transition-all"
         >
-          <Image src={LoudSpeaker} alt="Speaker" className="w-12 h-10" />
+          <Image width={48} height={40} src={LoudSpeaker} alt="Speaker" className="w-12 h-10" />
         </button>
       </div>
 

@@ -7,7 +7,7 @@ import { MathOperator, generateMathQuestion, generateChoices } from "./constants
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { SymbolComponent } from "./ExplainMathLesson";
-import LoudSpeaker from "@/assets/games/loud-speaker.webp";
+const LoudSpeaker = "https://assets.cuthongminh.com/games/loud-speaker.webp";
 import { FeedbackType } from "@/types/game";
 
 interface VisualMathLessonProps {
@@ -138,7 +138,7 @@ export function VisualMathLesson({ operator, maxSum, onComplete }: VisualMathLes
           onClick={() => speak(`${question.a} ${symbol === "-" ? "trừ" : "cộng"} ${question.b} bằng mấy?`)}
           className="cursor-pointer hover:scale-105 transition-all"
         >
-          <Image src={LoudSpeaker} alt="Speaker" className="w-12 h-10" />
+          <Image width={48} height={40} src={LoudSpeaker} alt="Speaker" className="w-12 h-10" />
         </button>
       </div>
 

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import GameHygieneLogo from "@/assets/games/learn-hygiene/logo.webp";
+const GameHygieneLogo = "https://assets.cuthongminh.com/games/learn-hygiene/logo.webp";
 
 export const metadata: Metadata = {
   title: "Học Vệ Sinh Cá Nhân | Cú Thông Minh",
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: GameHygieneLogo.src,
+        url: GameHygieneLogo,
         width: 630,
         height: 630,
         alt: "Học Vệ Sinh Cá Nhân | Cú Thông Minh",

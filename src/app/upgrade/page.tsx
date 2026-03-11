@@ -4,7 +4,7 @@ import { Suspense, useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { ActionButton } from "@/components/common/ActionButton";
-import owlHi from "@/assets/games/common/owl-say-hi.webp";
+const owlHi = "https://assets.cuthongminh.com/games/common/owl-say-hi.webp";
 import { toast } from "react-hot-toast";
 import { getPlans } from "@/libs/actions/plans";
 import Header from "@/components/layout/Header";

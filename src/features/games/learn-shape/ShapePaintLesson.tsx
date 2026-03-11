@@ -8,9 +8,9 @@ import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 import { ShapeData, SHAPES } from "./constants";
 import { SHAPE_PATHS, ShapePathData } from "@/libs/constants/shapePaths";
-import Easer from "@/assets/games/common/earser.webp";
-import Pen from "@/assets/games/pen.webp";
-import LoudSpeaker from "@/assets/games/loud-speaker.webp";
+const Easer = "https://assets.cuthongminh.com/games/common/earser.webp";
+const Pen = "https://assets.cuthongminh.com/games/pen.webp";
+const LoudSpeaker = "https://assets.cuthongminh.com/games/loud-speaker.webp";
 
 interface ShapePaintLessonProps {
   shapes: ShapeData[];
@@ -312,7 +312,7 @@ export function ShapePaintLesson({ shapes, onComplete }: ShapePaintLessonProps) 
             onClick={clearDrawing}
             onMouseEnter={playButtonSound}
           >
-            <Image src={Easer} alt="Eraser" className="w-12 h-12" />
+            <Image width={48} height={48} src={Easer} alt="Eraser" className="w-12 h-12" />
           </button>
         )}
 
@@ -322,7 +322,7 @@ export function ShapePaintLesson({ shapes, onComplete }: ShapePaintLessonProps) 
           onClick={() => speak(currentShape.name)}
           onMouseEnter={playButtonSound}
         >
-          <Image src={LoudSpeaker} alt="Speaker" className="w-12 h-10" />
+          <Image width={48} height={40} src={LoudSpeaker} alt="Speaker" className="w-12 h-10" />
         </button>
       </div>
 

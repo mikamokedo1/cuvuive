@@ -2,43 +2,43 @@ import { StaticImageData } from "next/image";
 import { EntityData } from "@/types/game";
 
 // Logos
-import LogoGroup1 from "@/assets/games/learn-weather/group1.webp";
-import LogoGroup2 from "@/assets/games/learn-weather/group2.webp";
-import LogoGroup3 from "@/assets/games/learn-weather/group3.webp";
+const LogoGroup1 = "https://assets.cuthongminh.com/games/learn-weather/group1.webp";
+const LogoGroup2 = "https://assets.cuthongminh.com/games/learn-weather/group2.webp";
+const LogoGroup3 = "https://assets.cuthongminh.com/games/learn-weather/group3.webp";
 
 // Group 1
-import MatTroi from "@/assets/games/learn-weather/mat_troi.webp";
-import Mua from "@/assets/games/learn-weather/mua.webp";
-import May from "@/assets/games/learn-weather/may_2.webp";
-import Gio from "@/assets/games/learn-weather/gio.webp";
-import SamSet from "@/assets/games/learn-weather/sam_set.webp";
-import CauVong from "@/assets/games/learn-weather/cau_vong.webp";
+const MatTroi = "https://assets.cuthongminh.com/games/learn-weather/mat_troi.webp";
+const Mua = "https://assets.cuthongminh.com/games/learn-weather/mua.webp";
+const May = "https://assets.cuthongminh.com/games/learn-weather/may_2.webp";
+const Gio = "https://assets.cuthongminh.com/games/learn-weather/gio.webp";
+const SamSet = "https://assets.cuthongminh.com/games/learn-weather/sam_set.webp";
+const CauVong = "https://assets.cuthongminh.com/games/learn-weather/cau_vong.webp";
 
 // Group 2
-import Tuyet from "@/assets/games/learn-weather/tuyet.webp";
-import MuaDa from "@/assets/games/learn-weather/mua_da.webp";
-import SuongMu from "@/assets/games/learn-weather/suong_mu.webp";
-import Bao from "@/assets/games/learn-weather/bao.webp";
-import LocXoay from "@/assets/games/learn-weather/loc_xoay.webp";
-import SongThan from "@/assets/games/learn-weather/song_than.webp";
+const Tuyet = "https://assets.cuthongminh.com/games/learn-weather/tuyet.webp";
+const MuaDa = "https://assets.cuthongminh.com/games/learn-weather/mua_da.webp";
+const SuongMu = "https://assets.cuthongminh.com/games/learn-weather/suong_mu.webp";
+const Bao = "https://assets.cuthongminh.com/games/learn-weather/bao.webp";
+const LocXoay = "https://assets.cuthongminh.com/games/learn-weather/loc_xoay.webp";
+const SongThan = "https://assets.cuthongminh.com/games/learn-weather/song_than.webp";
 
 // Group 3
-import MuaXuan from "@/assets/games/learn-weather/mua_xuan.webp";
-import MuaHa from "@/assets/games/learn-weather/mua_ha.webp";
-import MuaThu from "@/assets/games/learn-weather/mua_thu.webp";
-import MuaDong from "@/assets/games/learn-weather/mua_dong.webp";
-import MuaKho from "@/assets/games/learn-weather/mua_kho.webp";
-import MuaMua from "@/assets/games/learn-weather/mua_mua.webp";
+const MuaXuan = "https://assets.cuthongminh.com/games/learn-weather/mua_xuan.webp";
+const MuaHa = "https://assets.cuthongminh.com/games/learn-weather/mua_ha.webp";
+const MuaThu = "https://assets.cuthongminh.com/games/learn-weather/mua_thu.webp";
+const MuaDong = "https://assets.cuthongminh.com/games/learn-weather/mua_dong.webp";
+const MuaKho = "https://assets.cuthongminh.com/games/learn-weather/mua_kho.webp";
+const MuaMua = "https://assets.cuthongminh.com/games/learn-weather/mua_mua.webp";
 
 // Clothing (Group 3 Special Lesson)
-import AoAm from "@/assets/games/learn-weather/ao_am.webp";
-import KhanQuang from "@/assets/games/learn-weather/khan_quang.webp";
-import AoMua from "@/assets/games/learn-weather/ao_mua.webp";
-import ODu from "@/assets/games/learn-weather/o_du.webp";
-import KinhMat from "@/assets/games/learn-weather/kinh_mat.webp";
-import NonRong from "@/assets/games/learn-weather/non_rong.webp";
-import AoDai from "@/assets/games/learn-weather/ao_dai.webp";
-import AoLen from "@/assets/games/learn-weather/ao_len.webp";
+const AoAm = "https://assets.cuthongminh.com/games/learn-weather/ao_am.webp";
+const KhanQuang = "https://assets.cuthongminh.com/games/learn-weather/khan_quang.webp";
+const AoMua = "https://assets.cuthongminh.com/games/learn-weather/ao_mua.webp";
+const ODu = "https://assets.cuthongminh.com/games/learn-weather/o_du.webp";
+const KinhMat = "https://assets.cuthongminh.com/games/learn-weather/kinh_mat.webp";
+const NonRong = "https://assets.cuthongminh.com/games/learn-weather/non_rong.webp";
+const AoDai = "https://assets.cuthongminh.com/games/learn-weather/ao_dai.webp";
+const AoLen = "https://assets.cuthongminh.com/games/learn-weather/ao_len.webp";
 
 export const WEATHER_ITEMS: EntityData[] = [
   // Group 1

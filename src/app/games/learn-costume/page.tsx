@@ -1,5 +1,5 @@
 import { GROUPS } from "@/features/games/learn-costume/constants";
-import GameCostumeLogo from "@/assets/games/learn-flag/logo.webp"; // Using placeholder for now
+const GameCostumeLogo = "https://assets.cuthongminh.com/games/learn-flag/logo.webp"; // Using placeholder for now
 import { GameWrapGroups } from "@/components/layout/GameWrapGroups";
 
 export default function LearnCostumePage() {

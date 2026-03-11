@@ -2,45 +2,45 @@ import { StaticImageData } from "next/image";
 import { EntityData } from "@/types/game";
 
 // Import group logos
-import LogoGroup1 from "@/assets/games/learn-alphabet/group1.webp";
-import LogoGroup2 from "@/assets/games/learn-alphabet/group2.webp";
-import LogoGroup3 from "@/assets/games/learn-alphabet/group3.webp";
+const LogoGroup1 = "https://assets.cuthongminh.com/games/learn-alphabet/group1.webp";
+const LogoGroup2 = "https://assets.cuthongminh.com/games/learn-alphabet/group2.webp";
+const LogoGroup3 = "https://assets.cuthongminh.com/games/learn-alphabet/group3.webp";
 
 // Import letter representative images
 // Vowels
-import ImgCachua from "@/assets/games/learn-alphabet/cachua.webp";
-import ImgConGa from "@/assets/games/learn-animal/chicken.webp";
-import ImgRan from "@/assets/games/learn-alphabet/ran.webp";
-import ImgBocau from "@/assets/games/learn-alphabet/bocau.webp"; // Â - bồ câu
-import ImgEmPe from "@/assets/games/learn-alphabet/empe.webp"; // E - em pé
-import ImgEch from "@/assets/games/learn-alphabet/ech.webp"; // Ê - con ếch
-import ImgVit from "@/assets/games/learn-animal/duck.webp";
-import ImgOng from "@/assets/games/learn-alphabet/ong.webp";
-import ImgCoGiao from "@/assets/games/learn-occupation/teacher.webp"; // Ô - cô giáo
-import ImgOt from "@/assets/games/learn-alphabet/ot.webp"; // Ơ - trái ớt
-import ImgCua from "@/assets/games/learn-alphabet/cua.webp";
-import ImgSuTu from "@/assets/games/learn-animal/lion.webp";
-import ImgYTa from "@/assets/games/learn-occupation/nurse.webp";
+const ImgCachua = "https://assets.cuthongminh.com/games/learn-alphabet/cachua.webp";
+const ImgConGa = "https://assets.cuthongminh.com/games/learn-animal/chicken.webp";
+const ImgRan = "https://assets.cuthongminh.com/games/learn-alphabet/ran.webp";
+const ImgBocau = "https://assets.cuthongminh.com/games/learn-alphabet/bocau.webp"; // Â - bồ câu
+const ImgEmPe = "https://assets.cuthongminh.com/games/learn-alphabet/empe.webp"; // E - em pé
+const ImgEch = "https://assets.cuthongminh.com/games/learn-alphabet/ech.webp"; // Ê - con ếch
+const ImgVit = "https://assets.cuthongminh.com/games/learn-animal/duck.webp";
+const ImgOng = "https://assets.cuthongminh.com/games/learn-alphabet/ong.webp";
+const ImgCoGiao = "https://assets.cuthongminh.com/games/learn-occupation/teacher.webp"; // Ô - cô giáo
+const ImgOt = "https://assets.cuthongminh.com/games/learn-alphabet/ot.webp"; // Ơ - trái ớt
+const ImgCua = "https://assets.cuthongminh.com/games/learn-alphabet/cua.webp";
+const ImgSuTu = "https://assets.cuthongminh.com/games/learn-animal/lion.webp";
+const ImgYTa = "https://assets.cuthongminh.com/games/learn-occupation/nurse.webp";
 
 // Consonants Group 1
-import ImgBo from "@/assets/games/learn-animal/cow.webp"; // B - con bò
-import ImgCam from "@/assets/games/learn-fruit/orange.webp"; // C - con cọp
-import ImgDoi from "@/assets/games/learn-alphabet/doi.webp"; // D - con dơi
-import ImgDen from "@/assets/games/learn-alphabet/den.webp"; // Đ - cái đèn
-import ImgHoa from "@/assets/games/learn-alphabet/hoa.webp"; // H - bông hoa
-import ImgKem from "@/assets/games/learn-alphabet/kem.webp"; // K - con khỉ
-import ImgLa from "@/assets/games/learn-alphabet/la.webp"; // L - lá cờ
-import ImgMeo from "@/assets/games/learn-alphabet/meo.webp"; // M - con mèo
+const ImgBo = "https://assets.cuthongminh.com/games/learn-animal/cow.webp"; // B - con bò
+const ImgCam = "https://assets.cuthongminh.com/games/learn-fruit/orange.webp"; // C - con cọp
+const ImgDoi = "https://assets.cuthongminh.com/games/learn-alphabet/doi.webp"; // D - con dơi
+const ImgDen = "https://assets.cuthongminh.com/games/learn-alphabet/den.webp"; // Đ - cái đèn
+const ImgHoa = "https://assets.cuthongminh.com/games/learn-alphabet/hoa.webp"; // H - bông hoa
+const ImgKem = "https://assets.cuthongminh.com/games/learn-alphabet/kem.webp"; // K - con khỉ
+const ImgLa = "https://assets.cuthongminh.com/games/learn-alphabet/la.webp"; // L - lá cờ
+const ImgMeo = "https://assets.cuthongminh.com/games/learn-alphabet/meo.webp"; // M - con mèo
 
 // Consonants Group 2
-import ImgNam from "@/assets/games/learn-alphabet/nam.webp"; // N - cây nấm
-import ImgPin from "@/assets/games/learn-alphabet/pin.webp"; // P - pin
-import ImgQuabong from "@/assets/games/learn-numbers/example-num-2.webp";
-import ImgRua from "@/assets/games/learn-animal/turtle.webp";
-import ImgSao from "@/assets/games/learn-shape/star.webp";
-import ImgTenLua from "@/assets/games/learn-vehicle/rocket.webp";
-import ImgVoi from "@/assets/games/learn-animal/elephant.webp";
-import ImgXeDap from "@/assets/games/learn-vehicle/bicycle.webp";
+const ImgNam = "https://assets.cuthongminh.com/games/learn-alphabet/nam.webp"; // N - cây nấm
+const ImgPin = "https://assets.cuthongminh.com/games/learn-alphabet/pin.webp"; // P - pin
+const ImgQuabong = "https://assets.cuthongminh.com/games/learn-numbers/example-num-2.webp";
+const ImgRua = "https://assets.cuthongminh.com/games/learn-animal/turtle.webp";
+const ImgSao = "https://assets.cuthongminh.com/games/learn-shape/star.webp";
+const ImgTenLua = "https://assets.cuthongminh.com/games/learn-vehicle/rocket.webp";
+const ImgVoi = "https://assets.cuthongminh.com/games/learn-animal/elephant.webp";
+const ImgXeDap = "https://assets.cuthongminh.com/games/learn-vehicle/bicycle.webp";
 
 export interface LetterData extends EntityData {
   letter: string; // Uppercase letter display (e.g. "A", "Ă")
@@ -89,7 +89,7 @@ export interface GroupData {
   id: string;
   title: string;
   description: string;
-  logo: StaticImageData;
+  logo: string | StaticImageData;
   variant: "green" | "blue" | "purple" | "orange";
   letters: string[];
   [key: string]: any;

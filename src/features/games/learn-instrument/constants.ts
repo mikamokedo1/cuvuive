@@ -1,33 +1,33 @@
 import { StaticImageData } from "next/image";
 
 // Import group logos
-import LogoGroup1 from "@/assets/games/learn-instrument/group1.webp";
-import LogoGroup2 from "@/assets/games/learn-instrument/group2.webp";
-import LogoGroup3 from "@/assets/games/learn-instrument/group3.webp";
+const LogoGroup1 = "https://assets.cuthongminh.com/games/learn-instrument/group1.webp";
+const LogoGroup2 = "https://assets.cuthongminh.com/games/learn-instrument/group2.webp";
+const LogoGroup3 = "https://assets.cuthongminh.com/games/learn-instrument/group3.webp";
 
 // Import String Instruments (Group 1)
-import Guitar from "@/assets/games/learn-instrument/guitar.webp";
-import Piano from "@/assets/games/learn-instrument/piano.webp";
-import Violin from "@/assets/games/learn-instrument/violin.webp";
-import DanTranh from "@/assets/games/learn-instrument/dan_tranh.webp";
-import Ukulele from "@/assets/games/learn-instrument/ukulele.webp";
-import Harp from "@/assets/games/learn-instrument/harp.webp";
-import Bau from "@/assets/games/learn-instrument/bau.webp";
+const Guitar = "https://assets.cuthongminh.com/games/learn-instrument/guitar.webp";
+const Piano = "https://assets.cuthongminh.com/games/learn-instrument/piano.webp";
+const Violin = "https://assets.cuthongminh.com/games/learn-instrument/violin.webp";
+const DanTranh = "https://assets.cuthongminh.com/games/learn-instrument/dan_tranh.webp";
+const Ukulele = "https://assets.cuthongminh.com/games/learn-instrument/ukulele.webp";
+const Harp = "https://assets.cuthongminh.com/games/learn-instrument/harp.webp";
+const Bau = "https://assets.cuthongminh.com/games/learn-instrument/bau.webp";
 
 // Import Percussion Instruments (Group 2)
-import Drum from "@/assets/games/learn-instrument/drum.webp";
-import Xylophone from "@/assets/games/learn-instrument/xylophone.webp";
-import Tambourine from "@/assets/games/learn-instrument/tambourine.webp";
-import Maracas from "@/assets/games/learn-instrument/maracas.webp";
-import Gong from "@/assets/games/learn-instrument/gong.webp";
-import Torung from "@/assets/games/learn-instrument/torung.webp";
+const Drum = "https://assets.cuthongminh.com/games/learn-instrument/drum.webp";
+const Xylophone = "https://assets.cuthongminh.com/games/learn-instrument/xylophone.webp";
+const Tambourine = "https://assets.cuthongminh.com/games/learn-instrument/tambourine.webp";
+const Maracas = "https://assets.cuthongminh.com/games/learn-instrument/maracas.webp";
+const Gong = "https://assets.cuthongminh.com/games/learn-instrument/gong.webp";
+const Torung = "https://assets.cuthongminh.com/games/learn-instrument/torung.webp";
 
 // Import Wind Instruments (Group 3)
-import Flute from "@/assets/games/learn-instrument/flute.webp";
-import Trumpet from "@/assets/games/learn-instrument/trumpet.webp";
-import Saxophone from "@/assets/games/learn-instrument/saxophone.webp";
-import Clarinet from "@/assets/games/learn-instrument/clarinet.webp";
-import Harmonica from "@/assets/games/learn-instrument/harmonica.webp";
+const Flute = "https://assets.cuthongminh.com/games/learn-instrument/flute.webp";
+const Trumpet = "https://assets.cuthongminh.com/games/learn-instrument/trumpet.webp";
+const Saxophone = "https://assets.cuthongminh.com/games/learn-instrument/saxophone.webp";
+const Clarinet = "https://assets.cuthongminh.com/games/learn-instrument/clarinet.webp";
+const Harmonica = "https://assets.cuthongminh.com/games/learn-instrument/harmonica.webp";
 import { EntityData } from "@/types/game";
 
 export const INSTRUMENTS: EntityData[] = [

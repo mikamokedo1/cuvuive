@@ -1,9 +1,9 @@
 import { GroupData } from "@/features/games/learn-vehicle/constants";
 
 // Logos
-import LogoGroup1 from "@/assets/games/maze-runner/group1.webp";
-import LogoGroup2 from "@/assets/games/maze-runner/group2.webp";
-import LogoGroup3 from "@/assets/games/maze-runner/group3.webp";
+const LogoGroup1 = "https://assets.cuthongminh.com/games/maze-runner/group1.webp";
+const LogoGroup2 = "https://assets.cuthongminh.com/games/maze-runner/group2.webp";
+const LogoGroup3 = "https://assets.cuthongminh.com/games/maze-runner/group3.webp";
 
 // ═══════════════════════════════════════════
 // Types

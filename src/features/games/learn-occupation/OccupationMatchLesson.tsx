@@ -7,7 +7,7 @@ import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { playButtonSound } from "@/libs/utils/playSound";
 import Image from "next/image";
-import LoudSpeaker from "@/assets/games/loud-speaker.webp";
+const LoudSpeaker = "https://assets.cuthongminh.com/games/loud-speaker.webp";
 import { FeedbackType } from "@/types/game";
 
 interface OccupationMatchLessonProps {
@@ -101,7 +101,7 @@ export function OccupationMatchLesson({ occupations, onComplete, requiredWins = 
             onClick={() => speak(`${targetOccupation.name} dùng dụng cụ gì?`)}
             className="cursor-pointer hover:scale-105 transition-all"
           >
-            <Image src={LoudSpeaker} alt="Speaker" className="w-10 h-8" />
+            <Image width={40} height={32} src={LoudSpeaker} alt="Speaker" className="w-10 h-8" />
           </button>
         </div>
       </div>

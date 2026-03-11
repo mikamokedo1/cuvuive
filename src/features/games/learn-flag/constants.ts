@@ -1,42 +1,42 @@
 import { StaticImageData } from "next/image";
 
 // Import group logos
-import LogoGroup1 from "@/assets/games/learn-flag/group1.webp"; // Asia
-import LogoGroup2 from "@/assets/games/learn-flag/group2.webp"; // Europe
-import LogoGroup3 from "@/assets/games/learn-flag/group3.webp"; // Americas
-import LogoGroup4 from "@/assets/games/learn-flag/group4.webp"; // Africa & Oceania
+const LogoGroup1 = "https://assets.cuthongminh.com/games/learn-flag/group1.webp"; // Asia
+const LogoGroup2 = "https://assets.cuthongminh.com/games/learn-flag/group2.webp"; // Europe
+const LogoGroup3 = "https://assets.cuthongminh.com/games/learn-flag/group3.webp"; // Americas
+const LogoGroup4 = "https://assets.cuthongminh.com/games/learn-flag/group4.webp"; // Africa & Oceania
 
 // Import Asia
-import Vietnam from "@/assets/games/learn-flag/vietnam.webp";
-import Japan from "@/assets/games/learn-flag/japan.webp";
-import SouthKorea from "@/assets/games/learn-flag/southkorea.webp";
-import China from "@/assets/games/learn-flag/china.webp";
-import Thailand from "@/assets/games/learn-flag/thailand.webp";
-import India from "@/assets/games/learn-flag/india.webp";
+const Vietnam = "https://assets.cuthongminh.com/games/learn-flag/vietnam.webp";
+const Japan = "https://assets.cuthongminh.com/games/learn-flag/japan.webp";
+const SouthKorea = "https://assets.cuthongminh.com/games/learn-flag/southkorea.webp";
+const China = "https://assets.cuthongminh.com/games/learn-flag/china.webp";
+const Thailand = "https://assets.cuthongminh.com/games/learn-flag/thailand.webp";
+const India = "https://assets.cuthongminh.com/games/learn-flag/india.webp";
 
 // Import Europe
-import UK from "@/assets/games/learn-flag/uk.webp";
-import France from "@/assets/games/learn-flag/france.webp";
-import Germany from "@/assets/games/learn-flag/germany.webp";
-import Italy from "@/assets/games/learn-flag/italy.webp";
-import Spain from "@/assets/games/learn-flag/spain.webp";
-import Russia from "@/assets/games/learn-flag/russia.webp";
+const UK = "https://assets.cuthongminh.com/games/learn-flag/uk.webp";
+const France = "https://assets.cuthongminh.com/games/learn-flag/france.webp";
+const Germany = "https://assets.cuthongminh.com/games/learn-flag/germany.webp";
+const Italy = "https://assets.cuthongminh.com/games/learn-flag/italy.webp";
+const Spain = "https://assets.cuthongminh.com/games/learn-flag/spain.webp";
+const Russia = "https://assets.cuthongminh.com/games/learn-flag/russia.webp";
 
 // Import Americas
-import USA from "@/assets/games/learn-flag/usa.webp";
-import Canada from "@/assets/games/learn-flag/canada.webp";
-import Brazil from "@/assets/games/learn-flag/brazil.webp";
-import Argentina from "@/assets/games/learn-flag/argentina.webp";
-import Mexico from "@/assets/games/learn-flag/mexico.webp";
-import Colombia from "@/assets/games/learn-flag/colombia.webp";
+const USA = "https://assets.cuthongminh.com/games/learn-flag/usa.webp";
+const Canada = "https://assets.cuthongminh.com/games/learn-flag/canada.webp";
+const Brazil = "https://assets.cuthongminh.com/games/learn-flag/brazil.webp";
+const Argentina = "https://assets.cuthongminh.com/games/learn-flag/argentina.webp";
+const Mexico = "https://assets.cuthongminh.com/games/learn-flag/mexico.webp";
+const Colombia = "https://assets.cuthongminh.com/games/learn-flag/colombia.webp";
 
 // Import Africa & Oceania
-import SouthAfrica from "@/assets/games/learn-flag/southafrica.webp";
-import Egypt from "@/assets/games/learn-flag/egypt.webp";
-import Australia from "@/assets/games/learn-flag/australia.webp";
-import Nigeria from "@/assets/games/learn-flag/nigeria.webp";
-import Morocco from "@/assets/games/learn-flag/morocco.webp";
-import Kenya from "@/assets/games/learn-flag/kenya.webp";
+const SouthAfrica = "https://assets.cuthongminh.com/games/learn-flag/southafrica.webp";
+const Egypt = "https://assets.cuthongminh.com/games/learn-flag/egypt.webp";
+const Australia = "https://assets.cuthongminh.com/games/learn-flag/australia.webp";
+const Nigeria = "https://assets.cuthongminh.com/games/learn-flag/nigeria.webp";
+const Morocco = "https://assets.cuthongminh.com/games/learn-flag/morocco.webp";
+const Kenya = "https://assets.cuthongminh.com/games/learn-flag/kenya.webp";
 
 import { EntityData } from "@/types/game";
 

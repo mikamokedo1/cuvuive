@@ -9,7 +9,7 @@ export function GameSchema({ courseId }: { courseId: string }) {
     "@type": "LearningResource",
     name: course.title,
     description: course.description,
-    image: `https://cuthongminh.com${course.icon.src}`,
+    image: typeof course.icon === "string" ? course.icon : `https://assets.cuthongminh.com${course.icon.src}`,
     learningResourceType: "Educational Game",
     educationalLevel: "Preschool, Kindergarten, Early Childhood Education",
     publisher: {

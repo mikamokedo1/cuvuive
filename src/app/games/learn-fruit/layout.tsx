@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import GameFruitLogo from "@/assets/games/learn-fruit/logo.webp";
+const GameFruitLogo = "https://assets.cuthongminh.com/games/learn-fruit/logo.webp";
 
 export const metadata: Metadata = {
   title: "Học Trái Cây | Cú Thông Minh",
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: GameFruitLogo.src,
+        url: GameFruitLogo,
         width: 630,
         height: 630,
         alt: "Học Trái Cây | Cú Thông Minh",

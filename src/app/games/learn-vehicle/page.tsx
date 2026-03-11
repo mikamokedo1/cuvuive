@@ -1,5 +1,5 @@
 import { GROUPS } from "@/features/games/learn-vehicle/constants";
-import GameVehicleLogo from "@/assets/games/learn-vehicle/logo.webp";
+const GameVehicleLogo = "https://assets.cuthongminh.com/games/learn-vehicle/logo.webp";
 import { GameWrapGroups } from "@/components/layout/GameWrapGroups";
 
 export default function LearnVehiclePage() {

@@ -6,9 +6,9 @@ import { ChevronRight } from "lucide-react";
 import { NUMBER_PATHS } from "@/libs/constants/numberPaths";
 import Image from "next/image";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
-import Easer from "@/assets/games/common/earser.webp";
-import Pen from "@/assets/games/pen.webp";
-import LoudSpeaker from "@/assets/games/loud-speaker.webp";
+const Easer = "https://assets.cuthongminh.com/games/common/earser.webp";
+const Pen = "https://assets.cuthongminh.com/games/pen.webp";
+const LoudSpeaker = "https://assets.cuthongminh.com/games/loud-speaker.webp";
 import { playButtonSound, playSound } from "@/libs/utils/playSound";
 import { SoundNumbers } from "./LearnLesson";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
@@ -313,7 +313,7 @@ export function WritingLesson({ range, onComplete }: WritingLessonProps) {
             onClick={clearDrawing}
             onMouseEnter={playButtonSound}
           >
-            <Image src={Easer} alt="Eraser" className="w-12 h-12" />
+            <Image width={48} height={48} src={Easer} alt="Eraser" className="w-12 h-12" />
           </button>
         )}
 
@@ -322,7 +322,7 @@ export function WritingLesson({ range, onComplete }: WritingLessonProps) {
           onClick={() => playSound(SoundNumbers[currentNumber - 1])}
           onMouseEnter={playButtonSound}
         >
-          <Image src={LoudSpeaker} alt="Eraser" className="w-12 h-10" />
+          <Image width={48} height={40} src={LoudSpeaker} alt="Eraser" className="w-12 h-10" />
         </button>
       </div>
 

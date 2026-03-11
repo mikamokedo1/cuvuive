@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import NumberLogo from "@/assets/games/learn-numbers/number-logo.webp";
+const NumberLogo = "https://assets.cuthongminh.com/games/learn-numbers/number-logo.webp";
 
 export const metadata: Metadata = {
   title: "Bé học đếm số - Cú Thông Minh",
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: NumberLogo.src,
+        url: NumberLogo,
         width: 1200,
         height: 630,
         alt: "Bé học đếm số - Cú Thông Minh",

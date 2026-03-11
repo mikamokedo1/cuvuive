@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import Game3Logo from "@/assets/games/game-3-logo.webp";
+const Game3Logo = "https://assets.cuthongminh.com/games/game-3-logo.webp";
 
 export const metadata: Metadata = {
   title: "Bé học so sánh - Cú Thông Minh",
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: Game3Logo.src,
+        url: Game3Logo,
         width: 1200,
         height: 630,
         alt: "Bé học so sánh - Cú Thông Minh",

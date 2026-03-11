@@ -9,7 +9,7 @@ interface NumberCardProps {
   number: number;
   active?: boolean;
   soundNum?: string;
-  image: StaticImageData;
+  image: string | StaticImageData;
 }
 
 export const NumberCard = ({ number, active, soundNum, image }: NumberCardProps) => {

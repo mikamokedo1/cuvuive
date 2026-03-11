@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import GameColorLogo from "@/assets/games/learn-color-color.webp";
+const GameColorLogo = "https://assets.cuthongminh.com/games/learn-color-color.webp";
 
 export const metadata: Metadata = {
   title: "Học Màu Sắc - Cú Thông Minh",
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: GameColorLogo.src,
+        url: GameColorLogo,
         width: 630,
         height: 630,
         alt: "Học Màu Sắc - Cú Thông Minh",

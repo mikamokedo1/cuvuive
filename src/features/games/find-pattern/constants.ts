@@ -2,8 +2,8 @@ import { StaticImageData } from "next/image";
 import { GroupData } from "@/features/games/learn-vehicle/constants";
 
 // Import logos
-import LogoGroup1 from "@/assets/games/find-pattern/group1.webp";
-import LogoGroup2 from "@/assets/games/find-pattern/group2.webp";
+const LogoGroup1 = "https://assets.cuthongminh.com/games/find-pattern/group1.webp";
+const LogoGroup2 = "https://assets.cuthongminh.com/games/find-pattern/group2.webp";
 
 // ============ SHAPE & COLOR DEFINITIONS ============
 

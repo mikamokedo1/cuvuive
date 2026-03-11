@@ -12,7 +12,7 @@ import { useUser } from "@/context/UserContext";
 import Header from "@/components/layout/Header";
 
 // Re-using the same owl image for settings header
-import owlHi from "@/assets/games/common/owl-say-hi.webp";
+const owlHi = "https://assets.cuthongminh.com/games/common/owl-say-hi.webp";
 
 export function SettingsView() {
   const router = useRouter();

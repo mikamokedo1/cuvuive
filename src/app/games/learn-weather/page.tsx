@@ -1,5 +1,5 @@
 import { GROUPS } from "@/features/games/learn-weather/constants";
-import GameWeatherLogo from "@/assets/games/learn-weather/logo.webp";
+const GameWeatherLogo = "https://assets.cuthongminh.com/games/learn-weather/logo.webp";
 import { GameWrapGroups } from "@/components/layout/GameWrapGroups";
 
 export default function LearnWeatherPage() {

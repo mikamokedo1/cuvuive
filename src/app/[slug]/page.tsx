@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     openGraph: {
       title,
       description,
-      images: [{ url: group.icon.src }],
+      images: [{ url: typeof group.icon === "string" ? group.icon : group.icon.src }],
     },
   };
 }

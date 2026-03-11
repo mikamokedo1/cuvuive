@@ -1,33 +1,33 @@
 import { StaticImageData } from "next/image";
 
 // Import group logos
-import LogoGroup1 from "@/assets/games/learn-flower/group1.webp";
-import LogoGroup2 from "@/assets/games/learn-flower/group2.webp";
-import LogoGroup3 from "@/assets/games/learn-flower/group3.webp";
+const LogoGroup1 = "https://assets.cuthongminh.com/games/learn-flower/group1.webp";
+const LogoGroup2 = "https://assets.cuthongminh.com/games/learn-flower/group2.webp";
+const LogoGroup3 = "https://assets.cuthongminh.com/games/learn-flower/group3.webp";
 
 // Import Group 1: Hoa Phổ Biến (Common Vietnamese Flowers)
-import HoaSen from "@/assets/games/learn-flower/hoa_sen.webp";
-import HoaMai from "@/assets/games/learn-flower/hoa_mai.webp";
-import HoaDao from "@/assets/games/learn-flower/hoa_dao.webp";
-import HoaCuc from "@/assets/games/learn-flower/hoa_cuc.webp";
-import HoaHong from "@/assets/games/learn-flower/hoa_hong.webp";
-import HoaLan from "@/assets/games/learn-flower/hoa_lan.webp";
+const HoaSen = "https://assets.cuthongminh.com/games/learn-flower/hoa_sen.webp";
+const HoaMai = "https://assets.cuthongminh.com/games/learn-flower/hoa_mai.webp";
+const HoaDao = "https://assets.cuthongminh.com/games/learn-flower/hoa_dao.webp";
+const HoaCuc = "https://assets.cuthongminh.com/games/learn-flower/hoa_cuc.webp";
+const HoaHong = "https://assets.cuthongminh.com/games/learn-flower/hoa_hong.webp";
+const HoaLan = "https://assets.cuthongminh.com/games/learn-flower/hoa_lan.webp";
 
 // Import Group 2: Hoa Tết & Hoa Trang Trí (Tết & Decorative Flowers)
-import HoaLy from "@/assets/games/learn-flower/hoa_ly.webp";
-import HoaDongTien from "@/assets/games/learn-flower/hoa_dong_tien.webp";
-import HoaCatTuong from "@/assets/games/learn-flower/hoa_cat_tuong.webp";
-import HoaVanTho from "@/assets/games/learn-flower/hoa_van_tho.webp";
-import HoaGiay from "@/assets/games/learn-flower/hoa_giay.webp";
-import HoaPhuong from "@/assets/games/learn-flower/hoa_phuong.webp";
+const HoaLy = "https://assets.cuthongminh.com/games/learn-flower/hoa_ly.webp";
+const HoaDongTien = "https://assets.cuthongminh.com/games/learn-flower/hoa_dong_tien.webp";
+const HoaCatTuong = "https://assets.cuthongminh.com/games/learn-flower/hoa_cat_tuong.webp";
+const HoaVanTho = "https://assets.cuthongminh.com/games/learn-flower/hoa_van_tho.webp";
+const HoaGiay = "https://assets.cuthongminh.com/games/learn-flower/hoa_giay.webp";
+const HoaPhuong = "https://assets.cuthongminh.com/games/learn-flower/hoa_phuong.webp";
 
 // Import Group 3: Cây Ăn Quả (Fruit Trees)
-import CayXoai from "@/assets/games/learn-flower/cay_xoai.webp";
-import CayDua from "@/assets/games/learn-flower/cay_dua.webp";
-import CayChuoi from "@/assets/games/learn-flower/cay_chuoi.webp";
-import CayBuoi from "@/assets/games/learn-flower/cay_buoi.webp";
-import CayNhan from "@/assets/games/learn-flower/cay_nhan.webp";
-import CayMit from "@/assets/games/learn-flower/cay_mit.webp";
+const CayXoai = "https://assets.cuthongminh.com/games/learn-flower/cay_xoai.webp";
+const CayDua = "https://assets.cuthongminh.com/games/learn-flower/cay_dua.webp";
+const CayChuoi = "https://assets.cuthongminh.com/games/learn-flower/cay_chuoi.webp";
+const CayBuoi = "https://assets.cuthongminh.com/games/learn-flower/cay_buoi.webp";
+const CayNhan = "https://assets.cuthongminh.com/games/learn-flower/cay_nhan.webp";
+const CayMit = "https://assets.cuthongminh.com/games/learn-flower/cay_mit.webp";
 import { EntityData } from "@/types/game";
 
 export const FLOWERS: EntityData[] = [

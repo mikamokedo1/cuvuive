@@ -1,27 +1,27 @@
 import { StaticImageData } from "next/image";
-import LogoGroup1 from "@/assets/games/find-pattern/group1.webp";
-import LogoGroup2 from "@/assets/games/find-pattern/group2.webp";
-import ImgRoom from "@/assets/games/find-differences/lesson1-room.webp";
-import ImgRoomModified from "@/assets/games/find-differences/lesson1-room-modified.webp";
-import ImgGarden from "@/assets/games/find-differences/lesson2-garden.webp";
-import ImgGardenModified from "@/assets/games/find-differences/lesson2-garden-modified.webp";
-import ImgBeach from "@/assets/games/find-differences/lesson3-beach.webp";
-import ImgBeachModified from "@/assets/games/find-differences/lesson3-beach-modified.webp";
-import ImgKitchen from "@/assets/games/find-differences/lesson4-kitchen.webp";
-import ImgKitchenModified from "@/assets/games/find-differences/lesson4-kitchen-modified.webp";
-import ImgPlayground from "@/assets/games/find-differences/lesson5-playground.webp";
-import ImgPlaygroundModified from "@/assets/games/find-differences/lesson5-playground-modified.webp";
+const LogoGroup1 = "https://assets.cuthongminh.com/games/find-pattern/group1.webp";
+const LogoGroup2 = "https://assets.cuthongminh.com/games/find-pattern/group2.webp";
+const ImgRoom = "https://assets.cuthongminh.com/games/find-differences/lesson1-room.webp";
+const ImgRoomModified = "https://assets.cuthongminh.com/games/find-differences/lesson1-room-modified.webp";
+const ImgGarden = "https://assets.cuthongminh.com/games/find-differences/lesson2-garden.webp";
+const ImgGardenModified = "https://assets.cuthongminh.com/games/find-differences/lesson2-garden-modified.webp";
+const ImgBeach = "https://assets.cuthongminh.com/games/find-differences/lesson3-beach.webp";
+const ImgBeachModified = "https://assets.cuthongminh.com/games/find-differences/lesson3-beach-modified.webp";
+const ImgKitchen = "https://assets.cuthongminh.com/games/find-differences/lesson4-kitchen.webp";
+const ImgKitchenModified = "https://assets.cuthongminh.com/games/find-differences/lesson4-kitchen-modified.webp";
+const ImgPlayground = "https://assets.cuthongminh.com/games/find-differences/lesson5-playground.webp";
+const ImgPlaygroundModified = "https://assets.cuthongminh.com/games/find-differences/lesson5-playground-modified.webp";
 
-import ImgNight from "@/assets/games/find-differences/lesson3-night.webp";
-import ImgNightModified from "@/assets/games/find-differences/lesson3-night-modified.webp";
-import ImgSpace from "@/assets/games/find-differences/lesson2-space.webp";
-import ImgSpaceModified from "@/assets/games/find-differences/lesson2-space-modified.webp";
-import ImgUnderwater from "@/assets/games/find-differences/lesson3-underwater.webp";
-import ImgUnderwaterModified from "@/assets/games/find-differences/lesson3-underwater-modified.webp";
-import ImgForest from "@/assets/games/find-differences/lesson4-forest.webp";
-import ImgForestModified from "@/assets/games/find-differences/lesson4-forest-modified.webp";
-import ImgCity from "@/assets/games/find-differences/lesson5-city.webp";
-import ImgCityModified from "@/assets/games/find-differences/lesson5-city-modified.webp";
+const ImgNight = "https://assets.cuthongminh.com/games/find-differences/lesson3-night.webp";
+const ImgNightModified = "https://assets.cuthongminh.com/games/find-differences/lesson3-night-modified.webp";
+const ImgSpace = "https://assets.cuthongminh.com/games/find-differences/lesson2-space.webp";
+const ImgSpaceModified = "https://assets.cuthongminh.com/games/find-differences/lesson2-space-modified.webp";
+const ImgUnderwater = "https://assets.cuthongminh.com/games/find-differences/lesson3-underwater.webp";
+const ImgUnderwaterModified = "https://assets.cuthongminh.com/games/find-differences/lesson3-underwater-modified.webp";
+const ImgForest = "https://assets.cuthongminh.com/games/find-differences/lesson4-forest.webp";
+const ImgForestModified = "https://assets.cuthongminh.com/games/find-differences/lesson4-forest-modified.webp";
+const ImgCity = "https://assets.cuthongminh.com/games/find-differences/lesson5-city.webp";
+const ImgCityModified = "https://assets.cuthongminh.com/games/find-differences/lesson5-city-modified.webp";
 
 export interface PointConfig {
   x: number; // Percentage from 0-100 horizontally
@@ -42,7 +42,7 @@ export interface FDGroup {
   id: string;
   title: string;
   description: string;
-  logo: StaticImageData;
+  logo: string | StaticImageData;
   variant: "green" | "blue" | "orange" | "purple";
   lessons: FDLesson[];
 }

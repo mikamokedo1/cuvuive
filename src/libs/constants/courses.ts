@@ -1,36 +1,36 @@
 // Assets
-import NumberLogo from "@/assets/games/learn-numbers/number-logo.webp";
-import Game3Logo from "@/assets/games/game-3-logo.webp";
-import GameColorLogo from "@/assets/games/learn-color-color.webp";
-import ShapeLogo from "@/assets/games/learn-shape/learn-shape-logo.webp";
-import GameAnimalLogo from "@/assets/games/learn-animal/logo.webp";
-import GameVehicleLogo from "@/assets/games/learn-vehicle/logo.webp";
-import GameFruitLogo from "@/assets/games/learn-fruit/logo.webp";
-import GameInstrumentLogo from "@/assets/games/learn-instrument/logo.webp";
-import GameOccupationLogo from "@/assets/games/learn-occupation/logo.webp";
-import GameDinosaurLogo from "@/assets/games/learn-dinosaur/logo.webp";
-import GameFoodLogo from "@/assets/games/learn-food/logo.webp";
-import GameFlowerLogo from "@/assets/games/learn-flower/logo.webp";
-import GameMathLogo from "@/assets/games/learn-math/logo.webp";
-import GameWeatherLogo from "@/assets/games/learn-weather/logo.webp";
-import GameFlagLogo from "@/assets/games/learn-flag/logo.webp";
-import GameLandmarkLogo from "@/assets/games/learn-landmark/logo.webp";
-import GameHygieneLogo from "@/assets/games/learn-hygiene/logo.webp";
-import GamePatternLogo from "@/assets/games/find-pattern/logo.webp";
-import GameAlphabetLogo from "@/assets/games/learn-alphabet/logo.webp";
-import GameFindDifferencesLogo from "@/assets/games/game-4-logo.webp";
-import GameOddOneOutLogo from "@/assets/games/odd-one-out/logo.webp";
-import GameMazeRunnerLogo from "@/assets/games/maze-runner/logo.webp";
-import PaintPictureLogo from "@/assets/games/paint-picture/logo.webp";
-import GameEmotionLogo from "@/assets/games/learn-emotion/logo.webp";
-import GameLearnTonesLogo from "@/assets/games/learn-tones/logo.webp";
-import MixColorLogo from "@/assets/games/learn-color-color.webp"; // Using placeholder
-import GameCostumeLogo from "@/assets/games/learn-costume/logo.webp";
-import GameClockLogo from "@/assets/games/learn-clock/logo-main.webp";
-import MiniPianoLogo from "@/assets/games/mini-piano/logo.webp";
-import CreativeGroupLogo from "@/assets/games/mini-piano/group1.webp";
-import MusicianGroupLogo from "@/assets/games/mini-piano/group2.webp";
-import EarGroupLogo from "@/assets/games/mini-piano/group3.webp";
+const NumberLogo = "https://assets.cuthongminh.com/games/learn-numbers/number-logo.webp";
+const Game3Logo = "https://assets.cuthongminh.com/games/game-3-logo.webp";
+const GameColorLogo = "https://assets.cuthongminh.com/games/learn-color-color.webp";
+const ShapeLogo = "https://assets.cuthongminh.com/games/learn-shape/learn-shape-logo.webp";
+const GameAnimalLogo = "https://assets.cuthongminh.com/games/learn-animal/logo.webp";
+const GameVehicleLogo = "https://assets.cuthongminh.com/games/learn-vehicle/logo.webp";
+const GameFruitLogo = "https://assets.cuthongminh.com/games/learn-fruit/logo.webp";
+const GameInstrumentLogo = "https://assets.cuthongminh.com/games/learn-instrument/logo.webp";
+const GameOccupationLogo = "https://assets.cuthongminh.com/games/learn-occupation/logo.webp";
+const GameDinosaurLogo = "https://assets.cuthongminh.com/games/learn-dinosaur/logo.webp";
+const GameFoodLogo = "https://assets.cuthongminh.com/games/learn-food/logo.webp";
+const GameFlowerLogo = "https://assets.cuthongminh.com/games/learn-flower/logo.webp";
+const GameMathLogo = "https://assets.cuthongminh.com/games/learn-math/logo.webp";
+const GameWeatherLogo = "https://assets.cuthongminh.com/games/learn-weather/logo.webp";
+const GameFlagLogo = "https://assets.cuthongminh.com/games/learn-flag/logo.webp";
+const GameLandmarkLogo = "https://assets.cuthongminh.com/games/learn-landmark/logo.webp";
+const GameHygieneLogo = "https://assets.cuthongminh.com/games/learn-hygiene/logo.webp";
+const GamePatternLogo = "https://assets.cuthongminh.com/games/find-pattern/logo.webp";
+const GameAlphabetLogo = "https://assets.cuthongminh.com/games/learn-alphabet/logo.webp";
+const GameFindDifferencesLogo = "https://assets.cuthongminh.com/games/game-4-logo.webp";
+const GameOddOneOutLogo = "https://assets.cuthongminh.com/games/odd-one-out/logo.webp";
+const GameMazeRunnerLogo = "https://assets.cuthongminh.com/games/maze-runner/logo.webp";
+const PaintPictureLogo = "https://assets.cuthongminh.com/games/paint-picture/logo.webp";
+const GameEmotionLogo = "https://assets.cuthongminh.com/games/learn-emotion/logo.webp";
+const GameLearnTonesLogo = "https://assets.cuthongminh.com/games/learn-tones/logo.webp";
+const MixColorLogo = "https://assets.cuthongminh.com/games/learn-color-color.webp"; // Using placeholder
+const GameCostumeLogo = "https://assets.cuthongminh.com/games/learn-costume/logo.webp";
+const GameClockLogo = "https://assets.cuthongminh.com/games/learn-clock/logo-main.webp";
+const MiniPianoLogo = "https://assets.cuthongminh.com/games/mini-piano/logo.webp";
+const CreativeGroupLogo = "https://assets.cuthongminh.com/games/mini-piano/group1.webp";
+const MusicianGroupLogo = "https://assets.cuthongminh.com/games/mini-piano/group2.webp";
+const EarGroupLogo = "https://assets.cuthongminh.com/games/mini-piano/group3.webp";
 import { StaticImageData } from "next/image";
 import { GameGroupType } from "@/libs/constants/groups";
 
@@ -45,7 +45,7 @@ export interface GroupDef {
   title: string;
   lessons: LessonDef[];
   description?: string;
-  logo?: StaticImageData;
+  logo?: string | StaticImageData;
   variant?: "green" | "orange" | "purple" | "blue";
 }
 
@@ -54,7 +54,7 @@ export interface CourseDef {
   title: string;
   description: string;
   groups: GroupDef[];
-  icon: StaticImageData;
+  icon: string | StaticImageData;
   type: GameGroupType;
 }
 

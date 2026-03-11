@@ -69,7 +69,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     "@type": "Article",
     headline: post.title,
     description: post.description,
-    image: post.image ? [`https://cuthongminh.com${post.image}`] : [],
+    image: post.image ? [`https://assets.cuthongminh.com${post.image}`] : [],
     datePublished: post.date,
     dateModified: post.date,
     author: {
@@ -112,7 +112,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         "@type": "ListItem",
         position: 3,
         name: post.title,
-        item: `https://cuthongminh.com/blogs/${post.slug}`,
+        item: `https://assets.cuthongminh.com/blogs/${post.slug}`,
       },
     ],
   };

@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import MixColorLogo from "@/assets/games/learn-color-color.webp";
+const MixColorLogo = "https://assets.cuthongminh.com/games/learn-color-color.webp";
 
 export const metadata: Metadata = {
   title: "Pha Màu - Cú Thông Minh",
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: MixColorLogo.src,
+        url: MixColorLogo,
         width: 1200,
         height: 630,
         alt: "Pha Màu - Cú Thông Minh",

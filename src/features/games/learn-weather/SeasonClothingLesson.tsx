@@ -6,7 +6,7 @@ import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import Image from "next/image";
-import LoudSpeaker from "@/assets/games/loud-speaker.webp";
+const LoudSpeaker = "https://assets.cuthongminh.com/games/loud-speaker.webp";
 import { FeedbackType } from "@/types/game";
 import { CLOTHING_ITEMS } from "./constants";
 
@@ -111,7 +111,7 @@ export function SeasonClothingLesson({ seasons, onComplete, requiredWins = 8 }: 
           onClick={() => speak(`${targetSeason.name} nên mặc đồ gì?`)}
           className="cursor-pointer hover:scale-105 transition-all"
         >
-          <Image src={LoudSpeaker} alt="Speaker" className="w-12 h-10" />
+          <Image width={48} height={40} src={LoudSpeaker} alt="Speaker" className="w-12 h-10" />
         </button>
       </div>
 

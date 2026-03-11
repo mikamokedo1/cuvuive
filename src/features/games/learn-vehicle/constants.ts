@@ -1,37 +1,37 @@
 import { StaticImageData } from "next/image";
 
 // Import group logos
-import LogoGroup1 from "@/assets/games/learn-vehicle/group1.webp";
-import LogoGroup2 from "@/assets/games/learn-vehicle/group2.webp";
-import LogoGroup3 from "@/assets/games/learn-vehicle/group3.webp";
-import LogoGroup4 from "@/assets/games/learn-vehicle/logo.webp";
+const LogoGroup1 = "https://assets.cuthongminh.com/games/learn-vehicle/group1.webp";
+const LogoGroup2 = "https://assets.cuthongminh.com/games/learn-vehicle/group2.webp";
+const LogoGroup3 = "https://assets.cuthongminh.com/games/learn-vehicle/group3.webp";
+const LogoGroup4 = "https://assets.cuthongminh.com/games/learn-vehicle/logo.webp";
 
 // Import Land Vehicles (Group 1) - PNG format (AI generated)
-import Car from "@/assets/games/learn-vehicle/car.webp";
-import Motorbike from "@/assets/games/learn-vehicle/motorbike.webp";
-import Bus from "@/assets/games/learn-vehicle/bus.webp";
-import Truck from "@/assets/games/learn-vehicle/truck.webp";
-import Bicycle from "@/assets/games/learn-vehicle/bicycle.webp";
-import Taxi from "@/assets/games/learn-vehicle/taxi.webp";
+const Car = "https://assets.cuthongminh.com/games/learn-vehicle/car.webp";
+const Motorbike = "https://assets.cuthongminh.com/games/learn-vehicle/motorbike.webp";
+const Bus = "https://assets.cuthongminh.com/games/learn-vehicle/bus.webp";
+const Truck = "https://assets.cuthongminh.com/games/learn-vehicle/truck.webp";
+const Bicycle = "https://assets.cuthongminh.com/games/learn-vehicle/bicycle.webp";
+const Taxi = "https://assets.cuthongminh.com/games/learn-vehicle/taxi.webp";
 
 // Import Water Vehicles (Group 2) - webp format (AI generated)
-import Boat from "@/assets/games/learn-vehicle/boat.webp";
-import Ship from "@/assets/games/learn-vehicle/ship.webp";
-import Submarine from "@/assets/games/learn-vehicle/submarine.webp";
-import Jetski from "@/assets/games/learn-vehicle/jetski.webp";
-import Canoe from "@/assets/games/learn-vehicle/canoe.webp";
+const Boat = "https://assets.cuthongminh.com/games/learn-vehicle/boat.webp";
+const Ship = "https://assets.cuthongminh.com/games/learn-vehicle/ship.webp";
+const Submarine = "https://assets.cuthongminh.com/games/learn-vehicle/submarine.webp";
+const Jetski = "https://assets.cuthongminh.com/games/learn-vehicle/jetski.webp";
+const Canoe = "https://assets.cuthongminh.com/games/learn-vehicle/canoe.webp";
 
 // Import Air Vehicles (Group 3)
-import Airplane from "@/assets/games/learn-vehicle/airplane.webp";
-import Helicopter from "@/assets/games/learn-vehicle/helicopter.webp";
-import Balloon from "@/assets/games/learn-vehicle/balloon.webp";
-import Rocket from "@/assets/games/learn-vehicle/rocket.webp";
-import Drone from "@/assets/games/learn-vehicle/drone.webp"; // Placeholder
+const Airplane = "https://assets.cuthongminh.com/games/learn-vehicle/airplane.webp";
+const Helicopter = "https://assets.cuthongminh.com/games/learn-vehicle/helicopter.webp";
+const Balloon = "https://assets.cuthongminh.com/games/learn-vehicle/balloon.webp";
+const Rocket = "https://assets.cuthongminh.com/games/learn-vehicle/rocket.webp";
+const Drone = "https://assets.cuthongminh.com/games/learn-vehicle/drone.webp"; // Placeholder
 
 // import zones
-import ZoneLand from "@/assets/games/learn-vehicle/road.webp";
-import ZoneWater from "@/assets/games/learn-vehicle/beach.webp";
-import ZoneAir from "@/assets/games/learn-vehicle/sky.webp";
+const ZoneLand = "https://assets.cuthongminh.com/games/learn-vehicle/road.webp";
+const ZoneWater = "https://assets.cuthongminh.com/games/learn-vehicle/beach.webp";
+const ZoneAir = "https://assets.cuthongminh.com/games/learn-vehicle/sky.webp";
 import { EntityData } from "@/types/game";
 
 export const VEHICLES: EntityData[] = [
@@ -62,7 +62,7 @@ export interface GroupData {
   id: string;
   title: string;
   description: string;
-  logo: StaticImageData;
+  logo: string | StaticImageData;
   variant: "green" | "blue" | "purple" | "orange";
   lessonCount?: number;
   [key: string]: any;

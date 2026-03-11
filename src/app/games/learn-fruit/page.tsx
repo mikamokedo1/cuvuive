@@ -1,5 +1,5 @@
 import { GROUPS } from "@/features/games/learn-fruit/constants";
-import GameFruitLogo from "@/assets/games/learn-fruit/logo.webp";
+const GameFruitLogo = "https://assets.cuthongminh.com/games/learn-fruit/logo.webp";
 import { GameWrapGroups } from "@/components/layout/GameWrapGroups";
 
 export default function LearnFruitPage() {

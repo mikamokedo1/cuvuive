@@ -1,33 +1,33 @@
 import { StaticImageData } from "next/image";
 
 // Import group logos
-import LogoGroup1 from "@/assets/games/learn-fruit/group1.webp";
-import LogoGroup2 from "@/assets/games/learn-fruit/group2.webp";
-import LogoGroup3 from "@/assets/games/learn-fruit/group3.webp";
+const LogoGroup1 = "https://assets.cuthongminh.com/games/learn-fruit/group1.webp";
+const LogoGroup2 = "https://assets.cuthongminh.com/games/learn-fruit/group2.webp";
+const LogoGroup3 = "https://assets.cuthongminh.com/games/learn-fruit/group3.webp";
 
 // Import Tropical Fruits (Group 1)
-import Banana from "@/assets/games/learn-fruit/banana.webp";
-import Mango from "@/assets/games/learn-fruit/mango.webp";
-import Pineapple from "@/assets/games/learn-fruit/pineapple.webp";
-import Coconut from "@/assets/games/learn-fruit/coconut.webp";
-import Papaya from "@/assets/games/learn-fruit/papaya.webp";
-import DragonFruit from "@/assets/games/learn-fruit/dragonfruit.webp";
+const Banana = "https://assets.cuthongminh.com/games/learn-fruit/banana.webp";
+const Mango = "https://assets.cuthongminh.com/games/learn-fruit/mango.webp";
+const Pineapple = "https://assets.cuthongminh.com/games/learn-fruit/pineapple.webp";
+const Coconut = "https://assets.cuthongminh.com/games/learn-fruit/coconut.webp";
+const Papaya = "https://assets.cuthongminh.com/games/learn-fruit/papaya.webp";
+const DragonFruit = "https://assets.cuthongminh.com/games/learn-fruit/dragonfruit.webp";
 
 // Import Common Fruits (Group 2)
-import Apple from "@/assets/games/learn-fruit/apple.webp";
-import Orange from "@/assets/games/learn-fruit/orange.webp";
-import Grape from "@/assets/games/learn-fruit/grape.webp";
-import Strawberry from "@/assets/games/learn-fruit/strawberry.webp";
-import Watermelon from "@/assets/games/learn-fruit/watermelon.webp";
-import Pear from "@/assets/games/learn-fruit/pear.webp";
+const Apple = "https://assets.cuthongminh.com/games/learn-fruit/apple.webp";
+const Orange = "https://assets.cuthongminh.com/games/learn-fruit/orange.webp";
+const Grape = "https://assets.cuthongminh.com/games/learn-fruit/grape.webp";
+const Strawberry = "https://assets.cuthongminh.com/games/learn-fruit/strawberry.webp";
+const Watermelon = "https://assets.cuthongminh.com/games/learn-fruit/watermelon.webp";
+const Pear = "https://assets.cuthongminh.com/games/learn-fruit/pear.webp";
 
 // Import Special Fruits (Group 3)
-import Durian from "@/assets/games/learn-fruit/durian.webp";
-import Mangosteen from "@/assets/games/learn-fruit/mangosteen.webp";
-import Pomelo from "@/assets/games/learn-fruit/pomelo.webp";
-import Lychee from "@/assets/games/learn-fruit/lychee.webp";
-import Lemon from "@/assets/games/learn-fruit/lemon.webp";
-import Kiwi from "@/assets/games/learn-fruit/kiwi.webp";
+const Durian = "https://assets.cuthongminh.com/games/learn-fruit/durian.webp";
+const Mangosteen = "https://assets.cuthongminh.com/games/learn-fruit/mangosteen.webp";
+const Pomelo = "https://assets.cuthongminh.com/games/learn-fruit/pomelo.webp";
+const Lychee = "https://assets.cuthongminh.com/games/learn-fruit/lychee.webp";
+const Lemon = "https://assets.cuthongminh.com/games/learn-fruit/lemon.webp";
+const Kiwi = "https://assets.cuthongminh.com/games/learn-fruit/kiwi.webp";
 import { EntityData } from "@/types/game";
 
 export const FRUITS: EntityData[] = [

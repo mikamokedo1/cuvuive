@@ -1,34 +1,34 @@
 import { StaticImageData } from "next/image";
 
 // Import group logos
-import LogoGroup1 from "@/assets/games/learn-food/group1.webp";
-import LogoGroup2 from "@/assets/games/learn-food/group2.webp";
-import LogoGroup3 from "@/assets/games/learn-food/group3.webp";
+const LogoGroup1 = "https://assets.cuthongminh.com/games/learn-food/group1.webp";
+const LogoGroup2 = "https://assets.cuthongminh.com/games/learn-food/group2.webp";
+const LogoGroup3 = "https://assets.cuthongminh.com/games/learn-food/group3.webp";
 
 // Import Breakfast Items (Group 1)
-import BanhMi from "@/assets/games/learn-food/banh_mi.webp";
-import Pho from "@/assets/games/learn-food/pho.webp";
-import TrungOpLa from "@/assets/games/learn-food/trung_op_la.webp";
-import SuaTuoi from "@/assets/games/learn-food/sua_tuoi.webp";
-import NguCoc from "@/assets/games/learn-food/ngu_coc.webp";
-import XucXich from "@/assets/games/learn-food/xuc_xich.webp";
+const BanhMi = "https://assets.cuthongminh.com/games/learn-food/banh_mi.webp";
+const Pho = "https://assets.cuthongminh.com/games/learn-food/pho.webp";
+const TrungOpLa = "https://assets.cuthongminh.com/games/learn-food/trung_op_la.webp";
+const SuaTuoi = "https://assets.cuthongminh.com/games/learn-food/sua_tuoi.webp";
+const NguCoc = "https://assets.cuthongminh.com/games/learn-food/ngu_coc.webp";
+const XucXich = "https://assets.cuthongminh.com/games/learn-food/xuc_xich.webp";
 
 // Import Main Dishes (Group 2)
-import ComTrang from "@/assets/games/learn-food/com_trang.webp";
-import Canh from "@/assets/games/learn-food/canh.webp";
-import GaRan from "@/assets/games/learn-food/ga_ran.webp";
-import Pizza from "@/assets/games/learn-food/pizza.webp";
-import Hamburger from "@/assets/games/learn-food/hamburger.webp";
-import MiY from "@/assets/games/learn-food/mi_y.webp";
+const ComTrang = "https://assets.cuthongminh.com/games/learn-food/com_trang.webp";
+const Canh = "https://assets.cuthongminh.com/games/learn-food/canh.webp";
+const GaRan = "https://assets.cuthongminh.com/games/learn-food/ga_ran.webp";
+const Pizza = "https://assets.cuthongminh.com/games/learn-food/pizza.webp";
+const Hamburger = "https://assets.cuthongminh.com/games/learn-food/hamburger.webp";
+const MiY = "https://assets.cuthongminh.com/games/learn-food/mi_y.webp";
 
 // Import Desserts (Group 3)
-import Kem from "@/assets/games/learn-food/kem.webp";
-import BanhNgot from "@/assets/games/learn-food/banh_ngot.webp";
-import NuocCam from "@/assets/games/learn-food/nuoc_cam.webp";
-import SuaChua from "@/assets/games/learn-food/sua_chua.webp";
-import BanhVong from "@/assets/games/learn-food/banh_vong.webp";
-import BanhQuy from "@/assets/games/learn-food/banh_quy.webp";
-import Traicay from "@/assets/games/learn-food/trai_cay.webp";
+const Kem = "https://assets.cuthongminh.com/games/learn-food/kem.webp";
+const BanhNgot = "https://assets.cuthongminh.com/games/learn-food/banh_ngot.webp";
+const NuocCam = "https://assets.cuthongminh.com/games/learn-food/nuoc_cam.webp";
+const SuaChua = "https://assets.cuthongminh.com/games/learn-food/sua_chua.webp";
+const BanhVong = "https://assets.cuthongminh.com/games/learn-food/banh_vong.webp";
+const BanhQuy = "https://assets.cuthongminh.com/games/learn-food/banh_quy.webp";
+const Traicay = "https://assets.cuthongminh.com/games/learn-food/trai_cay.webp";
 import { EntityData } from "@/types/game";
 
 export const FOODS: EntityData[] = [

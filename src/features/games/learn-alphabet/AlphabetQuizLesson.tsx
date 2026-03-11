@@ -6,7 +6,7 @@ import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import Image from "next/image";
-import LoudSpeaker from "@/assets/games/loud-speaker.webp";
+const LoudSpeaker = "https://assets.cuthongminh.com/games/loud-speaker.webp";
 import { playButtonSound } from "@/libs/utils/playSound";
 import { FeedbackType } from "@/types/game";
 
@@ -119,7 +119,7 @@ export function AlphabetQuizLesson({ letters, onComplete, requiredWins = 6 }: Al
           onClick={() => speak(`${targetLetter.word} bắt đầu bằng chữ gì?`)}
           className="cursor-pointer hover:scale-105 transition-all"
         >
-          <Image src={LoudSpeaker} alt="Speaker" className="w-12 h-10" />
+          <Image width={48} height={40} src={LoudSpeaker} alt="Speaker" className="w-12 h-10" />
         </button>
       </div>
 

@@ -7,7 +7,7 @@ import Header from "@/components/layout/Header";
 import { ActionButton } from "@/components/common/ActionButton";
 import { Loader2, CheckCircle2 } from "lucide-react";
 import confetti from "canvas-confetti";
-import owlHi from "@/assets/games/common/owl-say-hi.webp";
+const owlHi = "https://assets.cuthongminh.com/games/common/owl-say-hi.webp";
 import { useUser } from "@/context/UserContext";
 
 function CheckoutContent() {
