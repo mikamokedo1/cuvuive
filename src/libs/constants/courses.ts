@@ -962,13 +962,19 @@ export const COURSES: CourseDef[] = [
     type: "logic",
     groups: [
       {
-        id: "logic-connect",
-        title: "Nối điểm trí tuệ",
-        lessons: [
-          { id: "lesson1", title: "Làm quen", isFree: true },
-          { id: "lesson2", title: "Thử thách" },
-          { id: "lesson3", title: "Siêu cấp" },
-        ],
+        id: "group1",
+        title: "Nối điểm dễ",
+        lessons: [{ id: "lesson1", title: "Bắt đầu", isFree: true }],
+      },
+      {
+        id: "group2",
+        title: "Nối điểm vừa",
+        lessons: [{ id: "lesson1", title: "Bắt đầu", isFree: true }],
+      },
+      {
+        id: "group3",
+        title: "Nối điểm khó",
+        lessons: [{ id: "lesson1", title: "Bắt đầu", isFree: true }],
       },
     ],
   },

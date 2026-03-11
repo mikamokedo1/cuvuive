@@ -5,7 +5,7 @@ import { GROUPS } from "@/features/games/line-connect/constants";
 import { LineConnectBoard } from "@/features/games/line-connect/LineConnectBoard";
 import { GameWrapGame } from "@/components/layout/GameWrapGame";
 
-const LESSON_ORDER = ["lesson1", "lesson2", "lesson3"];
+const LESSON_ORDER = ["lesson1"];
 
 export default function LineConnectLessonPage() {
   const game = useGameLesson({ 
@@ -22,7 +22,7 @@ export default function LineConnectLessonPage() {
     <GameWrapGame
       LessonContent={
         <LineConnectBoard
-          lessonId={game.lessonId}
+          groupId={game.groupId}
           onComplete={game.handleComplete}
         />
       }

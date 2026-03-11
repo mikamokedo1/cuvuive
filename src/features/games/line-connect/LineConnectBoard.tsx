@@ -8,12 +8,12 @@ import { playButtonSound, playCorrectSound, playWrongSound } from "@/libs/utils/
 
 interface LineConnectBoardProps {
   onComplete: () => void;
-  lessonId: string;
+  groupId: string;
 }
 
 type Point = [number, number]; // [r, c]
 
-export function LineConnectBoard({ onComplete, lessonId }: LineConnectBoardProps) {
+export function LineConnectBoard({ onComplete, groupId }: LineConnectBoardProps) {
   const { speak } = useTextToSpeech();
   const [levelIndex, setLevelIndex] = useState(0);
   const [level, setLevel] = useState<LineConnectLevel | null>(null);
@@ -32,8 +32,8 @@ export function LineConnectBoard({ onComplete, lessonId }: LineConnectBoardProps
   }, []);
 
   useEffect(() => {
-    const lessonOffset = lessonId === "lesson1" ? 0 : lessonId === "lesson2" ? 6 : 10;
-    const effectiveIndex = levelIndex + lessonOffset;
+    const groupOffset = groupId === "group1" ? 0 : groupId === "group2" ? 6 : 10;
+    const effectiveIndex = levelIndex + groupOffset;
     
     const diff = getDifficulty(effectiveIndex);
     const newLevel = generateLineConnectLevel(diff.rows, diff.cols, diff.dots);
@@ -44,10 +44,10 @@ export function LineConnectBoard({ onComplete, lessonId }: LineConnectBoardProps
     setIsWinning(false);
     
     const introText = levelIndex === 0 
-      ? (lessonId === "lesson1" ? "Hãy nối các cặp màu giống nhau nhé!" : "Thử thách khó hơn cho bạn đây!")
+      ? (groupId === "group1" ? "Hãy nối các cặp màu giống nhau nhé!" : "Thử thách khó hơn cho bạn đây!")
       : "Tiếp tục nào!";
     speak(introText);
-  }, [levelIndex, lessonId, speak, getDifficulty]);
+  }, [levelIndex, groupId, speak, getDifficulty]);
 
   const getCellFromEvent = (e: React.PointerEvent | PointerEvent) => {
     if (!boardRef.current || !level) return null;
@@ -173,7 +173,7 @@ export function LineConnectBoard({ onComplete, lessonId }: LineConnectBoardProps
     if (allConnected && level.dots.length > 0) {
       setIsWinning(true);
       setTimeout(() => {
-        if (levelIndex < 5) { // Each lesson has 5 levels
+        if (levelIndex < 4) { // 5 levels total: indices 0, 1, 2, 3, 4
           setLevelIndex(prev => prev + 1);
         } else {
           playWinEffect(500);

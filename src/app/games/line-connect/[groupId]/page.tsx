@@ -8,19 +8,7 @@ import { useGroupLessons } from "@/hooks/useGroupLessons";
 const lessons = [
   {
     id: "lesson1",
-    title: "Làm quen",
-    icon: <HelpCircle className="text-white w-6 h-6" />,
-    isPremium: false,
-  },
-  {
-    id: "lesson2",
-    title: "Thử thách",
-    icon: <HelpCircle className="text-white w-6 h-6" />,
-    isPremium: false,
-  },
-  {
-    id: "lesson3",
-    title: "Siêu cấp",
+    title: "Bắt đầu",
     icon: <HelpCircle className="text-white w-6 h-6" />,
     isPremium: false,
   },

@@ -86,17 +86,33 @@ export function generateLineConnectLevel(rows: number, cols: number, numDots: nu
 }
 
 import LogoGroup1 from "@/assets/games/maze-runner/group1.png";
+import LogoGroup2 from "@/assets/games/maze-runner/group2.png";
+import LogoGroup3 from "@/assets/games/maze-runner/group3.png";
 
 export const GROUPS = [
   {
-    id: "logic-connect",
-    title: "Nối điểm trí tuệ",
-    description: "Nối các cặp màu giống nhau không được chồng chéo",
-    variant: "blue" as const,
+    id: "group1",
+    title: "Nối điểm dễ",
+    description: "Thử sức với lưới 4x4",
+    variant: "green" as const,
     logo: LogoGroup1,
+  },
+  {
+    id: "group2",
+    title: "Nối điểm vừa",
+    description: "Nối điểm trên lưới 5x5",
+    variant: "orange" as const,
+    logo: LogoGroup2,
+  },
+  {
+    id: "group3",
+    title: "Nối điểm khó",
+    description: "Thử thách cực đại với lưới lớn",
+    variant: "purple" as const,
+    logo: LogoGroup3,
   },
 ];
 
 export function isLineConnectGroup(groupId: string): boolean {
-  return groupId === "logic-connect";
+  return ["group1", "group2", "group3"].includes(groupId);
 }
