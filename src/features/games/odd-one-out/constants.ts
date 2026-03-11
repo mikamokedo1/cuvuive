@@ -2,9 +2,9 @@ import { StaticImageData } from "next/image";
 import { GroupData } from "@/features/games/learn-vehicle/constants";
 
 // Import group logos
-import LogoGroup1 from "@/assets/games/odd-one-out/group1.png";
-import LogoGroup2 from "@/assets/games/odd-one-out/group2.png";
-import LogoGroup3 from "@/assets/games/odd-one-out/group3.png";
+import LogoGroup1 from "@/assets/games/odd-one-out/group1.webp";
+import LogoGroup2 from "@/assets/games/odd-one-out/group2.webp";
+import LogoGroup3 from "@/assets/games/odd-one-out/group3.webp";
 
 // Reusing shapes and colors from Find Pattern constants
 import { PATTERN_COLORS, PATTERN_SHAPES, PatternItem } from "@/features/games/find-pattern/constants";

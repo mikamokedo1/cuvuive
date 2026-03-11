@@ -1,5 +1,5 @@
 import { GROUPS } from "@/features/games/learn-emotion/constants";
-import GameEmotionLogo from "@/assets/games/learn-emotion/logo.png";
+import GameEmotionLogo from "@/assets/games/learn-emotion/logo.webp";
 import { GameWrapGroups } from "@/components/layout/GameWrapGroups";
 
 export default function LearnEmotionPage() {

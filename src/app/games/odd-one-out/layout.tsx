@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import GameOddOneOutLogo from "@/assets/games/odd-one-out/logo.png";
+import GameOddOneOutLogo from "@/assets/games/odd-one-out/logo.webp";
 
 export const metadata: Metadata = {
   title: "Tìm Điểm Khác Loại | Cú Thông Minh",

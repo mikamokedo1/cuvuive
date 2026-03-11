@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import GameHygieneLogo from "@/assets/games/learn-hygiene/logo.png";
+import GameHygieneLogo from "@/assets/games/learn-hygiene/logo.webp";
 
 export const metadata: Metadata = {
   title: "Học Vệ Sinh Cá Nhân | Cú Thông Minh",

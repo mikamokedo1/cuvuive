@@ -1,74 +1,74 @@
 import { StaticImageData } from "next/image";
 
 // Import group logos
-import LogoGroup1 from "@/assets/games/learn-costume/group1.png"; // Asia
-import LogoGroup2 from "@/assets/games/learn-costume/group2.png"; // Europe
-import LogoGroup3 from "@/assets/games/learn-costume/group3.png"; // Americas & Others
+import LogoGroup1 from "@/assets/games/learn-costume/group1.webp"; // Asia
+import LogoGroup2 from "@/assets/games/learn-costume/group2.webp"; // Europe
+import LogoGroup3 from "@/assets/games/learn-costume/group3.webp"; // Americas & Others
 
 // Import flags
-import FlagVietnam from "@/assets/games/learn-flag/vietnam.png";
-import FlagJapan from "@/assets/games/learn-flag/japan.png";
-import FlagSouthKorea from "@/assets/games/learn-flag/southkorea.png";
-import FlagIndia from "@/assets/games/learn-flag/india.png";
-import FlagChina from "@/assets/games/learn-flag/china.png";
-import FlagIndonesia from "@/assets/games/learn-flag/thailand.png"; // Using thailand as placeholder for Indonesia or we can just omit flag if not found
-import FlagScotland from "@/assets/games/learn-flag/uk.png"; // Using UK for Scotland
-import FlagGermany from "@/assets/games/learn-flag/germany.png";
-import FlagSpain from "@/assets/games/learn-flag/spain.png";
-import FlagRussia from "@/assets/games/learn-flag/russia.png";
-import FlagNetherlands from "@/assets/games/learn-flag/france.png"; // Using france as placeholder
-import FlagGreece from "@/assets/games/learn-flag/italy.png"; // Using italy as placeholder
-import FlagMexico from "@/assets/games/learn-flag/mexico.png";
-import FlagBrazil from "@/assets/games/learn-flag/brazil.png";
-import FlagPeru from "@/assets/games/learn-flag/colombia.png"; // Using colombia as placeholder
-import FlagNigeria from "@/assets/games/learn-flag/nigeria.png";
-import FlagEgypt from "@/assets/games/learn-flag/egypt.png";
-import FlagSaudiArabia from "@/assets/games/learn-flag/morocco.png"; // Using morocco as placeholder
+import FlagVietnam from "@/assets/games/learn-flag/vietnam.webp";
+import FlagJapan from "@/assets/games/learn-flag/japan.webp";
+import FlagSouthKorea from "@/assets/games/learn-flag/southkorea.webp";
+import FlagIndia from "@/assets/games/learn-flag/india.webp";
+import FlagChina from "@/assets/games/learn-flag/china.webp";
+import FlagIndonesia from "@/assets/games/learn-flag/thailand.webp"; // Using thailand as placeholder for Indonesia or we can just omit flag if not found
+import FlagScotland from "@/assets/games/learn-flag/uk.webp"; // Using UK for Scotland
+import FlagGermany from "@/assets/games/learn-flag/germany.webp";
+import FlagSpain from "@/assets/games/learn-flag/spain.webp";
+import FlagRussia from "@/assets/games/learn-flag/russia.webp";
+import FlagNetherlands from "@/assets/games/learn-flag/france.webp"; // Using france as placeholder
+import FlagGreece from "@/assets/games/learn-flag/italy.webp"; // Using italy as placeholder
+import FlagMexico from "@/assets/games/learn-flag/mexico.webp";
+import FlagBrazil from "@/assets/games/learn-flag/brazil.webp";
+import FlagPeru from "@/assets/games/learn-flag/colombia.webp"; // Using colombia as placeholder
+import FlagNigeria from "@/assets/games/learn-flag/nigeria.webp";
+import FlagEgypt from "@/assets/games/learn-flag/egypt.webp";
+import FlagSaudiArabia from "@/assets/games/learn-flag/morocco.webp"; // Using morocco as placeholder
 
-import PlaceholderCharacter from "@/assets/games/learn-costume/character.png";
+import PlaceholderCharacter from "@/assets/games/learn-costume/character.webp";
 
 // Import Asia Costumes
-import ImgAoDai from "@/assets/games/learn-costume/aodai.png";
-import WornAoDai from "@/assets/games/learn-costume/character_aodai.png";
-import ImgBatik from "@/assets/games/learn-costume/batik.png";
-import WornBatik from "@/assets/games/learn-costume/character_batik.png";
-import ImgKimono from "@/assets/games/learn-costume/kimono.png";
-import WornKimono from "@/assets/games/learn-costume/character_kimono.png";
-import ImgHanbok from "@/assets/games/learn-costume/hanbok.png";
-import WornHanbok from "@/assets/games/learn-costume/character_hanbok.png";
-import ImgSari from "@/assets/games/learn-costume/sari.png";
-import WornSari from "@/assets/games/learn-costume/character_sari.png";
-import ImgSuongxam from "@/assets/games/learn-costume/suongxam.png";
-import WornSuongxam from "@/assets/games/learn-costume/character_suongxam.png";
+import ImgAoDai from "@/assets/games/learn-costume/aodai.webp";
+import WornAoDai from "@/assets/games/learn-costume/character_aodai.webp";
+import ImgBatik from "@/assets/games/learn-costume/batik.webp";
+import WornBatik from "@/assets/games/learn-costume/character_batik.webp";
+import ImgKimono from "@/assets/games/learn-costume/kimono.webp";
+import WornKimono from "@/assets/games/learn-costume/character_kimono.webp";
+import ImgHanbok from "@/assets/games/learn-costume/hanbok.webp";
+import WornHanbok from "@/assets/games/learn-costume/character_hanbok.webp";
+import ImgSari from "@/assets/games/learn-costume/sari.webp";
+import WornSari from "@/assets/games/learn-costume/character_sari.webp";
+import ImgSuongxam from "@/assets/games/learn-costume/suongxam.webp";
+import WornSuongxam from "@/assets/games/learn-costume/character_suongxam.webp";
 
 // Placeholders for Groups 2 & 3
-import PlaceholderCostume from "@/assets/games/learn-costume/character.png";
+import PlaceholderCostume from "@/assets/games/learn-costume/character.webp";
 
 // Import Europe Costumes (Partial due to quota)
-import ImgKilt from "@/assets/games/learn-costume/kilt.png";
-import WornKilt from "@/assets/games/learn-costume/character_kilt.png";
-import ImgDirndl from "@/assets/games/learn-costume/dirndl.png";
-import WornDirndl from "@/assets/games/learn-costume/character_dirndl.png";
-import ImgFlamenco from "@/assets/games/learn-costume/flamenco.png";
-import ImgSarafan from "@/assets/games/learn-costume/sarafan.png";
-import WornSarafan from "@/assets/games/learn-costume/character_sarafan.png";
-import ImgKlompen from "@/assets/games/learn-costume/klompen.png";
-import WornKlompen from "@/assets/games/learn-costume/character_klompen.png";
-import ImgFustanella from "@/assets/games/learn-costume/fustanella.png";
-import WornFustanella from "@/assets/games/learn-costume/character_fustanella.png";
-import WornFlamenco from "@/assets/games/learn-costume/character_flamenco.png";
-import ImgPoncho from "@/assets/games/learn-costume/poncho.png";
-import WornPoncho from "@/assets/games/learn-costume/character_poncho.png";
-import ImgSamba from "@/assets/games/learn-costume/samba.png";
-import WornSamba from "@/assets/games/learn-costume/character_samba.png";
-import ImgChullo from "@/assets/games/learn-costume/chullo.png";
-import WornChullo from "@/assets/games/learn-costume/character_chullo.png";
-import ImgDashiki from "@/assets/games/learn-costume/dashiki.png";
-import WornDashiki from "@/assets/games/learn-costume/character_dashiki.png";
-import ImgGalabeya from "@/assets/games/learn-costume/galabeya.png";
-import WornGalabeya from "@/assets/games/learn-costume/character_galabeya.png";
-import ImgThobe from "@/assets/games/learn-costume/thobe.png";
-import WornThobe from "@/assets/games/learn-costume/character_thobe.png";
+import ImgKilt from "@/assets/games/learn-costume/kilt.webp";
+import WornKilt from "@/assets/games/learn-costume/character_kilt.webp";
+import ImgDirndl from "@/assets/games/learn-costume/dirndl.webp";
+import WornDirndl from "@/assets/games/learn-costume/character_dirndl.webp";
+import ImgFlamenco from "@/assets/games/learn-costume/flamenco.webp";
+import ImgSarafan from "@/assets/games/learn-costume/sarafan.webp";
+import WornSarafan from "@/assets/games/learn-costume/character_sarafan.webp";
+import ImgKlompen from "@/assets/games/learn-costume/klompen.webp";
+import WornKlompen from "@/assets/games/learn-costume/character_klompen.webp";
+import ImgFustanella from "@/assets/games/learn-costume/fustanella.webp";
+import WornFustanella from "@/assets/games/learn-costume/character_fustanella.webp";
+import WornFlamenco from "@/assets/games/learn-costume/character_flamenco.webp";
+import ImgPoncho from "@/assets/games/learn-costume/poncho.webp";
+import WornPoncho from "@/assets/games/learn-costume/character_poncho.webp";
+import ImgSamba from "@/assets/games/learn-costume/samba.webp";
+import WornSamba from "@/assets/games/learn-costume/character_samba.webp";
+import ImgChullo from "@/assets/games/learn-costume/chullo.webp";
+import WornChullo from "@/assets/games/learn-costume/character_chullo.webp";
+import ImgDashiki from "@/assets/games/learn-costume/dashiki.webp";
+import WornDashiki from "@/assets/games/learn-costume/character_dashiki.webp";
+import ImgGalabeya from "@/assets/games/learn-costume/galabeya.webp";
+import WornGalabeya from "@/assets/games/learn-costume/character_galabeya.webp";
+import ImgThobe from "@/assets/games/learn-costume/thobe.webp";
+import WornThobe from "@/assets/games/learn-costume/character_thobe.webp";
 
 import { EntityData } from "@/types/game";
 

@@ -24,7 +24,7 @@ import HoaPhuong from "@/assets/games/learn-flower/hoa_phuong.webp";
 // Import Group 3: Cây Ăn Quả (Fruit Trees)
 import CayXoai from "@/assets/games/learn-flower/cay_xoai.webp";
 import CayDua from "@/assets/games/learn-flower/cay_dua.webp";
-import CayChuoi from "@/assets/games/learn-flower/cay_chuoi.png";
+import CayChuoi from "@/assets/games/learn-flower/cay_chuoi.webp";
 import CayBuoi from "@/assets/games/learn-flower/cay_buoi.webp";
 import CayNhan from "@/assets/games/learn-flower/cay_nhan.webp";
 import CayMit from "@/assets/games/learn-flower/cay_mit.webp";

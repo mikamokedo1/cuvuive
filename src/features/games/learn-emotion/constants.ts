@@ -1,46 +1,46 @@
 import { StaticImageData } from "next/image";
 
 // Import group logos
-import LogoGroup1 from "@/assets/games/learn-emotion/group1.png";
-import LogoGroup2 from "@/assets/games/learn-emotion/group2.png";
-import LogoGroup3 from "@/assets/games/learn-emotion/group3.png";
+import LogoGroup1 from "@/assets/games/learn-emotion/group1.webp";
+import LogoGroup2 from "@/assets/games/learn-emotion/group2.webp";
+import LogoGroup3 from "@/assets/games/learn-emotion/group3.webp";
 
 // Import Basic Emotions (Group 1)
 import Happy from "@/assets/games/learn-emotion/happy.jpg";
-import Sad from "@/assets/games/learn-emotion/sad.png";
+import Sad from "@/assets/games/learn-emotion/sad.webp";
 import Angry from "@/assets/games/learn-emotion/angry.jpg";
-import Scared from "@/assets/games/learn-emotion/scared.png";
-import Surprised from "@/assets/games/learn-emotion/surprised.png";
-import Love from "@/assets/games/learn-emotion/love.png";
+import Scared from "@/assets/games/learn-emotion/scared.webp";
+import Surprised from "@/assets/games/learn-emotion/surprised.webp";
+import Love from "@/assets/games/learn-emotion/love.webp";
 
 // Import Advanced Emotions (Group 2)
-import Shy from "@/assets/games/learn-emotion/shy.png";
-import Proud from "@/assets/games/learn-emotion/proud.png";
-import Worried from "@/assets/games/learn-emotion/worried.png";
-import Jealous from "@/assets/games/learn-emotion/jealous.png";
-import Excited from "@/assets/games/learn-emotion/excited.png";
-import Bored from "@/assets/games/learn-emotion/bored.png";
+import Shy from "@/assets/games/learn-emotion/shy.webp";
+import Proud from "@/assets/games/learn-emotion/proud.webp";
+import Worried from "@/assets/games/learn-emotion/worried.webp";
+import Jealous from "@/assets/games/learn-emotion/jealous.webp";
+import Excited from "@/assets/games/learn-emotion/excited.webp";
+import Bored from "@/assets/games/learn-emotion/bored.webp";
 
 // Import Scenario Emotions (Group 3) - using some created + thoughtful/focused/relaxed
-import Thoughtful from "@/assets/games/learn-emotion/thoughtful.png";
-import Focused from "@/assets/games/learn-emotion/focused.png";
-import Relaxed from "@/assets/games/learn-emotion/relaxed.png";
+import Thoughtful from "@/assets/games/learn-emotion/thoughtful.webp";
+import Focused from "@/assets/games/learn-emotion/focused.webp";
+import Relaxed from "@/assets/games/learn-emotion/relaxed.webp";
 
 import { EntityData } from "@/types/game";
 
 // Import Scenario Match Images
-import SmBasic1 from "@/assets/games/learn-emotion/scenarios/sm_basic_1.png";
-import SmBasic2 from "@/assets/games/learn-emotion/scenarios/sm_basic_2.png";
-import SmBasic3 from "@/assets/games/learn-emotion/scenarios/sm_basic_3.png";
-import SmBasic4 from "@/assets/games/learn-emotion/scenarios/sm_basic_4.png";
-import SmAdv1 from "@/assets/games/learn-emotion/scenarios/sm_adv_1.png";
-import SmAdv2 from "@/assets/games/learn-emotion/scenarios/sm_adv_2.png";
-import SmAdv3 from "@/assets/games/learn-emotion/scenarios/sm_adv_3.png";
-import SmAdv4 from "@/assets/games/learn-emotion/scenarios/sm_adv_4.png";
-import SmScen1 from "@/assets/games/learn-emotion/scenarios/sm_scen_1.png";
-import SmScen2 from "@/assets/games/learn-emotion/scenarios/sm_scen_2.png";
-import SmScen3 from "@/assets/games/learn-emotion/scenarios/sm_scen_3.png";
-import SmScen4 from "@/assets/games/learn-emotion/scenarios/sm_scen_4.png";
+import SmBasic1 from "@/assets/games/learn-emotion/scenarios/sm_basic_1.webp";
+import SmBasic2 from "@/assets/games/learn-emotion/scenarios/sm_basic_2.webp";
+import SmBasic3 from "@/assets/games/learn-emotion/scenarios/sm_basic_3.webp";
+import SmBasic4 from "@/assets/games/learn-emotion/scenarios/sm_basic_4.webp";
+import SmAdv1 from "@/assets/games/learn-emotion/scenarios/sm_adv_1.webp";
+import SmAdv2 from "@/assets/games/learn-emotion/scenarios/sm_adv_2.webp";
+import SmAdv3 from "@/assets/games/learn-emotion/scenarios/sm_adv_3.webp";
+import SmAdv4 from "@/assets/games/learn-emotion/scenarios/sm_adv_4.webp";
+import SmScen1 from "@/assets/games/learn-emotion/scenarios/sm_scen_1.webp";
+import SmScen2 from "@/assets/games/learn-emotion/scenarios/sm_scen_2.webp";
+import SmScen3 from "@/assets/games/learn-emotion/scenarios/sm_scen_3.webp";
+import SmScen4 from "@/assets/games/learn-emotion/scenarios/sm_scen_4.webp";
 
 export const EMOTION_ITEMS: EntityData[] = [
   // Basic Emotions (Group 1)

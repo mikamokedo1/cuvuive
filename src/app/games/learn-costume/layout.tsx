@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import GameCostumeLogo from "@/assets/games/learn-costume/logo.png";
+import GameCostumeLogo from "@/assets/games/learn-costume/logo.webp";
 
 export const metadata: Metadata = {
   title: "Học Trang Phục | Cú Thông Minh",

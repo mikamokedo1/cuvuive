@@ -1,34 +1,34 @@
 import { StaticImageData } from "next/image";
 
 // Import group logos
-import LogoGroup1 from "@/assets/games/learn-landmark/group1.png"; // Asia
-import LogoGroup2 from "@/assets/games/learn-landmark/group2.png"; // Europe
-import LogoGroup3 from "@/assets/games/learn-landmark/group3.png"; // Americas & Others
+import LogoGroup1 from "@/assets/games/learn-landmark/group1.webp"; // Asia
+import LogoGroup2 from "@/assets/games/learn-landmark/group2.webp"; // Europe
+import LogoGroup3 from "@/assets/games/learn-landmark/group3.webp"; // Americas & Others
 
 // Group 1: Asia
-import ImgGreatWall from "@/assets/games/learn-landmark/greatwall.png";
-import ImgAngkorWat from "@/assets/games/learn-landmark/angkorwat.png";
-import ImgTajMahal from "@/assets/games/learn-landmark/tajmahal.png";
-import ImgMtFuji from "@/assets/games/learn-landmark/mtfuji.png";
-import ImgHaLongBay from "@/assets/games/learn-landmark/halongbay.png";
-import ImgPhuket from "@/assets/games/learn-landmark/phuket.png";
+import ImgGreatWall from "@/assets/games/learn-landmark/greatwall.webp";
+import ImgAngkorWat from "@/assets/games/learn-landmark/angkorwat.webp";
+import ImgTajMahal from "@/assets/games/learn-landmark/tajmahal.webp";
+import ImgMtFuji from "@/assets/games/learn-landmark/mtfuji.webp";
+import ImgHaLongBay from "@/assets/games/learn-landmark/halongbay.webp";
+import ImgPhuket from "@/assets/games/learn-landmark/phuket.webp";
 
 // Group 2: Europe
-import ImgEiffelTower from "@/assets/games/learn-landmark/eiffeltower.png";
-import ImgColosseum from "@/assets/games/learn-landmark/colosseum.png";
-import ImgBigBen from "@/assets/games/learn-landmark/bigben.png";
-import ImgLeaningTower from "@/assets/games/learn-landmark/leaningtower.png";
-import ImgWindmills from "@/assets/games/learn-landmark/windmills.png";
-import ImgSagradaFamilia from "@/assets/games/learn-landmark/sagradafamilia.png";
+import ImgEiffelTower from "@/assets/games/learn-landmark/eiffeltower.webp";
+import ImgColosseum from "@/assets/games/learn-landmark/colosseum.webp";
+import ImgBigBen from "@/assets/games/learn-landmark/bigben.webp";
+import ImgLeaningTower from "@/assets/games/learn-landmark/leaningtower.webp";
+import ImgWindmills from "@/assets/games/learn-landmark/windmills.webp";
+import ImgSagradaFamilia from "@/assets/games/learn-landmark/sagradafamilia.webp";
 
 // Group 3: Americas & Others
-import ImgStatueOfLiberty from "@/assets/games/learn-landmark/statueofliberty.png";
-import ImgChristTheRedeemer from "@/assets/games/learn-landmark/christtheredeemer.png";
-import ImgChichenItza from "@/assets/games/learn-landmark/chichenitza.png";
+import ImgStatueOfLiberty from "@/assets/games/learn-landmark/statueofliberty.webp";
+import ImgChristTheRedeemer from "@/assets/games/learn-landmark/christtheredeemer.webp";
+import ImgChichenItza from "@/assets/games/learn-landmark/chichenitza.webp";
 // Placeholders for the remaining 3 that hit rate limit
-import Placeholder16 from "@/assets/games/learn-flag/egypt.png";
-import Placeholder17 from "@/assets/games/learn-flag/australia.png";
-import Placeholder18 from "@/assets/games/learn-flag/southafrica.png";
+import Placeholder16 from "@/assets/games/learn-flag/egypt.webp";
+import Placeholder17 from "@/assets/games/learn-flag/australia.webp";
+import Placeholder18 from "@/assets/games/learn-flag/southafrica.webp";
 
 import { EntityData } from "@/types/game";
 

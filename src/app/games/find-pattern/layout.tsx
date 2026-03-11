@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import GamePatternLogo from "@/assets/games/find-pattern/logo.png";
+import GamePatternLogo from "@/assets/games/find-pattern/logo.webp";
 
 export const metadata: Metadata = {
   title: "Tìm Quy Luật | Cú Thông Minh",

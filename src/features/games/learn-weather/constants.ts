@@ -2,43 +2,43 @@ import { StaticImageData } from "next/image";
 import { EntityData } from "@/types/game";
 
 // Logos
-import LogoGroup1 from "@/assets/games/learn-weather/group1.png";
-import LogoGroup2 from "@/assets/games/learn-weather/group2.png";
-import LogoGroup3 from "@/assets/games/learn-weather/group3.png";
+import LogoGroup1 from "@/assets/games/learn-weather/group1.webp";
+import LogoGroup2 from "@/assets/games/learn-weather/group2.webp";
+import LogoGroup3 from "@/assets/games/learn-weather/group3.webp";
 
 // Group 1
-import MatTroi from "@/assets/games/learn-weather/mat_troi.png";
-import Mua from "@/assets/games/learn-weather/mua.png";
-import May from "@/assets/games/learn-weather/may_2.png";
-import Gio from "@/assets/games/learn-weather/gio.png";
-import SamSet from "@/assets/games/learn-weather/sam_set.png";
-import CauVong from "@/assets/games/learn-weather/cau_vong.png";
+import MatTroi from "@/assets/games/learn-weather/mat_troi.webp";
+import Mua from "@/assets/games/learn-weather/mua.webp";
+import May from "@/assets/games/learn-weather/may_2.webp";
+import Gio from "@/assets/games/learn-weather/gio.webp";
+import SamSet from "@/assets/games/learn-weather/sam_set.webp";
+import CauVong from "@/assets/games/learn-weather/cau_vong.webp";
 
 // Group 2
-import Tuyet from "@/assets/games/learn-weather/tuyet.png";
-import MuaDa from "@/assets/games/learn-weather/mua_da.png";
-import SuongMu from "@/assets/games/learn-weather/suong_mu.png";
-import Bao from "@/assets/games/learn-weather/bao.png";
-import LocXoay from "@/assets/games/learn-weather/loc_xoay.png";
-import SongThan from "@/assets/games/learn-weather/song_than.png";
+import Tuyet from "@/assets/games/learn-weather/tuyet.webp";
+import MuaDa from "@/assets/games/learn-weather/mua_da.webp";
+import SuongMu from "@/assets/games/learn-weather/suong_mu.webp";
+import Bao from "@/assets/games/learn-weather/bao.webp";
+import LocXoay from "@/assets/games/learn-weather/loc_xoay.webp";
+import SongThan from "@/assets/games/learn-weather/song_than.webp";
 
 // Group 3
-import MuaXuan from "@/assets/games/learn-weather/mua_xuan.png";
-import MuaHa from "@/assets/games/learn-weather/mua_ha.png";
-import MuaThu from "@/assets/games/learn-weather/mua_thu.png";
-import MuaDong from "@/assets/games/learn-weather/mua_dong.png";
-import MuaKho from "@/assets/games/learn-weather/mua_kho.png";
-import MuaMua from "@/assets/games/learn-weather/mua_mua.png";
+import MuaXuan from "@/assets/games/learn-weather/mua_xuan.webp";
+import MuaHa from "@/assets/games/learn-weather/mua_ha.webp";
+import MuaThu from "@/assets/games/learn-weather/mua_thu.webp";
+import MuaDong from "@/assets/games/learn-weather/mua_dong.webp";
+import MuaKho from "@/assets/games/learn-weather/mua_kho.webp";
+import MuaMua from "@/assets/games/learn-weather/mua_mua.webp";
 
 // Clothing (Group 3 Special Lesson)
-import AoAm from "@/assets/games/learn-weather/ao_am.png";
-import KhanQuang from "@/assets/games/learn-weather/khan_quang.png";
-import AoMua from "@/assets/games/learn-weather/ao_mua.png";
-import ODu from "@/assets/games/learn-weather/o_du.png";
-import KinhMat from "@/assets/games/learn-weather/kinh_mat.png";
+import AoAm from "@/assets/games/learn-weather/ao_am.webp";
+import KhanQuang from "@/assets/games/learn-weather/khan_quang.webp";
+import AoMua from "@/assets/games/learn-weather/ao_mua.webp";
+import ODu from "@/assets/games/learn-weather/o_du.webp";
+import KinhMat from "@/assets/games/learn-weather/kinh_mat.webp";
 import NonRong from "@/assets/games/learn-weather/non_rong.webp";
-import AoDai from "@/assets/games/learn-weather/ao_dai.png";
-import AoLen from "@/assets/games/learn-weather/ao_len.png";
+import AoDai from "@/assets/games/learn-weather/ao_dai.webp";
+import AoLen from "@/assets/games/learn-weather/ao_len.webp";
 
 export const WEATHER_ITEMS: EntityData[] = [
   // Group 1

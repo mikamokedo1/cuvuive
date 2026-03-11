@@ -1,10 +1,10 @@
 import { StaticImageData } from "next/image";
 
-import Group1Logo from "@/assets/games/learn-math/group-1-logo.png";
-import Group2Logo from "@/assets/games/learn-math/group-2-logo.png";
-import Group3Logo from "@/assets/games/learn-math/group-3-logo.png";
-import Group4Logo from "@/assets/games/learn-math/group-4-logo.png";
-import Group5Logo from "@/assets/games/learn-math/group-5-logo.png";
+import Group1Logo from "@/assets/games/learn-math/group-1-logo.webp";
+import Group2Logo from "@/assets/games/learn-math/group-2-logo.webp";
+import Group3Logo from "@/assets/games/learn-math/group-3-logo.webp";
+import Group4Logo from "@/assets/games/learn-math/group-4-logo.webp";
+import Group5Logo from "@/assets/games/learn-math/group-5-logo.webp";
 
 export type MathOperator = "add" | "sub";
 export type MathMode = "visual" | "number";

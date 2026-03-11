@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import GameMazeRunnerLogo from "@/assets/games/maze-runner/logo.png";
+import GameMazeRunnerLogo from "@/assets/games/maze-runner/logo.webp";
 
 export const metadata: Metadata = {
   title: "Giải Cứu Động Vật | Cú Thông Minh",

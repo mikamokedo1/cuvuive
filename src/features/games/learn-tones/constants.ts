@@ -2,11 +2,11 @@ import { StaticImageData } from "next/image";
 import { EntityData } from "@/types/game";
 
 // Import game logo and group logos
-import LogoGroup1 from "@/assets/games/learn-tones/group1.png";
-import LogoGroup2 from "@/assets/games/learn-tones/group2.png";
-import LogoGroup3 from "@/assets/games/learn-tones/group3.png";
-import LogoGroup4 from "@/assets/games/learn-tones/group4.png";
-import LogoGroup5 from "@/assets/games/learn-tones/group5.png";
+import LogoGroup1 from "@/assets/games/learn-tones/group1.webp";
+import LogoGroup2 from "@/assets/games/learn-tones/group2.webp";
+import LogoGroup3 from "@/assets/games/learn-tones/group3.webp";
+import LogoGroup4 from "@/assets/games/learn-tones/group4.webp";
+import LogoGroup5 from "@/assets/games/learn-tones/group5.webp";
 
 // Import words (reusing existing assets)
 import ImgLa from "@/assets/games/learn-tones/words/la.webp";
@@ -18,9 +18,9 @@ import ImgMeo from "@/assets/games/learn-animal/cat.webp";
 import ImgTiger from "@/assets/games/learn-animal/tiger.webp";
 import ImgPho from "@/assets/games/learn-food/pho.webp";
 import ImgKhi from "@/assets/games/learn-animal/monkey.webp";
-import ImgBao from "@/assets/games/learn-weather/bao.png";
+import ImgBao from "@/assets/games/learn-weather/bao.webp";
 import ImgVit from "@/assets/games/learn-animal/duck.webp";
-import ImgNghi from "@/assets/games/learn-emotion/thoughtful.png";
+import ImgNghi from "@/assets/games/learn-emotion/thoughtful.webp";
 import ImgHoc from "@/assets/games/learn-tones/words/hoc.webp";
 import ImgHat from "@/assets/games/learn-tones/words/hat.webp";
 import ImgNga from "@/assets/games/learn-tones/words/nga.webp";

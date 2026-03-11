@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import GameWeatherLogo from "@/assets/games/learn-weather/logo.png";
+import GameWeatherLogo from "@/assets/games/learn-weather/logo.webp";
 
 export const metadata: Metadata = {
   title: "Học Thời Tiết | Cú Thông Minh",

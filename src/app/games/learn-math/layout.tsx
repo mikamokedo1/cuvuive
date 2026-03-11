@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import GameMathLogo from "@/assets/games/learn-math/logo.png";
+import GameMathLogo from "@/assets/games/learn-math/logo.webp";
 
 export const metadata: Metadata = {
   title: "Toán Học Cơ Bản | Cú Thông Minh",

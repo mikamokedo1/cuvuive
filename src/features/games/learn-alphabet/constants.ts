@@ -26,11 +26,11 @@ import ImgYTa from "@/assets/games/learn-occupation/nurse.webp";
 import ImgBo from "@/assets/games/learn-animal/cow.webp"; // B - con bò
 import ImgCam from "@/assets/games/learn-fruit/orange.webp"; // C - con cọp
 import ImgDoi from "@/assets/games/learn-alphabet/doi.webp"; // D - con dơi
-import ImgDen from "@/assets/games/learn-alphabet/den.png"; // Đ - cái đèn
+import ImgDen from "@/assets/games/learn-alphabet/den.webp"; // Đ - cái đèn
 import ImgHoa from "@/assets/games/learn-alphabet/hoa.webp"; // H - bông hoa
 import ImgKem from "@/assets/games/learn-alphabet/kem.webp"; // K - con khỉ
-import ImgLa from "@/assets/games/learn-alphabet/la.png"; // L - lá cờ
-import ImgMeo from "@/assets/games/learn-alphabet/meo.png"; // M - con mèo
+import ImgLa from "@/assets/games/learn-alphabet/la.webp"; // L - lá cờ
+import ImgMeo from "@/assets/games/learn-alphabet/meo.webp"; // M - con mèo
 
 // Consonants Group 2
 import ImgNam from "@/assets/games/learn-alphabet/nam.webp"; // N - cây nấm

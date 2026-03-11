@@ -2,7 +2,7 @@
 
 import { COURSES } from "@/libs/constants/courses";
 import { GameWrapGroups } from "@/components/layout/GameWrapGroups";
-import MiniPianoLogo from "@/assets/games/mini-piano/logo.png";
+import MiniPianoLogo from "@/assets/games/mini-piano/logo.webp";
 
 export default function MiniPianoRootPage() {
     const course = COURSES.find((c) => c.id === "mini-piano");

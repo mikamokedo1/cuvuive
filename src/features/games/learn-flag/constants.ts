@@ -7,36 +7,36 @@ import LogoGroup3 from "@/assets/games/learn-flag/group3.webp"; // Americas
 import LogoGroup4 from "@/assets/games/learn-flag/group4.webp"; // Africa & Oceania
 
 // Import Asia
-import Vietnam from "@/assets/games/learn-flag/vietnam.png";
-import Japan from "@/assets/games/learn-flag/japan.png";
-import SouthKorea from "@/assets/games/learn-flag/southkorea.png";
-import China from "@/assets/games/learn-flag/china.png";
-import Thailand from "@/assets/games/learn-flag/thailand.png";
-import India from "@/assets/games/learn-flag/india.png";
+import Vietnam from "@/assets/games/learn-flag/vietnam.webp";
+import Japan from "@/assets/games/learn-flag/japan.webp";
+import SouthKorea from "@/assets/games/learn-flag/southkorea.webp";
+import China from "@/assets/games/learn-flag/china.webp";
+import Thailand from "@/assets/games/learn-flag/thailand.webp";
+import India from "@/assets/games/learn-flag/india.webp";
 
 // Import Europe
-import UK from "@/assets/games/learn-flag/uk.png";
-import France from "@/assets/games/learn-flag/france.png";
-import Germany from "@/assets/games/learn-flag/germany.png";
-import Italy from "@/assets/games/learn-flag/italy.png";
-import Spain from "@/assets/games/learn-flag/spain.png";
-import Russia from "@/assets/games/learn-flag/russia.png";
+import UK from "@/assets/games/learn-flag/uk.webp";
+import France from "@/assets/games/learn-flag/france.webp";
+import Germany from "@/assets/games/learn-flag/germany.webp";
+import Italy from "@/assets/games/learn-flag/italy.webp";
+import Spain from "@/assets/games/learn-flag/spain.webp";
+import Russia from "@/assets/games/learn-flag/russia.webp";
 
 // Import Americas
-import USA from "@/assets/games/learn-flag/usa.png";
-import Canada from "@/assets/games/learn-flag/canada.png";
-import Brazil from "@/assets/games/learn-flag/brazil.png";
-import Argentina from "@/assets/games/learn-flag/argentina.png";
-import Mexico from "@/assets/games/learn-flag/mexico.png";
-import Colombia from "@/assets/games/learn-flag/colombia.png";
+import USA from "@/assets/games/learn-flag/usa.webp";
+import Canada from "@/assets/games/learn-flag/canada.webp";
+import Brazil from "@/assets/games/learn-flag/brazil.webp";
+import Argentina from "@/assets/games/learn-flag/argentina.webp";
+import Mexico from "@/assets/games/learn-flag/mexico.webp";
+import Colombia from "@/assets/games/learn-flag/colombia.webp";
 
 // Import Africa & Oceania
-import SouthAfrica from "@/assets/games/learn-flag/southafrica.png";
-import Egypt from "@/assets/games/learn-flag/egypt.png";
-import Australia from "@/assets/games/learn-flag/australia.png";
-import Nigeria from "@/assets/games/learn-flag/nigeria.png";
-import Morocco from "@/assets/games/learn-flag/morocco.png";
-import Kenya from "@/assets/games/learn-flag/kenya.png";
+import SouthAfrica from "@/assets/games/learn-flag/southafrica.webp";
+import Egypt from "@/assets/games/learn-flag/egypt.webp";
+import Australia from "@/assets/games/learn-flag/australia.webp";
+import Nigeria from "@/assets/games/learn-flag/nigeria.webp";
+import Morocco from "@/assets/games/learn-flag/morocco.webp";
+import Kenya from "@/assets/games/learn-flag/kenya.webp";
 
 import { EntityData } from "@/types/game";
 

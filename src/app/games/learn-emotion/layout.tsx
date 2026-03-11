@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import GameEmotionLogo from "@/assets/games/learn-emotion/logo.png";
+import GameEmotionLogo from "@/assets/games/learn-emotion/logo.webp";
 
 export const metadata: Metadata = {
   title: "Nhận Biết Cảm Xúc | Cú Thông Minh",

@@ -1,6 +1,6 @@
 import { StaticImageData } from "next/image";
-import LogoGroup1 from "@/assets/games/mix-color/group1.png";
-import LogoGroup2 from "@/assets/games/mix-color/group2.png";
+import LogoGroup1 from "@/assets/games/mix-color/group1.webp";
+import LogoGroup2 from "@/assets/games/mix-color/group2.webp";
 import LogoGroup3 from "@/assets/games/mix-color/group3.webp";
 
 export interface ColorMix {
