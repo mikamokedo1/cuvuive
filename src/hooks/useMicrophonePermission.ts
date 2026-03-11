@@ -16,11 +16,15 @@ export function useMicrophonePermission(): UseMicrophonePermissionReturn {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    // navigator.permissions.query is not available on all browsers (e.g. older Safari)
-    if (navigator.permissions?.query) {
-      navigator.permissions
-        .query({ name: "microphone" as PermissionName })
-        .then((result) => {
+    let cancelled = false;
+
+    const checkPermission = async () => {
+      // Try navigator.permissions.query first (Chrome, Firefox, etc.)
+      if (navigator.permissions?.query) {
+        try {
+          const result = await navigator.permissions.query({ name: "microphone" as PermissionName });
+          if (cancelled) return;
+
           if (result.state === "granted") {
             setStatus("granted");
           } else if (result.state === "denied") {
@@ -36,11 +40,39 @@ export function useMicrophonePermission(): UseMicrophonePermissionReturn {
               setStatus("denied");
             }
           });
-        })
-        .catch(() => {
-          // permissions API not supported — stay "idle"
-        });
-    }
+          return; // permissions.query worked, no need for fallback
+        } catch {
+          // permissions.query not supported for microphone — fall through to fallback
+        }
+      }
+
+      // Fallback for iOS Safari: try a quick getUserMedia probe
+      // This will NOT show a permission prompt if already granted,
+      // but WILL show a prompt if not yet granted — so we only use it
+      // if the browser doesn't support permissions.query
+      if (navigator.mediaDevices?.getUserMedia) {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          if (cancelled) {
+            stream.getTracks().forEach((track) => track.stop());
+            return;
+          }
+          // If we got here without a prompt, permission was already granted
+          stream.getTracks().forEach((track) => track.stop());
+          setStatus("granted");
+        } catch {
+          // getUserMedia failed — could be denied or user dismissed
+          // Stay "idle" to show the permission UI (don't set "denied" since
+          // on iOS Safari the first getUserMedia call IS the permission prompt)
+        }
+      }
+    };
+
+    checkPermission();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const requestPermission = useCallback(async () => {

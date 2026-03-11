@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { generateRandomTime, timeToText, TimeScenario } from "./constants";
 import { AnalogClock } from "./components/AnalogClock";
-import { playCorrectSound, playWrongSound } from "@/libs/utils/playSound";
+import { playCorrectSound } from "@/libs/utils/playSound";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import LoudSpeaker from "@/assets/games/loud-speaker.webp";
@@ -36,15 +36,11 @@ export function ClockAdjustLesson({ onComplete }: ClockAdjustLessonProps) {
     if (isChecking) return;
     setCurrentHours(h);
     setCurrentMinutes(m);
-  };
 
-  const handleCheck = () => {
-    if (isChecking) return;
-    setIsChecking(true);
-
+    // Auto-check when time matches
     const q = questions[currentIndex];
-    // Allow matching e.g. 12:00
-    if (currentHours === q.hours && currentMinutes === q.minutes) {
+    if (h === q.hours && m === q.minutes) {
+      setIsChecking(true);
       playCorrectSound();
       playWinEffect(0);
       setTimeout(() => {
@@ -57,9 +53,6 @@ export function ClockAdjustLesson({ onComplete }: ClockAdjustLessonProps) {
         }
         setIsChecking(false);
       }, 1500);
-    } else {
-      playWrongSound();
-      setTimeout(() => setIsChecking(false), 1000);
     }
   };
 
@@ -82,22 +75,12 @@ export function ClockAdjustLesson({ onComplete }: ClockAdjustLessonProps) {
         <AnalogClock
           hours={currentHours}
           minutes={currentMinutes}
-          isInteractive={true}
+          isInteractive={!isChecking}
           onChange={handleTimeChange}
           size={320}
           onClick={() => speak(timeToText(currentHours, currentMinutes))}
         />
       </div>
-
-      <button
-        onClick={handleCheck}
-        disabled={isChecking}
-        className={`px-12 py-5 bg-green-500 hover:bg-green-600 active:scale-95 active:shadow-none active:translate-y-2 transition-all text-white text-xl md:text-3xl font-extrabold rounded-3xl shadow-[0_8px_0_#15803d] border-b-4 border-green-700
-          ${isChecking ? "opacity-70 cursor-not-allowed translate-y-2 shadow-none" : ""}
-        `}
-      >
-        Kiểm tra
-      </button>
     </div>
   );
 }

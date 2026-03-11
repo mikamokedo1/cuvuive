@@ -92,7 +92,7 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
       setTimeout(() => {
         setFeedback(null);
         resetTranscript();
-        if (!isMobile) startListening();
+        startListening();
       }, 2000);
       return;
     }
@@ -106,7 +106,7 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
       setTimeout(() => {
         setFeedback(null);
         resetTranscript();
-        if (!isMobile) startListening();
+        startListening();
       }, 2000);
     }, 2500);
 
@@ -120,7 +120,6 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
     resetTranscript,
     startListening,
     stopListening,
-    isMobile,
   ]);
 
   // Handle speech result
@@ -146,12 +145,12 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
           setFeedback(null);
           resetTranscript();
           // Auto-start microphone again after "Thử lại nhé"
-          if (!isMobile) startListening();
+          startListening();
         }, 2000);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isListening, transcript, targetEntity, feedback, isMobile]);
+  }, [isListening, transcript, targetEntity, feedback]);
 
   const handleMicClick = () => {
     playButtonSound();

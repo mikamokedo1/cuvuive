@@ -153,7 +153,7 @@ export const OCCUPATIONS: OccupationData[] = [
     name: "Phi hành gia",
     image: Astronaut,
     toolImage: ToolAstronaut,
-    toolName: "Tên lửa",
+    toolName: "Tàu vũ trụ",
     category: "creative",
   },
 ];

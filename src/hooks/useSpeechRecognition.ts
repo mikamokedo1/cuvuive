@@ -24,6 +24,7 @@ interface SpeechRecognition extends EventTarget {
   onerror: ((this: SpeechRecognition, ev: SpeechRecognitionErrorEvent) => any) | null;
   onend: ((this: SpeechRecognition, ev: Event) => any) | null;
   onstart: ((this: SpeechRecognition, ev: Event) => any) | null;
+  onaudiostart: ((this: SpeechRecognition, ev: Event) => any) | null;
 }
 
 declare global {
@@ -57,6 +58,10 @@ export function useSpeechRecognition(lang: string = "vi-VN"): UseSpeechRecogniti
 
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const langRef = useRef(lang);
+  const gotResultRef = useRef(false);
+  const retryCountRef = useRef(0);
+  const isUserStoppedRef = useRef(false);
+  const startListeningRef = useRef<(() => void) | null>(null);
 
   // Keep lang ref in sync
   useEffect(() => {
@@ -114,13 +119,21 @@ export function useSpeechRecognition(lang: string = "vi-VN"): UseSpeechRecogniti
     setError(null);
     setTranscript("");
     setInterimTranscript("");
+    gotResultRef.current = false;
+    isUserStoppedRef.current = false;
 
     recognition.onstart = () => {
       setIsListening(true);
       setError(null);
     };
 
+    // Track if audio actually started (iOS Safari specific)
+    recognition.onaudiostart = () => {
+      gotResultRef.current = false; // reset, audio is flowing
+    };
+
     recognition.onresult = (event: SpeechRecognitionEvent) => {
+      gotResultRef.current = true;
       let finalSpeech = "";
       let interimSpeech = "";
 
@@ -150,6 +163,20 @@ export function useSpeechRecognition(lang: string = "vi-VN"): UseSpeechRecogniti
 
     recognition.onend = () => {
       setIsListening(false);
+
+      // iOS Safari workaround: if recognition ended without results
+      // and user didn't manually stop, retry once automatically
+      if (!gotResultRef.current && !isUserStoppedRef.current && retryCountRef.current < 1) {
+        retryCountRef.current += 1;
+        // Small delay before retry to let iOS Safari settle
+        setTimeout(() => {
+          if (startListeningRef.current) {
+            startListeningRef.current();
+          }
+        }, 300);
+      } else {
+        retryCountRef.current = 0;
+      }
     };
 
     recognitionRef.current = recognition;
@@ -162,7 +189,14 @@ export function useSpeechRecognition(lang: string = "vi-VN"): UseSpeechRecogniti
     }
   }, []);
 
+  // Keep ref in sync so onend callback can call startListening
+  useEffect(() => {
+    startListeningRef.current = startListening;
+  }, [startListening]);
+
   const stopListening = useCallback(() => {
+    isUserStoppedRef.current = true;
+    retryCountRef.current = 0;
     if (recognitionRef.current) {
       try {
         recognitionRef.current.stop();
