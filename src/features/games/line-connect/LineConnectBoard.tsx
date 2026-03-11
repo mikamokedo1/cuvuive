@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect, useRef } from "react";
-import { LINE_CONNECT_LEVELS, LineConnectLevel, generateLineConnectLevel } from "./constants";
+import { LineConnectLevel, generateLineConnectLevel } from "./constants";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { playButtonSound, playCorrectSound, playWrongSound } from "@/libs/utils/playSound";
@@ -173,7 +173,7 @@ export function LineConnectBoard({ onComplete, lessonId }: LineConnectBoardProps
     if (allConnected && level.dots.length > 0) {
       setIsWinning(true);
       setTimeout(() => {
-        if (levelIndex < LINE_CONNECT_LEVELS.length - 1) {
+        if (levelIndex < 5) { // Each lesson has 5 levels
           setLevelIndex(prev => prev + 1);
         } else {
           playWinEffect(500);
@@ -199,20 +199,19 @@ export function LineConnectBoard({ onComplete, lessonId }: LineConnectBoardProps
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
       >
-        {/* Grid Background */}
-        <div 
-          className="absolute inset-0 grid"
-          style={{ 
-            gridTemplateColumns: `repeat(${level.cols}, 1fr)`,
-            gridTemplateRows: `repeat(${level.rows}, 1fr)`
-          }}
-        >
-          {Array.from({ length: level.rows * level.cols }).map((_, i) => (
-            <div key={i} className="border border-gray-100" />
-          ))}
-        </div>
+        {Array.from({ length: level.rows * level.cols }).map((_, i) => (
+          <div 
+            key={i} 
+            className="absolute border border-gray-100" 
+            style={{ 
+              width: cellSize, 
+              height: cellSize,
+              left: (i % level.cols) * cellSize,
+              top: Math.floor(i / level.cols) * cellSize
+            }}
+          />
+        ))}
 
-        {/* Lines Overlay */}
         <svg 
           className="absolute inset-0 pointer-events-none"
           width={boardWidth}
@@ -243,7 +242,6 @@ export function LineConnectBoard({ onComplete, lessonId }: LineConnectBoardProps
           )}
         </svg>
 
-        {/* Dots */}
         {level.dots.map((dot) => (
           dot.positions.map((pos, i) => (
             <div
@@ -266,7 +264,7 @@ export function LineConnectBoard({ onComplete, lessonId }: LineConnectBoardProps
       </div>
       
       <div className="text-xl font-bold text-indigo-600 bg-white/80 px-4 py-2 rounded-full shadow-sm">
-        Level {levelIndex + 1} / {LINE_CONNECT_LEVELS.length}
+        Level {levelIndex + 1} / 5
       </div>
     </div>
   );

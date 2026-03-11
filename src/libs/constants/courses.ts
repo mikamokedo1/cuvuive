@@ -952,9 +952,18 @@ export const COURSES: CourseDef[] = [
         title: "Mê cung khó",
         lessons: [{ id: "lesson1", title: "Bắt đầu", isFree: true }],
       },
+    ],
+  },
+  {
+    id: "line-connect",
+    title: "Nối Điểm",
+    description: "Nối các cặp màu giống nhau không được chồng chéo.",
+    icon: GameMazeRunnerLogo, // Placeholder
+    type: "logic",
+    groups: [
       {
-        id: "group4",
-        title: "Nối điểm",
+        id: "logic-connect",
+        title: "Nối điểm trí tuệ",
         lessons: [
           { id: "lesson1", title: "Làm quen", isFree: true },
           { id: "lesson2", title: "Thử thách" },
