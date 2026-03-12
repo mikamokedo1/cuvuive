@@ -31,6 +31,7 @@ const MiniPianoLogo = "https://assets.cuthongminh.com/games/mini-piano/logo.webp
 const CreativeGroupLogo = "https://assets.cuthongminh.com/games/mini-piano/group1.webp";
 const MusicianGroupLogo = "https://assets.cuthongminh.com/games/mini-piano/group2.webp";
 const EarGroupLogo = "https://assets.cuthongminh.com/games/mini-piano/group3.webp";
+const GameSyllableLogo = "https://assets.cuthongminh.com/games/learn-syllable/logo.webp";
 import { StaticImageData } from "next/image";
 import { GameGroupType } from "@/libs/constants/groups";
 
@@ -1147,6 +1148,63 @@ export const COURSES: CourseDef[] = [
         lessons: [
           { id: "find-the-note", title: "Tìm nốt nhạc đúng", isFree: true },
           { id: "repeat-melody", title: "Lặp lại giai điệu" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "learn-syllable",
+    title: "Ghép Vần",
+    description: "Bé học cách kết hợp nguyên âm và phụ âm để tạo thành tiếng.",
+    icon: GameSyllableLogo,
+    type: "language",
+    groups: [
+      {
+        id: "group1",
+        title: "Vần ie",
+        lessons: [
+          { id: "lesson1", title: "Học vần", isFree: true },
+          { id: "lesson2", title: "Chọn vần đúng" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Vần uo",
+        lessons: [
+          { id: "lesson1", title: "Học vần", isFree: true },
+          { id: "lesson2", title: "Chọn vần đúng" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Vần ươ",
+        lessons: [
+          { id: "lesson1", title: "Học vần", isFree: true },
+          { id: "lesson2", title: "Chọn vần đúng" },
+        ],
+      },
+      {
+        id: "group4",
+        title: "Vần oa",
+        lessons: [
+          { id: "lesson1", title: "Học vần", isFree: true },
+          { id: "lesson2", title: "Chọn vần đúng" },
+        ],
+      },
+      {
+        id: "group5",
+        title: "Vần uy",
+        lessons: [
+          { id: "lesson1", title: "Học vần", isFree: true },
+          { id: "lesson2", title: "Chọn vần đúng" },
+        ],
+      },
+      {
+        id: "group6",
+        title: "Vần khác",
+        lessons: [
+          { id: "lesson1", title: "Học vần", isFree: true },
+          { id: "lesson2", title: "Chọn vần đúng" },
         ],
       },
     ],

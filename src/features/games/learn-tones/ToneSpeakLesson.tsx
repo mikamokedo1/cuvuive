@@ -50,7 +50,7 @@ export function ToneSpeakLesson({ words, onComplete }: ToneSpeakLessonProps) {
       entities={allEntities.map((word) => ({
         ...word,
         name: word.spelling,
-        acceptedAnswer: word.name,
+        acceptedAnswers: [word.name, word.spelling],
       }))}
       onComplete={onComplete}
     />

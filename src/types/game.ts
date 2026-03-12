@@ -6,7 +6,7 @@ export interface EntityData {
   image: string | StaticImageData;
   category?: string;
   textRepresent?: string;
-  acceptedAnswer?: string; // If set, speech recognition matches against this instead of name
+  acceptedAnswers?: string[]; // Alternative answers for speech recognition
 }
 
 export type FeedbackType = "correct" | "wrong" | null;

@@ -117,8 +117,10 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
   useEffect(() => {
     if (!isListening && transcript && targetEntity && !feedback) {
       setHasTried(true);
-      const matchTarget = targetEntity.acceptedAnswer || targetEntity.name;
-      const isCorrect = fuzzyMatchVietnamese(transcript, matchTarget);
+      const answersToCheck = targetEntity.acceptedAnswers?.length
+        ? targetEntity.acceptedAnswers
+        : [targetEntity.name];
+      const isCorrect = answersToCheck.some((answer) => fuzzyMatchVietnamese(transcript, answer));
 
       if (isCorrect) {
         // Correct
@@ -284,24 +286,19 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
 
       {/* Transcript Display Area */}
       <div className="h-16 flex items-center justify-center w-full px-4">
-        {
-          // displayTranscript ? (
-          //   <p className="text-2xl md:text-3xl font-medium text-slate-700 text-center animate-fade-in">
-          //     "{displayTranscript}"
-          //   </p>
-          // ) :
-          hasTried && feedback === "wrong" ? (
-            <p className="text-xl md:text-2xl text-orange-500 font-medium animate-fade-in text-center">
-              Mình chưa nghe rõ, bé nói lại nhé!
-            </p>
-          ) : isListening ? (
-            <p className="text-xl md:text-2xl text-blue-500 font-medium animate-pulse text-center">Bé hãy nói to...</p>
-          ) : (
-            <p className="text-xl md:text-2xl text-slate-400 font-medium text-center">
-              Bấm vào chiếc mic để bắt đầu nói
-            </p>
-          )
-        }
+        {displayTranscript ? (
+          <p className="text-2xl md:text-3xl font-medium text-slate-700 text-center animate-fade-in">
+            "{displayTranscript}"
+          </p>
+        ) : hasTried && feedback === "wrong" ? (
+          <p className="text-xl md:text-2xl text-orange-500 font-medium animate-fade-in text-center">
+            Mình chưa nghe rõ, bé nói lại nhé!
+          </p>
+        ) : isListening ? (
+          <p className="text-xl md:text-2xl text-blue-500 font-medium animate-pulse text-center">Bé hãy nói to...</p>
+        ) : (
+          <p className="text-xl md:text-2xl text-slate-400 font-medium text-center">Bấm vào chiếc mic để bắt đầu nói</p>
+        )}
       </div>
 
       {/* Microphone Control */}

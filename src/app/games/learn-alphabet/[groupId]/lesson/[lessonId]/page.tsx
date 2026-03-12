@@ -38,7 +38,7 @@ export default function LessonPage() {
       case "lesson3":
         return <AlphabetWritingLesson letters={letters} onComplete={game.handleComplete} isReviewMode={isReviewMode} />;
       case "lesson4":
-        return <AlphabetQuizLesson letters={letters} onComplete={game.handleComplete} />;
+        return <AlphabetQuizLesson letters={letters} onComplete={game.handleComplete} requiredWins={15} />;
       case "lesson5":
         return <AlphabetMemoryLesson letters={letters} onComplete={game.handleComplete} />;
       default:

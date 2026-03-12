@@ -8,6 +8,7 @@ import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 import { LetterData } from "./constants";
 import { LetterSelector } from "./LetterSelector";
+import { LETTER_PATHS } from "@/libs/constants/letterPaths";
 const Easer = "https://assets.cuthongminh.com/games/common/earser.webp";
 const Pen = "https://assets.cuthongminh.com/games/pen.webp";
 const LoudSpeaker = "https://assets.cuthongminh.com/games/loud-speaker.webp";
@@ -33,31 +34,65 @@ export function AlphabetWritingLesson({ letters, onComplete, isReviewMode = fals
   const [showSparkle, setShowSparkle] = useState(false);
   const svgRef = useRef<SVGSVGElement>(null);
   const [cursorPos, setCursorPos] = useState<Point | null>(null);
-  const [letterPathSamples, setLetterPathSamples] = useState<Point[]>([]);
+  const [pathSamples, setPathSamples] = useState<Point[]>([]);
 
   const currentLetter = letters[currentIndex];
+  const letterPath = LETTER_PATHS[currentLetter.id];
 
-  // Generate zone grid from guide text bounding box for validation
-  const [letterBBox, setLetterBBox] = useState<{ x: number; y: number; width: number; height: number } | null>(null);
-
+  // Sample points along the template SVG path for validation
   useEffect(() => {
-    if (!svgRef.current) return;
+    setPathSamples([]);
+    if (!letterPath) return;
+
+    const extractPoints = () => {
+      if (!svgRef.current) return [];
+      const pathElement = svgRef.current.querySelector("path.template-path") as SVGPathElement;
+      if (!pathElement) return [];
+
+      const points: Point[] = [];
+      const totalLength = pathElement.getTotalLength();
+      const step = 5;
+
+      for (let i = 0; i <= totalLength; i += step) {
+        const pt = pathElement.getPointAtLength(i);
+        points.push({ x: pt.x, y: pt.y });
+      }
+      return points;
+    };
+
     const timer = setTimeout(() => {
-      if (!svgRef.current) return;
-      const textElement = svgRef.current.querySelector("#guide-text") as SVGTextElement;
-      if (!textElement) return;
-      const bbox = textElement.getBBox();
-      setLetterBBox({ x: bbox.x, y: bbox.y, width: bbox.width, height: bbox.height });
+      const points = extractPoints();
+      if (points.length > 0) {
+        setPathSamples(points);
+      }
     }, 100);
+
     return () => clearTimeout(timer);
-  }, [currentIndex, currentLetter]);
+  }, [currentIndex, letterPath]);
 
   // Speak letter name when it changes
   useEffect(() => {
     if (currentLetter) {
-      speak(`Pé tập viết chữ ${currentLetter.letter}`);
+      speak(`Pé tập viết ${currentLetter.name}`);
     }
   }, [currentIndex]);
+
+  // Check if a point is near the template path (constrains drawing)
+  const isPointNearPath = useCallback(
+    (point: Point, tolerance: number = 28): boolean => {
+      if (pathSamples.length === 0) return true;
+
+      for (const pathPoint of pathSamples) {
+        const dx = point.x - pathPoint.x;
+        const dy = point.y - pathPoint.y;
+        if (dx * dx + dy * dy <= tolerance * tolerance) {
+          return true;
+        }
+      }
+      return false;
+    },
+    [pathSamples],
+  );
 
   const getPointerPosition = useCallback((e: React.PointerEvent): Point | null => {
     if (!svgRef.current) return null;
@@ -75,7 +110,7 @@ export function AlphabetWritingLesson({ letters, onComplete, isReviewMode = fals
     setCursorPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
 
     const point = getPointerPosition(e);
-    if (point) {
+    if (point && isPointNearPath(point)) {
       setIsDrawing(true);
       setCurrentStroke([point]);
     }
@@ -88,7 +123,7 @@ export function AlphabetWritingLesson({ letters, onComplete, isReviewMode = fals
 
     if (!isDrawing || isSuccess) return;
     const point = getPointerPosition(e);
-    if (point) {
+    if (point && isPointNearPath(point)) {
       setCurrentStroke((prev) => [...prev, point]);
     }
   };
@@ -111,41 +146,25 @@ export function AlphabetWritingLesson({ letters, onComplete, isReviewMode = fals
   };
 
   const validateDrawing = (allStrokes: Point[][]) => {
-    if (!letterBBox) return;
+    if (pathSamples.length === 0) return;
 
     const allUserPoints = allStrokes.flat();
+    let coveredCount = 0;
+    const coverageTolerance = 32;
 
-    // Require minimum total drawn points (ensures enough drawing effort)
-    if (allUserPoints.length < 60) return;
+    pathSamples.forEach((pathPoint) => {
+      const isCovered = allUserPoints.some((userPoint) => {
+        const dx = userPoint.x - pathPoint.x;
+        const dy = userPoint.y - pathPoint.y;
+        return dx * dx + dy * dy <= coverageTolerance * coverageTolerance;
+      });
+      if (isCovered) coveredCount++;
+    });
 
-    // Divide the letter bounding box into a 5x6 grid of zones
-    const COLS = 5;
-    const ROWS = 6;
-    const zoneW = letterBBox.width / COLS;
-    const zoneH = letterBBox.height / ROWS;
-    const coveredZones = new Set<string>();
+    const coverageRatio = coveredCount / pathSamples.length;
 
-    for (const point of allUserPoints) {
-      // Check if point falls within the letter bounding box
-      if (
-        point.x >= letterBBox.x &&
-        point.x <= letterBBox.x + letterBBox.width &&
-        point.y >= letterBBox.y &&
-        point.y <= letterBBox.y + letterBBox.height
-      ) {
-        const col = Math.floor((point.x - letterBBox.x) / zoneW);
-        const row = Math.floor((point.y - letterBBox.y) / zoneH);
-        const clampedCol = Math.min(col, COLS - 1);
-        const clampedRow = Math.min(row, ROWS - 1);
-        coveredZones.add(`${clampedCol}-${clampedRow}`);
-      }
-    }
-
-    const totalZones = COLS * ROWS;
-    const coverageRatio = coveredZones.size / totalZones;
-
-    // Require at least 35% zone coverage
-    if (coverageRatio >= 0.45) {
+    // Require at least 80% of the template path to be covered
+    if (coverageRatio >= 0.9) {
       triggerSuccess();
     }
   };
@@ -154,7 +173,7 @@ export function AlphabetWritingLesson({ letters, onComplete, isReviewMode = fals
     setIsSuccess(true);
     setShowSparkle(true);
     playWinEffect(500);
-    speak(`Giỏi lắm! Chữ ${currentLetter.letter}`);
+    speak(`Giỏi lắm! ${currentLetter.name}`);
     setTimeout(() => setShowSparkle(false), 1500);
   };
 
@@ -206,24 +225,32 @@ export function AlphabetWritingLesson({ letters, onComplete, isReviewMode = fals
           </defs>
           <rect width="100%" height="100%" fill="url(#grid)" />
 
-          {/* Guide letter (dashed outline) */}
-          <text
-            id="guide-text"
-            x="130"
-            y="180"
-            textAnchor="middle"
-            dominantBaseline="central"
-            fontSize="200"
-            fontWeight="100"
-            fontFamily="sans-serif"
-            fill="none"
-            stroke="#fed7aa"
-            strokeWidth="2"
-            strokeDasharray="6 10"
-            opacity="0.8"
-          >
-            {currentLetter.id}
-          </text>
+          {/* Guide letter (dashed path template) */}
+          {letterPath && (
+            <>
+              <path
+                className="template-path"
+                d={letterPath.path}
+                fill="none"
+                stroke="#e9e8eeff"
+                strokeWidth="20"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeDasharray="8 16"
+                opacity="0.6"
+              />
+              {/* Start dot */}
+              <circle
+                cx={letterPath.startPoint.x}
+                cy={letterPath.startPoint.y}
+                r="14"
+                fill="#f97316"
+                opacity={completedStrokes.length > 0 || currentStroke.length > 0 ? 0 : 0.9}
+              >
+                <animate attributeName="r" values="12;16;12" dur="1.5s" repeatCount="indefinite" />
+              </circle>
+            </>
+          )}
 
           {/* User strokes */}
           {completedStrokes.map((s, i) => (
@@ -238,7 +265,7 @@ export function AlphabetWritingLesson({ letters, onComplete, isReviewMode = fals
               }
               fill="none"
               stroke={isSuccess ? "#22c55e" : color}
-              strokeWidth="10"
+              strokeWidth="14"
               strokeLinecap="round"
               strokeLinejoin="round"
               className="transition-colors duration-300"
@@ -257,7 +284,7 @@ export function AlphabetWritingLesson({ letters, onComplete, isReviewMode = fals
               }
               fill="none"
               stroke={isSuccess ? "#22c55e" : color}
-              strokeWidth="10"
+              strokeWidth="14"
               strokeLinecap="round"
               strokeLinejoin="round"
               className="transition-colors duration-300"
@@ -301,7 +328,7 @@ export function AlphabetWritingLesson({ letters, onComplete, isReviewMode = fals
         {/* Speaker button */}
         <button
           className="absolute top-2 left-2 cursor-pointer hover:scale-105 transition-all"
-          onClick={() => speak(`chữ ${currentLetter.letter}`)}
+          onClick={() => speak(` ${currentLetter.name}`)}
           onMouseEnter={playButtonSound}
         >
           <Image width={48} height={40} src={LoudSpeaker} alt="Speaker" className="w-12 h-10" />
