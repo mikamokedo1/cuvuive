@@ -100,9 +100,14 @@ export function useSpeechRecognition(lang: string = "vi-VN"): UseSpeechRecogniti
       return;
     }
 
-    // iOS Safari: Cancel any ongoing TTS — iOS cannot use microphone while TTS is playing
+    // iOS Safari: Cancel any ongoing TTS and suspend AudioContext
+    // iOS cannot use microphone while TTS or AudioContext is active
     if ("speechSynthesis" in window) {
       window.speechSynthesis.cancel();
+    }
+    // Suspend any active AudioContext to release the audio session for the microphone
+    if ((window as any).__audioContext && (window as any).__audioContext.state === "running") {
+      (window as any).__audioContext.suspend();
     }
 
     // Abort any existing instance first (critical for iOS Safari)

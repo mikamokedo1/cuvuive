@@ -180,10 +180,12 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
   }, [isListening, transcript, targetEntity, feedback]);
 
   const handleMicClick = () => {
-    playButtonSound();
     if (isListening) {
+      playButtonSound();
       stopListening();
     } else {
+      // Don't play button sound when starting to listen — on iOS Safari,
+      // AudioContext and SpeechRecognition compete for the audio session
       startListening();
     }
   };

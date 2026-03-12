@@ -7,6 +7,9 @@ const getAudioContext = () => {
     const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
     if (AudioContextClass) {
       audioContext = new AudioContextClass();
+      // Expose on window so speech recognition can suspend it before using the microphone
+      // (iOS Safari requires exclusive audio session access)
+      (window as any).__audioContext = audioContext;
     }
   }
   return audioContext;

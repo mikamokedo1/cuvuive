@@ -11,6 +11,7 @@ import { PaywallListener } from "@/features/paywall/PaywallListener";
 import { ProgressProvider } from "@/context/ProgressContext";
 import { PlayTimerProvider } from "@/context/PlayTimerContext";
 import { PlayTimerListener } from "@/features/parental/PlayTimerListener";
+import { InstallPrompt } from "@/components/common/InstallPrompt";
 
 // Configure fonts
 const baloo2 = Baloo_2({
@@ -151,6 +152,7 @@ export default async function RootLayout({
                   <MissingInfoListener />
                   <PaywallListener />
                   <PlayTimerListener />
+                  <InstallPrompt />
                 </OwlProvider>
               </PlayTimerProvider>
             </ProgressProvider>
