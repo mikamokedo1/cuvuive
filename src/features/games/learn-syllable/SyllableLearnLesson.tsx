@@ -56,13 +56,13 @@ export function SyllableLearnLesson({ syllables, onComplete }: SyllableLearnLess
   return (
     <div ref={swipeRef} className="flex flex-col items-center gap-6 md:gap-8 w-full max-w-4xl px-4">
       {/* Target Display */}
-      <div className="relative w-full aspect-video md:aspect-square md:w-[450px] flex flex-col items-center justify-around p-8 rounded-[3rem] border-4 border-emerald-400 shadow-2xl overflow-hidden">
+      <div className="relative w-full md:w-[450px] flex flex-col items-center justify-around p-3 md:p-8 rounded-[3rem] border-4 border-emerald-400 shadow-2xl overflow-hidden">
         {/* Background Sparkle or simple design */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-100 rounded-full -translate-y-1/2 translate-x-1/2 opacity-50" />
         <div className="absolute bottom-0 left-0 w-40 h-40 bg-emerald-100 rounded-full translate-y-1/2 -translate-x-1/2 opacity-50" />
 
         <div
-          className="relative w-40 h-40 md:w-60 md:h-60 transition-transform duration-300 hover:scale-105 cursor-pointer z-10 flex items-center justify-center"
+          className="relative w-full h-40 min-h-[100px] md:h-60 md:w-60 transition-transform duration-300 hover:scale-105 cursor-pointer z-10 flex items-center justify-center"
           onClick={() => speak(currentSyllable.name)}
         >
           {currentSyllable.image ? (
@@ -97,18 +97,6 @@ export function SyllableLearnLesson({ syllables, onComplete }: SyllableLearnLess
       <div className="flex items-center gap-8 mt-4">
         <BackLessonButton onClick={handlePrev} disabled={currentIndex === 0} />
         <NextLessonButton onClick={handleNext} isLast={isLast} />
-      </div>
-
-      {/* Progress Dots */}
-      <div className="flex gap-2 mt-4">
-        {syllables.map((_, i) => (
-          <div
-            key={i}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              i === currentIndex ? "bg-emerald-500 w-8" : "bg-gray-300"
-            }`}
-          />
-        ))}
       </div>
     </div>
   );

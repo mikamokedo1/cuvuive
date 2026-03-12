@@ -26,6 +26,7 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
   const [feedback, setFeedback] = useState<FeedbackType>(null);
   const [hasTried, setHasTried] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const hasMatchedRef = useRef(false);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -78,7 +79,7 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
   // Reset transcript if speaking for too long without correct answer
   useEffect(() => {
     const currentText = (transcript + " " + interimTranscript).trim();
-    if (!isListening || !currentText || feedback === "correct") return;
+    if (!isListening || !currentText || feedback === "correct" || hasMatchedRef.current) return;
 
     const words = currentText.split(/\s+/);
 
@@ -113,17 +114,49 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
     return () => clearTimeout(resetTimer);
   }, [transcript, interimTranscript, isListening, feedback, speak, resetTranscript, startListening, stopListening]);
 
-  // Handle speech result
+  // Handle speech result — check both during listening (interim) and after listening stops (final)
+  // On Android Chrome, interim results may show the correct answer but the final transcript
+  // transition differs from desktop, so we need to check in real-time too.
+
+  // Reset match flag when moving to next question
   useEffect(() => {
-    if (!isListening && transcript && targetEntity && !feedback) {
+    hasMatchedRef.current = false;
+  }, [currentIndex]);
+
+  // Real-time check: match during listening using combined transcript + interim
+  useEffect(() => {
+    if (!isListening || !targetEntity || feedback || hasMatchedRef.current) return;
+
+    const currentText = (transcript + " " + interimTranscript).trim();
+    if (!currentText) return;
+
+    const answersToCheck = targetEntity.acceptedAnswers?.length ? targetEntity.acceptedAnswers : [targetEntity.name];
+    const isCorrect = answersToCheck.some((answer) => fuzzyMatchVietnamese(currentText, answer));
+
+    if (isCorrect) {
+      hasMatchedRef.current = true;
       setHasTried(true);
-      const answersToCheck = targetEntity.acceptedAnswers?.length
-        ? targetEntity.acceptedAnswers
-        : [targetEntity.name];
+      stopListening();
+      playWinEffect(500);
+      speak("Giỏi quá!");
+      setFeedback("correct");
+
+      setTimeout(() => {
+        goToNextQuestion();
+      }, 2000);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [transcript, interimTranscript, isListening, targetEntity, feedback]);
+
+  // Post-listening check: handle the case where listening ends with a final transcript
+  useEffect(() => {
+    if (!isListening && transcript && targetEntity && !feedback && !hasMatchedRef.current) {
+      setHasTried(true);
+      const answersToCheck = targetEntity.acceptedAnswers?.length ? targetEntity.acceptedAnswers : [targetEntity.name];
       const isCorrect = answersToCheck.some((answer) => fuzzyMatchVietnamese(transcript, answer));
 
       if (isCorrect) {
-        // Correct
+        hasMatchedRef.current = true;
         playWinEffect(500);
         speak("Giỏi quá!");
         setFeedback("correct");
@@ -202,7 +235,7 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
               <p className="text-slate-600 text-base mb-3">
                 Vào <b>Cài đặt</b> → <b>Safari</b> → <b>Micro</b> → <b>Cho phép</b>
               </p>
-              <p className="font-semibold text-orange-700 mb-2">💻 Trên máy tính (Chrome):</p>
+              <p className="font-semibold text-orange-700 mb-2">💻 Trên máy tính, Android (Chrome):</p>
               <p className="text-slate-600 text-base">
                 Bấm vào biểu tượng 🔒 trên thanh địa chỉ → <b>Micro</b> → <b>Cho phép</b>
               </p>

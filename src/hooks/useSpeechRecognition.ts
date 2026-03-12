@@ -100,6 +100,11 @@ export function useSpeechRecognition(lang: string = "vi-VN"): UseSpeechRecogniti
       return;
     }
 
+    // iOS Safari: Cancel any ongoing TTS — iOS cannot use microphone while TTS is playing
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
+
     // Abort any existing instance first (critical for iOS Safari)
     if (recognitionRef.current) {
       try {
@@ -122,13 +127,29 @@ export function useSpeechRecognition(lang: string = "vi-VN"): UseSpeechRecogniti
     gotResultRef.current = false;
     isUserStoppedRef.current = false;
 
+    // Safety timeout: if onstart never fires within 3 seconds, reset state
+    // This handles iOS Safari silently failing to start
+    const startTimeout = setTimeout(() => {
+      if (!gotResultRef.current && recognitionRef.current === recognition) {
+        console.warn("Speech recognition: onstart never fired, resetting");
+        setIsListening(false);
+        try {
+          recognition.abort();
+        } catch {
+          // ignore
+        }
+      }
+    }, 3000);
+
     recognition.onstart = () => {
+      clearTimeout(startTimeout);
       setIsListening(true);
       setError(null);
     };
 
     // Track if audio actually started (iOS Safari specific)
     recognition.onaudiostart = () => {
+      clearTimeout(startTimeout);
       gotResultRef.current = false; // reset, audio is flowing
     };
 
@@ -152,7 +173,8 @@ export function useSpeechRecognition(lang: string = "vi-VN"): UseSpeechRecogniti
     };
 
     recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
-      console.error("Speech recognition error:", event.error);
+      clearTimeout(startTimeout);
+      console.error("Speech recognition error:", event.error, event.message);
       // "no-speech" is not a real error, just means the user didn't say anything
       // "aborted" happens when we intentionally abort, also not a real error
       if (event.error !== "no-speech" && event.error !== "aborted") {
@@ -162,6 +184,7 @@ export function useSpeechRecognition(lang: string = "vi-VN"): UseSpeechRecogniti
     };
 
     recognition.onend = () => {
+      clearTimeout(startTimeout);
       setIsListening(false);
 
       // iOS Safari workaround: if recognition ended without results
@@ -184,6 +207,7 @@ export function useSpeechRecognition(lang: string = "vi-VN"): UseSpeechRecogniti
     try {
       recognition.start();
     } catch (e) {
+      clearTimeout(startTimeout);
       console.error("Failed to start speech recognition:", e);
       setIsListening(false);
     }
