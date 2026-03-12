@@ -37,8 +37,7 @@ function shouldShowPrompt(): boolean {
 
     if (data.count >= MAX_DISMISSALS) return false;
 
-    const daysSince =
-      (Date.now() - data.lastDismissed) / (1000 * 60 * 60 * 24);
+    const daysSince = (Date.now() - data.lastDismissed) / (1000 * 60 * 60 * 24);
     return daysSince >= DISMISS_COOLDOWN_DAYS;
   } catch {
     return true;
@@ -48,16 +47,14 @@ function shouldShowPrompt(): boolean {
 function recordDismissal() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    const prev = raw
-      ? (JSON.parse(raw) as { count: number; lastDismissed: number })
-      : { count: 0, lastDismissed: 0 };
+    const prev = raw ? (JSON.parse(raw) as { count: number; lastDismissed: number }) : { count: 0, lastDismissed: 0 };
 
     localStorage.setItem(
       STORAGE_KEY,
       JSON.stringify({
         count: prev.count + 1,
         lastDismissed: Date.now(),
-      })
+      }),
     );
   } catch {
     // localStorage not available
@@ -71,8 +68,7 @@ function isIOS(): boolean {
 
 export function InstallPrompt() {
   const { user, isLoading } = useUser();
-  const [deferredPrompt, setDeferredPrompt] =
-    useState<BeforeInstallPromptEvent | null>(null);
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [showIOSGuide, setShowIOSGuide] = useState(false);
   const [visible, setVisible] = useState(false);
   const [animateIn, setAnimateIn] = useState(false);
@@ -138,9 +134,7 @@ export function InstallPrompt() {
   return (
     <div
       className={`fixed bottom-0 left-0 right-0 z-[90] flex justify-center p-4 pb-[max(env(safe-area-inset-bottom),16px)] transition-all duration-300 ease-out ${
-        animateIn
-          ? "translate-y-0 opacity-100"
-          : "translate-y-full opacity-0"
+        animateIn ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
       }`}
     >
       <div className="w-full max-w-md rounded-2xl bg-white shadow-[0_-4px_24px_rgba(0,0,0,0.12)] border border-gray-100 overflow-hidden">
@@ -154,12 +148,8 @@ export function InstallPrompt() {
             className="rounded-xl shadow-sm"
           />
           <div className="flex-1 min-w-0">
-            <h3 className="text-base font-bold text-gray-800 font-display leading-tight">
-              Cú Thông Minh
-            </h3>
-            <p className="text-xs text-gray-500 truncate">
-              cuthongminh.com
-            </p>
+            <h3 className="text-base font-bold text-gray-800 font-display leading-tight">Cú Thông Minh</h3>
+            <p className="text-xs text-gray-500 truncate">cuthongminh.com</p>
           </div>
           <button
             onClick={handleDismiss}
@@ -175,34 +165,28 @@ export function InstallPrompt() {
           {showIOSGuide ? (
             /* iOS Guide */
             <>
-              <p className="text-sm text-gray-600 mb-3">
-                Thêm app vào Màn hình chính để truy cập nhanh hơn:
-              </p>
+              <p className="text-sm text-gray-600 mb-3">Thêm app vào Màn hình chính để truy cập nhanh hơn:</p>
               <div className="flex items-center gap-3 bg-blue-50 rounded-xl p-3 mb-3">
                 <div className="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-lg">
                   <Share size={20} className="text-blue-600" />
                 </div>
                 <div className="flex-1 text-sm">
-                  <p className="font-semibold text-gray-800">
-                    Bước 1:
-                  </p>
-                  <p className="text-gray-600">
-                    Nhấn nút <strong>Chia sẻ</strong>{" "}
-                    <span className="inline-block text-blue-600">⬆</span> ở
-                    thanh dưới
+                  <p className="font-semibold text-gray-800">Bước 1:</p>
+                  <p className="text-gray-600 flex">
+                    Nhấn nút{" "}
+                    <div className="flex mx-1 gap-1">
+                      <Share size={20} /> <strong>Chia sẻ</strong>
+                    </div>{" "}
+                    ở thanh dưới
                   </p>
                 </div>
               </div>
               <div className="flex items-center gap-3 bg-green-50 rounded-xl p-3 mb-3">
-                <div className="flex items-center justify-center w-10 h-10 bg-green-100 rounded-lg text-xl">
-                  ➕
-                </div>
+                <div className="flex items-center justify-center w-10 h-10 bg-green-100 rounded-lg text-xl">➕</div>
                 <div className="flex-1 text-sm">
-                  <p className="font-semibold text-gray-800">
-                    Bước 2:
-                  </p>
+                  <p className="font-semibold text-gray-800">Bước 2:</p>
                   <p className="text-gray-600">
-                    Chọn <strong>&quot;Thêm vào MH chính&quot;</strong>
+                    Chọn <strong>&quot;Thêm vào Màn Hình chính&quot;</strong>
                   </p>
                 </div>
               </div>
@@ -217,8 +201,7 @@ export function InstallPrompt() {
             /* Android / Chrome */
             <>
               <p className="text-sm text-gray-600 mb-3">
-                Thêm vào Màn hình chính để mở nhanh — không cần gõ trên trình
-                duyệt!
+                Thêm vào Màn hình chính để mở nhanh — không cần gõ trên trình duyệt!
               </p>
               <button
                 onClick={handleInstall}

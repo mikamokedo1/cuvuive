@@ -18,7 +18,7 @@ interface SpeakPraticeLayoutProps {
 
 const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) => {
   const { speak } = useTextToSpeech();
-  const { isListening, transcript, interimTranscript, isSupported, startListening, stopListening, resetTranscript } =
+  const { isListening, transcript, interimTranscript, isSupported, error: speechError, debugLog, startListening, stopListening, resetTranscript } =
     useSpeechRecognition("vi-VN");
   const { status: micStatus, requestPermission } = useMicrophonePermission();
 
@@ -217,6 +217,63 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
             <p className="text-slate-600 text-base">Tính năng này yêu cầu iOS 14.5 trở lên.</p>
           </div>
         </div>
+      </div>
+    );
+  }
+
+  // iOS Safari / PWA: Dictation service not allowed
+  if (speechError === "service-not-allowed") {
+    // Detect if running as Home Screen PWA (standalone mode)
+    const isStandalone =
+      typeof window !== "undefined" &&
+      (window.matchMedia("(display-mode: standalone)").matches || (window.navigator as any).standalone === true);
+
+    return (
+      <div className="flex flex-col items-center justify-center p-8 bg-orange-50 rounded-3xl border-4 border-orange-200 text-center max-w-lg mt-10 gap-4">
+        <AlertCircle className="w-16 h-16 text-orange-400" />
+        {isStandalone ? (
+          <>
+            <h2 className="text-2xl font-bold text-orange-600">Cần mở bằng Safari 🧭</h2>
+            <p className="text-orange-800 text-lg leading-relaxed">
+              Tính năng nhận diện giọng nói <b>không hoạt động</b> khi mở từ Màn hình chính. Bạn cần mở bằng <b>Safari</b>.
+            </p>
+            <div className="bg-white rounded-2xl p-4 border-2 border-orange-100 text-left w-full space-y-3">
+              <div>
+                <p className="font-semibold text-orange-700">Mở Safari 🧭</p>
+                <p className="text-slate-600 text-base">
+                  Mở ứng dụng <b>Safari</b> và truy cập lại trang web này để sử dụng tính năng giọng nói.
+                </p>
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <h2 className="text-2xl font-bold text-orange-600">Cần cấp quyền giọng nói 🎙️</h2>
+            <p className="text-orange-800 text-lg leading-relaxed">
+              Safari trên iPhone cần được cấp quyền <b>nhận diện giọng nói</b> để chơi trò này.
+            </p>
+            <div className="bg-white rounded-2xl p-4 border-2 border-orange-100 text-left w-full space-y-3">
+              <div>
+                <p className="font-semibold text-orange-700">Cách 1: Bật Đọc chính tả ⚙️</p>
+                <p className="text-slate-600 text-base">
+                  <b>Cài đặt</b> → <b>Cài đặt chung</b> → <b>Bàn phím</b> → Bật <b>&quot;Đọc chính tả&quot;</b>
+                </p>
+              </div>
+              <div>
+                <p className="font-semibold text-orange-700">Cách 2: Xoá dữ liệu Safari 🗑️</p>
+                <p className="text-slate-600 text-base">
+                  <b>Cài đặt</b> → <b>Safari</b> → <b>Xoá lịch sử và dữ liệu</b>, rồi thử lại.
+                </p>
+              </div>
+            </div>
+          </>
+        )}
+        <button
+          onClick={() => window.location.reload()}
+          className="bg-orange-500 hover:bg-orange-400 active:scale-95 text-white font-bold text-lg px-8 py-4 rounded-2xl shadow-lg transition-all duration-200 mt-2"
+        >
+          🔄 Tải lại trang
+        </button>
       </div>
     );
   }
