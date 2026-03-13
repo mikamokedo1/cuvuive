@@ -18,7 +18,7 @@ interface SpeakPraticeLayoutProps {
 
 const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) => {
   const { speak } = useTextToSpeech();
-  const { isListening, transcript, interimTranscript, isSupported, error: speechError, debugLog, startListening, stopListening, resetTranscript } =
+  const { isListening, transcript, interimTranscript, isSupported, error: speechError, startListening, stopListening, resetTranscript } =
     useSpeechRecognition("vi-VN");
   const { status: micStatus, requestPermission } = useMicrophonePermission();
 
@@ -93,7 +93,9 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
       setTimeout(() => {
         setFeedback(null);
         resetTranscript();
-        startListening();
+        // Only auto-restart on desktop. On mobile, require explicit user tap
+        // to avoid TTS audio bleeding into the microphone.
+        if (!isMobile) startListening();
       }, 2000);
       return;
     }
@@ -107,7 +109,7 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
       setTimeout(() => {
         setFeedback(null);
         resetTranscript();
-        startListening();
+        if (!isMobile) startListening();
       }, 2000);
     }, 2500);
 
@@ -171,8 +173,8 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
         setTimeout(() => {
           setFeedback(null);
           resetTranscript();
-          // Auto-start microphone again after "Thử lại nhé"
-          startListening();
+          // Only auto-restart on desktop. On mobile, let the kid tap the mic.
+          if (!isMobile) startListening();
         }, 2000);
       }
     }

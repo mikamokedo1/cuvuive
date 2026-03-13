@@ -32,6 +32,7 @@ const CreativeGroupLogo = "https://assets.cuthongminh.com/games/mini-piano/group
 const MusicianGroupLogo = "https://assets.cuthongminh.com/games/mini-piano/group2.webp";
 const EarGroupLogo = "https://assets.cuthongminh.com/games/mini-piano/group3.webp";
 const GameSyllableLogo = "https://assets.cuthongminh.com/games/learn-syllable/logo.webp";
+const GameTerrainLogo = "https://assets.cuthongminh.com/games/learn-terrain/logo.webp";
 import { StaticImageData } from "next/image";
 import { GameGroupType } from "@/libs/constants/groups";
 
@@ -1205,6 +1206,48 @@ export const COURSES: CourseDef[] = [
         lessons: [
           { id: "lesson1", title: "Học vần", isFree: true },
           { id: "lesson2", title: "Chọn vần đúng" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "learn-terrain",
+    title: "Địa Hình",
+    description: "Bé khám phá các dạng địa hình tự nhiên qua trò chơi tương tác sáng tạo.",
+    icon: GameTerrainLogo,
+    type: "geography",
+    groups: [
+      {
+        id: "group1",
+        title: "Trên cạn",
+        lessons: [
+          { id: "lesson1", title: "Khám phá địa hình", isFree: true },
+          { id: "lesson2", title: "Nghe đoán địa hình" },
+          { id: "lesson3", title: "Xếp lớp địa hình" },
+          { id: "lesson4", title: "Ai sống ở đây?" },
+          { id: "lesson5", title: "Phiêu lưu địa hình" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Dưới nước",
+        lessons: [
+          { id: "lesson1", title: "Khám phá địa hình", isFree: true },
+          { id: "lesson2", title: "Nghe đoán địa hình" },
+          { id: "lesson3", title: "Xếp lớp địa hình" },
+          { id: "lesson4", title: "Ai sống ở đây?" },
+          { id: "lesson5", title: "Phiêu lưu địa hình" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Đặc biệt",
+        lessons: [
+          { id: "lesson1", title: "Khám phá địa hình", isFree: true },
+          { id: "lesson2", title: "Nghe đoán địa hình" },
+          { id: "lesson3", title: "Xếp lớp địa hình" },
+          { id: "lesson4", title: "Ai sống ở đây?" },
+          { id: "lesson5", title: "Phiêu lưu địa hình" },
         ],
       },
     ],
