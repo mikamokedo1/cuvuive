@@ -15,10 +15,11 @@ const LoudSpeaker = "https://assets.cuthongminh.com/games/loud-speaker.webp";
 const SOUND_HINTS: Record<string, string> = {
   mountain: "Gió thổi vi vu trên đỉnh cao...",
   hill: "Tiếng chim hót trên đồi cỏ xanh...",
-  plain: "Tiếng gió thổi qua cánh đồng rộng...",
+  plain: "Tiếng gió thổi qua cánh đồng rộng thơm mùi lúa...",
   plateau: "Gió lạnh thổi trên vùng đất cao bằng phẳng...",
   valley: "Tiếng suối chảy róc rách giữa hai ngọn núi...",
   desert: "Gió cát thổi vi vu trong nắng nóng...",
+  savanna: "Sư tử gầm vang trên đồng cỏ châu Phi rộng lớn...",
   ocean: "Sóng biển vỗ rì rào, rì rào...",
   river: "Nước chảy róc rách, róc rách không ngừng...",
   lake: "Mặt nước yên tĩnh, lăn tăn gợn sóng nhẹ...",
@@ -47,7 +48,6 @@ export function SoundscapeLesson({ terrains, onComplete, requiredWins = 6 }: Sou
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState<FeedbackType>(null);
   const [selectedOption, setSelectedOption] = useState<EntityData | null>(null);
-  const [showHint, setShowHint] = useState(false);
   const [isRevealing, setIsRevealing] = useState(false);
 
   const generateQuestion = useCallback(() => {
@@ -64,7 +64,6 @@ export function SoundscapeLesson({ terrains, onComplete, requiredWins = 6 }: Sou
     setTarget(newTarget);
     setFeedback(null);
     setSelectedOption(null);
-    setShowHint(false);
     setIsRevealing(false);
 
     // Auto speak the sound hint
@@ -109,7 +108,6 @@ export function SoundscapeLesson({ terrains, onComplete, requiredWins = 6 }: Sou
     } else {
       setFeedback("wrong");
       speak("Chưa đúng");
-      setShowHint(true);
 
       setTimeout(() => {
         setFeedback(null);

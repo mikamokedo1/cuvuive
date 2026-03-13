@@ -11,18 +11,25 @@ interface BeforeInstallPromptEvent extends Event {
 }
 
 const STORAGE_KEY = "a2hs_dismissed";
+const SESSION_KEY = "a2hs_shown_this_session";
 const MAX_DISMISSALS = 3;
 const DISMISS_COOLDOWN_DAYS = 7;
 const SHOW_DELAY_MS = 3000;
 
 function shouldShowPrompt(): boolean {
+  if (typeof window === "undefined") return false;
+
   // Already in standalone mode (installed)
   if (
-    typeof window !== "undefined" &&
-    (window.matchMedia("(display-mode: standalone)").matches ||
-      // @ts-expect-error – iOS Safari navigator property
-      window.navigator.standalone === true)
+    window.matchMedia("(display-mode: standalone)").matches ||
+    // @ts-expect-error – iOS Safari navigator property
+    window.navigator.standalone === true
   ) {
+    return false;
+  }
+
+  // Only show once per session
+  if (sessionStorage.getItem(SESSION_KEY)) {
     return false;
   }
 
@@ -100,6 +107,8 @@ export function InstallPrompt() {
 
     const timer = setTimeout(() => {
       setVisible(true);
+      // Mark this session so we don't show again
+      try { sessionStorage.setItem(SESSION_KEY, "1"); } catch { /* noop */ }
       // Trigger slide-up animation after mount
       requestAnimationFrame(() => setAnimateIn(true));
     }, SHOW_DELAY_MS);

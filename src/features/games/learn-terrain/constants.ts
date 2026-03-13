@@ -14,6 +14,7 @@ const ImgPlain = "https://assets.cuthongminh.com/games/learn-terrain/plain.webp"
 const ImgPlateau = "https://assets.cuthongminh.com/games/learn-terrain/plateau.webp";
 const ImgValley = "https://assets.cuthongminh.com/games/learn-terrain/valley.webp";
 const ImgDesert = "https://assets.cuthongminh.com/games/learn-terrain/desert.webp";
+const ImgSavanna = "https://assets.cuthongminh.com/games/learn-terrain/savanna.webp";
 
 // Group 2 — Địa hình nước
 const ImgOcean = "https://assets.cuthongminh.com/games/learn-terrain/ocean.webp";
@@ -40,6 +41,7 @@ export const TERRAINS: EntityData[] = [
   { id: "plateau", name: "Cao Nguyên", image: ImgPlateau, category: "land" },
   { id: "valley", name: "Thung Lũng", image: ImgValley, category: "land" },
   { id: "desert", name: "Sa Mạc", image: ImgDesert, category: "land" },
+  { id: "savanna", name: "Đồng Cỏ Châu Phi", image: ImgSavanna, category: "land" },
 
   // Group 2 — Nước
   { id: "ocean", name: "Đại Dương", image: ImgOcean, category: "water" },
@@ -64,7 +66,7 @@ export const GROUPS = [
     id: "group1",
     title: "Trên cạn",
     description: "Khám phá núi, đồi, đồng bằng và nhiều hơn",
-    items: ["mountain", "hill", "plain", "plateau", "valley", "desert"],
+    items: ["mountain", "hill", "plain", "plateau", "valley", "desert", "savanna"],
     logo: LogoGroup1,
     variant: "green" as const,
   },
@@ -100,6 +102,8 @@ export const TERRAIN_DESCRIPTIONS: Record<string, string> = {
   plateau: "Cao nguyên là vùng đất cao nhưng bằng phẳng ở trên. Giống như chiếc bàn khổng lồ!",
   valley: "Thung lũng nằm giữa hai ngọn núi. Nơi đây thường có sông chảy qua.",
   desert: "Sa mạc rất nóng và khô, toàn cát vàng. Lạc đà là bạn thân của sa mạc.",
+  savanna:
+    "Đồng cỏ châu Phi rộng lớn, trải dài dưới bầu trời xanh và ánh nắng rực rỡ. Xa xa là những cây keo đơn độc và đàn thú hoang đang thong thả kiếm ăn.",
   ocean: "Đại dương là vùng nước mặn rộng lớn nhất. Cá voi và cá heo sống ở đây.",
   river: "Sông là dòng nước chảy dài từ núi ra biển. Nước sông ngọt, không mặn.",
   lake: "Hồ là vùng nước tĩnh lặng được đất bao quanh. Hồ có thể rất lớn!",
@@ -152,6 +156,11 @@ export const HABITAT_MAP: Record<string, HabitatAnimal[]> = {
     { id: "camel", name: "Lạc Đà", emoji: "🐫" },
     { id: "scorpion", name: "Bọ Cạp", emoji: "🦂" },
     { id: "lizard", name: "Thằn Lằn", emoji: "🦎" },
+  ],
+  savanna: [
+    { id: "lion", name: "Sư Tử", emoji: "🦁" },
+    { id: "giraffe", name: "Hươu Cao Cổ", emoji: "🦒" },
+    { id: "zebra", name: "Ngựa Vằn", emoji: "🦓" },
   ],
   ocean: [
     { id: "whale", name: "Cá Voi", emoji: "🐋" },
@@ -244,6 +253,11 @@ export const ADVENTURES: Record<string, AdventureStep[]> = {
       question: "Cú thấy ngọn đồi nhỏ điểm xanh! Đây là đâu?",
       correctTerrainId: "hill",
       options: ["hill", "mountain", "plain"],
+    },
+    {
+      question: "Cú thấy sư tử và hươu cao cổ trên đồng cỏ rộng! Đây là đâu?",
+      correctTerrainId: "savanna",
+      options: ["savanna", "plain", "desert"],
     },
   ],
   group2: [

@@ -26,6 +26,7 @@ export function TerrainBuilderLesson({ challenges, onComplete }: TerrainBuilderL
   const cachedSlotRects = useRef<{ index: number; rect: DOMRect }[]>([]);
   const [draggedLayer, setDraggedLayer] = useState<string | null>(null);
   const [hoveredSlot, setHoveredSlot] = useState<number | null>(null);
+  const lastDragPoint = useRef<{ x: number; y: number } | null>(null);
 
   const currentChallenge = challenges[currentIndex];
 
@@ -67,6 +68,9 @@ export function TerrainBuilderLesson({ challenges, onComplete }: TerrainBuilderL
     (info: { point: { x: number; y: number } }) => {
       if (!draggedLayer) return;
 
+      // Store last known position for reliable mobile drop detection
+      lastDragPoint.current = { x: info.point.x, y: info.point.y };
+
       let foundSlot: number | null = null;
       for (const { index, rect } of cachedSlotRects.current) {
         if (
@@ -89,13 +93,16 @@ export function TerrainBuilderLesson({ challenges, onComplete }: TerrainBuilderL
 
   const handleDragEnd = useCallback(
     (info: { point: { x: number; y: number } }, layerId: string) => {
+      // Use last known drag position as fallback (fixes mobile where onDragEnd point can be stale)
+      const dropPoint = lastDragPoint.current || info.point;
+
       let slotIndex: number | null = null;
       for (const { index, rect } of cachedSlotRects.current) {
         if (
-          info.point.x >= rect.left &&
-          info.point.x <= rect.right &&
-          info.point.y >= rect.top &&
-          info.point.y <= rect.bottom
+          dropPoint.x >= rect.left &&
+          dropPoint.x <= rect.right &&
+          dropPoint.y >= rect.top &&
+          dropPoint.y <= rect.bottom
         ) {
           slotIndex = index;
           break;
@@ -104,6 +111,7 @@ export function TerrainBuilderLesson({ challenges, onComplete }: TerrainBuilderL
 
       setHoveredSlot(null);
       setDraggedLayer(null);
+      lastDragPoint.current = null;
       cachedSlotRects.current = [];
 
       if (slotIndex === null) return;
@@ -235,6 +243,8 @@ export function TerrainBuilderLesson({ challenges, onComplete }: TerrainBuilderL
                     key={layer.id}
                     drag
                     dragSnapToOrigin
+                    dragMomentum={false}
+                    dragElastic={0}
                     onDragStart={() => handleDragStart(layer.id)}
                     onDrag={(_, info) => handleDragUpdate(info)}
                     onDragEnd={(_, info) => handleDragEnd(info, layer.id)}
