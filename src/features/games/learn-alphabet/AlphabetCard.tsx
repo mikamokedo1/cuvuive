@@ -47,7 +47,7 @@ export function AlphabetCard({ letter, active = false, showName = true, onClick 
 
       {/* Representative image */}
       <div className="relative w-40 h-40 md:w-48 md:h-48" onClick={() => speak(`${letter.word}`)}>
-        <Image src={letter.image} alt={letter.word} fill className="object-contain drop-shadow-lg" priority />
+        <Image src={letter.image} alt={letter.word} fill className="object-contain drop-shadow-lg" sizes="(max-width: 768px) 160px, 192px" />
       </div>
     </div>
   );

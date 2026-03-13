@@ -31,7 +31,7 @@ export function ShapeCard({ shape, active = false, onClick, showName = true }: S
             speak(shape.name);
           }}
         >
-          <Image src={shape.image} alt={shape.name} fill className="object-contain p-4" />
+          <Image src={shape.image} alt={shape.name} fill className="object-contain p-4" sizes="(max-width: 640px) 160px, 208px" />
         </div>
 
         {/* Association Object Image */}
@@ -42,7 +42,7 @@ export function ShapeCard({ shape, active = false, onClick, showName = true }: S
             }}
             className="relative w-40 h-40 sm:w-52 sm:h-52 drop-shadow-xl bg-white rounded-3xl p-4 border-4 border-green-100 hover:scale-105"
           >
-            <Image src={shape.objectImage} alt={shape.objectName} fill className="object-contain p-4" />
+            <Image src={shape.objectImage} alt={shape.objectName} fill className="object-contain p-4" sizes="(max-width: 640px) 160px, 208px" />
           </div>
         </div>
       </div>
