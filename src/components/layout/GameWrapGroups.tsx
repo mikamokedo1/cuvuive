@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { GameLayout } from "@/components/layout/GameLayout";
 import { GroupCard } from "@/features/games/learn-game/GroupCard";
 import Image from "next/image";
@@ -29,8 +28,6 @@ export const GameWrapGroups = ({ logo, gameId, groups, title }: GameWrapGroups) 
     );
   }
 
-
-
   return (
     <GameLayout showBackButton={false} backTo="/games">
       <main className="w-full">
@@ -48,16 +45,16 @@ export const GameWrapGroups = ({ logo, gameId, groups, title }: GameWrapGroups) 
             const isCompleted = courseProgress.completedGroups.includes(group.id);
 
             return (
-              <Link key={group.id} href={unlocked ? `/games/${gameId}/${group.id}` : "#"} className={!unlocked ? "pointer-events-none" : ""}>
-                <GroupCard
-                  title={group.title}
-                  variant={group.variant}
-                  isLocked={!unlocked}
-                  mainImage={group.logo}
-                  level={index + 1}
-                  isCompleted={isCompleted}
-                />
-              </Link>
+              <GroupCard
+                key={group.id}
+                path={`/games/${gameId}/${group.id}`}
+                title={group.title}
+                variant={group.variant}
+                isLocked={!unlocked}
+                mainImage={group.logo}
+                level={index + 1}
+                isCompleted={isCompleted}
+              />
             );
           })}
         </div>

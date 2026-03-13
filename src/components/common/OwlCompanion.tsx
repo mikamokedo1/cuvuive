@@ -23,9 +23,18 @@ export const OwlCompanion = () => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       setWindowSize({ width: window.innerWidth, height: window.innerHeight });
-      const handleResize = () => setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+      let timerId: NodeJS.Timeout;
+      const handleResize = () => {
+        clearTimeout(timerId);
+        timerId = setTimeout(() => {
+          setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+        }, 300);
+      };
       window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
+      return () => {
+        clearTimeout(timerId);
+        window.removeEventListener("resize", handleResize);
+      };
     }
   }, []);
 

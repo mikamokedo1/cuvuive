@@ -187,7 +187,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     completedLessons: {},
   };
 
-  const markLessonComplete = async (groupId: string, lessonId: string, courseId: string = "learn-numbers") => {
+  const markLessonComplete = useCallback(async (groupId: string, lessonId: string, courseId: string = "learn-numbers") => {
     // Optimistically update last played course
     setLastPlayedCourseId(courseId);
 
@@ -246,9 +246,9 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
         // We don't rollback optimistic update because local progress is still valid.
       }
     }
-  };
+  }, [user, supabase]);
 
-  const isGroupUnlocked = (groupId: string, courseId: string = "learn-numbers") => {
+  const isGroupUnlocked = useCallback((groupId: string, courseId: string = "learn-numbers") => {
     const course = COURSES.find((c) => c.id === courseId);
     if (!course) return true; // Default to unlocked if course not found in constants
 
@@ -259,9 +259,9 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     const prevGroupId = course.groups[groupIndex - 1].id;
     const completedGroups = derivedCompletedGroups[courseId] || [];
     return completedGroups.includes(prevGroupId);
-  };
+  }, [derivedCompletedGroups]);
 
-  const isLessonUnlocked = (groupId: string, lessonId: string, courseId: string = "learn-numbers") => {
+  const isLessonUnlocked = useCallback((groupId: string, lessonId: string, courseId: string = "learn-numbers") => {
     if (!isGroupUnlocked(groupId, courseId)) return false;
 
     const course = COURSES.find((c) => c.id === courseId);
@@ -282,7 +282,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
 
     const prevLessonId = group.lessons[lessonIndex - 1].id;
     return completedInGroup.includes(prevLessonId);
-  };
+  }, [allProgress, isGroupUnlocked]);
 
   const contextValue = useMemo(
     () => ({
@@ -295,7 +295,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
       isLessonUnlocked,
       isLoaded,
     }),
-    [progressWithGroups, allProgressWithGroups, courseStructure, lastPlayedCourseId, isLoaded],
+    [progressWithGroups, allProgressWithGroups, courseStructure, lastPlayedCourseId, markLessonComplete, isGroupUnlocked, isLessonUnlocked, isLoaded],
   );
 
   return <ProgressContext.Provider value={contextValue}>{children}</ProgressContext.Provider>;

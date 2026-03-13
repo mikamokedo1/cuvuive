@@ -15,14 +15,12 @@ import { SignoutIcon } from "../common/Icons";
 import { useUser } from "@/context/UserContext";
 import { Dropdown } from "@/components/common/Dropdown";
 import { useAccess } from "@/context/AccessContext";
-import { User, Settings, MessageSquare, Trophy } from "lucide-react";
-import { useResponsive } from "@/hooks/useResponsive";
+import { Settings, MessageSquare, Trophy } from "lucide-react";
 
 const Header = () => {
   const pathname = usePathname();
   const { user, handleLogout, isPremium } = useUser();
   const { setPaywallState } = useAccess();
-  const { isMobile } = useResponsive();
 
 
 
@@ -30,9 +28,14 @@ const Header = () => {
     <header className="w-full flex justify-between items-center mb-8 bg-[#F8EEDD] backdrop-blur-sm rounded-3xl shadow-xl px-6 border-4 border-white relative z-50">
       <Link href="/games" aria-label="Go to homepage">
         <Image
-          src={isMobile ? LogoShort : LogoLong}
+          src={LogoShort}
           alt="Cú Thông Minh Logo"
-          className="cursor-pointer h-16 md:h-20 w-auto object-contain drop-shadow-md transition-transform duration-300 hover:scale-105"
+          className="md:hidden cursor-pointer h-16 w-auto object-contain drop-shadow-md transition-transform duration-300 hover:scale-105"
+        />
+        <Image
+          src={LogoLong}
+          alt="Cú Thông Minh Logo"
+          className="hidden md:block cursor-pointer h-20 w-auto object-contain drop-shadow-md transition-transform duration-300 hover:scale-105"
         />
       </Link>
 

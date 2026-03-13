@@ -23,7 +23,7 @@ export const GameLayout = ({ children, title, backTo, showBackButton = true }: G
     <div className="min-h-screen relative flex flex-col py-6 px-4 overflow-hidden">
       <Header />
       {/* Background */}
-      <Image src={BgImage} alt="Background" fill className="object-cover -z-10" priority />
+      <Image src={BgImage} alt="Background" fill className="object-cover -z-10" placeholder="blur" />
 
       {/* Header / Nav */}
       {(showBackButton || title) && (
