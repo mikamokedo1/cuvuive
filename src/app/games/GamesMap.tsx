@@ -14,7 +14,7 @@ import avatarGirl from "@/assets/avatar-girl.webp";
 import BgImage from "@/assets/bg-games-home.webp";
 import { GameGroupType, Group } from "@/libs/constants/groups";
 import { playButtonSound } from "@/libs/utils/playSound";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useUser } from "@/context/UserContext";
 
 interface LeanCourse {
@@ -32,7 +32,6 @@ interface GamesMapProps {
 
 export function GamesMap({ courses, staticCourses, groups }: GamesMapProps) {
   const { user } = useUser();
-  const router = useRouter();
   const [activeGroupId, setActiveGroupId] = useState<string | null>(null);
   const activeGroupRef = useRef<HTMLDivElement>(null);
   const [transformStyles, setTransformStyles] = useState<{ [key: string]: React.CSSProperties }>({});
@@ -204,12 +203,12 @@ export function GamesMap({ courses, staticCourses, groups }: GamesMapProps) {
                           pointerEvents: isActive ? "auto" : "none",
                         }}
                       >
-                        <div
+                        <Link
+                          href={`/games/${game.id}`}
                           className="block w-full h-full group/game"
                           onClick={(e) => {
                             e.stopPropagation();
                             playButtonSound();
-                            router.push(`/games/${game.id}`);
                           }}
                         >
                           <div className="relative w-full h-full bg-white rounded-full border-2 border-orange-300 shadow-xl flex items-center justify-center transition-transform hover:scale-110">
@@ -239,7 +238,7 @@ export function GamesMap({ courses, staticCourses, groups }: GamesMapProps) {
                           <div className="absolute -bottom-0 left-1/2 -translate-x-1/2 bg-blue-600/80 text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap transition-opacity pointer-events-none">
                             {game.title}
                           </div>
-                        </div>
+                        </Link>
                       </div>
                     );
                   })}

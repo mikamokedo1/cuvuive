@@ -4,6 +4,7 @@ import { createClient } from "@/libs/supabase/client";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { ActionButton } from "@/components/common/ActionButton";
@@ -98,9 +99,11 @@ export function SettingsView() {
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
             <p className="text-xl text-gray-500 mb-6">Vui lòng đăng nhập để xem cài đặt.</p>
-            <ActionButton variant="glossy" color="orange" onClick={() => router.push("/auth/login")}>
-              Đăng nhập ngay
-            </ActionButton>
+            <Link href="/auth/login">
+              <ActionButton variant="glossy" color="orange">
+                Đăng nhập ngay
+              </ActionButton>
+            </Link>
           </div>
         </div>
       </main>
@@ -150,14 +153,15 @@ export function SettingsView() {
                 )}
               </div>
               {!isPremium && (
-                <ActionButton
-                  variant="glossy"
-                  color="orange"
-                  onClick={() => router.push("/upgrade")}
-                  className="py-3 px-6 text-sm whitespace-nowrap shadow-md hover:shadow-lg transition-shadow"
-                >
-                  Nâng cấp Premium
-                </ActionButton>
+                <Link href="/upgrade">
+                  <ActionButton
+                    variant="glossy"
+                    color="orange"
+                    className="py-3 px-6 text-sm whitespace-nowrap shadow-md hover:shadow-lg transition-shadow"
+                  >
+                    Nâng cấp Premium
+                  </ActionButton>
+                </Link>
               )}
             </div>
 

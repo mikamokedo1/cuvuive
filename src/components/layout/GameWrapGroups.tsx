@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { GameLayout } from "@/components/layout/GameLayout";
 import { GroupCard } from "@/features/games/learn-game/GroupCard";
 import Image from "next/image";
@@ -16,7 +16,6 @@ interface GameWrapGroups {
 }
 
 export const GameWrapGroups = ({ logo, gameId, groups, title }: GameWrapGroups) => {
-  const router = useRouter();
   const { isGroupUnlocked, isLoaded, allProgress } = useProgress();
 
   if (!isLoaded && !allProgress[gameId]) {
@@ -30,9 +29,7 @@ export const GameWrapGroups = ({ logo, gameId, groups, title }: GameWrapGroups) 
     );
   }
 
-  const handleGroupClick = (groupId: string) => {
-    router.push(`/games/${gameId}/${groupId}`);
-  };
+
 
   return (
     <GameLayout showBackButton={false} backTo="/games">
@@ -51,16 +48,16 @@ export const GameWrapGroups = ({ logo, gameId, groups, title }: GameWrapGroups) 
             const isCompleted = courseProgress.completedGroups.includes(group.id);
 
             return (
-              <GroupCard
-                key={group.id}
-                title={group.title}
-                variant={group.variant}
-                isLocked={!unlocked}
-                mainImage={group.logo}
-                level={index + 1}
-                onClick={() => handleGroupClick(group.id)}
-                isCompleted={isCompleted}
-              />
+              <Link key={group.id} href={unlocked ? `/games/${gameId}/${group.id}` : "#"} className={!unlocked ? "pointer-events-none" : ""}>
+                <GroupCard
+                  title={group.title}
+                  variant={group.variant}
+                  isLocked={!unlocked}
+                  mainImage={group.logo}
+                  level={index + 1}
+                  isCompleted={isCompleted}
+                />
+              </Link>
             );
           })}
         </div>
