@@ -1,7 +1,7 @@
 "use client";
 
 import { useGameLesson } from "@/hooks/useGameLesson";
-import { GROUPS, getVehiclesForGroup, getAllVehicles } from "@/features/games/learn-vehicle/constants";
+import { GROUPS, getVehiclesForGroup, getAllVehicles, VEHICLE_DESCRIPTIONS } from "@/features/games/learn-vehicle/constants";
 import { VehicleLearnLesson } from "@/features/games/learn-vehicle/VehicleLearnLesson";
 import { VehicleQuizLesson } from "@/features/games/learn-vehicle/VehicleQuizLesson";
 import { VehicleMemoryLesson } from "@/features/games/learn-vehicle/VehicleMemoryLesson";
@@ -37,7 +37,7 @@ export default function LessonPage() {
       // Groups 1-3: Learn, Quiz, Memory (using group-specific vehicles)
       switch (game.lessonId) {
         case "lesson1":
-          return <VehicleLearnLesson vehicles={vehicles} onComplete={game.handleComplete} />;
+          return <VehicleLearnLesson vehicles={vehicles} descriptions={VEHICLE_DESCRIPTIONS} onComplete={game.handleComplete} />;
         case "lesson2":
           return <VehicleQuizLesson vehicles={vehicles} onComplete={game.handleComplete} />;
         case "lesson3":

@@ -97,3 +97,28 @@ export function getDinosaursForGroup(groupId: string): EntityData[] {
 export function getAllDinosaurs(): EntityData[] {
   return DINOSAURS;
 }
+
+// ──── Dinosaur Descriptions (for explore lesson) ────
+export const DINOSAUR_DESCRIPTIONS: Record<string, string> = {
+  // Herbivores
+  triceratops: "Khủng long ba sừng có ba chiếc sừng to và tấm khiên bảo vệ đầu. Chúng ăn cỏ và cây!",
+  stegosaurus: "Khủng long gai có hàng tấm xương dựng trên lưng và đuôi có gai nhọn để tự vệ!",
+  brachiosaurus: "Khủng long cổ dài cao như tòa nhà, cổ dài giúp chúng ăn lá cây trên cao!",
+  ankylosaurus: "Khủng long bọc giáp có lớp vỏ cứng như áo giáp và chiếc đuôi hình chùy rất mạnh!",
+  parasaurolophus: "Khủng long mào có chiếc mào dài trên đầu dùng để tạo ra âm thanh như kèn!",
+  diplodocus: "Khủng long đuôi dài có đuôi rất dài như chiếc roi. Chúng dài gần 30 mét!",
+  // Carnivores
+  trex: "Khủng long bạo chúa là kẻ săn mồi đáng sợ nhất, có hàm răng sắc và cú cắn cực mạnh!",
+  velociraptor: "Khủng long móng vuốt nhỏ nhưng rất nhanh và thông minh. Chúng săn mồi theo bầy đàn!",
+  spinosaurus: "Khủng long gai lưng có cánh buồm trên lưng và biết bơi. Chúng lớn hơn cả T-Rex!",
+  allosaurus: "Khủng long săn mồi có tay dài với móng vuốt sắc. Chúng là kẻ săn mồi giỏi nhất thời đại Jura!",
+  carnotaurus: "Khủng long sừng bò có hai sừng nhỏ trên đầu và chạy rất nhanh!",
+  dilophosaurus: "Khủng long mào đôi có hai chiếc mào trên đầu rất đẹp. Chúng sống vào đầu kỷ Jura!",
+  // Flying & Sea
+  pteranodon: "Thằn lằn bay có đôi cánh rộng nhưng không phải khủng long. Chúng bay trên bầu trời săn cá!",
+  plesiosaurus: "Thằn lằn biển có cổ dài và bốn vây bơi. Chúng sống trong đại dương cổ đại!",
+  mosasaurus: "Khủng long biển là kẻ săn mồi khổng lồ dưới đại dương. Chúng bơi rất nhanh!",
+  ichthyosaurus: "Thằn lằn cá trông giống cá heo hiện đại. Chúng bơi rất nhanh và ăn cá!",
+  quetzalcoatlus: "Bò sát bay khổng lồ có sải cánh rộng hơn 10 mét, to như máy bay nhỏ!",
+  archelon: "Rùa biển cổ đại to gấp nhiều lần rùa biển ngày nay. Mai rùa rộng hơn 4 mét!",
+};

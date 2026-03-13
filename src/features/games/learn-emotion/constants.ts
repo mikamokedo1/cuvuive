@@ -90,6 +90,28 @@ export function getEmotionsForGroup(groupId: string): EntityData[] {
   return EMOTION_ITEMS.filter((item) => group.items.includes(item.id));
 }
 
+// ──── Emotion Descriptions (for explore lesson) ────
+export const EMOTION_DESCRIPTIONS: Record<string, string> = {
+  // Basic
+  happy: "Vui vẻ là khi pé cảm thấy rất phấn khởi và muốn cười. Được chơi với bạn bè làm pé vui!",
+  sad: "Buồn bã là khi pé cảm thấy không vui, muốn khóc. Ai cũng có lúc buồn, hãy chia sẻ với mọi người nhé!",
+  angry: "Tức giận là khi pé cảm thấy bực bội. Khi tức giận, hãy hít thở sâu và bình tĩnh nhé!",
+  scared: "Sợ hãi là khi pé cảm thấy lo sợ một điều gì đó. Khi sợ, hãy tìm người lớn để được an ủi!",
+  surprised: "Ngạc nhiên là khi gặp điều bất ngờ. Mở quà sinh nhật luôn làm pé ngạc nhiên!",
+  love: "Yêu thương là cảm giác ấm áp khi ở bên gia đình và bạn bè. Yêu thương làm cuộc sống đẹp hơn!",
+  // Advanced
+  shy: "Xấu hổ là khi pé cảm thấy ngại ngùng. Lần đầu gặp người lạ, ai cũng hơi xấu hổ!",
+  proud: "Tự hào là khi pé làm được điều tốt và cảm thấy hãnh diện. Giúp đỡ người khác rất đáng tự hào!",
+  worried: "Lo lắng là khi pé suy nghĩ nhiều về một điều chưa xảy ra. Hãy nói với ba mẹ khi lo lắng nhé!",
+  jealous: "Ghen tị là khi pé muốn có thứ người khác có. Hãy biết ơn những gì mình đang có!",
+  excited: "Hào hứng là khi pé mong chờ điều gì đó sắp đến. Sắp đi du lịch luôn làm pé hào hứng!",
+  bored: "Chán nản là khi pé không biết làm gì cho vui. Hãy thử đọc sách hoặc vẽ tranh nhé!",
+  // Scenario
+  thoughtful: "Suy nghĩ là khi pé đang cố tìm câu trả lời. Suy nghĩ kỹ giúp pé giải quyết vấn đề tốt hơn!",
+  focused: "Tập trung là khi pé chú ý hoàn toàn vào một việc. Tập trung giúp pé học giỏi hơn!",
+  relaxed: "Thư giãn là khi pé cảm thấy thoải mái và bình yên. Nghe nhạc nhẹ giúp pé thư giãn!",
+};
+
 // ============ RIGHT OR WRONG SCENARIOS ============
 
 export interface RightWrongScenario {

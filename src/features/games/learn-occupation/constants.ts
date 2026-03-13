@@ -197,3 +197,28 @@ export function getOccupationsForGroup(groupId: string): OccupationData[] {
 export function getAllOccupations(): OccupationData[] {
   return OCCUPATIONS;
 }
+
+// ──── Occupation Descriptions (for explore lesson) ────
+export const OCCUPATION_DESCRIPTIONS: Record<string, string> = {
+  // Community
+  police: "Cảnh sát giữ gìn trật tự và bảo vệ mọi người. Cảnh sát rất dũng cảm!",
+  firefighter: "Lính cứu hỏa dập lửa và cứu người. Họ rất dũng cảm khi lao vào đám cháy!",
+  teacher: "Giáo viên dạy học và yêu thương học trò. Cô thầy giúp pé học đọc, viết và tính toán!",
+  chef: "Đầu bếp nấu ra những món ăn ngon tuyệt vời. Đầu bếp giỏi phải học rất nhiều năm!",
+  farmer: "Nông dân trồng lúa, rau và nuôi gia súc. Nhờ nông dân mà chúng ta có cơm ăn mỗi ngày!",
+  driver: "Tài xế lái xe chở người và hàng hóa. Tài xế phải lái xe rất cẩn thận!",
+  // Medical
+  doctor: "Bác sĩ khám bệnh và chữa bệnh cho mọi người. Bác sĩ mặc áo trắng và dùng ống nghe!",
+  nurse: "Y tá chăm sóc bệnh nhân và giúp bác sĩ. Y tá rất ân cần và nhẹ nhàng!",
+  dentist: "Nha sĩ chăm sóc răng miệng cho mọi người. Nhớ đánh răng mỗi ngày để răng khỏe mạnh!",
+  scientist: "Nhà khoa học nghiên cứu và phát minh ra nhiều điều mới. Họ làm việc trong phòng thí nghiệm!",
+  pharmacist: "Dược sĩ pha chế và bán thuốc cho bệnh nhân. Dược sĩ hiểu biết về các loại thuốc!",
+  veterinarian: "Bác sĩ thú y chữa bệnh cho các con vật. Họ rất yêu thương động vật!",
+  // Creative
+  singer: "Ca sĩ hát những bài hát hay. Ca sĩ biểu diễn trên sân khấu trước nhiều khán giả!",
+  painter: "Họa sĩ vẽ tranh rất đẹp bằng cọ và màu. Họa sĩ có trí tưởng tượng phong phú!",
+  dancer: "Vũ công nhảy múa uyển chuyển theo nhạc. Vũ công tập luyện rất chăm chỉ mỗi ngày!",
+  photographer: "Nhiếp ảnh gia chụp những bức ảnh đep. Họ dùng máy ảnh để ghi lại khoảnh khắc!",
+  athlete: "Vận động viên thi đấu thể thao và giành huy chương. Họ tập luyện rất vất vả!",
+  astronaut: "Phi hành gia bay vào vũ trụ và khám phá không gian. Phi hành gia rất dũng cảm!",
+};

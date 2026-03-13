@@ -147,6 +147,31 @@ export function getHygieneForGroup(groupId: string): EntityData[] {
   return HYGIENE_ITEMS.filter((item) => group.items.includes(item.id));
 }
 
+// ──── Hygiene Descriptions (for explore lesson) ────
+export const HYGIENE_DESCRIPTIONS: Record<string, string> = {
+  // Daily
+  brush_teeth: "Đánh răng sáng và tối giúp răng sạch sẽ, không bị sâu. Nhớ đánh ít nhất 2 phút nhé!",
+  wash_hands: "Rửa tay bằng xà phòng trước khi ăn và sau khi chơi. Rửa tay giúp diệt vi trùng!",
+  wash_face: "Rửa mặt mỗi sáng giúp mặt sạch sẽ và tươi tắn. Dùng nước mát rửa mặt thật sảng khoái!",
+  take_bath: "Tắm mỗi ngày giúp cơ thể sạch sẽ và thơm tho. Tắm xong pé thấy mát mẻ lắm!",
+  brush_hair: "Chải tóc gọn gàng trước khi đi học. Tóc sạch đẹp giúp pé trông tự tin hơn!",
+  trim_nails: "Cắt móng tay thường xuyên để giữ sạch sẽ. Móng tay dài dễ bị bẩn và gãy!",
+  // Healthy
+  drink_water: "Uống đủ nước mỗi ngày giúp cơ thể khỏe mạnh. Nước giúp pé tỉnh táo và vui vẻ!",
+  eat_vegetables: "Ăn rau củ giúp pé khỏe mạnh và thông minh. Rau xanh có rất nhiều vitamin!",
+  sleep_on_time: "Ngủ đúng giờ giúp pé lớn nhanh và học giỏi. Pé nên ngủ trước 9 giờ tối!",
+  wash_fruit: "Rửa trái cây trước khi ăn để loại bỏ bụi bẩn. Trái cây sạch ăn mới an toàn!",
+  cover_mouth: "Che miệng khi ho hoặc hắt hơi để không lây bệnh cho người khác. Đây là thói quen tốt!",
+  wear_mask: "Đeo khẩu trang nơi đông người để bảo vệ sức khỏe. Khẩu trang ngăn vi trùng xâm nhập!",
+  // Tidy
+  fold_clothes: "Gấp quần áo gọn gàng cất vào tủ. Quần áo gấp đẹp dễ tìm khi cần mặc!",
+  tidy_toys: "Dọn đồ chơi sau khi chơi xong. Phòng gọn gàng trông sạch đẹp hơn!",
+  throw_trash: "Bỏ rác đúng nơi quy định. Giữ sạch môi trường là bảo vệ trái đất!",
+  wipe_table: "Lau bàn sạch sẽ trước và sau khi ăn. Bàn sạch giúp bữa ăn ngon hơn!",
+  wear_shoes: "Đi giày dép khi ra ngoài để bảo vệ chân. Đi chân trần dễ bị đau và bẩn!",
+  clean_clothes: "Mặc quần áo sạch mỗi ngày. Quần áo sạch giúp pé thơm tho và tự tin!",
+};
+
 // ============ RIGHT OR WRONG SCENARIOS ============
 
 export interface RightWrongScenario {

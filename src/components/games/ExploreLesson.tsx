@@ -25,10 +25,15 @@ export function ExploreLesson({ terrains, descriptions, onComplete, additionText
   const [activeTerrainId, setActiveTerrainId] = useState<string | null>(null);
   const [showAllDone, setShowAllDone] = useState(false);
   const [isDescribing, setIsDescribing] = useState(false);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
   const describeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const currentTerrain = terrains[currentIndex];
   const isLast = currentIndex === terrains.length - 1 && discoveredIds.size >= terrains.length;
+
+  // Get adjacent terrains for preloading
+  const prevTerrain = currentIndex > 0 ? terrains[currentIndex - 1] : null;
+  const nextTerrain = currentIndex < terrains.length - 1 ? terrains[currentIndex + 1] : null;
 
   const handleDiscover = useCallback(
     (terrain: EntityData) => {
@@ -59,6 +64,7 @@ export function ExploreLesson({ terrains, descriptions, onComplete, additionText
   const handlePrev = () => {
     if (currentIndex > 0) {
       playButtonSound();
+      setIsImageLoaded(false);
       setCurrentIndex(currentIndex - 1);
       setActiveTerrainId(null);
     }
@@ -67,6 +73,7 @@ export function ExploreLesson({ terrains, descriptions, onComplete, additionText
   const handleNext = useCallback(() => {
     playButtonSound();
     if (currentIndex < terrains.length - 1) {
+      setIsImageLoaded(false);
       setCurrentIndex(currentIndex + 1);
       setActiveTerrainId(null);
       setIsDescribing(false);
@@ -100,23 +107,58 @@ export function ExploreLesson({ terrains, descriptions, onComplete, additionText
           ${activeTerrainId === currentTerrain.id ? "border-green-500 ring-4 ring-green-200" : "border-white"}`}
         onClick={() => handleDiscover(currentTerrain)}
       >
+        {/* Loading skeleton */}
+        {!isImageLoaded && (
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200 animate-pulse flex items-center justify-center z-10">
+            <div className="w-12 h-12 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin" />
+          </div>
+        )}
+
+        {/* Current image — key forces remount so old image doesn't flash */}
         <Image
+          key={currentTerrain.id}
           src={currentTerrain.image}
           alt={currentTerrain.name}
           fill
-          className="object-cover"
+          priority
+          className={`object-cover transition-opacity duration-300 ${isImageLoaded ? "opacity-100" : "opacity-0"}`}
           sizes="(max-width: 640px) 100vw, 448px"
+          onLoad={() => setIsImageLoaded(true)}
         />
 
+        {/* Preload adjacent images (hidden) */}
+        {prevTerrain && (
+          <Image
+            key={`preload-prev-${prevTerrain.id}`}
+            src={prevTerrain.image}
+            alt=""
+            fill
+            className="opacity-0 pointer-events-none absolute"
+            sizes="1px"
+            aria-hidden="true"
+          />
+        )}
+        {nextTerrain && (
+          <Image
+            key={`preload-next-${nextTerrain.id}`}
+            src={nextTerrain.image}
+            alt=""
+            fill
+            className="opacity-0 pointer-events-none absolute"
+            sizes="1px"
+            aria-hidden="true"
+          />
+        )}
+
         {/* Overlay with terrain info - shown after discover */}
-        {activeTerrainId === currentTerrain.id && (
+        {/* {activeTerrainId === currentTerrain.id && (
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex flex-col justify-end p-6 animate-fade-in">
             <h2 className="text-3xl md:text-4xl font-black text-white drop-shadow-lg mb-2">{currentTerrain.name}</h2>
             <p className="text-sm md:text-base text-white/90 leading-relaxed">
               {descriptions[currentTerrain.id] || ""}
             </p>
           </div>
-        )}
+        )} */}
 
         {/* Tap to discover hint */}
         {activeTerrainId !== currentTerrain.id && (
@@ -126,20 +168,16 @@ export function ExploreLesson({ terrains, descriptions, onComplete, additionText
             </div>
           </div>
         )}
-
-        {/* Discovered check */}
-        {discoveredIds.has(currentTerrain.id) && (
-          <div className="absolute top-4 right-4 w-10 h-10 bg-green-500 rounded-full flex items-center justify-center shadow-lg">
-            <span className="text-white text-xl">✓</span>
-          </div>
-        )}
       </div>
       {/* Navigation */}
       <div className="flex items-center gap-6 mt-4">
-        <BackLessonButton onClick={handlePrev} disabled={currentIndex === 0} />
-        <NextLessonButton onClick={handleNext} isLast={isLast} disabled={!discoveredIds.has(currentTerrain.id) || isDescribing} />
+        <BackLessonButton onClick={handlePrev} disabled={currentIndex === 0 || isDescribing} />
+        <NextLessonButton
+          onClick={handleNext}
+          isLast={isLast}
+          disabled={!discoveredIds.has(currentTerrain.id) || isDescribing}
+        />
       </div>
     </div>
   );
 }
-

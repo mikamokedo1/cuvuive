@@ -1,7 +1,7 @@
 "use client";
 
 import { useGameLesson } from "@/hooks/useGameLesson";
-import { GROUPS, getFlowersForGroup } from "@/features/games/learn-flower/constants";
+import { GROUPS, getFlowersForGroup, FLOWER_DESCRIPTIONS } from "@/features/games/learn-flower/constants";
 import { FlowerLearnLesson } from "@/features/games/learn-flower/FlowerLearnLesson";
 import { FlowerQuizLesson } from "@/features/games/learn-flower/FlowerQuizLesson";
 import { FlowerMemoryLesson } from "@/features/games/learn-flower/FlowerMemoryLesson";
@@ -21,7 +21,7 @@ export default function LessonPage() {
   const renderLesson = () => {
     switch (game.lessonId) {
       case "lesson1":
-        return <FlowerLearnLesson flowers={flowers} onComplete={game.handleComplete} />;
+        return <FlowerLearnLesson flowers={flowers} descriptions={FLOWER_DESCRIPTIONS} onComplete={game.handleComplete} />;
       case "lesson2":
         return <FlowerQuizLesson flowers={flowers} onComplete={game.handleComplete} />;
       case "lesson3":

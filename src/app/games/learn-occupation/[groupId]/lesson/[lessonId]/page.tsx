@@ -1,7 +1,7 @@
 "use client";
 
 import { useGameLesson } from "@/hooks/useGameLesson";
-import { GROUPS, getOccupationsForGroup } from "@/features/games/learn-occupation/constants";
+import { GROUPS, getOccupationsForGroup, OCCUPATION_DESCRIPTIONS } from "@/features/games/learn-occupation/constants";
 import { OccupationLearnLesson } from "@/features/games/learn-occupation/OccupationLearnLesson";
 import { OccupationQuizLesson } from "@/features/games/learn-occupation/OccupationQuizLesson";
 import { OccupationMatchLesson } from "@/features/games/learn-occupation/OccupationMatchLesson";
@@ -21,7 +21,7 @@ export default function LessonPage() {
   const renderLesson = () => {
     switch (game.lessonId) {
       case "lesson1":
-        return <OccupationLearnLesson occupations={occupations} onComplete={game.handleComplete} />;
+        return <OccupationLearnLesson occupations={occupations} descriptions={OCCUPATION_DESCRIPTIONS} onComplete={game.handleComplete} />;
       case "lesson2":
         return <OccupationQuizLesson occupations={occupations} onComplete={game.handleComplete} />;
       case "lesson3":

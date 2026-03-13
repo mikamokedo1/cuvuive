@@ -1,7 +1,7 @@
 "use client";
 
 import { useGameLesson } from "@/hooks/useGameLesson";
-import { getFlagsForGroup, GROUPS } from "@/features/games/learn-flag/constants";
+import { getFlagsForGroup, GROUPS, FLAG_DESCRIPTIONS } from "@/features/games/learn-flag/constants";
 import { FlagLearnLesson } from "@/features/games/learn-flag/FlagLearnLesson";
 import { FlagQuizLesson } from "@/features/games/learn-flag/FlagQuizLesson";
 import { FlagMemoryLesson } from "@/features/games/learn-flag/FlagMemoryLesson";
@@ -22,7 +22,7 @@ export default function LessonPage() {
   const renderLesson = () => {
     switch (game.lessonId) {
       case "lesson1":
-        return <FlagLearnLesson flags={flags} onComplete={game.handleComplete} />;
+        return <FlagLearnLesson flags={flags} descriptions={FLAG_DESCRIPTIONS} onComplete={game.handleComplete} />;
       case "lesson2":
         return <FlagQuizLesson flags={flags} onComplete={game.handleComplete} requiredWins={6} />;
       case "lesson3":

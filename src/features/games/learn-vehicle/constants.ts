@@ -144,3 +144,23 @@ export const ZONES = [
   { id: "water", name: "Đường Thủy", image: ZoneWater },
   { id: "air", name: "Hàng Không", image: ZoneAir },
 ];
+
+// ──── Vehicle Descriptions (for explore lesson) ────
+export const VEHICLE_DESCRIPTIONS: Record<string, string> = {
+  car: "Ô tô có bốn bánh, chở được cả gia đình đi chơi. Ô tô chạy bằng xăng hoặc điện!",
+  motorbike: "Xe máy có hai bánh, rất tiện lợi để đi lại trong thành phố. Nhớ đội mũ bảo hiểm nhé!",
+  bus: "Xe buýt to lớn, chở được rất nhiều người. Xe buýt dừng ở trạm để đón khách!",
+  truck: "Xe tải rất khỏe, chở được hàng hóa nặng. Xe tải giúp vận chuyển đồ đạc đi xa!",
+  bicycle: "Xe đạp chạy bằng sức đạp, rất tốt cho sức khỏe. Đạp xe vừa vui vừa bảo vệ môi trường!",
+  taxi: "Xe taxi chở khách đến nơi họ muốn. Taxi thường có màu vàng hoặc trắng!",
+  boat: "Thuyền nhỏ chèo trên sông, hồ. Thuyền là phương tiện lâu đời nhất của con người!",
+  ship: "Tàu thủy rất to, chở hàng và người đi biển. Tàu thủy có thể đi qua đại dương!",
+  submarine: "Tàu ngầm lặn sâu dưới biển. Thủy thủ trên tàu ngầm sống dưới nước nhiều tháng!",
+  jetski: "Mô tô nước lướt nhanh trên mặt nước. Chơi mô tô nước rất hào hứng!",
+  canoe: "Ca nô chạy nhanh trên sông và biển. Ca nô thường dùng để cứu hộ!",
+  airplane: "Máy bay bay trên trời rất cao và rất nhanh. Máy bay chở người đi khắp thế giới!",
+  helicopter: "Trực thăng có cánh quạt quay tròn ở trên. Trực thăng có thể bay lên thẳng và đứng yên trên không!",
+  balloon: "Khinh khí cầu bay lên nhờ khí nóng. Bay bằng khinh khí cầu rất lãng mạn!",
+  rocket: "Tên lửa phóng lên vũ trụ với tốc độ cực nhanh. Tên lửa đưa phi hành gia lên Mặt Trăng!",
+  drone: "Máy bay điều khiển từ xa, không có người lái. Drone dùng để chụp ảnh từ trên cao!",
+};

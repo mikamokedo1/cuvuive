@@ -90,3 +90,45 @@ export function getLandmarksForGroup(groupId: string): EntityData[] {
   if (!group) return [];
   return LANDMARKS.filter((landmark) => group.items.includes(landmark.id));
 }
+
+// ──── Landmark Descriptions (for explore lesson) ────
+export const LANDMARK_DESCRIPTIONS: Record<string, string> = {
+  // Asia
+  greatwall:
+    "Vạn Lý Trường Thành ở Trung Quốc dài hơn 21.000 km, được xây hàng ngàn năm trước để bảo vệ đất nước!",
+  angkorwat:
+    "Angkor Wat ở Campuchia là ngôi đền lớn nhất thế giới. Nhìn bóng đền in trên mặt hồ đẹp lắm!",
+  tajmahal:
+    "Taj Mahal ở Ấn Độ được xây bằng đá cẩm thạch trắng. Đây là món quà tình yêu của một vị vua dành cho hoàng hậu.",
+  mtfuji:
+    "Núi Phú Sĩ là ngọn núi cao nhất Nhật Bản, đỉnh luôn phủ tuyết trắng. Người Nhật rất yêu quý ngọn núi này!",
+  halongbay:
+    "Vịnh Hạ Long ở Việt Nam có gần 2.000 hòn đảo đá nhô lên giữa biển xanh. Tuyệt đẹp!",
+  phuket: "Phuket là hòn đảo lớn nhất Thái Lan với bãi biển cát trắng và nước biển trong vắt. Thiên đường nghỉ mát!",
+
+  // Europe
+  eiffeltower:
+    "Tháp Eiffel ở Paris, Pháp cao 330 mét, được làm bằng sắt. Đêm đến, tháp lấp lánh ánh đèn rất đẹp!",
+  colosseum:
+    "Đấu trường La Mã ở Ý được xây gần 2.000 năm trước. Ngày xưa, người ta xem các võ sĩ thi đấu ở đây!",
+  bigben: "Tháp Big Ben ở London, Anh có chuông nặng 13 tấn! Tiếng chuông vang xa cả thành phố.",
+  leaningtower:
+    "Tháp nghiêng Pisa ở Ý bị nghiêng vì đất mềm bên dưới. Tháp nghiêng nhưng không đổ, thú vị lắm!",
+  windmills:
+    "Cối xay gió ở Hà Lan dùng sức gió để bơm nước và xay bột. Trông như những chiếc quạt khổng lồ!",
+  sagradafamilia:
+    "Nhà thờ Sagrada Familia ở Tây Ban Nha được xây hơn 140 năm mà vẫn chưa xong! Kiến trúc rất độc đáo.",
+
+  // Americas & Others
+  statueofliberty:
+    "Tượng Nữ Thần Tự Do ở New York, Mỹ cao 93 mét. Bà cầm đuốc sáng chào đón mọi người!",
+  chichenitza:
+    "Chichen Itza ở Mexico là kim tự tháp bậc thang của người Maya cổ đại. Mỗi bậc là một ngày trong năm!",
+  christtheredeemer:
+    "Tượng Chúa Cứu Thế ở Brazil đứng trên đỉnh núi, dang rộng hai tay ôm cả thành phố Rio de Janeiro!",
+  machupicchu:
+    "Machu Picchu ở Peru là thành phố cổ nằm trên đỉnh núi cao, ẩn mình trong mây. Bí ẩn lắm!",
+  sydneyoperahouse:
+    "Nhà hát Sydney ở Úc có mái nhà hình cánh buồm trắng. Trông như những con thuyền đang lướt sóng!",
+  moai: "Tượng Moai trên đảo Phục Sinh là những bức tượng đá khổng lồ bí ẩn. Không ai biết chắc ai đã tạo ra chúng!",
+};

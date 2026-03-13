@@ -114,3 +114,35 @@ export function getFlagsForGroup(groupId: string): EntityData[] {
   if (!group) return [];
   return FLAGS.filter((flag) => group.animals.includes(flag.id));
 }
+
+// ──── Flag Descriptions (for explore lesson) ────
+export const FLAG_DESCRIPTIONS: Record<string, string> = {
+  // Asia
+  vietnam: "Cờ đỏ sao vàng năm cánh. Ngôi sao tượng trưng cho sự đoàn kết của nhân dân Việt Nam!",
+  japan: "Cờ Nhật Bản có hình tròn đỏ trên nền trắng, gọi là 'Mặt trời mọc'. Nhật Bản là xứ sở hoa anh đào!",
+  southkorea: "Cờ Hàn Quốc có vòng tròn âm dương ở giữa và bốn quẻ ở bốn góc. Hàn Quốc nổi tiếng với K-pop!",
+  china: "Cờ Trung Quốc có nền đỏ với ngôi sao vàng lớn và bốn sao nhỏ. Trung Quốc có Vạn Lý Trường Thành!",
+  thailand: "Cờ Thái Lan có ba màu đỏ, trắng, xanh. Thái Lan được gọi là 'Xứ sở nụ cười'!",
+  india: "Cờ Ấn Độ có ba sọc cam, trắng, xanh lá và bánh xe ở giữa. Ấn Độ có đền Taj Mahal nổi tiếng!",
+  // Europe
+  uk: "Cờ Vương quốc Anh gồm ba lá cờ chồng lên nhau, rất đặc biệt! Nước Anh có Nữ hoàng và Big Ben!",
+  france: "Cờ Pháp có ba sọc xanh, trắng, đỏ. Pháp nổi tiếng với tháp Eiffel và bánh mì baguette!",
+  germany: "Cờ Đức có ba sọc đen, đỏ, vàng. Đức nổi tiếng với xe hơi và bia!",
+  italy: "Cờ Ý có ba sọc xanh lá, trắng, đỏ. Ý là quê hương của pizza và mì Ý!",
+  spain: "Cờ Tây Ban Nha có hai sọc đỏ và một sọc vàng rộng ở giữa. Tây Ban Nha nổi tiếng với bóng đá!",
+  russia: "Cờ Nga có ba sọc trắng, xanh, đỏ. Nga là nước rộng lớn nhất thế giới!",
+  // Americas
+  usa: "Cờ Mỹ có 50 ngôi sao cho 50 bang và 13 sọc cho 13 thuộc địa đầu tiên. Mỹ có tượng Nữ Thần Tự Do!",
+  canada: "Cờ Canada có lá phong đỏ ở giữa. Canada nổi tiếng với siro phong và tuyết trắng!",
+  brazil: "Cờ Brazil có hình quả cầu xanh trên nền vàng với dòng chữ 'Trật tự và Tiến bộ'. Brazil giỏi bóng đá!",
+  argentina: "Cờ Argentina có hai sọc xanh nhạt và mặt trời ở giữa. Argentina nổi tiếng với điệu tango!",
+  mexico: "Cờ Mexico có ba sọc xanh, trắng, đỏ với hình đại bàng ăn rắn ở giữa. Mexico có nhiều kim tự tháp cổ!",
+  colombia: "Cờ Colombia có ba sọc vàng, xanh, đỏ, sọc vàng rộng nhất. Colombia nổi tiếng với cà phê ngon!",
+  // Africa & Oceania
+  southafrica: "Cờ Nam Phi có sáu màu rất rực rỡ, tượng trưng cho sự đa dạng. Nam Phi có nhiều động vật hoang dã!",
+  egypt: "Cờ Ai Cập có ba sọc đỏ, trắng, đen với đại bàng vàng ở giữa. Ai Cập có kim tự tháp cổ đại!",
+  australia: "Cờ Úc có ngôi sao lớn và chòm sao Thập Tự phương Nam. Úc có chuột túi kangaroo!",
+  nigeria: "Cờ Nigeria có hai sọc xanh lá và một sọc trắng ở giữa. Nigeria là nước đông dân nhất châu Phi!",
+  morocco: "Cờ Ma-rốc có nền đỏ với ngôi sao xanh năm cánh ở giữa. Ma-rốc nổi tiếng với sa mạc Sahara!",
+  kenya: "Cờ Kenya có nhiều sọc màu và chiếc khiên chiến binh ở giữa. Kenya nổi tiếng với đồng cỏ savanna!",
+};

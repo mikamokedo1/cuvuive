@@ -100,3 +100,29 @@ export function getFoodsForGroup(groupId: string): EntityData[] {
 export function getAllFoods(): EntityData[] {
   return FOODS;
 }
+
+// ──── Food Descriptions (for explore lesson) ────
+export const FOOD_DESCRIPTIONS: Record<string, string> = {
+  // Breakfast
+  banh_mi: "Bánh mì giòn rụm, nhân thịt và rau. Bánh mì Việt Nam nổi tiếng khắp thế giới!",
+  pho: "Phở có nước lèo thơm ngon, kèm bánh phở và thịt. Phở là món ăn đặc trưng của Việt Nam!",
+  trung_op_la: "Trứng ốp la chiên vàng giòn, lòng đỏ béo ngậy. Ăn kèm cơm hoặc bánh mì rất ngon!",
+  sua_tuoi: "Sữa tươi trắng ngon, rất tốt cho xương và răng. Uống sữa mỗi ngày giúp pé lớn nhanh!",
+  ngu_coc: "Ngũ cốc ăn với sữa, giòn giòn ngọt ngọt. Ngũ cốc giàu chất xơ, tốt cho bụng!",
+  xuc_xich: "Xúc xích nướng thơm lừng, ăn rất vui miệng. Xúc xích thường ăn kèm tương cà!",
+  // Main Dishes
+  com_trang: "Cơm trắng là món chính trong bữa ăn Việt Nam. Cơm ăn kèm canh và thịt rất ngon!",
+  canh: "Canh nóng hổi, có rau và thịt. Ăn canh giúp bổ sung nước và rau xanh cho cơ thể!",
+  ga_ran: "Gà rán giòn rụm bên ngoài, mềm ngọt bên trong. Gà rán là món trẻ em rất yêu thích!",
+  pizza: "Pi da tròn to, phủ phô mai và nhân. Pi da là món ăn nổi tiếng từ nước Ý!",
+  hamburger: "Ham bơ gơ có thịt bò, rau xà lách và sốt. Ham bơ gơ là món ăn nhanh phổ biến!",
+  mi_y: "Mì Ý có sốt cà chua và thịt bò băm. Mì Ý là món ăn ngon từ nước Ý!",
+  // Desserts
+  kem: "Kem lạnh ngọt, có nhiều hương vị. Mùa hè ăn kem mát lịm, ai cũng thích!",
+  banh_ngot: "Bánh ngọt mềm xốp, phủ kem bên trên. Bánh sinh nhật là loại bánh ngọt đặc biệt!",
+  nuoc_cam: "Nước cam tươi mát, giàu vitamin Xê. Uống nước cam giúp pé khỏe mạnh!",
+  sua_chua: "Sữa chua mát lạnh, vị chua ngọt dễ ăn. Sữa chua tốt cho hệ tiêu hóa!",
+  banh_vong: "Bánh vòng tròn xinh có phủ đường. Bánh vòng còn gọi là donut, rất ngon!",
+  banh_quy: "Bánh qui giòn tan, có nhiều hình dáng đáng yêu. Ăn bánh qui kèm sữa rất ngon!",
+  trai_cay: "Trái cây tươi có nhiều vitamin. Ăn nhiều trái cây giúp pé da đẹp và khỏe mạnh!",
+};

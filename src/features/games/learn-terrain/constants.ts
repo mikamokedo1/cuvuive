@@ -110,7 +110,7 @@ export const TERRAIN_DESCRIPTIONS: Record<string, string> = {
   waterfall: "Thác nước là nơi nước rơi từ trên cao xuống. Rất đẹp và hùng vĩ!",
   island: "Đảo là vùng đất nhỏ nằm giữa biển. Có thể đi thuyền ra đảo chơi.",
   swamp: "Đầm lầy là vùng đất ướt sũng nước. Có nhiều loài ếch và cá sấu sống ở đây.",
-  volcano: "Núi lửa có thể phun ra magma nóng đỏ từ trong lòng đất! Rất ngoạn mục.",
+  volcano: "Núi lửa có thể phun ra mắc ma nóng đỏ từ trong lòng đất! Rất ngoạn mục.",
   glacier: "Sông băng là khối băng khổng lồ di chuyển rất chậm. Lạnh cóng luôn!",
   cave: "Hang động là khoảng trống bên trong đá. Dơi thích sống trong hang động.",
   canyon: "Hẻm núi là khe sâu do sông bào mòn qua hàng triệu năm. Rất sâu và đẹp!",

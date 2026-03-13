@@ -1,7 +1,7 @@
 "use client";
 
 import { useGameLesson } from "@/hooks/useGameLesson";
-import { GROUPS, getFoodsForGroup } from "@/features/games/learn-food/constants";
+import { GROUPS, getFoodsForGroup, FOOD_DESCRIPTIONS } from "@/features/games/learn-food/constants";
 import { FoodLearnLesson } from "@/features/games/learn-food/FoodLearnLesson";
 import { FoodQuizLesson } from "@/features/games/learn-food/FoodQuizLesson";
 import { FoodMemoryLesson } from "@/features/games/learn-food/FoodMemoryLesson";
@@ -21,7 +21,7 @@ export default function LessonPage() {
   const renderLesson = () => {
     switch (game.lessonId) {
       case "lesson1":
-        return <FoodLearnLesson foods={foods} onComplete={game.handleComplete} />;
+        return <FoodLearnLesson foods={foods} descriptions={FOOD_DESCRIPTIONS} onComplete={game.handleComplete} />;
       case "lesson2":
         return <FoodQuizLesson foods={foods} onComplete={game.handleComplete} />;
       case "lesson3":

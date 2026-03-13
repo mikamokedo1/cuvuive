@@ -1,7 +1,7 @@
 "use client";
 
 import { useGameLesson } from "@/hooks/useGameLesson";
-import { GROUPS, getDinosaursForGroup } from "@/features/games/learn-dinosaur/constants";
+import { GROUPS, getDinosaursForGroup, DINOSAUR_DESCRIPTIONS } from "@/features/games/learn-dinosaur/constants";
 import { DinosaurLearnLesson } from "@/features/games/learn-dinosaur/DinosaurLearnLesson";
 import { DinosaurQuizLesson } from "@/features/games/learn-dinosaur/DinosaurQuizLesson";
 import { DinosaurMemoryLesson } from "@/features/games/learn-dinosaur/DinosaurMemoryLesson";
@@ -21,7 +21,7 @@ export default function LessonPage() {
   const renderLesson = () => {
     switch (game.lessonId) {
       case "lesson1":
-        return <DinosaurLearnLesson dinosaurs={dinosaurs} onComplete={game.handleComplete} />;
+        return <DinosaurLearnLesson dinosaurs={dinosaurs} descriptions={DINOSAUR_DESCRIPTIONS} onComplete={game.handleComplete} />;
       case "lesson2":
         return <DinosaurQuizLesson dinosaurs={dinosaurs} onComplete={game.handleComplete} />;
       case "lesson3":

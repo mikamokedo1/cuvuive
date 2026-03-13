@@ -2,7 +2,7 @@
 
 import { useParams } from "next/navigation";
 import { useGameLesson } from "@/hooks/useGameLesson";
-import { GROUPS, getItemsForGroup } from "@/features/games/learn-weather/constants";
+import { GROUPS, getItemsForGroup, WEATHER_DESCRIPTIONS } from "@/features/games/learn-weather/constants";
 import { WeatherLearnLesson } from "@/features/games/learn-weather/WeatherLearnLesson";
 import { WeatherSpeakingLesson } from "@/features/games/learn-weather/WeatherSpeakingLesson";
 import { WeatherQuizLesson } from "@/features/games/learn-weather/WeatherQuizLesson";
@@ -31,7 +31,7 @@ export default function WeatherLessonPage() {
   const renderLesson = () => {
     switch (game.lessonId) {
       case "lesson1":
-        return <WeatherLearnLesson items={items} onComplete={game.handleComplete} />;
+        return <WeatherLearnLesson items={items} descriptions={WEATHER_DESCRIPTIONS} onComplete={game.handleComplete} />;
       case "lesson2":
         return <WeatherSpeakingLesson items={items} onComplete={game.handleComplete} />;
       case "lesson3":

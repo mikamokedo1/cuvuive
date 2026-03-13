@@ -117,3 +117,28 @@ export function getItemsForGroup(groupId: string): EntityData[] {
 export function getAllItems(): EntityData[] {
   return WEATHER_ITEMS;
 }
+
+// ──── Weather Descriptions (for explore lesson) ────
+export const WEATHER_DESCRIPTIONS: Record<string, string> = {
+  // Basic
+  mat_troi: "Mặt trời tỏa sáng và sưởi ấm trái đất. Nhờ mặt trời, cây cối mới mọc và chúng ta mới có ánh sáng!",
+  mua: "Mưa là nước từ mây rơi xuống đất. Mưa giúp cây cối lớn lên và cho chúng ta nước uống!",
+  may: "Mây trắng bồng bềnh trên trời. Mây được tạo thành từ những giọt nước nhỏ li ti!",
+  gio: "Gió là không khí chuyển động. Gió mát thổi vào mùa hè mát lắm!",
+  sam_set: "Sấm sét xảy ra khi trời mưa to. Tia sét rất sáng và tiếng sấm rất lớn!",
+  cau_vong: "Cầu vồng có bảy màu sắc đẹp, xuất hiện sau cơn mưa khi có nắng. Cầu vồng rất kỳ diệu!",
+  // Special
+  tuyet: "Tuyết trắng rơi xuống khi trời rất lạnh. Trẻ em thích nặn người tuyết và chơi ném bóng tuyết!",
+  mua_da: "Mưa đá là những viên đá nhỏ rơi từ mây. Mưa đá xảy ra khi thời tiết rất bất thường!",
+  suong_mu: "Sương mù làm mờ tầm nhìn vào sáng sớm. Sương mù là mây ở rất thấp gần mặt đất!",
+  bao: "Bão là gió rất mạnh kèm mưa to. Khi có bão, mọi người phải ở trong nhà an toàn!",
+  loc_xoay: "Lốc xoáy là cơn gió xoáy tròn rất mạnh. Lốc xoáy có thể cuốn bay mọi thứ!",
+  song_than: "Sóng thần là đợt sóng khổng lồ trên biển. Sóng thần rất nguy hiểm!",
+  // Season
+  mua_xuan: "Mùa xuân ấm áp, cây cối đâm chồi nảy lộc. Mùa xuân là mùa của Tết Nguyên Đán!",
+  mua_ha: "Mùa hè nóng bức, được nghỉ học và đi biển. Mùa hè ăn kem và bơi lội thật vui!",
+  mua_thu: "Mùa thu mát mẻ, lá cây chuyển vàng rất đẹp. Mùa thu có Tết Trung Thu rước đèn!",
+  mua_dong: "Mùa đông lạnh, mặc áo ấm và uống trà nóng. Miền Bắc Việt Nam mùa đông rất lạnh!",
+  mua_kho: "Mùa khô trời nắng ráo, ít mưa. Miền Nam Việt Nam có hai mùa: mùa mưa và mùa khô!",
+  mua_mua: "Mùa mưa có nhiều cơn mưa rào, trời mát hơn. Nhớ mang ô khi đi ra ngoài nhé!",
+};
