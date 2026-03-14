@@ -60,6 +60,7 @@ export function useSpeechRecognition(lang: string = "vi-VN"): UseSpeechRecogniti
   const langRef = useRef(lang);
   const gotResultRef = useRef(false);
   const isUserStoppedRef = useRef(false);
+  const startPendingRef = useRef(false);
 
   // Keep lang ref in sync
   useEffect(() => {
@@ -78,6 +79,7 @@ export function useSpeechRecognition(lang: string = "vi-VN"): UseSpeechRecogniti
   // Cleanup on unmount
   useEffect(() => {
     return () => {
+      startPendingRef.current = false;
       if (recognitionRef.current) {
         try {
           recognitionRef.current.abort();
@@ -89,23 +91,23 @@ export function useSpeechRecognition(lang: string = "vi-VN"): UseSpeechRecogniti
     };
   }, []);
 
+  // Helper: detect Safari (including iOS Safari / WebKit-based browsers)
+  const isSafari = useCallback(() => {
+    if (typeof navigator === "undefined") return false;
+    const ua = navigator.userAgent;
+    return /Safari/.test(ua) && !/Chrome/.test(ua) && !/CriOS/.test(ua);
+  }, []);
+
   const startListening = useCallback(() => {
     if (typeof window === "undefined") return;
+
+    // Guard: prevent overlapping start attempts
+    if (startPendingRef.current) return;
 
     const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognitionAPI) {
       setIsSupported(false);
       return;
-    }
-
-    // iOS Safari: Cancel any ongoing TTS and suspend AudioContext
-    // iOS cannot use microphone while TTS or AudioContext is active
-    if ("speechSynthesis" in window) {
-      window.speechSynthesis.cancel();
-    }
-    // Suspend any active AudioContext to release the audio session for the microphone
-    if ((window as any).__audioContext && (window as any).__audioContext.state === "running") {
-      (window as any).__audioContext.suspend();
     }
 
     // Abort any existing instance first (critical for iOS Safari)
@@ -118,91 +120,125 @@ export function useSpeechRecognition(lang: string = "vi-VN"): UseSpeechRecogniti
       recognitionRef.current = null;
     }
 
-    // Create a fresh instance each time (iOS Safari requires this)
-    const recognition = new SpeechRecognitionAPI();
-    recognition.continuous = false;
-    recognition.interimResults = true;
-    recognition.lang = langRef.current;
-
-    setError(null);
-    setTranscript("");
-    setInterimTranscript("");
-    gotResultRef.current = false;
-    isUserStoppedRef.current = false;
-
-    // Safety timeout: if onstart never fires within 3 seconds, reset state
-    // This handles iOS Safari silently failing to start
-    const startTimeout = setTimeout(() => {
-      if (!gotResultRef.current && recognitionRef.current === recognition) {
-        console.warn("Speech recognition: onstart never fired, resetting");
-        setIsListening(false);
-        try {
-          recognition.abort();
-        } catch {
-          // ignore
-        }
+    // iOS Safari: Cancel any ongoing TTS and suspend AudioContext
+    // iOS cannot use microphone while TTS or AudioContext is active
+    let needsDelay = false;
+    if ("speechSynthesis" in window) {
+      if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+        needsDelay = true;
       }
-    }, 3000);
-
-    recognition.onstart = () => {
-      clearTimeout(startTimeout);
-      setIsListening(true);
-      setError(null);
-    };
-
-    // Track if audio actually started (iOS Safari specific)
-    recognition.onaudiostart = () => {
-      clearTimeout(startTimeout);
-      gotResultRef.current = false; // reset, audio is flowing
-    };
-
-    recognition.onresult = (event: SpeechRecognitionEvent) => {
-      gotResultRef.current = true;
-      let finalSpeech = "";
-      let interimSpeech = "";
-
-      for (let i = event.resultIndex; i < event.results.length; ++i) {
-        if (event.results[i].isFinal) {
-          finalSpeech += event.results[i][0].transcript;
-        } else {
-          interimSpeech += event.results[i][0].transcript;
-        }
-      }
-
-      setInterimTranscript(interimSpeech);
-      if (finalSpeech) {
-        setTranscript((prev) => (prev ? prev + " " + finalSpeech : finalSpeech));
-      }
-    };
-
-    recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
-      clearTimeout(startTimeout);
-      console.error("Speech recognition error:", event.error, event.message);
-      // "no-speech" is not a real error, just means the user didn't say anything
-      // "aborted" happens when we intentionally abort, also not a real error
-      if (event.error !== "no-speech" && event.error !== "aborted") {
-        setError(event.error);
-      }
-      setIsListening(false);
-    };
-
-    recognition.onend = () => {
-      clearTimeout(startTimeout);
-      setIsListening(false);
-      // Let the caller decide when to restart listening.
-      // Auto-retry here caused TTS audio to bleed into the mic on mobile.
-    };
-
-    recognitionRef.current = recognition;
-
-    try {
-      recognition.start();
-    } catch (e) {
-      clearTimeout(startTimeout);
-      console.error("Failed to start speech recognition:", e);
-      setIsListening(false);
+      window.speechSynthesis.cancel();
     }
-  }, []);
+    // Suspend any active AudioContext to release the audio session for the microphone
+    if ((window as any).__audioContext && (window as any).__audioContext.state === "running") {
+      (window as any).__audioContext.suspend();
+      needsDelay = true;
+    }
+
+    // On Safari, we need to wait for the audio session to be fully released
+    // after cancelling TTS / suspending AudioContext. Without this delay,
+    // the new SpeechRecognition instance starts but never receives audio.
+    const delay = needsDelay && isSafari() ? 350 : 0;
+
+    if (delay > 0) {
+      startPendingRef.current = true;
+    }
+
+    const doStart = () => {
+      startPendingRef.current = false;
+
+      // Create a fresh instance each time (iOS Safari requires this)
+      const recognition = new SpeechRecognitionAPI();
+      recognition.continuous = false;
+      recognition.interimResults = true;
+      recognition.lang = langRef.current;
+
+      setError(null);
+      setTranscript("");
+      setInterimTranscript("");
+      gotResultRef.current = false;
+      isUserStoppedRef.current = false;
+
+      // Safety timeout: if onstart never fires within 3 seconds, reset state
+      // This handles iOS Safari silently failing to start
+      const startTimeout = setTimeout(() => {
+        if (!gotResultRef.current && recognitionRef.current === recognition) {
+          console.warn("Speech recognition: onstart never fired, resetting");
+          setIsListening(false);
+          try {
+            recognition.abort();
+          } catch {
+            // ignore
+          }
+        }
+      }, 3000);
+
+      recognition.onstart = () => {
+        clearTimeout(startTimeout);
+        setIsListening(true);
+        setError(null);
+      };
+
+      // Track if audio actually started (iOS Safari specific)
+      recognition.onaudiostart = () => {
+        clearTimeout(startTimeout);
+        gotResultRef.current = false; // reset, audio is flowing
+      };
+
+      recognition.onresult = (event: SpeechRecognitionEvent) => {
+        gotResultRef.current = true;
+        let finalSpeech = "";
+        let interimSpeech = "";
+
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          if (event.results[i].isFinal) {
+            finalSpeech += event.results[i][0].transcript;
+          } else {
+            interimSpeech += event.results[i][0].transcript;
+          }
+        }
+
+        setInterimTranscript(interimSpeech);
+        if (finalSpeech) {
+          setTranscript((prev) => (prev ? prev + " " + finalSpeech : finalSpeech));
+        }
+      };
+
+      recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
+        clearTimeout(startTimeout);
+        console.error("Speech recognition error:", event.error, event.message);
+        // "no-speech" is not a real error, just means the user didn't say anything
+        // "aborted" happens when we intentionally abort, also not a real error
+        if (event.error !== "no-speech" && event.error !== "aborted") {
+          setError(event.error);
+        }
+        setIsListening(false);
+      };
+
+      recognition.onend = () => {
+        clearTimeout(startTimeout);
+        setIsListening(false);
+        // Let the caller decide when to restart listening.
+        // Auto-retry here caused TTS audio to bleed into the mic on mobile.
+      };
+
+      recognitionRef.current = recognition;
+
+      try {
+        recognition.start();
+      } catch (e) {
+        clearTimeout(startTimeout);
+        console.error("Failed to start speech recognition:", e);
+        setIsListening(false);
+      }
+    };
+
+    if (delay > 0) {
+      setTimeout(doStart, delay);
+    } else {
+      doStart();
+    }
+  }, [isSafari]);
 
 
 

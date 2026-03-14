@@ -140,7 +140,7 @@ export function HabitatMatchLesson({ terrains, habitatMap, onComplete, requiredW
   return (
     <div className="flex flex-col items-center gap-6 w-full max-w-4xl px-4">
       {/* Target terrain */}
-      <div className="relative w-full max-w-md aspect-[16/10] rounded-3xl overflow-hidden shadow-xl border-4 border-white">
+      <div className="relative w-full max-w-md aspect-square rounded-3xl overflow-hidden shadow-xl border-4 border-white">
         <Image
           onClick={() => speak(`Ai sống ở ${target.name}`)}
           src={target.image}
@@ -149,11 +149,6 @@ export function HabitatMatchLesson({ terrains, habitatMap, onComplete, requiredW
           className="object-cover"
           sizes="(max-width: 640px) 100vw, 448px"
         />
-
-        {/* Terrain name overlay */}
-        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
-          <h2 className="text-2xl md:text-3xl font-black text-white text-center drop-shadow-lg">{target.name}</h2>
-        </div>
 
         {/* Arrived animals floating on terrain */}
         <div className="absolute top-2 right-2 flex flex-wrap gap-1 max-w-[120px]">

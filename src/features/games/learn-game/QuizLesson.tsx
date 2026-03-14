@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { ActionButton } from "@/components/common/ActionButton";
-import { playSound } from "@/libs/utils/playSound";
+import { playSound, playWrongSound } from "@/libs/utils/playSound";
 import { SoundNumbers } from "./LearnLesson";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { FeedbackType } from "@/types/game";
@@ -77,6 +77,8 @@ export function QuizLesson({ range, onComplete, requiredWins = 6 }: QuizLessonPr
       // For now, no penalty, just maybe visual feedback handled by button or parent
       // We could add state for 'wrongId' to shake specific button
       setFeedback("wrong");
+      playWrongSound();
+
       setTimeout(() => setFeedback(null), 600);
     }
   };

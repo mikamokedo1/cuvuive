@@ -6,8 +6,8 @@ import { MathOperator, generateMathQuestion, generateChoices, SymbolToText } fro
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { SymbolComponent } from "./ExplainMathLesson";
-const LoudSpeaker = "https://assets.cuthongminh.com/games/loud-speaker.webp";
 import { FeedbackType } from "@/types/game";
+import { LoudSpeaker } from "@/libs/constants/game-assets";
 
 interface NumberMathLessonProps {
   operator: MathOperator | "mixed";

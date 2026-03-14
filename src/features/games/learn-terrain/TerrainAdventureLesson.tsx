@@ -6,7 +6,7 @@ import { AdventureStep } from "./constants";
 import Image from "next/image";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
-import { playButtonSound } from "@/libs/utils/playSound";
+import { playButtonSound, playWrongSound } from "@/libs/utils/playSound";
 
 interface TerrainAdventureLessonProps {
   steps: AdventureStep[];
@@ -51,7 +51,6 @@ export function TerrainAdventureLesson({ steps, terrains, onComplete }: TerrainA
   const handleOptionClick = (terrainId: string) => {
     if (feedback) return;
 
-    playButtonSound();
     setSelectedOption(terrainId);
 
     if (terrainId === currentStep.correctTerrainId) {
@@ -59,6 +58,8 @@ export function TerrainAdventureLesson({ steps, terrains, onComplete }: TerrainA
       setStars((prev) => prev + 1);
 
       playWinEffect(300);
+      const terrain = getTerrainById(terrainId);
+      speak(terrain?.name || "");
 
       setTimeout(() => {
         if (currentStepIndex < totalSteps - 1) {
@@ -76,6 +77,7 @@ export function TerrainAdventureLesson({ steps, terrains, onComplete }: TerrainA
         }
       }, 2000);
     } else {
+      playWrongSound();
       setFeedback("wrong");
       setTimeout(() => {
         setFeedback(null);
@@ -215,7 +217,6 @@ export function TerrainAdventureLesson({ steps, terrains, onComplete }: TerrainA
                   sizes="(max-width: 640px) 80px, 112px"
                 />
               </div>
-              <span className="font-bold text-sm md:text-base text-gray-700">{terrain.name}</span>
 
               {/* Correct star */}
               {feedback === "correct" && isCorrect && (

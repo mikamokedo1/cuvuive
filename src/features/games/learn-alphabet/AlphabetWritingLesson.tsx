@@ -9,9 +9,9 @@ import { NextLessonButton } from "@/components/games/NextLessonButton";
 import { LetterData } from "./constants";
 import { LetterSelector } from "./LetterSelector";
 import { LETTER_PATHS } from "@/libs/constants/letterPaths";
+import { LoudSpeaker } from "@/libs/constants/game-assets";
 const Easer = "https://assets.cuthongminh.com/games/common/earser.webp";
 const Pen = "https://assets.cuthongminh.com/games/pen.webp";
-const LoudSpeaker = "https://assets.cuthongminh.com/games/loud-speaker.webp";
 
 interface AlphabetWritingLessonProps {
   letters: LetterData[];

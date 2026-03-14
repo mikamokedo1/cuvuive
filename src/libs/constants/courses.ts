@@ -33,6 +33,7 @@ const MusicianGroupLogo = "https://assets.cuthongminh.com/games/mini-piano/group
 const EarGroupLogo = "https://assets.cuthongminh.com/games/mini-piano/group3.webp";
 const GameSyllableLogo = "https://assets.cuthongminh.com/games/learn-syllable/logo.webp";
 const GameTerrainLogo = "https://assets.cuthongminh.com/games/learn-terrain/logo.webp";
+const GameBodyLogo = "https://assets.cuthongminh.com/games/learn-body/logo.webp";
 import { StaticImageData } from "next/image";
 import { GameGroupType } from "@/libs/constants/groups";
 
@@ -1248,6 +1249,51 @@ export const COURSES: CourseDef[] = [
           { id: "lesson3", title: "Xếp lớp địa hình" },
           { id: "lesson4", title: "Ai sống ở đây?" },
           { id: "lesson5", title: "Phiêu lưu địa hình" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "learn-body",
+    title: "Bộ Phận Cơ Thể",
+    description: "Bé học nhận biết và gọi tên các bộ phận trên cơ thể qua hình ảnh vui nhộn.",
+    icon: GameBodyLogo,
+    type: "science",
+    groups: [
+      {
+        id: "group1",
+        title: "Đầu & Mặt",
+        lessons: [
+          { id: "lesson1", title: "Khám phá cơ thể", isFree: true },
+          { id: "lesson2", title: "Chạm và nói" },
+          { id: "lesson3", title: "Tập nói" },
+          { id: "lesson4", title: "Đây là gì?" },
+          { id: "lesson5", title: "Cơ thể làm gì?" },
+          { id: "lesson6", title: "Ghép đôi" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Thân Mình",
+        lessons: [
+          { id: "lesson1", title: "Khám phá cơ thể", isFree: true },
+          { id: "lesson2", title: "Chạm và nói" },
+          { id: "lesson3", title: "Tập nói" },
+          { id: "lesson4", title: "Đây là gì?" },
+          { id: "lesson5", title: "Cơ thể làm gì?" },
+          { id: "lesson6", title: "Ghép đôi" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Bàn Tay & Bàn Chân",
+        lessons: [
+          { id: "lesson1", title: "Khám phá cơ thể", isFree: true },
+          { id: "lesson2", title: "Chạm và nói" },
+          { id: "lesson3", title: "Tập nói" },
+          { id: "lesson4", title: "Đây là gì?" },
+          { id: "lesson5", title: "Cơ thể làm gì?" },
+          { id: "lesson6", title: "Ghép đôi" },
         ],
       },
     ],

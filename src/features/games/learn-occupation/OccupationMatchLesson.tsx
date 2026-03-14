@@ -7,8 +7,8 @@ import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { playButtonSound } from "@/libs/utils/playSound";
 import Image from "next/image";
-const LoudSpeaker = "https://assets.cuthongminh.com/games/loud-speaker.webp";
 import { FeedbackType } from "@/types/game";
+import { LoudSpeaker } from "@/libs/constants/game-assets";
 
 interface OccupationMatchLessonProps {
   occupations: OccupationData[];

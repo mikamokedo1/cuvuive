@@ -6,10 +6,10 @@ import Image from "next/image";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 const Easer = "https://assets.cuthongminh.com/games/common/earser.webp";
 const Pen = "https://assets.cuthongminh.com/games/pen.webp";
-const LoudSpeaker = "https://assets.cuthongminh.com/games/loud-speaker.webp";
 import { playButtonSound } from "@/libs/utils/playSound";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
+import { LoudSpeaker } from "@/libs/constants/game-assets";
 
 interface WritingLesson2Props {
   numbers: number[];

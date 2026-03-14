@@ -18,8 +18,16 @@ interface SpeakPraticeLayoutProps {
 
 const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) => {
   const { speak } = useTextToSpeech();
-  const { isListening, transcript, interimTranscript, isSupported, error: speechError, startListening, stopListening, resetTranscript } =
-    useSpeechRecognition("vi-VN");
+  const {
+    isListening,
+    transcript,
+    interimTranscript,
+    isSupported,
+    error: speechError,
+    startListening,
+    stopListening,
+    resetTranscript,
+  } = useSpeechRecognition("vi-VN");
   const { status: micStatus, requestPermission } = useMicrophonePermission();
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -237,7 +245,8 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
           <>
             <h2 className="text-2xl font-bold text-orange-600">Cần mở bằng Safari 🧭</h2>
             <p className="text-orange-800 text-lg leading-relaxed">
-              Tính năng nhận diện giọng nói <b>không hoạt động</b> khi mở từ Màn hình chính. Bạn cần mở bằng <b>Safari</b>.
+              Tính năng nhận diện giọng nói <b>không hoạt động</b> khi mở từ Màn hình chính. Bạn cần mở bằng{" "}
+              <b>Safari</b>.
             </p>
             <div className="bg-white rounded-2xl p-4 border-2 border-orange-100 text-left w-full space-y-3">
               <div>

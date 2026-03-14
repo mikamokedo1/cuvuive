@@ -6,9 +6,9 @@ import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import Image from "next/image";
-const LoudSpeaker = "https://assets.cuthongminh.com/games/loud-speaker.webp";
 import { FeedbackType } from "@/types/game";
 import { QuizzLesson } from "@/components/games/QuizLesson";
+import { LoudSpeaker } from "@/libs/constants/game-assets";
 
 interface FruitQuizLessonProps {
   fruits: EntityData[];

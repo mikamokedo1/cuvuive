@@ -8,10 +8,10 @@ import Image from "next/image";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 const Easer = "https://assets.cuthongminh.com/games/common/earser.webp";
 const Pen = "https://assets.cuthongminh.com/games/pen.webp";
-const LoudSpeaker = "https://assets.cuthongminh.com/games/loud-speaker.webp";
 import { playButtonSound, playSound } from "@/libs/utils/playSound";
 import { SoundNumbers } from "./LearnLesson";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
+import { LoudSpeaker } from "@/libs/constants/game-assets";
 
 interface WritingLessonProps {
   range: [number, number];

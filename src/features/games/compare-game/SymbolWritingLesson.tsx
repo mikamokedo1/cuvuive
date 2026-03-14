@@ -9,7 +9,7 @@ const Pen = "https://assets.cuthongminh.com/games/pen.webp";
 import { playButtonSound, playSound } from "@/libs/utils/playSound";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 import { MAP_COMPARE_SIGN_SOUND } from "./VisualCompareLesson";
-const LoudSpeaker = "https://assets.cuthongminh.com/games/loud-speaker.webp";
+import { LoudSpeaker } from "@/libs/constants/game-assets";
 
 interface SymbolWritingLessonProps {
   comparisonType: "greater" | "less" | "equal";

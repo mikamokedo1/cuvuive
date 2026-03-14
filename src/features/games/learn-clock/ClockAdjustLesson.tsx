@@ -6,8 +6,8 @@ import { AnalogClock } from "./components/AnalogClock";
 import { playCorrectSound } from "@/libs/utils/playSound";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
-const LoudSpeaker = "https://assets.cuthongminh.com/games/loud-speaker.webp";
 import Image from "next/image";
+import { LoudSpeaker } from "@/libs/constants/game-assets";
 
 interface ClockAdjustLessonProps {
   onComplete: () => void;

@@ -5,11 +5,11 @@ import { EntityData } from "@/types/game";
 import Image from "next/image";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
-import { playButtonSound } from "@/libs/utils/playSound";
+import { playButtonSound, playWrongSound } from "@/libs/utils/playSound";
 import { FeedbackType } from "@/types/game";
 import { getRandomItem } from "@/libs/utils/randomQuestion";
+import { LoudSpeaker } from "@/libs/constants/game-assets";
 
-const LoudSpeaker = "https://assets.cuthongminh.com/games/loud-speaker.webp";
 
 // Soundscape descriptions mapped to terrain IDs
 const SOUND_HINTS: Record<string, string> = {
@@ -87,7 +87,6 @@ export function SoundscapeLesson({ terrains, onComplete, requiredWins = 6 }: Sou
   const handleOptionClick = (option: EntityData) => {
     if (!target || feedback === "correct") return;
 
-    playButtonSound();
     setSelectedOption(option);
 
     if (option.id === target.id) {
@@ -106,9 +105,9 @@ export function SoundscapeLesson({ terrains, onComplete, requiredWins = 6 }: Sou
         }
       }, 2500);
     } else {
+      speak(option.name);
       setFeedback("wrong");
-      speak("Chưa đúng");
-
+      playWrongSound();
       setTimeout(() => {
         setFeedback(null);
         setSelectedOption(null);

@@ -26,7 +26,7 @@ export function TerrainBuilderLesson({ challenges, onComplete }: TerrainBuilderL
   const cachedSlotRects = useRef<{ index: number; rect: DOMRect }[]>([]);
   const [draggedLayer, setDraggedLayer] = useState<string | null>(null);
   const [hoveredSlot, setHoveredSlot] = useState<number | null>(null);
-  const lastDragPoint = useRef<{ x: number; y: number } | null>(null);
+  const hoveredSlotRef = useRef<number | null>(null);
 
   const currentChallenge = challenges[currentIndex];
 
@@ -48,12 +48,35 @@ export function TerrainBuilderLesson({ challenges, onComplete }: TerrainBuilderL
 
   const nextExpectedIndex = placedLayers.length;
 
+  // Convert Framer Motion page coords to viewport coords for getBoundingClientRect comparison
+  const toViewport = useCallback((point: { x: number; y: number }) => ({
+    x: point.x - window.scrollX,
+    y: point.y - window.scrollY,
+  }), []);
+
+  // Find which slot the pointer is over, with some tolerance
+  const findSlotAtPoint = useCallback((x: number, y: number): number | null => {
+    const tolerance = 10; // px of extra tolerance around slot edges
+    for (const { index, rect } of cachedSlotRects.current) {
+      if (
+        x >= rect.left - tolerance &&
+        x <= rect.right + tolerance &&
+        y >= rect.top - tolerance &&
+        y <= rect.bottom + tolerance
+      ) {
+        return index;
+      }
+    }
+    return null;
+  }, []);
+
   const handleDragStart = useCallback(
     (layerId: string) => {
       if (showSuccess) return;
       setDraggedLayer(layerId);
       playButtonSound();
 
+      // Cache slot positions at drag start (they won't change during drag)
       cachedSlotRects.current = slotRefs.current
         .map((ref, index) => ({
           index,
@@ -66,52 +89,53 @@ export function TerrainBuilderLesson({ challenges, onComplete }: TerrainBuilderL
 
   const handleDragUpdate = useCallback(
     (info: { point: { x: number; y: number } }) => {
-      if (!draggedLayer) return;
+      const vp = toViewport(info.point);
+      const foundSlot = findSlotAtPoint(vp.x, vp.y);
 
-      // Store last known position for reliable mobile drop detection
-      lastDragPoint.current = { x: info.point.x, y: info.point.y };
-
-      let foundSlot: number | null = null;
-      for (const { index, rect } of cachedSlotRects.current) {
-        if (
-          info.point.x >= rect.left &&
-          info.point.x <= rect.right &&
-          info.point.y >= rect.top &&
-          info.point.y <= rect.bottom
-        ) {
-          foundSlot = index;
-          break;
-        }
-      }
-
-      if (foundSlot !== hoveredSlot) {
-        setHoveredSlot(foundSlot);
-      }
+      hoveredSlotRef.current = foundSlot;
+      setHoveredSlot(foundSlot);
     },
-    [draggedLayer, hoveredSlot],
+    [findSlotAtPoint, toViewport],
   );
 
   const handleDragEnd = useCallback(
-    (info: { point: { x: number; y: number } }, layerId: string) => {
-      // Use last known drag position as fallback (fixes mobile where onDragEnd point can be stale)
-      const dropPoint = lastDragPoint.current || info.point;
+    (layerId: string, info: { point: { x: number; y: number } }) => {
+      const vp = toViewport(info.point);
 
-      let slotIndex: number | null = null;
-      for (const { index, rect } of cachedSlotRects.current) {
-        if (
-          dropPoint.x >= rect.left &&
-          dropPoint.x <= rect.right &&
-          dropPoint.y >= rect.top &&
-          dropPoint.y <= rect.bottom
-        ) {
-          slotIndex = index;
-          break;
+      // Re-check slot at the final drop point to handle cases where
+      // the last onDrag event didn't fire at the exact drop position
+      // (common on touch devices)
+      let slotIndex = hoveredSlotRef.current;
+      if (slotIndex === null) {
+        slotIndex = findSlotAtPoint(vp.x, vp.y);
+      }
+
+      // Also try fresh rects if cached ones failed (handles scroll offset issues)
+      if (slotIndex === null) {
+        const freshRects = slotRefs.current
+          .map((ref, index) => ({
+            index,
+            rect: ref?.getBoundingClientRect() || ({} as DOMRect),
+          }))
+          .filter((item) => item.index >= nextExpectedIndex);
+
+        const tolerance = 20;
+        for (const { index, rect } of freshRects) {
+          if (
+            vp.x >= rect.left - tolerance &&
+            vp.x <= rect.right + tolerance &&
+            vp.y >= rect.top - tolerance &&
+            vp.y <= rect.bottom + tolerance
+          ) {
+            slotIndex = index;
+            break;
+          }
         }
       }
 
       setHoveredSlot(null);
       setDraggedLayer(null);
-      lastDragPoint.current = null;
+      hoveredSlotRef.current = null;
       cachedSlotRects.current = [];
 
       if (slotIndex === null) return;
@@ -149,7 +173,17 @@ export function TerrainBuilderLesson({ challenges, onComplete }: TerrainBuilderL
         }, 1000);
       }
     },
-    [currentChallenge, nextExpectedIndex, placedLayers, speak, currentIndex, challenges.length, onComplete],
+    [
+      toViewport,
+      findSlotAtPoint,
+      currentChallenge,
+      nextExpectedIndex,
+      placedLayers,
+      speak,
+      currentIndex,
+      challenges.length,
+      onComplete,
+    ],
   );
 
   if (!currentChallenge) return <div>Đang tải...</div>;
@@ -243,11 +277,9 @@ export function TerrainBuilderLesson({ challenges, onComplete }: TerrainBuilderL
                     key={layer.id}
                     drag
                     dragSnapToOrigin
-                    dragMomentum={false}
-                    dragElastic={0}
                     onDragStart={() => handleDragStart(layer.id)}
                     onDrag={(_, info) => handleDragUpdate(info)}
-                    onDragEnd={(_, info) => handleDragEnd(info, layer.id)}
+                    onDragEnd={(_, info) => handleDragEnd(layer.id, info)}
                     className={`
                       flex flex-col items-center justify-center w-28 h-24 md:w-36 md:h-28
                       bg-white rounded-2xl shadow-lg border-3 cursor-grab active:cursor-grabbing
@@ -264,15 +296,6 @@ export function TerrainBuilderLesson({ challenges, onComplete }: TerrainBuilderL
           </div>
         )}
       </AnimatePresence>
-
-      {/* Success overlay */}
-      {showSuccess && (
-        <div className="flex flex-col items-center gap-4 animate-bounce-in mt-4">
-          <div className="text-6xl">🎉</div>
-          <h3 className="text-2xl font-black text-green-600">{currentChallenge.terrainName}</h3>
-          <p className="text-gray-600">Bé đã xếp đúng tất cả các lớp!</p>
-        </div>
-      )}
     </div>
   );
 }
