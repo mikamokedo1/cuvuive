@@ -38,7 +38,7 @@ const fullLessons: LessonData[] = [
 
 export default function GroupLessonsPage() {
   // Use fullLessons for hook computation; actual lessons depend on groupId
-  const { group, groupId, activeIndex, handleLessonClick } = useGroupLessons({
+  const { group, groupId, activeIndex,  handleLessonClick } = useGroupLessons({
     gameSlug: "learn-shape",
     groups: GROUPS,
     lessons: fullLessons,

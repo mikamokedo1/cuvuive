@@ -5,6 +5,9 @@ import { HeaderHome } from "@/components/layout/HeaderHome";
 export const metadata: Metadata = {
   title: "Chính sách bảo mật | Cú Thông Minh",
   description: "Chính sách bảo mật và quyền riêng tư của ứng dụng Cú Thông Minh dành cho trẻ em.",
+  alternates: {
+    canonical: "/privacy",
+  },
 };
 
 export default function PrivacyPage() {

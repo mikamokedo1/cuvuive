@@ -18,6 +18,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  alternates: {
+    canonical: "/games/maze-runner",
+  },
 };
 
 export default function MazeRunnerLayout({ children }: { children: React.ReactNode }) {

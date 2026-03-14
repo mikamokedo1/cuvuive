@@ -18,6 +18,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  alternates: {
+    canonical: "/games/learn-shape",
+  },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

@@ -18,6 +18,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  alternates: {
+    canonical: "/games/paint-picture",
+  },
 };
 
 export default function PaintPictureLayout({ children }: { children: React.ReactNode }) {

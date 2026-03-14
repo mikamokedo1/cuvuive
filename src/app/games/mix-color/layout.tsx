@@ -18,6 +18,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  alternates: {
+    canonical: "/games/mix-color",
+  },
 };
 
 export default function MixColorLayout({ children }: { children: React.ReactNode }) {

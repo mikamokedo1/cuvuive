@@ -18,6 +18,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  alternates: {
+    canonical: "/games/find-pattern",
+  },
 };
 
 export default function FindPatternLayout({ children }: { children: React.ReactNode }) {

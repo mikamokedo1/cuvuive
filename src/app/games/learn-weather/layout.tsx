@@ -18,6 +18,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  alternates: {
+    canonical: "/games/learn-weather",
+  },
 };
 
 export default function LearnWeatherLayout({ children }: { children: React.ReactNode }) {

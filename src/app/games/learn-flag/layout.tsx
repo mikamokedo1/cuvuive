@@ -18,6 +18,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  alternates: {
+    canonical: "/games/learn-flag",
+  },
 };
 
 export default function LearnFlagLayout({ children }: { children: React.ReactNode }) {

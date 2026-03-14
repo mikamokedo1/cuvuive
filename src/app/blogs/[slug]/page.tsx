@@ -29,6 +29,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${post.title} | Cú Thông Minh Blog`,
     description: post.description,
+    alternates: {
+      canonical: `/blogs/${post.slug}`,
+    },
     openGraph: {
       title: post.title,
       description: post.description,
@@ -112,7 +115,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         "@type": "ListItem",
         position: 3,
         name: post.title,
-        item: `https://assets.cuthongminh.com/blogs/${post.slug}`,
+        item: `https://cuthongminh.com/blogs/${post.slug}`,
       },
     ],
   };

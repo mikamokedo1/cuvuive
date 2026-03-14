@@ -19,6 +19,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  alternates: {
+    canonical: "/games/compare-quantity",
+  },
 };
 
 export default function CompareQuantityLayout({ children }: { children: React.ReactNode }) {

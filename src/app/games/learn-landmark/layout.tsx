@@ -18,6 +18,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  alternates: {
+    canonical: "/games/learn-landmark",
+  },
 };
 
 export default function LearnLandmarkLayout({ children }: { children: React.ReactNode }) {

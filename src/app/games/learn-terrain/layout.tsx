@@ -18,6 +18,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  alternates: {
+    canonical: "/games/learn-terrain",
+  },
 };
 
 export default function LearnTerrainLayout({ children }: { children: React.ReactNode }) {

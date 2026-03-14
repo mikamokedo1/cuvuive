@@ -18,6 +18,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  alternates: {
+    canonical: "/games/learn-occupation",
+  },
 };
 
 export default function LearnOccupationLayout({ children }: { children: React.ReactNode }) {

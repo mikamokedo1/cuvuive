@@ -18,6 +18,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  alternates: {
+    canonical: "/games/learn-emotion",
+  },
 };
 
 export default function LearnEmotionLayout({ children }: { children: React.ReactNode }) {

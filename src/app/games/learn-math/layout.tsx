@@ -18,6 +18,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  alternates: {
+    canonical: "/games/learn-math",
+  },
 };
 
 export default function LearnMathLayout({ children }: { children: React.ReactNode }) {

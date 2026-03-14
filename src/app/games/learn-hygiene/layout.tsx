@@ -18,6 +18,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  alternates: {
+    canonical: "/games/learn-hygiene",
+  },
 };
 
 export default function LearnHygieneLayout({ children }: { children: React.ReactNode }) {

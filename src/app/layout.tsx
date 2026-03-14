@@ -100,9 +100,9 @@ export default async function RootLayout({
     url: "https://cuthongminh.com",
     logo: {
       "@type": "ImageObject",
-      url: "https://cuthongminh.com/icons/favicon-32x32.png",
-      width: "32",
-      height: "32",
+      url: "https://cuthongminh.com/icons/android-chrome-512x512.png",
+      width: "512",
+      height: "512",
     },
     description: "Nền tảng học tập tương tác cho bé từ 3-8 tuổi.",
     contactPoint: {

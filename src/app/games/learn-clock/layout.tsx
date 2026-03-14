@@ -18,6 +18,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  alternates: {
+    canonical: "/games/learn-clock",
+  },
 };
 
 export default function LearnClockLayout({ children }: { children: React.ReactNode }) {

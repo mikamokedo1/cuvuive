@@ -18,6 +18,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  alternates: {
+    canonical: "/games/learn-dinosaur",
+  },
 };
 
 export default function LearnDinosaurLayout({ children }: { children: React.ReactNode }) {

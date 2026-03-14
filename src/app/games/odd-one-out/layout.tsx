@@ -18,6 +18,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  alternates: {
+    canonical: "/games/odd-one-out",
+  },
 };
 
 export default function OddOneOutLayout({ children }: { children: React.ReactNode }) {

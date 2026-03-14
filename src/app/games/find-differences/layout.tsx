@@ -18,6 +18,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  alternates: {
+    canonical: "/games/find-differences",
+  },
 };
 
 export default function FindDifferencesLayout({ children }: { children: React.ReactNode }) {

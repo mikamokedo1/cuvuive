@@ -67,7 +67,7 @@ const group3Lessons: LessonData[] = [
 
 export default function WeatherGroupLessonsPage() {
   // Use group3Lessons (longest) for hook so activeIndex covers all cases
-  const { group, groupId, activeIndex, handleLessonClick } = useGroupLessons({
+  const { group, groupId, activeIndex,  handleLessonClick } = useGroupLessons({
     gameSlug: "learn-weather",
     groups: GROUPS,
     lessons: group3Lessons,

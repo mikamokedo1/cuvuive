@@ -45,7 +45,7 @@ const lessons = [
 ];
 
 export default function BodyGroupLessonsPage() {
-  const { group, activeIndex, handleLessonClick } = useGroupLessons({
+  const { group, activeIndex,  handleLessonClick } = useGroupLessons({
     gameSlug: "learn-body",
     groups: GROUPS,
     lessons,

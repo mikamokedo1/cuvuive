@@ -18,6 +18,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  alternates: {
+    canonical: "/games/learn-instrument",
+  },
 };
 
 export default function LearnInstrumentLayout({ children }: { children: React.ReactNode }) {

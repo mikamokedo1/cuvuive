@@ -49,7 +49,7 @@ const group4Lessons: LessonData[] = [
 
 export default function GroupLessonsPage() {
   // Both lesson sets have same length (3), so use regularLessons for hook
-  const { group, groupId, activeIndex, handleLessonClick } = useGroupLessons({
+  const { group, groupId, activeIndex,  handleLessonClick } = useGroupLessons({
     gameSlug: "learn-vehicle",
     groups: GROUPS,
     lessons: regularLessons,

@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: "Kho Trò Chơi Giáo Dục - Cú Thông Minh",
   description:
     "Khám phá hơn 20+ trò chơi giáo dục tương tác đa dạng chủ đề: Toán học, Âm nhạc, Động vật, Địa lý giúp bé phát triển trí tuệ toàn diện.",
+  alternates: {
+    canonical: "/games",
+  },
 };
 
 export default async function GamesPage() {
@@ -28,7 +31,7 @@ export default async function GamesPage() {
     name: "Kho Trò Chơi Giáo Dục - Cú Thông Minh",
     description:
       "Hơn 20+ trò chơi giáo dục tương tác giúp bé phát triển trí tuệ toàn diện: Toán học, Âm nhạc, Động vật, Địa lý.",
-    url: "https://assets.cuthongminh.com/games",
+    url: "https://cuthongminh.com/games",
     mainEntity: {
       "@type": "ItemList",
       itemListElement: COURSES.map((course, index) => ({
@@ -38,7 +41,7 @@ export default async function GamesPage() {
           "@type": "CreativeWork",
           name: course.title,
           description: course.description,
-          url: `https://assets.cuthongminh.com/games/${course.id}`,
+          url: `https://cuthongminh.com/games/${course.id}`,
         },
       })),
     },

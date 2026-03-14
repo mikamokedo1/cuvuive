@@ -18,6 +18,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  alternates: {
+    canonical: "/games/learn-color",
+  },
 };
 
 export default function LearnColorLayout({ children }: { children: React.ReactNode }) {

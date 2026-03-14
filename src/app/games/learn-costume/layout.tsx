@@ -18,6 +18,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  alternates: {
+    canonical: "/games/learn-costume",
+  },
 };
 
 export default function LearnCostumeLayout({ children }: { children: React.ReactNode }) {

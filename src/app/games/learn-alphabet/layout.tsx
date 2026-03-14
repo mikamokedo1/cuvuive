@@ -18,6 +18,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  alternates: {
+    canonical: "/games/learn-alphabet",
+  },
 };
 
 export default function LearnAlphabetLayout({ children }: { children: React.ReactNode }) {

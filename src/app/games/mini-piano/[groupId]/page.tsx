@@ -28,7 +28,7 @@ export default function PianoGroupLessonsPage() {
     }));
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const { activeIndex, handleLessonClick } = useGroupLessons({
+    const { activeIndex,  handleLessonClick } = useGroupLessons({
         gameSlug: "mini-piano",
         groups: course.groups as any,
         lessons,

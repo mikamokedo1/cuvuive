@@ -118,9 +118,9 @@ export const MemoryLesson = ({
           setIsLocked(false);
         }, 600);
       } else {
+        playWrongSound();
         // No match - flip back
         setTimeout(() => {
-          playWrongSound();
           setCards((prev) => prev.map((c) => (c.id === firstId || c.id === secondId ? { ...c, isFlipped: false } : c)));
           setFlippedCards([]);
           setIsLocked(false);

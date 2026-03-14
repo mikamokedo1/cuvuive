@@ -19,6 +19,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  alternates: {
+    canonical: "/games/learn-numbers",
+  },
 };
 
 export default function NumberGameLayout({ children }: { children: React.ReactNode }) {

@@ -18,6 +18,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  alternates: {
+    canonical: "/games/learn-flower",
+  },
 };
 
 export default function LearnFlowerLayout({ children }: { children: React.ReactNode }) {

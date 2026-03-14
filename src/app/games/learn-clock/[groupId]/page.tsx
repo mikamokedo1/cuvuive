@@ -23,7 +23,7 @@ export default function GroupLessonsPage() {
 
   const lessons = isAnalog ? analogLessons : digitalLessons;
 
-  const { group, activeIndex, handleLessonClick } = useGroupLessons({
+  const { group, activeIndex,  handleLessonClick } = useGroupLessons({
     gameSlug: "learn-clock",
     groups: GROUPS,
     lessons: lessons as any,

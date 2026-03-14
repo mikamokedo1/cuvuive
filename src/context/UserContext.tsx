@@ -61,6 +61,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     const initializeUser = async () => {
       try {
         await checkMissingInfo();
+        await refreshSubscription();
       } catch (error) {
         console.error("Error checking user info:", error);
       } finally {
