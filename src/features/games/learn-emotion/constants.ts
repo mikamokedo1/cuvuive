@@ -126,7 +126,7 @@ export interface RightWrongScenario {
 export const RIGHT_WRONG_SCENARIOS: RightWrongScenario[] = [
   // Group 1
   { id: "rw_basic_1", text: "Được tặng quà, pé cảm thấy rất vui", image: Happy, isCorrect: true, category: "basic" },
-  { id: "rw_basic_2", text: "Làm vỡ ly, pé cảm thấy tức giận", image: Angry, isCorrect: false, category: "basic" },
+  { id: "rw_basic_2", text: "Được mẹ khen, pé cảm thấy tức giận", image: Angry, isCorrect: false, category: "basic" },
   {
     id: "rw_basic_3",
     text: "Trời mưa không được đi chơi, pé thấy buồn",
