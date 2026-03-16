@@ -48,8 +48,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     setUser(user);
 
     if (user) {
-      const { kidName, age, sex } = user.user_metadata || {};
-      if (!kidName || !age || !sex) {
+      const { kidName, age, sex, parentPhone } = user.user_metadata || {};
+      if (!kidName || !age || !sex || !parentPhone) {
         setShowMissingInfoModal(true);
       } else {
         setShowMissingInfoModal(false);
@@ -82,8 +82,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
             return session.user;
           });
           // Check metadata on login
-          const { kidName, age, sex } = session.user.user_metadata || {};
-          if (!kidName || !age || !sex) {
+          const { kidName, age, sex, parentPhone } = session.user.user_metadata || {};
+          if (!kidName || !age || !sex || !parentPhone) {
             setShowMissingInfoModal(true);
           } else {
             setShowMissingInfoModal(false);

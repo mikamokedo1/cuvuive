@@ -8,7 +8,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { ActionButton } from "@/components/common/ActionButton";
 const owlHi = "https://assets.cuthongminh.com/games/common/owl-say-hi.webp";
-import { ExclamationIcon, UserIcon } from "@/components/common/Icons";
+import { ExclamationIcon, PhoneIcon, UserIcon } from "@/components/common/Icons";
 
 interface MissingInfoModalProps {
   isOpen: boolean;
@@ -24,11 +24,15 @@ export function MissingInfoModal({ isOpen, onSuccess }: MissingInfoModalProps) {
   const formik = useFormik({
     initialValues: {
       kidName: "",
+      parentPhone: "",
       age: 3,
       sex: "male",
     },
     validationSchema: Yup.object({
       kidName: Yup.string().required("Vui lòng nhập tên bé"),
+      parentPhone: Yup.string()
+        .required("Vui lòng nhập số điện thoại")
+        .matches(/^[0-9]{10,11}$/, "Số điện thoại không hợp lệ"),
       age: Yup.number().required("Vui lòng chọn tuổi"),
       sex: Yup.string().required("Vui lòng chọn giới tính"),
     }),
@@ -39,6 +43,7 @@ export function MissingInfoModal({ isOpen, onSuccess }: MissingInfoModalProps) {
       const { error } = await supabase.auth.updateUser({
         data: {
           kidName: values.kidName,
+          parentPhone: values.parentPhone,
           age: values.age,
           sex: values.sex,
         },
@@ -95,6 +100,34 @@ export function MissingInfoModal({ isOpen, onSuccess }: MissingInfoModalProps) {
               </div>
               {formik.touched.kidName && formik.errors.kidName && (
                 <div className="text-red-500 text-xs ml-1 font-semibold">{formik.errors.kidName}</div>
+              )}
+            </div>
+
+            <div className="space-y-1">
+              <div className="relative group">
+                <span
+                  className={`absolute left-4 top-3.5 transition-colors ${
+                    formik.touched.parentPhone && formik.errors.parentPhone
+                      ? "text-red-400"
+                      : "text-gray-400 group-focus-within:text-purple-500"
+                  }`}
+                >
+                  <PhoneIcon className="h-6 w-6" />
+                </span>
+                <input
+                  id="parentPhone"
+                  type="tel"
+                  {...formik.getFieldProps("parentPhone")}
+                  className={`w-full pl-12 pr-4 py-3.5 rounded-xl border-2 focus:ring-4 focus:outline-none transition-all font-medium text-lg placeholder:text-gray-300 ${
+                    formik.touched.parentPhone && formik.errors.parentPhone
+                      ? "border-red-300 focus:border-red-400 focus:ring-red-100 text-red-900"
+                      : "border-gray-200 focus:border-purple-400 focus:ring-purple-100 text-gray-700"
+                  }`}
+                  placeholder="Số điện thoại bố mẹ"
+                />
+              </div>
+              {formik.touched.parentPhone && formik.errors.parentPhone && (
+                <div className="text-red-500 text-xs ml-1 font-semibold">{formik.errors.parentPhone}</div>
               )}
             </div>
 

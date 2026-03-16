@@ -46,14 +46,14 @@ export function Footer() {
               <h4 className="font-bold text-slate-900 mb-2">Kết nối</h4>
               <div className="flex gap-4">
                 <Link
-                  href="#"
+                  href="https://www.facebook.com/CuthongminhOffical"
                   className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-[#1877F2] hover:text-white transition-all shadow-sm"
                   aria-label="Facebook"
                 >
                   <Facebook size={20} />
                 </Link>
                 <Link
-                  href="#"
+                  href="https://www.tiktok.com/@cuthongminh"
                   className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-black hover:text-white transition-all shadow-sm"
                   aria-label="TikTok"
                 >

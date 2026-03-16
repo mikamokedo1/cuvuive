@@ -122,7 +122,7 @@ export default async function RootLayout({
     url: "https://cuthongminh.com",
     potentialAction: {
       "@type": "SearchAction",
-      target: "https://assets.cuthongminh.com/games?q={search_term_string}",
+      target: "https://cuthongminh.com/games?q={search_term_string}",
       "query-input": "required name=search_term_string",
     },
   };
