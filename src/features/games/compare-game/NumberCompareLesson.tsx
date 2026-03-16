@@ -4,13 +4,10 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import { randomNum } from "@/libs/utils/randomNum";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { ActionButton } from "@/components/common/ActionButton";
-const SoundGreater = "https://assets.cuthongminh.com/games/compare-quantity/sounds/dau-lon.mp3";
-const SoundLess = "https://assets.cuthongminh.com/games/compare-quantity/sounds/dau-be.mp3";
-const SoundEqual = "https://assets.cuthongminh.com/games/compare-quantity/sounds/dau-bang.mp3";
 import { playSound } from "@/libs/utils/playSound";
 import { MAP_COMPARE_SIGN_SOUND } from "./VisualCompareLesson";
-import { SoundNumbers } from "../learn-game/LearnLesson";
 import { FeedbackType } from "@/types/game";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 
 interface NumberCompareLessonProps {
   comparisonType: "greater" | "less" | "equal" | "mixed";
@@ -20,6 +17,7 @@ interface NumberCompareLessonProps {
 const REQUIRED_WINS = 5;
 
 export function NumberCompareLesson({ comparisonType, onComplete }: NumberCompareLessonProps) {
+  const { speak } = useTextToSpeech();
   const [leftNum, setLeftNum] = useState(0);
   const [rightNum, setRightNum] = useState(0);
   const [feedback, setFeedback] = useState<FeedbackType>(null);
@@ -108,7 +106,7 @@ export function NumberCompareLesson({ comparisonType, onComplete }: NumberCompar
         <div className="flex items-center justify-center gap-4 md:gap-8">
           <div
             className="flex-1 flex items-center justify-center cursor-pointer hover:scale-105"
-            onClick={() => leftNum && playSound(SoundNumbers[leftNum - 1])}
+            onClick={() => leftNum && speak(`số ${leftNum}`)}
           >
             <span className="text-8xl md:text-[12rem] leading-none font-display font-black text-orange-500 drop-shadow-md animate-scale">
               {leftNum}
@@ -127,7 +125,7 @@ export function NumberCompareLesson({ comparisonType, onComplete }: NumberCompar
 
           <div
             className="flex-1 flex items-center justify-center cursor-pointer hover:scale-105"
-            onClick={() => rightNum && playSound(SoundNumbers[rightNum - 1])}
+            onClick={() => rightNum && speak(`số ${rightNum}`)}
           >
             <span className="text-8xl md:text-[12rem] leading-none font-display font-black text-orange-500 drop-shadow-md animate-scale">
               {rightNum}

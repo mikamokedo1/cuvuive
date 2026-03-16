@@ -3,9 +3,9 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { ActionButton } from "@/components/common/ActionButton";
 import { playSound, playWrongSound } from "@/libs/utils/playSound";
-import { SoundNumbers } from "./LearnLesson";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { FeedbackType } from "@/types/game";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 
 export const MAP_INDEX_TO_COLOR = ["blue", "green", "orange", "purple"] as const;
 
@@ -16,6 +16,7 @@ interface QuizLessonProps {
 }
 
 export function QuizLesson({ range, onComplete, requiredWins = 6 }: QuizLessonProps) {
+  const { speak } = useTextToSpeech();
   const [start, end] = range;
   const [targetNumber, setTargetNumber] = useState(0);
   const [options, setOptions] = useState<number[]>([]);
@@ -59,7 +60,7 @@ export function QuizLesson({ range, onComplete, requiredWins = 6 }: QuizLessonPr
   }, [generateQuestion]); // Init
 
   const handleAnswer = (num: number) => {
-    playSound(SoundNumbers[num - 1]);
+    speak(`số ${num}`);
     if (num === targetNumber) {
       setFeedback("correct");
       // Correct
@@ -90,7 +91,7 @@ export function QuizLesson({ range, onComplete, requiredWins = 6 }: QuizLessonPr
       >
         <span
           className="text-7xl md:text-9xl font-display font-black text-blue-600 block text-center min-w-[150px] md:min-w-[200px] animate-scale cursor-pointer"
-          onClick={() => playSound(SoundNumbers[targetNumber - 1])}
+          onClick={() => speak(`số ${targetNumber}`)}
         >
           {targetNumber}
         </span>

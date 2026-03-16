@@ -8,9 +8,7 @@ import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 import { ShapeData, SHAPES } from "./constants";
 import { SHAPE_PATHS, ShapePathData } from "@/libs/constants/shapePaths";
-import { LoudSpeaker } from "@/libs/constants/game-assets";
-const Easer = "https://assets.cuthongminh.com/games/common/earser.webp";
-const Pen = "https://assets.cuthongminh.com/games/pen.webp";
+import { LoudSpeaker, Eraser as Easer, Pen } from "@/libs/constants/game-assets";
 
 interface ShapePaintLessonProps {
   shapes: ShapeData[];

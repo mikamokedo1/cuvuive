@@ -24,10 +24,6 @@ interface ProgressContextType {
 
 const ProgressContext = createContext<ProgressContextType | undefined>(undefined);
 
-// Hoisted regex patterns used in unlock checks — avoids creating new RegExp every call
-const GROUP_ID_REGEX = /^group(\d+)$/;
-const LESSON_ID_REGEX = /^lesson(\d+)$/;
-
 export function ProgressProvider({ children }: { children: React.ReactNode }) {
   const { user } = useUser();
   const supabaseRef = useRef(createClient());
@@ -187,102 +183,111 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     completedLessons: {},
   };
 
-  const markLessonComplete = useCallback(async (groupId: string, lessonId: string, courseId: string = "learn-numbers") => {
-    // Optimistically update last played course
-    setLastPlayedCourseId(courseId);
+  const markLessonComplete = useCallback(
+    async (groupId: string, lessonId: string, courseId: string = "learn-numbers") => {
+      // Optimistically update last played course
+      setLastPlayedCourseId(courseId);
 
-    // 1. Optimistic update — only update completedLessons, groups are derived automatically
-    setAllProgress((prevAll) => {
-      const prevCourse = prevAll[courseId] || { completedGroups: [], completedLessons: {} };
+      // 1. Optimistic update — only update completedLessons, groups are derived automatically
+      setAllProgress((prevAll) => {
+        const prevCourse = prevAll[courseId] || { completedGroups: [], completedLessons: {} };
 
-      const groupLessons = prevCourse.completedLessons[groupId] || [];
-      if (groupLessons.includes(lessonId)) return prevAll;
+        const groupLessons = prevCourse.completedLessons[groupId] || [];
+        if (groupLessons.includes(lessonId)) return prevAll;
 
-      const newGroupLessons = [...groupLessons, lessonId];
-      const newCompletedLessons = { ...prevCourse.completedLessons, [groupId]: newGroupLessons };
+        const newGroupLessons = [...groupLessons, lessonId];
+        const newCompletedLessons = { ...prevCourse.completedLessons, [groupId]: newGroupLessons };
 
-      return {
-        ...prevAll,
-        [courseId]: {
-          ...prevCourse,
-          completedLessons: newCompletedLessons,
-        },
-      };
-    });
+        return {
+          ...prevAll,
+          [courseId]: {
+            ...prevCourse,
+            completedLessons: newCompletedLessons,
+          },
+        };
+      });
 
-    // 2. Sync to Supabase if logged in
-    if (user) {
-      try {
-        const { data: existing, error: selectError } = await supabase
-          .from("progress")
-          .select("id")
-          .eq("user_id", user.id)
-          .eq("course_id", courseId)
-          .eq("group_id", groupId)
-          .eq("lesson_id", lessonId)
-          .maybeSingle();
+      // 2. Sync to Supabase if logged in
+      if (user) {
+        try {
+          const { data: existing, error: selectError } = await supabase
+            .from("progress")
+            .select("id")
+            .eq("user_id", user.id)
+            .eq("course_id", courseId)
+            .eq("group_id", groupId)
+            .eq("lesson_id", lessonId)
+            .maybeSingle();
 
-        if (selectError && selectError.code !== "PGRST116") {
-          console.error("Error checking progress:", selectError);
-          return;
-        }
-
-        if (!existing) {
-          const { error: insertError } = await supabase.from("progress").insert({
-            id: generateUUID(),
-            user_id: user.id,
-            course_id: courseId,
-            group_id: groupId,
-            lesson_id: lessonId,
-            completed_at: new Date().toISOString(),
-          });
-
-          if (insertError) {
-            console.error("Error saving progress:", insertError);
+          if (selectError && selectError.code !== "PGRST116") {
+            console.error("Error checking progress:", selectError);
+            return;
           }
+
+          if (!existing) {
+            const { error: insertError } = await supabase.from("progress").insert({
+              id: generateUUID(),
+              user_id: user.id,
+              course_id: courseId,
+              group_id: groupId,
+              lesson_id: lessonId,
+              completed_at: new Date().toISOString(),
+            });
+
+            if (insertError) {
+              console.error("Error saving progress:", insertError);
+            }
+          }
+        } catch (error) {
+          console.error("Error syncing progress to Supabase:", error);
+          // We don't rollback optimistic update because local progress is still valid.
         }
-      } catch (error) {
-        console.error("Error syncing progress to Supabase:", error);
-        // We don't rollback optimistic update because local progress is still valid.
       }
-    }
-  }, [user, supabase]);
+    },
+    [user, supabase],
+  );
 
-  const isGroupUnlocked = useCallback((groupId: string, courseId: string = "learn-numbers") => {
-    const course = COURSES.find((c) => c.id === courseId);
-    if (!course) return true; // Default to unlocked if course not found in constants
+  const isGroupUnlocked = useCallback(
+    (groupId: string, courseId: string = "learn-numbers") => {
+      const course = COURSES.find((c) => c.id === courseId);
+      if (!course) return true; // Default to unlocked if course not found in constants
 
-    const groupIndex = course.groups.findIndex((g) => g.id === groupId);
-    if (groupIndex === 0) return true; // First group is always unlocked
-    if (groupIndex === -1) return false; // Group not found in this course
+      const groupIndex = course.groups.findIndex((g) => g.id === groupId);
+      if (groupIndex === 0) return true; // First group is always unlocked
+      if (groupIndex === -1) return false; // Group not found in this course
 
-    const prevGroupId = course.groups[groupIndex - 1].id;
-    const completedGroups = derivedCompletedGroups[courseId] || [];
-    return completedGroups.includes(prevGroupId);
-  }, [derivedCompletedGroups]);
+      const prevGroupId = course.groups[groupIndex - 1].id;
+      const completedGroups = derivedCompletedGroups[courseId] || [];
+      return completedGroups.includes(prevGroupId);
+    },
+    [derivedCompletedGroups],
+  );
 
-  const isLessonUnlocked = useCallback((groupId: string, lessonId: string, courseId: string = "learn-numbers") => {
-    if (!isGroupUnlocked(groupId, courseId)) return false;
+  const isLessonUnlocked = useCallback(
+    (groupId: string, lessonId: string, courseId: string = "learn-numbers") => {
+      if (!isGroupUnlocked(groupId, courseId)) return false;
 
-    const course = COURSES.find((c) => c.id === courseId);
-    if (!course) return true;
+      const course = COURSES.find((c) => c.id === courseId);
+      if (!course) return true;
 
-    const group = course.groups.find((g) => g.id === groupId);
-    if (!group) return false;
+      const group = course.groups.find((g) => g.id === groupId);
+      if (!group) return false;
 
-    const lessonIndex = group.lessons.findIndex((l) => l.id === lessonId);
-    if (lessonIndex === 0) return true; // First lesson in group is always unlocked
-    if (lessonIndex === -1) return false; // Lesson not found in this group
+      const lessonIndex = group.lessons.findIndex((l) => l.id === lessonId);
+      if (lessonIndex === 0) return true; // First lesson in group is always unlocked
+      if (lessonIndex === -1) return false; // Lesson not found in this group
 
-    const courseProgress = allProgress[courseId] || { completedLessons: {} };
-    const completedInGroup = courseProgress.completedLessons[groupId] || [];
+      const courseProgress = allProgress[courseId] || { completedLessons: {} };
+      const completedInGroup = courseProgress.completedLessons[groupId] || [];
 
-    // If lesson is already completed, it is effectively unlocked
-    if (completedInGroup.includes(lessonId)) return true;
+      // If lesson is already completed, it is effectively unlocked
+      if (completedInGroup.includes(lessonId)) return true;
 
-    const prevLessonId = group.lessons[lessonIndex - 1].id;
-    return completedInGroup.includes(prevLessonId);
-  }, [allProgress, isGroupUnlocked]);
+      const prevLessonId = group.lessons[lessonIndex - 1].id;
+      return completedInGroup.includes(prevLessonId);
+    },
+    [allProgress, isGroupUnlocked],
+  );
 
   const contextValue = useMemo(
     () => ({
@@ -295,7 +300,16 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
       isLessonUnlocked,
       isLoaded,
     }),
-    [progressWithGroups, allProgressWithGroups, courseStructure, lastPlayedCourseId, markLessonComplete, isGroupUnlocked, isLessonUnlocked, isLoaded],
+    [
+      progressWithGroups,
+      allProgressWithGroups,
+      courseStructure,
+      lastPlayedCourseId,
+      markLessonComplete,
+      isGroupUnlocked,
+      isLessonUnlocked,
+      isLoaded,
+    ],
   );
 
   return <ProgressContext.Provider value={contextValue}>{children}</ProgressContext.Provider>;

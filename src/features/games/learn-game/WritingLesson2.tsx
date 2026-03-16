@@ -4,12 +4,10 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { DIGIT_PATHS, getDigits, NUMBER_NAMES_VI } from "@/libs/constants/numberPaths2";
 import Image from "next/image";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
-const Easer = "https://assets.cuthongminh.com/games/common/earser.webp";
-const Pen = "https://assets.cuthongminh.com/games/pen.webp";
 import { playButtonSound } from "@/libs/utils/playSound";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
-import { LoudSpeaker } from "@/libs/constants/game-assets";
+import { LoudSpeaker, Eraser as Easer, Pen } from "@/libs/constants/game-assets";
 
 interface WritingLesson2Props {
   numbers: number[];

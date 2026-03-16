@@ -1,79 +1,57 @@
 "use client";
 
 import { useState } from "react";
-import { ActionButton } from "@/components/common/ActionButton";
-import { ChevronRight, Check } from "lucide-react";
 import { NumberCard } from "@/features/games/learn-game/NumberCard";
-const Sound1 = "https://assets.cuthongminh.com/games/learn-numbers/sound/number-1.mp3";
-const Sound2 = "https://assets.cuthongminh.com/games/learn-numbers/sound/number-2.mp3";
-const Sound3 = "https://assets.cuthongminh.com/games/learn-numbers/sound/number-3.mp3";
-const Sound4 = "https://assets.cuthongminh.com/games/learn-numbers/sound/number-4.mp3";
-const Sound5 = "https://assets.cuthongminh.com/games/learn-numbers/sound/number-5.mp3";
-const Sound6 = "https://assets.cuthongminh.com/games/learn-numbers/sound/number-6.mp3";
-const Sound7 = "https://assets.cuthongminh.com/games/learn-numbers/sound/number-7.mp3";
-const Sound8 = "https://assets.cuthongminh.com/games/learn-numbers/sound/number-8.mp3";
-const Sound9 = "https://assets.cuthongminh.com/games/learn-numbers/sound/number-9.mp3";
 import { ThingImages } from "@/libs/constants/thingImages";
 import { BackLessonButton } from "@/components/games/BackLessonButton";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 import { useSwipe } from "@/hooks/useSwipe";
-
-export const SoundNumbers = [Sound1, Sound2, Sound3, Sound4, Sound5, Sound6, Sound7, Sound8, Sound9];
 
 const MAP_NUMBERS = [
   {
     number: 1,
     title: "Số 1",
     icon: ThingImages[0].icon,
-    sound: SoundNumbers[0],
   },
   {
     number: 2,
     title: "Số 2",
     icon: ThingImages[1].icon,
-    sound: SoundNumbers[1],
   },
   {
     number: 3,
     title: "Số 3",
     icon: ThingImages[2].icon,
-    sound: SoundNumbers[2],
   },
   {
     number: 4,
     title: "Số 4",
     icon: ThingImages[3].icon,
-    sound: SoundNumbers[3],
   },
   {
     number: 5,
     title: "Số 5",
     icon: ThingImages[4].icon,
-    sound: SoundNumbers[4],
   },
   {
     number: 6,
     title: "Số 6",
     icon: ThingImages[5].icon,
-    sound: SoundNumbers[5],
   },
   {
     number: 7,
     title: "Số 7",
     icon: ThingImages[6].icon,
-    sound: SoundNumbers[6],
   },
   {
     number: 8,
     title: "Số 8",
     icon: ThingImages[7].icon,
-    sound: SoundNumbers[7],
   },
   {
     number: 9,
     title: "Số 9",
     icon: ThingImages[8].icon,
-    sound: SoundNumbers[8],
   },
 ];
 interface LearnLessonProps {
@@ -114,12 +92,7 @@ export function LearnLesson({ range, onComplete }: LearnLessonProps) {
       {/* Progress Indicator */}
       <div className="flex items-center justify-center gap-4 md:gap-16 w-full">
         {/* Number Display */}
-        <NumberCard
-          number={currentNumber}
-          active={true}
-          soundNum={MAP_NUMBERS[currentNumber - 1].sound}
-          image={MAP_NUMBERS[currentNumber - 1].icon}
-        />
+        <NumberCard number={currentNumber} active={true} image={MAP_NUMBERS[currentNumber - 1].icon} />
       </div>
 
       {/* <div className="text-2xl text-orange-600 font-bold bg-white/80 px-6 py-2 rounded-full backdrop-blur-sm">

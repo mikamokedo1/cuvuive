@@ -6,17 +6,14 @@ import { ThingImages } from "@/libs/constants/thingImages";
 import { randomNum } from "@/libs/utils/randomNum";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { ActionButton } from "@/components/common/ActionButton";
-const SoundGreater = "https://assets.cuthongminh.com/games/compare-quantity/sounds/dau-lon.mp3";
-const SoundLess = "https://assets.cuthongminh.com/games/compare-quantity/sounds/dau-be.mp3";
-const SoundEqual = "https://assets.cuthongminh.com/games/compare-quantity/sounds/dau-bang.mp3";
 import { playSound } from "@/libs/utils/playSound";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { FeedbackType } from "@/types/game";
 
 export const MAP_COMPARE_SIGN_SOUND = {
-  ">": SoundGreater,
-  "<": SoundLess,
-  "=": SoundEqual,
+  ">": "dấu lớn",
+  "<": "dấu bé",
+  "=": "dấu bằng",
 };
 
 interface VisualCompareLessonProps {
@@ -75,7 +72,7 @@ export function VisualCompareLesson({ comparisonType, onComplete }: VisualCompar
 
   const handleChoice = (sign: "<" | ">" | "=") => {
     if (feedback) return;
-    playSound(MAP_COMPARE_SIGN_SOUND[sign]);
+    speak(MAP_COMPARE_SIGN_SOUND[sign]);
     let isCorrect = false;
 
     if (leftCount > rightCount) {

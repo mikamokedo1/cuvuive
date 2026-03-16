@@ -4,11 +4,10 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { SYMBOL_PATHS } from "@/libs/constants/symbolPaths";
 import Image from "next/image";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
-const Easer = "https://assets.cuthongminh.com/games/common/earser.webp";
-const Pen = "https://assets.cuthongminh.com/games/pen.webp";
 import { playButtonSound } from "@/libs/utils/playSound";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 import { MathOperator } from "./constants";
+import { Eraser as Easer, Pen } from "@/libs/constants/game-assets";
 
 interface SymbolWritingLessonProps {
   operator: MathOperator;

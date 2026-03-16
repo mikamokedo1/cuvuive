@@ -17,6 +17,7 @@ export function AlphabetSpeakingLesson({ letters, onComplete, isReviewMode = fal
   // Map letters to include accepted answers for better speech recognition
   const entities = (isReviewMode ? [letters[selectedIndex]] : letters).map((l) => ({
     ...l,
+    textRepresent: l.letter,
     // Accept "chữ a", just the letter "a", or the representative word (e.g. "cà chua")
     acceptedAnswers: [l.name, l.letter, l.word],
   }));

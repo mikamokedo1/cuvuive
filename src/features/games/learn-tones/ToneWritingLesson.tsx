@@ -8,11 +8,9 @@ import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 import { ToneWord } from "./constants";
 import { TONE_PATHS } from "@/libs/constants/tonePaths";
-const Easer = "https://assets.cuthongminh.com/games/common/earser.webp";
-const Pen = "https://assets.cuthongminh.com/games/pen.webp";
 import Loading from "@/components/common/Loading";
 import { getRandomItem } from "@/libs/utils/randomQuestion";
-import { LoudSpeaker } from "@/libs/constants/game-assets";
+import { LoudSpeaker, Eraser as Easer, Pen } from "@/libs/constants/game-assets";
 
 interface ToneWritingLessonProps {
   words: ToneWord[];

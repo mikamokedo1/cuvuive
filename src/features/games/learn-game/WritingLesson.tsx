@@ -6,12 +6,10 @@ import { ChevronRight } from "lucide-react";
 import { NUMBER_PATHS } from "@/libs/constants/numberPaths";
 import Image from "next/image";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
-const Easer = "https://assets.cuthongminh.com/games/common/earser.webp";
-const Pen = "https://assets.cuthongminh.com/games/pen.webp";
 import { playButtonSound, playSound } from "@/libs/utils/playSound";
-import { SoundNumbers } from "./LearnLesson";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
-import { LoudSpeaker } from "@/libs/constants/game-assets";
+import { LoudSpeaker, Eraser as Easer, Pen } from "@/libs/constants/game-assets";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 
 interface WritingLessonProps {
   range: [number, number];
@@ -24,6 +22,7 @@ interface Point {
 }
 
 export function WritingLesson({ range, onComplete }: WritingLessonProps) {
+  const { speak } = useTextToSpeech();
   const [start, end] = range;
   const [currentNumber, setCurrentNumber] = useState(start);
   const [isDrawing, setIsDrawing] = useState(false);
@@ -319,7 +318,7 @@ export function WritingLesson({ range, onComplete }: WritingLessonProps) {
 
         <button
           className="absolute top-2 left-2 cursor-pointer hover:scale-105 transition-all"
-          onClick={() => playSound(SoundNumbers[currentNumber - 1])}
+          onClick={() => speak(`số ${currentNumber}`)}
           onMouseEnter={playButtonSound}
         >
           <Image width={48} height={40} src={LoudSpeaker} alt="Eraser" className="w-12 h-10" />

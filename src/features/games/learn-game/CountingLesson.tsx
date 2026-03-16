@@ -6,7 +6,6 @@ import { ThingImages } from "@/libs/constants/thingImages";
 import { randomNum } from "@/libs/utils/randomNum";
 import Image from "next/image";
 import { playSound } from "@/libs/utils/playSound";
-import { SoundNumbers } from "./LearnLesson";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { MAP_INDEX_TO_COLOR } from "./QuizLesson";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
@@ -60,7 +59,7 @@ export function CountingLesson({ range, onComplete, requiredWins = 6 }: Counting
   }, [generateQuestion]);
 
   const handleAnswer = (num: number) => {
-    playSound(SoundNumbers[num - 1]);
+    speak(`số ${num}`);
     if (num === targetNumber) {
       playWinEffect(500);
       setFeedback("correct");

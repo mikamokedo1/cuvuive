@@ -6,10 +6,6 @@ import { ThingImages } from "@/libs/constants/thingImages";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { BackLessonButton } from "@/components/games/BackLessonButton";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
-import { SoundNumbers } from "@/features/games/learn-game/LearnLesson";
-const SoundGreater = "https://assets.cuthongminh.com/games/compare-quantity/sounds/dau-lon.mp3";
-const SoundLess = "https://assets.cuthongminh.com/games/compare-quantity/sounds/dau-be.mp3";
-const SoundEqual = "https://assets.cuthongminh.com/games/compare-quantity/sounds/dau-bang.mp3";
 import { playSound } from "@/libs/utils/playSound";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { useSwipe } from "@/hooks/useSwipe";
@@ -23,14 +19,11 @@ const CONCEPTS = {
   greater: {
     symbol: ">",
     title: "Lớn hơn",
-    sound: SoundGreater,
     description: "Số bên trái LỚN HƠN số bên phải",
     examples: [
       {
         left: 5,
         right: 2,
-        soundNumLeft: SoundNumbers[4],
-        soundNumRight: SoundNumbers[1],
         textSpeakLeft: "Có 5 quả táo",
         textSpeakRight: "Có 2 quả táo",
         sound: "5 quả táo lớn hơn 2 quả táo",
@@ -38,8 +31,6 @@ const CONCEPTS = {
       {
         left: 4,
         right: 1,
-        soundNumLeft: SoundNumbers[3],
-        soundNumRight: SoundNumbers[0],
         textSpeakLeft: "Có 4 quả bóng",
         textSpeakRight: "Có 1 quả bóng",
         sound: "4 quả bóng lớn hơn 1 quả bóng",
@@ -47,8 +38,6 @@ const CONCEPTS = {
       {
         left: 3,
         right: 2,
-        soundNumLeft: SoundNumbers[2],
-        soundNumRight: SoundNumbers[1],
         textSpeakLeft: "Có 3 con gấu",
         textSpeakRight: "Có 2 con gấu",
         sound: "3 con gấu lớn hơn 2 con gấu",
@@ -59,14 +48,11 @@ const CONCEPTS = {
   less: {
     symbol: "<",
     title: "Nhỏ hơn",
-    sound: SoundLess,
     description: "Số bên trái NHỎ HƠN số bên phải",
     examples: [
       {
         left: 2,
         right: 5,
-        soundNumLeft: SoundNumbers[1],
-        soundNumRight: SoundNumbers[4],
         textSpeakLeft: "Có 2 quả táo",
         textSpeakRight: "Có 5 quả táo",
         sound: "2 quả táo nhỏ hơn 5 quả táo",
@@ -74,8 +60,6 @@ const CONCEPTS = {
       {
         left: 1,
         right: 4,
-        soundNumLeft: SoundNumbers[0],
-        soundNumRight: SoundNumbers[3],
         textSpeakLeft: "Có 1 quả bóng",
         textSpeakRight: "Có 4 quả bóng",
         sound: "1 quả bóng nhỏ hơn 4 quả bóng",
@@ -83,8 +67,6 @@ const CONCEPTS = {
       {
         left: 2,
         right: 3,
-        soundNumLeft: SoundNumbers[1],
-        soundNumRight: SoundNumbers[2],
         textSpeakLeft: "Có 2 con gấu",
         textSpeakRight: "Có 3 con gấu",
         sound: "2 con gấu nhỏ hơn 3 con gấu",
@@ -95,14 +77,11 @@ const CONCEPTS = {
   equal: {
     symbol: "=",
     title: "Bằng nhau",
-    sound: SoundEqual,
     description: "Hai bên BẰNG NHAU",
     examples: [
       {
         left: 3,
         right: 3,
-        soundNumLeft: SoundNumbers[2],
-        soundNumRight: SoundNumbers[2],
         textSpeakLeft: "Có 3 quả táo",
         textSpeakRight: "Có 3 quả táo",
         sound: "3 quả táo bằng 3 quả táo",
@@ -110,8 +89,6 @@ const CONCEPTS = {
       {
         left: 4,
         right: 4,
-        soundNumLeft: SoundNumbers[3],
-        soundNumRight: SoundNumbers[3],
         textSpeakLeft: "Có 4 quả bóng",
         textSpeakRight: "Có 4 quả bóng",
         sound: "4 quả bóng bằng 4 quả bóng",
@@ -119,8 +96,6 @@ const CONCEPTS = {
       {
         left: 2,
         right: 2,
-        soundNumLeft: SoundNumbers[1],
-        soundNumRight: SoundNumbers[1],
         textSpeakLeft: "Có 2 con gấu",
         textSpeakRight: "Có 2 con gấu",
         sound: "2 con gấu bằng 2 con gấu",

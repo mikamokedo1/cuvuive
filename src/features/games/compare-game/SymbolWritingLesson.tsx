@@ -4,12 +4,10 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { SYMBOL_PATHS, SYMBOL_NAMES_VI } from "@/libs/constants/symbolPaths";
 import Image from "next/image";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
-const Easer = "https://assets.cuthongminh.com/games/common/earser.webp";
-const Pen = "https://assets.cuthongminh.com/games/pen.webp";
 import { playButtonSound, playSound } from "@/libs/utils/playSound";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 import { MAP_COMPARE_SIGN_SOUND } from "./VisualCompareLesson";
-import { LoudSpeaker } from "@/libs/constants/game-assets";
+import { LoudSpeaker, Eraser as Easer, Pen } from "@/libs/constants/game-assets";
 
 interface SymbolWritingLessonProps {
   comparisonType: "greater" | "less" | "equal";

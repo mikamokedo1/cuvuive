@@ -8,24 +8,21 @@ import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 interface NumberCardProps {
   number: number;
   active?: boolean;
-  soundNum?: string;
   image: string | StaticImageData;
 }
 
-export const NumberCard = ({ number, active, soundNum, image }: NumberCardProps) => {
+export const NumberCard = ({ number, active, image }: NumberCardProps) => {
   const { speak } = useTextToSpeech();
   // Generate dots corresponding to the number
   const dots = Array.from({ length: number });
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (soundNum) {
-        playSound(soundNum);
-      }
+      speak(`Số ${number}`);
     }, 1000);
     return () => {
       clearTimeout(timer);
     };
-  }, [number, soundNum]);
+  }, [number]);
   return (
     <div
       className={cn(
@@ -36,7 +33,7 @@ export const NumberCard = ({ number, active, soundNum, image }: NumberCardProps)
       {/* The Digit */}
       <div
         className="flex-1 flex items-center justify-center cursor-pointer  hover:scale-105"
-        onClick={() => soundNum && playSound(soundNum)}
+        onClick={() => speak(`Số ${number}`)}
       >
         <span className="text-[12rem] leading-none font-display font-black text-orange-500 drop-shadow-md animate-scale ">
           {number}
