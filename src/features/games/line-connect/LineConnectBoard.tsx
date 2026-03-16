@@ -34,7 +34,7 @@ export function LineConnectBoard({ onComplete, groupId }: LineConnectBoardProps)
   useEffect(() => {
     const groupOffset = groupId === "group1" ? 0 : groupId === "group2" ? 6 : 10;
     const effectiveIndex = levelIndex + groupOffset;
-    
+
     const diff = getDifficulty(effectiveIndex);
     const newLevel = generateLineConnectLevel(diff.rows, diff.cols, diff.dots);
     setLevel(newLevel);
@@ -42,8 +42,8 @@ export function LineConnectBoard({ onComplete, groupId }: LineConnectBoardProps)
     setDrawingColor(null);
     setCurrentLine([]);
     setIsWinning(false);
-    
-    const introText = levelIndex === 0 
+
+    const introText = levelIndex === 0
       ? (groupId === "group1" ? "Hãy nối các cặp màu giống nhau nhé!" : "Thử thách khó hơn cho bạn đây!")
       : "Tiếp tục nào!";
     speak(introText);
@@ -108,14 +108,14 @@ export function LineConnectBoard({ onComplete, groupId }: LineConnectBoardProps)
     if (!isNeighbor) return;
 
     // Check if occupied by another color
-    const occupiedColor = Object.entries(lines).find(([clr, pts]) => 
+    const occupiedColor = Object.entries(lines).find(([clr, pts]) =>
       pts.some(p => p[0] === r && p[1] === c)
     )?.[0];
-    
+
     if (occupiedColor && occupiedColor !== drawingColor) return;
 
     // If it's the dot of another color
-    const otherDot = level?.dots.find(d => 
+    const otherDot = level?.dots.find(d =>
       d.color !== drawingColor && d.positions.some(p => p[0] === r && p[1] === c)
     );
     if (otherDot) return;
@@ -190,79 +190,90 @@ export function LineConnectBoard({ onComplete, groupId }: LineConnectBoardProps)
   const boardWidth = level.cols * cellSize;
   const boardHeight = level.rows * cellSize;
 
+  // Scale board down on small screens (375px - 32px padding = 343px available)
+  const availableWidth = typeof window !== "undefined" ? window.innerWidth - 32 : 512;
+  const scale = Math.min(1, availableWidth / boardWidth);
+
   return (
     <div className="flex flex-col items-center justify-center gap-6 w-full max-w-lg mx-auto px-4 flex-1">
-      <div 
-        ref={boardRef}
-        className="relative bg-white/90 rounded-3xl shadow-xl border-4 border-white backdrop-blur-sm touch-none overflow-hidden"
-        style={{ width: boardWidth, height: boardHeight }}
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-      >
-        {Array.from({ length: level.rows * level.cols }).map((_, i) => (
-          <div 
-            key={i} 
-            className="absolute border border-gray-100" 
-            style={{ 
-              width: cellSize, 
-              height: cellSize,
-              left: (i % level.cols) * cellSize,
-              top: Math.floor(i / level.cols) * cellSize
-            }}
-          />
-        ))}
-
-        <svg 
-          className="absolute inset-0 pointer-events-none"
-          width={boardWidth}
-          height={boardHeight}
+      <div style={{ width: boardWidth * scale, height: boardHeight * scale }}>
+        <div
+          ref={boardRef}
+          className="relative bg-white/90 rounded-3xl shadow-xl border-4 border-white backdrop-blur-sm touch-none overflow-hidden"
+          style={{
+            width: boardWidth,
+            height: boardHeight,
+            transform: `scale(${scale})`,
+            transformOrigin: "top left",
+          }}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
         >
-          {Object.entries(lines).map(([color, pts]) => (
-            <polyline
-              key={color}
-              points={pts.map(p => `${p[1] * cellSize + cellSize/2},${p[0] * cellSize + cellSize/2}`).join(" ")}
-              fill="none"
-              stroke={color}
-              strokeWidth={cellSize * 0.4}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              opacity={0.8}
-            />
-          ))}
-          {drawingColor && currentLine.length > 0 && (
-            <polyline
-              points={currentLine.map(p => `${p[1] * cellSize + cellSize/2},${p[0] * cellSize + cellSize/2}`).join(" ")}
-              fill="none"
-              stroke={drawingColor}
-              strokeWidth={cellSize * 0.4}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              opacity={0.6}
-            />
-          )}
-        </svg>
-
-        {level.dots.map((dot) => (
-          dot.positions.map((pos, i) => (
+          {Array.from({ length: level.rows * level.cols }).map((_, i) => (
             <div
-              key={`${dot.color}-${i}`}
-              className="absolute flex items-center justify-center p-1"
+              key={i}
+              className="absolute border border-gray-100"
               style={{
                 width: cellSize,
                 height: cellSize,
-                left: pos[1] * cellSize,
-                top: pos[0] * cellSize,
+                left: (i % level.cols) * cellSize,
+                top: Math.floor(i / level.cols) * cellSize
               }}
-            >
-              <div 
-                className="w-4/5 h-4/5 rounded-full shadow-inner border-4 border-white/50"
-                style={{ backgroundColor: dot.color }}
+            />
+          ))}
+
+          <svg
+            className="absolute inset-0 pointer-events-none"
+            width={boardWidth}
+            height={boardHeight}
+          >
+            {Object.entries(lines).map(([color, pts]) => (
+              <polyline
+                key={color}
+                points={pts.map(p => `${p[1] * cellSize + cellSize / 2},${p[0] * cellSize + cellSize / 2}`).join(" ")}
+                fill="none"
+                stroke={color}
+                strokeWidth={cellSize * 0.4}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                opacity={0.8}
               />
-            </div>
-          ))
-        ))}
+            ))}
+            {drawingColor && currentLine.length > 0 && (
+              <polyline
+                points={currentLine.map(p => `${p[1] * cellSize + cellSize / 2},${p[0] * cellSize + cellSize / 2}`).join(" ")}
+                fill="none"
+                stroke={drawingColor}
+                strokeWidth={cellSize * 0.4}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                opacity={0.6}
+              />
+            )}
+          </svg>
+
+          {level.dots.map((dot) => (
+            dot.positions.map((pos, i) => (
+              <div
+                key={`${dot.color}-${i}`}
+                className="absolute flex items-center justify-center p-1"
+                style={{
+                  width: cellSize,
+                  height: cellSize,
+                  left: pos[1] * cellSize,
+                  top: pos[0] * cellSize,
+                }}
+              >
+                <div
+                  className="w-4/5 h-4/5 rounded-full shadow-inner border-4 border-white/50"
+                  style={{ backgroundColor: dot.color }}
+                />
+              </div>
+            ))
+          ))}
+        </div>
       </div>
-      
+
       <div className="text-xl font-bold text-indigo-600 bg-white/80 px-4 py-2 rounded-full shadow-sm">
         Level {levelIndex + 1} / 5
       </div>
