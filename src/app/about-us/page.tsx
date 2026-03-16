@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { HeaderHome } from "@/components/layout/HeaderHome";
 import { Footer } from "@/components/layout/Footer";
 import { Brain, Heart, BookOpenText, Users, Gamepad2, Rocket, ShieldCheck, MessageSquareHeart } from "lucide-react";
-import LogoLong from "@/assets/logo.png";
+const LogoLong = "https://assets.cuthongminh.com/assets/logo.webp";
 import { FAQSchema, type FAQItem } from "@/components/common/FAQSchema";
 import { SpeakableSchema } from "@/components/common/SpeakableSchema";
 

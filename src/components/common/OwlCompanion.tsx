@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { useOwl } from "@/context/OwlContext";
-import ownLearningImg from "@/assets/own-learning.webp";
+const ownLearningImg = "https://assets.cuthongminh.com/assets/own-learning.webp";
 import { playSound } from "@/libs/utils/playSound";
 import { usePathname } from "next/navigation";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";

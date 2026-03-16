@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import LogoLong from "@/assets/logo-long.webp";
-import LogoShort from "@/assets/logo.png";
+const LogoLong = "https://assets.cuthongminh.com/assets/logo-long.webp";
+const LogoShort = "https://assets.cuthongminh.com/assets/logo.webp";
 
 export const HeaderHome = () => {
   return (

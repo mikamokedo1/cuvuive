@@ -5,11 +5,11 @@ import Link from "next/link";
 import { ActionButton } from "@/components/common/ActionButton";
 import { Crown } from "lucide-react";
 
-// Assets
-import LogoLong from "@/assets/logo-long.webp";
-import LogoShort from "@/assets/logo.png";
-import avatarBoy from "@/assets/avatar-boy.webp";
-import avatarGirl from "@/assets/avatar-girl.webp";
+// Assets (Cloudflare R2)
+const LogoLong = "https://assets.cuthongminh.com/assets/logo-long.webp";
+const LogoShort = "https://assets.cuthongminh.com/assets/logo.webp";
+const avatarBoy = "https://assets.cuthongminh.com/assets/avatar-boy.webp";
+const avatarGirl = "https://assets.cuthongminh.com/assets/avatar-girl.webp";
 import { usePathname } from "next/navigation";
 import { SignoutIcon } from "../common/Icons";
 import { useUser } from "@/context/UserContext";

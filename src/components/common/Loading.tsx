@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import loadingIcon from "@/assets/loading-icon.svg";
-import OwnLearning from "@/assets/own-learning.webp";
+const OwnLearning = "https://assets.cuthongminh.com/assets/own-learning.webp";
 
 const Loading = () => {
   return (
