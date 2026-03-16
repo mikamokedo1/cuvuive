@@ -11,21 +11,21 @@ export interface LetterPathData {
 export const LETTER_PATHS: Record<string, LetterPathData> = {
   // === VOWELS ===
   a: {
-    // Lowercase 'a': oval body + right vertical stem
-    path: "M 185 105 C 185 60, 75 60, 75 170 C 75 265, 185 265, 185 195 L 185 265",
-    startPoint: { x: 185, y: 105 },
+    // Lowercase 'a': Vietnamese cursive - closed oval, right stem down, tail hook
+    path: "M 175 125 C 175 55, 60 55, 60 130 C 60 205, 175 205, 175 125 L 175 165 Q 175 192, 200 185",
+    startPoint: { x: 175, y: 125 },
     viewBox: "0 0 260 320",
   },
-  "ă": {
-    // 'a' + breve (˘)
-    path: "M 185 115 C 185 70, 75 70, 75 175 C 75 270, 185 270, 185 205 L 185 270 M 100 55 Q 130 85, 160 55",
-    startPoint: { x: 185, y: 115 },
+  ă: {
+    // 'ă': cursive a shifted down + breve accent
+    path: "M 175 140 C 175 70, 60 70, 60 145 C 60 220, 175 220, 175 140 L 175 180 Q 175 207, 200 200 M 88 45 Q 118 70, 148 45",
+    startPoint: { x: 175, y: 140 },
     viewBox: "0 0 260 320",
   },
-  "â": {
-    // 'a' + circumflex (^)
-    path: "M 185 115 C 185 70, 75 70, 75 175 C 75 270, 185 270, 185 205 L 185 270 M 100 55 L 130 25 L 160 55",
-    startPoint: { x: 185, y: 115 },
+  â: {
+    // 'â': cursive a shifted down + circumflex accent
+    path: "M 175 140 C 175 70, 60 70, 60 145 C 60 220, 175 220, 175 140 L 175 180 Q 175 207, 200 200 M 88 45 L 118 15 L 148 45",
+    startPoint: { x: 175, y: 140 },
     viewBox: "0 0 260 320",
   },
   e: {
@@ -34,16 +34,16 @@ export const LETTER_PATHS: Record<string, LetterPathData> = {
     startPoint: { x: 75, y: 170 },
     viewBox: "0 0 260 320",
   },
-  "ê": {
+  ê: {
     // 'e' + circumflex (^)
     path: "M 75 175 L 185 175 C 185 105, 75 105, 75 175 C 75 270, 185 275, 185 220 M 100 65 L 130 35 L 160 65",
     startPoint: { x: 75, y: 175 },
     viewBox: "0 0 260 320",
   },
   i: {
-    // Lowercase 'i': vertical stroke + dot
-    path: "M 130 115 L 130 265 M 125 75 A 10 10 0 1 0 135 75 A 10 10 0 1 0 125 75",
-    startPoint: { x: 130, y: 115 },
+    // Lowercase 'i': Vietnamese cursive - diagonal up, vertical stroke, bottom hook, small dot
+    path: "M 105 155 L 130 115 L 130 245 C 130 278, 148 288, 175 275 M 127 78 A 3 3 0 1 0 133 78 A 3 3 0 1 0 127 78",
+    startPoint: { x: 105, y: 155 },
     viewBox: "0 0 260 320",
   },
   o: {
@@ -52,15 +52,15 @@ export const LETTER_PATHS: Record<string, LetterPathData> = {
     startPoint: { x: 130, y: 85 },
     viewBox: "0 0 260 320",
   },
-  "ô": {
+  ô: {
     // 'o' + circumflex (^)
     path: "M 130 95 C 180 95, 215 130, 215 180 C 215 230, 180 270, 130 270 C 80 270, 45 230, 45 180 C 45 130, 80 95, 130 95 M 100 60 L 130 30 L 160 60",
     startPoint: { x: 130, y: 95 },
     viewBox: "0 0 260 320",
   },
-  "ơ": {
-    // 'o' + horn (hook on upper right)
-    path: "M 130 95 C 180 95, 210 130, 210 180 C 210 230, 180 270, 130 270 C 80 270, 50 230, 50 180 C 50 130, 80 95, 130 95 M 205 110 C 220 90, 240 105, 228 120",
+  ơ: {
+    // 'o' + horn (hook curving upward-right from top-right of the oval)
+    path: "M 130 95 C 180 95, 210 130, 210 180 C 210 230, 180 270, 130 270 C 80 270, 50 230, 50 180 C 50 130, 80 95, 130 95 M 205 110 C 215 105, 225 95, 228 80 C 230 70, 225 62, 218 65",
     startPoint: { x: 130, y: 95 },
     viewBox: "0 0 260 320",
   },
@@ -70,9 +70,9 @@ export const LETTER_PATHS: Record<string, LetterPathData> = {
     startPoint: { x: 80, y: 105 },
     viewBox: "0 0 260 320",
   },
-  "ư": {
-    // 'u' + horn (hook on upper right)
-    path: "M 80 115 L 80 200 C 80 270, 180 270, 180 200 L 180 115 M 180 100 C 200 75, 220 95, 208 110",
+  ư: {
+    // 'u' + horn (hook curving upward-right from top of right stem)
+    path: "M 80 115 L 80 200 C 80 270, 180 270, 180 200 L 180 115 M 180 115 C 192 110, 202 100, 205 85 C 207 75, 202 67, 195 70",
     startPoint: { x: 80, y: 115 },
     viewBox: "0 0 260 320",
   },
@@ -102,22 +102,22 @@ export const LETTER_PATHS: Record<string, LetterPathData> = {
     startPoint: { x: 180, y: 45 },
     viewBox: "0 0 260 320",
   },
-  "đ": {
+  đ: {
     // 'd' + horizontal stroke through ascender
     path: "M 180 45 L 180 265 M 180 155 C 180 95, 75 95, 75 180 C 75 260, 180 260, 180 200 M 150 75 L 215 75",
     startPoint: { x: 180, y: 45 },
     viewBox: "0 0 260 320",
   },
   g: {
-    // Lowercase 'g': oval + right descending stem with hook
-    path: "M 185 105 C 185 60, 75 60, 75 170 C 75 260, 185 260, 185 195 L 185 300 C 185 330, 90 325, 80 290",
-    startPoint: { x: 185, y: 105 },
+    // Lowercase 'g': Vietnamese cursive - 1) closed oval top, 2) straight line down, 3) bottom loop
+    path: "M 130 40 C 175 40, 190 75, 188 110 C 186 145, 152 162, 122 162 C 88 162, 70 140, 70 108 C 70 72, 92 40, 130 40 M 185 118 L 185 288 C 185 320, 128 320, 128 275 C 128 230, 168 180, 200 168",
+    startPoint: { x: 130, y: 40 },
     viewBox: "0 0 260 320",
   },
   h: {
-    // Lowercase 'h': tall left stem + right arch
-    path: "M 80 45 L 80 265 M 80 155 C 80 95, 180 95, 180 160 L 180 265",
-    startPoint: { x: 80, y: 45 },
+    // Lowercase 'h': Vietnamese cursive - stem up, loop RIGHT at top, gap, narrow hump RIGHT below, tail hook
+    path: "M 90 270 L 90 45 C 90 12, 138 12, 138 68 C 138 125, 112 155, 90 180 C 90 230, 160 150, 172 218 C 185 248, 172 265, 170 272 Q 170 284, 190 274",
+    startPoint: { x: 90, y: 270 },
     viewBox: "0 0 260 320",
   },
   k: {
@@ -169,9 +169,9 @@ export const LETTER_PATHS: Record<string, LetterPathData> = {
     viewBox: "0 0 260 320",
   },
   t: {
-    // Lowercase 't': tall stem + cross stroke
-    path: "M 120 50 L 120 265 M 70 115 L 175 115",
-    startPoint: { x: 120, y: 50 },
+    // Lowercase 't': tall stem + cross stroke + bottom hook (Vietnamese style)
+    path: "M 130 50 L 130 230 Q 130 270, 95 255 M 80 115 L 175 115",
+    startPoint: { x: 130, y: 50 },
     viewBox: "0 0 260 320",
   },
   v: {
