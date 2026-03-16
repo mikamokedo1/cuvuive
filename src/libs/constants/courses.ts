@@ -34,6 +34,10 @@ const EarGroupLogo = "https://assets.cuthongminh.com/games/mini-piano/group3.web
 const GameSyllableLogo = "https://assets.cuthongminh.com/games/learn-syllable/logo.webp";
 const GameTerrainLogo = "https://assets.cuthongminh.com/games/learn-terrain/logo.webp";
 const GameBodyLogo = "https://assets.cuthongminh.com/games/learn-body/logo.webp";
+const GameLineConnectLogo = "https://assets.cuthongminh.com/games/line-connect/logo.webp";
+const LineConnectGroup1Logo = "https://assets.cuthongminh.com/games/line-connect/group1.webp";
+const LineConnectGroup2Logo = "https://assets.cuthongminh.com/games/line-connect/group2.webp";
+const LineConnectGroup3Logo = "https://assets.cuthongminh.com/games/line-connect/group3.webp";
 import { StaticImageData } from "next/image";
 import { GameGroupType } from "@/libs/constants/groups";
 
@@ -1027,16 +1031,19 @@ export const COURSES: CourseDef[] = [
       {
         id: "group1",
         title: "Nối điểm dễ",
+        logo: LineConnectGroup1Logo,
         lessons: [{ id: "lesson1", title: "Bắt đầu", isFree: true }],
       },
       {
         id: "group2",
         title: "Nối điểm vừa",
+        logo: LineConnectGroup2Logo,
         lessons: [{ id: "lesson1", title: "Bắt đầu", isFree: true }],
       },
       {
         id: "group3",
         title: "Nối điểm khó",
+        logo: LineConnectGroup3Logo,
         lessons: [{ id: "lesson1", title: "Bắt đầu", isFree: true }],
       },
     ],

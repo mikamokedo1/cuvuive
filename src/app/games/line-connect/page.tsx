@@ -1,5 +1,5 @@
 import { GROUPS } from "@/features/games/line-connect/constants";
-import GameLineConnectLogo from "@/assets/games/line-connect/logo.png";
+const GameLineConnectLogo = "https://assets.cuthongminh.com/games/line-connect/logo.webp";
 import { GameWrapGroups } from "@/components/layout/GameWrapGroups";
 
 export default function LineConnectGroupsPage() {
