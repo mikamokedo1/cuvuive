@@ -1,7 +1,7 @@
 "use client";
 
 import { useGameLesson } from "@/hooks/useGameLesson";
-import { GROUPS, getFruitsForGroup } from "@/features/games/learn-fruit/constants";
+import { GROUPS, getFruitsForGroup, FRUIT_DESCRIPTIONS } from "@/features/games/learn-fruit/constants";
 import { FruitLearnLesson } from "@/features/games/learn-fruit/FruitLearnLesson";
 import { FruitQuizLesson } from "@/features/games/learn-fruit/FruitQuizLesson";
 import { FruitMemoryLesson } from "@/features/games/learn-fruit/FruitMemoryLesson";
@@ -21,7 +21,7 @@ export default function LessonPage() {
   const renderLesson = () => {
     switch (game.lessonId) {
       case "lesson1":
-        return <FruitLearnLesson fruits={fruits} onComplete={game.handleComplete} />;
+        return <FruitLearnLesson fruits={fruits} descriptions={FRUIT_DESCRIPTIONS} onComplete={game.handleComplete} />;
       case "lesson2":
         return <FruitQuizLesson fruits={fruits} onComplete={game.handleComplete} />;
       case "lesson3":

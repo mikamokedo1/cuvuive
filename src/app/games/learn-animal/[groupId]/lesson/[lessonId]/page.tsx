@@ -1,7 +1,7 @@
 "use client";
 
 import { useGameLesson } from "@/hooks/useGameLesson";
-import { GROUPS, getAnimalsForGroup } from "@/features/games/learn-animal/constants";
+import { GROUPS, getAnimalsForGroup, ANIMAL_DESCRIPTIONS } from "@/features/games/learn-animal/constants";
 import { AnimalLearnLesson } from "@/features/games/learn-animal/AnimalLearnLesson";
 import { AnimalQuizLesson } from "@/features/games/learn-animal/AnimalQuizLesson";
 import { AnimalMemoryLesson } from "@/features/games/learn-animal/AnimalMemoryLesson";
@@ -22,7 +22,7 @@ export default function LessonPage() {
   const renderLesson = () => {
     switch (game.lessonId) {
       case "lesson1":
-        return <AnimalLearnLesson animals={animals} onComplete={game.handleComplete} />;
+        return <AnimalLearnLesson animals={animals} descriptions={ANIMAL_DESCRIPTIONS} onComplete={game.handleComplete} />;
       case "lesson2":
         return <AnimalSpeakingLesson animals={animals} onComplete={game.handleComplete} />;
       case "lesson3":

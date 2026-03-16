@@ -1,10 +1,10 @@
 import { StaticImageData } from "next/image";
 
-import Group1Logo from "@/assets/games/learn-math/group-1-logo.png";
-import Group2Logo from "@/assets/games/learn-math/group-2-logo.png";
-import Group3Logo from "@/assets/games/learn-math/group-3-logo.png";
-import Group4Logo from "@/assets/games/learn-math/group-4-logo.png";
-import Group5Logo from "@/assets/games/learn-math/group-5-logo.png";
+const Group1Logo = "https://assets.cuthongminh.com/games/learn-math/group-1-logo.webp";
+const Group2Logo = "https://assets.cuthongminh.com/games/learn-math/group-2-logo.webp";
+const Group3Logo = "https://assets.cuthongminh.com/games/learn-math/group-3-logo.webp";
+const Group4Logo = "https://assets.cuthongminh.com/games/learn-math/group-4-logo.webp";
+const Group5Logo = "https://assets.cuthongminh.com/games/learn-math/group-5-logo.webp";
 
 export type MathOperator = "add" | "sub";
 export type MathMode = "visual" | "number";
@@ -24,7 +24,7 @@ export interface GroupData {
   description: string;
   subtitle?: string;
   variant: "green" | "orange" | "purple" | "blue";
-  logo: StaticImageData;
+  logo: string | StaticImageData;
 }
 
 export const GROUPS: GroupData[] = [

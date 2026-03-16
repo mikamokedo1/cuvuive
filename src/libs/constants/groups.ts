@@ -1,15 +1,15 @@
 import { StaticImageData } from "next/image";
 
 //group logo
-import MusicLogo from "@/assets/games/home/am_nhac.webp";
-import GeographyLogo from "@/assets/games/home/dia_ly.webp";
-import ScienceLogo from "@/assets/games/home/khoa_hoc.webp";
-import LifeSkillLogo from "@/assets/games/home/ky_nang_song.webp";
-// import HistoryLogo from "@/assets/games/home/lich_su.webp";
-import LanguageLogo from "@/assets/games/home/ngon_ngu.webp";
-import MathLogo from "@/assets/games/home/toan.webp";
-import LogicLogo from "@/assets/games/home/tu_duy.webp";
-import ArtLogo from "@/assets/games/home/ve.webp";
+const MusicLogo = "https://assets.cuthongminh.com/games/home/am_nhac.webp";
+const GeographyLogo = "https://assets.cuthongminh.com/games/home/dia_ly.webp";
+const ScienceLogo = "https://assets.cuthongminh.com/games/home/khoa_hoc.webp";
+const LifeSkillLogo = "https://assets.cuthongminh.com/games/home/ky_nang_song.webp";
+// const HistoryLogo = "https://assets.cuthongminh.com/games/home/lich_su.webp";
+const LanguageLogo = "https://assets.cuthongminh.com/games/home/ngon_ngu.webp";
+const MathLogo = "https://assets.cuthongminh.com/games/home/toan.webp";
+const LogicLogo = "https://assets.cuthongminh.com/games/home/tu_duy.webp";
+const ArtLogo = "https://assets.cuthongminh.com/games/home/ve.webp";
 
 export type GameGroupType =
   | "math"
@@ -26,7 +26,7 @@ export interface Group {
   id: GameGroupType;
   title: string;
   slug: string;
-  icon: StaticImageData;
+  icon: string | StaticImageData;
 }
 
 export const GROUPS: Group[] = [

@@ -7,6 +7,7 @@ import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { NUMBER_NAMES_VI } from "@/libs/constants/numberPaths2";
 import { randomExcluding } from "@/libs/utils/randomNum";
 import { FeedbackType } from "@/types/game";
+import { playWrongSound } from "@/libs/utils/playSound";
 
 const MAP_INDEX_TO_COLOR = ["blue", "green", "orange", "purple"] as const;
 
@@ -82,6 +83,7 @@ export function QuizLesson2({ numbers, onComplete, requiredWins = 6 }: QuizLesso
       }
     } else {
       setFeedback("wrong");
+      playWrongSound();
       setTimeout(() => setFeedback(null), 600);
     }
   };

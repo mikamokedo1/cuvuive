@@ -1,7 +1,7 @@
 import { StaticImageData } from "next/image";
-import LogoGroup1 from "@/assets/games/paint-picture/group1.png";
-import LogoGroup2 from "@/assets/games/paint-picture/group2.png";
-import LogoGroup3 from "@/assets/games/paint-picture/group3.png";
+const LogoGroup1 = "https://assets.cuthongminh.com/games/paint-picture/group1.webp";
+const LogoGroup2 = "https://assets.cuthongminh.com/games/paint-picture/group2.webp";
+const LogoGroup3 = "https://assets.cuthongminh.com/games/paint-picture/group3.webp";
 
 export interface ColorRegion {
   id: string;
@@ -171,7 +171,7 @@ export interface GroupData {
   id: string;
   title: string;
   description: string;
-  logo: StaticImageData;
+  logo: string | StaticImageData;
   variant: "green" | "blue" | "purple" | "orange";
 }
 

@@ -1,19 +1,19 @@
 import { StaticImageData } from "next/image";
 
 // Import images
-import RedApple from "@/assets/games/learn-color/red-apple.webp";
-import BlueDolphin from "@/assets/games/learn-color/blue-whale.webp";
-import YellowBanana from "@/assets/games/learn-color/yellow-banana.webp";
-import GreenFrog from "@/assets/games/learn-color/green-frog.webp";
-import OrangeFruit from "@/assets/games/learn-color/orange-fruit.webp";
-import PurpleGrape from "@/assets/games/learn-color/purple-grape.webp";
-import PinkPig from "@/assets/games/learn-color/pink-pig.webp";
-import BrownBear from "@/assets/games/learn-color/brown-bear.webp";
-import BlackCat from "@/assets/games/learn-color/black-cat.webp";
-import WhiteCloud from "@/assets/games/learn-color/cloud.webp";
-import LogoLesson1 from "@/assets/games/learn-color/learn-color-logo-1.webp";
-import LogoLesson2 from "@/assets/games/learn-color/learn-color-logo-2.webp";
-import LogoLesson3 from "@/assets/games/learn-color/learn-color-logo-3.webp";
+const RedApple = "https://assets.cuthongminh.com/games/learn-color/red-apple.webp";
+const BlueDolphin = "https://assets.cuthongminh.com/games/learn-color/blue-whale.webp";
+const YellowBanana = "https://assets.cuthongminh.com/games/learn-color/yellow-banana.webp";
+const GreenFrog = "https://assets.cuthongminh.com/games/learn-color/green-frog.webp";
+const OrangeFruit = "https://assets.cuthongminh.com/games/learn-color/orange-fruit.webp";
+const PurpleGrape = "https://assets.cuthongminh.com/games/learn-color/purple-grape.webp";
+const PinkPig = "https://assets.cuthongminh.com/games/learn-color/pink-pig.webp";
+const BrownBear = "https://assets.cuthongminh.com/games/learn-color/brown-bear.webp";
+const BlackCat = "https://assets.cuthongminh.com/games/learn-color/black-cat.webp";
+const WhiteCloud = "https://assets.cuthongminh.com/games/learn-color/cloud.webp";
+const LogoLesson1 = "https://assets.cuthongminh.com/games/learn-color/learn-color-logo-1.webp";
+const LogoLesson2 = "https://assets.cuthongminh.com/games/learn-color/learn-color-logo-2.webp";
+const LogoLesson3 = "https://assets.cuthongminh.com/games/learn-color/learn-color-logo-3.webp";
 import { EntityData } from "@/types/game";
 
 export interface ColorData extends EntityData {

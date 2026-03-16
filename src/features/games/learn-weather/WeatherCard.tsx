@@ -41,7 +41,7 @@ export function WeatherCard({ item, active = false, onClick }: WeatherCardProps)
     >
       {/* Item Image */}
       <div className="relative w-48 h-48 md:w-64 md:h-64">
-        <Image src={item.image} alt={item.name} fill className="object-contain drop-shadow-lg" priority />
+        <Image src={item.image} alt={item.name} fill className="object-contain drop-shadow-lg" sizes="(max-width: 768px) 192px, 256px" />
       </div>
     </div>
   );

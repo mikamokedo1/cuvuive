@@ -1,5 +1,5 @@
 import { GROUPS } from "@/features/games/learn-hygiene/constants";
-import GameHygieneLogo from "@/assets/games/learn-hygiene/logo.png";
+const GameHygieneLogo = "https://assets.cuthongminh.com/games/learn-hygiene/logo.webp";
 import { GameWrapGroups } from "@/components/layout/GameWrapGroups";
 
 export default function LearnHygienePage() {

@@ -1,5 +1,5 @@
 import { GROUPS } from "@/features/games/learn-color/constants";
-import GameColorLogo from "@/assets/games/learn-color-color.webp";
+const GameColorLogo = "https://assets.cuthongminh.com/games/learn-color-color.webp";
 import { GameWrapGroups } from "@/components/layout/GameWrapGroups";
 
 export default function LearnColorPage() {

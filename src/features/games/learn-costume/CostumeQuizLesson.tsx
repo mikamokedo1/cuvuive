@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import Image from "next/image";
 import { CostumeData } from "./constants";
-import { playButtonSound } from "@/libs/utils/playSound";
+import { playButtonSound, playWrongSound } from "@/libs/utils/playSound";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { FeedbackType } from "@/types/game";
 import { motion, AnimatePresence } from "framer-motion";
@@ -56,8 +56,8 @@ export function CostumeQuizLesson({ costumes, onComplete, requiredWins = 6 }: Co
 
   const handleAnswer = (answer: string) => {
     if (feedback !== null || !currentCostume) return;
-
     setSelectedAnswer(answer);
+    speak(answer);
 
     if (answer === currentCostume.category) {
       setFeedback("correct");
@@ -72,7 +72,7 @@ export function CostumeQuizLesson({ costumes, onComplete, requiredWins = 6 }: Co
       }
     } else {
       setFeedback("wrong");
-      playButtonSound();
+      playWrongSound();
       setTimeout(() => {
         setFeedback(null);
         setSelectedAnswer(null);

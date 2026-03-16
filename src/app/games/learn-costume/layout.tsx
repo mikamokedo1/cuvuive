@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import GameCostumeLogo from "@/assets/games/learn-costume/logo.png";
+const GameCostumeLogo = "https://assets.cuthongminh.com/games/learn-costume/logo.webp";
 
 export const metadata: Metadata = {
   title: "Học Trang Phục | Cú Thông Minh",
@@ -11,12 +11,15 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: GameCostumeLogo.src,
+        url: GameCostumeLogo,
         width: 630,
         height: 630,
         alt: "Học Trang Phục | Cú Thông Minh",
       },
     ],
+  },
+  alternates: {
+    canonical: "/games/learn-costume",
   },
 };
 

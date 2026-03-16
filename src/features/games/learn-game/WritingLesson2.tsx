@@ -4,12 +4,12 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { DIGIT_PATHS, getDigits, NUMBER_NAMES_VI } from "@/libs/constants/numberPaths2";
 import Image from "next/image";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
-import Easer from "@/assets/games/common/earser.webp";
-import Pen from "@/assets/games/pen.webp";
-import LoudSpeaker from "@/assets/games/loud-speaker.webp";
+const Easer = "https://assets.cuthongminh.com/games/common/earser.webp";
+const Pen = "https://assets.cuthongminh.com/games/pen.webp";
 import { playButtonSound } from "@/libs/utils/playSound";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
+import { LoudSpeaker } from "@/libs/constants/game-assets";
 
 interface WritingLesson2Props {
   numbers: number[];
@@ -422,7 +422,7 @@ export function WritingLesson2({ numbers, onComplete }: WritingLesson2Props) {
             onClick={clearDrawing}
             onMouseEnter={playButtonSound}
           >
-            <Image src={Easer} alt="Eraser" className="w-12 h-12" />
+            <Image width={48} height={48} src={Easer} alt="Eraser" className="w-12 h-12" />
           </button>
         )}
 
@@ -432,7 +432,7 @@ export function WritingLesson2({ numbers, onComplete }: WritingLesson2Props) {
           onClick={() => speak(`Số ${currentNumber}`)}
           onMouseEnter={playButtonSound}
         >
-          <Image src={LoudSpeaker} alt="Speaker" className="w-12 h-10" />
+          <Image width={48} height={40} src={LoudSpeaker} alt="Speaker" className="w-12 h-10" />
         </button>
       </div>
 

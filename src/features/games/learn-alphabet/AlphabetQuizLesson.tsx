@@ -6,9 +6,9 @@ import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import Image from "next/image";
-import LoudSpeaker from "@/assets/games/loud-speaker.webp";
 import { playButtonSound } from "@/libs/utils/playSound";
 import { FeedbackType } from "@/types/game";
+import { LoudSpeaker } from "@/libs/constants/game-assets";
 
 interface AlphabetQuizLessonProps {
   letters: LetterData[];
@@ -45,7 +45,7 @@ export function AlphabetQuizLesson({ letters, onComplete, requiredWins = 6 }: Al
 
     // Auto speak question after a short delay
     setTimeout(() => {
-      speak(`${target.word} bắt đầu bằng chữ gì?`);
+      speak(`${target.word} có chữ gì?`);
     }, 1000);
   };
 
@@ -61,7 +61,7 @@ export function AlphabetQuizLesson({ letters, onComplete, requiredWins = 6 }: Al
     playButtonSound();
 
     if (selected.id === targetLetter.id) {
-      speak(`Đúng rồi, ${targetLetter.word} bắt đầu bằng chữ ${targetLetter.letter}`);
+      speak(`Đúng rồi, ${targetLetter.word} có chữ ${targetLetter.letter}`);
       setFeedback("correct");
       playWinEffect(500);
 
@@ -86,7 +86,10 @@ export function AlphabetQuizLesson({ letters, onComplete, requiredWins = 6 }: Al
   return (
     <div className="flex flex-col items-center gap-8 w-full max-w-4xl">
       {/* Target Image Display */}
-      <div className="relative w-48 h-48 md:w-64 md:h-64 flex items-center justify-center">
+      <div
+        className="relative w-48 h-48 md:w-64 md:h-64 flex items-center justify-center"
+        onClick={() => speak(`${targetLetter.word} có chữ gì?`)}
+      >
         <div
           className={`absolute inset-0 bg-gray-100 rounded-3xl border-4 border-gray-300 shadow-inner
           ${
@@ -111,16 +114,6 @@ export function AlphabetQuizLesson({ letters, onComplete, requiredWins = 6 }: Al
             <div className="w-full h-full animate-ping rounded-3xl bg-green-100 opacity-20" />
           </div>
         )}
-      </div>
-
-      {/* Question - Speaker */}
-      <div className="flex flex-col items-center gap-4 text-center">
-        <button
-          onClick={() => speak(`${targetLetter.word} bắt đầu bằng chữ gì?`)}
-          className="cursor-pointer hover:scale-105 transition-all"
-        >
-          <Image src={LoudSpeaker} alt="Speaker" className="w-12 h-10" />
-        </button>
       </div>
 
       {/* Letter Options */}

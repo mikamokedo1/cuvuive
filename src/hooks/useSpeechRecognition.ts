@@ -24,6 +24,7 @@ interface SpeechRecognition extends EventTarget {
   onerror: ((this: SpeechRecognition, ev: SpeechRecognitionErrorEvent) => any) | null;
   onend: ((this: SpeechRecognition, ev: Event) => any) | null;
   onstart: ((this: SpeechRecognition, ev: Event) => any) | null;
+  onaudiostart: ((this: SpeechRecognition, ev: Event) => any) | null;
 }
 
 declare global {
@@ -57,6 +58,9 @@ export function useSpeechRecognition(lang: string = "vi-VN"): UseSpeechRecogniti
 
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const langRef = useRef(lang);
+  const gotResultRef = useRef(false);
+  const isUserStoppedRef = useRef(false);
+  const startPendingRef = useRef(false);
 
   // Keep lang ref in sync
   useEffect(() => {
@@ -75,6 +79,7 @@ export function useSpeechRecognition(lang: string = "vi-VN"): UseSpeechRecogniti
   // Cleanup on unmount
   useEffect(() => {
     return () => {
+      startPendingRef.current = false;
       if (recognitionRef.current) {
         try {
           recognitionRef.current.abort();
@@ -86,11 +91,23 @@ export function useSpeechRecognition(lang: string = "vi-VN"): UseSpeechRecogniti
     };
   }, []);
 
-  const startListening = useCallback(() => {
+  // Helper: detect Safari (including iOS Safari / WebKit-based browsers)
+  const isSafari = useCallback(() => {
+    if (typeof navigator === "undefined") return false;
+    const ua = navigator.userAgent;
+    return /Safari/.test(ua) && !/Chrome/.test(ua) && !/CriOS/.test(ua);
+  }, []);
+
+  const startListening = useCallback(async () => {
     if (typeof window === "undefined") return;
+
+    // Guard: prevent overlapping start attempts
+    if (startPendingRef.current) return;
+    startPendingRef.current = true;
 
     const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognitionAPI) {
+      startPendingRef.current = false;
       setIsSupported(false);
       return;
     }
@@ -105,7 +122,47 @@ export function useSpeechRecognition(lang: string = "vi-VN"): UseSpeechRecogniti
       recognitionRef.current = null;
     }
 
-    // Create a fresh instance each time (iOS Safari requires this)
+    const safari = isSafari();
+
+    // ── Step 1: Kill all competing audio sources ──
+    // iOS Safari has exclusive audio session: only ONE of TTS / AudioContext /
+    // SpeechRecognition can hold the audio hardware at a time.
+
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
+
+    // Close AudioContext entirely (not just suspend) so iOS fully releases the
+    // audio session. playSound.ts will lazily recreate it when needed.
+    const ctx = (window as any).__audioContext as AudioContext | undefined;
+    if (ctx && ctx.state !== "closed") {
+      try {
+        await ctx.close();
+      } catch {
+        // ignore
+      }
+      (window as any).__audioContext = null;
+    }
+
+    // ── Step 2: Force iOS to switch audio session to recording mode ──
+    // On iOS Safari, after TTS or AudioContext playback, the audio session stays
+    // in "playback" mode. webkitSpeechRecognition.start() does NOT switch it to
+    // "record" mode automatically. Requesting getUserMedia forces the OS to
+    // switch, making the microphone available for SpeechRecognition.
+    if (safari) {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        // Brief pause to let iOS complete the audio session switch
+        await new Promise((resolve) => setTimeout(resolve, 300));
+        // Release the stream — the audio session stays in recording mode
+        stream.getTracks().forEach((track) => track.stop());
+      } catch (e) {
+        console.warn("getUserMedia warmup failed:", e);
+        // Continue anyway — SpeechRecognition might still work
+      }
+    }
+
+    // ── Step 3: Create and start a fresh SpeechRecognition instance ──
     const recognition = new SpeechRecognitionAPI();
     recognition.continuous = false;
     recognition.interimResults = true;
@@ -114,13 +171,37 @@ export function useSpeechRecognition(lang: string = "vi-VN"): UseSpeechRecogniti
     setError(null);
     setTranscript("");
     setInterimTranscript("");
+    gotResultRef.current = false;
+    isUserStoppedRef.current = false;
+
+    // Safety timeout: if onstart never fires within 3 seconds, reset state
+    const startTimeout = setTimeout(() => {
+      if (!gotResultRef.current && recognitionRef.current === recognition) {
+        console.warn("Speech recognition: onstart never fired, resetting");
+        setIsListening(false);
+        startPendingRef.current = false;
+        try {
+          recognition.abort();
+        } catch {
+          // ignore
+        }
+      }
+    }, 3000);
 
     recognition.onstart = () => {
+      clearTimeout(startTimeout);
+      startPendingRef.current = false;
       setIsListening(true);
       setError(null);
     };
 
+    recognition.onaudiostart = () => {
+      clearTimeout(startTimeout);
+      gotResultRef.current = false; // reset, audio is flowing
+    };
+
     recognition.onresult = (event: SpeechRecognitionEvent) => {
+      gotResultRef.current = true;
       let finalSpeech = "";
       let interimSpeech = "";
 
@@ -139,9 +220,9 @@ export function useSpeechRecognition(lang: string = "vi-VN"): UseSpeechRecogniti
     };
 
     recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
-      console.error("Speech recognition error:", event.error);
-      // "no-speech" is not a real error, just means the user didn't say anything
-      // "aborted" happens when we intentionally abort, also not a real error
+      clearTimeout(startTimeout);
+      startPendingRef.current = false;
+      console.error("Speech recognition error:", event.error, event.message);
       if (event.error !== "no-speech" && event.error !== "aborted") {
         setError(event.error);
       }
@@ -149,6 +230,8 @@ export function useSpeechRecognition(lang: string = "vi-VN"): UseSpeechRecogniti
     };
 
     recognition.onend = () => {
+      clearTimeout(startTimeout);
+      startPendingRef.current = false;
       setIsListening(false);
     };
 
@@ -157,12 +240,15 @@ export function useSpeechRecognition(lang: string = "vi-VN"): UseSpeechRecogniti
     try {
       recognition.start();
     } catch (e) {
+      clearTimeout(startTimeout);
+      startPendingRef.current = false;
       console.error("Failed to start speech recognition:", e);
       setIsListening(false);
     }
-  }, []);
+  }, [isSafari]);
 
   const stopListening = useCallback(() => {
+    isUserStoppedRef.current = true;
     if (recognitionRef.current) {
       try {
         recognitionRef.current.stop();

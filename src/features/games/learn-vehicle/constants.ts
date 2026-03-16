@@ -1,37 +1,37 @@
 import { StaticImageData } from "next/image";
 
 // Import group logos
-import LogoGroup1 from "@/assets/games/learn-vehicle/group1.webp";
-import LogoGroup2 from "@/assets/games/learn-vehicle/group2.webp";
-import LogoGroup3 from "@/assets/games/learn-vehicle/group3.webp";
-import LogoGroup4 from "@/assets/games/learn-vehicle/logo.webp";
+const LogoGroup1 = "https://assets.cuthongminh.com/games/learn-vehicle/group1.webp";
+const LogoGroup2 = "https://assets.cuthongminh.com/games/learn-vehicle/group2.webp";
+const LogoGroup3 = "https://assets.cuthongminh.com/games/learn-vehicle/group3.webp";
+const LogoGroup4 = "https://assets.cuthongminh.com/games/learn-vehicle/logo.webp";
 
 // Import Land Vehicles (Group 1) - PNG format (AI generated)
-import Car from "@/assets/games/learn-vehicle/car.webp";
-import Motorbike from "@/assets/games/learn-vehicle/motorbike.webp";
-import Bus from "@/assets/games/learn-vehicle/bus.webp";
-import Truck from "@/assets/games/learn-vehicle/truck.webp";
-import Bicycle from "@/assets/games/learn-vehicle/bicycle.webp";
-import Taxi from "@/assets/games/learn-vehicle/taxi.webp";
+const Car = "https://assets.cuthongminh.com/games/learn-vehicle/car.webp";
+const Motorbike = "https://assets.cuthongminh.com/games/learn-vehicle/motorbike.webp";
+const Bus = "https://assets.cuthongminh.com/games/learn-vehicle/bus.webp";
+const Truck = "https://assets.cuthongminh.com/games/learn-vehicle/truck.webp";
+const Bicycle = "https://assets.cuthongminh.com/games/learn-vehicle/bicycle.webp";
+const Taxi = "https://assets.cuthongminh.com/games/learn-vehicle/taxi.webp";
 
 // Import Water Vehicles (Group 2) - webp format (AI generated)
-import Boat from "@/assets/games/learn-vehicle/boat.webp";
-import Ship from "@/assets/games/learn-vehicle/ship.webp";
-import Submarine from "@/assets/games/learn-vehicle/submarine.webp";
-import Jetski from "@/assets/games/learn-vehicle/jetski.webp";
-import Canoe from "@/assets/games/learn-vehicle/canoe.webp";
+const Boat = "https://assets.cuthongminh.com/games/learn-vehicle/boat.webp";
+const Ship = "https://assets.cuthongminh.com/games/learn-vehicle/ship.webp";
+const Submarine = "https://assets.cuthongminh.com/games/learn-vehicle/submarine.webp";
+const Jetski = "https://assets.cuthongminh.com/games/learn-vehicle/jetski.webp";
+const Canoe = "https://assets.cuthongminh.com/games/learn-vehicle/canoe.webp";
 
 // Import Air Vehicles (Group 3)
-import Airplane from "@/assets/games/learn-vehicle/airplane.webp";
-import Helicopter from "@/assets/games/learn-vehicle/helicopter.webp";
-import Balloon from "@/assets/games/learn-vehicle/balloon.webp";
-import Rocket from "@/assets/games/learn-vehicle/rocket.webp";
-import Drone from "@/assets/games/learn-vehicle/drone.webp"; // Placeholder
+const Airplane = "https://assets.cuthongminh.com/games/learn-vehicle/airplane.webp";
+const Helicopter = "https://assets.cuthongminh.com/games/learn-vehicle/helicopter.webp";
+const Balloon = "https://assets.cuthongminh.com/games/learn-vehicle/balloon.webp";
+const Rocket = "https://assets.cuthongminh.com/games/learn-vehicle/rocket.webp";
+const Drone = "https://assets.cuthongminh.com/games/learn-vehicle/drone.webp"; // Placeholder
 
 // import zones
-import ZoneLand from "@/assets/games/learn-vehicle/road.webp";
-import ZoneWater from "@/assets/games/learn-vehicle/beach.webp";
-import ZoneAir from "@/assets/games/learn-vehicle/sky.webp";
+const ZoneLand = "https://assets.cuthongminh.com/games/learn-vehicle/road.webp";
+const ZoneWater = "https://assets.cuthongminh.com/games/learn-vehicle/beach.webp";
+const ZoneAir = "https://assets.cuthongminh.com/games/learn-vehicle/sky.webp";
 import { EntityData } from "@/types/game";
 
 export const VEHICLES: EntityData[] = [
@@ -62,7 +62,7 @@ export interface GroupData {
   id: string;
   title: string;
   description: string;
-  logo: StaticImageData;
+  logo: string | StaticImageData;
   variant: "green" | "blue" | "purple" | "orange";
   lessonCount?: number;
   [key: string]: any;
@@ -144,3 +144,23 @@ export const ZONES = [
   { id: "water", name: "Đường Thủy", image: ZoneWater },
   { id: "air", name: "Hàng Không", image: ZoneAir },
 ];
+
+// ──── Vehicle Descriptions (for explore lesson) ────
+export const VEHICLE_DESCRIPTIONS: Record<string, string> = {
+  car: "Ô tô có bốn bánh, chở được cả gia đình đi chơi. Ô tô chạy bằng xăng hoặc điện!",
+  motorbike: "Xe máy có hai bánh, rất tiện lợi để đi lại trong thành phố. Nhớ đội mũ bảo hiểm nhé!",
+  bus: "Xe buýt to lớn, chở được rất nhiều người. Xe buýt dừng ở trạm để đón khách!",
+  truck: "Xe tải rất khỏe, chở được hàng hóa nặng. Xe tải giúp vận chuyển đồ đạc đi xa!",
+  bicycle: "Xe đạp chạy bằng sức đạp, rất tốt cho sức khỏe. Đạp xe vừa vui vừa bảo vệ môi trường!",
+  taxi: "Xe taxi chở khách đến nơi họ muốn. Taxi thường có màu vàng hoặc trắng!",
+  boat: "Thuyền nhỏ chèo trên sông, hồ. Thuyền là phương tiện lâu đời nhất của con người!",
+  ship: "Tàu thủy rất to, chở hàng và người đi biển. Tàu thủy có thể đi qua đại dương!",
+  submarine: "Tàu ngầm lặn sâu dưới biển. Thủy thủ trên tàu ngầm sống dưới nước nhiều tháng!",
+  jetski: "Mô tô nước lướt nhanh trên mặt nước. Chơi mô tô nước rất hào hứng!",
+  canoe: "Ca nô chạy nhanh trên sông và biển. Ca nô thường dùng để cứu hộ!",
+  airplane: "Máy bay bay trên trời rất cao và rất nhanh. Máy bay chở người đi khắp thế giới!",
+  helicopter: "Trực thăng có cánh quạt quay tròn ở trên. Trực thăng có thể bay lên thẳng và đứng yên trên không!",
+  balloon: "Khinh khí cầu bay lên nhờ khí nóng. Bay bằng khinh khí cầu rất lãng mạn!",
+  rocket: "Tên lửa phóng lên vũ trụ với tốc độ cực nhanh. Tên lửa đưa phi hành gia lên Mặt Trăng!",
+  drone: "Máy bay điều khiển từ xa, không có người lái. Drone dùng để chụp ảnh từ trên cao!",
+};

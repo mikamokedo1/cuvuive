@@ -10,33 +10,32 @@ import LogoLong from "@/assets/logo-long.webp";
 import LogoShort from "@/assets/logo.png";
 import avatarBoy from "@/assets/avatar-boy.webp";
 import avatarGirl from "@/assets/avatar-girl.webp";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { SignoutIcon } from "../common/Icons";
 import { useUser } from "@/context/UserContext";
 import { Dropdown } from "@/components/common/Dropdown";
 import { useAccess } from "@/context/AccessContext";
-import { User, Settings, MessageSquare, Trophy } from "lucide-react";
-import { useResponsive } from "@/hooks/useResponsive";
+import { Settings, MessageSquare, Trophy } from "lucide-react";
 
 const Header = () => {
   const pathname = usePathname();
-  const router = useRouter();
   const { user, handleLogout, isPremium } = useUser();
   const { setPaywallState } = useAccess();
-  const { isMobile } = useResponsive();
 
-  const handleLogin = () => {
-    setPaywallState({ isOpen: false, type: null, redirectUrl: pathname });
-    router.push("/auth/login");
-  };
+
 
   return (
     <header className="w-full flex justify-between items-center mb-8 bg-[#F8EEDD] backdrop-blur-sm rounded-3xl shadow-xl px-6 border-4 border-white relative z-50">
       <Link href="/games" aria-label="Go to homepage">
         <Image
-          src={isMobile ? LogoShort : LogoLong}
+          src={LogoShort}
           alt="Cú Thông Minh Logo"
-          className="cursor-pointer h-16 md:h-20 w-auto object-contain drop-shadow-md transition-transform duration-300 hover:scale-105"
+          className="md:hidden cursor-pointer h-16 w-auto object-contain drop-shadow-md transition-transform duration-300 hover:scale-105"
+        />
+        <Image
+          src={LogoLong}
+          alt="Cú Thông Minh Logo"
+          className="hidden md:block cursor-pointer h-20 w-auto object-contain drop-shadow-md transition-transform duration-300 hover:scale-105"
         />
       </Link>
 
@@ -50,8 +49,7 @@ const Header = () => {
                 aria-label="User menu"
               >
                 <div className="relative">
-                  <Image
-                    src={user?.user_metadata?.sex === "female" ? avatarGirl : avatarBoy}
+                  <Image width={56} height={56} src={user?.user_metadata?.sex === "female" ? avatarGirl : avatarBoy}
                     alt="User Avatar"
                     className="w-14 h-14 rounded-full border-4 border-white shadow-md bg-blue-200 object-cover"
                   />
@@ -115,16 +113,17 @@ const Header = () => {
         </div>
       ) : (
         /* Auth on the right */
-        <ActionButton
-          variant="glossy"
-          color="orange"
-          size="auto"
-          className="px-4 py-2 rounded-xl flex items-center gap-2"
-          onClick={handleLogin}
-          aria-label="Login"
-        >
-          Đăng nhập
-        </ActionButton>
+        <Link href="/auth/login" onClick={() => setPaywallState({ isOpen: false, type: null, redirectUrl: pathname })}>
+          <ActionButton
+            variant="glossy"
+            color="orange"
+            size="auto"
+            className="px-4 py-2 rounded-xl flex items-center gap-2"
+            aria-label="Login"
+          >
+            Đăng nhập
+          </ActionButton>
+        </Link>
       )}
     </header>
   );

@@ -1,80 +1,80 @@
 import { StaticImageData } from "next/image";
 
 // Import group logos
-import LogoGroup1 from "@/assets/games/learn-costume/group1.png"; // Asia
-import LogoGroup2 from "@/assets/games/learn-costume/group2.png"; // Europe
-import LogoGroup3 from "@/assets/games/learn-costume/group3.png"; // Americas & Others
+const LogoGroup1 = "https://assets.cuthongminh.com/games/learn-costume/group1.webp"; // Asia
+const LogoGroup2 = "https://assets.cuthongminh.com/games/learn-costume/group2.webp"; // Europe
+const LogoGroup3 = "https://assets.cuthongminh.com/games/learn-costume/group3.webp"; // Americas & Others
 
 // Import flags
-import FlagVietnam from "@/assets/games/learn-flag/vietnam.png";
-import FlagJapan from "@/assets/games/learn-flag/japan.png";
-import FlagSouthKorea from "@/assets/games/learn-flag/southkorea.png";
-import FlagIndia from "@/assets/games/learn-flag/india.png";
-import FlagChina from "@/assets/games/learn-flag/china.png";
-import FlagIndonesia from "@/assets/games/learn-flag/thailand.png"; // Using thailand as placeholder for Indonesia or we can just omit flag if not found
-import FlagScotland from "@/assets/games/learn-flag/uk.png"; // Using UK for Scotland
-import FlagGermany from "@/assets/games/learn-flag/germany.png";
-import FlagSpain from "@/assets/games/learn-flag/spain.png";
-import FlagRussia from "@/assets/games/learn-flag/russia.png";
-import FlagNetherlands from "@/assets/games/learn-flag/france.png"; // Using france as placeholder
-import FlagGreece from "@/assets/games/learn-flag/italy.png"; // Using italy as placeholder
-import FlagMexico from "@/assets/games/learn-flag/mexico.png";
-import FlagBrazil from "@/assets/games/learn-flag/brazil.png";
-import FlagPeru from "@/assets/games/learn-flag/colombia.png"; // Using colombia as placeholder
-import FlagNigeria from "@/assets/games/learn-flag/nigeria.png";
-import FlagEgypt from "@/assets/games/learn-flag/egypt.png";
-import FlagSaudiArabia from "@/assets/games/learn-flag/morocco.png"; // Using morocco as placeholder
+const FlagVietnam = "https://assets.cuthongminh.com/games/learn-flag/vietnam.webp";
+const FlagJapan = "https://assets.cuthongminh.com/games/learn-flag/japan.webp";
+const FlagSouthKorea = "https://assets.cuthongminh.com/games/learn-flag/southkorea.webp";
+const FlagIndia = "https://assets.cuthongminh.com/games/learn-flag/india.webp";
+const FlagChina = "https://assets.cuthongminh.com/games/learn-flag/china.webp";
+const FlagIndonesia = "https://assets.cuthongminh.com/games/learn-flag/thailand.webp"; // Using thailand as placeholder for Indonesia or we can just omit flag if not found
+const FlagScotland = "https://assets.cuthongminh.com/games/learn-flag/uk.webp"; // Using UK for Scotland
+const FlagGermany = "https://assets.cuthongminh.com/games/learn-flag/germany.webp";
+const FlagSpain = "https://assets.cuthongminh.com/games/learn-flag/spain.webp";
+const FlagRussia = "https://assets.cuthongminh.com/games/learn-flag/russia.webp";
+const FlagNetherlands = "https://assets.cuthongminh.com/games/learn-flag/france.webp"; // Using france as placeholder
+const FlagGreece = "https://assets.cuthongminh.com/games/learn-flag/italy.webp"; // Using italy as placeholder
+const FlagMexico = "https://assets.cuthongminh.com/games/learn-flag/mexico.webp";
+const FlagBrazil = "https://assets.cuthongminh.com/games/learn-flag/brazil.webp";
+const FlagPeru = "https://assets.cuthongminh.com/games/learn-flag/colombia.webp"; // Using colombia as placeholder
+const FlagNigeria = "https://assets.cuthongminh.com/games/learn-flag/nigeria.webp";
+const FlagEgypt = "https://assets.cuthongminh.com/games/learn-flag/egypt.webp";
+const FlagSaudiArabia = "https://assets.cuthongminh.com/games/learn-flag/morocco.webp"; // Using morocco as placeholder
 
-import PlaceholderCharacter from "@/assets/games/learn-costume/character.png";
+const PlaceholderCharacter = "https://assets.cuthongminh.com/games/learn-costume/character.webp";
 
 // Import Asia Costumes
-import ImgAoDai from "@/assets/games/learn-costume/aodai.png";
-import WornAoDai from "@/assets/games/learn-costume/character_aodai.png";
-import ImgBatik from "@/assets/games/learn-costume/batik.png";
-import WornBatik from "@/assets/games/learn-costume/character_batik.png";
-import ImgKimono from "@/assets/games/learn-costume/kimono.png";
-import WornKimono from "@/assets/games/learn-costume/character_kimono.png";
-import ImgHanbok from "@/assets/games/learn-costume/hanbok.png";
-import WornHanbok from "@/assets/games/learn-costume/character_hanbok.png";
-import ImgSari from "@/assets/games/learn-costume/sari.png";
-import WornSari from "@/assets/games/learn-costume/character_sari.png";
-import ImgSuongxam from "@/assets/games/learn-costume/suongxam.png";
-import WornSuongxam from "@/assets/games/learn-costume/character_suongxam.png";
+const ImgAoDai = "https://assets.cuthongminh.com/games/learn-costume/aodai.webp";
+const WornAoDai = "https://assets.cuthongminh.com/games/learn-costume/character_aodai.webp";
+const ImgBatik = "https://assets.cuthongminh.com/games/learn-costume/batik.webp";
+const WornBatik = "https://assets.cuthongminh.com/games/learn-costume/character_batik.webp";
+const ImgKimono = "https://assets.cuthongminh.com/games/learn-costume/kimono.webp";
+const WornKimono = "https://assets.cuthongminh.com/games/learn-costume/character_kimono.webp";
+const ImgHanbok = "https://assets.cuthongminh.com/games/learn-costume/hanbok.webp";
+const WornHanbok = "https://assets.cuthongminh.com/games/learn-costume/character_hanbok.webp";
+const ImgSari = "https://assets.cuthongminh.com/games/learn-costume/sari.webp";
+const WornSari = "https://assets.cuthongminh.com/games/learn-costume/character_sari.webp";
+const ImgSuongxam = "https://assets.cuthongminh.com/games/learn-costume/suongxam.webp";
+const WornSuongxam = "https://assets.cuthongminh.com/games/learn-costume/character_suongxam.webp";
 
 // Placeholders for Groups 2 & 3
-import PlaceholderCostume from "@/assets/games/learn-costume/character.png";
+const PlaceholderCostume = "https://assets.cuthongminh.com/games/learn-costume/character.webp";
 
 // Import Europe Costumes (Partial due to quota)
-import ImgKilt from "@/assets/games/learn-costume/kilt.png";
-import WornKilt from "@/assets/games/learn-costume/character_kilt.png";
-import ImgDirndl from "@/assets/games/learn-costume/dirndl.png";
-import WornDirndl from "@/assets/games/learn-costume/character_dirndl.png";
-import ImgFlamenco from "@/assets/games/learn-costume/flamenco.png";
-import ImgSarafan from "@/assets/games/learn-costume/sarafan.png";
-import WornSarafan from "@/assets/games/learn-costume/character_sarafan.png";
-import ImgKlompen from "@/assets/games/learn-costume/klompen.png";
-import WornKlompen from "@/assets/games/learn-costume/character_klompen.png";
-import ImgFustanella from "@/assets/games/learn-costume/fustanella.png";
-import WornFustanella from "@/assets/games/learn-costume/character_fustanella.png";
-import WornFlamenco from "@/assets/games/learn-costume/character_flamenco.png";
-import ImgPoncho from "@/assets/games/learn-costume/poncho.png";
-import WornPoncho from "@/assets/games/learn-costume/character_poncho.png";
-import ImgSamba from "@/assets/games/learn-costume/samba.png";
-import WornSamba from "@/assets/games/learn-costume/character_samba.png";
-import ImgChullo from "@/assets/games/learn-costume/chullo.png";
-import WornChullo from "@/assets/games/learn-costume/character_chullo.png";
-import ImgDashiki from "@/assets/games/learn-costume/dashiki.png";
-import WornDashiki from "@/assets/games/learn-costume/character_dashiki.png";
-import ImgGalabeya from "@/assets/games/learn-costume/galabeya.png";
-import WornGalabeya from "@/assets/games/learn-costume/character_galabeya.png";
-import ImgThobe from "@/assets/games/learn-costume/thobe.png";
-import WornThobe from "@/assets/games/learn-costume/character_thobe.png";
+const ImgKilt = "https://assets.cuthongminh.com/games/learn-costume/kilt.webp";
+const WornKilt = "https://assets.cuthongminh.com/games/learn-costume/character_kilt.webp";
+const ImgDirndl = "https://assets.cuthongminh.com/games/learn-costume/dirndl.webp";
+const WornDirndl = "https://assets.cuthongminh.com/games/learn-costume/character_dirndl.webp";
+const ImgFlamenco = "https://assets.cuthongminh.com/games/learn-costume/flamenco.webp";
+const ImgSarafan = "https://assets.cuthongminh.com/games/learn-costume/sarafan.webp";
+const WornSarafan = "https://assets.cuthongminh.com/games/learn-costume/character_sarafan.webp";
+const ImgKlompen = "https://assets.cuthongminh.com/games/learn-costume/klompen.webp";
+const WornKlompen = "https://assets.cuthongminh.com/games/learn-costume/character_klompen.webp";
+const ImgFustanella = "https://assets.cuthongminh.com/games/learn-costume/fustanella.webp";
+const WornFustanella = "https://assets.cuthongminh.com/games/learn-costume/character_fustanella.webp";
+const WornFlamenco = "https://assets.cuthongminh.com/games/learn-costume/character_flamenco.webp";
+const ImgPoncho = "https://assets.cuthongminh.com/games/learn-costume/poncho.webp";
+const WornPoncho = "https://assets.cuthongminh.com/games/learn-costume/character_poncho.webp";
+const ImgSamba = "https://assets.cuthongminh.com/games/learn-costume/samba.webp";
+const WornSamba = "https://assets.cuthongminh.com/games/learn-costume/character_samba.webp";
+const ImgChullo = "https://assets.cuthongminh.com/games/learn-costume/chullo.webp";
+const WornChullo = "https://assets.cuthongminh.com/games/learn-costume/character_chullo.webp";
+const ImgDashiki = "https://assets.cuthongminh.com/games/learn-costume/dashiki.webp";
+const WornDashiki = "https://assets.cuthongminh.com/games/learn-costume/character_dashiki.webp";
+const ImgGalabeya = "https://assets.cuthongminh.com/games/learn-costume/galabeya.webp";
+const WornGalabeya = "https://assets.cuthongminh.com/games/learn-costume/character_galabeya.webp";
+const ImgThobe = "https://assets.cuthongminh.com/games/learn-costume/thobe.webp";
+const WornThobe = "https://assets.cuthongminh.com/games/learn-costume/character_thobe.webp";
 
 import { EntityData } from "@/types/game";
 
 export interface CostumeData extends EntityData {
-  wornImage?: StaticImageData; // Image of the character wearing the costume
-  flag?: StaticImageData; // Country flag image
+  wornImage?: string | StaticImageData; // Image of the character wearing the costume
+  flag?: string | StaticImageData; // Country flag image
 }
 
 export const COSTUMES: CostumeData[] = [

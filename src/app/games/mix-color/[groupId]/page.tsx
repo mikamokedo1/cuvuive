@@ -30,7 +30,7 @@ const lessons = [
 ];
 
 export default function GroupLessonsPage() {
-  const { group, activeIndex, handleLessonClick } = useGroupLessons({
+  const { group, activeIndex,  handleLessonClick } = useGroupLessons({
     gameSlug: "mix-color",
     groups: GROUPS,
     lessons,

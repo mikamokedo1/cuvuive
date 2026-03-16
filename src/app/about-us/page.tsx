@@ -1,14 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { HeaderHome } from "@/components/layout/HeaderHome";
 import { Footer } from "@/components/layout/Footer";
 import { Brain, Heart, BookOpenText, Users, Gamepad2, Rocket, ShieldCheck, MessageSquareHeart } from "lucide-react";
 import LogoLong from "@/assets/logo.png";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Về Chúng Tôi | Cú Thông Minh - Hành trình khơi nguồn tri thức",
   description:
     "Khám phá câu chuyện đằng sau Cú Thông Minh - Nơi những người thầy, bậc phụ huynh và trẻ nhỏ cùng nhau tạo nên thế giới học tập đầy màu sắc và an toàn.",
+  alternates: {
+    canonical: "/about-us",
+  },
 };
 
 export default function AboutUsPage() {

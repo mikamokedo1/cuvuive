@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import GameWeatherLogo from "@/assets/games/learn-weather/logo.png";
+const GameWeatherLogo = "https://assets.cuthongminh.com/games/learn-weather/logo.webp";
 
 export const metadata: Metadata = {
   title: "Học Thời Tiết | Cú Thông Minh",
@@ -11,12 +11,15 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: GameWeatherLogo.src,
+        url: GameWeatherLogo,
         width: 630,
         height: 630,
         alt: "Học Thời Tiết | Cú Thông Minh",
       },
     ],
+  },
+  alternates: {
+    canonical: "/games/learn-weather",
   },
 };
 

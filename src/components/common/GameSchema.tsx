@@ -9,13 +9,13 @@ export function GameSchema({ courseId }: { courseId: string }) {
     "@type": "LearningResource",
     name: course.title,
     description: course.description,
-    image: `https://cuthongminh.com${course.icon.src}`,
+    image: typeof course.icon === "string" ? course.icon : `https://cuthongminh.com${course.icon.src}`,
     learningResourceType: "Educational Game",
     educationalLevel: "Preschool, Kindergarten, Early Childhood Education",
     publisher: {
       "@type": "Organization",
       name: "Cú Thông Minh",
-      logo: "https://cuthongminh.com/icons/favicon-32x32.png",
+      logo: "https://cuthongminh.com/icons/android-chrome-512x512.png",
     },
     inLanguage: "vi",
   };

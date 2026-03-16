@@ -41,7 +41,7 @@ export function FlagCard({ animal, active = false, onClick }: FlagCardProps) {
     >
       {/* Animal Image */}
       <div className="relative w-48 h-48 md:w-64 md:h-64">
-        <Image src={animal.image} alt={animal.name} fill className="object-contain drop-shadow-lg" priority />
+        <Image src={animal.image} alt={animal.name} fill className="object-contain drop-shadow-lg" sizes="(max-width: 768px) 192px, 256px" />
       </div>
     </div>
   );

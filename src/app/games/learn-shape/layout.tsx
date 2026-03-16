@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import ShapeLogo from "@/assets/games/learn-shape/learn-shape-logo.webp";
+const ShapeLogo = "https://assets.cuthongminh.com/games/learn-shape/learn-shape-logo.webp";
 
 export const metadata: Metadata = {
   title: "Hình Dạng | Cú Thông Minh",
@@ -11,12 +11,15 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: ShapeLogo.src,
+        url: ShapeLogo,
         width: 1200,
         height: 630,
         alt: "Hình Dạng | Cú Thông Minh",
       },
     ],
+  },
+  alternates: {
+    canonical: "/games/learn-shape",
   },
 };
 

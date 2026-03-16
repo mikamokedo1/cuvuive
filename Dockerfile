@@ -16,8 +16,15 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+# Copy env file for NEXT_PUBLIC_* vars to be baked in at build time
+ARG ENV_FILE=.env.local
+COPY ${ENV_FILE} .env.production
+
 # Next.js telemetry
 ENV NEXT_TELEMETRY_DISABLED=1
+
+# Increase Node.js memory limit for build
+ENV NODE_OPTIONS="--max-old-space-size=4096"
 
 RUN npm run build
 

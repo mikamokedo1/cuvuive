@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { ActionButton } from "@/components/common/ActionButton";
-import owlSayHi from "@/assets/games/common/owl-say-hi.webp";
-import star from "@/assets/games/star.webp";
+const owlSayHi = "https://assets.cuthongminh.com/games/common/owl-say-hi.webp";
+const star = "https://assets.cuthongminh.com/games/star.webp";
 import { useEffect } from "react";
 import { playSound } from "@/libs/utils/playSound";
-import WinSound from "@/assets/games/common/sounds/win.mp3";
+const WinSound = "https://assets.cuthongminh.com/games/common/sounds/win.mp3";
 
 interface CompletionModalProps {
   isOpen: boolean;
@@ -40,7 +40,7 @@ export function CompletionModal({
         <div className="bg-white rounded-[32px] border-[8px] border-[#FFD057] p-8 shadow-[0_0_40px_rgba(255,208,87,0.6)] flex flex-col items-center text-center relative overflow-visible">
           {/* Top Star Decoration */}
           <div className="absolute -top-6 -right-6 w-16 h-16 animate-pulse">
-            <Image src={star} alt="Star" width={64} height={64} className="object-contain" />
+            <Image src={star} alt="Star" width={64} height={64} className="object-contain" sizes="64px" />
           </div>
 
           {/* Title */}
@@ -50,7 +50,7 @@ export function CompletionModal({
 
           {/* Character Image */}
           <div className="relative w-48 h-48 my-2">
-            <Image src={owlSayHi} alt="Great Job!" fill className="object-contain drop-shadow-xl" />
+            <Image src={owlSayHi} alt="Great Job!" fill className="object-contain drop-shadow-xl" sizes="192px" />
           </div>
 
           {/* Message Body */}

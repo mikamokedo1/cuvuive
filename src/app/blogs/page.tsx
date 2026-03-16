@@ -28,7 +28,7 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Pr
       "@type": "BlogPosting",
       headline: post.title,
       description: post.description,
-      url: `https://cuthongminh.com/blogs/${post.slug}`,
+      url: `https://assets.cuthongminh.com/blogs/${post.slug}`,
       datePublished: post.date,
       author: {
         "@type": "Person",

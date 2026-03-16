@@ -7,20 +7,20 @@ import { WelcomeBackModal } from "@/components/common/WelcomeBackModal";
 import { useClickOutside } from "@/hooks/useClickOutside";
 import { useProgress } from "@/context/ProgressContext";
 import { CourseDef } from "@/libs/actions/courses";
-import star from "@/assets/games/star.webp";
+const star = "https://assets.cuthongminh.com/games/star.webp";
 import avatarBoy from "@/assets/avatar-boy.webp";
 import avatarGirl from "@/assets/avatar-girl.webp";
 //main bg
 import BgImage from "@/assets/bg-games-home.webp";
 import { GameGroupType, Group } from "@/libs/constants/groups";
 import { playButtonSound } from "@/libs/utils/playSound";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useUser } from "@/context/UserContext";
 
 interface LeanCourse {
   id: string;
   title: string;
-  icon: StaticImageData;
+  icon: string | StaticImageData;
   type: string;
 }
 
@@ -32,7 +32,6 @@ interface GamesMapProps {
 
 export function GamesMap({ courses, staticCourses, groups }: GamesMapProps) {
   const { user } = useUser();
-  const router = useRouter();
   const [activeGroupId, setActiveGroupId] = useState<string | null>(null);
   const activeGroupRef = useRef<HTMLDivElement>(null);
   const [transformStyles, setTransformStyles] = useState<{ [key: string]: React.CSSProperties }>({});
@@ -155,7 +154,7 @@ export function GamesMap({ courses, staticCourses, groups }: GamesMapProps) {
               >
                 {/* Group Icon */}
                 <div
-                  className={`transition-all duration-300 drop-shadow-xl z-30 border-4 rounded-full bg-white relative ${
+                  className={`transition-all duration-300 drop-shadow-xl z-30 border-4 rounded-full bg-white relative w-24 h-24 sm:w-32 sm:h-32 flex items-center justify-center ${
                     isActive
                       ? "border-orange-500 scale-110 ring-4 ring-orange-300 ring-offset-2"
                       : "border-orange-500 hover:scale-[1.05] scale-100"
@@ -164,9 +163,10 @@ export function GamesMap({ courses, staticCourses, groups }: GamesMapProps) {
                   <Image
                     src={group.icon}
                     alt={group.title}
+                    width={128}
+                    height={128}
                     priority={i < 4} // Prioritize first few icons for LCP
-                    sizes="(max-width: 640px) 72px, 128px"
-                    className="w-24 h-24 sm:w-32 sm:h-32 object-contain drop-shadow-[0_10px_10px_rgba(0,0,0,0.15)]"
+                    className="w-full h-full object-contain drop-shadow-[0_10px_10px_rgba(0,0,0,0.15)]"
                   />
                   {/* Last played indicator */}
                   {user && isLastPlayedGroup && !isActive && (
@@ -174,6 +174,8 @@ export function GamesMap({ courses, staticCourses, groups }: GamesMapProps) {
                       <Image
                         src={user?.user_metadata?.sex === "female" ? avatarGirl : avatarBoy}
                         alt="User Avatar"
+                        width={32}
+                        height={32}
                         className="w-8 h-8 rounded-full border-1 border-white shadow-md bg-blue-200 object-cover"
                       />
                     </div>
@@ -201,12 +203,12 @@ export function GamesMap({ courses, staticCourses, groups }: GamesMapProps) {
                           pointerEvents: isActive ? "auto" : "none",
                         }}
                       >
-                        <div
+                        <Link
+                          href={`/games/${game.id}`}
                           className="block w-full h-full group/game"
                           onClick={(e) => {
                             e.stopPropagation();
                             playButtonSound();
-                            router.push(`/games/${game.id}`);
                           }}
                         >
                           <div className="relative w-full h-full bg-white rounded-full border-2 border-orange-300 shadow-xl flex items-center justify-center transition-transform hover:scale-110">
@@ -236,7 +238,7 @@ export function GamesMap({ courses, staticCourses, groups }: GamesMapProps) {
                           <div className="absolute -bottom-0 left-1/2 -translate-x-1/2 bg-blue-600/80 text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap transition-opacity pointer-events-none">
                             {game.title}
                           </div>
-                        </div>
+                        </Link>
                       </div>
                     );
                   })}

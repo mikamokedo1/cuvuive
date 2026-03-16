@@ -1,5 +1,5 @@
-import LogoGroup1 from "@/assets/games/learn-clock/logo-analog.png";
-import LogoGroup2 from "@/assets/games/learn-clock/logo-digital.png";
+const LogoGroup1 = "https://assets.cuthongminh.com/games/learn-clock/logo-analog.webp";
+const LogoGroup2 = "https://assets.cuthongminh.com/games/learn-clock/logo-digital.webp";
 
 export const GROUPS = [
   {

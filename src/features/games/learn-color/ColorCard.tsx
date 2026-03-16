@@ -44,7 +44,7 @@ export function ColorCard({ color, active = false, onClick, showName = true }: C
             onClick={() => speak(color.imageName)}
             className="relative w-40 h-40 sm:w-52 sm:h-52 drop-shadow-xl bg-white rounded-3xl p-4 border-4 border-orange-100  hover:scale-105"
           >
-            <Image src={color.image} alt={color.imageName} fill className="object-contain p-2" />
+            <Image src={color.image} alt={color.imageName} fill className="object-contain p-2" sizes="(max-width: 640px) 160px, 208px" />
           </div>
         </div>
       </div>

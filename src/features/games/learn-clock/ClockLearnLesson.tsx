@@ -73,7 +73,7 @@ export function ClockLearnLesson({ type, onComplete }: ClockLearnLessonProps) {
             <DigitalClock
               hours={currentItem.hours}
               minutes={currentItem.minutes}
-              size="lg"
+              size="md"
               onClick={() => speak(timeToText(currentItem.hours, currentItem.minutes))}
             />
           )}

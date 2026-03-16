@@ -1,8 +1,9 @@
 import Image, { StaticImageData } from "next/image";
 import { cn } from "@/libs/utils/cn";
-import lockImg from "@/assets/games/lock-card.webp";
+const lockImg = "https://assets.cuthongminh.com/games/lock-card.webp";
 import { ActionButton } from "@/components/common/ActionButton";
-import Star from "@/assets/games/star.webp";
+const Star = "https://assets.cuthongminh.com/games/star.webp";
+import Link from "next/link";
 
 interface GroupCardProps {
   title: string;
@@ -10,8 +11,8 @@ interface GroupCardProps {
   isLocked: boolean;
   mainImage: StaticImageData | string;
   level: number;
-  onClick?: () => void;
   isCompleted: boolean;
+  path: string;
 }
 
 const STYLES = {
@@ -45,16 +46,16 @@ const STYLES = {
   },
 };
 
-export function GroupCard({ title, variant, isLocked, mainImage, onClick, isCompleted }: GroupCardProps) {
+export function GroupCard({ title, variant, isLocked, mainImage, isCompleted, path }: GroupCardProps) {
   const currentStyle = STYLES[variant];
 
   return (
-    <div
-      onClick={!isLocked ? onClick : undefined}
+    <Link
+      href={isLocked ? "#" : path}
       className={cn(
         "relative flex flex-col items-center p-4 rounded-[40px] border-[8px] overflow-hidden transition-transform",
         currentStyle.card,
-        !isLocked && "cursor-pointer hover:scale-105 active:scale-95",
+        !isLocked ? "cursor-pointer hover:scale-105 active:scale-95" : "pointer-events-none",
         "w-full aspect-[3/4] max-w-[240px] shadow-xl group",
       )}
     >
@@ -103,6 +104,6 @@ export function GroupCard({ title, variant, isLocked, mainImage, onClick, isComp
           </div>
         </div>
       )}
-    </div>
+    </Link>
   );
 }

@@ -16,11 +16,15 @@ export function useMicrophonePermission(): UseMicrophonePermissionReturn {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    // navigator.permissions.query is not available on all browsers (e.g. older Safari)
-    if (navigator.permissions?.query) {
-      navigator.permissions
-        .query({ name: "microphone" as PermissionName })
-        .then((result) => {
+    let cancelled = false;
+
+    const checkPermission = async () => {
+      // Try navigator.permissions.query first (Chrome, Firefox, etc.)
+      if (navigator.permissions?.query) {
+        try {
+          const result = await navigator.permissions.query({ name: "microphone" as PermissionName });
+          if (cancelled) return;
+
           if (result.state === "granted") {
             setStatus("granted");
           } else if (result.state === "denied") {
@@ -36,11 +40,48 @@ export function useMicrophonePermission(): UseMicrophonePermissionReturn {
               setStatus("denied");
             }
           });
-        })
-        .catch(() => {
-          // permissions API not supported — stay "idle"
-        });
-    }
+          return; // permissions.query worked, no need for fallback
+        } catch {
+          // permissions.query not supported for microphone — fall through to fallback
+        }
+      }
+
+      // Fallback for iOS Safari: DON'T call getUserMedia if we'll be using SpeechRecognition.
+      // On iOS Safari, getUserMedia (microphone) and SpeechRecognition (dictation) are
+      // SEPARATE permissions. Calling getUserMedia first can prevent Safari from showing
+      // the SpeechRecognition permission prompt, causing "service-not-allowed" error.
+      //
+      // If webkitSpeechRecognition is available, skip getUserMedia and let SpeechRecognition
+      // handle its own permission flow when the user taps the mic button.
+      if ((window as any).webkitSpeechRecognition || (window as any).SpeechRecognition) {
+        // SpeechRecognition is available — skip getUserMedia probe.
+        // Set "granted" so the permission gate doesn't block the UI.
+        // SpeechRecognition.start() will show its own permission prompt if needed.
+        setStatus("granted");
+        return;
+      }
+
+      // Only use getUserMedia probe for browsers WITHOUT SpeechRecognition support
+      if (navigator.mediaDevices?.getUserMedia) {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          if (cancelled) {
+            stream.getTracks().forEach((track) => track.stop());
+            return;
+          }
+          stream.getTracks().forEach((track) => track.stop());
+          setStatus("granted");
+        } catch {
+          // getUserMedia failed — stay "idle"
+        }
+      }
+    };
+
+    checkPermission();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const requestPermission = useCallback(async () => {

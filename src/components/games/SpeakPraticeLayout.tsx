@@ -18,14 +18,23 @@ interface SpeakPraticeLayoutProps {
 
 const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) => {
   const { speak } = useTextToSpeech();
-  const { isListening, transcript, interimTranscript, isSupported, startListening, stopListening, resetTranscript } =
-    useSpeechRecognition("vi-VN");
+  const {
+    isListening,
+    transcript,
+    interimTranscript,
+    isSupported,
+    error: speechError,
+    startListening,
+    stopListening,
+    resetTranscript,
+  } = useSpeechRecognition("vi-VN");
   const { status: micStatus, requestPermission } = useMicrophonePermission();
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [feedback, setFeedback] = useState<FeedbackType>(null);
   const [hasTried, setHasTried] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const hasMatchedRef = useRef(false);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -78,7 +87,7 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
   // Reset transcript if speaking for too long without correct answer
   useEffect(() => {
     const currentText = (transcript + " " + interimTranscript).trim();
-    if (!isListening || !currentText || feedback === "correct") return;
+    if (!isListening || !currentText || feedback === "correct" || hasMatchedRef.current) return;
 
     const words = currentText.split(/\s+/);
 
@@ -92,6 +101,8 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
       setTimeout(() => {
         setFeedback(null);
         resetTranscript();
+        // Only auto-restart on desktop. On mobile, require explicit user tap
+        // to avoid TTS audio bleeding into the microphone.
         if (!isMobile) startListening();
       }, 2000);
       return;
@@ -111,26 +122,51 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
     }, 2500);
 
     return () => clearTimeout(resetTimer);
-  }, [
-    transcript,
-    interimTranscript,
-    isListening,
-    feedback,
-    speak,
-    resetTranscript,
-    startListening,
-    stopListening,
-    isMobile,
-  ]);
+  }, [transcript, interimTranscript, isListening, feedback, speak, resetTranscript, startListening, stopListening]);
 
-  // Handle speech result
+  // Handle speech result — check both during listening (interim) and after listening stops (final)
+  // On Android Chrome, interim results may show the correct answer but the final transcript
+  // transition differs from desktop, so we need to check in real-time too.
+
+  // Reset match flag when moving to next question
   useEffect(() => {
-    if (!isListening && transcript && targetEntity && !feedback) {
+    hasMatchedRef.current = false;
+  }, [currentIndex]);
+
+  // Real-time check: match during listening using combined transcript + interim
+  useEffect(() => {
+    if (!isListening || !targetEntity || feedback || hasMatchedRef.current) return;
+
+    const currentText = (transcript + " " + interimTranscript).trim();
+    if (!currentText) return;
+
+    const answersToCheck = targetEntity.acceptedAnswers?.length ? targetEntity.acceptedAnswers : [targetEntity.name];
+    const isCorrect = answersToCheck.some((answer) => fuzzyMatchVietnamese(currentText, answer));
+
+    if (isCorrect) {
+      hasMatchedRef.current = true;
       setHasTried(true);
-      const isCorrect = fuzzyMatchVietnamese(transcript, targetEntity.name);
+      stopListening();
+      playWinEffect(500);
+      speak("Giỏi quá!");
+      setFeedback("correct");
+
+      setTimeout(() => {
+        goToNextQuestion();
+      }, 2000);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [transcript, interimTranscript, isListening, targetEntity, feedback]);
+
+  // Post-listening check: handle the case where listening ends with a final transcript
+  useEffect(() => {
+    if (!isListening && transcript && targetEntity && !feedback && !hasMatchedRef.current) {
+      setHasTried(true);
+      const answersToCheck = targetEntity.acceptedAnswers?.length ? targetEntity.acceptedAnswers : [targetEntity.name];
+      const isCorrect = answersToCheck.some((answer) => fuzzyMatchVietnamese(transcript, answer));
 
       if (isCorrect) {
-        // Correct
+        hasMatchedRef.current = true;
         playWinEffect(500);
         speak("Giỏi quá!");
         setFeedback("correct");
@@ -145,19 +181,21 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
         setTimeout(() => {
           setFeedback(null);
           resetTranscript();
-          // Auto-start microphone again after "Thử lại nhé"
+          // Only auto-restart on desktop. On mobile, let the kid tap the mic.
           if (!isMobile) startListening();
         }, 2000);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isListening, transcript, targetEntity, feedback, isMobile]);
+  }, [isListening, transcript, targetEntity, feedback]);
 
   const handleMicClick = () => {
-    playButtonSound();
     if (isListening) {
+      playButtonSound();
       stopListening();
     } else {
+      // Don't play button sound when starting to listen — on iOS Safari,
+      // AudioContext and SpeechRecognition compete for the audio session
       startListening();
     }
   };
@@ -193,6 +231,64 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
     );
   }
 
+  // iOS Safari / PWA: Dictation service not allowed
+  if (speechError === "service-not-allowed") {
+    // Detect if running as Home Screen PWA (standalone mode)
+    const isStandalone =
+      typeof window !== "undefined" &&
+      (window.matchMedia("(display-mode: standalone)").matches || (window.navigator as any).standalone === true);
+
+    return (
+      <div className="flex flex-col items-center justify-center p-8 bg-orange-50 rounded-3xl border-4 border-orange-200 text-center max-w-lg mt-10 gap-4">
+        <AlertCircle className="w-16 h-16 text-orange-400" />
+        {isStandalone ? (
+          <>
+            <h2 className="text-2xl font-bold text-orange-600">Cần mở bằng Safari 🧭</h2>
+            <p className="text-orange-800 text-lg leading-relaxed">
+              Tính năng nhận diện giọng nói <b>không hoạt động</b> khi mở từ Màn hình chính. Bạn cần mở bằng{" "}
+              <b>Safari</b>.
+            </p>
+            <div className="bg-white rounded-2xl p-4 border-2 border-orange-100 text-left w-full space-y-3">
+              <div>
+                <p className="font-semibold text-orange-700">Mở Safari 🧭</p>
+                <p className="text-slate-600 text-base">
+                  Mở ứng dụng <b>Safari</b> và truy cập lại trang web này để sử dụng tính năng giọng nói.
+                </p>
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <h2 className="text-2xl font-bold text-orange-600">Cần cấp quyền giọng nói 🎙️</h2>
+            <p className="text-orange-800 text-lg leading-relaxed">
+              Safari trên iPhone cần được cấp quyền <b>nhận diện giọng nói</b> để chơi trò này.
+            </p>
+            <div className="bg-white rounded-2xl p-4 border-2 border-orange-100 text-left w-full space-y-3">
+              <div>
+                <p className="font-semibold text-orange-700">Cách 1: Bật Đọc chính tả ⚙️</p>
+                <p className="text-slate-600 text-base">
+                  <b>Cài đặt</b> → <b>Cài đặt chung</b> → <b>Bàn phím</b> → Bật <b>&quot;Đọc chính tả&quot;</b>
+                </p>
+              </div>
+              <div>
+                <p className="font-semibold text-orange-700">Cách 2: Xoá dữ liệu Safari 🗑️</p>
+                <p className="text-slate-600 text-base">
+                  <b>Cài đặt</b> → <b>Safari</b> → <b>Xoá lịch sử và dữ liệu</b>, rồi thử lại.
+                </p>
+              </div>
+            </div>
+          </>
+        )}
+        <button
+          onClick={() => window.location.reload()}
+          className="bg-orange-500 hover:bg-orange-400 active:scale-95 text-white font-bold text-lg px-8 py-4 rounded-2xl shadow-lg transition-all duration-200 mt-2"
+        >
+          🔄 Tải lại trang
+        </button>
+      </div>
+    );
+  }
+
   // Microphone permission gate
   if (micStatus !== "granted") {
     return (
@@ -209,7 +305,7 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
               <p className="text-slate-600 text-base mb-3">
                 Vào <b>Cài đặt</b> → <b>Safari</b> → <b>Micro</b> → <b>Cho phép</b>
               </p>
-              <p className="font-semibold text-orange-700 mb-2">💻 Trên máy tính (Chrome):</p>
+              <p className="font-semibold text-orange-700 mb-2">💻 Trên máy tính, Android (Chrome):</p>
               <p className="text-slate-600 text-base">
                 Bấm vào biểu tượng 🔒 trên thanh địa chỉ → <b>Micro</b> → <b>Cho phép</b>
               </p>
@@ -281,7 +377,13 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
           `}
           onClick={() => !isListening && speak(targetEntity.name)}
         >
-          <Image src={targetEntity.image} alt={targetEntity.name} fill className="object-contain" />
+          {targetEntity.textRepresent ? (
+            <p className="text-8xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 leading-none text-center">
+              {targetEntity.textRepresent}
+            </p>
+          ) : (
+            <Image src={targetEntity.image} alt={targetEntity.name} fill className="object-contain" />
+          )}
         </div>
       </div>
 

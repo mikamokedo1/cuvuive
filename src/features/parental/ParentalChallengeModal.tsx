@@ -3,7 +3,7 @@
 import { useState, useMemo, useCallback } from "react";
 import Image from "next/image";
 import { ActionButton } from "@/components/common/ActionButton";
-import owlHi from "@/assets/games/common/owl-say-hi.webp";
+const owlHi = "https://assets.cuthongminh.com/games/common/owl-say-hi.webp";
 
 interface ParentalChallengeModalProps {
   isOpen: boolean;

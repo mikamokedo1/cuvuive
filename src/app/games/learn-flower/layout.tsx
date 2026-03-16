@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import GameFlowerLogo from "@/assets/games/learn-flower/logo.webp";
+const GameFlowerLogo = "https://assets.cuthongminh.com/games/learn-flower/logo.webp";
 
 export const metadata: Metadata = {
   title: "Học Hoa & Cây | Cú Thông Minh",
@@ -11,12 +11,15 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: GameFlowerLogo.src,
+        url: GameFlowerLogo,
         width: 630,
         height: 630,
         alt: "Học Hoa & Cây | Cú Thông Minh",
       },
     ],
+  },
+  alternates: {
+    canonical: "/games/learn-flower",
   },
 };
 

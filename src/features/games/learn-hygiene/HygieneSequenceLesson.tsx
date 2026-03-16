@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { SequenceActivity } from "./constants";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { playButtonSound } from "@/libs/utils/playSound";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface HygieneSequenceLessonProps {
   activities: SequenceActivity[];
@@ -26,6 +27,10 @@ export function HygieneSequenceLesson({ activities, onComplete }: HygieneSequenc
   const [wrongSlot, setWrongSlot] = useState<number | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const slotRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const cachedSlotRects = useRef<{ index: number; rect: DOMRect }[]>([]);
+
   const currentActivity = activities[currentActivityIndex];
 
   // Shuffle steps when activity changes
@@ -37,6 +42,7 @@ export function HygieneSequenceLesson({ activities, onComplete }: HygieneSequenc
       setPlacedSteps(Array(currentActivity.steps.length).fill(null));
       setWrongSlot(null);
       setShowSuccess(false);
+      slotRefs.current = Array(currentActivity.steps.length).fill(null);
     }
   }, [currentActivity]);
 
@@ -50,40 +56,69 @@ export function HygieneSequenceLesson({ activities, onComplete }: HygieneSequenc
     }
   }, [currentActivity, showSuccess, speak]);
 
-  const handleDragStart = (e: React.DragEvent, stepIndex: number) => {
+  const handleDragStart = (stepIndex: number) => {
     if (showSuccess) return;
     setDraggedStep(stepIndex);
     playButtonSound();
+
+    // Cache slot rectangles at the start of drag to avoid layout thrashing during onDrag
+    cachedSlotRects.current = slotRefs.current
+      .map((ref, index) => ({
+        index,
+        rect: ref?.getBoundingClientRect() || ({} as DOMRect),
+      }))
+      .filter((item) => placedSteps[item.index] === null);
   };
 
-  const handleDragOver = (e: React.DragEvent, slotIndex: number) => {
-    e.preventDefault();
-    if (hoveredSlot !== slotIndex && placedSteps[slotIndex] === null) {
-      setHoveredSlot(slotIndex);
+  const handleDragUpdate = (info: { point: { x: number; y: number } }) => {
+    if (draggedStep === null) return;
+
+    let foundSlot: number | null = null;
+    for (const { index, rect } of cachedSlotRects.current) {
+      if (
+        info.point.x >= rect.left &&
+        info.point.x <= rect.right &&
+        info.point.y >= rect.top &&
+        info.point.y <= rect.bottom
+      ) {
+        foundSlot = index;
+        break;
+      }
+    }
+
+    if (foundSlot !== hoveredSlot) {
+      setHoveredSlot(foundSlot);
     }
   };
 
-  const handleDragLeave = () => {
-    setHoveredSlot(null);
-  };
+  const handleDragEnd = (info: { point: { x: number; y: number } }, stepIndex: number) => {
+    let slotIndex: number | null = null;
+    for (const { index, rect } of cachedSlotRects.current) {
+      if (
+        info.point.x >= rect.left &&
+        info.point.x <= rect.right &&
+        info.point.y >= rect.top &&
+        info.point.y <= rect.bottom
+      ) {
+        slotIndex = index;
+        break;
+      }
+    }
 
-  const handleDrop = (e: React.DragEvent, slotIndex: number) => {
-    e.preventDefault();
     setHoveredSlot(null);
-    if (draggedStep === null) return;
-    if (placedSteps[slotIndex] !== null) return;
+    setDraggedStep(null);
+    cachedSlotRects.current = [];
+
+    if (slotIndex === null) return;
 
     // The logic: children must place step 0 into slot 0, step 1 into slot 1, etc.
-    // Or they can place them out of order as long as step N goes to slot N.
-    // We enforce that slotIndex MUST match the draggedStep index.
-
-    if (draggedStep === slotIndex) {
+    if (stepIndex === slotIndex) {
       // Correct placement
       playButtonSound();
-      speak(currentActivity.steps[draggedStep]);
+      speak(currentActivity.steps[stepIndex]);
 
       const newPlaced = [...placedSteps];
-      newPlaced[slotIndex] = draggedStep;
+      newPlaced[slotIndex] = stepIndex;
       setPlacedSteps(newPlaced);
 
       // Check if all steps are complete
@@ -109,13 +144,12 @@ export function HygieneSequenceLesson({ activities, onComplete }: HygieneSequenc
         setWrongSlot(null);
       }, 1000);
     }
-    setDraggedStep(null);
   };
 
   if (!currentActivity) return <div>Đang tải...</div>;
 
   return (
-    <div className="flex flex-col items-center gap-6 w-full max-w-4xl px-4">
+    <div ref={containerRef} className="flex flex-col items-center gap-6 w-full max-w-4xl px-4 select-none">
       {/* Target Slots (Empty Cells) */}
       <div className="flex flex-wrap justify-center gap-4 w-full mt-4">
         {currentActivity.steps.map((_, index) => {
@@ -126,9 +160,9 @@ export function HygieneSequenceLesson({ activities, onComplete }: HygieneSequenc
           return (
             <div
               key={`slot-${index}`}
-              onDragOver={(e) => handleDragOver(e, index)}
-              onDragLeave={handleDragLeave}
-              onDrop={(e) => handleDrop(e, index)}
+              ref={(el) => {
+                slotRefs.current[index] = el;
+              }}
               className={`
                 relative flex flex-col items-center w-[140px] h-[180px] md:w-[160px] md:h-[200px] border-4 rounded-2xl transition-all duration-300
                 ${
@@ -175,47 +209,48 @@ export function HygieneSequenceLesson({ activities, onComplete }: HygieneSequenc
       </div>
 
       {/* Available Items (Draggable Images) */}
-      {!showSuccess && (
-        <div className="w-full mt-8">
-          <div className="flex flex-wrap justify-center gap-6">
-            {shuffledIndices.map((stepIndex) => {
-              if (placedSteps.includes(stepIndex)) return null;
+      <AnimatePresence>
+        {!showSuccess && (
+          <div className="w-full mt-8">
+            <div className="flex flex-wrap justify-center gap-6">
+              {shuffledIndices.map((stepIndex) => {
+                if (placedSteps.includes(stepIndex)) return null;
 
-              return (
-                <div
-                  key={`drag-${stepIndex}`}
-                  draggable
-                  onDragStart={(e) => handleDragStart(e, stepIndex)}
-                  onDragEnd={() => {
-                    setDraggedStep(null);
-                    setHoveredSlot(null);
-                  }}
-                  className="relative flex flex-col items-center justify-center w-[130px] h-[160px] md:w-[150px] md:h-[180px] bg-white rounded-xl shadow-lg border-2 border-blue-200 cursor-grab hover:-translate-y-2 hover:shadow-xl transition-all active:cursor-grabbing"
-                  onClick={() => speak(currentActivity.steps[stepIndex])}
-                >
-                  {currentActivity.stepImages?.[stepIndex] ? (
-                    <div className="relative w-full flex-1 p-2">
-                      <Image
-                        src={currentActivity.stepImages[stepIndex]}
-                        alt={currentActivity.steps[stepIndex]}
-                        fill
-                        className="object-contain drop-shadow-sm pointer-events-none"
-                      />
+                return (
+                  <motion.div
+                    key={`drag-${stepIndex}`}
+                    drag
+                    dragSnapToOrigin
+                    onDragStart={() => handleDragStart(stepIndex)}
+                    onDrag={(_, info) => handleDragUpdate(info)}
+                    onDragEnd={(_, info) => handleDragEnd(info, stepIndex)}
+                    className="relative flex flex-col items-center justify-center w-[130px] h-[160px] md:w-[150px] md:h-[180px] bg-white rounded-xl shadow-lg border-2 border-blue-200 cursor-grab hover:-translate-y-2 hover:shadow-xl transition-all shadow-blue-100"
+                    onClick={() => speak(currentActivity.steps[stepIndex])}
+                  >
+                    {currentActivity.stepImages?.[stepIndex] ? (
+                      <div className="relative w-full flex-1 p-2">
+                        <Image
+                          src={currentActivity.stepImages[stepIndex]}
+                          alt={currentActivity.steps[stepIndex]}
+                          fill
+                          className="object-contain drop-shadow-sm pointer-events-none"
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-full flex-1 flex items-center justify-center text-4xl pointer-events-none">
+                        📸
+                      </div>
+                    )}
+                    <div className="w-full px-2 py-2 text-center text-xs md:text-sm font-bold text-gray-700 bg-gray-50 rounded-b-lg border-t border-gray-100 leading-tight h-14 flex items-center justify-center pointer-events-none">
+                      {currentActivity.steps[stepIndex]}
                     </div>
-                  ) : (
-                    <div className="w-full flex-1 flex items-center justify-center text-4xl pointer-events-none">
-                      📸
-                    </div>
-                  )}
-                  <div className="w-full px-2 py-2 text-center text-xs md:text-sm font-bold text-gray-700 bg-gray-50 rounded-b-lg border-t border-gray-100 leading-tight h-14 flex items-center justify-center pointer-events-none">
-                    {currentActivity.steps[stepIndex]}
-                  </div>
-                </div>
-              );
-            })}
+                  </motion.div>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
     </div>
   );
 }

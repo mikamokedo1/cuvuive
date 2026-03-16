@@ -1,6 +1,7 @@
 import { MetadataRoute } from "next";
 import fs from "fs";
 import path from "path";
+import { GROUPS } from "@/libs/constants/groups";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://cuthongminh.com";
@@ -11,7 +12,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/privacy`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.5 },
     { url: `${baseUrl}/terms`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.5 },
     { url: `${baseUrl}/feedback`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 },
+    { url: `${baseUrl}/about-us`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 },
   ];
+
+  // Group landing pages (e.g. /tro-choi-tu-duy, /tro-choi-toan-hoc)
+  const groupRoutes: MetadataRoute.Sitemap = GROUPS.map((group) => ({
+    url: `${baseUrl}/${group.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly",
+    priority: 0.8,
+  }));
 
   // Dynamically get all game routes
   const gamesDir = path.join(process.cwd(), "src/app/games");
@@ -61,5 +71,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/blogs`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 },
   ];
 
-  return [...staticRoutes, ...gameRoutes, ...blogListingRoute, ...blogRoutes];
+  return [...staticRoutes, ...groupRoutes, ...gameRoutes, ...blogListingRoute, ...blogRoutes];
 }
+

@@ -4,15 +4,16 @@ import { createClient } from "@/libs/supabase/client";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { ActionButton } from "@/components/common/ActionButton";
-import { ExclamationIcon, UserIcon } from "@/components/common/Icons";
+import { ExclamationIcon, PhoneIcon, UserIcon } from "@/components/common/Icons";
 import { useUser } from "@/context/UserContext";
 import Header from "@/components/layout/Header";
 
 // Re-using the same owl image for settings header
-import owlHi from "@/assets/games/common/owl-say-hi.webp";
+const owlHi = "https://assets.cuthongminh.com/games/common/owl-say-hi.webp";
 
 export function SettingsView() {
   const router = useRouter();
@@ -25,6 +26,7 @@ export function SettingsView() {
   const formik = useFormik({
     initialValues: {
       kidName: user?.user_metadata?.kidName ?? "",
+      parentPhone: user?.user_metadata?.parentPhone ?? "",
       age: user?.user_metadata?.age ?? 3,
       sex: user?.user_metadata?.sex ?? "male",
       playTimerMinutes: user?.user_metadata?.playTimerMinutes ?? 15,
@@ -32,6 +34,9 @@ export function SettingsView() {
     enableReinitialize: true,
     validationSchema: Yup.object({
       kidName: Yup.string().required("Vui lòng nhập tên bé"),
+      parentPhone: Yup.string()
+        .required("Vui lòng nhập số điện thoại")
+        .matches(/^[0-9]{10,11}$/, "Số điện thoại không hợp lệ"),
       age: Yup.number().required("Vui lòng chọn tuổi"),
       sex: Yup.string().required("Vui lòng chọn giới tính"),
       playTimerMinutes: Yup.number().min(0).required(),
@@ -44,6 +49,7 @@ export function SettingsView() {
       const { error } = await supabase.auth.updateUser({
         data: {
           kidName: values.kidName,
+          parentPhone: values.parentPhone,
           age: parseInt(values.age.toString(), 10),
           sex: values.sex,
           playTimerMinutes: parseInt(values.playTimerMinutes.toString(), 10),
@@ -98,9 +104,11 @@ export function SettingsView() {
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
             <p className="text-xl text-gray-500 mb-6">Vui lòng đăng nhập để xem cài đặt.</p>
-            <ActionButton variant="glossy" color="orange" onClick={() => router.push("/auth/login")}>
-              Đăng nhập ngay
-            </ActionButton>
+            <Link href="/auth/login">
+              <ActionButton variant="glossy" color="orange">
+                Đăng nhập ngay
+              </ActionButton>
+            </Link>
           </div>
         </div>
       </main>
@@ -150,14 +158,15 @@ export function SettingsView() {
                 )}
               </div>
               {!isPremium && (
-                <ActionButton
-                  variant="glossy"
-                  color="orange"
-                  onClick={() => router.push("/upgrade")}
-                  className="py-3 px-6 text-sm whitespace-nowrap shadow-md hover:shadow-lg transition-shadow"
-                >
-                  Nâng cấp Premium
-                </ActionButton>
+                <Link href="/upgrade">
+                  <ActionButton
+                    variant="glossy"
+                    color="orange"
+                    className="py-3 px-6 text-sm whitespace-nowrap shadow-md hover:shadow-lg transition-shadow"
+                  >
+                    Nâng cấp Premium
+                  </ActionButton>
+                </Link>
               )}
             </div>
 
@@ -190,6 +199,37 @@ export function SettingsView() {
                 </div>
                 {formik.touched.kidName && formik.errors.kidName && (
                   <div className="text-red-500 text-sm ml-1 font-semibold">{formik.errors.kidName as string}</div>
+                )}
+              </div>
+
+              <div className="space-y-1">
+                <label htmlFor="parentPhone" className="block text-sm font-semibold text-gray-700 ml-1">
+                  Số điện thoại bố mẹ
+                </label>
+                <div className="relative group">
+                  <span
+                    className={`absolute left-4 top-3.5 transition-colors ${
+                      formik.touched.parentPhone && formik.errors.parentPhone
+                        ? "text-red-400"
+                        : "text-gray-400 group-focus-within:text-purple-500"
+                    }`}
+                  >
+                    <PhoneIcon className="h-6 w-6" />
+                  </span>
+                  <input
+                    id="parentPhone"
+                    type="tel"
+                    {...formik.getFieldProps("parentPhone")}
+                    className={`w-full pl-12 pr-4 py-3.5 rounded-xl border-2 focus:ring-4 focus:outline-none transition-all font-medium text-lg placeholder:text-gray-300 ${
+                      formik.touched.parentPhone && formik.errors.parentPhone
+                        ? "border-red-300 focus:border-red-400 focus:ring-red-100 text-red-900"
+                        : "border-gray-200 focus:border-purple-400 focus:ring-purple-100 text-gray-700"
+                    }`}
+                    placeholder="Số điện thoại bố mẹ"
+                  />
+                </div>
+                {formik.touched.parentPhone && formik.errors.parentPhone && (
+                  <div className="text-red-500 text-sm ml-1 font-semibold">{formik.errors.parentPhone as string}</div>
                 )}
               </div>
 

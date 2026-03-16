@@ -2,9 +2,7 @@ version: "3.8"
 
 services:
   cuthongminh-web:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: cuthongminh-web:latest
     container_name: cuthongminh_web
     restart: unless-stopped
     ports:

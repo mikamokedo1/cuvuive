@@ -1,5 +1,4 @@
 "use client";
-import { useRouter } from "next/navigation";
 import { GameLayout } from "@/components/layout/GameLayout";
 import { GroupCard } from "@/features/games/learn-game/GroupCard";
 import Image from "next/image";
@@ -9,14 +8,13 @@ import { GroupData } from "@/features/games/learn-vehicle/constants";
 import { StaticImageData } from "next/image";
 
 interface GameWrapGroups {
-  logo: StaticImageData;
+  logo: string | StaticImageData;
   gameId: string;
   groups: GroupData[];
   title: string;
 }
 
 export const GameWrapGroups = ({ logo, gameId, groups, title }: GameWrapGroups) => {
-  const router = useRouter();
   const { isGroupUnlocked, isLoaded, allProgress } = useProgress();
 
   if (!isLoaded && !allProgress[gameId]) {
@@ -29,10 +27,6 @@ export const GameWrapGroups = ({ logo, gameId, groups, title }: GameWrapGroups) 
       </GameLayout>
     );
   }
-
-  const handleGroupClick = (groupId: string) => {
-    router.push(`/games/${gameId}/${groupId}`);
-  };
 
   return (
     <GameLayout showBackButton={false} backTo="/games">
@@ -53,12 +47,12 @@ export const GameWrapGroups = ({ logo, gameId, groups, title }: GameWrapGroups) 
             return (
               <GroupCard
                 key={group.id}
+                path={`/games/${gameId}/${group.id}`}
                 title={group.title}
                 variant={group.variant}
                 isLocked={!unlocked}
                 mainImage={group.logo}
                 level={index + 1}
-                onClick={() => handleGroupClick(group.id)}
                 isCompleted={isCompleted}
               />
             );

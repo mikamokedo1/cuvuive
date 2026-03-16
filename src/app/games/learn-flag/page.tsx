@@ -1,5 +1,5 @@
 import { GROUPS } from "@/features/games/learn-flag/constants";
-import GameFlagLogo from "@/assets/games/learn-flag/logo.webp";
+const GameFlagLogo = "https://assets.cuthongminh.com/games/learn-flag/logo.webp";
 import { GameWrapGroups } from "@/components/layout/GameWrapGroups";
 
 export default function LearnFlagPage() {

@@ -34,7 +34,7 @@ export function EmotionCard({ item, active = false, onClick, showName = true }: 
       `}
     >
       <div className="relative w-48 h-48 md:w-56 md:h-56">
-        <Image src={item.image} alt={item.name} fill className="object-contain drop-shadow-md" priority />
+        <Image src={item.image} alt={item.name} fill className="object-contain drop-shadow-md" sizes="(max-width: 768px) 192px, 256px" />
       </div>
     </div>
   );

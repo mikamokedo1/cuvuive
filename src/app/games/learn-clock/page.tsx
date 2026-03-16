@@ -1,5 +1,5 @@
 import { GROUPS } from "@/features/games/learn-clock/constants";
-import GameClockLogo from "@/assets/games/learn-clock/logo-main.png";
+const GameClockLogo = "https://assets.cuthongminh.com/games/learn-clock/logo-main.webp";
 import { GameWrapGroups } from "@/components/layout/GameWrapGroups";
 
 export default function LearnClockPage() {

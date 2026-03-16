@@ -1,5 +1,5 @@
 import { FIND_DIFFERENCES_DATA } from "@/features/games/find-differences/constans";
-import GameFindDifferencesLogo from "@/assets/games/game-4-logo.webp";
+const GameFindDifferencesLogo = "https://assets.cuthongminh.com/games/game-4-logo.webp";
 import { GameWrapGroups } from "@/components/layout/GameWrapGroups";
 
 export default function FindDifferencesPage() {

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { cn } from "@/libs/utils/cn";
-import LockCardIcon from "@/assets/games/lock-card.webp";
-import OwnSayHi from "@/assets/games/common/owl-say-hi.webp";
+const LockCardIcon = "https://assets.cuthongminh.com/games/lock-card.webp";
+const OwnSayHi = "https://assets.cuthongminh.com/games/common/owl-say-hi.webp";
 import PlayButton from "@/components/common/PlayButton";
 import { playButtonSound } from "@/libs/utils/playSound";
 
@@ -38,7 +38,7 @@ export const LessonCard = ({ lesson, unlocked, isActive, onClick }: LessonCardPr
             <h3 className="text-xl font-bold text-[#FF6B00]">{lesson.title}</h3>
           </div>
           <div className="relative w-32 h-32 z-0">
-            <Image src={OwnSayHi} alt="Lesson" fill className="object-contain" />
+            <Image src={OwnSayHi} alt="Lesson" fill className="object-contain" sizes="128px" />
           </div>
           <div className="flex flex-col items-center justify-center pl-4">
             <div className="z-10 scale-110 -ml-4">
@@ -72,7 +72,7 @@ export const LessonCard = ({ lesson, unlocked, isActive, onClick }: LessonCardPr
       </div>
       {!unlocked && (
         <div className="opacity-50">
-          <Image src={LockCardIcon} alt="Locked" width={32} height={32} />
+          <Image src={LockCardIcon} alt="Locked" width={32} height={32} sizes="32px" />
         </div>
       )}
     </div>

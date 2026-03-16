@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import GameMathLogo from "@/assets/games/learn-math/logo.png";
+const GameMathLogo = "https://assets.cuthongminh.com/games/learn-math/logo.webp";
 
 export const metadata: Metadata = {
   title: "Toán Học Cơ Bản | Cú Thông Minh",
@@ -11,12 +11,15 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: GameMathLogo.src,
+        url: GameMathLogo,
         width: 1200,
         height: 630,
         alt: "Toán Học Cơ Bản | Cú Thông Minh",
       },
     ],
+  },
+  alternates: {
+    canonical: "/games/learn-math",
   },
 };
 

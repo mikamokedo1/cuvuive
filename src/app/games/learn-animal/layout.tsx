@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import GameAnimalLogo from "@/assets/games/learn-animal/logo.webp";
+const GameAnimalLogo = "https://assets.cuthongminh.com/games/learn-animal/logo.webp";
 
 export const metadata: Metadata = {
   title: "Học Động Vật | Cú Thông Minh",
@@ -11,12 +11,15 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: GameAnimalLogo.src,
+        url: GameAnimalLogo,
         width: 630,
         height: 630,
         alt: "Học Động Vật | Cú Thông Minh",
       },
     ],
+  },
+  alternates: {
+    canonical: "/games/learn-animal",
   },
 };
 

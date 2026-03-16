@@ -1,7 +1,7 @@
 "use client";
 
 import { useGameLesson } from "@/hooks/useGameLesson";
-import { GROUPS, getInstrumentsForGroup } from "@/features/games/learn-instrument/constants";
+import { GROUPS, getInstrumentsForGroup, INSTRUMENT_DESCRIPTIONS } from "@/features/games/learn-instrument/constants";
 import { InstrumentLearnLesson } from "@/features/games/learn-instrument/InstrumentLearnLesson";
 import { InstrumentQuizLesson } from "@/features/games/learn-instrument/InstrumentQuizLesson";
 import { InstrumentMemoryLesson } from "@/features/games/learn-instrument/InstrumentMemoryLesson";
@@ -21,7 +21,7 @@ export default function LessonPage() {
   const renderLesson = () => {
     switch (game.lessonId) {
       case "lesson1":
-        return <InstrumentLearnLesson instruments={instruments} onComplete={game.handleComplete} />;
+        return <InstrumentLearnLesson instruments={instruments} descriptions={INSTRUMENT_DESCRIPTIONS} onComplete={game.handleComplete} />;
       case "lesson2":
         return <InstrumentQuizLesson instruments={instruments} onComplete={game.handleComplete} />;
       case "lesson3":

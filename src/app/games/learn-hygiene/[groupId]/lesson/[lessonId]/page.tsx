@@ -6,6 +6,7 @@ import {
   getHygieneForGroup,
   getScenariosForGroup,
   getSequencesForGroup,
+  HYGIENE_DESCRIPTIONS,
 } from "@/features/games/learn-hygiene/constants";
 import { HygieneLearnLesson } from "@/features/games/learn-hygiene/HygieneLearnLesson";
 import { HygieneSpeakingLesson } from "@/features/games/learn-hygiene/HygieneSpeakingLesson";
@@ -29,7 +30,7 @@ export default function LessonPage() {
   const renderLesson = () => {
     switch (game.lessonId) {
       case "lesson1":
-        return <HygieneLearnLesson items={items} onComplete={game.handleComplete} />;
+        return <HygieneLearnLesson items={items} descriptions={HYGIENE_DESCRIPTIONS} onComplete={game.handleComplete} />;
       case "lesson2":
         return <HygieneSpeakingLesson items={items} onComplete={game.handleComplete} />;
       case "lesson3":

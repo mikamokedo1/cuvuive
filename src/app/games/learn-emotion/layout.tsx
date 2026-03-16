@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import GameEmotionLogo from "@/assets/games/learn-emotion/logo.png";
+const GameEmotionLogo = "https://assets.cuthongminh.com/games/learn-emotion/logo.webp";
 
 export const metadata: Metadata = {
   title: "Nhận Biết Cảm Xúc | Cú Thông Minh",
@@ -11,12 +11,15 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: GameEmotionLogo.src,
+        url: GameEmotionLogo,
         width: 1200,
         height: 630,
         alt: "Nhận Biết Cảm Xúc | Cú Thông Minh",
       },
     ],
+  },
+  alternates: {
+    canonical: "/games/learn-emotion",
   },
 };
 

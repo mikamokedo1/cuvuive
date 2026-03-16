@@ -4,8 +4,8 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { SYMBOL_PATHS } from "@/libs/constants/symbolPaths";
 import Image from "next/image";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
-import Easer from "@/assets/games/common/earser.webp";
-import Pen from "@/assets/games/pen.webp";
+const Easer = "https://assets.cuthongminh.com/games/common/earser.webp";
+const Pen = "https://assets.cuthongminh.com/games/pen.webp";
 import { playButtonSound } from "@/libs/utils/playSound";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 import { MathOperator } from "./constants";
@@ -294,7 +294,7 @@ export function SymbolWritingLesson({ operator, onComplete }: SymbolWritingLesso
             onClick={clearDrawing}
             onMouseEnter={playButtonSound}
           >
-            <Image src={Easer} alt="Eraser" className="w-12 h-12" />
+            <Image width={48} height={48} src={Easer} alt="Eraser" className="w-12 h-12" />
           </button>
         )}
       </div>

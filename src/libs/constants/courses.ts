@@ -1,36 +1,39 @@
 // Assets
-import NumberLogo from "@/assets/games/learn-numbers/number-logo.webp";
-import Game3Logo from "@/assets/games/game-3-logo.webp";
-import GameColorLogo from "@/assets/games/learn-color-color.webp";
-import ShapeLogo from "@/assets/games/learn-shape/learn-shape-logo.webp";
-import GameAnimalLogo from "@/assets/games/learn-animal/logo.webp";
-import GameVehicleLogo from "@/assets/games/learn-vehicle/logo.webp";
-import GameFruitLogo from "@/assets/games/learn-fruit/logo.webp";
-import GameInstrumentLogo from "@/assets/games/learn-instrument/logo.webp";
-import GameOccupationLogo from "@/assets/games/learn-occupation/logo.webp";
-import GameDinosaurLogo from "@/assets/games/learn-dinosaur/logo.webp";
-import GameFoodLogo from "@/assets/games/learn-food/logo.webp";
-import GameFlowerLogo from "@/assets/games/learn-flower/logo.webp";
-import GameMathLogo from "@/assets/games/learn-math/logo.png";
-import GameWeatherLogo from "@/assets/games/learn-weather/logo.png";
-import GameFlagLogo from "@/assets/games/learn-flag/logo.webp";
-import GameLandmarkLogo from "@/assets/games/learn-landmark/logo.png";
-import GameHygieneLogo from "@/assets/games/learn-hygiene/logo.png";
-import GamePatternLogo from "@/assets/games/find-pattern/logo.png";
-import GameAlphabetLogo from "@/assets/games/learn-alphabet/logo.png";
-import GameFindDifferencesLogo from "@/assets/games/game-4-logo.webp";
-import GameOddOneOutLogo from "@/assets/games/odd-one-out/logo.png";
-import GameMazeRunnerLogo from "@/assets/games/maze-runner/logo.png";
-import GameLineConnectLogo from "@/assets/games/line-connect/logo.png";
-import PaintPictureLogo from "@/assets/games/paint-picture/logo.png";
-import GameEmotionLogo from "@/assets/games/learn-emotion/logo.png";
-import MixColorLogo from "@/assets/games/learn-color-color.webp"; // Using placeholder
-import GameCostumeLogo from "@/assets/games/learn-costume/logo.png";
-import GameClockLogo from "@/assets/games/learn-clock/logo-main.png";
-import MiniPianoLogo from "@/assets/games/mini-piano/logo.png";
-import CreativeGroupLogo from "@/assets/games/mini-piano/group1.png";
-import MusicianGroupLogo from "@/assets/games/mini-piano/group2.png";
-import EarGroupLogo from "@/assets/games/mini-piano/group3.png";
+const NumberLogo = "https://assets.cuthongminh.com/games/learn-numbers/number-logo.webp";
+const Game3Logo = "https://assets.cuthongminh.com/games/game-3-logo.webp";
+const GameColorLogo = "https://assets.cuthongminh.com/games/learn-color-color.webp";
+const ShapeLogo = "https://assets.cuthongminh.com/games/learn-shape/learn-shape-logo.webp";
+const GameAnimalLogo = "https://assets.cuthongminh.com/games/learn-animal/logo.webp";
+const GameVehicleLogo = "https://assets.cuthongminh.com/games/learn-vehicle/logo.webp";
+const GameFruitLogo = "https://assets.cuthongminh.com/games/learn-fruit/logo.webp";
+const GameInstrumentLogo = "https://assets.cuthongminh.com/games/learn-instrument/logo.webp";
+const GameOccupationLogo = "https://assets.cuthongminh.com/games/learn-occupation/logo.webp";
+const GameDinosaurLogo = "https://assets.cuthongminh.com/games/learn-dinosaur/logo.webp";
+const GameFoodLogo = "https://assets.cuthongminh.com/games/learn-food/logo.webp";
+const GameFlowerLogo = "https://assets.cuthongminh.com/games/learn-flower/logo.webp";
+const GameMathLogo = "https://assets.cuthongminh.com/games/learn-math/logo.webp";
+const GameWeatherLogo = "https://assets.cuthongminh.com/games/learn-weather/logo.webp";
+const GameFlagLogo = "https://assets.cuthongminh.com/games/learn-flag/logo.webp";
+const GameLandmarkLogo = "https://assets.cuthongminh.com/games/learn-landmark/logo.webp";
+const GameHygieneLogo = "https://assets.cuthongminh.com/games/learn-hygiene/logo.webp";
+const GamePatternLogo = "https://assets.cuthongminh.com/games/find-pattern/logo.webp";
+const GameAlphabetLogo = "https://assets.cuthongminh.com/games/learn-alphabet/logo.webp";
+const GameFindDifferencesLogo = "https://assets.cuthongminh.com/games/game-4-logo.webp";
+const GameOddOneOutLogo = "https://assets.cuthongminh.com/games/odd-one-out/logo.webp";
+const GameMazeRunnerLogo = "https://assets.cuthongminh.com/games/maze-runner/logo.webp";
+const PaintPictureLogo = "https://assets.cuthongminh.com/games/paint-picture/logo.webp";
+const GameEmotionLogo = "https://assets.cuthongminh.com/games/learn-emotion/logo.webp";
+const GameLearnTonesLogo = "https://assets.cuthongminh.com/games/learn-tones/logo.webp";
+const MixColorLogo = "https://assets.cuthongminh.com/games/learn-color-color.webp"; // Using placeholder
+const GameCostumeLogo = "https://assets.cuthongminh.com/games/learn-costume/logo.webp";
+const GameClockLogo = "https://assets.cuthongminh.com/games/learn-clock/logo-main.webp";
+const MiniPianoLogo = "https://assets.cuthongminh.com/games/mini-piano/logo.webp";
+const CreativeGroupLogo = "https://assets.cuthongminh.com/games/mini-piano/group1.webp";
+const MusicianGroupLogo = "https://assets.cuthongminh.com/games/mini-piano/group2.webp";
+const EarGroupLogo = "https://assets.cuthongminh.com/games/mini-piano/group3.webp";
+const GameSyllableLogo = "https://assets.cuthongminh.com/games/learn-syllable/logo.webp";
+const GameTerrainLogo = "https://assets.cuthongminh.com/games/learn-terrain/logo.webp";
+const GameBodyLogo = "https://assets.cuthongminh.com/games/learn-body/logo.webp";
 import { StaticImageData } from "next/image";
 import { GameGroupType } from "@/libs/constants/groups";
 
@@ -45,7 +48,7 @@ export interface GroupDef {
   title: string;
   lessons: LessonDef[];
   description?: string;
-  logo?: StaticImageData;
+  logo?: string | StaticImageData;
   variant?: "green" | "orange" | "purple" | "blue";
 }
 
@@ -54,11 +57,70 @@ export interface CourseDef {
   title: string;
   description: string;
   groups: GroupDef[];
-  icon: StaticImageData;
+  icon: string | StaticImageData;
   type: GameGroupType;
 }
 
 export const COURSES: CourseDef[] = [
+  {
+    id: "learn-tones",
+    title: "Học Dấu Tiếng Việt",
+    description: "Bé học nhận biết và phát âm các dấu thanh trong tiếng Việt.",
+    icon: GameLearnTonesLogo,
+    type: "language",
+    groups: [
+      {
+        id: "group_sac",
+        title: "Thanh Sắc",
+        lessons: [
+          { id: "lesson1", title: "Học dấu", isFree: true },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Tập viết" },
+          { id: "lesson4", title: "Chữ nào đúng" },
+        ],
+      },
+      {
+        id: "group_huyen",
+        title: "Thanh Huyền",
+        lessons: [
+          { id: "lesson1", title: "Học dấu", isFree: true },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Tập viết" },
+          { id: "lesson4", title: "Chữ nào đúng" },
+        ],
+      },
+      {
+        id: "group_hoi",
+        title: "Thanh Hỏi",
+        lessons: [
+          { id: "lesson1", title: "Học dấu", isFree: true },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Tập viết" },
+          { id: "lesson4", title: "Chữ nào đúng" },
+        ],
+      },
+      {
+        id: "group_nga",
+        title: "Thanh Ngã",
+        lessons: [
+          { id: "lesson1", title: "Học dấu", isFree: true },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Tập viết" },
+          { id: "lesson4", title: "Chữ nào đúng" },
+        ],
+      },
+      {
+        id: "group_nang",
+        title: "Thanh Nặng",
+        lessons: [
+          { id: "lesson1", title: "Học dấu", isFree: true },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Tập viết" },
+          { id: "lesson4", title: "Chữ nào đúng" },
+        ],
+      },
+    ],
+  },
   {
     id: "learn-numbers",
     title: "Đếm số",
@@ -1112,6 +1174,150 @@ export const COURSES: CourseDef[] = [
         lessons: [
           { id: "find-the-note", title: "Tìm nốt nhạc đúng", isFree: true },
           { id: "repeat-melody", title: "Lặp lại giai điệu" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "learn-syllable",
+    title: "Ghép Vần",
+    description: "Bé học cách kết hợp nguyên âm và phụ âm để tạo thành tiếng.",
+    icon: GameSyllableLogo,
+    type: "language",
+    groups: [
+      {
+        id: "group1",
+        title: "Vần ie",
+        lessons: [
+          { id: "lesson1", title: "Học vần", isFree: true },
+          { id: "lesson2", title: "Chọn vần đúng" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Vần uo",
+        lessons: [
+          { id: "lesson1", title: "Học vần", isFree: true },
+          { id: "lesson2", title: "Chọn vần đúng" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Vần ươ",
+        lessons: [
+          { id: "lesson1", title: "Học vần", isFree: true },
+          { id: "lesson2", title: "Chọn vần đúng" },
+        ],
+      },
+      {
+        id: "group4",
+        title: "Vần oa",
+        lessons: [
+          { id: "lesson1", title: "Học vần", isFree: true },
+          { id: "lesson2", title: "Chọn vần đúng" },
+        ],
+      },
+      {
+        id: "group5",
+        title: "Vần uy",
+        lessons: [
+          { id: "lesson1", title: "Học vần", isFree: true },
+          { id: "lesson2", title: "Chọn vần đúng" },
+        ],
+      },
+      {
+        id: "group6",
+        title: "Vần khác",
+        lessons: [
+          { id: "lesson1", title: "Học vần", isFree: true },
+          { id: "lesson2", title: "Chọn vần đúng" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "learn-terrain",
+    title: "Địa Hình",
+    description: "Bé khám phá các dạng địa hình tự nhiên qua trò chơi tương tác sáng tạo.",
+    icon: GameTerrainLogo,
+    type: "geography",
+    groups: [
+      {
+        id: "group1",
+        title: "Trên cạn",
+        lessons: [
+          { id: "lesson1", title: "Khám phá địa hình", isFree: true },
+          { id: "lesson2", title: "Nghe đoán địa hình" },
+          { id: "lesson3", title: "Xếp lớp địa hình" },
+          { id: "lesson4", title: "Ai sống ở đây?" },
+          { id: "lesson5", title: "Phiêu lưu địa hình" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Dưới nước",
+        lessons: [
+          { id: "lesson1", title: "Khám phá địa hình", isFree: true },
+          { id: "lesson2", title: "Nghe đoán địa hình" },
+          { id: "lesson3", title: "Xếp lớp địa hình" },
+          { id: "lesson4", title: "Ai sống ở đây?" },
+          { id: "lesson5", title: "Phiêu lưu địa hình" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Đặc biệt",
+        lessons: [
+          { id: "lesson1", title: "Khám phá địa hình", isFree: true },
+          { id: "lesson2", title: "Nghe đoán địa hình" },
+          { id: "lesson3", title: "Xếp lớp địa hình" },
+          { id: "lesson4", title: "Ai sống ở đây?" },
+          { id: "lesson5", title: "Phiêu lưu địa hình" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "learn-body",
+    title: "Bộ Phận Cơ Thể",
+    description: "Bé học nhận biết và gọi tên các bộ phận trên cơ thể qua hình ảnh vui nhộn.",
+    icon: GameBodyLogo,
+    type: "science",
+    groups: [
+      {
+        id: "group1",
+        title: "Đầu & Mặt",
+        lessons: [
+          { id: "lesson1", title: "Khám phá cơ thể", isFree: true },
+          { id: "lesson2", title: "Chạm và nói" },
+          { id: "lesson3", title: "Tập nói" },
+          { id: "lesson4", title: "Đây là gì?" },
+          { id: "lesson5", title: "Cơ thể làm gì?" },
+          { id: "lesson6", title: "Ghép đôi" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Thân Mình",
+        lessons: [
+          { id: "lesson1", title: "Khám phá cơ thể", isFree: true },
+          { id: "lesson2", title: "Chạm và nói" },
+          { id: "lesson3", title: "Tập nói" },
+          { id: "lesson4", title: "Đây là gì?" },
+          { id: "lesson5", title: "Cơ thể làm gì?" },
+          { id: "lesson6", title: "Ghép đôi" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Bàn Tay & Bàn Chân",
+        lessons: [
+          { id: "lesson1", title: "Khám phá cơ thể", isFree: true },
+          { id: "lesson2", title: "Chạm và nói" },
+          { id: "lesson3", title: "Tập nói" },
+          { id: "lesson4", title: "Đây là gì?" },
+          { id: "lesson5", title: "Cơ thể làm gì?" },
+          { id: "lesson6", title: "Ghép đôi" },
         ],
       },
     ],

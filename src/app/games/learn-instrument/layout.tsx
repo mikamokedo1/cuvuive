@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import GameInstrumentLogo from "@/assets/games/learn-instrument/logo.webp";
+const GameInstrumentLogo = "https://assets.cuthongminh.com/games/learn-instrument/logo.webp";
 
 export const metadata: Metadata = {
   title: "Học Nhạc Cụ | Cú Thông Minh",
@@ -11,12 +11,15 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: GameInstrumentLogo.src,
+        url: GameInstrumentLogo,
         width: 630,
         height: 630,
         alt: "Học Nhạc Cụ | Cú Thông Minh",
       },
     ],
+  },
+  alternates: {
+    canonical: "/games/learn-instrument",
   },
 };
 

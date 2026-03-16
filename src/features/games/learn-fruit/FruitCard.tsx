@@ -41,7 +41,7 @@ export function FruitCard({ fruit, active = false, showName = true, onClick }: F
     >
       {/* Fruit Image */}
       <div className="relative w-48 h-48 md:w-64 md:h-64">
-        <Image src={fruit.image} alt={fruit.name} fill className="object-contain drop-shadow-lg" priority />
+        <Image src={fruit.image} alt={fruit.name} fill className="object-contain drop-shadow-lg" sizes="(max-width: 768px) 192px, 256px" />
       </div>
     </div>
   );

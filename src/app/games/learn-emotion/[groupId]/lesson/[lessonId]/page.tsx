@@ -6,6 +6,7 @@ import {
   getEmotionsForGroup,
   getScenariosForGroup,
   getScenarioMatchForGroup,
+  EMOTION_DESCRIPTIONS,
 } from "@/features/games/learn-emotion/constants";
 import { EmotionLearnLesson } from "@/features/games/learn-emotion/EmotionLearnLesson";
 import { EmotionSpeakingLesson } from "@/features/games/learn-emotion/EmotionSpeakingLesson";
@@ -29,7 +30,7 @@ export default function LessonPage() {
   const renderLesson = () => {
     switch (game.lessonId) {
       case "lesson1":
-        return <EmotionLearnLesson items={items} onComplete={game.handleComplete} />;
+        return <EmotionLearnLesson items={items} descriptions={EMOTION_DESCRIPTIONS} onComplete={game.handleComplete} />;
       case "lesson2":
         return <EmotionSpeakingLesson items={items} onComplete={game.handleComplete} />;
       case "lesson3":

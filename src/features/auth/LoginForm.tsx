@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { ActionButton } from "@/components/common/ActionButton";
-import owlHi from "@/assets/games/common/owl-say-hi.webp";
+const owlHi = "https://assets.cuthongminh.com/games/common/owl-say-hi.webp";
 import { EmailIcon, ExclamationIcon, EyeIcon, FacebookIcon, GoogleIcon, PasswordIcon } from "@/components/common/Icons";
 import { MAP_ERROR } from "./SignupForm";
 import { useAccess, getRedirectUrl, clearRedirectUrl } from "@/context/AccessContext";

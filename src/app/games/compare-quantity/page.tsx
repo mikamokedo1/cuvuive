@@ -1,10 +1,10 @@
-import Group1Logo from "@/assets/games/compare-quantity/compare-quantity-logo-1.webp";
-import Group2Logo from "@/assets/games/compare-quantity/compare-quantity-logo-2.webp";
-import Group3Logo from "@/assets/games/compare-quantity/compare-quantity-logo-3.webp";
-import Group4Logo from "@/assets/games/compare-quantity/compare-quantity-logo-4.webp";
+const Group1Logo = "https://assets.cuthongminh.com/games/compare-quantity/compare-quantity-logo-1.webp";
+const Group2Logo = "https://assets.cuthongminh.com/games/compare-quantity/compare-quantity-logo-2.webp";
+const Group3Logo = "https://assets.cuthongminh.com/games/compare-quantity/compare-quantity-logo-3.webp";
+const Group4Logo = "https://assets.cuthongminh.com/games/compare-quantity/compare-quantity-logo-4.webp";
 
 // Reuse assets
-import compareLogo from "@/assets/games/game-3-logo.webp";
+const compareLogo = "https://assets.cuthongminh.com/games/game-3-logo.webp";
 import { GameWrapGroups } from "@/components/layout/GameWrapGroups";
 
 const GROUPS = [

@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: "Kho Trò Chơi Giáo Dục - Cú Thông Minh",
   description:
     "Khám phá hơn 20+ trò chơi giáo dục tương tác đa dạng chủ đề: Toán học, Âm nhạc, Động vật, Địa lý giúp bé phát triển trí tuệ toàn diện.",
+  alternates: {
+    canonical: "/games",
+  },
 };
 
 export default async function GamesPage() {

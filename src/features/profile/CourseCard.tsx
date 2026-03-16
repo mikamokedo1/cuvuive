@@ -4,7 +4,6 @@ import { useProgress } from "@/context/ProgressContext";
 import { CheckCircle, Lock, PlayCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 
 interface CourseCardProps {
@@ -12,7 +11,6 @@ interface CourseCardProps {
 }
 
 export function CourseCard({ course }: CourseCardProps) {
-  const router = useRouter();
   const { allProgress, isGroupUnlocked } = useProgress(); // Use isGroupUnlocked for simplicity or custom logic?
 
   const progress = allProgress[course.id];
@@ -78,15 +76,16 @@ export function CourseCard({ course }: CourseCardProps) {
       </div>
 
       <div className="flex-shrink-0">
-        <ActionButton
-          variant="glossy"
-          color={percentage === 100 ? "green" : "orange"}
-          size="auto"
-          className="rounded-xl px-8"
-          onClick={() => router.push(stats.nextLessonUrl)}
-        >
-          {percentage === 100 ? "Hoàn thành" : "Tiếp tục"}
-        </ActionButton>
+        <Link href={stats.nextLessonUrl}>
+          <ActionButton
+            variant="glossy"
+            color={percentage === 100 ? "green" : "orange"}
+            size="auto"
+            className="rounded-xl px-8"
+          >
+            {percentage === 100 ? "Hoàn thành" : "Tiếp tục"}
+          </ActionButton>
+        </Link>
       </div>
     </div>
   );

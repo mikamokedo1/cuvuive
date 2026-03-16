@@ -1,89 +1,89 @@
 import { StaticImageData } from "next/image";
 
 // Import group logos
-import LogoGroup1 from "@/assets/games/learn-hygiene/group1.png";
-import LogoGroup2 from "@/assets/games/learn-hygiene/group2.png";
-import LogoGroup3 from "@/assets/games/learn-hygiene/group3.png";
+const LogoGroup1 = "https://assets.cuthongminh.com/games/learn-hygiene/group1.webp";
+const LogoGroup2 = "https://assets.cuthongminh.com/games/learn-hygiene/group2.webp";
+const LogoGroup3 = "https://assets.cuthongminh.com/games/learn-hygiene/group3.webp";
 
 // Import Daily Hygiene (Group 1)
-import BrushTeeth from "@/assets/games/learn-hygiene/brush-teeth.png";
-import WashHands from "@/assets/games/learn-hygiene/wash-hands.png";
-import WashFace from "@/assets/games/learn-hygiene/wash-face.png";
-import TakeBath from "@/assets/games/learn-hygiene/take-bath.png";
-import BrushHair from "@/assets/games/learn-hygiene/brush-hair.png";
-import TrimNails from "@/assets/games/learn-hygiene/trim-nails.png";
+const BrushTeeth = "https://assets.cuthongminh.com/games/learn-hygiene/brush-teeth.webp";
+const WashHands = "https://assets.cuthongminh.com/games/learn-hygiene/wash-hands.webp";
+const WashFace = "https://assets.cuthongminh.com/games/learn-hygiene/wash-face.webp";
+const TakeBath = "https://assets.cuthongminh.com/games/learn-hygiene/take-bath.webp";
+const BrushHair = "https://assets.cuthongminh.com/games/learn-hygiene/brush-hair.webp";
+const TrimNails = "https://assets.cuthongminh.com/games/learn-hygiene/trim-nails.webp";
 
 // Import Staying Healthy (Group 2)
-import DrinkWater from "@/assets/games/learn-hygiene/drink-water.png";
-import EatVegetables from "@/assets/games/learn-hygiene/eat-vegetables.png";
-import SleepOnTime from "@/assets/games/learn-hygiene/sleep-on-time.png";
-import WashFruit from "@/assets/games/learn-hygiene/wash-fruit.png";
-import CoverMouth from "@/assets/games/learn-hygiene/cover-mouth.png";
-import WearMask from "@/assets/games/learn-hygiene/wear-mask.png";
+const DrinkWater = "https://assets.cuthongminh.com/games/learn-hygiene/drink-water.webp";
+const EatVegetables = "https://assets.cuthongminh.com/games/learn-hygiene/eat-vegetables.webp";
+const SleepOnTime = "https://assets.cuthongminh.com/games/learn-hygiene/sleep-on-time.webp";
+const WashFruit = "https://assets.cuthongminh.com/games/learn-hygiene/wash-fruit.webp";
+const CoverMouth = "https://assets.cuthongminh.com/games/learn-hygiene/cover-mouth.webp";
+const WearMask = "https://assets.cuthongminh.com/games/learn-hygiene/wear-mask.webp";
 
 // Import Clean & Tidy (Group 3)
-import FoldClothes from "@/assets/games/learn-hygiene/fold-clothes.png";
-import TidyToys from "@/assets/games/learn-hygiene/tidy-toys.png";
-import MessedToys from "@/assets/games/learn-hygiene/messed_toy.webp";
-import DirtyClothes from "@/assets/games/learn-hygiene/dirty_clothes.webp";
-import ThrowTrashWrong from "@/assets/games/learn-hygiene/throw-trash-wrong.webp";
-import ThrowTrash from "@/assets/games/learn-hygiene/throw-trash.png";
-import WipeTable from "@/assets/games/learn-hygiene/wipe-table.png";
-import WearShoes from "@/assets/games/learn-hygiene/wear-shoes.png";
-import CleanClothes from "@/assets/games/learn-hygiene/clean-clothes.png";
+const FoldClothes = "https://assets.cuthongminh.com/games/learn-hygiene/fold-clothes.webp";
+const TidyToys = "https://assets.cuthongminh.com/games/learn-hygiene/tidy-toys.webp";
+const MessedToys = "https://assets.cuthongminh.com/games/learn-hygiene/messed_toy.webp";
+const DirtyClothes = "https://assets.cuthongminh.com/games/learn-hygiene/dirty_clothes.webp";
+const ThrowTrashWrong = "https://assets.cuthongminh.com/games/learn-hygiene/throw-trash-wrong.webp";
+const ThrowTrash = "https://assets.cuthongminh.com/games/learn-hygiene/throw-trash.webp";
+const WipeTable = "https://assets.cuthongminh.com/games/learn-hygiene/wipe-table.webp";
+const WearShoes = "https://assets.cuthongminh.com/games/learn-hygiene/wear-shoes.webp";
+const CleanClothes = "https://assets.cuthongminh.com/games/learn-hygiene/clean-clothes.webp";
 
 // lesson 3
-import dontBath from "@/assets/games/learn-hygiene/dont_bath.png";
-import compettionTollBrush from "@/assets/games/learn-hygiene/compettion-toothbrush.png";
-import washHandsWC from "@/assets/games/learn-hygiene/wash_hands_wc.png";
-import playPhoneLate from "@/assets/games/learn-hygiene/play_phone_late.png";
-import eatCandy from "@/assets/games/learn-hygiene/eat_candy.png";
+const dontBath = "https://assets.cuthongminh.com/games/learn-hygiene/dont_bath.webp";
+const compettionTollBrush = "https://assets.cuthongminh.com/games/learn-hygiene/compettion-toothbrush.webp";
+const washHandsWC = "https://assets.cuthongminh.com/games/learn-hygiene/wash_hands_wc.webp";
+const playPhoneLate = "https://assets.cuthongminh.com/games/learn-hygiene/play_phone_late.webp";
+const eatCandy = "https://assets.cuthongminh.com/games/learn-hygiene/eat_candy.webp";
 
 // lesson 4 - sequence images
-import SeqBrushTeeth1 from "@/assets/games/learn-hygiene/seq_brush_teeth_1.png";
-import SeqBrushTeeth2 from "@/assets/games/learn-hygiene/seq_brush_teeth_2.png";
-import SeqBrushTeeth3 from "@/assets/games/learn-hygiene/seq_brush_teeth_3.png";
-import SeqBrushTeeth4 from "@/assets/games/learn-hygiene/seq_brush_teeth_4.png";
+const SeqBrushTeeth1 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_brush_teeth_1.webp";
+const SeqBrushTeeth2 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_brush_teeth_2.webp";
+const SeqBrushTeeth3 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_brush_teeth_3.webp";
+const SeqBrushTeeth4 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_brush_teeth_4.webp";
 
-import SeqWashHands1 from "@/assets/games/learn-hygiene/seq_wash_hands_1.png";
-import SeqWashHands2 from "@/assets/games/learn-hygiene/seq_wash_hands_2.png";
-import SeqWashHands3 from "@/assets/games/learn-hygiene/seq_wash_hands_3.png";
-import SeqWashHands4 from "@/assets/games/learn-hygiene/seq_wash_hands_4.png";
+const SeqWashHands1 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_wash_hands_1.webp";
+const SeqWashHands2 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_wash_hands_2.webp";
+const SeqWashHands3 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_wash_hands_3.webp";
+const SeqWashHands4 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_wash_hands_4.webp";
 
-import SeqTakeBath1 from "@/assets/games/learn-hygiene/seq_take_bath_1.png";
-import SeqTakeBath2 from "@/assets/games/learn-hygiene/seq_take_bath_2.png";
-import SeqTakeBath3 from "@/assets/games/learn-hygiene/seq_take_bath_3.png";
-import SeqTakeBath4 from "@/assets/games/learn-hygiene/seq_take_bath_4.png";
+const SeqTakeBath1 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_take_bath_1.webp";
+const SeqTakeBath2 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_take_bath_2.webp";
+const SeqTakeBath3 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_take_bath_3.webp";
+const SeqTakeBath4 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_take_bath_4.webp";
 
-import SeqWashFruit1 from "@/assets/games/learn-hygiene/seq_wash_fruit_1.webp";
-import SeqWashFruit2 from "@/assets/games/learn-hygiene/seq_wash_fruit_2.webp";
-import SeqWashFruit3 from "@/assets/games/learn-hygiene/seq_wash_fruit_3.webp";
-import SeqWashFruit4 from "@/assets/games/learn-hygiene/seq_wash_fruit_4.webp";
+const SeqWashFruit1 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_wash_fruit_1.webp";
+const SeqWashFruit2 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_wash_fruit_2.webp";
+const SeqWashFruit3 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_wash_fruit_3.webp";
+const SeqWashFruit4 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_wash_fruit_4.webp";
 
-import SeqCoverMouth1 from "@/assets/games/learn-hygiene/seq_cover_mouth_1.webp";
-import SeqCoverMouth2 from "@/assets/games/learn-hygiene/seq_cover_mouth_2.webp";
-import SeqCoverMouth3 from "@/assets/games/learn-hygiene/seq_cover_mouth_3.webp";
-import SeqCoverMouth4 from "@/assets/games/learn-hygiene/seq_cover_mouth_4.webp";
+const SeqCoverMouth1 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_cover_mouth_1.webp";
+const SeqCoverMouth2 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_cover_mouth_2.webp";
+const SeqCoverMouth3 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_cover_mouth_3.webp";
+const SeqCoverMouth4 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_cover_mouth_4.webp";
 
-import SeqWearMask1 from "@/assets/games/learn-hygiene/seq_wear_mask_1.webp";
-import SeqWearMask2 from "@/assets/games/learn-hygiene/seq_wear_mask_2.webp";
-import SeqWearMask3 from "@/assets/games/learn-hygiene/seq_wear_mask_3.webp";
-import SeqWearMask4 from "@/assets/games/learn-hygiene/seq_wear_mask_4.webp";
+const SeqWearMask1 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_wear_mask_1.webp";
+const SeqWearMask2 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_wear_mask_2.webp";
+const SeqWearMask3 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_wear_mask_3.webp";
+const SeqWearMask4 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_wear_mask_4.webp";
 
-import SeqFoldClothes1 from "@/assets/games/learn-hygiene/seq_fold_clothes_1.webp";
-import SeqFoldClothes2 from "@/assets/games/learn-hygiene/seq_fold_clothes_2.webp";
-import SeqFoldClothes3 from "@/assets/games/learn-hygiene/seq_fold_clothes_3.webp";
-import SeqFoldClothes4 from "@/assets/games/learn-hygiene/seq_fold_clothes_4.webp";
+const SeqFoldClothes1 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_fold_clothes_1.webp";
+const SeqFoldClothes2 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_fold_clothes_2.webp";
+const SeqFoldClothes3 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_fold_clothes_3.webp";
+const SeqFoldClothes4 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_fold_clothes_4.webp";
 
-import SeqThrowTrash1 from "@/assets/games/learn-hygiene/seq_throw_trash_1.png";
-import SeqThrowTrash2 from "@/assets/games/learn-hygiene/seq_throw_trash_2.png";
-import SeqThrowTrash3 from "@/assets/games/learn-hygiene/seq_throw_trash_3.png";
-import SeqThrowTrash4 from "@/assets/games/learn-hygiene/seq_throw_trash_4.png";
+const SeqThrowTrash1 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_throw_trash_1.webp";
+const SeqThrowTrash2 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_throw_trash_2.webp";
+const SeqThrowTrash3 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_throw_trash_3.webp";
+const SeqThrowTrash4 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_throw_trash_4.webp";
 
-import SeqTidyToys1 from "@/assets/games/learn-hygiene/seq_tidy_toys_1.webp";
-import SeqTidyToys2 from "@/assets/games/learn-hygiene/seq_tidy_toys_2.webp";
-import SeqTidyToys3 from "@/assets/games/learn-hygiene/seq_tidy_toys_3.webp";
-import SeqTidyToys4 from "@/assets/games/learn-hygiene/seq_tidy_toys_4.webp";
+const SeqTidyToys1 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_tidy_toys_1.webp";
+const SeqTidyToys2 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_tidy_toys_2.webp";
+const SeqTidyToys3 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_tidy_toys_3.webp";
+const SeqTidyToys4 = "https://assets.cuthongminh.com/games/learn-hygiene/seq_tidy_toys_4.webp";
 
 import { EntityData } from "@/types/game";
 
@@ -147,12 +147,37 @@ export function getHygieneForGroup(groupId: string): EntityData[] {
   return HYGIENE_ITEMS.filter((item) => group.items.includes(item.id));
 }
 
+// ──── Hygiene Descriptions (for explore lesson) ────
+export const HYGIENE_DESCRIPTIONS: Record<string, string> = {
+  // Daily
+  brush_teeth: "Đánh răng sáng và tối giúp răng sạch sẽ, không bị sâu. Nhớ đánh ít nhất 2 phút nhé!",
+  wash_hands: "Rửa tay bằng xà phòng trước khi ăn và sau khi chơi. Rửa tay giúp diệt vi trùng!",
+  wash_face: "Rửa mặt mỗi sáng giúp mặt sạch sẽ và tươi tắn. Dùng nước mát rửa mặt thật sảng khoái!",
+  take_bath: "Tắm mỗi ngày giúp cơ thể sạch sẽ và thơm tho. Tắm xong pé thấy mát mẻ lắm!",
+  brush_hair: "Chải tóc gọn gàng trước khi đi học. Tóc sạch đẹp giúp pé trông tự tin hơn!",
+  trim_nails: "Cắt móng tay thường xuyên để giữ sạch sẽ. Móng tay dài dễ bị bẩn và gãy!",
+  // Healthy
+  drink_water: "Uống đủ nước mỗi ngày giúp cơ thể khỏe mạnh. Nước giúp pé tỉnh táo và vui vẻ!",
+  eat_vegetables: "Ăn rau củ giúp pé khỏe mạnh và thông minh. Rau xanh có rất nhiều vitamin!",
+  sleep_on_time: "Ngủ đúng giờ giúp pé lớn nhanh và học giỏi. Pé nên ngủ trước 9 giờ tối!",
+  wash_fruit: "Rửa trái cây trước khi ăn để loại bỏ bụi bẩn. Trái cây sạch ăn mới an toàn!",
+  cover_mouth: "Che miệng khi ho hoặc hắt hơi để không lây bệnh cho người khác. Đây là thói quen tốt!",
+  wear_mask: "Đeo khẩu trang nơi đông người để bảo vệ sức khỏe. Khẩu trang ngăn vi trùng xâm nhập!",
+  // Tidy
+  fold_clothes: "Gấp quần áo gọn gàng cất vào tủ. Quần áo gấp đẹp dễ tìm khi cần mặc!",
+  tidy_toys: "Dọn đồ chơi sau khi chơi xong. Phòng gọn gàng trông sạch đẹp hơn!",
+  throw_trash: "Bỏ rác đúng nơi quy định. Giữ sạch môi trường là bảo vệ trái đất!",
+  wipe_table: "Lau bàn sạch sẽ trước và sau khi ăn. Bàn sạch giúp bữa ăn ngon hơn!",
+  wear_shoes: "Đi giày dép khi ra ngoài để bảo vệ chân. Đi chân trần dễ bị đau và bẩn!",
+  clean_clothes: "Mặc quần áo sạch mỗi ngày. Quần áo sạch giúp pé thơm tho và tự tin!",
+};
+
 // ============ RIGHT OR WRONG SCENARIOS ============
 
 export interface RightWrongScenario {
   id: string;
   text: string;
-  image: StaticImageData;
+  image: string | StaticImageData;
   isCorrect: boolean;
   category: string;
 }
@@ -231,7 +256,7 @@ export interface SequenceActivity {
   id: string;
   title: string;
   steps: string[];
-  stepImages?: import("next/image").StaticImageData[];
+  stepImages?: Array<string | import("next/image").StaticImageData>;
   category: string;
 }
 

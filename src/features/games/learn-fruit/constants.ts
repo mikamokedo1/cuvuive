@@ -1,33 +1,33 @@
 import { StaticImageData } from "next/image";
 
 // Import group logos
-import LogoGroup1 from "@/assets/games/learn-fruit/group1.webp";
-import LogoGroup2 from "@/assets/games/learn-fruit/group2.webp";
-import LogoGroup3 from "@/assets/games/learn-fruit/group3.webp";
+const LogoGroup1 = "https://assets.cuthongminh.com/games/learn-fruit/group1.webp";
+const LogoGroup2 = "https://assets.cuthongminh.com/games/learn-fruit/group2.webp";
+const LogoGroup3 = "https://assets.cuthongminh.com/games/learn-fruit/group3.webp";
 
 // Import Tropical Fruits (Group 1)
-import Banana from "@/assets/games/learn-fruit/banana.webp";
-import Mango from "@/assets/games/learn-fruit/mango.webp";
-import Pineapple from "@/assets/games/learn-fruit/pineapple.webp";
-import Coconut from "@/assets/games/learn-fruit/coconut.webp";
-import Papaya from "@/assets/games/learn-fruit/papaya.webp";
-import DragonFruit from "@/assets/games/learn-fruit/dragonfruit.webp";
+const Banana = "https://assets.cuthongminh.com/games/learn-fruit/banana.webp";
+const Mango = "https://assets.cuthongminh.com/games/learn-fruit/mango.webp";
+const Pineapple = "https://assets.cuthongminh.com/games/learn-fruit/pineapple.webp";
+const Coconut = "https://assets.cuthongminh.com/games/learn-fruit/coconut.webp";
+const Papaya = "https://assets.cuthongminh.com/games/learn-fruit/papaya.webp";
+const DragonFruit = "https://assets.cuthongminh.com/games/learn-fruit/dragonfruit.webp";
 
 // Import Common Fruits (Group 2)
-import Apple from "@/assets/games/learn-fruit/apple.webp";
-import Orange from "@/assets/games/learn-fruit/orange.webp";
-import Grape from "@/assets/games/learn-fruit/grape.webp";
-import Strawberry from "@/assets/games/learn-fruit/strawberry.webp";
-import Watermelon from "@/assets/games/learn-fruit/watermelon.webp";
-import Pear from "@/assets/games/learn-fruit/pear.webp";
+const Apple = "https://assets.cuthongminh.com/games/learn-fruit/apple.webp";
+const Orange = "https://assets.cuthongminh.com/games/learn-fruit/orange.webp";
+const Grape = "https://assets.cuthongminh.com/games/learn-fruit/grape.webp";
+const Strawberry = "https://assets.cuthongminh.com/games/learn-fruit/strawberry.webp";
+const Watermelon = "https://assets.cuthongminh.com/games/learn-fruit/watermelon.webp";
+const Pear = "https://assets.cuthongminh.com/games/learn-fruit/pear.webp";
 
 // Import Special Fruits (Group 3)
-import Durian from "@/assets/games/learn-fruit/durian.webp";
-import Mangosteen from "@/assets/games/learn-fruit/mangosteen.webp";
-import Pomelo from "@/assets/games/learn-fruit/pomelo.webp";
-import Lychee from "@/assets/games/learn-fruit/lychee.webp";
-import Lemon from "@/assets/games/learn-fruit/lemon.webp";
-import Kiwi from "@/assets/games/learn-fruit/kiwi.webp";
+const Durian = "https://assets.cuthongminh.com/games/learn-fruit/durian.webp";
+const Mangosteen = "https://assets.cuthongminh.com/games/learn-fruit/mangosteen.webp";
+const Pomelo = "https://assets.cuthongminh.com/games/learn-fruit/pomelo.webp";
+const Lychee = "https://assets.cuthongminh.com/games/learn-fruit/lychee.webp";
+const Lemon = "https://assets.cuthongminh.com/games/learn-fruit/lemon.webp";
+const Kiwi = "https://assets.cuthongminh.com/games/learn-fruit/kiwi.webp";
 import { EntityData } from "@/types/game";
 
 export const FRUITS: EntityData[] = [
@@ -95,3 +95,25 @@ export function getFruitsForGroup(groupId: string): EntityData[] {
 export function getAllFruits(): EntityData[] {
   return FRUITS;
 }
+
+// ──── Fruit Descriptions (for explore lesson) ────
+export const FRUIT_DESCRIPTIONS: Record<string, string> = {
+  banana: "Chuối có vỏ vàng và ruột ngọt mềm. Chuối giàu kali, giúp xương chắc khỏe!",
+  mango: "Xoài chín vàng ươm, ngọt lịm và thơm lừng. Xoài là vua của các loại trái cây nhiệt đới!",
+  pineapple: "Dứa có vỏ sần sùi nhưng ruột vàng ngọt. Dứa ăn nhiều sẽ bị rát lưỡi",
+  coconut: "Dừa có nước ngọt mát bên trong. Cây dừa mọc rất cao và thường ở gần biển!",
+  papaya: "Đu đủ chín có ruột cam ngọt lịm. Đu đủ tốt cho tiêu hóa!",
+  dragonfruit: "Thanh long có vỏ hồng đẹp như rồng. Ruột trắng hoặc đỏ với hạt đen nhỏ li ti!",
+  apple: "Táo có vị giòn ngọt, rất tốt cho sức khỏe. 'Mỗi ngày một quả táo, bác sĩ xa ta!'",
+  orange: "Cam có múi ngọt mọng nước. Cam giàu vitamin Xê giúp pé khỏe mạnh!",
+  grape: "Nho mọc thành chùm, có nho xanh và nho tím. Nho dùng làm nước ép rất ngon!",
+  strawberry: "Dâu tây đỏ tươi, có nhiều hạt nhỏ bên ngoài. Dâu tây thơm ngon và bổ dưỡng!",
+  watermelon: "Dưa hấu to tròn, ruột đỏ mọng nước. Mùa hè ăn dưa hấu mát lắm!",
+  pear: "Lê có vị ngọt thanh mát. Lê giúp giải nhiệt rất tốt!",
+  durian: "Sầu riêng có gai nhọn và mùi rất đặc biệt. Ai thích thì rất thích, ai sợ thì rất sợ!",
+  mangosteen: "Măng cụt có vỏ tím sậm, ruột trắng ngọt. Măng cụt được gọi là 'nữ hoàng trái cây'!",
+  pomelo: "Bưởi to tròn, múi ngọt hoặc chua nhẹ. Ngày Tết, người ta hay mua bưởi để trưng!",
+  lychee: "Vải có vỏ đỏ sần sùi, ruột trắng trong ngọt lịm. Vải chín vào mùa hè!",
+  lemon: "Chanh có vị chua, dùng để pha nước giải khát.",
+  kiwi: "Kiwi có vỏ nâu xù xì, ruột xanh với hạt đen nhỏ.",
+};

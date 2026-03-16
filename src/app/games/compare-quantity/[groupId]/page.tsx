@@ -17,7 +17,7 @@ const groupConfig: Record<
   {
     title: string;
     symbol: string;
-    image: StaticImageData;
+    image: string | StaticImageData;
     comparisonType: "greater" | "less" | "equal" | "mixed";
     lessons: Array<{ id: string; title: string; icon: React.ReactNode }>;
   }

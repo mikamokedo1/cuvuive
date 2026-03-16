@@ -1,34 +1,34 @@
 import { StaticImageData } from "next/image";
 
 // Import group logos
-import LogoGroup1 from "@/assets/games/learn-food/group1.webp";
-import LogoGroup2 from "@/assets/games/learn-food/group2.webp";
-import LogoGroup3 from "@/assets/games/learn-food/group3.webp";
+const LogoGroup1 = "https://assets.cuthongminh.com/games/learn-food/group1.webp";
+const LogoGroup2 = "https://assets.cuthongminh.com/games/learn-food/group2.webp";
+const LogoGroup3 = "https://assets.cuthongminh.com/games/learn-food/group3.webp";
 
 // Import Breakfast Items (Group 1)
-import BanhMi from "@/assets/games/learn-food/banh_mi.webp";
-import Pho from "@/assets/games/learn-food/pho.webp";
-import TrungOpLa from "@/assets/games/learn-food/trung_op_la.webp";
-import SuaTuoi from "@/assets/games/learn-food/sua_tuoi.webp";
-import NguCoc from "@/assets/games/learn-food/ngu_coc.webp";
-import XucXich from "@/assets/games/learn-food/xuc_xich.webp";
+const BanhMi = "https://assets.cuthongminh.com/games/learn-food/banh_mi.webp";
+const Pho = "https://assets.cuthongminh.com/games/learn-food/pho.webp";
+const TrungOpLa = "https://assets.cuthongminh.com/games/learn-food/trung_op_la.webp";
+const SuaTuoi = "https://assets.cuthongminh.com/games/learn-food/sua_tuoi.webp";
+const NguCoc = "https://assets.cuthongminh.com/games/learn-food/ngu_coc.webp";
+const XucXich = "https://assets.cuthongminh.com/games/learn-food/xuc_xich.webp";
 
 // Import Main Dishes (Group 2)
-import ComTrang from "@/assets/games/learn-food/com_trang.webp";
-import Canh from "@/assets/games/learn-food/canh.webp";
-import GaRan from "@/assets/games/learn-food/ga_ran.webp";
-import Pizza from "@/assets/games/learn-food/pizza.webp";
-import Hamburger from "@/assets/games/learn-food/hamburger.webp";
-import MiY from "@/assets/games/learn-food/mi_y.webp";
+const ComTrang = "https://assets.cuthongminh.com/games/learn-food/com_trang.webp";
+const Canh = "https://assets.cuthongminh.com/games/learn-food/canh.webp";
+const GaRan = "https://assets.cuthongminh.com/games/learn-food/ga_ran.webp";
+const Pizza = "https://assets.cuthongminh.com/games/learn-food/pizza.webp";
+const Hamburger = "https://assets.cuthongminh.com/games/learn-food/hamburger.webp";
+const MiY = "https://assets.cuthongminh.com/games/learn-food/mi_y.webp";
 
 // Import Desserts (Group 3)
-import Kem from "@/assets/games/learn-food/kem.webp";
-import BanhNgot from "@/assets/games/learn-food/banh_ngot.webp";
-import NuocCam from "@/assets/games/learn-food/nuoc_cam.webp";
-import SuaChua from "@/assets/games/learn-food/sua_chua.webp";
-import BanhVong from "@/assets/games/learn-food/banh_vong.webp";
-import BanhQuy from "@/assets/games/learn-food/banh_quy.webp";
-import Traicay from "@/assets/games/learn-food/trai_cay.webp";
+const Kem = "https://assets.cuthongminh.com/games/learn-food/kem.webp";
+const BanhNgot = "https://assets.cuthongminh.com/games/learn-food/banh_ngot.webp";
+const NuocCam = "https://assets.cuthongminh.com/games/learn-food/nuoc_cam.webp";
+const SuaChua = "https://assets.cuthongminh.com/games/learn-food/sua_chua.webp";
+const BanhVong = "https://assets.cuthongminh.com/games/learn-food/banh_vong.webp";
+const BanhQuy = "https://assets.cuthongminh.com/games/learn-food/banh_quy.webp";
+const Traicay = "https://assets.cuthongminh.com/games/learn-food/trai_cay.webp";
 import { EntityData } from "@/types/game";
 
 export const FOODS: EntityData[] = [
@@ -100,3 +100,29 @@ export function getFoodsForGroup(groupId: string): EntityData[] {
 export function getAllFoods(): EntityData[] {
   return FOODS;
 }
+
+// ──── Food Descriptions (for explore lesson) ────
+export const FOOD_DESCRIPTIONS: Record<string, string> = {
+  // Breakfast
+  banh_mi: "Bánh mì giòn rụm, nhân thịt và rau. Bánh mì Việt Nam nổi tiếng khắp thế giới!",
+  pho: "Phở có nước lèo thơm ngon, kèm bánh phở và thịt. Phở là món ăn đặc trưng của Việt Nam!",
+  trung_op_la: "Trứng ốp la chiên vàng giòn, lòng đỏ béo ngậy. Ăn kèm cơm hoặc bánh mì rất ngon!",
+  sua_tuoi: "Sữa tươi trắng ngon, rất tốt cho xương và răng. Uống sữa mỗi ngày giúp pé lớn nhanh!",
+  ngu_coc: "Ngũ cốc ăn với sữa, giòn giòn ngọt ngọt. Ngũ cốc giàu chất xơ, tốt cho bụng!",
+  xuc_xich: "Xúc xích nướng thơm lừng, ăn rất vui miệng. Xúc xích thường ăn kèm tương cà!",
+  // Main Dishes
+  com_trang: "Cơm trắng là món chính trong bữa ăn Việt Nam. Cơm ăn kèm canh và thịt rất ngon!",
+  canh: "Canh nóng hổi, có rau và thịt. Ăn canh giúp bổ sung nước và rau xanh cho cơ thể!",
+  ga_ran: "Gà rán giòn rụm bên ngoài, mềm ngọt bên trong. Gà rán là món trẻ em rất yêu thích!",
+  pizza: "Pi da tròn to, phủ phô mai và nhân. Pi da là món ăn nổi tiếng từ nước Ý!",
+  hamburger: "Ham bơ gơ có thịt bò, rau xà lách và sốt. Ham bơ gơ là món ăn nhanh phổ biến!",
+  mi_y: "Mì Ý có sốt cà chua và thịt bò băm. Mì Ý là món ăn ngon từ nước Ý!",
+  // Desserts
+  kem: "Kem lạnh ngọt, có nhiều hương vị. Mùa hè ăn kem mát lịm, ai cũng thích!",
+  banh_ngot: "Bánh ngọt mềm xốp, phủ kem bên trên. Bánh sinh nhật là loại bánh ngọt đặc biệt!",
+  nuoc_cam: "Nước cam tươi mát, giàu vitamin Xê. Uống nước cam giúp pé khỏe mạnh!",
+  sua_chua: "Sữa chua mát lạnh, vị chua ngọt dễ ăn. Sữa chua tốt cho hệ tiêu hóa!",
+  banh_vong: "Bánh vòng tròn xinh có phủ đường. Bánh vòng còn gọi là donut, rất ngon!",
+  banh_quy: "Bánh qui giòn tan, có nhiều hình dáng đáng yêu. Ăn bánh qui kèm sữa rất ngon!",
+  trai_cay: "Trái cây tươi có nhiều vitamin. Ăn nhiều trái cây giúp pé da đẹp và khỏe mạnh!",
+};

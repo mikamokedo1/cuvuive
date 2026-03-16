@@ -9,7 +9,7 @@ export function Footer() {
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row gap-12 items-start justify-between mb-12">
           <div className="flex flex-col gap-6 max-w-xs text-center md:text-left">
-            <Image src={LogoLong} alt="Logo" width={220} height={48} className="mx-auto md:mx-0" />
+            <Image src={LogoLong} alt="Cú Thông Minh - Trang chủ" width={220} height={48} className="mx-auto md:mx-0" />
             <p className="text-slate-500 text-sm leading-relaxed">
               Nền tảng học mà chơi số 1 cho bé, giúp con phát triển tư duy toàn diện qua những bài học sáng tạo.
             </p>
@@ -46,14 +46,14 @@ export function Footer() {
               <h4 className="font-bold text-slate-900 mb-2">Kết nối</h4>
               <div className="flex gap-4">
                 <Link
-                  href="#"
+                  href="https://www.facebook.com/CuthongminhOffical"
                   className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-[#1877F2] hover:text-white transition-all shadow-sm"
                   aria-label="Facebook"
                 >
                   <Facebook size={20} />
                 </Link>
                 <Link
-                  href="#"
+                  href="https://www.tiktok.com/@cuthongminh"
                   className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-black hover:text-white transition-all shadow-sm"
                   aria-label="TikTok"
                 >

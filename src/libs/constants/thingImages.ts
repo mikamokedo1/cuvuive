@@ -1,12 +1,12 @@
-import Number1 from "@/assets/games/learn-numbers/example-num-1.webp";
-import Number2 from "@/assets/games/learn-numbers/example-num-2.webp";
-import Number3 from "@/assets/games/learn-numbers/example-num-3.webp";
-import Number4 from "@/assets/games/learn-numbers/example-num-4.webp";
-import Number5 from "@/assets/games/learn-numbers/example-num-5.webp";
-import Number6 from "@/assets/games/learn-numbers/example-num-6.webp";
-import Number7 from "@/assets/games/learn-numbers/example-num-7.webp";
-import Number8 from "@/assets/games/learn-numbers/example-num-8.webp";
-import Number9 from "@/assets/games/learn-numbers/example-num-9.webp";
+const Number1 = "https://assets.cuthongminh.com/games/learn-numbers/example-num-1.webp";
+const Number2 = "https://assets.cuthongminh.com/games/learn-numbers/example-num-2.webp";
+const Number3 = "https://assets.cuthongminh.com/games/learn-numbers/example-num-3.webp";
+const Number4 = "https://assets.cuthongminh.com/games/learn-numbers/example-num-4.webp";
+const Number5 = "https://assets.cuthongminh.com/games/learn-numbers/example-num-5.webp";
+const Number6 = "https://assets.cuthongminh.com/games/learn-numbers/example-num-6.webp";
+const Number7 = "https://assets.cuthongminh.com/games/learn-numbers/example-num-7.webp";
+const Number8 = "https://assets.cuthongminh.com/games/learn-numbers/example-num-8.webp";
+const Number9 = "https://assets.cuthongminh.com/games/learn-numbers/example-num-9.webp";
 export const ThingImages = [
   {
     icon: Number1,

@@ -6,8 +6,8 @@ import { BackLessonButton } from "@/components/games/BackLessonButton";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { useSwipe } from "@/hooks/useSwipe";
-import LoudSpeaker from "@/assets/games/loud-speaker.webp";
 import Image from "next/image";
+import { LoudSpeaker } from "@/libs/constants/game-assets";
 
 interface MixColorLearnLessonProps {
   rules: MixingRule[];

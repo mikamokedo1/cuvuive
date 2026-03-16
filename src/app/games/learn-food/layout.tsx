@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import GameFoodLogo from "@/assets/games/learn-food/logo.webp";
+const GameFoodLogo = "https://assets.cuthongminh.com/games/learn-food/logo.webp";
 
 export const metadata: Metadata = {
   title: "Học Món Ăn | Cú Thông Minh",
@@ -11,12 +11,15 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: GameFoodLogo.src,
+        url: GameFoodLogo,
         width: 630,
         height: 630,
         alt: "Học Món Ăn | Cú Thông Minh",
       },
     ],
+  },
+  alternates: {
+    canonical: "/games/learn-food",
   },
 };
 

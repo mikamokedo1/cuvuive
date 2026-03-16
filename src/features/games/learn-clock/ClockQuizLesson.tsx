@@ -76,7 +76,7 @@ export function ClockQuizLesson({ type, onComplete }: ClockQuizLessonProps) {
           <DigitalClock
             hours={currentItem.question.hours}
             minutes={currentItem.question.minutes}
-            size="lg"
+            size="md"
             // onClick={() => speak(timeToText(currentItem.question.hours, currentItem.question.minutes))}
           />
         )}

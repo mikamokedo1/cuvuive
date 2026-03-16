@@ -7,8 +7,8 @@ import { generateMathQuestion, generateChoices, MathOperator } from "./constants
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { SymbolComponent } from "./ExplainMathLesson";
-import LoudSpeaker from "@/assets/games/loud-speaker.webp";
 import { FeedbackType } from "@/types/game";
+import { LoudSpeaker } from "@/libs/constants/game-assets";
 
 interface MixedMathLessonProps {
   mode: "visual" | "number" | "mixed";
@@ -145,7 +145,7 @@ export function MixedMathLesson({ mode, maxSum, onComplete }: MixedMathLessonPro
           onClick={() => speak(`${question.a} ${symbol === "−" ? "trừ" : "cộng"} ${question.b} bằng mấy?`)}
           className="cursor-pointer hover:scale-105 transition-all"
         >
-          <Image src={LoudSpeaker} alt="Speaker" className="w-12 h-10" />
+          <Image width={48} height={40} src={LoudSpeaker} alt="Speaker" className="w-12 h-10" />
         </button>
       </div>
 

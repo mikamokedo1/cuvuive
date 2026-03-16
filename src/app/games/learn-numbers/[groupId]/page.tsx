@@ -8,11 +8,11 @@ import { BookOpen, HelpCircle, Calculator, PenTool } from "lucide-react";
 import { GameWrapLessons } from "@/components/layout/GameWrapLessons";
 
 // Assets
-import group1 from "@/assets/games/learn-numbers/number-logo-1.webp";
-import group2 from "@/assets/games/learn-numbers/number-logo-2.webp";
-import group3 from "@/assets/games/learn-numbers/number-logo-3.webp";
-import group4 from "@/assets/games/learn-numbers/number-logo-4.webp";
-import group5 from "@/assets/games/compare-quantity/compare-quantity-logo-4.webp";
+const group1 = "https://assets.cuthongminh.com/games/learn-numbers/number-logo-1.webp";
+const group2 = "https://assets.cuthongminh.com/games/learn-numbers/number-logo-2.webp";
+const group3 = "https://assets.cuthongminh.com/games/learn-numbers/number-logo-3.webp";
+const group4 = "https://assets.cuthongminh.com/games/learn-numbers/number-logo-4.webp";
+const group5 = "https://assets.cuthongminh.com/games/compare-quantity/compare-quantity-logo-4.webp";
 
 import { LessonCard } from "@/components/games/LessonCard";
 // Note: User mentioned "own-sleep" but design shows lock icon for locked state.
@@ -29,7 +29,7 @@ export default function GroupLessonsPage() {
     typeof params.groupId === "string" ? params.groupId : Array.isArray(params.groupId) ? params.groupId[0] : "";
 
   // Config mapping
-  const groupConfig: Record<string, { title: string; range: string; image: StaticImageData }> = {
+  const groupConfig: Record<string, { title: string; range: string; image: string | StaticImageData}> = {
     group1: { title: "Nhóm 1,2,3", range: "1 - 3", image: group1 },
     group2: { title: "Nhóm 4,5,6", range: "4 - 6", image: group2 },
     group3: { title: "Nhóm 7,8,9", range: "7 - 9", image: group3 },

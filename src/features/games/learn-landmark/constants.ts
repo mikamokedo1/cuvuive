@@ -1,34 +1,34 @@
 import { StaticImageData } from "next/image";
 
 // Import group logos
-import LogoGroup1 from "@/assets/games/learn-landmark/group1.png"; // Asia
-import LogoGroup2 from "@/assets/games/learn-landmark/group2.png"; // Europe
-import LogoGroup3 from "@/assets/games/learn-landmark/group3.png"; // Americas & Others
+const LogoGroup1 = "https://assets.cuthongminh.com/games/learn-landmark/group1.webp"; // Asia
+const LogoGroup2 = "https://assets.cuthongminh.com/games/learn-landmark/group2.webp"; // Europe
+const LogoGroup3 = "https://assets.cuthongminh.com/games/learn-landmark/group3.webp"; // Americas & Others
 
 // Group 1: Asia
-import ImgGreatWall from "@/assets/games/learn-landmark/greatwall.png";
-import ImgAngkorWat from "@/assets/games/learn-landmark/angkorwat.png";
-import ImgTajMahal from "@/assets/games/learn-landmark/tajmahal.png";
-import ImgMtFuji from "@/assets/games/learn-landmark/mtfuji.png";
-import ImgHaLongBay from "@/assets/games/learn-landmark/halongbay.png";
-import ImgPhuket from "@/assets/games/learn-landmark/phuket.png";
+const ImgGreatWall = "https://assets.cuthongminh.com/games/learn-landmark/greatwall.webp";
+const ImgAngkorWat = "https://assets.cuthongminh.com/games/learn-landmark/angkorwat.webp";
+const ImgTajMahal = "https://assets.cuthongminh.com/games/learn-landmark/tajmahal.webp";
+const ImgMtFuji = "https://assets.cuthongminh.com/games/learn-landmark/mtfuji.webp";
+const ImgHaLongBay = "https://assets.cuthongminh.com/games/learn-landmark/halongbay.webp";
+const ImgPhuket = "https://assets.cuthongminh.com/games/learn-landmark/phuket.webp";
 
 // Group 2: Europe
-import ImgEiffelTower from "@/assets/games/learn-landmark/eiffeltower.png";
-import ImgColosseum from "@/assets/games/learn-landmark/colosseum.png";
-import ImgBigBen from "@/assets/games/learn-landmark/bigben.png";
-import ImgLeaningTower from "@/assets/games/learn-landmark/leaningtower.png";
-import ImgWindmills from "@/assets/games/learn-landmark/windmills.png";
-import ImgSagradaFamilia from "@/assets/games/learn-landmark/sagradafamilia.png";
+const ImgEiffelTower = "https://assets.cuthongminh.com/games/learn-landmark/eiffeltower.webp";
+const ImgColosseum = "https://assets.cuthongminh.com/games/learn-landmark/colosseum.webp";
+const ImgBigBen = "https://assets.cuthongminh.com/games/learn-landmark/bigben.webp";
+const ImgLeaningTower = "https://assets.cuthongminh.com/games/learn-landmark/leaningtower.webp";
+const ImgWindmills = "https://assets.cuthongminh.com/games/learn-landmark/windmills.webp";
+const ImgSagradaFamilia = "https://assets.cuthongminh.com/games/learn-landmark/sagradafamilia.webp";
 
 // Group 3: Americas & Others
-import ImgStatueOfLiberty from "@/assets/games/learn-landmark/statueofliberty.png";
-import ImgChristTheRedeemer from "@/assets/games/learn-landmark/christtheredeemer.png";
-import ImgChichenItza from "@/assets/games/learn-landmark/chichenitza.png";
+const ImgStatueOfLiberty = "https://assets.cuthongminh.com/games/learn-landmark/statueofliberty.webp";
+const ImgChristTheRedeemer = "https://assets.cuthongminh.com/games/learn-landmark/christtheredeemer.webp";
+const ImgChichenItza = "https://assets.cuthongminh.com/games/learn-landmark/chichenitza.webp";
 // Placeholders for the remaining 3 that hit rate limit
-import Placeholder16 from "@/assets/games/learn-flag/egypt.png";
-import Placeholder17 from "@/assets/games/learn-flag/australia.png";
-import Placeholder18 from "@/assets/games/learn-flag/southafrica.png";
+const Placeholder16 = "https://assets.cuthongminh.com/games/learn-flag/egypt.webp";
+const Placeholder17 = "https://assets.cuthongminh.com/games/learn-flag/australia.webp";
+const Placeholder18 = "https://assets.cuthongminh.com/games/learn-flag/southafrica.webp";
 
 import { EntityData } from "@/types/game";
 
@@ -90,3 +90,33 @@ export function getLandmarksForGroup(groupId: string): EntityData[] {
   if (!group) return [];
   return LANDMARKS.filter((landmark) => group.items.includes(landmark.id));
 }
+
+// ──── Landmark Descriptions (for explore lesson) ────
+export const LANDMARK_DESCRIPTIONS: Record<string, string> = {
+  // Asia
+  greatwall:
+    "Vạn Lý Trường Thành ở Trung Quốc dài hơn 21.000 km, được xây hàng ngàn năm trước để bảo vệ đất nước bởi vua tần thủy hoàng",
+  angkorwat: "Angkor Wat ở Campuchia là ngôi đền lớn nhất thế giới. Nhìn bóng đền in trên mặt hồ đẹp lắm!",
+  tajmahal:
+    "Taj Mahal ở Ấn Độ được xây bằng đá cẩm thạch trắng. Đây là món quà tình yêu của một vị vua dành cho hoàng hậu.",
+  mtfuji: "Núi Phú Sĩ là ngọn núi cao nhất Nhật Bản, đỉnh luôn phủ tuyết trắng. Người Nhật rất yêu quý ngọn núi này!",
+  halongbay: "Vịnh Hạ Long ở Việt Nam có gần 2.000 hòn đảo đá nhô lên giữa biển xanh. Tuyệt đẹp!",
+  phuket: "Phuket là hòn đảo lớn nhất Thái Lan với bãi biển cát trắng và nước biển trong vắt. Thiên đường nghỉ mát!",
+
+  // Europe
+  eiffeltower: "Tháp Eiffel ở Paris, Pháp cao 330 mét, được làm bằng sắt. Đêm đến, tháp lấp lánh ánh đèn rất đẹp!",
+  colosseum: "Đấu trường La Mã ở Ý được xây gần 2.000 năm trước. Ngày xưa, người ta xem các võ sĩ thi đấu ở đây!",
+  bigben: "Tháp Big Ben ở London, Anh có chuông nặng 13 tấn! Tiếng chuông vang xa cả thành phố.",
+  leaningtower: "Tháp nghiêng Pisa ở Ý bị nghiêng vì đất mềm bên dưới. Tháp nghiêng nhưng không đổ, thú vị lắm!",
+  windmills: "Cối xay gió ở Hà Lan dùng sức gió để bơm nước và xay bột. Trông như những chiếc quạt khổng lồ!",
+  sagradafamilia: "Nhà thờ Sagrada Familia ở Tây Ban Nha được xây hơn 140 năm mà vẫn chưa xong! Kiến trúc rất độc đáo.",
+
+  // Americas & Others
+  statueofliberty: "Tượng Nữ Thần Tự Do ở New York, Mỹ cao 93 mét. Bà cầm đuốc sáng chào đón mọi người!",
+  chichenitza: "Chichen Itza ở Mexico là kim tự tháp bậc thang của người Maya cổ đại. Mỗi bậc là một ngày trong năm!",
+  christtheredeemer:
+    "Tượng Chúa Cứu Thế ở Brazil đứng trên đỉnh núi, dang rộng hai tay ôm cả thành phố Rio de Janeiro!",
+  machupicchu: "Machu Picchu ở Peru là thành phố cổ nằm trên đỉnh núi cao, ẩn mình trong mây. Bí ẩn lắm!",
+  sydneyoperahouse: "Nhà hát Sydney ở Úc có mái nhà hình cánh buồm trắng. Trông như những con thuyền đang lướt sóng!",
+  moai: "Tượng Moai trên đảo Phục Sinh là những bức tượng đá khổng lồ bí ẩn. Không ai biết chắc ai đã tạo ra chúng!",
+};

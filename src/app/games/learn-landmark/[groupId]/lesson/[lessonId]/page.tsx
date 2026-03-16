@@ -1,7 +1,7 @@
 "use client";
 
 import { useGameLesson } from "@/hooks/useGameLesson";
-import { getLandmarksForGroup, GROUPS } from "@/features/games/learn-landmark/constants";
+import { getLandmarksForGroup, GROUPS, LANDMARK_DESCRIPTIONS } from "@/features/games/learn-landmark/constants";
 import { LandmarkLearnLesson } from "@/features/games/learn-landmark/LandmarkLearnLesson";
 import { LandmarkQuizLesson } from "@/features/games/learn-landmark/LandmarkQuizLesson";
 import { LandmarkMemoryLesson } from "@/features/games/learn-landmark/LandmarkMemoryLesson";
@@ -22,7 +22,7 @@ export default function LessonPage() {
   const renderLesson = () => {
     switch (game.lessonId) {
       case "lesson1":
-        return <LandmarkLearnLesson landmarks={landmarks} onComplete={game.handleComplete} />;
+        return <LandmarkLearnLesson landmarks={landmarks} descriptions={LANDMARK_DESCRIPTIONS} onComplete={game.handleComplete} />;
       case "lesson2":
         return <LandmarkQuizLesson landmarks={landmarks} onComplete={game.handleComplete} requiredWins={6} />;
       case "lesson3":

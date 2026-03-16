@@ -5,6 +5,9 @@ import { HeaderHome } from "@/components/layout/HeaderHome";
 export const metadata: Metadata = {
   title: "Điều khoản sử dụng | Cú Thông Minh",
   description: "Điều khoản và điều kiện sử dụng dịch vụ của Cú Thông Minh dành cho phụ huynh và học sinh.",
+  alternates: {
+    canonical: "/terms",
+  },
 };
 
 export default function TermsPage() {

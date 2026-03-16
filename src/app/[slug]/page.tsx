@@ -30,10 +30,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title,
     description,
+    alternates: {
+      canonical: `/${slug}`,
+    },
     openGraph: {
       title,
       description,
-      images: [{ url: group.icon.src }],
+      images: [{ url: typeof group.icon === "string" ? group.icon : group.icon.src }],
     },
   };
 }

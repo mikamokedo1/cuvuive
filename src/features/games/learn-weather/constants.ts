@@ -2,43 +2,43 @@ import { StaticImageData } from "next/image";
 import { EntityData } from "@/types/game";
 
 // Logos
-import LogoGroup1 from "@/assets/games/learn-weather/group1.png";
-import LogoGroup2 from "@/assets/games/learn-weather/group2.png";
-import LogoGroup3 from "@/assets/games/learn-weather/group3.png";
+const LogoGroup1 = "https://assets.cuthongminh.com/games/learn-weather/group1.webp";
+const LogoGroup2 = "https://assets.cuthongminh.com/games/learn-weather/group2.webp";
+const LogoGroup3 = "https://assets.cuthongminh.com/games/learn-weather/group3.webp";
 
 // Group 1
-import MatTroi from "@/assets/games/learn-weather/mat_troi.png";
-import Mua from "@/assets/games/learn-weather/mua.png";
-import May from "@/assets/games/learn-weather/may_2.png";
-import Gio from "@/assets/games/learn-weather/gio.png";
-import SamSet from "@/assets/games/learn-weather/sam_set.png";
-import CauVong from "@/assets/games/learn-weather/cau_vong.png";
+const MatTroi = "https://assets.cuthongminh.com/games/learn-weather/mat_troi.webp";
+const Mua = "https://assets.cuthongminh.com/games/learn-weather/mua.webp";
+const May = "https://assets.cuthongminh.com/games/learn-weather/may_2.webp";
+const Gio = "https://assets.cuthongminh.com/games/learn-weather/gio.webp";
+const SamSet = "https://assets.cuthongminh.com/games/learn-weather/sam_set.webp";
+const CauVong = "https://assets.cuthongminh.com/games/learn-weather/cau_vong.webp";
 
 // Group 2
-import Tuyet from "@/assets/games/learn-weather/tuyet.png";
-import MuaDa from "@/assets/games/learn-weather/mua_da.png";
-import SuongMu from "@/assets/games/learn-weather/suong_mu.png";
-import Bao from "@/assets/games/learn-weather/bao.png";
-import LocXoay from "@/assets/games/learn-weather/loc_xoay.png";
-import SongThan from "@/assets/games/learn-weather/song_than.png";
+const Tuyet = "https://assets.cuthongminh.com/games/learn-weather/tuyet.webp";
+const MuaDa = "https://assets.cuthongminh.com/games/learn-weather/mua_da.webp";
+const SuongMu = "https://assets.cuthongminh.com/games/learn-weather/suong_mu.webp";
+const Bao = "https://assets.cuthongminh.com/games/learn-weather/bao.webp";
+const LocXoay = "https://assets.cuthongminh.com/games/learn-weather/loc_xoay.webp";
+const SongThan = "https://assets.cuthongminh.com/games/learn-weather/song_than.webp";
 
 // Group 3
-import MuaXuan from "@/assets/games/learn-weather/mua_xuan.png";
-import MuaHa from "@/assets/games/learn-weather/mua_ha.png";
-import MuaThu from "@/assets/games/learn-weather/mua_thu.png";
-import MuaDong from "@/assets/games/learn-weather/mua_dong.png";
-import MuaKho from "@/assets/games/learn-weather/mua_kho.png";
-import MuaMua from "@/assets/games/learn-weather/mua_mua.png";
+const MuaXuan = "https://assets.cuthongminh.com/games/learn-weather/mua_xuan.webp";
+const MuaHa = "https://assets.cuthongminh.com/games/learn-weather/mua_ha.webp";
+const MuaThu = "https://assets.cuthongminh.com/games/learn-weather/mua_thu.webp";
+const MuaDong = "https://assets.cuthongminh.com/games/learn-weather/mua_dong.webp";
+const MuaKho = "https://assets.cuthongminh.com/games/learn-weather/mua_kho.webp";
+const MuaMua = "https://assets.cuthongminh.com/games/learn-weather/mua_mua.webp";
 
 // Clothing (Group 3 Special Lesson)
-import AoAm from "@/assets/games/learn-weather/ao_am.png";
-import KhanQuang from "@/assets/games/learn-weather/khan_quang.png";
-import AoMua from "@/assets/games/learn-weather/ao_mua.png";
-import ODu from "@/assets/games/learn-weather/o_du.png";
-import KinhMat from "@/assets/games/learn-weather/kinh_mat.png";
-import NonRong from "@/assets/games/learn-weather/non_rong.webp";
-import AoDai from "@/assets/games/learn-weather/ao_dai.png";
-import AoLen from "@/assets/games/learn-weather/ao_len.png";
+const AoAm = "https://assets.cuthongminh.com/games/learn-weather/ao_am.webp";
+const KhanQuang = "https://assets.cuthongminh.com/games/learn-weather/khan_quang.webp";
+const AoMua = "https://assets.cuthongminh.com/games/learn-weather/ao_mua.webp";
+const ODu = "https://assets.cuthongminh.com/games/learn-weather/o_du.webp";
+const KinhMat = "https://assets.cuthongminh.com/games/learn-weather/kinh_mat.webp";
+const NonRong = "https://assets.cuthongminh.com/games/learn-weather/non_rong.webp";
+const AoDai = "https://assets.cuthongminh.com/games/learn-weather/ao_dai.webp";
+const AoLen = "https://assets.cuthongminh.com/games/learn-weather/ao_len.webp";
 
 export const WEATHER_ITEMS: EntityData[] = [
   // Group 1
@@ -117,3 +117,28 @@ export function getItemsForGroup(groupId: string): EntityData[] {
 export function getAllItems(): EntityData[] {
   return WEATHER_ITEMS;
 }
+
+// ──── Weather Descriptions (for explore lesson) ────
+export const WEATHER_DESCRIPTIONS: Record<string, string> = {
+  // Basic
+  mat_troi: "Mặt trời tỏa sáng và sưởi ấm trái đất. Nhờ mặt trời, cây cối mới mọc và chúng ta mới có ánh sáng!",
+  mua: "Mưa là nước từ mây rơi xuống đất. Mưa giúp cây cối lớn lên và cho chúng ta nước uống!",
+  may: "Mây trắng bồng bềnh trên trời. Mây được tạo thành từ những giọt nước nhỏ li ti!",
+  gio: "Gió là không khí chuyển động. Gió mát thổi vào mùa hè mát lắm!",
+  sam_set: "Sấm sét xảy ra khi trời mưa to. Tia sét rất sáng và tiếng sấm rất lớn!",
+  cau_vong: "Cầu vồng có bảy màu sắc đẹp, xuất hiện sau cơn mưa khi có nắng. Cầu vồng rất kỳ diệu!",
+  // Special
+  tuyet: "Tuyết trắng rơi xuống khi trời rất lạnh. Trẻ em thích nặn người tuyết và chơi ném bóng tuyết!",
+  mua_da: "Mưa đá là những viên đá nhỏ rơi từ mây. Mưa đá xảy ra khi thời tiết rất bất thường!",
+  suong_mu: "Sương mù làm mờ tầm nhìn vào sáng sớm. Sương mù là mây ở rất thấp gần mặt đất!",
+  bao: "Bão là gió rất mạnh kèm mưa to. Khi có bão, mọi người phải ở trong nhà an toàn!",
+  loc_xoay: "Lốc xoáy là cơn gió xoáy tròn rất mạnh. Lốc xoáy có thể cuốn bay mọi thứ!",
+  song_than: "Sóng thần là đợt sóng khổng lồ trên biển. Sóng thần rất nguy hiểm!",
+  // Season
+  mua_xuan: "Mùa xuân ấm áp, cây cối đâm chồi nảy lộc. Mùa xuân là mùa của Tết Nguyên Đán!",
+  mua_ha: "Mùa hè nóng bức, được nghỉ học và đi biển. Mùa hè ăn kem và bơi lội thật vui!",
+  mua_thu: "Mùa thu mát mẻ, lá cây chuyển vàng rất đẹp. Mùa thu có Tết Trung Thu rước đèn!",
+  mua_dong: "Mùa đông lạnh, mặc áo ấm và uống trà nóng. Miền Bắc Việt Nam mùa đông rất lạnh!",
+  mua_kho: "Mùa khô trời nắng ráo, ít mưa. Miền Nam Việt Nam có hai mùa: mùa mưa và mùa khô!",
+  mua_mua: "Mùa mưa có nhiều cơn mưa rào, trời mát hơn. Nhớ mang ô khi đi ra ngoài nhé!",
+};

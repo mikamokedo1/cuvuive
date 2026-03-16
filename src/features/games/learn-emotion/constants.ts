@@ -1,46 +1,46 @@
 import { StaticImageData } from "next/image";
 
 // Import group logos
-import LogoGroup1 from "@/assets/games/learn-emotion/group1.png";
-import LogoGroup2 from "@/assets/games/learn-emotion/group2.png";
-import LogoGroup3 from "@/assets/games/learn-emotion/group3.png";
+const LogoGroup1 = "https://assets.cuthongminh.com/games/learn-emotion/group1.webp";
+const LogoGroup2 = "https://assets.cuthongminh.com/games/learn-emotion/group2.webp";
+const LogoGroup3 = "https://assets.cuthongminh.com/games/learn-emotion/group3.webp";
 
 // Import Basic Emotions (Group 1)
-import Happy from "@/assets/games/learn-emotion/happy.jpg";
-import Sad from "@/assets/games/learn-emotion/sad.png";
-import Angry from "@/assets/games/learn-emotion/angry.jpg";
-import Scared from "@/assets/games/learn-emotion/scared.png";
-import Surprised from "@/assets/games/learn-emotion/surprised.png";
-import Love from "@/assets/games/learn-emotion/love.png";
+const Happy = "https://assets.cuthongminh.com/games/learn-emotion/happy.jpg";
+const Sad = "https://assets.cuthongminh.com/games/learn-emotion/sad.webp";
+const Angry = "https://assets.cuthongminh.com/games/learn-emotion/angry.jpg";
+const Scared = "https://assets.cuthongminh.com/games/learn-emotion/scared.webp";
+const Surprised = "https://assets.cuthongminh.com/games/learn-emotion/surprised.webp";
+const Love = "https://assets.cuthongminh.com/games/learn-emotion/love.webp";
 
 // Import Advanced Emotions (Group 2)
-import Shy from "@/assets/games/learn-emotion/shy.png";
-import Proud from "@/assets/games/learn-emotion/proud.png";
-import Worried from "@/assets/games/learn-emotion/worried.png";
-import Jealous from "@/assets/games/learn-emotion/jealous.png";
-import Excited from "@/assets/games/learn-emotion/excited.png";
-import Bored from "@/assets/games/learn-emotion/bored.png";
+const Shy = "https://assets.cuthongminh.com/games/learn-emotion/shy.webp";
+const Proud = "https://assets.cuthongminh.com/games/learn-emotion/proud.webp";
+const Worried = "https://assets.cuthongminh.com/games/learn-emotion/worried.webp";
+const Jealous = "https://assets.cuthongminh.com/games/learn-emotion/jealous.webp";
+const Excited = "https://assets.cuthongminh.com/games/learn-emotion/excited.webp";
+const Bored = "https://assets.cuthongminh.com/games/learn-emotion/bored.webp";
 
 // Import Scenario Emotions (Group 3) - using some created + thoughtful/focused/relaxed
-import Thoughtful from "@/assets/games/learn-emotion/thoughtful.png";
-import Focused from "@/assets/games/learn-emotion/focused.png";
-import Relaxed from "@/assets/games/learn-emotion/relaxed.png";
+const Thoughtful = "https://assets.cuthongminh.com/games/learn-emotion/thoughtful.webp";
+const Focused = "https://assets.cuthongminh.com/games/learn-emotion/focused.webp";
+const Relaxed = "https://assets.cuthongminh.com/games/learn-emotion/relaxed.webp";
 
 import { EntityData } from "@/types/game";
 
 // Import Scenario Match Images
-import SmBasic1 from "@/assets/games/learn-emotion/scenarios/sm_basic_1.png";
-import SmBasic2 from "@/assets/games/learn-emotion/scenarios/sm_basic_2.png";
-import SmBasic3 from "@/assets/games/learn-emotion/scenarios/sm_basic_3.png";
-import SmBasic4 from "@/assets/games/learn-emotion/scenarios/sm_basic_4.png";
-import SmAdv1 from "@/assets/games/learn-emotion/scenarios/sm_adv_1.png";
-import SmAdv2 from "@/assets/games/learn-emotion/scenarios/sm_adv_2.png";
-import SmAdv3 from "@/assets/games/learn-emotion/scenarios/sm_adv_3.png";
-import SmAdv4 from "@/assets/games/learn-emotion/scenarios/sm_adv_4.png";
-import SmScen1 from "@/assets/games/learn-emotion/scenarios/sm_scen_1.png";
-import SmScen2 from "@/assets/games/learn-emotion/scenarios/sm_scen_2.png";
-import SmScen3 from "@/assets/games/learn-emotion/scenarios/sm_scen_3.png";
-import SmScen4 from "@/assets/games/learn-emotion/scenarios/sm_scen_4.png";
+const SmBasic1 = "https://assets.cuthongminh.com/games/learn-emotion/scenarios/sm_basic_1.webp";
+const SmBasic2 = "https://assets.cuthongminh.com/games/learn-emotion/scenarios/sm_basic_2.webp";
+const SmBasic3 = "https://assets.cuthongminh.com/games/learn-emotion/scenarios/sm_basic_3.webp";
+const SmBasic4 = "https://assets.cuthongminh.com/games/learn-emotion/scenarios/sm_basic_4.webp";
+const SmAdv1 = "https://assets.cuthongminh.com/games/learn-emotion/scenarios/sm_adv_1.webp";
+const SmAdv2 = "https://assets.cuthongminh.com/games/learn-emotion/scenarios/sm_adv_2.webp";
+const SmAdv3 = "https://assets.cuthongminh.com/games/learn-emotion/scenarios/sm_adv_3.webp";
+const SmAdv4 = "https://assets.cuthongminh.com/games/learn-emotion/scenarios/sm_adv_4.webp";
+const SmScen1 = "https://assets.cuthongminh.com/games/learn-emotion/scenarios/sm_scen_1.webp";
+const SmScen2 = "https://assets.cuthongminh.com/games/learn-emotion/scenarios/sm_scen_2.webp";
+const SmScen3 = "https://assets.cuthongminh.com/games/learn-emotion/scenarios/sm_scen_3.webp";
+const SmScen4 = "https://assets.cuthongminh.com/games/learn-emotion/scenarios/sm_scen_4.webp";
 
 export const EMOTION_ITEMS: EntityData[] = [
   // Basic Emotions (Group 1)
@@ -90,12 +90,34 @@ export function getEmotionsForGroup(groupId: string): EntityData[] {
   return EMOTION_ITEMS.filter((item) => group.items.includes(item.id));
 }
 
+// ──── Emotion Descriptions (for explore lesson) ────
+export const EMOTION_DESCRIPTIONS: Record<string, string> = {
+  // Basic
+  happy: "Vui vẻ là khi pé cảm thấy rất phấn khởi và muốn cười. Được chơi với bạn bè làm pé vui!",
+  sad: "Buồn bã là khi pé cảm thấy không vui, muốn khóc. Ai cũng có lúc buồn, hãy chia sẻ với mọi người nhé!",
+  angry: "Tức giận là khi pé cảm thấy bực bội. Khi tức giận, hãy hít thở sâu và bình tĩnh nhé!",
+  scared: "Sợ hãi là khi pé cảm thấy lo sợ một điều gì đó. Khi sợ, hãy tìm người lớn để được an ủi!",
+  surprised: "Ngạc nhiên là khi gặp điều bất ngờ. Mở quà sinh nhật luôn làm pé ngạc nhiên!",
+  love: "Yêu thương là cảm giác ấm áp khi ở bên gia đình và bạn bè. Yêu thương làm cuộc sống đẹp hơn!",
+  // Advanced
+  shy: "Xấu hổ là khi pé cảm thấy ngại ngùng. Lần đầu gặp người lạ, ai cũng hơi xấu hổ!",
+  proud: "Tự hào là khi pé làm được điều tốt và cảm thấy hãnh diện. Giúp đỡ người khác rất đáng tự hào!",
+  worried: "Lo lắng là khi pé suy nghĩ nhiều về một điều chưa xảy ra. Hãy nói với ba mẹ khi lo lắng nhé!",
+  jealous: "Ghen tị là khi pé muốn có thứ người khác có. Hãy biết ơn những gì mình đang có!",
+  excited: "Hào hứng là khi pé mong chờ điều gì đó sắp đến. Sắp đi du lịch luôn làm pé hào hứng!",
+  bored: "Chán nản là khi pé không biết làm gì cho vui. Hãy thử đọc sách hoặc vẽ tranh nhé!",
+  // Scenario
+  thoughtful: "Suy nghĩ là khi pé đang cố tìm câu trả lời. Suy nghĩ kỹ giúp pé giải quyết vấn đề tốt hơn!",
+  focused: "Tập trung là khi pé chú ý hoàn toàn vào một việc. Tập trung giúp pé học giỏi hơn!",
+  relaxed: "Thư giãn là khi pé cảm thấy thoải mái và bình yên. Nghe nhạc nhẹ giúp pé thư giãn!",
+};
+
 // ============ RIGHT OR WRONG SCENARIOS ============
 
 export interface RightWrongScenario {
   id: string;
   text: string;
-  image: StaticImageData;
+  image: string | StaticImageData;
   isCorrect: boolean;
   category: string;
 }
@@ -104,7 +126,7 @@ export interface RightWrongScenario {
 export const RIGHT_WRONG_SCENARIOS: RightWrongScenario[] = [
   // Group 1
   { id: "rw_basic_1", text: "Được tặng quà, pé cảm thấy rất vui", image: Happy, isCorrect: true, category: "basic" },
-  { id: "rw_basic_2", text: "Làm vỡ ly, pé cảm thấy tức giận", image: Angry, isCorrect: false, category: "basic" },
+  { id: "rw_basic_2", text: "Được mẹ khen, pé cảm thấy tức giận", image: Angry, isCorrect: false, category: "basic" },
   {
     id: "rw_basic_3",
     text: "Trời mưa không được đi chơi, pé thấy buồn",
@@ -191,7 +213,7 @@ export function getScenariosForGroup(groupId: string): RightWrongScenario[] {
 export interface ScenarioMatchActivity {
   id: string;
   situationText: string;
-  image: StaticImageData;
+  image: string | StaticImageData;
   correctEmotionId: string;
   options: string[]; // array of emotion ids (4 items including correct one)
   category: string;

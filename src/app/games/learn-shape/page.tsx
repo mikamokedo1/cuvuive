@@ -1,5 +1,5 @@
 import { GROUPS } from "@/features/games/learn-shape/constants";
-import GameShapeLogo from "@/assets/games/learn-shape/learn-shape-logo.webp";
+const GameShapeLogo = "https://assets.cuthongminh.com/games/learn-shape/learn-shape-logo.webp";
 import { GameWrapGroups } from "@/components/layout/GameWrapGroups";
 
 export default function LearnShapePage() {

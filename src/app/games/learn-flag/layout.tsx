@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import GameFlagLogo from "@/assets/games/learn-flag/logo.webp";
+const GameFlagLogo = "https://assets.cuthongminh.com/games/learn-flag/logo.webp";
 
 export const metadata: Metadata = {
   title: "Học Quốc Kỳ | Cú Thông Minh",
@@ -11,12 +11,15 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: GameFlagLogo.src,
+        url: GameFlagLogo,
         width: 630,
         height: 630,
         alt: "Học Quốc Kỳ | Cú Thông Minh",
       },
     ],
+  },
+  alternates: {
+    canonical: "/games/learn-flag",
   },
 };
 

@@ -22,47 +22,47 @@ async function seed() {
 
     console.log("✅ Courses seeded successfully");
 
-    // Seed Plans (Keep existing logic)
-    console.log("🌱 Seeding plans table...");
+    // // Seed Plans (Keep existing logic)
+    // console.log("🌱 Seeding plans table...");
 
-    const plansData = [
-      {
-        name: "Lớp Mầm",
-        code: "seed",
-        price: 100000,
-        durationMonths: 1,
-        description: "Gói 1 tháng dành cho bé mới bắt đầu",
-      },
-      {
-        name: "Lớp Chồi",
-        code: "bud",
-        price: 240000,
-        durationMonths: 3,
-        description: "Gói 3 tháng tiết kiệm hơn",
-      },
-      {
-        name: "Lớp Lá",
-        code: "leaf",
-        price: 600000,
-        durationMonths: 12,
-        description: "Gói 1 năm đầu tư dài hạn",
-      },
-    ];
+    // const plansData = [
+    //   {
+    //     name: "Lớp Mầm",
+    //     code: "seed",
+    //     price: 100000,
+    //     durationMonths: 1,
+    //     description: "Gói 1 tháng dành cho bé mới bắt đầu",
+    //   },
+    //   {
+    //     name: "Lớp Chồi",
+    //     code: "bud",
+    //     price: 240000,
+    //     durationMonths: 3,
+    //     description: "Gói 3 tháng tiết kiệm hơn",
+    //   },
+    //   {
+    //     name: "Lớp Lá",
+    //     code: "leaf",
+    //     price: 600000,
+    //     durationMonths: 12,
+    //     description: "Gói 1 năm đầu tư dài hạn",
+    //   },
+    // ];
 
-    await db
-      .insert(plans)
-      .values(plansData)
-      .onConflictDoUpdate({
-        target: plans.code,
-        set: {
-          name: sql.raw("excluded.name"),
-          price: sql.raw("excluded.price"),
-          durationMonths: sql.raw("excluded.duration_months"),
-          description: sql.raw("excluded.description"),
-        },
-      });
+    // await db
+    //   .insert(plans)
+    //   .values(plansData)
+    //   .onConflictDoUpdate({
+    //     target: plans.code,
+    //     set: {
+    //       name: sql.raw("excluded.name"),
+    //       price: sql.raw("excluded.price"),
+    //       durationMonths: sql.raw("excluded.duration_months"),
+    //       description: sql.raw("excluded.description"),
+    //     },
+    //   });
 
-    console.log("✅ Plans seeded/updated");
+    // console.log("✅ Plans seeded/updated");
   } catch (error) {
     console.error("Error seeding:", error);
     process.exit(1);

@@ -1,5 +1,5 @@
 import { GROUPS } from "@/features/games/learn-alphabet/constants";
-import GameAlphabetLogo from "@/assets/games/learn-alphabet/logo.png";
+const GameAlphabetLogo = "https://assets.cuthongminh.com/games/learn-alphabet/logo.webp";
 import { GameWrapGroups } from "@/components/layout/GameWrapGroups";
 
 export default function LearnAlphabetPage() {

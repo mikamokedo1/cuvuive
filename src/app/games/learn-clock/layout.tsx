@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import GameClockLogo from "@/assets/games/learn-clock/logo-main.png";
+const GameClockLogo = "https://assets.cuthongminh.com/games/learn-clock/logo-main.webp";
 
 export const metadata: Metadata = {
   title: "Học Xem Đồng Hồ | Cú Thông Minh",
@@ -11,12 +11,15 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: GameClockLogo.src,
+        url: GameClockLogo,
         width: 630,
         height: 630,
         alt: "Học Xem Đồng Hồ | Cú Thông Minh",
       },
     ],
+  },
+  alternates: {
+    canonical: "/games/learn-clock",
   },
 };
 

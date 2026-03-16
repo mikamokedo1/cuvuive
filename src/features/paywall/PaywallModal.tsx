@@ -1,9 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import Image from "next/image";
 import { ActionButton } from "@/components/common/ActionButton";
-import owlHi from "@/assets/games/common/owl-say-hi.webp";
+const owlHi = "https://assets.cuthongminh.com/games/common/owl-say-hi.webp";
 import { Crown, X, Sparkles, BookOpen, Star, Zap } from "lucide-react";
 import { useAccess } from "@/context/AccessContext";
 
@@ -14,33 +14,15 @@ interface PaywallModalProps {
 }
 
 export function PaywallModal({ isOpen, type, onClose }: PaywallModalProps) {
-  const router = useRouter();
   const { paywallState } = useAccess();
 
   if (!isOpen || !type) return null;
 
-  const handleLogin = () => {
-    // paywallState.redirectUrl is already set by showPaywall() and synced to sessionStorage
-    // After login, LoginForm will read it from context (or sessionStorage for OAuth)
-    router.push("/auth/login");
-    onClose();
-  };
-
-  const handleSignup = () => {
-    // Same as login — paywallState.redirectUrl already set
-    router.push("/auth/sign-up");
-    onClose();
-  };
-
-  const handleUpgrade = () => {
-    // For premium paywall, pass redirectUrl as ?next= to the upgrade page
-    let nextParam = "";
-    if (paywallState.redirectUrl) {
-      nextParam = `?next=${encodeURIComponent(paywallState.redirectUrl)}`;
-    }
-    router.push(`/upgrade${nextParam}`);
-    onClose();
-  };
+  const loginHref = "/auth/login";
+  const signupHref = "/auth/sign-up";
+  const upgradeHref = paywallState.redirectUrl
+    ? `/upgrade?next=${encodeURIComponent(paywallState.redirectUrl)}`
+    : "/upgrade";
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
@@ -65,12 +47,16 @@ export function PaywallModal({ isOpen, type, onClose }: PaywallModalProps) {
             </p>
 
             <div className="flex flex-col gap-3 w-full">
-              <ActionButton onClick={handleLogin} variant="glossy" color="purple" className="w-full py-4 text-lg">
-                Đăng nhập
-              </ActionButton>
-              <ActionButton onClick={handleSignup} variant="glossy" color="green" className="w-full py-4 text-lg">
-                Đăng ký miễn phí
-              </ActionButton>
+              <Link href={loginHref} onClick={onClose}>
+                <ActionButton variant="glossy" color="purple" className="w-full py-4 text-lg">
+                  Đăng nhập
+                </ActionButton>
+              </Link>
+              <Link href={signupHref} onClick={onClose}>
+                <ActionButton variant="glossy" color="green" className="w-full py-4 text-lg">
+                  Đăng ký miễn phí
+                </ActionButton>
+              </Link>
             </div>
           </div>
         ) : (
@@ -109,10 +95,12 @@ export function PaywallModal({ isOpen, type, onClose }: PaywallModalProps) {
               </div>
             </div>
 
-            <ActionButton onClick={handleUpgrade} variant="glossy" color="orange" className="w-full py-4 text-lg">
-              <Crown className="w-5 h-5 mr-2" />
-              Nâng cấp ngay
-            </ActionButton>
+            <Link href={upgradeHref} onClick={onClose}>
+              <ActionButton variant="glossy" color="orange" className="w-full py-4 text-lg">
+                <Crown className="w-5 h-5 mr-2" />
+                Nâng cấp ngay
+              </ActionButton>
+            </Link>
           </div>
         )}
       </div>

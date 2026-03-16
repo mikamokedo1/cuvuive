@@ -64,7 +64,7 @@ export function EmotionScenarioLesson({ activities, onComplete }: EmotionScenari
         }, 2500);
       } else {
         setFeedback("wrong");
-        speak("Chưa đúng rồi, bé thử suy nghĩ lại nhé!");
+        speak("Chưa đúng rồi, pé thử suy nghĩ lại nhé!");
 
         setTimeout(() => {
           setFeedback(null);

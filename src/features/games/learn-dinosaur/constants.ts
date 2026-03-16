@@ -1,33 +1,33 @@
 import { StaticImageData } from "next/image";
 
 // Import group logos
-import LogoGroup1 from "@/assets/games/learn-dinosaur/group1.webp";
-import LogoGroup2 from "@/assets/games/learn-dinosaur/group2.webp";
-import LogoGroup3 from "@/assets/games/learn-dinosaur/group3.webp";
+const LogoGroup1 = "https://assets.cuthongminh.com/games/learn-dinosaur/group1.webp";
+const LogoGroup2 = "https://assets.cuthongminh.com/games/learn-dinosaur/group2.webp";
+const LogoGroup3 = "https://assets.cuthongminh.com/games/learn-dinosaur/group3.webp";
 
 // Import Herbivores (Group 1)
-import Triceratops from "@/assets/games/learn-dinosaur/triceratops.webp";
-import Stegosaurus from "@/assets/games/learn-dinosaur/stegosaurus.webp";
-import Brachiosaurus from "@/assets/games/learn-dinosaur/brachiosaurus.webp";
-import Ankylosaurus from "@/assets/games/learn-dinosaur/ankylosaurus.webp";
-import Parasaurolophus from "@/assets/games/learn-dinosaur/parasaurolophus.webp";
-import Diplodocus from "@/assets/games/learn-dinosaur/diplodocus.webp";
+const Triceratops = "https://assets.cuthongminh.com/games/learn-dinosaur/triceratops.webp";
+const Stegosaurus = "https://assets.cuthongminh.com/games/learn-dinosaur/stegosaurus.webp";
+const Brachiosaurus = "https://assets.cuthongminh.com/games/learn-dinosaur/brachiosaurus.webp";
+const Ankylosaurus = "https://assets.cuthongminh.com/games/learn-dinosaur/ankylosaurus.webp";
+const Parasaurolophus = "https://assets.cuthongminh.com/games/learn-dinosaur/parasaurolophus.webp";
+const Diplodocus = "https://assets.cuthongminh.com/games/learn-dinosaur/diplodocus.webp";
 
 // Import Carnivores (Group 2)
-import TRex from "@/assets/games/learn-dinosaur/trex.webp";
-import Velociraptor from "@/assets/games/learn-dinosaur/velociraptor.webp";
-import Spinosaurus from "@/assets/games/learn-dinosaur/spinosaurus.webp";
-import Allosaurus from "@/assets/games/learn-dinosaur/allosaurus.webp";
-import Carnotaurus from "@/assets/games/learn-dinosaur/carnotaurus.webp";
-import Dilophosaurus from "@/assets/games/learn-dinosaur/dilophosaurus.webp";
+const TRex = "https://assets.cuthongminh.com/games/learn-dinosaur/trex.webp";
+const Velociraptor = "https://assets.cuthongminh.com/games/learn-dinosaur/velociraptor.webp";
+const Spinosaurus = "https://assets.cuthongminh.com/games/learn-dinosaur/spinosaurus.webp";
+const Allosaurus = "https://assets.cuthongminh.com/games/learn-dinosaur/allosaurus.webp";
+const Carnotaurus = "https://assets.cuthongminh.com/games/learn-dinosaur/carnotaurus.webp";
+const Dilophosaurus = "https://assets.cuthongminh.com/games/learn-dinosaur/dilophosaurus.webp";
 
 // Import Flying & Sea (Group 3)
-import Pteranodon from "@/assets/games/learn-dinosaur/pteranodon.webp";
-import Plesiosaurus from "@/assets/games/learn-dinosaur/plesiosaurus.webp";
-import Mosasaurus from "@/assets/games/learn-dinosaur/mosasaurus.webp";
-import Ichthyosaurus from "@/assets/games/learn-dinosaur/ichthyosaurus.webp";
-import Quetzalcoatlus from "@/assets/games/learn-dinosaur/quetzalcoatlus.webp";
-import Archelon from "@/assets/games/learn-dinosaur/archelon.webp";
+const Pteranodon = "https://assets.cuthongminh.com/games/learn-dinosaur/pteranodon.webp";
+const Plesiosaurus = "https://assets.cuthongminh.com/games/learn-dinosaur/plesiosaurus.webp";
+const Mosasaurus = "https://assets.cuthongminh.com/games/learn-dinosaur/mosasaurus.webp";
+const Ichthyosaurus = "https://assets.cuthongminh.com/games/learn-dinosaur/ichthyosaurus.webp";
+const Quetzalcoatlus = "https://assets.cuthongminh.com/games/learn-dinosaur/quetzalcoatlus.webp";
+const Archelon = "https://assets.cuthongminh.com/games/learn-dinosaur/archelon.webp";
 import { EntityData } from "@/types/game";
 
 export type DinosaurCategory = "herbivore" | "carnivore" | "flying_sea";
@@ -97,3 +97,28 @@ export function getDinosaursForGroup(groupId: string): EntityData[] {
 export function getAllDinosaurs(): EntityData[] {
   return DINOSAURS;
 }
+
+// ──── Dinosaur Descriptions (for explore lesson) ────
+export const DINOSAUR_DESCRIPTIONS: Record<string, string> = {
+  // Herbivores
+  triceratops: "Khủng long ba sừng có ba chiếc sừng to và tấm khiên bảo vệ đầu. Chúng ăn cỏ và cây!",
+  stegosaurus: "Khủng long gai có hàng tấm xương dựng trên lưng và đuôi có gai nhọn để tự vệ!",
+  brachiosaurus: "Khủng long cổ dài cao như tòa nhà, cổ dài giúp chúng ăn lá cây trên cao!",
+  ankylosaurus: "Khủng long bọc giáp có lớp vỏ cứng như áo giáp và chiếc đuôi hình chùy rất mạnh!",
+  parasaurolophus: "Khủng long mào có chiếc mào dài trên đầu dùng để tạo ra âm thanh như kèn!",
+  diplodocus: "Khủng long đuôi dài có đuôi rất dài như chiếc roi. Chúng dài gần 30 mét!",
+  // Carnivores
+  trex: "Khủng long bạo chúa là kẻ săn mồi đáng sợ nhất, có hàm răng sắc và cú cắn cực mạnh!",
+  velociraptor: "Khủng long móng vuốt nhỏ nhưng rất nhanh và thông minh. Chúng săn mồi theo bầy đàn!",
+  spinosaurus: "Khủng long gai lưng có cánh buồm trên lưng và biết bơi. Chúng lớn hơn cả T-Rex!",
+  allosaurus: "Khủng long săn mồi có tay dài với móng vuốt sắc. Chúng là kẻ săn mồi giỏi nhất thời đại Jura!",
+  carnotaurus: "Khủng long sừng bò có hai sừng nhỏ trên đầu và chạy rất nhanh!",
+  dilophosaurus: "Khủng long mào đôi có hai chiếc mào trên đầu rất đẹp. Chúng sống vào đầu kỷ Jura!",
+  // Flying & Sea
+  pteranodon: "Thằn lằn bay có đôi cánh rộng nhưng không phải khủng long. Chúng bay trên bầu trời săn cá!",
+  plesiosaurus: "Thằn lằn biển có cổ dài và bốn vây bơi. Chúng sống trong đại dương cổ đại!",
+  mosasaurus: "Khủng long biển là kẻ săn mồi khổng lồ dưới đại dương. Chúng bơi rất nhanh!",
+  ichthyosaurus: "Thằn lằn cá trông giống cá heo hiện đại. Chúng bơi rất nhanh và ăn cá!",
+  quetzalcoatlus: "Bò sát bay khổng lồ có sải cánh rộng hơn 10 mét, to như máy bay nhỏ!",
+  archelon: "Rùa biển cổ đại to gấp nhiều lần rùa biển ngày nay. Mai rùa rộng hơn 4 mét!",
+};

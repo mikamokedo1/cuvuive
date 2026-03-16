@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import PlayIcon from "@/assets/games/common/play.webp";
+const PlayIcon = "https://assets.cuthongminh.com/games/common/play.webp";
 import { playButtonSound } from "@/libs/utils/playSound";
 
 export type PlayButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;

@@ -1,33 +1,33 @@
 import { StaticImageData } from "next/image";
 
 // Import group logos
-import LogoGroup1 from "@/assets/games/learn-instrument/group1.webp";
-import LogoGroup2 from "@/assets/games/learn-instrument/group2.webp";
-import LogoGroup3 from "@/assets/games/learn-instrument/group3.webp";
+const LogoGroup1 = "https://assets.cuthongminh.com/games/learn-instrument/group1.webp";
+const LogoGroup2 = "https://assets.cuthongminh.com/games/learn-instrument/group2.webp";
+const LogoGroup3 = "https://assets.cuthongminh.com/games/learn-instrument/group3.webp";
 
 // Import String Instruments (Group 1)
-import Guitar from "@/assets/games/learn-instrument/guitar.webp";
-import Piano from "@/assets/games/learn-instrument/piano.webp";
-import Violin from "@/assets/games/learn-instrument/violin.webp";
-import DanTranh from "@/assets/games/learn-instrument/dan_tranh.webp";
-import Ukulele from "@/assets/games/learn-instrument/ukulele.webp";
-import Harp from "@/assets/games/learn-instrument/harp.webp";
-import Bau from "@/assets/games/learn-instrument/bau.webp";
+const Guitar = "https://assets.cuthongminh.com/games/learn-instrument/guitar.webp";
+const Piano = "https://assets.cuthongminh.com/games/learn-instrument/piano.webp";
+const Violin = "https://assets.cuthongminh.com/games/learn-instrument/violin.webp";
+const DanTranh = "https://assets.cuthongminh.com/games/learn-instrument/dan_tranh.webp";
+const Ukulele = "https://assets.cuthongminh.com/games/learn-instrument/ukulele.webp";
+const Harp = "https://assets.cuthongminh.com/games/learn-instrument/harp.webp";
+const Bau = "https://assets.cuthongminh.com/games/learn-instrument/bau.webp";
 
 // Import Percussion Instruments (Group 2)
-import Drum from "@/assets/games/learn-instrument/drum.webp";
-import Xylophone from "@/assets/games/learn-instrument/xylophone.webp";
-import Tambourine from "@/assets/games/learn-instrument/tambourine.webp";
-import Maracas from "@/assets/games/learn-instrument/maracas.webp";
-import Gong from "@/assets/games/learn-instrument/gong.webp";
-import Torung from "@/assets/games/learn-instrument/torung.webp";
+const Drum = "https://assets.cuthongminh.com/games/learn-instrument/drum.webp";
+const Xylophone = "https://assets.cuthongminh.com/games/learn-instrument/xylophone.webp";
+const Tambourine = "https://assets.cuthongminh.com/games/learn-instrument/tambourine.webp";
+const Maracas = "https://assets.cuthongminh.com/games/learn-instrument/maracas.webp";
+const Gong = "https://assets.cuthongminh.com/games/learn-instrument/gong.webp";
+const Torung = "https://assets.cuthongminh.com/games/learn-instrument/torung.webp";
 
 // Import Wind Instruments (Group 3)
-import Flute from "@/assets/games/learn-instrument/flute.webp";
-import Trumpet from "@/assets/games/learn-instrument/trumpet.webp";
-import Saxophone from "@/assets/games/learn-instrument/saxophone.webp";
-import Clarinet from "@/assets/games/learn-instrument/clarinet.webp";
-import Harmonica from "@/assets/games/learn-instrument/harmonica.webp";
+const Flute = "https://assets.cuthongminh.com/games/learn-instrument/flute.webp";
+const Trumpet = "https://assets.cuthongminh.com/games/learn-instrument/trumpet.webp";
+const Saxophone = "https://assets.cuthongminh.com/games/learn-instrument/saxophone.webp";
+const Clarinet = "https://assets.cuthongminh.com/games/learn-instrument/clarinet.webp";
+const Harmonica = "https://assets.cuthongminh.com/games/learn-instrument/harmonica.webp";
 import { EntityData } from "@/types/game";
 
 export const INSTRUMENTS: EntityData[] = [
@@ -95,3 +95,28 @@ export function getInstrumentsForGroup(groupId: string): EntityData[] {
 export function getAllInstruments(): EntityData[] {
   return INSTRUMENTS;
 }
+
+// ──── Instrument Descriptions (for explore lesson) ────
+export const INSTRUMENT_DESCRIPTIONS: Record<string, string> = {
+  // String
+  guitar: "Đàn ghi ta có sáu dây, chơi bằng cách gảy hoặc búng. Ghi ta là nhạc cụ rất phổ biến!",
+  piano: "Đàn piano có nhiều phím đen trắng. Piano tạo ra âm thanh tuyệt vời khi nhấn phím!",
+  violin: "Đàn vĩ cầm chơi bằng cung kéo qua dây. Tiếng vĩ cầm rất du dương và lãng mạn!",
+  dan_tranh: "Đàn tranh là nhạc cụ cổ truyền Việt Nam có 16 dây. Tiếng đàn tranh rất thanh tao!",
+  ukulele: "Đàn u ke le le nhỏ xinh, có bốn dây. U ke le le đến từ quần đảo Hawaii!",
+  harp: "Đàn hạc rất to và đẹp, có nhiều dây kéo dài. Tiếng đàn hạc nhẹ nhàng như tiếng thiên thần!",
+  bau: "Đàn bầu là nhạc cụ độc đáo của Việt Nam, chỉ có một dây. Tiếng đàn bầu rất da diết!",
+  // Percussion
+  drum: "Trống đánh bằng dùi, tạo ra nhịp điệu sôi động. Trống là nhạc cụ cổ xưa nhất thế giới!",
+  xylophone: "Đàn phím gỗ có nhiều thanh gỗ xếp theo bậc. Gõ vào mỗi thanh phát ra nốt nhạc khác nhau!",
+  tambourine: "Trống lắc có những miếng kim loại nhỏ phát ra tiếng xúc xắc khi lắc!",
+  maracas: "Lục lạc cầm tay có hạt bên trong, lắc phát ra tiếng rất vui nhộn!",
+  gong: "Cồng chiêng là nhạc cụ của các dân tộc Tây Nguyên. Tiếng cồng chiêng vang xa!",
+  torung: "Đàn tơ rưng làm từ ống tre, gõ phát ra tiếng trong trẻo. Là nhạc cụ của người Tây Nguyên!",
+  // Wind
+  flute: "Sáo thổi bằng hơi, có nhiều lỗ để bấm nốt. Tiếng sáo réo rắt rất hay!",
+  trumpet: "Kèn trumpet có âm thanh rực rỡ và mạnh mẽ. Trumpet thường chơi trong ban nhạc!",
+  saxophone: "Kèn sắc sô phôn có âm thanh ấm áp và quyến rũ. Sắc sô phôn rất phổ biến trong nhạc jazz!",
+  clarinet: "Kèn cla ri net có âm thanh trong trẻo. Cla ri net dùng trong dàn nhạc giao hưởng!",
+  harmonica: "Kèn hác mô ni ca nhỏ gọn, thổi bằng miệng. Hác mô ni ca bỏ túi mang đi mọi nơi!",
+};

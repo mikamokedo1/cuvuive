@@ -1,5 +1,5 @@
 import { GROUPS } from "@/features/games/learn-instrument/constants";
-import GameInstrumentLogo from "@/assets/games/learn-instrument/logo.webp";
+const GameInstrumentLogo = "https://assets.cuthongminh.com/games/learn-instrument/logo.webp";
 import { GameWrapGroups } from "@/components/layout/GameWrapGroups";
 
 export default function LearnInstrumentPage() {

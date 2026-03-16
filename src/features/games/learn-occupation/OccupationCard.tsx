@@ -41,7 +41,7 @@ export function OccupationCard({ occupation, active = false, showName = true, on
     >
       {/* Occupation Image */}
       <div className="relative w-48 h-48 md:w-64 md:h-64">
-        <Image src={occupation.image} alt={occupation.name} fill className="object-contain drop-shadow-lg" priority />
+        <Image src={occupation.image} alt={occupation.name} fill className="object-contain drop-shadow-lg" sizes="(max-width: 768px) 192px, 256px" />
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import GameMazeRunnerLogo from "@/assets/games/maze-runner/logo.png";
+const GameMazeRunnerLogo = "https://assets.cuthongminh.com/games/maze-runner/logo.webp";
 
 export const metadata: Metadata = {
   title: "Giải Cứu Động Vật | Cú Thông Minh",
@@ -11,12 +11,15 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: GameMazeRunnerLogo.src,
+        url: GameMazeRunnerLogo,
         width: 1200,
         height: 630,
         alt: "Giải Cứu Động Vật | Cú Thông Minh",
       },
     ],
+  },
+  alternates: {
+    canonical: "/games/maze-runner",
   },
 };
 

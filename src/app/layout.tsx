@@ -11,6 +11,7 @@ import { PaywallListener } from "@/features/paywall/PaywallListener";
 import { ProgressProvider } from "@/context/ProgressContext";
 import { PlayTimerProvider } from "@/context/PlayTimerContext";
 import { PlayTimerListener } from "@/features/parental/PlayTimerListener";
+import { InstallPrompt } from "@/components/common/InstallPrompt";
 
 // Configure fonts
 const baloo2 = Baloo_2({
@@ -70,6 +71,17 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
     title: "Cú Thông Minh",
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export const viewport = {
@@ -86,7 +98,12 @@ export default async function RootLayout({
     "@type": "Organization",
     name: "Cú Thông Minh",
     url: "https://cuthongminh.com",
-    logo: "https://cuthongminh.com/icons/favicon-32x32.png",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://cuthongminh.com/icons/android-chrome-512x512.png",
+      width: "512",
+      height: "512",
+    },
     description: "Nền tảng học tập tương tác cho bé từ 3-8 tuổi.",
     contactPoint: {
       "@type": "ContactPoint",
@@ -135,6 +152,7 @@ export default async function RootLayout({
                   <MissingInfoListener />
                   <PaywallListener />
                   <PlayTimerListener />
+                  <InstallPrompt />
                 </OwlProvider>
               </PlayTimerProvider>
             </ProgressProvider>

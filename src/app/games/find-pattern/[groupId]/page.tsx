@@ -27,7 +27,7 @@ const lessons = [
 ];
 
 export default function GroupLessonsPage() {
-  const { group, activeIndex, handleLessonClick } = useGroupLessons({
+  const { group, activeIndex,  handleLessonClick } = useGroupLessons({
     gameSlug: "find-pattern",
     groups: GROUPS,
     lessons,

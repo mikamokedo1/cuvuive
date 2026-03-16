@@ -3,6 +3,7 @@
 import { ActionButton } from "@/components/common/ActionButton";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import Image from "next/image";
 import BgImage from "@/assets/bg.jpg";
 import Header from "./Header";
@@ -22,22 +23,36 @@ export const GameLayout = ({ children, title, backTo, showBackButton = true }: G
     <div className="min-h-screen relative flex flex-col py-6 px-4 overflow-hidden">
       <Header />
       {/* Background */}
-      <Image src={BgImage} alt="Background" fill className="object-cover -z-10" priority />
+      <Image src={BgImage} alt="Background" fill className="object-cover -z-10" placeholder="blur" />
 
       {/* Header / Nav */}
       {(showBackButton || title) && (
         <div className="w-full max-w-6xl mx-auto flex items-center justify-between mb-10">
           {showBackButton && (
-            <ActionButton
-              variant="glossy"
-              color="orange"
-              size="auto"
-              className="px-4 py-2 rounded-xl flex items-center gap-2"
-              onClick={() => (backTo ? router.push(backTo) : router.back())}
-            >
-              <ArrowLeft size={20} className="text-white" />
-              <span className="text-white font-bold hidden sm:block">Quay lại</span>
-            </ActionButton>
+            backTo ? (
+              <Link href={backTo}>
+                <ActionButton
+                  variant="glossy"
+                  color="orange"
+                  size="auto"
+                  className="px-4 py-2 rounded-xl flex items-center gap-2"
+                >
+                  <ArrowLeft size={20} className="text-white" />
+                  <span className="text-white font-bold hidden sm:block">Quay lại</span>
+                </ActionButton>
+              </Link>
+            ) : (
+              <ActionButton
+                variant="glossy"
+                color="orange"
+                size="auto"
+                className="px-4 py-2 rounded-xl flex items-center gap-2"
+                onClick={() => router.back()}
+              >
+                <ArrowLeft size={20} className="text-white" />
+                <span className="text-white font-bold hidden sm:block">Quay lại</span>
+              </ActionButton>
+            )
           )}
 
           {title && <LessonTitle>{title}</LessonTitle>}

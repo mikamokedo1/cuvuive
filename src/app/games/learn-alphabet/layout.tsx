@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import GameAlphabetLogo from "@/assets/games/learn-alphabet/logo.png";
+const GameAlphabetLogo = "https://assets.cuthongminh.com/games/learn-alphabet/logo.webp";
 
 export const metadata: Metadata = {
   title: "Bảng Chữ Cái | Cú Thông Minh",
@@ -11,12 +11,15 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: GameAlphabetLogo.src,
+        url: GameAlphabetLogo,
         width: 1200,
         height: 630,
         alt: "Bảng Chữ Cái | Cú Thông Minh",
       },
     ],
+  },
+  alternates: {
+    canonical: "/games/learn-alphabet",
   },
 };
 

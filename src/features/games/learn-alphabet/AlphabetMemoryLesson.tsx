@@ -149,8 +149,8 @@ export function AlphabetMemoryLesson({ letters, onComplete, pairsCount = 6 }: Al
 
               {/* Card Front (revealed state) - shows letter + image */}
               {isRevealed && (
-                <div className="absolute inset-0 bg-white rounded-2xl shadow-lg border-2 border-orange-200 flex flex-col items-center justify-center gap-1 p-2">
-                  <span className="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-br from-orange-500 to-purple-500 leading-none">
+                <div className="absolute inset-0 bg-white rounded-2xl shadow-lg border-2 border-orange-200 flex flex-col items-center justify-center gap-1 p-2 [transform:rotateY(180deg)]">
+                  <span className="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-br from-orange-500 to-purple-500">
                     {card.data.letter}
                   </span>
                   <div className="relative w-12 h-12 sm:w-16 sm:h-16">

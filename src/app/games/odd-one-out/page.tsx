@@ -1,5 +1,5 @@
 import { GROUPS } from "@/features/games/odd-one-out/constants";
-import GameOddOneOutLogo from "@/assets/games/find-pattern/logo.png"; // temporary logo reuse
+const GameOddOneOutLogo = "https://assets.cuthongminh.com/games/find-pattern/logo.webp"; // temporary logo reuse
 import { GameWrapGroups } from "@/components/layout/GameWrapGroups";
 
 export default function OddOneOutPage() {

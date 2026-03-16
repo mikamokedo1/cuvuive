@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import GameDinosaurLogo from "@/assets/games/learn-dinosaur/logo.webp";
+const GameDinosaurLogo = "https://assets.cuthongminh.com/games/learn-dinosaur/logo.webp";
 
 export const metadata: Metadata = {
   title: "Học Khủng Long | Cú Thông Minh",
@@ -11,12 +11,15 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: GameDinosaurLogo.src,
+        url: GameDinosaurLogo,
         width: 630,
         height: 630,
         alt: "Học Khủng Long | Cú Thông Minh",
       },
     ],
+  },
+  alternates: {
+    canonical: "/games/learn-dinosaur",
   },
 };
 

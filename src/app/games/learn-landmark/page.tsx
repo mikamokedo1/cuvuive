@@ -1,5 +1,5 @@
 import { GROUPS } from "@/features/games/learn-landmark/constants";
-import GameLogo from "@/assets/games/learn-landmark/logo.png";
+const GameLogo = "https://assets.cuthongminh.com/games/learn-landmark/logo.webp";
 import { GameWrapGroups } from "@/components/layout/GameWrapGroups";
 
 export default function LearnLandmarkPage() {

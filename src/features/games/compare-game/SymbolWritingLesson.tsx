@@ -4,12 +4,12 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { SYMBOL_PATHS, SYMBOL_NAMES_VI } from "@/libs/constants/symbolPaths";
 import Image from "next/image";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
-import Easer from "@/assets/games/common/earser.webp";
-import Pen from "@/assets/games/pen.webp";
+const Easer = "https://assets.cuthongminh.com/games/common/earser.webp";
+const Pen = "https://assets.cuthongminh.com/games/pen.webp";
 import { playButtonSound, playSound } from "@/libs/utils/playSound";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 import { MAP_COMPARE_SIGN_SOUND } from "./VisualCompareLesson";
-import LoudSpeaker from "@/assets/games/loud-speaker.webp";
+import { LoudSpeaker } from "@/libs/constants/game-assets";
 
 interface SymbolWritingLessonProps {
   comparisonType: "greater" | "less" | "equal";
@@ -299,7 +299,7 @@ export function SymbolWritingLesson({ comparisonType, onComplete }: SymbolWritin
             onClick={clearDrawing}
             onMouseEnter={playButtonSound}
           >
-            <Image src={Easer} alt="Eraser" className="w-12 h-12" />
+            <Image width={48} height={48} src={Easer} alt="Eraser" className="w-12 h-12" />
           </button>
         )}
 
@@ -308,7 +308,7 @@ export function SymbolWritingLesson({ comparisonType, onComplete }: SymbolWritin
           onClick={() => playSound(MAP_COMPARE_SIGN_SOUND[symbol as keyof typeof MAP_COMPARE_SIGN_SOUND])}
           onMouseEnter={playButtonSound}
         >
-          <Image src={LoudSpeaker} alt="Eraser" className="w-12 h-10" />
+          <Image width={48} height={40} src={LoudSpeaker} alt="Eraser" className="w-12 h-10" />
         </button>
       </div>
 

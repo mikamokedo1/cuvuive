@@ -11,7 +11,7 @@ import Header from "@/components/layout/Header";
 import { submitFeedbackAction } from "@/libs/actions/feedback";
 
 // Re-using the same owl image for feedback header
-import owlHi from "@/assets/games/common/owl-say-hi.webp";
+const owlHi = "https://assets.cuthongminh.com/games/common/owl-say-hi.webp";
 
 export function FeedbackView() {
   const { user } = useUser();

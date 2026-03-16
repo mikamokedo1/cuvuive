@@ -29,7 +29,7 @@ export const NumberCard2 = ({ number, active }: NumberCard2Props) => {
   return (
     <div
       className={cn(
-        "w-100 rounded-3xl border-8 border-white shadow-xl bg-white flex flex-col items-center justify-between transition-all duration-500",
+        "w-80 md:w-100 rounded-3xl border-8 border-white shadow-xl bg-white flex flex-col items-center justify-between transition-all duration-500",
         active ? "scale-100 opacity-100 rotate-0" : "scale-90 opacity-50 rotate-6",
       )}
     >

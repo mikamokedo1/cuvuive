@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-import GamePatternLogo from "@/assets/games/find-pattern/logo.png";
+const GamePatternLogo = "https://assets.cuthongminh.com/games/find-pattern/logo.webp";
 
 export const metadata: Metadata = {
   title: "Tìm Quy Luật | Cú Thông Minh",
@@ -11,12 +11,15 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: GamePatternLogo.src,
+        url: GamePatternLogo,
         width: 1200,
         height: 630,
         alt: "Tìm Quy Luật | Cú Thông Minh",
       },
     ],
+  },
+  alternates: {
+    canonical: "/games/find-pattern",
   },
 };
 
