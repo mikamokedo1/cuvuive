@@ -85,9 +85,9 @@ export function generateLineConnectLevel(rows: number, cols: number, numDots: nu
   return { rows, cols, dots: activeDots };
 }
 
-import LogoGroup1 from "@/assets/games/line-connect/group1.png";
-import LogoGroup2 from "@/assets/games/line-connect/group2.png";
-import LogoGroup3 from "@/assets/games/line-connect/group3.png";
+const LogoGroup1 = "https://assets.cuthongminh.com/games/line-connect/group1.webp";
+const LogoGroup2 = "https://assets.cuthongminh.com/games/line-connect/group2.webp";
+const LogoGroup3 = "https://assets.cuthongminh.com/games/line-connect/group3.webp";
 
 export const GROUPS = [
   {
