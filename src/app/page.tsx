@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Brain, BookOpen, Trophy, Shield, Heart, Gamepad2, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Brain, BookOpen, Trophy, Shield, Heart, Gamepad2, CheckCircle2, Users, Star, Sparkles, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { GROUPS } from "@/libs/constants/groups";
@@ -7,6 +7,14 @@ import { Footer } from "@/components/layout/Footer";
 import { HeaderHome } from "@/components/layout/HeaderHome";
 import { FAQSchema, type FAQItem } from "@/components/common/FAQSchema";
 import { SpeakableSchema } from "@/components/common/SpeakableSchema";
+
+const FloatingCTA = dynamic(() =>
+  import("@/components/common/FloatingCTA").then((mod) => mod.FloatingCTA),
+);
+
+const ExitIntentPopup = dynamic(() =>
+  import("@/components/common/ExitIntentPopup").then((mod) => mod.ExitIntentPopup),
+);
 
 const HOME_FAQ_ITEMS: FAQItem[] = [
   {
@@ -130,7 +138,50 @@ export default function Home() {
                 Khám phá Kho bài học
               </Link>
             </div>
+
+            {/* Trust Badges */}
+            <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 mt-8 text-sm font-semibold text-slate-500">
+              <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-green-500" /> Miễn phí trải nghiệm</span>
+              <span className="flex items-center gap-1.5"><ShieldCheck className="w-4 h-4 text-blue-500" /> An toàn cho bé</span>
+              <span className="flex items-center gap-1.5"><Sparkles className="w-4 h-4 text-orange-500" /> Không cần tải app</span>
+            </div>
           </div>
+
+          {/* Social Proof Stats */}
+          <div className="container mx-auto px-6 relative z-10 mt-16">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
+              <div className="text-center p-4 rounded-2xl bg-white/70 backdrop-blur-sm border border-slate-100 shadow-sm">
+                <div className="flex items-center justify-center gap-1 mb-1">
+                  <Gamepad2 className="w-5 h-5 text-orange-500" />
+                  <span className="text-2xl md:text-3xl font-extrabold font-[family-name:var(--font-baloo-2)] text-slate-900">20+</span>
+                </div>
+                <p className="text-xs md:text-sm font-semibold text-slate-500">Thể loại trò chơi</p>
+              </div>
+              <div className="text-center p-4 rounded-2xl bg-white/70 backdrop-blur-sm border border-slate-100 shadow-sm">
+                <div className="flex items-center justify-center gap-1 mb-1">
+                  <Users className="w-5 h-5 text-blue-500" />
+                  <span className="text-2xl md:text-3xl font-extrabold font-[family-name:var(--font-baloo-2)] text-slate-900">1,000+</span>
+                </div>
+                <p className="text-xs md:text-sm font-semibold text-slate-500">Phụ huynh tin dùng</p>
+              </div>
+              <div className="text-center p-4 rounded-2xl bg-white/70 backdrop-blur-sm border border-slate-100 shadow-sm">
+                <div className="flex items-center justify-center gap-1 mb-1">
+                  <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
+                  <span className="text-2xl md:text-3xl font-extrabold font-[family-name:var(--font-baloo-2)] text-slate-900">4.9/5</span>
+                </div>
+                <p className="text-xs md:text-sm font-semibold text-slate-500">Đánh giá</p>
+              </div>
+              <div className="text-center p-4 rounded-2xl bg-white/70 backdrop-blur-sm border border-slate-100 shadow-sm">
+                <div className="flex items-center justify-center gap-1 mb-1">
+                  <Shield className="w-5 h-5 text-green-500" />
+                  <span className="text-2xl md:text-3xl font-extrabold font-[family-name:var(--font-baloo-2)] text-slate-900">100%</span>
+                </div>
+                <p className="text-xs md:text-sm font-semibold text-slate-500">An toàn, không QC</p>
+              </div>
+            </div>
+          </div>
+          {/* Sentinel for FloatingCTA IntersectionObserver */}
+          <div id="hero-sentinel" className="absolute bottom-0 h-1 w-full" aria-hidden="true" />
         </header>
 
         {/* Features Showcase */}
@@ -329,6 +380,10 @@ export default function Home() {
 
       {/* Footer */}
       <Footer />
+
+      {/* CRO Components */}
+      <FloatingCTA />
+      <ExitIntentPopup />
     </div>
   );
 }

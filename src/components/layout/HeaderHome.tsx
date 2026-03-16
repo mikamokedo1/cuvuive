@@ -10,12 +10,18 @@ export const HeaderHome = () => {
         <Image className="md:block hidden" src={LogoLong} alt="Cú Thông Minh - Nền tảng học và chơi cho bé" width={256} height={56} priority />
         <Image className="md:hidden" src={LogoShort} alt="Cú Thông Minh Logo" width={56} height={56} priority />
       </Link>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
         <Link
-          href="/games"
+          href="/auth/login"
+          className="hidden sm:inline-flex px-5 py-2.5 text-slate-600 font-bold rounded-full hover:bg-slate-100 transition-colors duration-200 text-sm"
+        >
+          Đăng nhập
+        </Link>
+        <Link
+          href="/auth/sign-up"
           className="px-6 py-3 bg-[#FF9C01] hover:bg-orange-500 text-slate-900 font-bold rounded-full shadow-[0_4px_14px_0_rgba(255,156,1,0.39)] hover:shadow-[0_6px_20px_rgba(255,156,1,0.23)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
         >
-          Bắt đầu khám phá
+          Đăng ký miễn phí
         </Link>
       </div>
     </nav>
