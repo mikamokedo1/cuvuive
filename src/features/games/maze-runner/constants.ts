@@ -25,6 +25,17 @@ export interface MazeData {
   goal: [number, number]; // [row, col]
 }
 
+export interface LineConnectLevel {
+  rows: number;
+  cols: number;
+  dots: {
+    color: string;
+    positions: [Point, Point];
+  }[];
+}
+
+type Point = [number, number];
+
 // ═══════════════════════════════════════════
 // Maze Generator (Recursive Backtracking / DFS)
 // ═══════════════════════════════════════════

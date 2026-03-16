@@ -4,11 +4,19 @@ import { useGameLesson } from "@/hooks/useGameLesson";
 import { GROUPS } from "@/features/games/maze-runner/constants";
 import { MazeBoard } from "@/features/games/maze-runner/MazeBoard";
 import { GameWrapGame } from "@/components/layout/GameWrapGame";
+import { useParams } from "next/navigation";
 
 const LESSON_ORDER = ["lesson1"];
 
 export default function LessonPage() {
-  const game = useGameLesson({ gameSlug: "maze-runner", lessonOrder: LESSON_ORDER, groups: GROUPS });
+  const params = useParams();
+  const groupId = typeof params.groupId === "string" ? params.groupId : "";
+
+  const game = useGameLesson({ 
+    gameSlug: "maze-runner", 
+    lessonOrder: LESSON_ORDER, 
+    groups: GROUPS 
+  });
 
   if (!game.group || !game.lessonId) {
     return <div>Bài học không tồn tại</div>;
