@@ -186,12 +186,12 @@ export function LineConnectBoard({ onComplete, groupId }: LineConnectBoardProps)
 
   if (!level) return <div className="text-orange-500 font-bold">Đang tạo thử thách...</div>;
 
-  const cellSize = level.cols <= 4 ? 70 : level.cols <= 5 ? 60 : level.cols <= 6 ? 50 : 40;
+  const cellSize = 70;
   const boardWidth = level.cols * cellSize;
   const boardHeight = level.rows * cellSize;
 
   return (
-    <div className="flex flex-col items-center gap-6 w-full max-w-lg px-4">
+    <div className="flex flex-col items-center justify-center gap-6 w-full max-w-lg mx-auto px-4 flex-1">
       <div 
         ref={boardRef}
         className="relative bg-white/90 rounded-3xl shadow-xl border-4 border-white backdrop-blur-sm touch-none overflow-hidden"
