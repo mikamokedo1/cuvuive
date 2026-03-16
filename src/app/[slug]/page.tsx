@@ -7,6 +7,110 @@ import { Metadata } from "next";
 import { HeaderHome } from "@/components/layout/HeaderHome";
 import { Footer } from "@/components/layout/Footer";
 import { ArrowRight, Star, Play, Trophy } from "lucide-react";
+import { FAQSchema, type FAQItem } from "@/components/common/FAQSchema";
+import { SpeakableSchema } from "@/components/common/SpeakableSchema";
+import { GameGroupType } from "@/libs/constants/groups";
+
+// FAQ data per group for AEO
+const GROUP_FAQ: Record<GameGroupType, FAQItem[]> = {
+  math: [
+    {
+      question: "Trò chơi Toán Học trên Cú Thông Minh phù hợp cho bé mấy tuổi?",
+      answer:
+        "Các trò chơi Toán Học được thiết kế cho bé từ 3-8 tuổi, bao gồm học đếm số 1-20, so sánh số lượng, phép cộng trừ đơn giản và nhận biết hình dạng. Nội dung được phân loại theo độ khó phù hợp từng lứa tuổi.",
+    },
+    {
+      question: "Bé có thể học được gì qua trò chơi Toán Học?",
+      answer:
+        "Bé sẽ học đếm số, nhận biết chữ số, so sánh nhiều hơn - ít hơn, phép cộng trừ cơ bản, nhận biết hình dạng (tròn, vuông, tam giác), và rèn luyện tư duy logic qua các bài tập tương tác.",
+    },
+  ],
+  logic: [
+    {
+      question: "Trò chơi Tư Duy giúp bé phát triển kỹ năng gì?",
+      answer:
+        "Trò chơi Tư Duy giúp bé rèn luyện khả năng quan sát, tìm quy luật, phân tích so sánh, tìm điểm khác biệt và giải mê cung. Đây là những kỹ năng nền tảng cho tư duy logic và giải quyết vấn đề.",
+    },
+    {
+      question: "Có những loại trò chơi tư duy nào trên Cú Thông Minh?",
+      answer:
+        "Cú Thông Minh cung cấp các trò chơi tìm quy luật (pattern), tìm điểm khác biệt, tìm hình khác loại (odd one out), mê cung (maze runner), và nối hình (line connect). Mỗi trò chơi đều có nhiều cấp độ từ dễ đến khó.",
+    },
+  ],
+  language: [
+    {
+      question: "Bé học Tiếng Việt trên Cú Thông Minh như thế nào?",
+      answer:
+        "Bé sẽ học bảng chữ cái tiếng Việt, tập viết chữ, học dấu thanh (sắc, huyền, hỏi, ngã, nặng), và ghép vần thông qua các bài học tương tác với hình ảnh và âm thanh sống động.",
+    },
+    {
+      question: "Trò chơi Ngôn Ngữ có phù hợp cho bé chưa biết chữ không?",
+      answer:
+        "Tuyệt đối phù hợp! Các bài học bắt đầu từ nhận biết chữ cái cơ bản, có âm thanh phát âm chuẩn và hình ảnh minh họa trực quan, giúp bé làm quen với chữ cái trước khi bước vào lớp 1.",
+    },
+  ],
+  science: [
+    {
+      question: "Bé học Khoa Học những gì trên Cú Thông Minh?",
+      answer:
+        "Bé sẽ khám phá thế giới động vật (động vật nuôi, hoang dã, biển), các loài hoa và cây, trái cây, thời tiết và khí hậu, khủng long, và nhiều chủ đề khoa học thú vị khác qua hình ảnh và âm thanh sống động.",
+    },
+    {
+      question: "Trò chơi Khoa Học có giúp bé chuẩn bị cho chương trình học không?",
+      answer:
+        "Có! Nội dung Khoa Học trên Cú Thông Minh bám sát chương trình giáo dục mầm non, giúp bé xây dựng kiến thức nền tảng về thế giới tự nhiên trước khi bước vào cấp tiểu học.",
+    },
+  ],
+  "life-skill": [
+    {
+      question: "Kỹ Năng Sống trên Cú Thông Minh dạy bé những gì?",
+      answer:
+        "Bé sẽ học nhận biết phương tiện giao thông, nghề nghiệp, vệ sinh cá nhân, cảm xúc, và các kỹ năng sống thiết yếu khác. Mỗi chủ đề đều có bài học tương tác và trò chơi giúp bé ghi nhớ tốt hơn.",
+    },
+    {
+      question: "Trò chơi Kỹ Năng Sống có phù hợp cho bé 3 tuổi không?",
+      answer:
+        "Hoàn toàn phù hợp! Các bài học Kỹ Năng Sống sử dụng hình ảnh sinh động, âm thanh vui nhộn và cách tương tác đơn giản, phù hợp cho bé từ 3 tuổi trở lên.",
+    },
+  ],
+  geography: [
+    {
+      question: "Bé học Địa Lý Tự Nhiên những gì trên Cú Thông Minh?",
+      answer:
+        "Bé sẽ học nhận biết quốc kỳ các nước, các địa danh nổi tiếng thế giới, trang phục truyền thống các quốc gia, và các địa hình tự nhiên. Kiến thức được truyền tải qua hình ảnh thực tế và trò chơi ghép hình thú vị.",
+    },
+    {
+      question: "Trò chơi Địa Lý có giúp bé mở rộng hiểu biết về thế giới không?",
+      answer:
+        "Chắc chắn rồi! Bé sẽ được khám phá thế giới qua việc nhận biết quốc kỳ, địa danh và văn hóa các quốc gia, giúp bé phát triển kiến thức và sự tò mò về thế giới xung quanh.",
+    },
+  ],
+  music: [
+    {
+      question: "Bé học Âm Nhạc trên Cú Thông Minh như thế nào?",
+      answer:
+        "Bé sẽ được làm quen với các loại nhạc cụ (dây, gõ, hơi), nghe âm thanh thực tế của từng nhạc cụ, và thử chơi đàn piano mini trên ứng dụng. Âm nhạc giúp bé phát triển thính giác và cảm nhận nghệ thuật.",
+    },
+    {
+      question: "Trò chơi Âm Nhạc có cần bé biết nhạc lý không?",
+      answer:
+        "Hoàn toàn không! Các bài học Âm Nhạc được thiết kế cho bé chưa có kiến thức nhạc lý, bắt đầu từ việc nhận biết nhạc cụ qua hình ảnh và âm thanh, đến chơi đàn piano đơn giản theo màu sắc.",
+    },
+  ],
+  art: [
+    {
+      question: "Bé học Mỹ Thuật trên Cú Thông Minh như thế nào?",
+      answer:
+        "Bé sẽ được học nhận biết màu sắc, pha màu, tô màu tranh sáng tạo và vẽ tự do. Các trò chơi Mỹ Thuật giúp bé phát triển khả năng sáng tạo, nhận biết thẩm mỹ và kỹ năng vận động tinh.",
+    },
+    {
+      question: "Trò chơi Mỹ Thuật có phù hợp cho bé chưa biết vẽ không?",
+      answer:
+        "Rất phù hợp! Các bài học bắt đầu từ nhận biết màu sắc cơ bản, sau đó nâng dần lên tô màu theo mẫu và vẽ sáng tạo. Bé không cần biết vẽ trước, ứng dụng sẽ hướng dẫn từng bước.",
+    },
+  ],
+  history: [],
+};
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -50,9 +154,46 @@ export default async function GroupLandingPage({ params }: PageProps) {
   }
 
   const groupGames = COURSES.filter((course) => course.type === group.id);
+  const faqItems = GROUP_FAQ[group.id] || [];
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Trang chủ",
+        item: "https://cuthongminh.com",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: group.title,
+        item: `https://cuthongminh.com/${slug}`,
+      },
+    ],
+  };
+
+  const itemListJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: `Trò chơi ${group.title} cho bé`,
+    description: `Khám phá ${groupGames.length} trò chơi ${group.title} hấp dẫn dành cho bé từ 3-8 tuổi trên Cú Thông Minh.`,
+    numberOfItems: groupGames.length,
+    itemListElement: groupGames.map((game, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: game.title,
+      url: `https://cuthongminh.com/games/${game.id}`,
+    })),
+  };
 
   return (
     <div className="min-h-screen bg-[#FFF9F0] font-[family-name:var(--font-nunito-sans)]">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }} />
+
       <div className="max-w-6xl mx-auto px-4 py-6">
         <HeaderHome />
 
@@ -142,12 +283,25 @@ export default async function GroupLandingPage({ params }: PageProps) {
                 href="/games"
                 className="w-full sm:w-auto px-10 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-full text-lg backdrop-blur-md border border-white/20 transition-all duration-300"
               >
-                Khám phá kho game
+                Khám phá bài học
               </Link>
             </div>
           </section>
         </main>
       </div>
+
+      {/* FAQ Section — AEO optimized */}
+      {faqItems.length > 0 && (
+        <FAQSchema
+          items={faqItems}
+          title={`Câu hỏi về trò chơi ${group.title}`}
+          subtitle={`Những thắc mắc phổ biến về trò chơi ${group.title} trên Cú Thông Minh`}
+        />
+      )}
+
+      {/* Speakable Schema for AI voice reading */}
+      <SpeakableSchema url={`https://cuthongminh.com/${slug}`} cssSelectors={["h1", "main > div p", "#faq"]} />
+
       <Footer />
     </div>
   );

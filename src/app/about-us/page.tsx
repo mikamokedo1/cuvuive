@@ -5,6 +5,31 @@ import { HeaderHome } from "@/components/layout/HeaderHome";
 import { Footer } from "@/components/layout/Footer";
 import { Brain, Heart, BookOpenText, Users, Gamepad2, Rocket, ShieldCheck, MessageSquareHeart } from "lucide-react";
 import LogoLong from "@/assets/logo.png";
+import { FAQSchema, type FAQItem } from "@/components/common/FAQSchema";
+import { SpeakableSchema } from "@/components/common/SpeakableSchema";
+
+const ABOUT_FAQ_ITEMS: FAQItem[] = [
+  {
+    question: "Ai đứng sau Cú Thông Minh?",
+    answer:
+      "Cú Thông Minh được phát triển bởi đội ngũ gồm các giáo viên tâm huyết, các chuyên gia giáo dục sớm và kỹ sư công nghệ, đặt sứ mệnh biến công nghệ thành công cụ giáo dục tích cực cho trẻ nhỏ.",
+  },
+  {
+    question: "Nội dung trên Cú Thông Minh được kiểm duyệt như thế nào?",
+    answer:
+      "Tất cả bài học và trò chơi đều được thiết kế bởi đội ngũ giáo viên, sau đó được xem xét về tính phù hợp với lứa tuổi, độ chính xác kiến thức và tính sư phạm trước khi được đưa lên nền tảng.",
+  },
+  {
+    question: "Cú Thông Minh có thu thập dữ liệu cá nhân của bé không?",
+    answer:
+      "Không. Cú Thông Minh cam kết bảo vệ quyền riêng tư của trẻ em. Chúng tôi không thu thập dữ liệu cá nhân của bé, không có quảng cáo và không chia sẻ dữ liệu với bên thứ ba.",
+  },
+  {
+    question: "Làm sao để phụ huynh theo dõi tiến độ của bé?",
+    answer:
+      "Phụ huynh có thể xem tiến độ học tập, số bài học đã hoàn thành và thời gian sử dụng của bé ngay trên ứng dụng. Hệ thống cũng hỗ trợ tính năng giới hạn thời gian chơi để ba mẹ kiểm soát.",
+  },
+];
 
 export const metadata: Metadata = {
   title: "Về Chúng Tôi | Cú Thông Minh - Hành trình khơi nguồn tri thức",
@@ -264,6 +289,13 @@ export default function AboutUsPage() {
           </div>
         </section>
 
+        {/* FAQ Section — AEO */}
+        <FAQSchema
+          items={ABOUT_FAQ_ITEMS}
+          title="Câu hỏi về chúng tôi"
+          subtitle="Những điều phụ huynh thường hỏi về Cú Thông Minh"
+        />
+
         {/* CTA Section */}
         <section className="py-24 bg-gradient-to-br from-slate-50 to-orange-50">
           <div className="container mx-auto px-6 text-center">
@@ -287,13 +319,16 @@ export default function AboutUsPage() {
                   href="/games"
                   className="w-full sm:w-auto px-8 py-4 bg-white text-orange-500 font-bold rounded-full border-2 border-orange-200 hover:border-orange-500 transition-all text-lg"
                 >
-                  Khám phá kho game
+                  Khám phá bài học
                 </Link>
               </div>
             </div>
           </div>
         </section>
       </main>
+
+      {/* Speakable Schema for AI voice reading */}
+      <SpeakableSchema url="https://cuthongminh.com/about-us" cssSelectors={["h1", "section > div > div > p", "#faq"]} />
 
       <Footer />
     </div>

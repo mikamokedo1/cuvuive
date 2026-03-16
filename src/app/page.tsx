@@ -5,6 +5,41 @@ import dynamic from "next/dynamic";
 import { GROUPS } from "@/libs/constants/groups";
 import { Footer } from "@/components/layout/Footer";
 import { HeaderHome } from "@/components/layout/HeaderHome";
+import { FAQSchema, type FAQItem } from "@/components/common/FAQSchema";
+import { SpeakableSchema } from "@/components/common/SpeakableSchema";
+
+const HOME_FAQ_ITEMS: FAQItem[] = [
+  {
+    question: "Cú Thông Minh là gì?",
+    answer:
+      "Cú Thông Minh là ứng dụng giáo dục tương tác dành cho trẻ em từ 3-8 tuổi, giúp bé vừa học vừa chơi qua hàng trăm trò chơi trí tuệ về toán học, ngôn ngữ, khoa học và kỹ năng sống.",
+  },
+  {
+    question: "Cú Thông Minh phù hợp cho bé mấy tuổi?",
+    answer:
+      "Ứng dụng được thiết kế cho bé từ 3 đến 8 tuổi, với nội dung phân loại theo độ khó phù hợp từng lứa tuổi. Bé 3-4 tuổi có thể bắt đầu với các bài học nhận biết màu sắc, hình dạng; bé 5-8 tuổi có thể thử thách với toán học, chữ cái và tư duy logic.",
+  },
+  {
+    question: "Ứng dụng Cú Thông Minh có miễn phí không?",
+    answer:
+      "Cú Thông Minh cung cấp nhiều trò chơi miễn phí để trải nghiệm. Để mở khóa toàn bộ nội dung premium với hơn 20+ thể loại trò chơi, phụ huynh có thể nâng cấp lên gói trả phí với mức giá hợp lý.",
+  },
+  {
+    question: "Cú Thông Minh có an toàn cho trẻ nhỏ không?",
+    answer:
+      "Tuyệt đối an toàn. Cú Thông Minh cam kết không có quảng cáo, không có nội dung độc hại, không thu thập dữ liệu cá nhân của trẻ. Phụ huynh có thể theo dõi tiến độ học tập và quản lý thời gian sử dụng của bé.",
+  },
+  {
+    question: "Bé có thể học được gì trên Cú Thông Minh?",
+    answer:
+      "Bé có thể học toán (đếm số, phép cộng trừ, so sánh số lượng), chữ cái tiếng Việt, nhận biết động vật, màu sắc, hình dạng, phương tiện giao thông, cờ các nước, và rèn luyện tư duy logic qua các trò chơi tìm quy luật, tìm điểm khác biệt, mê cung.",
+  },
+  {
+    question: "Cú Thông Minh hoạt động trên thiết bị nào?",
+    answer:
+      "Cú Thông Minh là ứng dụng web (PWA) hoạt động trên mọi thiết bị có trình duyệt: điện thoại, máy tính bảng, và máy tính để bàn. Không cần tải về từ App Store hay Google Play, chỉ cần truy cập cuthongminh.com.",
+  },
+];
 
 const TestimonialSlider = dynamic(() =>
   import("@/components/common/TestimonialSlider").then((mod) => mod.TestimonialSlider),
@@ -25,6 +60,10 @@ export default function Home() {
     browserRequirements: "Requires JavaScript",
     softwareVersion: "1.2.0",
     operatingSystem: "All",
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": "https://cuthongminh.com",
+    },
     offers: {
       "@type": "Offer",
       price: "0",
@@ -88,7 +127,7 @@ export default function Home() {
                 className="w-full sm:w-auto px-8 py-4 bg-white text-slate-700 font-bold rounded-full border border-slate-200 hover:border-orange-300 hover:bg-orange-50 border-b-4 hover:border-b-orange-400 flex items-center justify-center gap-3 text-lg transition-all duration-300 shadow-sm hover:shadow-md"
               >
                 <Gamepad2 className="w-5 h-5 text-orange-400" />
-                Khám phá Kho Game
+                Khám phá Kho bài học
               </Link>
             </div>
           </div>
@@ -277,6 +316,16 @@ export default function Home() {
           </div>
         </section>
       </main>
+
+      {/* FAQ Section — AEO optimized */}
+      <FAQSchema
+        items={HOME_FAQ_ITEMS}
+        title="Câu hỏi thường gặp"
+        subtitle="Những thắc mắc phổ biến của phụ huynh về Cú Thông Minh"
+      />
+
+      {/* Speakable Schema for AI voice reading */}
+      <SpeakableSchema url="https://cuthongminh.com" cssSelectors={["h1", "main > header p", "#faq"]} />
 
       {/* Footer */}
       <Footer />

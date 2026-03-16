@@ -5,6 +5,46 @@ import { getAllPosts, getPostBySlug } from "@/libs/blog";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { Clock, Calendar, User, Tag } from "lucide-react";
 import "@/styles/blog.css"; // Make sure to import the new blog styles
+import { HowToSchema, type HowToStep } from "@/components/common/HowToSchema";
+
+/**
+ * Extracts HowTo steps from MDX content by parsing ## headings and their following text.
+ * Only applies to tutorial-style blog posts.
+ */
+function extractHowToSteps(content: string): HowToStep[] {
+  const headingRegex = /^## \d+\.\s*(.+)$/gm;
+  const steps: HowToStep[] = [];
+  let match;
+
+  while ((match = headingRegex.exec(content)) !== null) {
+    const stepName = match[1].trim();
+    const startIdx = match.index + match[0].length;
+    // Find text until the next ## heading or end of content
+    const nextHeading = content.indexOf("\n## ", startIdx);
+    const stepText = content
+      .slice(startIdx, nextHeading === -1 ? undefined : nextHeading)
+      .replace(/^[\s\n]+/, "")
+      .split("\n")
+      .filter((line) => line.trim() && !line.startsWith("![") && !line.startsWith("---"))
+      .slice(0, 3)
+      .join(" ")
+      .trim();
+
+    if (stepName && stepText) {
+      steps.push({ name: stepName, text: stepText });
+    }
+  }
+
+  return steps;
+}
+
+/**
+ * Checks if a blog post title suggests it's a tutorial/how-to article
+ */
+function isHowToPost(title: string): boolean {
+  const howToKeywords = ["Cách", "Hướng dẫn", "Phương Pháp", "phương pháp", "Bước", "bước"];
+  return howToKeywords.some((kw) => title.includes(kw));
+}
 
 export async function generateStaticParams() {
   const posts = await getAllPosts();
@@ -67,6 +107,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     notFound();
   }
 
+  // Calculate word count for schema
+  const wordCount = post.content.split(/\s+/).length;
+  const articleSection = post.tags && post.tags.length > 0 ? post.tags[0] : "Giáo dục";
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -75,6 +119,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     image: post.image ? [`https://assets.cuthongminh.com${post.image}`] : [],
     datePublished: post.date,
     dateModified: post.date,
+    wordCount,
+    articleSection,
+    inLanguage: "vi",
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://cuthongminh.com/blogs/${post.slug}`,
+    },
     author: {
       "@type": "Person",
       name: post.author,
@@ -86,6 +137,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         "@type": "ImageObject",
         url: "https://cuthongminh.com/icons/favicon-32x32.png",
       },
+    },
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: ["article h1", "article header", ".blog-content p:first-of-type"],
     },
   };
 
@@ -120,10 +175,23 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     ],
   };
 
+  // Extract HowTo steps if this is a tutorial post
+  const howToSteps = isHowToPost(post.title) ? extractHowToSteps(post.content) : [];
+
   return (
     <article className="container mx-auto px-6 max-w-3xl">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+
+      {/* HowTo Schema for tutorial posts */}
+      {howToSteps.length > 0 && (
+        <HowToSchema
+          name={post.title}
+          description={post.description}
+          steps={howToSteps}
+          image={post.image ? (post.image.startsWith("http") ? post.image : `https://cuthongminh.com${post.image}`) : undefined}
+        />
+      )}
 
       {/* Article Header */}
       <header className="mb-12 text-center">
