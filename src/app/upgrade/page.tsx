@@ -8,9 +8,9 @@ const owlHi = "https://assets.cuthongminh.com/games/common/owl-say-hi.webp";
 import { toast } from "react-hot-toast";
 import { getPlans } from "@/libs/actions/plans";
 import Header from "@/components/layout/Header";
-import SeedImg from "@/assets/upgrade/seed.webp";
-import BuffImg from "@/assets/upgrade/buff.webp";
-import LeafImg from "@/assets/upgrade/leaf.webp";
+const SeedImg = "https://assets.cuthongminh.com/assets/upgrade/seed.webp";
+const BuffImg = "https://assets.cuthongminh.com/assets/upgrade/buff.webp";
+const LeafImg = "https://assets.cuthongminh.com/assets/upgrade/leaf.webp";
 import Loading from "../loading";
 import { Loader2 } from "lucide-react";
 

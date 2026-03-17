@@ -4,7 +4,7 @@ import { createClient } from "@/libs/supabase/client";
 import { useState } from "react";
 import Link from "next/link";
 import { useFormik } from "formik";
-import * as Yup from "yup";
+import { object, string } from "yup";
 import { ActionButton } from "@/components/common/ActionButton";
 import { EmailIcon, ExclamationIcon } from "@/components/common/Icons";
 
@@ -18,8 +18,8 @@ export function ForgotPasswordForm() {
     initialValues: {
       email: "",
     },
-    validationSchema: Yup.object({
-      email: Yup.string().email("Email không hợp lệ").required("Vui lòng nhập email"),
+    validationSchema: object({
+      email: string().email("Email không hợp lệ").required("Vui lòng nhập email"),
     }),
     onSubmit: async (values) => {
       setLoading(true);

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getPaginatedPosts } from "@/libs/blog";
 import Pagination from "@/components/common/Pagination";
 import BlogCard from "@/components/blog/BlogCard";
+import { SpeakableSchema } from "@/components/common/SpeakableSchema";
 
 export default async function BlogIndexPage({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
   const params = await searchParams;
@@ -12,10 +13,15 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Pr
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Blog",
+    "@type": ["Blog", "CollectionPage"],
     name: "Cú Thông Minh Blog",
     description: "Góc chia sẻ kiến thức, phương pháp giáo dục sớm và kinh nghiệm nuôi dạy trẻ.",
     url: "https://cuthongminh.com/blogs",
+    inLanguage: "vi",
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": "https://cuthongminh.com/blogs",
+    },
     publisher: {
       "@type": "Organization",
       name: "Cú Thông Minh",
@@ -28,7 +34,7 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Pr
       "@type": "BlogPosting",
       headline: post.title,
       description: post.description,
-      url: `https://assets.cuthongminh.com/blogs/${post.slug}`,
+      url: `https://cuthongminh.com/blogs/${post.slug}`,
       datePublished: post.date,
       author: {
         "@type": "Person",
@@ -60,6 +66,9 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Pr
     <div className="container mx-auto px-6 max-w-4xl">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+
+      {/* Speakable Schema for AI voice reading */}
+      <SpeakableSchema url="https://cuthongminh.com/blogs" cssSelectors={["h1", "h1 + p"]} />
 
       <div className="mb-16">
         <h1 className="text-4xl md:text-5xl font-extrabold font-[family-name:var(--font-baloo-2)] text-slate-900 mb-4 tracking-tight">

@@ -5,7 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import BgImage from "@/assets/bg.jpg";
+const BgImage = "https://assets.cuthongminh.com/assets/bg.webp";
 import Header from "./Header";
 import { LessonTitle } from "@/components/games/LessonTitle";
 
@@ -23,7 +23,7 @@ export const GameLayout = ({ children, title, backTo, showBackButton = true }: G
     <div className="min-h-screen relative flex flex-col py-6 px-4 overflow-hidden">
       <Header />
       {/* Background */}
-      <Image src={BgImage} alt="Background" fill className="object-cover -z-10" placeholder="blur" />
+      <Image src={BgImage} alt="Background" fill className="object-cover -z-10" />
 
       {/* Header / Nav */}
       {(showBackButton || title) && (

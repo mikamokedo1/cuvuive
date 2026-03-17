@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import { ColorData } from "./constants";
-import confetti from "canvas-confetti";
 import NextImage from "next/image";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { getRandomItem } from "@/libs/utils/randomQuestion";

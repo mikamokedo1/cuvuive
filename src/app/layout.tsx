@@ -3,15 +3,13 @@ import { Baloo_2, Nunito_Sans } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import { OwlProvider } from "@/context/OwlContext";
-import { OwlCompanion } from "@/components/common/OwlCompanion";
 import { UserProvider } from "@/context/UserContext";
 import { AccessProvider } from "@/context/AccessContext";
 import { MissingInfoListener } from "@/features/auth/MissingInfoListener";
-import { PaywallListener } from "@/features/paywall/PaywallListener";
 import { ProgressProvider } from "@/context/ProgressContext";
 import { PlayTimerProvider } from "@/context/PlayTimerContext";
-import { PlayTimerListener } from "@/features/parental/PlayTimerListener";
-import { InstallPrompt } from "@/components/common/InstallPrompt";
+import { ClientDynamicComponents } from "@/components/common/ClientDynamicComponents";
+
 
 // Configure fonts
 const baloo2 = Baloo_2({
@@ -95,7 +93,7 @@ export default async function RootLayout({
 }>) {
   const orgJsonLd = {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": "EducationalOrganization",
     name: "Cú Thông Minh",
     url: "https://cuthongminh.com",
     logo: {
@@ -104,7 +102,20 @@ export default async function RootLayout({
       width: "512",
       height: "512",
     },
-    description: "Nền tảng học tập tương tác cho bé từ 3-8 tuổi.",
+    description:
+      "Cú Thông Minh là nền tảng giáo dục tương tác cho trẻ em từ 3-8 tuổi, giúp bé vừa học vừa chơi qua hàng trăm trò chơi trí tuệ về toán học, ngôn ngữ và kỹ năng sống.",
+    foundingDate: "2024",
+    areaServed: {
+      "@type": "Country",
+      name: "Vietnam",
+    },
+    knowsAbout: [
+      "Early childhood education",
+      "Educational games for kids",
+      "Vietnamese language learning",
+      "Math learning for preschoolers",
+      "Interactive learning",
+    ],
     contactPoint: {
       "@type": "ContactPoint",
       telephone: "+84-888-222-293",
@@ -130,6 +141,9 @@ export default async function RootLayout({
   return (
     <html lang="vi">
       <head>
+        {/* Preconnect to external domains for faster resource loading */}
+        <link rel="preconnect" href="https://assets.cuthongminh.com" />
+        <link rel="dns-prefetch" href="https://assets.cuthongminh.com" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
@@ -148,11 +162,8 @@ export default async function RootLayout({
               <PlayTimerProvider>
                 <OwlProvider>
                   {children}
-                  <OwlCompanion />
                   <MissingInfoListener />
-                  <PaywallListener />
-                  <PlayTimerListener />
-                  <InstallPrompt />
+                  <ClientDynamicComponents />
                 </OwlProvider>
               </PlayTimerProvider>
             </ProgressProvider>

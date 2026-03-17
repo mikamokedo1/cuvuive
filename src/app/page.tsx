@@ -1,10 +1,54 @@
 import Link from "next/link";
-import { ArrowRight, Brain, BookOpen, Trophy, Shield, Heart, Gamepad2, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Brain, BookOpen, Trophy, Shield, Heart, Gamepad2, CheckCircle2, Users, Star, Sparkles, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { GROUPS } from "@/libs/constants/groups";
 import { Footer } from "@/components/layout/Footer";
 import { HeaderHome } from "@/components/layout/HeaderHome";
+import { FAQSchema, type FAQItem } from "@/components/common/FAQSchema";
+import { SpeakableSchema } from "@/components/common/SpeakableSchema";
+import { ScrollReveal } from "@/components/common/ScrollReveal";
+
+const FloatingCTA = dynamic(() =>
+  import("@/components/common/FloatingCTA").then((mod) => mod.FloatingCTA),
+);
+
+const ExitIntentPopup = dynamic(() =>
+  import("@/components/common/ExitIntentPopup").then((mod) => mod.ExitIntentPopup),
+);
+
+const HOME_FAQ_ITEMS: FAQItem[] = [
+  {
+    question: "Cú Thông Minh là gì?",
+    answer:
+      "Cú Thông Minh là ứng dụng giáo dục tương tác dành cho trẻ em từ 3-8 tuổi, giúp bé vừa học vừa chơi qua hàng trăm trò chơi trí tuệ về toán học, ngôn ngữ, khoa học và kỹ năng sống.",
+  },
+  {
+    question: "Cú Thông Minh phù hợp cho bé mấy tuổi?",
+    answer:
+      "Ứng dụng được thiết kế cho bé từ 3 đến 8 tuổi, với nội dung phân loại theo độ khó phù hợp từng lứa tuổi. Bé 3-4 tuổi có thể bắt đầu với các bài học nhận biết màu sắc, hình dạng; bé 5-8 tuổi có thể thử thách với toán học, chữ cái và tư duy logic.",
+  },
+  {
+    question: "Ứng dụng Cú Thông Minh có miễn phí không?",
+    answer:
+      "Cú Thông Minh cung cấp nhiều trò chơi miễn phí để trải nghiệm. Để mở khóa toàn bộ nội dung premium với hơn 20+ thể loại trò chơi, phụ huynh có thể nâng cấp lên gói trả phí với mức giá hợp lý.",
+  },
+  {
+    question: "Cú Thông Minh có an toàn cho trẻ nhỏ không?",
+    answer:
+      "Tuyệt đối an toàn. Cú Thông Minh cam kết không có quảng cáo, không có nội dung độc hại, không thu thập dữ liệu cá nhân của trẻ. Phụ huynh có thể theo dõi tiến độ học tập và quản lý thời gian sử dụng của bé.",
+  },
+  {
+    question: "Bé có thể học được gì trên Cú Thông Minh?",
+    answer:
+      "Bé có thể học toán (đếm số, phép cộng trừ, so sánh số lượng), chữ cái tiếng Việt, nhận biết động vật, màu sắc, hình dạng, phương tiện giao thông, cờ các nước, và rèn luyện tư duy logic qua các trò chơi tìm quy luật, tìm điểm khác biệt, mê cung.",
+  },
+  {
+    question: "Cú Thông Minh hoạt động trên thiết bị nào?",
+    answer:
+      "Cú Thông Minh là ứng dụng web (PWA) hoạt động trên mọi thiết bị có trình duyệt: điện thoại, máy tính bảng, và máy tính để bàn. Không cần tải về từ App Store hay Google Play, chỉ cần truy cập cuthongminh.com.",
+  },
+];
 
 const TestimonialSlider = dynamic(() =>
   import("@/components/common/TestimonialSlider").then((mod) => mod.TestimonialSlider),
@@ -25,6 +69,10 @@ export default function Home() {
     browserRequirements: "Requires JavaScript",
     softwareVersion: "1.2.0",
     operatingSystem: "All",
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": "https://cuthongminh.com",
+    },
     offers: {
       "@type": "Offer",
       price: "0",
@@ -49,7 +97,7 @@ export default function Home() {
       {/* Navigation */}
       <HeaderHome />
 
-      <main>
+      <main className="pt-[72px]">
         {/* Hero Section */}
         <header className="relative pt-20 pb-32 lg:pt-32 lg:pb-40 overflow-hidden">
           {/* Background decorations - Hidden on mobile for GPU performance */}
@@ -88,13 +136,57 @@ export default function Home() {
                 className="w-full sm:w-auto px-8 py-4 bg-white text-slate-700 font-bold rounded-full border border-slate-200 hover:border-orange-300 hover:bg-orange-50 border-b-4 hover:border-b-orange-400 flex items-center justify-center gap-3 text-lg transition-all duration-300 shadow-sm hover:shadow-md"
               >
                 <Gamepad2 className="w-5 h-5 text-orange-400" />
-                Khám phá Kho Game
+                Khám phá Kho bài học
               </Link>
             </div>
+
+            {/* Trust Badges */}
+            <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 mt-8 text-sm font-semibold text-slate-500">
+              <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-green-500" /> Miễn phí trải nghiệm</span>
+              <span className="flex items-center gap-1.5"><ShieldCheck className="w-4 h-4 text-blue-500" /> An toàn cho bé</span>
+              <span className="flex items-center gap-1.5"><Sparkles className="w-4 h-4 text-orange-500" /> Không cần tải app</span>
+            </div>
           </div>
+
+          {/* Social Proof Stats */}
+          <div className="container mx-auto px-6 relative z-10 mt-16">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
+              <div className="text-center p-4 rounded-2xl bg-white/70 backdrop-blur-sm border border-slate-100 shadow-sm">
+                <div className="flex items-center justify-center gap-1 mb-1">
+                  <Gamepad2 className="w-5 h-5 text-orange-500" />
+                  <span className="text-2xl md:text-3xl font-extrabold font-[family-name:var(--font-baloo-2)] text-slate-900">20+</span>
+                </div>
+                <p className="text-xs md:text-sm font-semibold text-slate-500">Thể loại trò chơi</p>
+              </div>
+              <div className="text-center p-4 rounded-2xl bg-white/70 backdrop-blur-sm border border-slate-100 shadow-sm">
+                <div className="flex items-center justify-center gap-1 mb-1">
+                  <Users className="w-5 h-5 text-blue-500" />
+                  <span className="text-2xl md:text-3xl font-extrabold font-[family-name:var(--font-baloo-2)] text-slate-900">1,000+</span>
+                </div>
+                <p className="text-xs md:text-sm font-semibold text-slate-500">Phụ huynh tin dùng</p>
+              </div>
+              <div className="text-center p-4 rounded-2xl bg-white/70 backdrop-blur-sm border border-slate-100 shadow-sm">
+                <div className="flex items-center justify-center gap-1 mb-1">
+                  <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
+                  <span className="text-2xl md:text-3xl font-extrabold font-[family-name:var(--font-baloo-2)] text-slate-900">4.9/5</span>
+                </div>
+                <p className="text-xs md:text-sm font-semibold text-slate-500">Đánh giá</p>
+              </div>
+              <div className="text-center p-4 rounded-2xl bg-white/70 backdrop-blur-sm border border-slate-100 shadow-sm">
+                <div className="flex items-center justify-center gap-1 mb-1">
+                  <Shield className="w-5 h-5 text-green-500" />
+                  <span className="text-2xl md:text-3xl font-extrabold font-[family-name:var(--font-baloo-2)] text-slate-900">100%</span>
+                </div>
+                <p className="text-xs md:text-sm font-semibold text-slate-500">An toàn, không QC</p>
+              </div>
+            </div>
+          </div>
+          {/* Sentinel for FloatingCTA IntersectionObserver */}
+          <div id="hero-sentinel" className="absolute bottom-0 h-1 w-full" aria-hidden="true" />
         </header>
 
         {/* Features Showcase */}
+        <ScrollReveal>
         <section
           id="features"
           className="py-24 bg-white relative z-20 shadow-[0_-20px_40px_-20px_rgba(0,0,0,0.03)] rounded-t-[3rem]"
@@ -151,8 +243,10 @@ export default function Home() {
             </div>
           </div>
         </section>
+        </ScrollReveal>
 
         {/* Games Preview Section */}
+        <ScrollReveal delay={100}>
         <section
           id="games"
           className="py-24 relative overflow-hidden bg-slate-900 rounded-[3rem] mx-2 lg:mx-8 my-8 shadow-2xl"
@@ -220,11 +314,15 @@ export default function Home() {
             </div>
           </div>
         </section>
+        </ScrollReveal>
 
         {/* Latest Blogs Section */}
-        <LatestBlogs />
+        <ScrollReveal delay={100}>
+          <LatestBlogs />
+        </ScrollReveal>
 
         {/* Testimonial / Social Proof (Slider) */}
+        <ScrollReveal delay={100}>
         <section className="py-24 bg-white relative">
           <div className="container mx-auto px-6 max-w-5xl">
             <div className="text-center mb-16">
@@ -239,8 +337,10 @@ export default function Home() {
             <TestimonialSlider />
           </div>
         </section>
+        </ScrollReveal>
 
         {/* CTA Section */}
+        <ScrollReveal delay={100}>
         <section className="py-24 relative overflow-hidden bg-gradient-to-br from-[#FF9C01] to-orange-500">
           <div className="absolute inset-0 bg-[url('/patterns/cubes.png')] opacity-5 md:opacity-10 md:mix-blend-overlay"></div>
           <div className="container mx-auto px-6 relative z-10 text-center text-white">
@@ -276,10 +376,27 @@ export default function Home() {
             </div>
           </div>
         </section>
+        </ScrollReveal>
       </main>
+
+      {/* FAQ Section — AEO optimized */}
+      <ScrollReveal delay={100}>
+        <FAQSchema
+          items={HOME_FAQ_ITEMS}
+          title="Câu hỏi thường gặp"
+          subtitle="Những thắc mắc phổ biến của phụ huynh về Cú Thông Minh"
+        />
+      </ScrollReveal>
+
+      {/* Speakable Schema for AI voice reading */}
+      <SpeakableSchema url="https://cuthongminh.com" cssSelectors={["h1", "main > header p", "#faq"]} />
 
       {/* Footer */}
       <Footer />
+
+      {/* CRO Components */}
+      <FloatingCTA />
+      <ExitIntentPopup />
     </div>
   );
 }

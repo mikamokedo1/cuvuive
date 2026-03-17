@@ -6,12 +6,25 @@ export function GameSchema({ courseId }: { courseId: string }) {
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "LearningResource",
+    "@type": ["LearningResource", "Course"],
     name: course.title,
     description: course.description,
     image: typeof course.icon === "string" ? course.icon : `https://cuthongminh.com${course.icon.src}`,
     learningResourceType: "Educational Game",
     educationalLevel: "Preschool, Kindergarten, Early Childhood Education",
+    typicalAgeRange: "3-8",
+    isAccessibleForFree: true,
+    audience: {
+      "@type": "EducationalAudience",
+      educationalRole: "student",
+      audienceType: "Preschoolers, Kindergarteners",
+    },
+    provider: {
+      "@type": "EducationalOrganization",
+      name: "Cú Thông Minh",
+      url: "https://cuthongminh.com",
+      logo: "https://cuthongminh.com/icons/android-chrome-512x512.png",
+    },
     publisher: {
       "@type": "Organization",
       name: "Cú Thông Minh",

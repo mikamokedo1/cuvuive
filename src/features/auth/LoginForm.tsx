@@ -6,7 +6,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useFormik } from "formik";
-import * as Yup from "yup";
+import { object, string } from "yup";
 import { ActionButton } from "@/components/common/ActionButton";
 const owlHi = "https://assets.cuthongminh.com/games/common/owl-say-hi.webp";
 import { EmailIcon, ExclamationIcon, EyeIcon, FacebookIcon, GoogleIcon, PasswordIcon } from "@/components/common/Icons";
@@ -26,9 +26,9 @@ export function LoginForm() {
       email: "",
       password: "",
     },
-    validationSchema: Yup.object({
-      email: Yup.string().email("Email không hợp lệ").required("Vui lòng nhập email"),
-      password: Yup.string().min(6, "Mật khẩu phải có ít nhất 6 ký tự").required("Vui lòng nhập mật khẩu"),
+    validationSchema: object({
+      email: string().email("Email không hợp lệ").required("Vui lòng nhập email"),
+      password: string().min(6, "Mật khẩu phải có ít nhất 6 ký tự").required("Vui lòng nhập mật khẩu"),
     }),
     onSubmit: async (values) => {
       setLoading(true);

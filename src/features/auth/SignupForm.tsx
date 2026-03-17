@@ -6,21 +6,12 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useFormik } from "formik";
-import * as Yup from "yup";
+import { object, string } from "yup";
 import { ActionButton } from "@/components/common/ActionButton";
 const owlHi = "https://assets.cuthongminh.com/games/common/owl-say-hi.webp";
-import {
-  ConfirmPasswordIcon,
-  EmailIcon,
-  ExclamationIcon,
-  EyeIcon,
-  FacebookIcon,
-  GoogleIcon,
-  PasswordIcon,
-  PhoneIcon,
-  UserIcon,
-} from "@/components/common/Icons";
+import { EmailIcon, ExclamationIcon, EyeIcon, GoogleIcon, PasswordIcon } from "@/components/common/Icons";
 import { useAccess } from "@/context/AccessContext";
+import { CheckCircle2 } from "lucide-react";
 
 export const MAP_ERROR = {
   "User already registered": "Email đã được đăng ký",
@@ -33,31 +24,16 @@ export function SignupForm() {
   const [loading, setLoading] = useState(false);
   const [generalError, setGeneralError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const { paywallState } = useAccess();
 
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
-      confirmPassword: "",
-      kidName: "",
-      parentPhone: "",
-      age: 3,
-      sex: "male",
     },
-    validationSchema: Yup.object({
-      email: Yup.string().email("Email không hợp lệ").required("Vui lòng nhập email"),
-      password: Yup.string().min(6, "Mật khẩu phải có ít nhất 6 ký tự").required("Vui lòng nhập mật khẩu"),
-      confirmPassword: Yup.string()
-        .oneOf([Yup.ref("password"), undefined], "Mật khẩu không khớp")
-        .required("Vui lòng xác nhận mật khẩu"),
-      kidName: Yup.string().required("Vui lòng nhập tên bé"),
-      parentPhone: Yup.string()
-        .required("Vui lòng nhập số điện thoại")
-        .matches(/^[0-9]{10,11}$/, "Số điện thoại không hợp lệ"),
-      age: Yup.number().required("Vui lòng chọn tuổi"),
-      sex: Yup.string().required("Vui lòng chọn giới tính"),
+    validationSchema: object({
+      email: string().email("Email không hợp lệ").required("Vui lòng nhập email"),
+      password: string().min(6, "Mật khẩu phải có ít nhất 6 ký tự").required("Vui lòng nhập mật khẩu"),
     }),
     onSubmit: async (values) => {
       setLoading(true);
@@ -68,12 +44,6 @@ export function SignupForm() {
         password: values.password,
         options: {
           emailRedirectTo: `${location.origin}/auth/sign-up-success`,
-          data: {
-            kidName: values.kidName,
-            parentPhone: values.parentPhone,
-            age: values.age,
-            sex: values.sex,
-          },
         },
       });
 
@@ -88,9 +58,6 @@ export function SignupForm() {
 
   const handleSocialLogin = async (provider: "google" | "facebook") => {
     setLoading(true);
-    // Social OAuth leaves the app — redirect URL is persisted in sessionStorage
-    // (already saved by AccessContext when paywallState.redirectUrl was set)
-    // The useAuthRedirect hook will pick it up on return
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
@@ -124,7 +91,7 @@ export function SignupForm() {
       <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center bg-white relative">
         <div className="text-center mb-6">
           <h1 className="text-4xl text-[#D97706] font-display mb-2 drop-shadow-sm">Đăng Ký</h1>
-          <p className="text-gray-500 font-medium">Tạo tài khoản học tập cho bé</p>
+          <p className="text-gray-500 font-medium">Tạo tài khoản miễn phí — chỉ 10 giây!</p>
         </div>
 
         <div className="space-y-3 mb-6">
@@ -136,15 +103,6 @@ export function SignupForm() {
             <GoogleIcon className="w-6 h-6" />
             Đăng ký bằng Google
           </button>
-          {/* 
-          <button
-            type="button"
-            onClick={() => handleSocialLogin("facebook")}
-            className="cursor-pointer w-full flex items-center justify-center gap-3 bg-[#1877F2] text-white font-bold py-3 rounded-xl hover:bg-[#166FE5] transition-all shadow-md active:scale-[0.98]"
-          >
-            <FacebookIcon className="w-6 h-6" />
-            Đăng ký bằng Facebook
-          </button> */}
         </div>
 
         <div className="relative mb-6">
@@ -157,83 +115,6 @@ export function SignupForm() {
         </div>
 
         <form onSubmit={formik.handleSubmit} className="flex flex-col gap-3">
-          <div className="space-y-1">
-            <div className="relative group">
-              <span
-                className={`absolute left-4 top-3.5 transition-colors ${
-                  formik.touched.kidName && formik.errors.kidName
-                    ? "text-red-400"
-                    : "text-gray-400 group-focus-within:text-purple-500"
-                }`}
-              >
-                <UserIcon className="h-6 w-6" />
-              </span>
-              <input
-                id="kidName"
-                type="text"
-                {...formik.getFieldProps("kidName")}
-                className={`w-full pl-12 pr-4 py-3.5 rounded-xl border-2 focus:ring-4 focus:outline-none transition-all font-medium text-lg placeholder:text-gray-300 ${
-                  formik.touched.kidName && formik.errors.kidName
-                    ? "border-red-300 focus:border-red-400 focus:ring-red-100 text-red-900"
-                    : "border-gray-200 focus:border-purple-400 focus:ring-purple-100 text-gray-700"
-                }`}
-                placeholder="Tên của bé"
-              />
-            </div>
-            {formik.touched.kidName && formik.errors.kidName && (
-              <div className="text-red-500 text-xs ml-1 font-semibold">{formik.errors.kidName}</div>
-            )}
-          </div>
-
-          <div className="flex gap-3">
-            <div className="space-y-1 w-1/2">
-              <div className="relative group">
-                <span className="absolute left-4 top-4 text-gray-400">🎂</span>
-                <select
-                  id="age"
-                  {...formik.getFieldProps("age")}
-                  className="w-full pl-12 pr-4 py-3.5 rounded-xl border-2 border-gray-200 focus:border-purple-400 focus:ring-4 focus:ring-purple-100 focus:outline-none transition-all font-medium text-lg text-gray-700 appearance-none bg-white"
-                >
-                  {Array.from({ length: 10 }, (_, i) => i + 3).map((age) => (
-                    <option key={age} value={age}>
-                      {age} tuổi
-                    </option>
-                  ))}
-                </select>
-                <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-500">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-                  </svg>
-                </div>
-              </div>
-              {formik.touched.age && formik.errors.age && (
-                <div className="text-red-500 text-xs ml-1 font-semibold">{formik.errors.age}</div>
-              )}
-            </div>
-
-            <div className="space-y-1 w-1/2">
-              <div className="relative group">
-                <span className="absolute left-4 top-4 text-gray-400">⚧</span>
-                <select
-                  id="sex"
-                  {...formik.getFieldProps("sex")}
-                  className="w-full pl-12 pr-4 py-3.5 rounded-xl border-2 border-gray-200 focus:border-purple-400 focus:ring-4 focus:ring-purple-100 focus:outline-none transition-all font-medium text-lg text-gray-700 appearance-none bg-white"
-                >
-                  <option value="male">Bé trai</option>
-                  <option value="female">Bé gái</option>
-                </select>
-                <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-500">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-                  </svg>
-                </div>
-              </div>
-              {formik.touched.sex && formik.errors.sex && (
-                <div className="text-red-500 text-xs ml-1 font-semibold">{formik.errors.sex}</div>
-              )}
-            </div>
-          </div>
-
           <div className="space-y-1">
             <div className="relative group">
               <span
@@ -266,34 +147,6 @@ export function SignupForm() {
             <div className="relative group">
               <span
                 className={`absolute left-4 top-3.5 transition-colors ${
-                  formik.touched.parentPhone && formik.errors.parentPhone
-                    ? "text-red-400"
-                    : "text-gray-400 group-focus-within:text-purple-500"
-                }`}
-              >
-                <PhoneIcon className="h-6 w-6" />
-              </span>
-              <input
-                id="parentPhone"
-                type="tel"
-                {...formik.getFieldProps("parentPhone")}
-                className={`w-full pl-12 pr-4 py-3.5 rounded-xl border-2 focus:ring-4 focus:outline-none transition-all font-medium text-lg placeholder:text-gray-300 ${
-                  formik.touched.parentPhone && formik.errors.parentPhone
-                    ? "border-red-300 focus:border-red-400 focus:ring-red-100 text-red-900"
-                    : "border-gray-200 focus:border-purple-400 focus:ring-purple-100 text-gray-700"
-                }`}
-                placeholder="Số điện thoại bố mẹ"
-              />
-            </div>
-            {formik.touched.parentPhone && formik.errors.parentPhone && (
-              <div className="text-red-500 text-xs ml-1 font-semibold">{formik.errors.parentPhone}</div>
-            )}
-          </div>
-
-          <div className="space-y-1">
-            <div className="relative group">
-              <span
-                className={`absolute left-4 top-3.5 transition-colors ${
                   formik.touched.password && formik.errors.password
                     ? "text-red-400"
                     : "text-gray-400 group-focus-within:text-purple-500"
@@ -310,7 +163,7 @@ export function SignupForm() {
                     ? "border-red-300 focus:border-red-400 focus:ring-red-100 text-red-900"
                     : "border-gray-200 focus:border-purple-400 focus:ring-purple-100 text-gray-700"
                 }`}
-                placeholder="Mật khẩu"
+                placeholder="Mật khẩu (ít nhất 6 ký tự)"
               />
               <button
                 type="button"
@@ -322,41 +175,6 @@ export function SignupForm() {
             </div>
             {formik.touched.password && formik.errors.password && (
               <div className="text-red-500 text-xs ml-1 font-semibold">{formik.errors.password}</div>
-            )}
-          </div>
-
-          <div className="space-y-1">
-            <div className="relative group">
-              <span
-                className={`absolute left-4 top-3.5 transition-colors ${
-                  formik.touched.confirmPassword && formik.errors.confirmPassword
-                    ? "text-red-400"
-                    : "text-gray-400 group-focus-within:text-purple-500"
-                }`}
-              >
-                <ConfirmPasswordIcon className="h-6 w-6" />
-              </span>
-              <input
-                id="confirmPassword"
-                type={showConfirmPassword ? "text" : "password"}
-                {...formik.getFieldProps("confirmPassword")}
-                className={`w-full pl-12 pr-12 py-3.5 rounded-xl border-2 focus:ring-4 focus:outline-none transition-all font-medium text-lg placeholder:text-gray-300 ${
-                  formik.touched.confirmPassword && formik.errors.confirmPassword
-                    ? "border-red-300 focus:border-red-400 focus:ring-red-100 text-red-900"
-                    : "border-gray-200 focus:border-purple-400 focus:ring-purple-100 text-gray-700"
-                }`}
-                placeholder="Nhập lại mật khẩu"
-              />
-              <button
-                type="button"
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-4 top-3.5 text-gray-300 hover:text-gray-500"
-              >
-                <EyeIcon className="h-6 w-6" />
-              </button>
-            </div>
-            {formik.touched.confirmPassword && formik.errors.confirmPassword && (
-              <div className="text-red-500 text-xs ml-1 font-semibold">{formik.errors.confirmPassword}</div>
             )}
           </div>
 
@@ -376,6 +194,11 @@ export function SignupForm() {
           >
             {loading ? "Đang xử lý..." : "Tạo Tài Khoản"}
           </ActionButton>
+
+          {/* Social proof under CTA */}
+          <p className="text-center text-xs text-slate-400 font-medium mt-1">
+            ✅ Miễn phí &nbsp;•&nbsp; 🔒 An toàn cho bé &nbsp;•&nbsp; 🎮 1,000+ phụ huynh tin dùng
+          </p>
         </form>
 
         <div className="text-center mt-6">

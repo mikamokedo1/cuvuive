@@ -103,6 +103,7 @@ export const GROUPS = [
     description: "Nối điểm trên lưới 5x5",
     variant: "orange" as const,
     logo: LogoGroup2,
+    isPremium: true,
   },
   {
     id: "group3",
@@ -110,6 +111,7 @@ export const GROUPS = [
     description: "Thử thách cực đại với lưới lớn",
     variant: "purple" as const,
     logo: LogoGroup3,
+    isPremium: true,
   },
 ];
 

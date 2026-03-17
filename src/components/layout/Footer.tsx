@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import LogoLong from "@/assets/logo-long.webp";
+const LogoLong = "https://assets.cuthongminh.com/assets/logo-long.webp";
 import { Facebook, Video } from "lucide-react";
 
 export function Footer() {

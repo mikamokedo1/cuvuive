@@ -8,10 +8,10 @@ import { useClickOutside } from "@/hooks/useClickOutside";
 import { useProgress } from "@/context/ProgressContext";
 import { CourseDef } from "@/libs/actions/courses";
 const star = "https://assets.cuthongminh.com/games/star.webp";
-import avatarBoy from "@/assets/avatar-boy.webp";
-import avatarGirl from "@/assets/avatar-girl.webp";
+const avatarBoy = "https://assets.cuthongminh.com/assets/avatar-boy.webp";
+const avatarGirl = "https://assets.cuthongminh.com/assets/avatar-girl.webp";
 //main bg
-import BgImage from "@/assets/bg-games-home.webp";
+const BgImage = "https://assets.cuthongminh.com/assets/bg-games-home.webp";
 import { GameGroupType, Group } from "@/libs/constants/groups";
 import { playButtonSound } from "@/libs/utils/playSound";
 import Link from "next/link";
