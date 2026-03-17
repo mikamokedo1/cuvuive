@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useFormik } from "formik";
-import * as Yup from "yup";
+import { object, string } from "yup";
 import { ActionButton } from "@/components/common/ActionButton";
 import { ExclamationIcon, UserIcon } from "@/components/common/Icons";
 import { useUser } from "@/context/UserContext";
@@ -27,11 +27,11 @@ export function FeedbackView() {
       phone: "",
     },
     enableReinitialize: true,
-    validationSchema: Yup.object({
-      title: Yup.string().required("Vui lòng nhập tiêu đề"),
-      description: Yup.string().required("Vui lòng nhập nội dung góp ý"),
-      email: Yup.string().email("Email không hợp lệ").required("Vui lòng nhập email"),
-      phone: Yup.string().nullable(),
+    validationSchema: object({
+      title: string().required("Vui lòng nhập tiêu đề"),
+      description: string().required("Vui lòng nhập nội dung góp ý"),
+      email: string().email("Email không hợp lệ").required("Vui lòng nhập email"),
+      phone: string().nullable(),
     }),
     onSubmit: async (values, { resetForm }) => {
       setLoading(true);

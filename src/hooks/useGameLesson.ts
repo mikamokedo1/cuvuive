@@ -33,6 +33,8 @@ export function useGameLesson<G extends { id: string }>({ gameSlug, lessonOrder,
     const runAccessCheck = async () => {
       if (!isLoaded) return;
 
+      setIsCheckingAccess(false);
+
       if (!isLessonUnlocked(groupId, lessonId, gameSlug)) {
         router.push(`/games/${gameSlug}/${groupId}`);
         return;
@@ -48,8 +50,6 @@ export function useGameLesson<G extends { id: string }>({ gameSlug, lessonOrder,
         router.push(`/games/${gameSlug}/${groupId}`);
         return;
       }
-
-      setIsCheckingAccess(false);
     };
 
     runAccessCheck();

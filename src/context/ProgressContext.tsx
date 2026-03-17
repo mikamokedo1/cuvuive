@@ -62,6 +62,9 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
         return;
       }
 
+      // Snapshot anonymous progress before resetting (so we can merge it after fetch)
+      const anonymousProgress = { ...allProgress };
+
       setIsLoaded(false);
 
       try {
@@ -94,7 +97,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
         const { data, error } = progressResult;
         if (error) throw error;
 
-        // REPLACE state entirely with Supabase data (don't merge with localStorage)
+        // Build fresh progress from Supabase data
         const freshProgress: Record<string, ProgressState> = {};
 
         if (data && data.length > 0) {
@@ -118,7 +121,51 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
           });
         }
 
+        // Merge anonymous progress into fresh Supabase data (preserve lessons completed before login)
+        const recordsToSync: { courseId: string; groupId: string; lessonId: string }[] = [];
+
+        Object.keys(anonymousProgress).forEach((courseId) => {
+          const anonCourse = anonymousProgress[courseId];
+          if (!anonCourse?.completedLessons) return;
+
+          if (!freshProgress[courseId]) {
+            freshProgress[courseId] = { completedGroups: [], completedLessons: {} };
+          }
+
+          Object.keys(anonCourse.completedLessons).forEach((groupId) => {
+            const anonLessons = anonCourse.completedLessons[groupId] || [];
+            if (!freshProgress[courseId].completedLessons[groupId]) {
+              freshProgress[courseId].completedLessons[groupId] = [];
+            }
+
+            anonLessons.forEach((lessonId) => {
+              if (!freshProgress[courseId].completedLessons[groupId].includes(lessonId)) {
+                freshProgress[courseId].completedLessons[groupId].push(lessonId);
+                recordsToSync.push({ courseId, groupId, lessonId });
+              }
+            });
+          });
+        });
+
         setAllProgress(freshProgress);
+
+        // Sync anonymous progress records to Supabase in background (fire-and-forget)
+        if (recordsToSync.length > 0) {
+          const rows = recordsToSync.map((r) => ({
+            id: generateUUID(),
+            user_id: userId,
+            course_id: r.courseId,
+            group_id: r.groupId,
+            lesson_id: r.lessonId,
+            completed_at: new Date().toISOString(),
+          }));
+          supabase
+            .from("progress")
+            .insert(rows)
+            .then(({ error: syncError }) => {
+              if (syncError) console.error("Error syncing anonymous progress:", syncError);
+            });
+        }
 
         // Set last played course
         if (lastPlayedResult.data?.course_id) {
@@ -132,6 +179,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     };
 
     fetchStructureAndProgress();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
   // Derive completedGroups from allProgress + courseStructure (no state mutation needed)

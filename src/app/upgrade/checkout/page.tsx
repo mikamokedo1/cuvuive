@@ -6,7 +6,6 @@ import Image from "next/image";
 import Header from "@/components/layout/Header";
 import { ActionButton } from "@/components/common/ActionButton";
 import { Loader2, CheckCircle2 } from "lucide-react";
-import confetti from "canvas-confetti";
 const owlHi = "https://assets.cuthongminh.com/games/common/owl-say-hi.webp";
 import { useUser } from "@/context/UserContext";
 
@@ -87,7 +86,8 @@ function CheckoutContent() {
     return () => clearInterval(interval);
   }, [orderId, router, status]);
 
-  const fireConfetti = () => {
+  const fireConfetti = async () => {
+    const confetti = (await import("canvas-confetti")).default;
     const duration = 3 * 1000;
     const animationEnd = Date.now() + duration;
     const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };

@@ -63,9 +63,7 @@ export function ExitIntentPopup() {
             <h2 className="text-2xl font-extrabold font-[family-name:var(--font-baloo-2)] mb-2 drop-shadow-sm">
               Đừng bỏ lỡ!
             </h2>
-            <p className="text-white/90 font-medium">
-              Cho bé trải nghiệm 20+ trò chơi giáo dục hoàn toàn miễn phí
-            </p>
+            <p className="text-white/90 font-medium">Cho bé trải nghiệm 20+ trò chơi giáo dục hoàn toàn miễn phí</p>
           </div>
         </div>
 
@@ -84,12 +82,6 @@ export function ExitIntentPopup() {
             <Gift className="w-5 h-5" />
             Trải nghiệm ngay — Miễn phí!
           </Link>
-          <button
-            onClick={() => setVisible(false)}
-            className="cursor-pointer mt-3 text-sm text-slate-400 hover:text-slate-600 transition-colors font-medium"
-          >
-            Để sau
-          </button>
         </div>
       </div>
     </div>

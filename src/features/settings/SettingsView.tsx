@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useFormik } from "formik";
-import * as Yup from "yup";
+import { object, string, number } from "yup";
 import { ActionButton } from "@/components/common/ActionButton";
 import { ExclamationIcon, PhoneIcon, UserIcon } from "@/components/common/Icons";
 import { useUser } from "@/context/UserContext";
@@ -32,14 +32,14 @@ export function SettingsView() {
       playTimerMinutes: user?.user_metadata?.playTimerMinutes ?? 15,
     },
     enableReinitialize: true,
-    validationSchema: Yup.object({
-      kidName: Yup.string().required("Vui lòng nhập tên bé"),
-      parentPhone: Yup.string()
+    validationSchema: object({
+      kidName: string().required("Vui lòng nhập tên bé"),
+      parentPhone: string()
         .required("Vui lòng nhập số điện thoại")
         .matches(/^[0-9]{10,11}$/, "Số điện thoại không hợp lệ"),
-      age: Yup.number().required("Vui lòng chọn tuổi"),
-      sex: Yup.string().required("Vui lòng chọn giới tính"),
-      playTimerMinutes: Yup.number().min(0).required(),
+      age: number().required("Vui lòng chọn tuổi"),
+      sex: string().required("Vui lòng chọn giới tính"),
+      playTimerMinutes: number().min(0).required(),
     }),
     onSubmit: async (values) => {
       setLoading(true);

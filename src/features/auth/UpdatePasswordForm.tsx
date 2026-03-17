@@ -4,7 +4,7 @@ import { createClient } from "@/libs/supabase/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useFormik } from "formik";
-import * as Yup from "yup";
+import { object, string, ref } from "yup";
 import { ActionButton } from "@/components/common/ActionButton";
 import { ConfirmPasswordIcon, ExclamationIcon, EyeIcon, PasswordIcon } from "@/components/common/Icons";
 
@@ -21,10 +21,10 @@ export function UpdatePasswordForm() {
       password: "",
       confirmPassword: "",
     },
-    validationSchema: Yup.object({
-      password: Yup.string().min(6, "Mật khẩu phải có ít nhất 6 ký tự").required("Vui lòng nhập mật khẩu mới"),
-      confirmPassword: Yup.string()
-        .oneOf([Yup.ref("password"), undefined], "Mật khẩu không khớp")
+    validationSchema: object({
+      password: string().min(6, "Mật khẩu phải có ít nhất 6 ký tự").required("Vui lòng nhập mật khẩu mới"),
+      confirmPassword: string()
+        .oneOf([ref("password"), undefined], "Mật khẩu không khớp")
         .required("Vui lòng xác nhận mật khẩu"),
     }),
     onSubmit: async (values) => {

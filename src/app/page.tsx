@@ -7,6 +7,7 @@ import { Footer } from "@/components/layout/Footer";
 import { HeaderHome } from "@/components/layout/HeaderHome";
 import { FAQSchema, type FAQItem } from "@/components/common/FAQSchema";
 import { SpeakableSchema } from "@/components/common/SpeakableSchema";
+import { ScrollReveal } from "@/components/common/ScrollReveal";
 
 const FloatingCTA = dynamic(() =>
   import("@/components/common/FloatingCTA").then((mod) => mod.FloatingCTA),
@@ -96,7 +97,7 @@ export default function Home() {
       {/* Navigation */}
       <HeaderHome />
 
-      <main>
+      <main className="pt-[72px]">
         {/* Hero Section */}
         <header className="relative pt-20 pb-32 lg:pt-32 lg:pb-40 overflow-hidden">
           {/* Background decorations - Hidden on mobile for GPU performance */}
@@ -185,6 +186,7 @@ export default function Home() {
         </header>
 
         {/* Features Showcase */}
+        <ScrollReveal>
         <section
           id="features"
           className="py-24 bg-white relative z-20 shadow-[0_-20px_40px_-20px_rgba(0,0,0,0.03)] rounded-t-[3rem]"
@@ -241,8 +243,10 @@ export default function Home() {
             </div>
           </div>
         </section>
+        </ScrollReveal>
 
         {/* Games Preview Section */}
+        <ScrollReveal delay={100}>
         <section
           id="games"
           className="py-24 relative overflow-hidden bg-slate-900 rounded-[3rem] mx-2 lg:mx-8 my-8 shadow-2xl"
@@ -310,11 +314,15 @@ export default function Home() {
             </div>
           </div>
         </section>
+        </ScrollReveal>
 
         {/* Latest Blogs Section */}
-        <LatestBlogs />
+        <ScrollReveal delay={100}>
+          <LatestBlogs />
+        </ScrollReveal>
 
         {/* Testimonial / Social Proof (Slider) */}
+        <ScrollReveal delay={100}>
         <section className="py-24 bg-white relative">
           <div className="container mx-auto px-6 max-w-5xl">
             <div className="text-center mb-16">
@@ -329,8 +337,10 @@ export default function Home() {
             <TestimonialSlider />
           </div>
         </section>
+        </ScrollReveal>
 
         {/* CTA Section */}
+        <ScrollReveal delay={100}>
         <section className="py-24 relative overflow-hidden bg-gradient-to-br from-[#FF9C01] to-orange-500">
           <div className="absolute inset-0 bg-[url('/patterns/cubes.png')] opacity-5 md:opacity-10 md:mix-blend-overlay"></div>
           <div className="container mx-auto px-6 relative z-10 text-center text-white">
@@ -366,14 +376,17 @@ export default function Home() {
             </div>
           </div>
         </section>
+        </ScrollReveal>
       </main>
 
       {/* FAQ Section — AEO optimized */}
-      <FAQSchema
-        items={HOME_FAQ_ITEMS}
-        title="Câu hỏi thường gặp"
-        subtitle="Những thắc mắc phổ biến của phụ huynh về Cú Thông Minh"
-      />
+      <ScrollReveal delay={100}>
+        <FAQSchema
+          items={HOME_FAQ_ITEMS}
+          title="Câu hỏi thường gặp"
+          subtitle="Những thắc mắc phổ biến của phụ huynh về Cú Thông Minh"
+        />
+      </ScrollReveal>
 
       {/* Speakable Schema for AI voice reading */}
       <SpeakableSchema url="https://cuthongminh.com" cssSelectors={["h1", "main > header p", "#faq"]} />
