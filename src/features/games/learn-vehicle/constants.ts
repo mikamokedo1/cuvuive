@@ -162,5 +162,5 @@ export const VEHICLE_DESCRIPTIONS: Record<string, string> = {
   helicopter: "Trực thăng có cánh quạt quay tròn ở trên. Trực thăng có thể bay lên thẳng và đứng yên trên không!",
   balloon: "Khinh khí cầu bay lên nhờ khí nóng. Bay bằng khinh khí cầu rất lãng mạn!",
   rocket: "Tên lửa phóng lên vũ trụ với tốc độ cực nhanh. Tên lửa đưa phi hành gia lên Mặt Trăng!",
-  drone: "Máy bay điều khiển từ xa, không có người lái. Drone dùng để chụp ảnh từ trên cao!",
+  drone: "Máy bay điều khiển từ xa, không có người lái. dùng để chụp ảnh từ trên cao!",
 };

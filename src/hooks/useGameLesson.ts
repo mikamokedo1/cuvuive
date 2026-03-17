@@ -15,7 +15,6 @@ export function useGameLesson<G extends { id: string }>({ gameSlug, lessonOrder,
   const params = useParams();
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
-  const [isCheckingAccess, setIsCheckingAccess] = useState(true);
 
   const { isLoaded, isLessonUnlocked, markLessonComplete } = useProgress();
   const { checkAccess, showPaywall } = useAccess();
@@ -30,29 +29,23 @@ export function useGameLesson<G extends { id: string }>({ gameSlug, lessonOrder,
   const group = groups.find((g: G) => g.id === groupId);
 
   useEffect(() => {
-    const runAccessCheck = async () => {
-      if (!isLoaded) return;
+    if (!isLoaded) return;
 
-      setIsCheckingAccess(false);
+    if (!isLessonUnlocked(groupId, lessonId, gameSlug)) {
+      router.push(`/games/${gameSlug}/${groupId}`);
+      return;
+    }
 
-      if (!isLessonUnlocked(groupId, lessonId, gameSlug)) {
-        router.push(`/games/${gameSlug}/${groupId}`);
-        return;
+    const access = checkAccess(gameSlug, groupId, lessonId);
+    if (!access.userHasAccess) {
+      if (access.reason === "not_logged_in") {
+        showPaywall("login", `/games/${gameSlug}/${groupId}/lesson/${lessonId}`);
+      } else if (access.reason === "premium_required") {
+        showPaywall("premium", `/games/${gameSlug}/${groupId}/lesson/${lessonId}`);
       }
-
-      const access = checkAccess(gameSlug, groupId, lessonId);
-      if (!access.userHasAccess) {
-        if (access.reason === "not_logged_in") {
-          showPaywall("login", `/games/${gameSlug}/${groupId}/lesson/${lessonId}`);
-        } else if (access.reason === "premium_required") {
-          showPaywall("premium", `/games/${gameSlug}/${groupId}/lesson/${lessonId}`);
-        }
-        router.push(`/games/${gameSlug}/${groupId}`);
-        return;
-      }
-    };
-
-    runAccessCheck();
+      router.push(`/games/${gameSlug}/${groupId}`);
+      return;
+    }
   }, [isLoaded, groupId, lessonId, gameSlug, isLessonUnlocked, checkAccess, showPaywall, router]);
 
   const handleComplete = useCallback(() => {
@@ -101,7 +94,6 @@ export function useGameLesson<G extends { id: string }>({ gameSlug, lessonOrder,
     lessonId,
     group,
     isLoaded,
-    isCheckingAccess,
     showModal,
     currentLessonNum,
     nextLessonNum,

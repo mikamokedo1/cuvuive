@@ -2,7 +2,7 @@
 
 import { createClient } from "@/libs/supabase/client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useFormik } from "formik";
@@ -20,6 +20,10 @@ export function LoginForm() {
   const [generalError, setGeneralError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const { paywallState, setPaywallState } = useAccess();
+
+  // Capture redirect URL at mount time — before login triggers useAuthRedirect
+  // which would read and clear it from sessionStorage
+  const savedRedirectUrl = useRef(paywallState.redirectUrl || getRedirectUrl() || "/games");
 
   const formik = useFormik({
     initialValues: {
@@ -51,8 +55,8 @@ export function LoginForm() {
           data: { session },
         } = await supabase.auth.getSession();
 
-        // Read redirect URL from context or sessionStorage fallback
-        const redirectUrl = paywallState.redirectUrl || getRedirectUrl() || "/games";
+        // Use the redirect URL captured at mount time (before useAuthRedirect could clear it)
+        const redirectUrl = savedRedirectUrl.current;
 
         // Prevent redirect loop
         const target =

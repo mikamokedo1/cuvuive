@@ -30,11 +30,15 @@ const Header = () => {
         <Image
           src={LogoShort}
           alt="Cú Thông Minh Logo"
+          width={64}
+          height={64}
           className="md:hidden cursor-pointer h-16 w-auto object-contain drop-shadow-md transition-transform duration-300 hover:scale-105"
         />
         <Image
           src={LogoLong}
           alt="Cú Thông Minh Logo"
+          width={200}
+          height={80}
           className="hidden md:block cursor-pointer h-20 w-auto object-contain drop-shadow-md transition-transform duration-300 hover:scale-105"
         />
       </Link>

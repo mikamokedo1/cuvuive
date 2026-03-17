@@ -39,12 +39,20 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
 
   // Fetch course structure and user progress in parallel
   useEffect(() => {
+    let aborted = false;
+
     const fetchStructureAndProgress = async () => {
       if (!userId) {
+        // User logged out or anonymous — reset progress to prevent data leaking
+        setAllProgress({});
+        setLastPlayedCourseId(null);
+
         // Still need structure even without user
         try {
           const { getCourseStructureAction } = await import("@/libs/actions/courses");
           const data = await getCourseStructureAction();
+
+          if (aborted) return;
 
           const structure: Record<string, Record<string, number>> = {};
           data.forEach((row) => {
@@ -58,14 +66,16 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
         } catch (err) {
           console.error("Error fetching course structure:", err);
         }
-        setIsLoaded(true);
+        if (!aborted) setIsLoaded(true);
         return;
       }
 
       // Snapshot anonymous progress before resetting (so we can merge it after fetch)
       const anonymousProgress = { ...allProgress };
 
-      setIsLoaded(false);
+      // NOTE: we intentionally do NOT set isLoaded=false here.
+      // The existing progress data remains usable while we re-fetch in the background.
+      // Setting isLoaded=false would block the UI and cause hangs if the fetch is aborted.
 
       try {
         // Run structure, progress, and last-played fetches in parallel
@@ -91,6 +101,8 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
             .limit(1)
             .maybeSingle(),
         ]);
+
+        if (aborted) return;
 
         setCourseStructure(structureResult);
 
@@ -174,11 +186,15 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
-        setIsLoaded(true);
+        if (!aborted) setIsLoaded(true);
       }
     };
 
     fetchStructureAndProgress();
+
+    return () => {
+      aborted = true;
+    };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 

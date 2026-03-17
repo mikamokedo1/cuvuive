@@ -69,7 +69,6 @@ export default function BodyLessonPage() {
       nextLessonNum={game.nextLessonNum}
       isGroupDone={game.isGroupDone}
       isLoaded={game.isLoaded}
-      isCheckingAccess={game.isCheckingAccess}
     />
   );
 }

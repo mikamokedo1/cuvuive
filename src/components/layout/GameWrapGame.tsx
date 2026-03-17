@@ -14,7 +14,6 @@ interface GameWrapGameProps {
   nextLessonNum: number | string | null;
   isGroupDone: boolean;
   isLoaded?: boolean;
-  isCheckingAccess?: boolean;
 }
 
 export const GameWrapGame = ({
@@ -28,9 +27,9 @@ export const GameWrapGame = ({
   nextLessonNum,
   isGroupDone,
   isLoaded = true,
-  isCheckingAccess,
 }: GameWrapGameProps) => {
-  if (!isLoaded || isCheckingAccess) {
+  console.log(isLoaded);
+  if (!isLoaded) {
     return <CheckingPermission path={`/games/${gameSlug}/${groupId}`} />;
   }
 

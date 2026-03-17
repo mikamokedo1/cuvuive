@@ -58,7 +58,6 @@ export default function LessonPage() {
       nextLessonNum={game.nextLessonNum}
       isGroupDone={game.isGroupDone}
       isLoaded={game.isLoaded}
-      isCheckingAccess={game.isCheckingAccess}
     />
   );
 }

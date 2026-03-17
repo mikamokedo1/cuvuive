@@ -60,7 +60,6 @@ export default function WeatherLessonPage() {
       nextLessonNum={game.nextLessonNum}
       isGroupDone={game.isGroupDone}
       isLoaded={game.isLoaded}
-      isCheckingAccess={game.isCheckingAccess}
     />
   );
 }
