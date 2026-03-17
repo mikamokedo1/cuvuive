@@ -1023,8 +1023,8 @@ export const COURSES: CourseDef[] = [
   },
   {
     id: "line-connect",
-    title: "Nối Điểm",
-    description: "Nối các cặp màu giống nhau không được chồng chéo.",
+    title: "Nối Điểm Trí Tuệ",
+    description: "Nối các điểm cùng màu để lấp đầy bảng.",
     icon: GameLineConnectLogo,
     type: "logic",
     groups: [
@@ -1326,36 +1326,6 @@ export const COURSES: CourseDef[] = [
           { id: "lesson5", title: "Cơ thể làm gì?" },
           { id: "lesson6", title: "Ghép đôi" },
         ],
-      },
-    ],
-  },
-  {
-    id: "line-connect",
-    title: "Nối Điểm Trí Tuệ",
-    description: "Nối các điểm cùng màu để lấp đầy bảng.",
-    icon: GameLineConnectLogo,
-    type: "art" as GameGroupType,
-    groups: [
-      {
-        id: "group1",
-        title: "Nối điểm dễ",
-        logo: LineConnectGroup1Logo,
-        variant: "green" as const,
-        lessons: [{ id: "lesson1", title: "Bắt đầu", isFree: true }],
-      },
-      {
-        id: "group2",
-        title: "Nối điểm vừa",
-        logo: LineConnectGroup2Logo,
-        variant: "orange" as const,
-        lessons: [{ id: "lesson1", title: "Bắt đầu" }],
-      },
-      {
-        id: "group3",
-        title: "Nối điểm khó",
-        logo: LineConnectGroup3Logo,
-        variant: "purple" as const,
-        lessons: [{ id: "lesson1", title: "Bắt đầu" }],
       },
     ],
   },
