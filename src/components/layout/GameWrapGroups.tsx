@@ -4,6 +4,7 @@ import { GroupCard } from "@/features/games/learn-game/GroupCard";
 import Image from "next/image";
 import { LessonTitle } from "@/components/games/LessonTitle";
 import { useProgress } from "@/context/ProgressContext";
+import { useAccess } from "@/context/AccessContext";
 import { GroupData } from "@/features/games/learn-vehicle/constants";
 import { StaticImageData } from "next/image";
 
@@ -16,6 +17,7 @@ interface GameWrapGroups {
 
 export const GameWrapGroups = ({ logo, gameId, groups, title }: GameWrapGroups) => {
   const { isGroupUnlocked, isLoaded, allProgress } = useProgress();
+  const { isPremium, isLoggedIn, showPaywall } = useAccess();
 
   if (!isLoaded && !allProgress[gameId]) {
     return (
@@ -44,16 +46,34 @@ export const GameWrapGroups = ({ logo, gameId, groups, title }: GameWrapGroups) 
             const courseProgress = allProgress[gameId] || { completedGroups: [] };
             const isCompleted = courseProgress.completedGroups.includes(group.id);
 
+            // Check premium locking: if group requires premium and user doesn't have it
+            const groupRequiresPremium = !!group.isPremium;
+            const premiumLocked = groupRequiresPremium && (!isLoggedIn || !isPremium);
+            const isLocked = !unlocked || premiumLocked;
+
+            const handleGroupClick = premiumLocked
+              ? (e: React.MouseEvent) => {
+                  e.preventDefault();
+                  if (!isLoggedIn) {
+                    showPaywall("login", `/games/${gameId}/${group.id}`);
+                  } else {
+                    showPaywall("premium", `/games/${gameId}/${group.id}`);
+                  }
+                }
+              : undefined;
+
             return (
               <GroupCard
                 key={group.id}
                 path={`/games/${gameId}/${group.id}`}
                 title={group.title}
                 variant={group.variant}
-                isLocked={!unlocked}
+                isLocked={isLocked}
                 mainImage={group.logo}
                 level={index + 1}
                 isCompleted={isCompleted}
+                isPremiumLocked={premiumLocked}
+                onLockedClick={handleGroupClick}
               />
             );
           })}
@@ -62,3 +82,4 @@ export const GameWrapGroups = ({ logo, gameId, groups, title }: GameWrapGroups) 
     </GameLayout>
   );
 };
+

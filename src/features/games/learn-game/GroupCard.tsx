@@ -13,6 +13,8 @@ interface GroupCardProps {
   level: number;
   isCompleted: boolean;
   path: string;
+  isPremiumLocked?: boolean;
+  onLockedClick?: (e: React.MouseEvent) => void;
 }
 
 const STYLES = {
@@ -46,8 +48,62 @@ const STYLES = {
   },
 };
 
-export function GroupCard({ title, variant, isLocked, mainImage, isCompleted, path }: GroupCardProps) {
+export function GroupCard({ title, variant, isLocked, mainImage, isCompleted, path, isPremiumLocked, onLockedClick }: GroupCardProps) {
   const currentStyle = STYLES[variant];
+
+  // For premium-locked cards, render as a clickable div instead of Link
+  if (isPremiumLocked && onLockedClick) {
+    return (
+      <div
+        onClick={onLockedClick}
+        className={cn(
+          "relative flex flex-col items-center p-4 rounded-[40px] border-[8px] overflow-hidden transition-transform",
+          currentStyle.card,
+          "cursor-pointer hover:scale-105 active:scale-95",
+          "w-full aspect-[3/4] max-w-[240px] shadow-xl group",
+        )}
+      >
+        {/* Header */}
+        <h3
+          className={cn(
+            "text-center text-2xl md:text-[22px] font-bold uppercase tracking-wider font-display",
+            currentStyle.header,
+          )}
+        >
+          {title}
+        </h3>
+        <div className="flex gap-1 h-10 items-center justify-center" />
+        {/* Main Image Area */}
+        <div className="relative w-full flex-1 flex items-center justify-center">
+          <Image
+            src={mainImage}
+            alt={title}
+            fill
+            className={cn("object-contain drop-shadow-xl")}
+            sizes="(max-width: 768px) 100vw, 320px"
+          />
+        </div>
+
+        {/* Action Button */}
+        <ActionButton
+          variant="glossy"
+          color={variant}
+          size="auto"
+          className="w-full flex flex-col items-center justify-center gap-4 py-3 md:py-4 px-4 text-xl md:text-2xl"
+          aria-label={`Bắt đầu học ${title}`}
+        >
+          {currentStyle.buttonText}
+        </ActionButton>
+
+        {/* Premium Lock Overlay */}
+        <div className="absolute inset-0 flex items-center justify-center w-full h-full bg-black/50 cursor-pointer backdrop-blur-[2px]">
+          <div className="relative w-20 h-20 md:w-24 md:h-24">
+            <Image src={lockImg} alt="Premium" fill className="object-contain opacity-80" />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <Link
@@ -107,3 +163,4 @@ export function GroupCard({ title, variant, isLocked, mainImage, isCompleted, pa
     </Link>
   );
 }
+
