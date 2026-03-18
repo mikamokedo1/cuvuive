@@ -13,9 +13,13 @@ Sentry.init({
   replaysSessionSampleRate: 0.1,
   replaysOnErrorSampleRate: 1.0,
 
-  integrations: [
-    Sentry.replayIntegration(),
-  ],
+  // Integrations are lazy-loaded below to reduce initial bundle size
+  integrations: [],
+});
+
+// Lazy-load Sentry Replay to reduce initial JS bundle (~30-50KB)
+Sentry.lazyLoadIntegration("replayIntegration").then((replay) => {
+  Sentry.addIntegration(replay());
 });
 
 // Required by Sentry to instrument client-side navigations

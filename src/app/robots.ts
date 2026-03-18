@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/auth/", "/settings/", "/upgrade/", "/learn-progress/", "/api/"],
+      disallow: ["/auth/", "/settings/", "/learn-progress/", "/api/"],
     },
     sitemap: "https://cuthongminh.com/sitemap.xml",
   };

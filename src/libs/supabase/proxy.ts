@@ -1,9 +1,42 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-const publicPaths = ["/", "/games", "/auth", "/blogs", "/about-us", "/privacy", "/terms", "/feedback", "/api/"];
+const publicPaths = [
+  "/",
+  "/games",
+  "/auth",
+  "/blogs",
+  "/about-us",
+  "/privacy",
+  "/terms",
+  "/feedback",
+  "/api/",
+  // Group landing pages (SEO)
+  "/tro-choi-tu-duy",
+  "/tro-choi-my-thuat",
+  "/ky-nang-song",
+  "/dia-ly-tu-nhien",
+  "/am-nhac",
+  "/khoa-hoc",
+  "/hoc-tieng-viet-cho-be",
+  "/tro-choi-toan-hoc",
+];
+
+function isPublicPath(pathname: string): boolean {
+  return (
+    pathname === "/" ||
+    publicPaths.some((path) => path !== "/" && pathname.startsWith(path))
+  );
+}
 
 export async function updateSession(request: NextRequest) {
+  // PERF: For public paths, skip Supabase auth entirely.
+  // This avoids creating a Supabase client + calling getClaims() on every
+  // homepage/blog/about request, saving ~500ms TTFB.
+  if (isPublicPath(request.nextUrl.pathname)) {
+    return NextResponse.next({ request });
+  }
+
   let supabaseResponse = NextResponse.next({
     request,
   });
@@ -45,11 +78,8 @@ export async function updateSession(request: NextRequest) {
     await supabase.auth.signOut();
   }
 
-  const isPublicPath =
-    request.nextUrl.pathname === "/" ||
-    publicPaths.some((path) => path !== "/" && request.nextUrl.pathname.startsWith(path));
-  if (!user && !isPublicPath) {
-    // no user, potentially respond by redirecting the user to the login page
+  if (!user) {
+    // no user, redirect to the login page
     const url = request.nextUrl.clone();
     url.pathname = "/auth/login";
     return NextResponse.redirect(url);
@@ -70,3 +100,4 @@ export async function updateSession(request: NextRequest) {
 
   return supabaseResponse;
 }
+

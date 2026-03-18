@@ -80,6 +80,10 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Pr
         </p>
       </div>
 
+      <h2 className="text-2xl md:text-3xl font-bold font-[family-name:var(--font-baloo-2)] text-slate-800 mb-8">
+        Tất Cả Bài Viết
+      </h2>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         {posts.map((post) => (
           <BlogCard key={post.slug} post={post} />
