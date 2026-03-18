@@ -1,5 +1,5 @@
-// Assets
 const NumberLogo = "https://assets.cuthongminh.com/games/learn-numbers/number-logo.webp";
+const GameMultiplyLogo = "https://assets.cuthongminh.com/games/learn-multiply/logo.webp";
 const Game3Logo = "https://assets.cuthongminh.com/games/game-3-logo.webp";
 const GameColorLogo = "https://assets.cuthongminh.com/games/learn-color-color.webp";
 const ShapeLogo = "https://assets.cuthongminh.com/games/learn-shape/learn-shape-logo.webp";
@@ -912,6 +912,68 @@ export const COURSES: CourseDef[] = [
         lessons: [
           { id: "lesson1", title: "Cộng trừ bằng hình", isFree: true },
           { id: "lesson2", title: "Cộng trừ bằng số" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "learn-multiply",
+    title: "Phép Nhân",
+    description: "Bé học bảng nhân 2-5 qua hình ảnh và trò chơi tương tác.",
+    icon: GameMultiplyLogo,
+    type: "math",
+    groups: [
+      {
+        id: "group1",
+        title: "Bảng nhân 2",
+        lessons: [
+          { id: "lesson1", title: "Giải thích phép nhân", isFree: true },
+          { id: "lesson2", title: "Nhân bằng hình" },
+          { id: "lesson3", title: "Nhân bằng số" },
+          { id: "lesson4", title: "Điền số thiếu" },
+          { id: "lesson5", title: "Nhảy số" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Bảng nhân 3",
+        lessons: [
+          { id: "lesson1", title: "Giải thích phép nhân", isFree: true },
+          { id: "lesson2", title: "Nhân bằng hình" },
+          { id: "lesson3", title: "Nhân bằng số" },
+          { id: "lesson4", title: "Điền số thiếu" },
+          { id: "lesson5", title: "Nhảy số" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Bảng nhân 4",
+        lessons: [
+          { id: "lesson1", title: "Giải thích phép nhân", isFree: true },
+          { id: "lesson2", title: "Nhân bằng hình" },
+          { id: "lesson3", title: "Nhân bằng số" },
+          { id: "lesson4", title: "Điền số thiếu" },
+          { id: "lesson5", title: "Nhảy số" },
+        ],
+      },
+      {
+        id: "group4",
+        title: "Bảng nhân 5",
+        lessons: [
+          { id: "lesson1", title: "Giải thích phép nhân", isFree: true },
+          { id: "lesson2", title: "Nhân bằng hình" },
+          { id: "lesson3", title: "Nhân bằng số" },
+          { id: "lesson4", title: "Điền số thiếu" },
+          { id: "lesson5", title: "Nhảy số" },
+        ],
+      },
+      {
+        id: "group5",
+        title: "Luyện tập",
+        lessons: [
+          { id: "lesson1", title: "Nhân bằng hình", isFree: true },
+          { id: "lesson2", title: "Nhân bằng số" },
+          { id: "lesson3", title: "Điền số thiếu" },
         ],
       },
     ],
