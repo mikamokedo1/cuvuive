@@ -3,6 +3,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug } from "@/libs/blog";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import remarkGfm from "remark-gfm";
 import { Clock, Calendar, User, Tag } from "lucide-react";
 import "@/styles/blog.css"; // Make sure to import the new blog styles
 import { HowToSchema, type HowToStep } from "@/components/common/HowToSchema";
@@ -245,7 +246,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
       {/* MDX Content area */}
       <div className="prose prose-lg prose-slate max-w-none hover:prose-a:text-orange-600 blog-content">
-        <MDXRemote source={post.content} />
+        <MDXRemote source={post.content} options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }} />
       </div>
     </article>
   );

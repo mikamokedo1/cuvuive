@@ -126,6 +126,62 @@
   padding: 0;
 }
 
+/* Tables */
+.blog-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.blog-content thead {
+  background-color: #1e293b; /* slate-800 */
+  color: #f8fafc; /* slate-50 */
+}
+
+.blog-content th {
+  padding: 0.875rem 1rem;
+  text-align: left;
+  font-weight: 700;
+  font-family: var(--font-baloo-2);
+  font-size: 0.9rem;
+  letter-spacing: 0.025em;
+}
+
+.blog-content td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e2e8f0; /* slate-200 */
+}
+
+.blog-content tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+.blog-content tbody tr:nth-child(even) {
+  background-color: #f8fafc; /* slate-50 */
+}
+
+.blog-content tbody tr:hover {
+  background-color: #fff7ed; /* orange-50 */
+}
+
+.blog-content tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Responsive table wrapper */
+@media (max-width: 640px) {
+  .blog-content table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+  }
+}
+
 /* Responsive adjustments */
 @media (max-width: 640px) {
   .blog-content {
