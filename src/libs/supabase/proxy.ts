@@ -1,17 +1,12 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
-import { hasEnvVars } from "../utils/hasEnvVars";
+
+const publicPaths = ["/", "/games", "/auth", "/blogs", "/about-us", "/privacy", "/terms", "/feedback", "/api/"];
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
   });
-
-  // If the env vars are not set, skip proxy check. You can remove this
-  // once you setup the project.
-  if (!hasEnvVars) {
-    return supabaseResponse;
-  }
 
   // With Fluid compute, don't put this client in a global environment
   // variable. Always create a new one on each request.
@@ -24,17 +19,11 @@ export async function updateSession(request: NextRequest) {
           return request.cookies.getAll();
         },
         setAll(cookiesToSet) {
-          const isProduction = process.env.NODE_ENV === "production";
           cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
           supabaseResponse = NextResponse.next({
             request,
           });
-          cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, {
-              ...options,
-              secure: isProduction ? true : options?.secure,
-            }),
-          );
+          cookiesToSet.forEach(({ name, value, options }) => supabaseResponse.cookies.set(name, value, options));
         },
       },
     },
@@ -46,23 +35,28 @@ export async function updateSession(request: NextRequest) {
 
   // IMPORTANT: If you remove getClaims() and you use server-side rendering
   // with the Supabase client, your users may be randomly logged out.
-  const { data } = await supabase.auth.getClaims();
-  const user = data?.claims;
+  let user = null;
+  try {
+    const { data } = await supabase.auth.getClaims();
+    user = data?.claims;
+  } catch {
+    // JWT has expired or is invalid — sign the user out so stale cookies are
+    // cleared and a fresh session can be established on next login.
+    await supabase.auth.signOut();
+  }
 
-  if (
-    request.nextUrl.pathname !== "/games" &&
-    !user &&
-    !request.nextUrl.pathname.startsWith("/login") &&
-    !request.nextUrl.pathname.startsWith("/auth")
-  ) {
+  const isPublicPath =
+    request.nextUrl.pathname === "/" ||
+    publicPaths.some((path) => path !== "/" && request.nextUrl.pathname.startsWith(path));
+  if (!user && !isPublicPath) {
     // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone();
     url.pathname = "/auth/login";
     return NextResponse.redirect(url);
   }
 
-  // IMPORTANT: You *must* return the supabaseResponse object as it is.
-  // If you're creating a new response object with NextResponse.next() make sure to:
+  // IMPORTANT: You *must* return the supabaseResponse object as it is. If you're
+  // creating a new response object with NextResponse.next() make sure to:
   // 1. Pass the request in it, like so:
   //    const myNewResponse = NextResponse.next({ request })
   // 2. Copy over the cookies, like so:
