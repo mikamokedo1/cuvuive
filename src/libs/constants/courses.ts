@@ -38,6 +38,7 @@ const GameLineConnectLogo = "https://assets.cuthongminh.com/games/line-connect/l
 const LineConnectGroup1Logo = "https://assets.cuthongminh.com/games/line-connect/group1.webp";
 const LineConnectGroup2Logo = "https://assets.cuthongminh.com/games/line-connect/group2.webp";
 const LineConnectGroup3Logo = "https://assets.cuthongminh.com/games/line-connect/group3.webp";
+const GameTrafficLogo = "https://assets.cuthongminh.com/games/learn-traffic/logo.webp";
 import { StaticImageData } from "next/image";
 import { GameGroupType } from "@/libs/constants/groups";
 
@@ -676,6 +677,48 @@ export const COURSES: CourseDef[] = [
           { id: "lesson2", title: "Tập nói" },
           { id: "lesson3", title: "Đúng hay Sai?" },
           { id: "lesson4", title: "Sắp xếp thứ tự" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "learn-traffic",
+    title: "An Toàn Giao Thông",
+    description: "Bé học các quy tắc an toàn giao thông qua trò chơi tương tác, phiêu lưu và lắp ráp.",
+    icon: GameTrafficLogo,
+    type: "life-skill",
+    groups: [
+      {
+        id: "group1",
+        title: "Đèn & Biển Báo",
+        lessons: [
+          { id: "lesson1", title: "Học biển báo", isFree: true },
+          { id: "lesson2", title: "Khám phá phố" },
+          { id: "lesson3", title: "Tìm biển đúng" },
+          { id: "lesson4", title: "Chọn hành động" },
+          { id: "lesson5", title: "Lắp biển báo" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Đi Bộ An Toàn",
+        lessons: [
+          { id: "lesson1", title: "Học quy tắc đi bộ", isFree: true },
+          { id: "lesson2", title: "Khám phá đường" },
+          { id: "lesson3", title: "Tình huống đi bộ" },
+          { id: "lesson4", title: "An toàn đi bộ" },
+          { id: "lesson5", title: "Lắp biển đi bộ" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Đi Xe An Toàn",
+        lessons: [
+          { id: "lesson1", title: "Học quy tắc đi xe", isFree: true },
+          { id: "lesson2", title: "Khám phá xe cộ" },
+          { id: "lesson3", title: "Tình huống trên xe" },
+          { id: "lesson4", title: "Hành khách an toàn" },
+          { id: "lesson5", title: "Lắp biển xe" },
         ],
       },
     ],

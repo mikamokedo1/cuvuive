@@ -37,9 +37,14 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
 
   const [courseStructure, setCourseStructure] = useState<Record<string, Record<string, number>>>({});
 
+  // Keep a ref to allProgress so the effect always reads the latest value
+  // (the effect depends only on [userId], so allProgress in the closure would be stale)
+  const allProgressRef = useRef(allProgress);
+  allProgressRef.current = allProgress;
+
   // Fetch course structure and user progress in parallel
   useEffect(() => {
-    let aborted = false;
+    let cancelled = false;
 
     const fetchStructureAndProgress = async () => {
       if (!userId) {
@@ -52,7 +57,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
           const { getCourseStructureAction } = await import("@/libs/actions/courses");
           const data = await getCourseStructureAction();
 
-          if (aborted) return;
+          if (cancelled) return;
 
           const structure: Record<string, Record<string, number>> = {};
           data.forEach((row) => {
@@ -66,16 +71,23 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
         } catch (err) {
           console.error("Error fetching course structure:", err);
         }
-        if (!aborted) setIsLoaded(true);
+        if (!cancelled) setIsLoaded(true);
         return;
       }
 
-      // Snapshot anonymous progress before resetting (so we can merge it after fetch)
-      const anonymousProgress = { ...allProgress };
-
-      // NOTE: we intentionally do NOT set isLoaded=false here.
-      // The existing progress data remains usable while we re-fetch in the background.
-      // Setting isLoaded=false would block the UI and cause hangs if the fetch is aborted.
+      // Deep-copy anonymous progress using ref to get the LATEST value
+      // (not the stale closure value from when userId changed)
+      const anonymousProgress: Record<string, ProgressState> = {};
+      const currentProgress = allProgressRef.current;
+      Object.keys(currentProgress).forEach((courseId) => {
+        const cp = currentProgress[courseId];
+        anonymousProgress[courseId] = {
+          completedGroups: [...cp.completedGroups],
+          completedLessons: Object.fromEntries(
+            Object.entries(cp.completedLessons).map(([gid, lessons]) => [gid, [...lessons]])
+          ),
+        };
+      });
 
       try {
         // Run structure, progress, and last-played fetches in parallel
@@ -102,7 +114,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
             .maybeSingle(),
         ]);
 
-        if (aborted) return;
+        // Don't bail here — always let the merge complete so progress data is correct
 
         setCourseStructure(structureResult);
 
@@ -186,14 +198,14 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
-        if (!aborted) setIsLoaded(true);
+        if (!cancelled) setIsLoaded(true);
       }
     };
 
     fetchStructureAndProgress();
 
     return () => {
-      aborted = true;
+      cancelled = true;
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
