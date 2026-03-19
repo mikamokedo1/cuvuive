@@ -151,7 +151,7 @@ export function ExplainMultiplyLesson({ multiplier, onComplete }: ExplainMultipl
               >
                 {Array.from({ length: currentExample.perGroup }).map((_, ii) => (
                   <div key={`item-${gi}-${ii}`} className="w-10 h-10 sm:w-12 sm:h-12 relative">
-                    <Image src={thingImage.icon} alt="" fill className="object-contain drop-shadow-md" />
+                    <Image src={thingImage.icon} alt={thingName} fill className="object-contain drop-shadow-md" />
                   </div>
                 ))}
               </div>
@@ -192,7 +192,7 @@ export function ExplainMultiplyLesson({ multiplier, onComplete }: ExplainMultipl
           >
             {Array.from({ length: answer }).map((_, i) => (
               <div key={`ans-${i}`} className="w-10 h-10 sm:w-12 sm:h-12 relative">
-                <Image src={thingImage.icon} alt="" fill className="object-contain drop-shadow-md" />
+                <Image src={thingImage.icon} alt={thingName} fill className="object-contain drop-shadow-md" />
               </div>
             ))}
           </div>

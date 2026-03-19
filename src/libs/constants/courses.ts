@@ -1,5 +1,6 @@
 const NumberLogo = "https://assets.cuthongminh.com/games/learn-numbers/number-logo.webp";
 const GameMultiplyLogo = "https://assets.cuthongminh.com/games/learn-multiply/logo.webp";
+const GameDivideLogo = "https://assets.cuthongminh.com/games/learn-divide/logo.webp";
 const Game3Logo = "https://assets.cuthongminh.com/games/game-3-logo.webp";
 const GameColorLogo = "https://assets.cuthongminh.com/games/learn-color-color.webp";
 const ShapeLogo = "https://assets.cuthongminh.com/games/learn-shape/learn-shape-logo.webp";
@@ -973,6 +974,68 @@ export const COURSES: CourseDef[] = [
         lessons: [
           { id: "lesson1", title: "Nhân bằng hình", isFree: true },
           { id: "lesson2", title: "Nhân bằng số" },
+          { id: "lesson3", title: "Điền số thiếu" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "learn-divide",
+    title: "Phép Chia",
+    description: "Bé học bảng chia 2-5 qua hình ảnh và trò chơi tương tác.",
+    icon: GameDivideLogo,
+    type: "math",
+    groups: [
+      {
+        id: "group1",
+        title: "Bảng chia 2",
+        lessons: [
+          { id: "lesson1", title: "Giải thích phép chia", isFree: true },
+          { id: "lesson2", title: "Chia bằng hình" },
+          { id: "lesson3", title: "Chia bằng số" },
+          { id: "lesson4", title: "Điền số thiếu" },
+          { id: "lesson5", title: "Nhân ngược" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Bảng chia 3",
+        lessons: [
+          { id: "lesson1", title: "Giải thích phép chia", isFree: true },
+          { id: "lesson2", title: "Chia bằng hình" },
+          { id: "lesson3", title: "Chia bằng số" },
+          { id: "lesson4", title: "Điền số thiếu" },
+          { id: "lesson5", title: "Nhân ngược" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Bảng chia 4",
+        lessons: [
+          { id: "lesson1", title: "Giải thích phép chia", isFree: true },
+          { id: "lesson2", title: "Chia bằng hình" },
+          { id: "lesson3", title: "Chia bằng số" },
+          { id: "lesson4", title: "Điền số thiếu" },
+          { id: "lesson5", title: "Nhân ngược" },
+        ],
+      },
+      {
+        id: "group4",
+        title: "Bảng chia 5",
+        lessons: [
+          { id: "lesson1", title: "Giải thích phép chia", isFree: true },
+          { id: "lesson2", title: "Chia bằng hình" },
+          { id: "lesson3", title: "Chia bằng số" },
+          { id: "lesson4", title: "Điền số thiếu" },
+          { id: "lesson5", title: "Nhân ngược" },
+        ],
+      },
+      {
+        id: "group5",
+        title: "Luyện tập",
+        lessons: [
+          { id: "lesson1", title: "Chia bằng hình", isFree: true },
+          { id: "lesson2", title: "Chia bằng số" },
           { id: "lesson3", title: "Điền số thiếu" },
         ],
       },

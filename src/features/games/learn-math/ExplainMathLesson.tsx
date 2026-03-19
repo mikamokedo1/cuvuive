@@ -147,7 +147,7 @@ export function ExplainMathLesson({ operator, onComplete }: ExplainMathLessonPro
             <div className="flex gap-1.5 flex-wrap justify-center">
               {Array.from({ length: currentExample.a }).map((_, i) => (
                 <div key={`a-${i}`} className="w-14 h-14 sm:w-16 sm:h-16 relative">
-                  <Image src={thingImage.icon} alt="" fill className="object-contain drop-shadow-md" />
+                  <Image src={thingImage.icon} alt={thingName} fill className="object-contain drop-shadow-md" />
                 </div>
               ))}
             </div>
@@ -171,7 +171,7 @@ export function ExplainMathLesson({ operator, onComplete }: ExplainMathLessonPro
                   key={`b-${i}`}
                   className={`w-14 h-14 sm:w-16 sm:h-16 relative ${operator === "sub" ? "opacity-30 grayscale" : ""}`}
                 >
-                  <Image src={thingImage.icon} alt="" fill className="object-contain drop-shadow-md" />
+                  <Image src={thingImage.icon} alt={thingName} fill className="object-contain drop-shadow-md" />
                 </div>
               ))}
             </div>
@@ -191,7 +191,7 @@ export function ExplainMathLesson({ operator, onComplete }: ExplainMathLessonPro
             <div className="flex gap-1.5 flex-wrap justify-center">
               {Array.from({ length: answer }).map((_, i) => (
                 <div key={`ans-${i}`} className="w-14 h-14 sm:w-16 sm:h-16 relative">
-                  <Image src={thingImage.icon} alt="" fill className="object-contain drop-shadow-md" />
+                  <Image src={thingImage.icon} alt={thingName} fill className="object-contain drop-shadow-md" />
                 </div>
               ))}
             </div>
