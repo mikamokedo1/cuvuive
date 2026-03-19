@@ -344,11 +344,13 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
       const courseProgress = allProgress[courseId] || { completedLessons: {} };
       const completedInGroup = courseProgress.completedLessons[groupId] || [];
 
-      // If lesson is already completed, it is effectively unlocked
-      if (completedInGroup.includes(lessonId)) return true;
-
-      const prevLessonId = group.lessons[lessonIndex - 1].id;
-      return completedInGroup.includes(prevLessonId);
+      // Enforce sequential unlock: ALL previous lessons must be completed
+      for (let i = 0; i < lessonIndex; i++) {
+        if (!completedInGroup.includes(group.lessons[i].id)) {
+          return false;
+        }
+      }
+      return true;
     },
     [allProgress, isGroupUnlocked],
   );
