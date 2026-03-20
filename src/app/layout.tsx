@@ -9,6 +9,7 @@ import { MissingInfoListener } from "@/features/auth/MissingInfoListener";
 import { ProgressProvider } from "@/context/ProgressContext";
 import { PlayTimerProvider } from "@/context/PlayTimerContext";
 import { ClientDynamicComponents } from "@/components/common/ClientDynamicComponents";
+import { ReferralTracker } from "@/features/referral/ReferralTracker";
 
 
 // Configure fonts
@@ -163,6 +164,7 @@ export default async function RootLayout({
                 <OwlProvider>
                   {children}
                   <MissingInfoListener />
+                  <ReferralTracker />
                   <ClientDynamicComponents />
                 </OwlProvider>
               </PlayTimerProvider>

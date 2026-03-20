@@ -15,7 +15,7 @@ import { SignoutIcon } from "../common/Icons";
 import { useUser } from "@/context/UserContext";
 import { Dropdown } from "@/components/common/Dropdown";
 import { useAccess } from "@/context/AccessContext";
-import { Settings, MessageSquare, Trophy } from "lucide-react";
+import { Settings, MessageSquare, Trophy, Banknote } from "lucide-react";
 
 const Header = () => {
   const pathname = usePathname();
@@ -104,6 +104,13 @@ const Header = () => {
               >
                 <MessageSquare size={18} />
                 Góp ý
+              </Link>
+              <Link
+                href="/earn"
+                className="w-full text-left px-4 py-2 text-emerald-700 hover:bg-emerald-50 rounded-lg font-bold text-sm transition-colors flex items-center gap-2"
+              >
+                <Banknote size={18} />
+                Kiếm tiền
               </Link>
               <button
                 onClick={handleLogout}

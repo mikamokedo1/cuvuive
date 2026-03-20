@@ -214,3 +214,85 @@ export const feedbacks = pgTable(
     };
   },
 );
+
+// ============================================
+// REFERRAL SYSTEM
+// ============================================
+
+export const referralCodes = pgTable(
+  "referral_codes",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    code: text("code").notNull(), // Short 8-char code, e.g. "ABC12345"
+    commissionPercent: integer("commission_percent").notNull().default(10), // % commission, default 10%
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
+  },
+  (table) => {
+    return {
+      uniqueUserIdx: uniqueIndex("referral_codes_user_idx").on(table.userId),
+      uniqueCodeIdx: uniqueIndex("referral_codes_code_idx").on(table.code),
+    };
+  },
+);
+
+export const referralStatusEnum = pgEnum("referral_status", ["pending", "confirmed"]);
+
+export const referrals = pgTable(
+  "referrals",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    referrerUserId: text("referrer_user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    referredUserId: text("referred_user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    orderId: integer("order_id").references(() => orders.id), // Nullable, set when referred user pays
+    commissionRate: integer("commission_rate"), // 10 or 20 (%)
+    commissionAmount: integer("commission_amount"), // VND, calculated when order is paid
+    status: referralStatusEnum("status").notNull().default("pending"),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
+    confirmedAt: timestamp("confirmed_at", { withTimezone: true }),
+  },
+  (table) => {
+    return {
+      referrerIdx: index("referrals_referrer_idx").on(table.referrerUserId),
+      referredIdx: uniqueIndex("referrals_referred_idx").on(table.referredUserId), // One referrer per user
+    };
+  },
+);
+
+export const withdrawalStatusEnum = pgEnum("withdrawal_status", ["pending", "processing", "completed", "rejected"]);
+
+export const withdrawals = pgTable(
+  "withdrawals",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    amount: integer("amount").notNull(), // VND
+    status: withdrawalStatusEnum("status").notNull().default("pending"),
+    bankName: text("bank_name").notNull(),
+    bankAccount: text("bank_account").notNull(),
+    bankAccountName: text("bank_account_name").notNull(),
+    note: text("note"), // Admin note
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
+    processedAt: timestamp("processed_at", { withTimezone: true }),
+  },
+  (table) => {
+    return {
+      userIdIdx: index("withdrawals_user_id_idx").on(table.userId),
+      userStatusIdx: index("withdrawals_user_status_idx").on(table.userId, table.status),
+    };
+  },
+);
