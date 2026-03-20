@@ -40,6 +40,10 @@ const LineConnectGroup1Logo = "https://assets.cuthongminh.com/games/line-connect
 const LineConnectGroup2Logo = "https://assets.cuthongminh.com/games/line-connect/group2.webp";
 const LineConnectGroup3Logo = "https://assets.cuthongminh.com/games/line-connect/group3.webp";
 const GameTrafficLogo = "https://assets.cuthongminh.com/games/learn-traffic/logo.webp";
+const LearnNotesLogo = "https://assets.cuthongminh.com/games/learn-notes/logo.webp";
+const LearnNotesGroup1Logo = "https://assets.cuthongminh.com/games/learn-notes/group1.webp";
+const LearnNotesGroup2Logo = "https://assets.cuthongminh.com/games/learn-notes/group2.webp";
+const LearnNotesGroup3Logo = "https://assets.cuthongminh.com/games/learn-notes/group3.webp";
 import { StaticImageData } from "next/image";
 import { GameGroupType } from "@/libs/constants/groups";
 
@@ -1493,6 +1497,52 @@ export const COURSES: CourseDef[] = [
           { id: "lesson4", title: "Đây là gì?" },
           { id: "lesson5", title: "Cơ thể làm gì?" },
           { id: "lesson6", title: "Ghép đôi" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "learn-notes",
+    title: "Học Nốt Nhạc",
+    description: "Bé làm quen với các nốt nhạc Đồ Rê Mi trên khuông nhạc qua hình ảnh và âm thanh.",
+    icon: LearnNotesLogo,
+    type: "music",
+    groups: [
+      {
+        id: "basic-notes",
+        title: "Nốt Nhạc Cơ Bản",
+        description: "Đồ, Rê, Mi, Fa",
+        logo: LearnNotesGroup1Logo,
+        variant: "green",
+        lessons: [
+          { id: "lesson1", title: "Học nốt nhạc", isFree: true },
+          { id: "lesson2", title: "Nghe và chọn" },
+          { id: "lesson3", title: "Nốt nào đúng?" },
+          { id: "lesson4", title: "Sắp xếp nốt" },
+        ],
+      },
+      {
+        id: "advanced-notes",
+        title: "Nốt Nhạc Nâng Cao",
+        description: "Sol, La, Si, Đố",
+        logo: LearnNotesGroup2Logo,
+        variant: "orange",
+        lessons: [
+          { id: "lesson1", title: "Học nốt nhạc", isFree: true },
+          { id: "lesson2", title: "Nghe và chọn" },
+          { id: "lesson3", title: "Nốt nào đúng?" },
+          { id: "lesson4", title: "Sắp xếp nốt" },
+        ],
+      },
+      {
+        id: "practice",
+        title: "Luyện Tập",
+        description: "Ôn tập tất cả các nốt",
+        logo: LearnNotesGroup3Logo,
+        variant: "purple",
+        lessons: [
+          { id: "lesson1", title: "Nghe và chọn", isFree: true },
+          { id: "lesson2", title: "Sắp xếp giai điệu" },
         ],
       },
     ],
