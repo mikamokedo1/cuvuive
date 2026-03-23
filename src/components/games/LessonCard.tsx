@@ -16,11 +16,12 @@ interface LessonCardProps {
   lesson: Lesson;
   unlocked: boolean;
   isActive: boolean;
+  completed?: boolean;
   onClick: (lessonId: string) => void;
 }
 
-export const LessonCard = ({ lesson, unlocked, isActive, onClick }: LessonCardProps) => {
-  if (isActive) {
+export const LessonCard = ({ lesson, unlocked, isActive, completed, onClick }: LessonCardProps) => {
+  if (isActive && !completed) {
     return (
       <div
         onMouseEnter={() => playButtonSound()}

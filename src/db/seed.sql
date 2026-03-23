@@ -26,7 +26,8 @@ INSERT INTO courses (id, title, description, thumbnail, sort_index) VALUES
   ('odd-one-out', 'Tìm hình khác biệt', 'Bé luyện nhãn quan bằng cách tìm ra hình khác với các hình còn lại.', '/assets/games/odd-one-out/logo.png', 18),
   ('maze-runner', 'Mê Cung Phiêu Lưu', 'Bé điều hướng qua các mê cung để tìm ngôi sao.', '/assets/games/maze-runner/logo.png', 19),
   ('mix-color', 'Pha Màu', 'Bé học cách pha trộn màu sắc để tạo ra màu mới.', '/assets/games/learn-color/learn-color-logo-3.webp', 20),
-  ('paint-picture', 'Tô Màu', 'Bé tô màu các hình vẽ dễ thương qua các trò chơi nghệ thuật.', '/assets/games/paint-picture/logo.png', 21)
+  ('paint-picture', 'Tô Màu', 'Bé tô màu các hình vẽ dễ thương qua các trò chơi nghệ thuật.', '/assets/games/paint-picture/logo.png', 21),
+  ('learn-cleaning', 'Dọn Dẹp', 'Bé học cách dọn dẹp nhà cửa gọn gàng và phân loại rác đúng cách.', '/assets/games/learn-cleaning/logo.webp', 24)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   description = EXCLUDED.description,
@@ -221,6 +222,15 @@ INSERT INTO groups (id, slug, course_id, title, sort_index) VALUES
   ('paint-picture-group1', 'group1', 'paint-picture', 'Động vật', 1),
   ('paint-picture-group2', 'group2', 'paint-picture', 'Thiên nhiên', 2),
   ('paint-picture-group3', 'group3', 'paint-picture', 'Đồ chơi', 3)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  sort_index = EXCLUDED.sort_index;
+
+-- Learn Cleaning Groups
+INSERT INTO groups (id, slug, course_id, title, sort_index) VALUES
+  ('learn-cleaning-group1', 'group1', 'learn-cleaning', 'Dọn phòng', 1),
+  ('learn-cleaning-group2', 'group2', 'learn-cleaning', 'Dọn bếp', 2),
+  ('learn-cleaning-group3', 'group3', 'learn-cleaning', 'Phân loại rác', 3)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   sort_index = EXCLUDED.sort_index;
@@ -604,6 +614,25 @@ INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) 
   ('paint-picture-g2-l2', 'lesson2', 'paint-picture-group2', 'paint-picture', 'Hoạ Khám Phá', false, 2),
   ('paint-picture-g3-l1', 'lesson1', 'paint-picture-group3', 'paint-picture', 'Tô tự do', true, 1),
   ('paint-picture-g3-l2', 'lesson2', 'paint-picture-group3', 'paint-picture', 'Hoạ Khám Phá', false, 2)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  is_free = EXCLUDED.is_free,
+  sort_index = EXCLUDED.sort_index;
+
+-- Learn Cleaning Lessons
+INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) VALUES
+  ('learn-cleaning-g1-l1', 'lesson1', 'learn-cleaning-group1', 'learn-cleaning', 'Học dọn dẹp', true, 1),
+  ('learn-cleaning-g1-l2', 'lesson2', 'learn-cleaning-group1', 'learn-cleaning', 'Tập nói', false, 2),
+  ('learn-cleaning-g1-l3', 'lesson3', 'learn-cleaning-group1', 'learn-cleaning', 'Đúng hay Sai?', false, 3),
+  ('learn-cleaning-g1-l4', 'lesson4', 'learn-cleaning-group1', 'learn-cleaning', 'Sắp xếp thứ tự', false, 4),
+  ('learn-cleaning-g2-l1', 'lesson1', 'learn-cleaning-group2', 'learn-cleaning', 'Học dọn dẹp', true, 1),
+  ('learn-cleaning-g2-l2', 'lesson2', 'learn-cleaning-group2', 'learn-cleaning', 'Tập nói', false, 2),
+  ('learn-cleaning-g2-l3', 'lesson3', 'learn-cleaning-group2', 'learn-cleaning', 'Đúng hay Sai?', false, 3),
+  ('learn-cleaning-g2-l4', 'lesson4', 'learn-cleaning-group2', 'learn-cleaning', 'Sắp xếp thứ tự', false, 4),
+  ('learn-cleaning-g3-l1', 'lesson1', 'learn-cleaning-group3', 'learn-cleaning', 'Học phân loại', true, 1),
+  ('learn-cleaning-g3-l2', 'lesson2', 'learn-cleaning-group3', 'learn-cleaning', 'Tập nói', false, 2),
+  ('learn-cleaning-g3-l3', 'lesson3', 'learn-cleaning-group3', 'learn-cleaning', 'Đúng hay Sai?', false, 3),
+  ('learn-cleaning-g3-l4', 'lesson4', 'learn-cleaning-group3', 'learn-cleaning', 'Sắp xếp thứ tự', false, 4)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   is_free = EXCLUDED.is_free,
