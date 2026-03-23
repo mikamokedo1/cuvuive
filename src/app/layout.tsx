@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Baloo_2, Nunito_Sans } from "next/font/google";
 import Script from "next/script";
+import { Suspense } from "react";
 import "./globals.css";
 import { OwlProvider } from "@/context/OwlContext";
 import { UserProvider } from "@/context/UserContext";
@@ -157,16 +158,18 @@ export default async function RootLayout({
         />
       </head>
       <body className={`${baloo2.variable} ${nunitoSans.variable} antialiased`} suppressHydrationWarning>
-        <TopProgressBar />
         <UserProvider>
           <AccessProvider>
             <ProgressProvider>
               <PlayTimerProvider>
                 <OwlProvider>
+                  <TopProgressBar />
                   {children}
                   <MissingInfoListener />
                   <ReferralTracker />
-                  <ClientDynamicComponents />
+                  <Suspense fallback={null}>
+                    <ClientDynamicComponents />
+                  </Suspense>
                 </OwlProvider>
               </PlayTimerProvider>
             </ProgressProvider>
