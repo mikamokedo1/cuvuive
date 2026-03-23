@@ -1,3 +1,6 @@
+import type { Metadata } from "next";
+import { GAME_SEO } from "@/libs/constants/game-seo";
+import { GameSeoSection } from "@/components/seo/GameSeoSection";
 const group1 = "https://assets.cuthongminh.com/games/learn-numbers/number-logo-1.webp";
 const group2 = "https://assets.cuthongminh.com/games/learn-numbers/number-logo-2.webp";
 const group3 = "https://assets.cuthongminh.com/games/learn-numbers/number-logo-3.webp";
@@ -48,6 +51,27 @@ const GROUPS = [
   },
 ];
 
+
+const seo = GAME_SEO["learn-numbers"];
+
+export const metadata: Metadata = {
+  title: seo.title,
+  description: seo.description,
+  keywords: seo.keywords,
+  alternates: { canonical: `/games/learn-numbers` },
+  openGraph: {
+    title: seo.title,
+    description: seo.description,
+    url: `https://cuthongminh.com/games/learn-numbers`,
+    type: "website",
+  },
+};
+
 export default function NumberGroupsPage() {
-  return <GameWrapGroups logo={group4} gameId="learn-numbers" groups={GROUPS} title="Học số" />;
+  return (
+    <>
+      <GameWrapGroups logo={group4} gameId="learn-numbers" groups={GROUPS} title="Học số" />
+      <GameSeoSection gameId="learn-numbers" />
+    </>
+  );
 }

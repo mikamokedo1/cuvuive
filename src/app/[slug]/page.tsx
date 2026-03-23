@@ -197,7 +197,7 @@ export default async function GroupLandingPage({ params }: PageProps) {
       <div className="max-w-6xl mx-auto px-4 py-6">
         <HeaderHome />
 
-        <main className="mt-8">
+        <main className="mt-16">
           {/* Hero Section */}
           <div className="relative overflow-hidden rounded-[3rem] bg-gradient-to-br from-orange-400 to-red-500 p-8 md:p-16 text-white mb-12 shadow-2xl">
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>

@@ -1,7 +1,31 @@
+import type { Metadata } from "next";
+import { GAME_SEO } from "@/libs/constants/game-seo";
+import { GameSeoSection } from "@/components/seo/GameSeoSection";
 import { GROUPS } from "@/features/games/learn-tones/constants";
 const GameLearnTonesLogo = "https://assets.cuthongminh.com/games/learn-tones/logo.webp";
 import { GameWrapGroups } from "@/components/layout/GameWrapGroups";
 
+
+const seo = GAME_SEO["learn-tones"];
+
+export const metadata: Metadata = {
+  title: seo.title,
+  description: seo.description,
+  keywords: seo.keywords,
+  alternates: { canonical: `/games/learn-tones` },
+  openGraph: {
+    title: seo.title,
+    description: seo.description,
+    url: `https://cuthongminh.com/games/learn-tones`,
+    type: "website",
+  },
+};
+
 export default function LearnTonesPage() {
-  return <GameWrapGroups logo={GameLearnTonesLogo} gameId="learn-tones" groups={GROUPS} title="Học Dấu Tiếng Việt" />;
+  return (
+    <>
+      <GameWrapGroups logo={GameLearnTonesLogo} gameId="learn-tones" groups={GROUPS} title="Học Dấu Tiếng Việt" />
+      <GameSeoSection gameId="learn-tones" />
+    </>
+  );
 }

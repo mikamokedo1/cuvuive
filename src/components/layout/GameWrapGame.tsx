@@ -28,22 +28,17 @@ export const GameWrapGame = ({
   isGroupDone,
   isLoaded = true,
 }: GameWrapGameProps) => {
-  console.log(isLoaded);
   if (!isLoaded) {
     return <CheckingPermission path={`/games/${gameSlug}/${groupId}`} />;
   }
 
-  if (!LessonContent) {
-    return (
-      <GameLayout backTo={`/games/${gameSlug}/${groupId}`}>
-        <div className="text-center text-slate-500">Lesson not found</div>
-      </GameLayout>
-    );
-  }
-
   return (
     <GameLayout backTo={`/games/${gameSlug}/${groupId}`} title={LessonTitle}>
-      {LessonContent}
+      {LessonContent ? (
+        LessonContent
+      ) : (
+        <div className="text-center text-slate-500">Lesson not found</div>
+      )}
       <CompletionModal
         isOpen={showModal}
         onNext={handleNextLesson}

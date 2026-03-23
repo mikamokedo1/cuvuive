@@ -6,6 +6,7 @@ import { RightWrongScenario } from "./constants";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { playButtonSound } from "@/libs/utils/playSound";
+import { TrueFalseButtons } from "@/components/games/TrueFalseButtons";
 
 interface HygieneRightWrongLessonProps {
   scenarios: RightWrongScenario[];
@@ -104,43 +105,11 @@ export function HygieneRightWrongLesson({ scenarios, onComplete }: HygieneRightW
       </div>
 
       {/* Answer Buttons */}
-      <div className="flex gap-6 w-full max-w-md">
-        <button
-          onClick={() => handleAnswer(true)}
-          disabled={feedback !== null}
-          className={`
-            flex-1 py-6 rounded-2xl text-2xl font-bold shadow-lg
-            transform transition-all duration-200 active:scale-95
-            ${
-              feedback === "correct" && currentScenario.isCorrect
-                ? "bg-green-500 text-white scale-110"
-                : feedback !== null
-                  ? "opacity-50 cursor-not-allowed bg-green-100 text-green-700"
-                  : "bg-green-500 text-white hover:bg-green-600 hover:scale-105 cursor-pointer"
-            }
-          `}
-        >
-          ✅ Đúng
-        </button>
-
-        <button
-          onClick={() => handleAnswer(false)}
-          disabled={feedback !== null}
-          className={`
-            flex-1 py-6 rounded-2xl text-2xl font-bold shadow-lg
-            transform transition-all duration-200 active:scale-95
-            ${
-              feedback === "correct" && !currentScenario.isCorrect
-                ? "bg-red-500 text-white scale-110"
-                : feedback !== null
-                  ? "opacity-50 cursor-not-allowed bg-red-100 text-red-700"
-                  : "bg-red-500 text-white hover:bg-red-600 hover:scale-105 cursor-pointer"
-            }
-          `}
-        >
-          ❌ Sai
-        </button>
-      </div>
+      <TrueFalseButtons
+        onAnswer={handleAnswer}
+        feedback={feedback}
+        correctAnswer={currentScenario.isCorrect}
+      />
     </div>
   );
 }

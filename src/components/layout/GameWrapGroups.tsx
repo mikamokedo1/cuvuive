@@ -19,16 +19,7 @@ export const GameWrapGroups = ({ logo, gameId, groups, title }: GameWrapGroups) 
   const { isGroupUnlocked, isLoaded, allProgress } = useProgress();
   const { isPremium, isLoggedIn, showPaywall } = useAccess();
 
-  if (!isLoaded && !allProgress[gameId]) {
-    return (
-      <GameLayout showBackButton={false} backTo="/games">
-        <div className="flex flex-col items-center justify-center min-h-[60vh]">
-          <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin" />
-          <p className="mt-4 text-orange-600 font-bold">Đang tải dữ liệu..</p>
-        </div>
-      </GameLayout>
-    );
-  }
+  const dataReady = isLoaded || !!allProgress[gameId];
 
   return (
     <GameLayout showBackButton={false} backTo="/games">
@@ -40,15 +31,16 @@ export const GameWrapGroups = ({ logo, gameId, groups, title }: GameWrapGroups) 
           <LessonTitle>{title}</LessonTitle>
         </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-5">
+        {/* Always render group cards so Googlebot sees content in initial HTML */}
+        <div className={`flex flex-wrap items-center justify-center gap-5 transition-opacity duration-300 ${dataReady ? "opacity-100" : "opacity-70"}`}>
           {groups.map((group, index) => {
-            const unlocked = isGroupUnlocked(group.id, gameId);
+            const unlocked = dataReady ? isGroupUnlocked(group.id, gameId) : index === 0;
             const courseProgress = allProgress[gameId] || { completedGroups: [] };
-            const isCompleted = courseProgress.completedGroups.includes(group.id);
+            const isCompleted = dataReady ? courseProgress.completedGroups.includes(group.id) : false;
 
             // Check premium locking: if group requires premium and user doesn't have it
             const groupRequiresPremium = !!group.isPremium;
-            const premiumLocked = groupRequiresPremium && (!isLoggedIn || !isPremium);
+            const premiumLocked = dataReady ? groupRequiresPremium && (!isLoggedIn || !isPremium) : false;
             const isLocked = !unlocked || premiumLocked;
 
             const handleGroupClick = premiumLocked

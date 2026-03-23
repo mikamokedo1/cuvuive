@@ -44,6 +44,7 @@ const LearnNotesLogo = "https://assets.cuthongminh.com/games/learn-notes/logo.we
 const LearnNotesGroup1Logo = "https://assets.cuthongminh.com/games/learn-notes/group1.webp";
 const LearnNotesGroup2Logo = "https://assets.cuthongminh.com/games/learn-notes/group2.webp";
 const LearnNotesGroup3Logo = "https://assets.cuthongminh.com/games/learn-notes/group3.webp";
+const GameDangerLogo = "https://assets.cuthongminh.com/games/learn-danger/logo.webp";
 import { StaticImageData } from "next/image";
 import { GameGroupType } from "@/libs/constants/groups";
 
@@ -84,8 +85,8 @@ export const COURSES: CourseDef[] = [
         title: "Thanh Sắc",
         lessons: [
           { id: "lesson1", title: "Học dấu", isFree: true },
-          { id: "lesson2", title: "Tập nói" },
-          { id: "lesson3", title: "Tập viết" },
+          { id: "lesson2", title: "Tập nói", isFree: true },
+          { id: "lesson3", title: "Tập viết", isFree: true },
           { id: "lesson4", title: "Chữ nào đúng" },
         ],
       },
@@ -143,8 +144,8 @@ export const COURSES: CourseDef[] = [
         title: "Làm quen 1-3",
         lessons: [
           { id: "lesson1", title: "Học số 1-3", isFree: true },
-          { id: "lesson2", title: "Số nào đúng?" },
-          { id: "lesson3", title: "Đếm đồ vật" },
+          { id: "lesson2", title: "Số nào đúng?", isFree: true },
+          { id: "lesson3", title: "Đếm đồ vật", isFree: true },
           { id: "lesson4", title: "Tập viết" },
         ],
       },
@@ -190,7 +191,7 @@ export const COURSES: CourseDef[] = [
   },
   {
     id: "compare-quantity",
-    title: "So sánh số lượng",
+    title: "So sánh",
     description: "Bé học so sánh nhiều hơn, ít hơn, bằng nhau.",
     icon: Game3Logo,
     type: "math",
@@ -200,8 +201,8 @@ export const COURSES: CourseDef[] = [
         title: "Lớn hơn",
         lessons: [
           { id: "lesson1", title: "Học lớn hơn", isFree: true },
-          { id: "lesson2", title: "Luyện tập" },
-          { id: "lesson3", title: "Thử thách" },
+          { id: "lesson2", title: "Luyện tập", isFree: true },
+          { id: "lesson3", title: "Thử thách", isFree: true },
           { id: "lesson4", title: "Trò chơi" },
         ],
       },
@@ -247,8 +248,8 @@ export const COURSES: CourseDef[] = [
         title: "Màu cơ bản",
         lessons: [
           { id: "lesson1", title: "Học màu sắc", isFree: true },
-          { id: "lesson2", title: "Tìm màu giống" },
-          { id: "lesson3", title: "Trò chơi màu" },
+          { id: "lesson2", title: "Tìm màu giống", isFree: true },
+          { id: "lesson3", title: "Trò chơi màu", isFree: true },
         ],
       },
       {
@@ -282,8 +283,8 @@ export const COURSES: CourseDef[] = [
         title: "Hình cơ bản",
         lessons: [
           { id: "lesson1", title: "Học hình dạng", isFree: true },
-          { id: "lesson2", title: "Tìm hình giống" },
-          { id: "lesson3", title: "Tìm đồ vật" },
+          { id: "lesson2", title: "Tìm hình giống", isFree: true },
+          { id: "lesson3", title: "Tìm đồ vật", isFree: true },
           { id: "lesson4", title: "Trò chơi hình" },
         ],
       },
@@ -319,8 +320,8 @@ export const COURSES: CourseDef[] = [
         title: "Động vật nuôi",
         lessons: [
           { id: "lesson1", title: "Học tên động vật", isFree: true },
-          { id: "lesson2", title: "Tập nói" },
-          { id: "lesson3", title: "Đây là con gì?" },
+          { id: "lesson2", title: "Tập nói", isFree: true },
+          { id: "lesson3", title: "Đây là con gì?", isFree: true },
           { id: "lesson4", title: "Ghép đôi" },
         ],
       },
@@ -358,8 +359,8 @@ export const COURSES: CourseDef[] = [
         title: "Phương tiện đường bộ",
         lessons: [
           { id: "lesson1", title: "Học tên phương tiện", isFree: true },
-          { id: "lesson2", title: "Đây là gì?" },
-          { id: "lesson3", title: "Ghép đôi" },
+          { id: "lesson2", title: "Đây là gì?", isFree: true },
+          { id: "lesson3", title: "Ghép đôi", isFree: true },
         ],
       },
       {
@@ -403,8 +404,8 @@ export const COURSES: CourseDef[] = [
         title: "Trái cây phổ biến",
         lessons: [
           { id: "lesson1", title: "Học tên trái cây", isFree: true },
-          { id: "lesson2", title: "Đây là gì?" },
-          { id: "lesson3", title: "Ghép đôi" },
+          { id: "lesson2", title: "Đây là gì?", isFree: true },
+          { id: "lesson3", title: "Ghép đôi", isFree: true },
         ],
       },
       {
@@ -439,8 +440,8 @@ export const COURSES: CourseDef[] = [
         title: "Món ăn sáng",
         lessons: [
           { id: "lesson1", title: "Học tên món ăn", isFree: true },
-          { id: "lesson2", title: "Đây là gì?" },
-          { id: "lesson3", title: "Ghép đôi" },
+          { id: "lesson2", title: "Đây là gì?", isFree: true },
+          { id: "lesson3", title: "Ghép đôi", isFree: true },
         ],
       },
       {
@@ -475,8 +476,8 @@ export const COURSES: CourseDef[] = [
         title: "Khủng long ăn cỏ",
         lessons: [
           { id: "lesson1", title: "Học tên khủng long", isFree: true },
-          { id: "lesson2", title: "Đây là gì?" },
-          { id: "lesson3", title: "Ghép đôi" },
+          { id: "lesson2", title: "Đây là gì?", isFree: true },
+          { id: "lesson3", title: "Ghép đôi", isFree: true },
         ],
       },
       {
@@ -511,8 +512,8 @@ export const COURSES: CourseDef[] = [
         title: "Nhạc cụ dây",
         lessons: [
           { id: "lesson1", title: "Học nhạc cụ", isFree: true },
-          { id: "lesson2", title: "Đây là gì?" },
-          { id: "lesson3", title: "Ghép đôi" },
+          { id: "lesson2", title: "Đây là gì?", isFree: true },
+          { id: "lesson3", title: "Ghép đôi", isFree: true },
         ],
       },
       {
@@ -547,8 +548,8 @@ export const COURSES: CourseDef[] = [
         title: "Nghề cộng đồng",
         lessons: [
           { id: "lesson1", title: "Học tên nghề", isFree: true },
-          { id: "lesson2", title: "Đây là gì?" },
-          { id: "lesson3", title: "Nối dụng cụ" },
+          { id: "lesson2", title: "Đây là gì?", isFree: true },
+          { id: "lesson3", title: "Nối dụng cụ", isFree: true },
         ],
       },
       {
@@ -583,8 +584,8 @@ export const COURSES: CourseDef[] = [
         title: "Hoa phổ biến",
         lessons: [
           { id: "lesson1", title: "Học tên hoa", isFree: true },
-          { id: "lesson2", title: "Đây là gì?" },
-          { id: "lesson3", title: "Ghép đôi" },
+          { id: "lesson2", title: "Đây là gì?", isFree: true },
+          { id: "lesson3", title: "Ghép đôi", isFree: true },
         ],
       },
       {
@@ -619,8 +620,8 @@ export const COURSES: CourseDef[] = [
         title: "Thời tiết cơ bản",
         lessons: [
           { id: "lesson1", title: "Học tên thời tiết", isFree: true },
-          { id: "lesson2", title: "Tập nói" },
-          { id: "lesson3", title: "Đây là gì?" },
+          { id: "lesson2", title: "Tập nói", isFree: true },
+          { id: "lesson3", title: "Đây là gì?", isFree: true },
           { id: "lesson4", title: "Ghép đôi" },
         ],
       },
@@ -659,8 +660,8 @@ export const COURSES: CourseDef[] = [
         title: "Vệ sinh hàng ngày",
         lessons: [
           { id: "lesson1", title: "Học tên", isFree: true },
-          { id: "lesson2", title: "Tập nói" },
-          { id: "lesson3", title: "Đúng hay Sai?" },
+          { id: "lesson2", title: "Tập nói", isFree: true },
+          { id: "lesson3", title: "Đúng hay Sai?", isFree: true },
           { id: "lesson4", title: "Sắp xếp thứ tự" },
         ],
       },
@@ -698,8 +699,8 @@ export const COURSES: CourseDef[] = [
         title: "Đèn & Biển Báo",
         lessons: [
           { id: "lesson1", title: "Học biển báo", isFree: true },
-          { id: "lesson2", title: "Khám phá phố" },
-          { id: "lesson3", title: "Tìm biển đúng" },
+          { id: "lesson2", title: "Khám phá phố", isFree: true },
+          { id: "lesson3", title: "Tìm biển đúng", isFree: true },
           { id: "lesson4", title: "Chọn hành động" },
           { id: "lesson5", title: "Lắp biển báo" },
         ],
@@ -740,8 +741,8 @@ export const COURSES: CourseDef[] = [
         title: "Cảm xúc cơ bản",
         lessons: [
           { id: "lesson1", title: "Học cảm xúc", isFree: true },
-          { id: "lesson2", title: "Tập nói" },
-          { id: "lesson3", title: "Đúng hay Sai?" },
+          { id: "lesson2", title: "Tập nói", isFree: true },
+          { id: "lesson3", title: "Đúng hay Sai?", isFree: true },
           { id: "lesson4", title: "Chọn cảm xúc đúng" },
         ],
       },
@@ -769,8 +770,8 @@ export const COURSES: CourseDef[] = [
         title: "Châu Á",
         lessons: [
           { id: "lesson1", title: "Học tên quốc kỳ", isFree: true },
-          { id: "lesson2", title: "Chọn quốc kỳ đúng" },
-          { id: "lesson3", title: "Lật hình ghi nhớ" },
+          { id: "lesson2", title: "Chọn quốc kỳ đúng", isFree: true },
+          { id: "lesson3", title: "Lật hình ghi nhớ", isFree: true },
           { id: "lesson4", title: "Ghép hình" },
         ],
       },
@@ -818,8 +819,8 @@ export const COURSES: CourseDef[] = [
         title: "Châu Á",
         lessons: [
           { id: "lesson1", title: "Học địa danh", isFree: true },
-          { id: "lesson2", title: "Đây là đâu?" },
-          { id: "lesson3", title: "Ghép đôi" },
+          { id: "lesson2", title: "Đây là đâu?", isFree: true },
+          { id: "lesson3", title: "Ghép đôi", isFree: true },
           { id: "lesson4", title: "Xếp hình" },
         ],
       },
@@ -857,8 +858,8 @@ export const COURSES: CourseDef[] = [
         title: "Châu Á",
         lessons: [
           { id: "lesson1", title: "Học trang phục", isFree: true },
-          { id: "lesson2", title: "Trang phục nước nào?" },
-          { id: "lesson3", title: "Mặc Đúng Cho Bạn" },
+          { id: "lesson2", title: "Trang phục nước nào?", isFree: true },
+          { id: "lesson3", title: "Mặc Đúng Cho Bạn", isFree: true },
           { id: "lesson4", title: "Ghép đôi" },
         ],
       },
@@ -896,8 +897,8 @@ export const COURSES: CourseDef[] = [
         title: "Phép Cộng",
         lessons: [
           { id: "lesson1", title: "Giải thích phép cộng", isFree: true },
-          { id: "lesson2", title: "Cộng bằng hình" },
-          { id: "lesson3", title: "Cộng bằng số" },
+          { id: "lesson2", title: "Cộng bằng hình", isFree: true },
+          { id: "lesson3", title: "Cộng bằng số", isFree: true },
           { id: "lesson4", title: "Tập viết dấu" },
         ],
       },
@@ -933,8 +934,8 @@ export const COURSES: CourseDef[] = [
         title: "Bảng nhân 2",
         lessons: [
           { id: "lesson1", title: "Giải thích phép nhân", isFree: true },
-          { id: "lesson2", title: "Nhân bằng hình" },
-          { id: "lesson3", title: "Nhân bằng số" },
+          { id: "lesson2", title: "Nhân bằng hình", isFree: true },
+          { id: "lesson3", title: "Nhân bằng số", isFree: true },
           { id: "lesson4", title: "Điền số thiếu" },
           { id: "lesson5", title: "Nhảy số" },
         ],
@@ -995,8 +996,8 @@ export const COURSES: CourseDef[] = [
         title: "Bảng chia 2",
         lessons: [
           { id: "lesson1", title: "Giải thích phép chia", isFree: true },
-          { id: "lesson2", title: "Chia bằng hình" },
-          { id: "lesson3", title: "Chia bằng số" },
+          { id: "lesson2", title: "Chia bằng hình", isFree: true },
+          { id: "lesson3", title: "Chia bằng số", isFree: true },
           { id: "lesson4", title: "Điền số thiếu" },
           { id: "lesson5", title: "Nhân ngược" },
         ],
@@ -1057,8 +1058,8 @@ export const COURSES: CourseDef[] = [
         title: "Quy luật màu sắc",
         lessons: [
           { id: "lesson1", title: "Học quy luật", isFree: true },
-          { id: "lesson2", title: "Phần tiếp theo?" },
-          { id: "lesson3", title: "Điền vào chỗ trống" },
+          { id: "lesson2", title: "Phần tiếp theo?", isFree: true },
+          { id: "lesson3", title: "Điền vào chỗ trống", isFree: true },
         ],
       },
       {
@@ -1084,8 +1085,8 @@ export const COURSES: CourseDef[] = [
         title: "Nguyên âm",
         lessons: [
           { id: "lesson1", title: "Học chữ cái", isFree: true },
-          { id: "lesson2", title: "Tập nói" },
-          { id: "lesson3", title: "Tập viết" },
+          { id: "lesson2", title: "Tập nói", isFree: true },
+          { id: "lesson3", title: "Tập viết", isFree: true },
           { id: "lesson4", title: "Chữ nào đúng?" },
           { id: "lesson5", title: "Ghép đôi" },
         ],
@@ -1126,8 +1127,8 @@ export const COURSES: CourseDef[] = [
         title: "Dễ",
         lessons: [
           { id: "lesson1", title: "Phòng khách vui nhộn", isFree: true },
-          { id: "lesson2", title: "Khu vườn thú vị" },
-          { id: "lesson3", title: "Bãi biển đầy nắng" },
+          { id: "lesson2", title: "Khu vườn thú vị", isFree: true },
+          { id: "lesson3", title: "Bãi biển đầy nắng", isFree: true },
           { id: "lesson4", title: "Căn bếp ấm cúng" },
           { id: "lesson5", title: "Sân chơi nhộn nhịp" },
         ],
@@ -1232,8 +1233,8 @@ export const COURSES: CourseDef[] = [
         title: "Màu cơ bản",
         lessons: [
           { id: "lesson1", title: "Học pha màu", isFree: true },
-          { id: "lesson2", title: "Pha màu nào?" },
-          { id: "lesson3", title: "Thử thách pha màu" },
+          { id: "lesson2", title: "Pha màu nào?", isFree: true },
+          { id: "lesson3", title: "Thử thách pha màu", isFree: true },
         ],
       },
       {
@@ -1268,7 +1269,7 @@ export const COURSES: CourseDef[] = [
         title: "Động vật",
         lessons: [
           { id: "lesson1", title: "Tô tự do", isFree: true },
-          { id: "lesson2", title: "Hoạ Khám Phá" },
+          { id: "lesson2", title: "Hoạ Khám Phá", isFree: true },
         ],
       },
       {
@@ -1301,8 +1302,8 @@ export const COURSES: CourseDef[] = [
         title: "Đồng hồ kim",
         lessons: [
           { id: "lesson1", title: "Làm quen đồng hồ", isFree: true },
-          { id: "lesson2", title: "Chọn đúng giờ" },
-          { id: "lesson3", title: "Chỉnh kim đồng hồ" },
+          { id: "lesson2", title: "Chọn đúng giờ", isFree: true },
+          { id: "lesson3", title: "Chỉnh kim đồng hồ", isFree: true },
         ],
       },
       {
@@ -1338,8 +1339,8 @@ export const COURSES: CourseDef[] = [
         variant: "orange",
         lessons: [
           { id: "kia-con-buom-vang", title: "Kìa con bướm vàng", isFree: true },
-          { id: "happy-birthday", title: "Chúc mừng sinh nhật" },
-          { id: "ngoi-sao-lap-lanh", title: "Ngôi sao lấp lánh" },
+          { id: "happy-birthday", title: "Chúc mừng sinh nhật", isFree: true },
+          { id: "ngoi-sao-lap-lanh", title: "Ngôi sao lấp lánh", isFree: true },
           { id: "ba-oi-ba", title: "Bà ơi bà" },
           { id: "doi-ken-ti-hon", title: "Đội kèn tí hon" },
         ],
@@ -1369,7 +1370,7 @@ export const COURSES: CourseDef[] = [
         title: "Vần ie",
         lessons: [
           { id: "lesson1", title: "Học vần", isFree: true },
-          { id: "lesson2", title: "Chọn vần đúng" },
+          { id: "lesson2", title: "Chọn vần đúng", isFree: true },
         ],
       },
       {
@@ -1426,8 +1427,8 @@ export const COURSES: CourseDef[] = [
         title: "Trên cạn",
         lessons: [
           { id: "lesson1", title: "Khám phá địa hình", isFree: true },
-          { id: "lesson2", title: "Nghe đoán địa hình" },
-          { id: "lesson3", title: "Xếp lớp địa hình" },
+          { id: "lesson2", title: "Nghe đoán địa hình", isFree: true },
+          { id: "lesson3", title: "Xếp lớp địa hình", isFree: true },
           { id: "lesson4", title: "Ai sống ở đây?" },
           { id: "lesson5", title: "Phiêu lưu địa hình" },
         ],
@@ -1468,8 +1469,8 @@ export const COURSES: CourseDef[] = [
         title: "Đầu & Mặt",
         lessons: [
           { id: "lesson1", title: "Khám phá cơ thể", isFree: true },
-          { id: "lesson2", title: "Chạm và nói" },
-          { id: "lesson3", title: "Tập nói" },
+          { id: "lesson2", title: "Chạm và nói", isFree: true },
+          { id: "lesson3", title: "Tập nói", isFree: true },
           { id: "lesson4", title: "Đây là gì?" },
           { id: "lesson5", title: "Cơ thể làm gì?" },
           { id: "lesson6", title: "Ghép đôi" },
@@ -1516,8 +1517,8 @@ export const COURSES: CourseDef[] = [
         variant: "green",
         lessons: [
           { id: "lesson1", title: "Học nốt nhạc", isFree: true },
-          { id: "lesson2", title: "Nghe và chọn" },
-          { id: "lesson3", title: "Nốt nào đúng?" },
+          { id: "lesson2", title: "Nghe và chọn", isFree: true },
+          { id: "lesson3", title: "Nốt nào đúng?", isFree: true },
           { id: "lesson4", title: "Sắp xếp nốt" },
         ],
       },
@@ -1543,6 +1544,48 @@ export const COURSES: CourseDef[] = [
         lessons: [
           { id: "lesson1", title: "Nghe và chọn", isFree: true },
           { id: "lesson2", title: "Sắp xếp giai điệu" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "learn-danger",
+    title: "Đồ Vật Nguy Hiểm",
+    description: "Bé học nhận biết các đồ vật nguy hiểm trong nhà và cách giữ an toàn.",
+    icon: GameDangerLogo,
+    type: "life-skill",
+    groups: [
+      {
+        id: "group1",
+        title: "Trong bếp",
+        lessons: [
+          { id: "lesson1", title: "Học tên đồ vật", isFree: true },
+          { id: "lesson2", title: "Khám phá ngôi nhà", isFree: true },
+          { id: "lesson3", title: "Tình huống", isFree: true },
+          { id: "lesson4", title: "Hành động an toàn" },
+          { id: "lesson5", title: "Đúng hay Sai?" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Phòng tắm & xung quanh",
+        lessons: [
+          { id: "lesson1", title: "Học tên đồ vật", isFree: true },
+          { id: "lesson2", title: "Khám phá ngôi nhà" },
+          { id: "lesson3", title: "Tình huống" },
+          { id: "lesson4", title: "Hành động an toàn" },
+          { id: "lesson5", title: "Đúng hay Sai?" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Đồ điện",
+        lessons: [
+          { id: "lesson1", title: "Học tên đồ vật", isFree: true },
+          { id: "lesson2", title: "Khám phá ngôi nhà" },
+          { id: "lesson3", title: "Tình huống" },
+          { id: "lesson4", title: "Hành động an toàn" },
+          { id: "lesson5", title: "Đúng hay Sai?" },
         ],
       },
     ],

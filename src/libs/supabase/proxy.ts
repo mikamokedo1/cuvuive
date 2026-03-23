@@ -20,13 +20,11 @@ const publicPaths = [
   "/khoa-hoc",
   "/hoc-tieng-viet-cho-be",
   "/tro-choi-toan-hoc",
+  "/gioi-thieu-kiem-tien",
 ];
 
 function isPublicPath(pathname: string): boolean {
-  return (
-    pathname === "/" ||
-    publicPaths.some((path) => path !== "/" && pathname.startsWith(path))
-  );
+  return pathname === "/" || publicPaths.some((path) => path !== "/" && pathname.startsWith(path));
 }
 
 export async function updateSession(request: NextRequest) {
@@ -100,4 +98,3 @@ export async function updateSession(request: NextRequest) {
 
   return supabaseResponse;
 }
-

@@ -19,7 +19,7 @@ export default function BlogLayout({ children }: { children: React.ReactNode }) 
     <div className="min-h-screen bg-white font-[family-name:var(--font-nunito-sans)] flex flex-col">
       <HeaderHome />
 
-      <main className="py-4 lg:py-8 flex-1">{children}</main>
+      <main className="py-4 lg:py-8 flex-1 mt-16">{children}</main>
 
       <Footer />
     </div>

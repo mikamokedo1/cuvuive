@@ -19,21 +19,20 @@ export default function LearnNotesGroupPage() {
   const course = COURSES.find((c) => c.id === "learn-notes");
   const groupData = course?.groups.find((g) => g.id === groupId);
 
-  if (!course || !groupData) return <div>Group not found</div>;
-
-  const lessons = groupData.lessons.map((l) => ({
+  const lessons = (groupData?.lessons || []).map((l) => ({
     id: l.id,
     title: l.title,
     icon: ICON_MAP[l.id] || <Music className="text-white w-6 h-6" />,
     isPremium: !l.isFree,
   }));
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { activeIndex, handleLessonClick } = useGroupLessons({
     gameSlug: "learn-notes",
-    groups: course.groups as any,
+    groups: (course?.groups || []) as any,
     lessons,
   });
+
+  if (!course || !groupData) return <div>Group not found</div>;
 
   return (
     <GameWrapLessons

@@ -10,7 +10,7 @@ import { ProgressProvider } from "@/context/ProgressContext";
 import { PlayTimerProvider } from "@/context/PlayTimerContext";
 import { ClientDynamicComponents } from "@/components/common/ClientDynamicComponents";
 import { ReferralTracker } from "@/features/referral/ReferralTracker";
-
+import TopProgressBar from "@/components/common/TopProgressBar";
 
 // Configure fonts
 const baloo2 = Baloo_2({
@@ -157,6 +157,7 @@ export default async function RootLayout({
         />
       </head>
       <body className={`${baloo2.variable} ${nunitoSans.variable} antialiased`} suppressHydrationWarning>
+        <TopProgressBar />
         <UserProvider>
           <AccessProvider>
             <ProgressProvider>

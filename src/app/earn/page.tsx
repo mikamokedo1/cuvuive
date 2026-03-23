@@ -385,7 +385,7 @@ function EarnDashboard() {
 
         <div className="bg-white rounded-2xl shadow-md p-5 border border-purple-100">
           <div className="flex items-center gap-2 mb-2">
-            <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+            <div className="w-8 h-8 bg-purple-50 rounded-full flex items-center justify-center">
               <Crown className="w-4 h-4 text-purple-600" />
             </div>
           </div>
