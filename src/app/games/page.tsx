@@ -12,6 +12,12 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/games",
   },
+  openGraph: {
+    title: "Kho Trò Chơi Giáo Dục - Cú Thông Minh",
+    description:
+      "Hơn 20+ trò chơi giáo dục tương tác giúp bé phát triển trí tuệ toàn diện: Toán học, Âm nhạc, Động vật, Địa lý.",
+    images: [{ url: "/og-image.webp", width: 1200, height: 630, alt: "Cú Thông Minh - Kho trò chơi giáo dục" }],
+  },
 };
 
 export default async function GamesPage() {

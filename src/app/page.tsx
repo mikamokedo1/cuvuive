@@ -93,11 +93,6 @@ export default function Home() {
       logo: "https://cuthongminh.com/icons/favicon-32x32.png",
     },
     screenshot: "https://cuthongminh.com/og-image.png",
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.9",
-      reviewCount: "1280",
-    },
   };
 
   return (

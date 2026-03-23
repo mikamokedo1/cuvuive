@@ -9,6 +9,9 @@ export interface GameSeoData {
   keywords: string[];
   seoText: string;
   seoFeatures: string[];
+  ogImage: string;
+  relatedGames: string[];
+  videoUrl?: string;
 }
 
 export const GAME_SEO: Record<string, GameSeoData> = {
@@ -25,6 +28,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Trò chơi nhận diện chữ đúng",
       "Phù hợp bé 3-6 tuổi",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-tones/logo.webp",
+    relatedGames: ["learn-alphabet", "learn-syllable"],
   },
   "learn-numbers": {
     title: "Học Đếm Số cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -39,6 +44,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Tập viết số",
       "5 cấp độ từ dễ đến khó",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-numbers/number-logo.webp",
+    relatedGames: ["compare-quantity", "learn-shape", "learn-math"],
   },
   "compare-quantity": {
     title: "Học So Sánh Số Lượng cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -53,6 +60,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Luyện tập và thử thách tư duy",
       "Phù hợp bé 3-6 tuổi",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/game-3-logo.webp",
+    relatedGames: ["learn-numbers", "learn-shape", "learn-math"],
   },
   "learn-color": {
     title: "Học Màu Sắc cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -67,6 +76,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Trò chơi tìm màu giống nhau",
       "Hình ảnh đồ vật sinh động",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-color-color.webp",
+    relatedGames: ["mix-color", "paint-picture"],
   },
   "learn-shape": {
     title: "Học Hình Dạng cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -81,6 +92,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Trò chơi tìm hình và ghép hình",
       "Phù hợp bé 3-6 tuổi",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-shape/learn-shape-logo.webp",
+    relatedGames: ["learn-numbers", "compare-quantity", "learn-math"],
   },
   "learn-animal": {
     title: "Học Động Vật cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -95,6 +108,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Trò chơi nhận diện và ghép đôi",
       "Hình ảnh minh họa sinh động",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-animal/logo.webp",
+    relatedGames: ["learn-fruit", "learn-food", "learn-dinosaur"],
   },
   "learn-vehicle": {
     title: "Học Phương Tiện Giao Thông cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -109,6 +124,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Trò chơi nhận diện và ghép đôi",
       "Tìm hiểu công dụng phương tiện",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-vehicle/logo.webp",
+    relatedGames: ["learn-occupation", "learn-hygiene", "learn-traffic"],
   },
   "learn-fruit": {
     title: "Học Trái Cây cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -123,6 +140,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Trò chơi nhận diện và ghép đôi",
       "Hình ảnh trái cây sống động",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-fruit/logo.webp",
+    relatedGames: ["learn-animal", "learn-food", "learn-dinosaur"],
   },
   "learn-food": {
     title: "Học Món Ăn cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -137,6 +156,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Trò chơi nhận diện và ghép đôi",
       "Phù hợp bé 3-6 tuổi",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-food/logo.webp",
+    relatedGames: ["learn-animal", "learn-fruit", "learn-dinosaur"],
   },
   "learn-dinosaur": {
     title: "Học Khủng Long cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -151,6 +172,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Trò chơi nhận diện và ghép đôi",
       "Phù hợp bé yêu thích khám phá",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-dinosaur/logo.webp",
+    relatedGames: ["learn-animal", "learn-fruit", "learn-food"],
   },
   "learn-instrument": {
     title: "Học Nhạc Cụ cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -165,6 +188,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Trò chơi nhận diện và ghép đôi",
       "Phát triển khả năng nghe nhạc",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-instrument/logo.webp",
+    relatedGames: ["mini-piano", "learn-notes"],
   },
   "learn-occupation": {
     title: "Học Nghề Nghiệp cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -179,6 +204,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Nối nghề với dụng cụ làm việc",
       "Hình ảnh minh họa dễ thương",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-occupation/logo.webp",
+    relatedGames: ["learn-vehicle", "learn-hygiene", "learn-traffic"],
   },
   "learn-flower": {
     title: "Học Hoa và Cây cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -193,6 +220,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Trò chơi nhận diện và ghép đôi",
       "Hình ảnh thiên nhiên tươi đẹp",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-flower/logo.webp",
+    relatedGames: ["learn-animal", "learn-fruit", "learn-weather"],
   },
   "learn-weather": {
     title: "Học Thời Tiết cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -207,6 +236,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Tập nói tên thời tiết",
       "Trò chơi mặc đồ đúng mùa",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-weather/logo.webp",
+    relatedGames: ["learn-animal", "learn-fruit", "learn-flower"],
   },
   "learn-hygiene": {
     title: "Học Vệ Sinh Cá Nhân cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -221,6 +252,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Tình huống thực tế sinh động",
       "Sắp xếp thứ tự các bước vệ sinh",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-hygiene/logo.webp",
+    relatedGames: ["learn-vehicle", "learn-occupation", "learn-traffic"],
   },
   "learn-traffic": {
     title: "Học An Toàn Giao Thông cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -235,6 +268,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Trò chơi phiêu lưu và tình huống",
       "Lắp ráp biển báo",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-traffic/logo.webp",
+    relatedGames: ["learn-vehicle", "learn-occupation", "learn-hygiene"],
   },
   "learn-emotion": {
     title: "Học Cảm Xúc cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -249,6 +284,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Tình huống kịch bản sinh động",
       "Phát triển trí tuệ cảm xúc",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-emotion/logo.webp",
+    relatedGames: ["learn-vehicle", "learn-occupation", "learn-hygiene"],
   },
   "learn-flag": {
     title: "Học Cờ Quốc Gia cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -263,6 +300,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Ghép hình quốc kỳ",
       "Mở rộng kiến thức địa lý",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-flag/logo.webp",
+    relatedGames: ["learn-landmark", "learn-costume", "learn-terrain"],
   },
   "learn-landmark": {
     title: "Học Địa Danh Nổi Tiếng cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -277,6 +316,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Trò chơi nhận diện và xếp hình",
       "Mở rộng kiến thức địa lý",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-landmark/logo.webp",
+    relatedGames: ["learn-flag", "learn-costume", "learn-terrain"],
   },
   "learn-costume": {
     title: "Học Trang Phục Thế Giới cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -291,6 +332,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Trò chơi mặc đúng cho bạn",
       "Tìm hiểu văn hóa thế giới",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-costume/logo.webp",
+    relatedGames: ["learn-flag", "learn-landmark", "learn-terrain"],
   },
   "learn-math": {
     title: "Học Toán Đơn Giản cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -305,6 +348,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Tập viết dấu cộng và trừ",
       "Luyện tập tổng hợp",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-math/logo.webp",
+    relatedGames: ["learn-numbers", "compare-quantity", "learn-multiply"],
   },
   "learn-multiply": {
     title: "Học Phép Nhân cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -319,6 +364,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Điền số thiếu và nhảy số",
       "Cách tiếp cận trực quan",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-multiply/logo.webp",
+    relatedGames: ["learn-math", "learn-divide", "learn-numbers"],
   },
   "learn-divide": {
     title: "Học Phép Chia cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -333,6 +380,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Điền số thiếu và nhân ngược",
       "Phương pháp trực quan",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-divide/logo.webp",
+    relatedGames: ["learn-math", "learn-multiply", "learn-numbers"],
   },
   "find-pattern": {
     title: "Học Tìm Quy Luật cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -347,6 +396,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Điền vào chỗ trống",
       "Phát triển tư duy logic",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/find-pattern/logo.webp",
+    relatedGames: ["find-differences", "odd-one-out", "maze-runner"],
   },
   "learn-alphabet": {
     title: "Học Bảng Chữ Cái Tiếng Việt cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -361,6 +412,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Tập viết theo nét hướng dẫn",
       "Nhận diện chữ và ghép đôi",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-alphabet/logo.webp",
+    relatedGames: ["learn-tones", "learn-syllable"],
   },
   "find-differences": {
     title: "Tìm Điểm Khác Biệt cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -375,6 +428,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "2 cấp độ: dễ và trung bình",
       "Rèn luyện khả năng quan sát",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/game-4-logo.webp",
+    relatedGames: ["find-pattern", "odd-one-out", "maze-runner"],
   },
   "odd-one-out": {
     title: "Tìm Hình Khác Biệt cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -389,6 +444,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Tìm hình khác loại",
       "Rèn luyện tư duy phân loại",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/odd-one-out/logo.webp",
+    relatedGames: ["find-pattern", "find-differences", "maze-runner"],
   },
   "maze-runner": {
     title: "Mê Cung Phiêu Lưu cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -403,6 +460,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Phát triển tư duy không gian",
       "Rèn luyện sự kiên nhẫn",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/maze-runner/logo.webp",
+    relatedGames: ["find-pattern", "find-differences", "line-connect"],
   },
   "line-connect": {
     title: "Nối Điểm Trí Tuệ cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -417,6 +476,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Phát triển tư duy logic",
       "Rèn luyện lập kế hoạch",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/line-connect/logo.webp",
+    relatedGames: ["find-pattern", "maze-runner", "odd-one-out"],
   },
   "mix-color": {
     title: "Học Pha Màu cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -431,6 +492,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Thử thách sáng tạo",
       "Phát triển khả năng mỹ thuật",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-color-color.webp",
+    relatedGames: ["learn-color", "paint-picture"],
   },
   "paint-picture": {
     title: "Tô Màu Sáng Tạo cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -445,6 +508,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Chế độ Hoạ Khám Phá",
       "Phát triển thẩm mỹ và sáng tạo",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/paint-picture/logo.webp",
+    relatedGames: ["learn-color", "mix-color"],
   },
   "learn-clock": {
     title: "Học Xem Đồng Hồ cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -459,6 +524,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Chọn đúng giờ theo yêu cầu",
       "Chỉnh kim đồng hồ tương tác",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-clock/logo-main.webp",
+    relatedGames: ["learn-numbers", "compare-quantity", "learn-math"],
   },
   "mini-piano": {
     title: "Đàn Piano Tí Hon cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -473,6 +540,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Thử thách trí nhớ âm thanh",
       "Phát triển tai nghe nhạc",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/mini-piano/logo.webp",
+    relatedGames: ["learn-instrument", "learn-notes"],
   },
   "learn-syllable": {
     title: "Học Ghép Vần cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -487,6 +556,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Trò chơi chọn vần đúng",
       "Nền tảng cho kỹ năng đọc",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-syllable/logo.webp",
+    relatedGames: ["learn-tones", "learn-alphabet"],
   },
   "learn-terrain": {
     title: "Học Địa Hình cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -501,6 +572,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Tìm hiểu sinh vật ở mỗi địa hình",
       "Phiêu lưu khám phá tự nhiên",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-terrain/logo.webp",
+    relatedGames: ["learn-flag", "learn-landmark", "learn-costume"],
   },
   "learn-body": {
     title: "Học Bộ Phận Cơ Thể cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -515,6 +588,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Chạm và nói tên bộ phận",
       "Tìm hiểu chức năng cơ thể",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-body/logo.webp",
+    relatedGames: ["learn-animal", "learn-fruit", "learn-food"],
   },
   "learn-notes": {
     title: "Học Nốt Nhạc cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -529,6 +604,8 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Nghe âm thanh và chọn nốt đúng",
       "Sắp xếp nốt trên khuông nhạc",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-notes/logo.webp",
+    relatedGames: ["learn-instrument", "mini-piano"],
   },
   "learn-danger": {
     title: "Học Đồ Vật Nguy Hiểm cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -543,5 +620,7 @@ export const GAME_SEO: Record<string, GameSeoData> = {
       "Xử lý tình huống an toàn",
       "Rèn kỹ năng phòng tránh tai nạn",
     ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-danger/logo.webp",
+    relatedGames: ["learn-vehicle", "learn-occupation", "learn-hygiene"],
   },
 };

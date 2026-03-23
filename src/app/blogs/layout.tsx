@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Góc Chia Sẻ | Cú Thông Minh",
     description: "Kiến thức và phương pháp giáo dục sớm cho trẻ từ chuyên gia và cộng đồng phụ huynh.",
+    images: [{ url: "/og-image.webp", width: 1200, height: 630, alt: "Cú Thông Minh - Blog" }],
   },
 };
 

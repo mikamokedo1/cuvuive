@@ -8,6 +8,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/terms",
   },
+  openGraph: {
+    title: "Điều khoản sử dụng | Cú Thông Minh",
+    description: "Điều khoản và điều kiện sử dụng dịch vụ của Cú Thông Minh dành cho phụ huynh và học sinh.",
+    images: [{ url: "/og-image.webp", width: 1200, height: 630, alt: "Cú Thông Minh - Điều khoản sử dụng" }],
+  },
 };
 
 export default function TermsPage() {
@@ -24,7 +29,7 @@ export default function TermsPage() {
           <h1 className="text-4xl md:text-5xl font-bold font-[family-name:var(--font-baloo-2)] text-slate-900 mb-4 tracking-tight">
             Điều Khoản Sử Dụng
           </h1>
-          <p className="text-lg text-slate-500">Cập nhật lần cuối: {new Date().toLocaleDateString("vi-VN")}</p>
+          <p className="text-lg text-slate-500">Cập nhật lần cuối: 23 tháng 3, 2026</p>
         </div>
 
         <div className="bg-white rounded-[2rem] shadow-sm border border-slate-100 p-8 md:p-12 prose prose-slate max-w-none prose-headings:font-[family-name:var(--font-baloo-2)] prose-headings:text-slate-900 prose-a:text-[#FF9C01] hover:prose-a:text-orange-600">

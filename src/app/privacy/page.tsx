@@ -8,6 +8,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/privacy",
   },
+  openGraph: {
+    title: "Chính sách bảo mật | Cú Thông Minh",
+    description: "Chính sách bảo mật và quyền riêng tư của ứng dụng Cú Thông Minh dành cho trẻ em.",
+    images: [{ url: "/og-image.webp", width: 1200, height: 630, alt: "Cú Thông Minh - Chính sách bảo mật" }],
+  },
 };
 
 export default function PrivacyPage() {
@@ -24,7 +29,7 @@ export default function PrivacyPage() {
           <h1 className="text-4xl md:text-5xl font-bold font-[family-name:var(--font-baloo-2)] text-slate-900 mb-4 tracking-tight">
             Chính Sách Bảo Mật
           </h1>
-          <p className="text-lg text-slate-500">Cập nhật lần cuối: {new Date().toLocaleDateString("vi-VN")}</p>
+          <p className="text-lg text-slate-500">Cập nhật lần cuối: 23 tháng 3, 2026</p>
         </div>
 
         <div className="bg-white rounded-[2rem] shadow-sm border border-slate-100 p-8 md:p-12 prose prose-slate max-w-none prose-headings:font-[family-name:var(--font-baloo-2)] prose-headings:text-slate-900 prose-a:text-[#FF9C01] hover:prose-a:text-orange-600">

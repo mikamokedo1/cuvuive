@@ -32,6 +32,9 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://cuthongminh.com"),
   alternates: {
     canonical: "/",
+    languages: {
+      "vi": "https://cuthongminh.com",
+    },
   },
   title: "Cú Thông Minh - Vừa học vừa chơi | Ứng dụng học tập cho bé",
   description:

@@ -1,5 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "404 - Trang không tồn tại | Cú Thông Minh",
+  description: "Trang bạn đang tìm kiếm không tồn tại. Hãy quay về trang chủ Cú Thông Minh.",
+  robots: { index: false, follow: true },
+};
+
 const OwlSleep = "https://assets.cuthongminh.com/games/owl-sleep.webp";
 
 export default function NotFound() {

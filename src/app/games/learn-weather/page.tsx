@@ -18,6 +18,7 @@ export const metadata: Metadata = {
     description: seo.description,
     url: `https://cuthongminh.com/games/learn-weather`,
     type: "website",
+  images: [{ url: seo.ogImage, width: 1200, height: 630, alt: seo.title }],
   },
 };
 

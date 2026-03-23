@@ -1,29 +1,6 @@
-import type { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-const GameInstrumentLogo = "https://assets.cuthongminh.com/games/learn-instrument/logo.webp";
 
-export const metadata: Metadata = {
-  title: "Học Nhạc Cụ | Cú Thông Minh",
-  description: "Học các loại nhạc cụ: dây, gõ, hơi",
-  openGraph: {
-    title: "Học Nhạc Cụ | Cú Thông Minh",
-    description: "Khám phá âm thanh của các loại nhạc cụ cùng bé.",
-    type: "website",
-    images: [
-      {
-        url: GameInstrumentLogo,
-        width: 630,
-        height: 630,
-        alt: "Học Nhạc Cụ | Cú Thông Minh",
-      },
-    ],
-  },
-  alternates: {
-    canonical: "/games/learn-instrument",
-  },
-};
-
-export default function LearnInstrumentLayout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <GameSchema courseId="learn-instrument" />

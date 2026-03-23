@@ -7,6 +7,8 @@ import remarkGfm from "remark-gfm";
 import { Clock, Calendar, User, Tag } from "lucide-react";
 import "@/styles/blog.css"; // Make sure to import the new blog styles
 import { HowToSchema, type HowToStep } from "@/components/common/HowToSchema";
+import { safeJsonLd } from "@/libs/utils/safe-jsonld";
+import Link from "next/link";
 
 /**
  * Extracts HowTo steps from MDX content by parsing ## headings and their following text.
@@ -119,7 +121,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     description: post.description,
     image: post.image ? [`https://assets.cuthongminh.com${post.image}`] : [],
     datePublished: post.date,
-    dateModified: post.date,
+    dateModified: post.dateModified,
     wordCount,
     articleSection,
     inLanguage: "vi",
@@ -181,8 +183,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   return (
     <article className="container mx-auto px-6 max-w-3xl">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }} />
 
       {/* HowTo Schema for tutorial posts */}
       {howToSteps.length > 0 && (
@@ -190,7 +192,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           name={post.title}
           description={post.description}
           steps={howToSteps}
-          image={post.image ? (post.image.startsWith("http") ? post.image : `https://cuthongminh.com${post.image}`) : undefined}
+          image={
+            post.image
+              ? post.image.startsWith("http")
+                ? post.image
+                : `https://cuthongminh.com${post.image}`
+              : undefined
+          }
         />
       )}
 
@@ -199,13 +207,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         {post.tags && post.tags.length > 0 && (
           <div className="flex flex-wrap items-center justify-center gap-2 mb-6">
             {post.tags.map((tag) => (
-              <span
+              <Link
                 key={tag}
-                className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider px-3 py-1.5 bg-orange-100 text-orange-600 rounded-full"
+                href={`/blogs/tag/${encodeURIComponent(tag)}`}
+                className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider px-3 py-1.5 bg-orange-100 text-orange-600 rounded-full hover:bg-orange-200 transition-colors"
               >
                 <Tag className="w-3.5 h-3.5" />
                 {tag}
-              </span>
+              </Link>
             ))}
           </div>
         )}

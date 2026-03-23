@@ -8,6 +8,7 @@ export interface BlogPost {
   title: string;
   description: string;
   date: string; // ISO 8601 string, e.g., '2026-03-08'
+  dateModified: string; // ISO 8601 string, falls back to date if not specified
   author: string;
   tags?: string[];
   image?: string;
@@ -53,6 +54,7 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
       title: data.title || "Untitled",
       description: data.description || "",
       date: data.date || "",
+      dateModified: data.dateModified || data.date || "",
       author: data.author || "Cú Thông Minh",
       tags: data.tags || [],
       image: data.image || "/og-image.png",

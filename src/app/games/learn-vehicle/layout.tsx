@@ -1,29 +1,6 @@
-import type { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-const GameVehicleLogo = "https://assets.cuthongminh.com/games/learn-vehicle/logo.webp";
 
-export const metadata: Metadata = {
-  title: "Học Phương Tiện Giao Thông | Cú Thông Minh",
-  description: "Học các loại phương tiện giao thông: đường bộ, đường thủy, hàng không",
-  openGraph: {
-    title: "Học Phương Tiện Giao Thông | Cú Thông Minh",
-    description: "Khám phá các loại phương tiện giao thông cùng bé.",
-    type: "website",
-    images: [
-      {
-        url: GameVehicleLogo,
-        width: 630,
-        height: 630,
-        alt: "Học Phương Tiện Giao Thông | Cú Thông Minh",
-      },
-    ],
-  },
-  alternates: {
-    canonical: "/games/learn-vehicle",
-  },
-};
-
-export default function LearnVehicleLayout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <GameSchema courseId="learn-vehicle" />

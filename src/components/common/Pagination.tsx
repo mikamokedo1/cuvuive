@@ -7,10 +7,49 @@ interface PaginationProps {
   baseUrl: string;
 }
 
+/**
+ * Build a truncated list of page numbers with ellipsis.
+ * Always shows: first page, last page, and a window of ±1 around current page.
+ * Example outputs for currentPage=6, totalPages=20:
+ *   [1, '…', 5, 6, 7, '…', 20]
+ */
+function getPageRange(current: number, total: number): (number | "…")[] {
+  const SIBLING = 1; // pages shown on each side of current
+  const items: (number | "…")[] = [];
+
+  const rangeStart = Math.max(2, current - SIBLING);
+  const rangeEnd = Math.min(total - 1, current + SIBLING);
+
+  // Always add first page
+  items.push(1);
+
+  // Left ellipsis
+  if (rangeStart > 2) {
+    items.push("…");
+  }
+
+  // Middle range
+  for (let i = rangeStart; i <= rangeEnd; i++) {
+    items.push(i);
+  }
+
+  // Right ellipsis
+  if (rangeEnd < total - 1) {
+    items.push("…");
+  }
+
+  // Always add last page (if more than 1 page)
+  if (total > 1) {
+    items.push(total);
+  }
+
+  return items;
+}
+
 export default function Pagination({ currentPage, totalPages, baseUrl }: PaginationProps) {
   if (totalPages <= 1) return null;
 
-  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+  const pageRange = getPageRange(currentPage, totalPages);
 
   // Helper to construct page URLs
   const getPageUrl = (page: number) => {
@@ -18,7 +57,7 @@ export default function Pagination({ currentPage, totalPages, baseUrl }: Paginat
   };
 
   return (
-    <nav className="flex items-center justify-center space-x-2 py-12" aria-label="Pagination">
+    <nav className="flex items-center justify-center space-x-1 sm:space-x-2 py-12" aria-label="Pagination">
       {/* Previous Page */}
       <Link
         href={currentPage > 1 ? getPageUrl(currentPage - 1) : "#"}
@@ -34,19 +73,28 @@ export default function Pagination({ currentPage, totalPages, baseUrl }: Paginat
 
       {/* Page Numbers */}
       <div className="flex items-center space-x-1">
-        {pages.map((page) => (
-          <Link
-            key={page}
-            href={getPageUrl(page)}
-            className={`w-10 h-10 flex items-center justify-center rounded-xl font-semibold transition-all ${
-              currentPage === page
-                ? "bg-orange-500 text-white shadow-lg shadow-orange-200"
-                : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 border border-transparent"
-            }`}
-          >
-            {page}
-          </Link>
-        ))}
+        {pageRange.map((item, idx) =>
+          item === "…" ? (
+            <span
+              key={`ellipsis-${idx}`}
+              className="w-8 sm:w-10 h-10 flex items-center justify-center text-slate-400 select-none"
+            >
+              …
+            </span>
+          ) : (
+            <Link
+              key={item}
+              href={getPageUrl(item)}
+              className={`w-8 sm:w-10 h-10 flex items-center justify-center rounded-xl text-sm sm:text-base font-semibold transition-all ${
+                currentPage === item
+                  ? "bg-orange-500 text-white shadow-lg shadow-orange-200"
+                  : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 border border-transparent"
+              }`}
+            >
+              {item}
+            </Link>
+          )
+        )}
       </div>
 
       {/* Next Page */}
