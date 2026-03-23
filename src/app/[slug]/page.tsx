@@ -122,18 +122,78 @@ export async function generateStaticParams() {
   }));
 }
 
+// SEO keywords per group for better long-tail targeting
+const GROUP_KEYWORDS: Record<GameGroupType, string[]> = {
+  math: [
+    "trò chơi toán học cho bé mầm non", "bé học toán online", "phép cộng trừ cho trẻ",
+    "toán tư duy cho bé 5 tuổi", "dạy bé đếm số tại nhà", "game toán cho trẻ 3-8 tuổi",
+    "bài tập toán mẫu giáo", "học cộng trừ nhân chia đơn giản",
+  ],
+  logic: [
+    "trò chơi tư duy logic cho bé", "game phát triển trí tuệ trẻ em", "tìm quy luật cho bé",
+    "trò chơi mê cung online cho trẻ", "bài tập tư duy cho trẻ mầm non",
+    "rèn luyện tư duy logic trẻ 3-6 tuổi", "trò chơi tìm điểm khác biệt", "puzzle cho bé online",
+  ],
+  language: [
+    "học tiếng việt cho bé online", "bé học chữ cái tiếng việt", "tập đọc cho bé 4 tuổi",
+    "học bảng chữ cái cho trẻ mầm non", "bé học ghép vần", "dạy bé tập viết chữ",
+    "học dấu thanh tiếng việt", "giáo dục ngôn ngữ cho trẻ",
+  ],
+  science: [
+    "bé học khoa học vui", "trò chơi khám phá động vật cho bé", "bé học nhận biết trái cây",
+    "khủng long cho trẻ em", "thế giới động vật cho bé mầm non",
+    "dạy bé nhận biết hoa và cây", "khoa học tự nhiên cho trẻ 3-6 tuổi", "bé học bộ phận cơ thể",
+  ],
+  "life-skill": [
+    "kỹ năng sống cho bé mầm non", "dạy bé vệ sinh cá nhân", "an toàn giao thông cho trẻ",
+    "bé học nghề nghiệp", "nhận biết cảm xúc cho trẻ", "dạy bé nhận biết đồ vật nguy hiểm",
+    "kỹ năng tự phục vụ cho bé", "giáo dục kỹ năng sống trẻ em",
+  ],
+  geography: [
+    "bé học địa lý vui", "nhận biết cờ các nước cho bé", "địa danh nổi tiếng thế giới cho trẻ",
+    "trang phục truyền thống các nước", "khám phá địa hình tự nhiên",
+    "dạy bé về các quốc gia", "địa lý cho trẻ mầm non", "trò chơi địa lý online cho bé",
+  ],
+  music: [
+    "bé học âm nhạc online", "đàn piano cho trẻ em", "nhận biết nhạc cụ cho bé",
+    "học nốt nhạc cho bé", "bài hát thiếu nhi", "giáo dục âm nhạc cho trẻ mầm non",
+    "game chơi đàn piano online cho bé", "âm nhạc cho trẻ 3-6 tuổi",
+  ],
+  art: [
+    "bé học mỹ thuật online", "tô màu online cho bé miễn phí", "học pha màu cho trẻ",
+    "trò chơi vẽ tranh cho bé", "dạy bé nhận biết màu sắc", "sáng tạo nghệ thuật cho trẻ",
+    "game tô màu cho trẻ mầm non", "mỹ thuật cho bé 3-6 tuổi",
+  ],
+  history: [],
+};
+
+// SEO-optimized descriptions per group
+const GROUP_DESCRIPTIONS: Record<GameGroupType, string> = {
+  math: "Trò chơi Toán Học tương tác giúp bé 3-8 tuổi học đếm số, phép cộng trừ nhân chia, so sánh số lượng. Phương pháp học mà chơi hiệu quả trên Cú Thông Minh.",
+  logic: "Rèn luyện tư duy logic cho bé qua trò chơi tìm quy luật, mê cung, nối điểm, tìm điểm khác biệt. Phát triển trí tuệ toàn diện cho trẻ 3-8 tuổi.",
+  language: "Bé học tiếng Việt online: bảng chữ cái, dấu thanh, ghép vần qua trò chơi tương tác sinh động. Nền tảng ngôn ngữ vững chắc cho trẻ mầm non.",
+  science: "Khám phá thế giới khoa học cùng bé: động vật, trái cây, khủng long, thời tiết, cơ thể người. Trò chơi giáo dục tương tác cho trẻ 3-8 tuổi.",
+  "life-skill": "Dạy bé kỹ năng sống thiết yếu: an toàn giao thông, vệ sinh cá nhân, nghề nghiệp, quản lý cảm xúc qua trò chơi tương tác vui nhộn trên Cú Thông Minh.",
+  geography: "Bé khám phá thế giới: quốc kỳ các nước, địa danh nổi tiếng, trang phục truyền thống, địa hình tự nhiên qua trò chơi giáo dục tương tác.",
+  music: "Bé học âm nhạc vui: nhạc cụ, nốt nhạc, chơi đàn piano qua trò chơi tương tác. Phát triển thính giác và cảm thụ nghệ thuật cho trẻ mầm non.",
+  art: "Bé học mỹ thuật sáng tạo: nhận biết màu sắc, pha màu, tô tranh, vẽ tự do. Phát triển thẩm mỹ và khả năng sáng tạo cho trẻ 3-8 tuổi.",
+  history: "",
+};
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const group = GROUPS.find((g) => g.slug === slug);
 
   if (!group) return {};
 
-  const title = `${group.title} cho bé - Trò chơi giáo dục Cú Thông Minh`;
-  const description = `Khám phá các trò chơi ${group.title} hấp dẫn giúp bé phát triển tư duy, sáng tạo và kỹ năng toàn diện tại Cú Thông Minh.`;
+  const title = `Trò Chơi ${group.title} Cho Bé - Game Giáo Dục Online | Cú Thông Minh`;
+  const description = GROUP_DESCRIPTIONS[group.id] || `Khám phá các trò chơi ${group.title} hấp dẫn giúp bé phát triển tư duy, sáng tạo và kỹ năng toàn diện tại Cú Thông Minh.`;
+  const keywords = GROUP_KEYWORDS[group.id] || [];
 
   return {
     title,
     description,
+    keywords,
     alternates: {
       canonical: `/${slug}`,
     },

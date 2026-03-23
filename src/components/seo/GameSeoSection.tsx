@@ -147,6 +147,37 @@ export function GameSeoSection({ gameId }: GameSeoSectionProps) {
             </div>
           </div>
         )}
+
+        {/* Related Blog Posts — Internal Linking for SEO */}
+        {seo.relatedBlogs && seo.relatedBlogs.length > 0 && (
+          <div className="mt-8 pt-8 border-t border-slate-200">
+            <h3 className="text-lg font-bold text-slate-800 mb-4 font-[family-name:var(--font-baloo-2)]">
+              📚 Bài viết liên quan
+            </h3>
+            <div className="grid grid-cols-1 gap-3">
+              {seo.relatedBlogs.map((blog) => (
+                <Link
+                  key={blog.slug}
+                  href={`/blogs/${blog.slug}`}
+                  className="flex items-center gap-3 p-4 rounded-xl bg-slate-50 hover:bg-orange-50 border border-slate-100 hover:border-orange-200 transition-colors group"
+                >
+                  <span className="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center shrink-0 group-hover:bg-orange-200 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-orange-500">
+                      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                    </svg>
+                  </span>
+                  <span className="text-sm font-semibold text-slate-700 group-hover:text-orange-600 transition-colors line-clamp-2">
+                    {blog.title}
+                  </span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-auto shrink-0 text-slate-400 group-hover:text-orange-500 transition-colors">
+                    <path d="m9 18 6-6-6-6" />
+                  </svg>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </section>
     </>
   );
