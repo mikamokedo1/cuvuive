@@ -172,7 +172,7 @@ export const ADVENTURE_STEPS: AdventureStep[] = [
   },
   {
     id: "adv_signs_4",
-    question: "Đèn VÀNG bật lên. Mình nên làm gì?",
+    question: "Đèn nào nhắc nhở mình CHÚ Ý, chuẩn bị dừng?",
     options: ["green_light", "yellow_light", "red_light"],
     correctId: "yellow_light",
     explanation: "Đèn vàng là chú ý, chuẩn bị dừng!",
@@ -180,7 +180,7 @@ export const ADVENTURE_STEPS: AdventureStep[] = [
   },
   {
     id: "adv_signs_5",
-    question: "Biển tròn đỏ có vạch trắng ngang nghĩa là gì?",
+    question: "Biển nào báo hiệu KHÔNG ĐƯỢC ĐI VÀO con đường này?",
     options: ["no_entry", "stop_sign", "crosswalk_sign"],
     correctId: "no_entry",
     explanation: "Đúng! Biển cấm đi vào đường này!",
@@ -311,15 +311,11 @@ export function getAdventureForGroup(groupId: string): AdventureStep[] {
 // SCENARIO SPOTTER (Situation-based choice)
 // ═══════════════════════════════════════════
 
-export interface ScenarioQuestion {
-  id: string;
-  situationText: string;
-  image: string | StaticImageData;
-  options: { id: string; text: string; emoji: string }[];
-  correctOptionId: string;
-  explanation: string;
-  category: string;
-}
+// Re-export shared type for backward compatibility
+import { ScenarioQuestion } from "@/types/game";
+export type { ScenarioQuestion } from "@/types/game";
+
+
 
 export const SCENARIO_QUESTIONS: ScenarioQuestion[] = [
   // Group 1

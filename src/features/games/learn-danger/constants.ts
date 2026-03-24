@@ -217,7 +217,7 @@ export const HOUSE_EXPLORER_STEPS: AdventureStep[] = [
   },
   {
     id: "exp_bath_3",
-    question: "Viên nào nhìn giống kẹo nhưng là THUỐC nguy hiểm?",
+    question: "Viên nào nhìn giống kẹo nhưng là rất nguy hiểm?",
     options: ["medicine", "sharp_tool", "detergent"],
     correctId: "medicine",
     explanation: "Chính xác! Thuốc không phải kẹo, chỉ uống khi bố mẹ cho!",
@@ -251,7 +251,7 @@ export const HOUSE_EXPLORER_STEPS: AdventureStep[] = [
   // Group 3 — Đồ điện
   {
     id: "exp_elec_1",
-    question: "Cú thấy cái lỗ nhỏ trên tường. Đó là gì?",
+    question: "Cú thấy những cái lỗ nhỏ trên tường. Đó là gì?",
     options: ["power_socket", "hot_iron", "fan"],
     correctId: "power_socket",
     explanation: "Đúng! Ổ cắm điện rất nguy hiểm, không chọc tay vào!",
@@ -314,15 +314,9 @@ export function getExplorerForGroup(groupId: string): AdventureStep[] {
 // SCENARIO QUIZ (Situation-based choice — lesson 3)
 // ═══════════════════════════════════════════
 
-export interface ScenarioQuestion {
-  id: string;
-  situationText: string;
-  image: string | StaticImageData;
-  options: { id: string; text: string; emoji: string }[];
-  correctOptionId: string;
-  explanation: string;
-  category: string;
-}
+// Re-export shared type for backward compatibility
+import { ScenarioQuestion } from "@/types/game";
+export type { ScenarioQuestion } from "@/types/game";
 
 export const DANGER_SCENARIOS: ScenarioQuestion[] = [
   // Group 1 — Trong bếp
@@ -357,7 +351,7 @@ export const DANGER_SCENARIOS: ScenarioQuestion[] = [
     situationText: "Pé thấy bật lửa của bố trên bàn. Pé nên làm gì?",
     image: KidPlayLighter,
     options: [
-      { id: "a", text: "Bật thử xem lửa", emoji: "🔥" },
+      { id: "a", text: "Bật thử xem", emoji: "🔥" },
       { id: "b", text: "Cho bạn xem", emoji: "👫" },
       { id: "c", text: "Báo bố cất đi", emoji: "🗣️" },
     ],
