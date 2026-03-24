@@ -1,5 +1,5 @@
 import { GROUPS } from "@/features/games/learn-cleaning/constants";
-const GameCleaningLogo = "https://assets.cuthongminh.com/games/learn-cleaning/logo.webp";
+const GameCleaningLogo = "/games/learn-cleaning/logo.png";
 import { GameWrapGroups } from "@/components/layout/GameWrapGroups";
 
 export default function LearnCleaningPage() {

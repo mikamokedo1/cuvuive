@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GameSchema } from "@/components/common/GameSchema";
-const GameCleaningLogo = "https://assets.cuthongminh.com/games/learn-cleaning/logo.webp";
+const GameCleaningLogo = "/games/learn-cleaning/logo.png";
 
 export const metadata: Metadata = {
   title: "Học Dọn Dẹp | Cú Thông Minh",

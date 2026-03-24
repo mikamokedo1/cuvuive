@@ -38,7 +38,7 @@ const GameLineConnectLogo = "https://assets.cuthongminh.com/games/line-connect/l
 const LineConnectGroup1Logo = "https://assets.cuthongminh.com/games/line-connect/group1.webp";
 const LineConnectGroup2Logo = "https://assets.cuthongminh.com/games/line-connect/group2.webp";
 const LineConnectGroup3Logo = "https://assets.cuthongminh.com/games/line-connect/group3.webp";
-const GameCleaningLogo = "https://assets.cuthongminh.com/games/learn-cleaning/logo.webp";
+const GameCleaningLogo = "/games/learn-cleaning/logo.png";
 import { StaticImageData } from "next/image";
 import { GameGroupType } from "@/libs/constants/groups";
 

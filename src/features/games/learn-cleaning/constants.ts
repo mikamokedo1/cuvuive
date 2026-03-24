@@ -1,9 +1,9 @@
 import { StaticImageData } from "next/image";
 
 // Import group logos (placeholder URLs - need to upload actual images)
-const LogoGroup1 = "https://assets.cuthongminh.com/games/learn-cleaning/group1.webp";
-const LogoGroup2 = "https://assets.cuthongminh.com/games/learn-cleaning/group2.webp";
-const LogoGroup3 = "https://assets.cuthongminh.com/games/learn-cleaning/group3.webp";
+const LogoGroup1 = "/games/learn-cleaning/group1.png";
+const LogoGroup2 = "/games/learn-cleaning/group2.png";
+const LogoGroup3 = "/games/learn-cleaning/group3.png";
 
 // Import Dọn Phòng (Group 1)
 const TidyBed = "https://assets.cuthongminh.com/games/learn-cleaning/tidy-bed.webp";
