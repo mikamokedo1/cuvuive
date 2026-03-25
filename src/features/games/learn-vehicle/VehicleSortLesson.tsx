@@ -22,6 +22,11 @@ export function VehicleSortLesson({ vehicles, onComplete, requiredCorrect = 8 }:
   const [selectedZone, setSelectedZone] = useState<string | null>(null);
   const [remainingVehicles, setRemainingVehicles] = useState<EntityData[]>([]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      speak(`${currentVehicle?.name} hoạt động ở đâu`);
+    }, 500);
+  }, [currentVehicle]);
   // Initialize game
   useEffect(() => {
     initializeGame();
@@ -36,10 +41,6 @@ export function VehicleSortLesson({ vehicles, onComplete, requiredCorrect = 8 }:
     setScore(0);
     setFeedback(null);
     setSelectedZone(null);
-
-    setTimeout(() => {
-      speak("Xe này đi ở đâu");
-    }, 500);
   };
 
   const handleZoneClick = (zoneId: string) => {
@@ -71,7 +72,7 @@ export function VehicleSortLesson({ vehicles, onComplete, requiredCorrect = 8 }:
           speak("Tuyệt vời! Bạn đã hoàn thành!");
           setTimeout(onComplete, 1500);
         }
-      }, 1500);
+      }, 3000);
     } else {
       // Wrong!
       setFeedback("wrong");

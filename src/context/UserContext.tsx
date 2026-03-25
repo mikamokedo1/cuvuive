@@ -2,7 +2,7 @@
 
 import { createClient } from "@/libs/supabase/client";
 import { User } from "@supabase/supabase-js";
-import { createContext, useContext, useEffect, useMemo, useRef, useState, ReactNode } from "react";
+import { createContext, useContext, useEffect, useMemo, useRef, useState, startTransition, ReactNode } from "react";
 import { getSubscriptionDetailsAction } from "@/libs/actions/user";
 
 interface UserContextType {
@@ -71,30 +71,36 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       const {
         data: { subscription },
       } = supabase.auth.onAuthStateChange(async (event, session) => {
-        if (session?.user) {
-          setUser((prev) => {
-            if (
-              prev?.id === session.user.id &&
-              JSON.stringify(prev?.user_metadata) === JSON.stringify(session.user.user_metadata)
-            ) {
-              return prev;
+        // Batch state updates to prevent multiple re-renders that could
+        // cause "Rendered more hooks" errors with lazy-loaded components
+        startTransition(() => {
+          if (session?.user) {
+            setUser((prev) => {
+              if (
+                prev?.id === session.user.id &&
+                JSON.stringify(prev?.user_metadata) === JSON.stringify(session.user.user_metadata)
+              ) {
+                return prev;
+              }
+              return session.user;
+            });
+            // Check metadata on login
+            const { kidName, age, sex, parentPhone } = session.user.user_metadata || {};
+            if (!kidName || !age || !sex || !parentPhone) {
+              setShowMissingInfoModal(true);
+            } else {
+              setShowMissingInfoModal(false);
             }
-            return session.user;
-          });
-          // Check metadata on login
-          const { kidName, age, sex, parentPhone } = session.user.user_metadata || {};
-          if (!kidName || !age || !sex || !parentPhone) {
-            setShowMissingInfoModal(true);
           } else {
+            setUser(null);
             setShowMissingInfoModal(false);
           }
-          // Fetch fresh premium status on login
+          setIsLoading(false);
+        });
+        // Fetch fresh premium status outside startTransition (async)
+        if (session?.user) {
           refreshSubscription();
-        } else {
-          setUser(null);
-          setShowMissingInfoModal(false);
         }
-        setIsLoading(false);
       });
 
       return () => {

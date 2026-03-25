@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { COURSES } from "@/libs/constants/courses";
 import CreativeLesson from "@/features/games/mini-piano/CreativeLesson";
@@ -12,6 +12,8 @@ import { ArrowLeft } from "lucide-react";
 import { useProgress } from "@/context/ProgressContext";
 import { ActionButton } from "@/components/common/ActionButton";
 import { CompletionModal } from "@/components/games/CompletionModal";
+import { ShareModal } from "@/components/games/ShareModal";
+import { useFirstCompletion } from "@/hooks/useFirstCompletion";
 
 export default function MiniPianoGamePage() {
     const params = useParams();
@@ -22,6 +24,8 @@ export default function MiniPianoGamePage() {
     const lessonId = params.lessonId as string;
 
     const [showComplete, setShowComplete] = useState(false);
+    const [showShareModal, setShowShareModal] = useState(false);
+    const { hasShownShareModal, markShareModalShown } = useFirstCompletion("mini-piano");
 
     const course = COURSES.find((c) => c.id === "mini-piano");
     const group = course?.groups.find((g) => g.id === groupId);
@@ -32,14 +36,28 @@ export default function MiniPianoGamePage() {
     const isLastLesson = lessonIndex === lessons.length - 1;
     const nextLessonNum = isLastLesson ? undefined : lessonIndex + 2;
 
+    // Check if this is the last group's last lesson
+    const lastGroup = course?.groups[course.groups.length - 1];
+    const isCourseComplete = isLastLesson && groupId === lastGroup?.id;
+
     const handleComplete = () => {
         markLessonComplete(groupId, lessonId, "mini-piano");
         setShowComplete(true);
     };
 
-    const handleNext = () => {
+    const handleNext = useCallback(() => {
+        if (isCourseComplete && !hasShownShareModal) {
+            markShareModalShown();
+            setShowShareModal(true);
+            return;
+        }
         router.push(`/games/mini-piano/${groupId}`);
-    };
+    }, [isCourseComplete, hasShownShareModal, markShareModalShown, router, groupId]);
+
+    const handleShareClose = useCallback(() => {
+        setShowShareModal(false);
+        router.push(`/games/mini-piano/${groupId}`);
+    }, [router, groupId]);
 
     return (
         <main className="min-h-screen bg-gradient-to-br from-pink-100 via-blue-100 to-yellow-100 relative overflow-hidden py-4 sm:py-6 px-3 sm:px-4 flex flex-col">
@@ -81,11 +99,16 @@ export default function MiniPianoGamePage() {
             </div>
 
             <CompletionModal
-                isOpen={showComplete}
+                isOpen={showComplete && !showShareModal}
                 onNext={handleNext}
                 currentLessonNum={currentLessonNum}
                 nextLessonNum={nextLessonNum}
                 isGroupComplete={isLastLesson}
+            />
+            <ShareModal
+                isOpen={showShareModal}
+                onClose={handleShareClose}
+                gameSlug="mini-piano"
             />
 
 

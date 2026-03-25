@@ -68,6 +68,7 @@ export default function BodyLessonPage() {
       currentLessonNum={game.currentLessonNum}
       nextLessonNum={game.nextLessonNum}
       isGroupDone={game.isGroupDone}
+      isCourseComplete={game.isCourseComplete}
       isLoaded={game.isLoaded}
     />
   );

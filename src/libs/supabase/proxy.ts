@@ -21,6 +21,7 @@ const publicPaths = [
   "/hoc-tieng-viet-cho-be",
   "/tro-choi-toan-hoc",
   "/gioi-thieu-kiem-tien",
+  "/share",
 ];
 
 function isPublicPath(pathname: string): boolean {

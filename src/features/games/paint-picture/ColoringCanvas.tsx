@@ -97,7 +97,7 @@ export function ColoringCanvas({ svgPath, regions, guideColors, onComplete, show
     setIsCompleted(false);
   };
 
-  const handleSavePhoto = () => {
+  const handleSavePhoto = async () => {
     const svgElement = svgWrapperRef.current?.querySelector("svg");
     if (!svgElement) return;
 
@@ -128,7 +128,7 @@ export function ColoringCanvas({ svgPath, regions, guideColors, onComplete, show
     const url = URL.createObjectURL(svgBlob);
 
     const img = new Image();
-    img.onload = () => {
+    img.onload = async () => {
       const canvas = document.createElement("canvas");
       // Scale up for better quality
       const scale = 2;
@@ -142,13 +142,53 @@ export function ColoringCanvas({ svgPath, regions, guideColors, onComplete, show
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-      const dataUrl = canvas.toDataURL("image/jpeg", 0.9);
-      const link = document.createElement("a");
-      link.download = `Cuthongminh-Tomau-${Date.now()}.jpg`;
-      link.href = dataUrl;
-      link.click();
       URL.revokeObjectURL(url);
+
+      const fileName = `Cuthongminh-Tomau-${Date.now()}.jpg`;
+
+      // Use canvas.toBlob for better mobile compatibility
+      canvas.toBlob(
+        async (blob) => {
+          if (!blob) return;
+
+          // Try Web Share API first (works great on iOS Safari)
+          if (navigator.share && navigator.canShare) {
+            try {
+              const file = new File([blob], fileName, { type: "image/jpeg" });
+              if (navigator.canShare({ files: [file] })) {
+                await navigator.share({
+                  files: [file],
+                  title: "Cú Thông Minh - Tô màu",
+                });
+                return;
+              }
+            } catch (err) {
+              // User cancelled share or share failed — fall through
+              if ((err as DOMException)?.name === "AbortError") return;
+            }
+          }
+
+          // Fallback: create a blob URL and use <a download>
+          const blobUrl = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = blobUrl;
+          link.download = fileName;
+
+          // For Safari: open in new tab if download attribute isn't supported
+          const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+          if (isSafari) {
+            link.target = "_blank";
+            link.rel = "noopener noreferrer";
+          }
+
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+        },
+        "image/jpeg",
+        0.9
+      );
     };
     img.src = url;
   };

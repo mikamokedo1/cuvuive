@@ -5,7 +5,7 @@ import Image from "next/image";
 import { RightWrongScenario } from "./constants";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
-import { playButtonSound } from "@/libs/utils/playSound";
+import { playButtonSound, playWrongSound } from "@/libs/utils/playSound";
 import { TrueFalseButtons } from "@/components/games/TrueFalseButtons";
 
 interface EmotionRightWrongLessonProps {
@@ -35,7 +35,7 @@ export function EmotionRightWrongLesson({ scenarios, onComplete }: EmotionRightW
       }, 500);
       return () => clearTimeout(timeout);
     }
-  }, [currentScenario, feedback, speak]);
+  }, [currentScenario, speak]);
 
   const handleAnswer = useCallback(
     (answeredCorrect: boolean) => {
@@ -47,9 +47,7 @@ export function EmotionRightWrongLesson({ scenarios, onComplete }: EmotionRightW
 
       if (isRight) {
         setFeedback("correct");
-        speak(
-          currentScenario.isCorrect ? "Đúng rồi! Cảm xúc này rất phù hợp!" : "Giỏi lắm! Cảm xúc này không đúng đâu!",
-        );
+        speak(currentScenario.isCorrect ? "Đúng rồi!" : "Giỏi lắm! Cảm xúc này không đúng đâu!");
         playWinEffect(500);
 
         setTimeout(() => {
@@ -65,7 +63,8 @@ export function EmotionRightWrongLesson({ scenarios, onComplete }: EmotionRightW
         }, 2000);
       } else {
         setFeedback("wrong");
-        speak("Sai rồi, thử nghĩ lại xem nhé!");
+        speak("Sai rồi!");
+        playWrongSound();
 
         setTimeout(() => {
           setFeedback(null);
@@ -107,11 +106,7 @@ export function EmotionRightWrongLesson({ scenarios, onComplete }: EmotionRightW
       </div>
 
       {/* Answer Buttons */}
-      <TrueFalseButtons
-        onAnswer={handleAnswer}
-        feedback={feedback}
-        correctAnswer={currentScenario.isCorrect}
-      />
+      <TrueFalseButtons onAnswer={handleAnswer} feedback={feedback} correctAnswer={currentScenario.isCorrect} />
     </div>
   );
 }

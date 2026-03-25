@@ -70,7 +70,7 @@ export function MixColorReverseQuizLesson({ rules, onComplete, requiredWins = 5 
         } else {
           generateQuestion();
         }
-      }, 2000);
+      }, 3000);
     } else {
       setFeedback("wrong");
       setShakeIndex(index);

@@ -60,6 +60,7 @@ export default function LessonPage() {
       currentLessonNum={game.currentLessonNum}
       nextLessonNum={game.nextLessonNum}
       isGroupDone={game.isGroupDone}
+      isCourseComplete={game.isCourseComplete}
       isLoaded={game.isLoaded}
     />
   );

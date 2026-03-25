@@ -34,6 +34,7 @@ export default function LineConnectLessonPage() {
       currentLessonNum={game.currentLessonNum}
       nextLessonNum={game.nextLessonNum}
       isGroupDone={game.isGroupDone}
+      isCourseComplete={game.isCourseComplete}
       isLoaded={game.isLoaded}
     />
   );

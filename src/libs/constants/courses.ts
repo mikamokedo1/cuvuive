@@ -265,8 +265,9 @@ export const COURSES: CourseDef[] = [
         id: "group3",
         title: "Luyện tập",
         lessons: [
-          { id: "lesson1", title: "Luyện tập màu", isFree: true },
-          { id: "lesson2", title: "Thử thách màu" },
+          { id: "lesson1", title: "Học màu sắc", isFree: true },
+          { id: "lesson2", title: "Tìm màu giống" },
+          { id: "lesson3", title: "Trò chơi màu" },
         ],
       },
     ],

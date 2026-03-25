@@ -118,8 +118,6 @@ export function DangerTrueFalseLesson({ statements, onComplete }: DangerTrueFals
               priority
             />
           </div>
-
-          <p className="text-lg md:text-xl font-bold text-gray-800 leading-relaxed">{current.statement}</p>
         </div>
       </div>
 

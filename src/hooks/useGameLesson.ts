@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useProgress } from "@/context/ProgressContext";
 import { useAccess } from "@/context/AccessContext";
+import { COURSES } from "@/libs/constants/courses";
 
 interface UseGameLessonOptions<G extends { id: string }> {
   gameSlug: string;
@@ -22,6 +23,7 @@ export function useGameLesson<G extends { id: string }>({ gameSlug, lessonOrder,
   const [currentLessonNum, setCurrentLessonNum] = useState<number | string>(1);
   const [nextLessonNum, setNextLessonNum] = useState<number | string | null>(null);
   const [isGroupDone, setIsGroupDone] = useState(false);
+  const [isCourseComplete, setIsCourseComplete] = useState(false);
 
   const groupId = typeof params.groupId === "string" ? params.groupId : "";
   const lessonId = typeof params.lessonId === "string" ? params.lessonId : "";
@@ -57,9 +59,17 @@ export function useGameLesson<G extends { id: string }>({ gameSlug, lessonOrder,
     if (currentIdx < lessonOrder.length - 1) {
       setNextLessonNum(currentIdx + 2);
       setIsGroupDone(false);
+      setIsCourseComplete(false);
     } else {
       setIsGroupDone(true);
       setNextLessonNum(null);
+
+      // Check if this is the last group in the course → entire course is complete
+      const course = COURSES.find((c) => c.id === gameSlug);
+      if (course) {
+        const lastGroup = course.groups[course.groups.length - 1];
+        setIsCourseComplete(groupId === lastGroup.id);
+      }
     }
 
     setShowModal(true);
@@ -98,6 +108,8 @@ export function useGameLesson<G extends { id: string }>({ gameSlug, lessonOrder,
     currentLessonNum,
     nextLessonNum,
     isGroupDone,
+    isCourseComplete,
+    gameSlug,
     handleComplete,
     handleNextLesson,
   };

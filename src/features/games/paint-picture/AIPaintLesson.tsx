@@ -121,7 +121,7 @@ export function AIPaintLesson({ groupId, onComplete }: AIPaintLessonProps) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   };
 
-  const handleSavePhoto = () => {
+  const handleSavePhoto = async () => {
     const originalCanvas = canvasRef.current;
     const imgElement = imgRef.current;
 
@@ -162,16 +162,55 @@ export function AIPaintLesson({ groupId, onComplete }: AIPaintLessonProps) {
     // Draw user's strokes over image
     ctx.drawImage(originalCanvas, 0, 0);
 
-    // Export
-    const dataUrl = exportCanvas.toDataURL("image/jpeg", 0.9);
+    const fileName = `Cuthongminh-Tomau-${groupId}-${Date.now()}.jpg`;
 
-    const link = document.createElement("a");
-    link.download = `Cuthongminh-Tomau-${groupId}-${Date.now()}.jpg`;
-    link.href = dataUrl;
-    link.click();
+    // Use canvas.toBlob for better mobile compatibility
+    exportCanvas.toBlob(
+      async (blob) => {
+        if (!blob) return;
 
-    // Trigger completion if they took a photo
-    setTimeout(onComplete, 1000);
+        // Try Web Share API first (works great on iOS Safari)
+        if (navigator.share && navigator.canShare) {
+          try {
+            const file = new File([blob], fileName, { type: "image/jpeg" });
+            if (navigator.canShare({ files: [file] })) {
+              await navigator.share({
+                files: [file],
+                title: "Cú Thông Minh - Tô màu",
+              });
+              setTimeout(onComplete, 1000);
+              return;
+            }
+          } catch (err) {
+            // User cancelled share or share failed — fall through
+            if ((err as DOMException)?.name === "AbortError") return;
+          }
+        }
+
+        // Fallback: create a blob URL and use <a download>
+        const blobUrl = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = blobUrl;
+        link.download = fileName;
+
+        // For Safari: open in new tab if download attribute isn't supported
+        const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        if (isSafari) {
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+        }
+
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+
+        // Trigger completion if they took a photo
+        setTimeout(onComplete, 1000);
+      },
+      "image/jpeg",
+      0.9
+    );
   };
 
   if (!backgroundImage) {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { COURSES } from "@/libs/constants/courses";
 import NoteLearnLesson from "@/features/games/learn-notes/NoteLearnLesson";
@@ -12,6 +12,8 @@ import { ArrowLeft } from "lucide-react";
 import { useProgress } from "@/context/ProgressContext";
 import { ActionButton } from "@/components/common/ActionButton";
 import { CompletionModal } from "@/components/games/CompletionModal";
+import { ShareModal } from "@/components/games/ShareModal";
+import { useFirstCompletion } from "@/hooks/useFirstCompletion";
 
 export default function LearnNotesLessonPage() {
   const params = useParams();
@@ -22,6 +24,8 @@ export default function LearnNotesLessonPage() {
   const lessonId = params.lessonId as string;
 
   const [showComplete, setShowComplete] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
+  const { hasShownShareModal, markShareModalShown } = useFirstCompletion("learn-notes");
 
   const course = COURSES.find((c) => c.id === "learn-notes");
   const group = course?.groups.find((g) => g.id === groupId);
@@ -32,14 +36,28 @@ export default function LearnNotesLessonPage() {
   const isLastLesson = lessonIndex === lessons.length - 1;
   const nextLessonNum = isLastLesson ? undefined : lessonIndex + 2;
 
+  // Check if this is the last group's last lesson
+  const lastGroup = course?.groups[course.groups.length - 1];
+  const isCourseComplete = isLastLesson && groupId === lastGroup?.id;
+
   const handleComplete = () => {
     markLessonComplete(groupId, lessonId, "learn-notes");
     setShowComplete(true);
   };
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
+    if (isCourseComplete && !hasShownShareModal) {
+      markShareModalShown();
+      setShowShareModal(true);
+      return;
+    }
     router.push(`/games/learn-notes/${groupId}`);
-  };
+  }, [isCourseComplete, hasShownShareModal, markShareModalShown, router, groupId]);
+
+  const handleShareClose = useCallback(() => {
+    setShowShareModal(false);
+    router.push(`/games/learn-notes/${groupId}`);
+  }, [router, groupId]);
 
   // Determine which component to render based on lesson ID and group
   const renderLesson = () => {
@@ -92,11 +110,16 @@ export default function LearnNotesLessonPage() {
       </div>
 
       <CompletionModal
-        isOpen={showComplete}
+        isOpen={showComplete && !showShareModal}
         onNext={handleNext}
         currentLessonNum={currentLessonNum}
         nextLessonNum={nextLessonNum}
         isGroupComplete={isLastLesson}
+      />
+      <ShareModal
+        isOpen={showShareModal}
+        onClose={handleShareClose}
+        gameSlug="learn-notes"
       />
 
       {/* Decorative elements */}

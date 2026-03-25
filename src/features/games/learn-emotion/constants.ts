@@ -156,7 +156,7 @@ export const RIGHT_WRONG_SCENARIOS: RightWrongScenario[] = [
   },
   {
     id: "rw_adv_4",
-    text: "Mẹ mua đồ chơi cho em pé, pé thấy vui vẻ",
+    text: "Mẹ mua đồ chơi cho em pé, pé thấy tức giận",
     image: Happy,
     isCorrect: false,
     category: "advanced",

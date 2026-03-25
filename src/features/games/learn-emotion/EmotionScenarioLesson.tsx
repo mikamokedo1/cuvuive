@@ -5,7 +5,7 @@ import Image from "next/image";
 import { ScenarioMatchActivity, EMOTION_ITEMS } from "./constants";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
-import { playButtonSound } from "@/libs/utils/playSound";
+import { playButtonSound, playWrongSound } from "@/libs/utils/playSound";
 
 interface EmotionScenarioLessonProps {
   activities: ScenarioMatchActivity[];
@@ -35,19 +35,18 @@ export function EmotionScenarioLesson({ activities, onComplete }: EmotionScenari
       }, 500);
       return () => clearTimeout(timeout);
     }
-  }, [currentActivity, feedback, speak]);
+  }, [currentActivity, speak]);
 
   const handleSelectOption = useCallback(
-    (optionId: string) => {
+    (optionId: string, emotionName: string) => {
       if (feedback) return;
 
-      playButtonSound();
       setSelectedOption(optionId);
       const isRight = optionId === currentActivity.correctEmotionId;
 
       if (isRight) {
         setFeedback("correct");
-        speak("Đúng rồi! Cảm xúc rất chính xác!");
+        speak(`${emotionName} Đúng rồi! Cảm xúc rất chính xác!`);
         playWinEffect(500);
 
         setTimeout(() => {
@@ -64,7 +63,8 @@ export function EmotionScenarioLesson({ activities, onComplete }: EmotionScenari
         }, 2500);
       } else {
         setFeedback("wrong");
-        speak("Chưa đúng rồi, pé thử suy nghĩ lại nhé!");
+        speak(`${emotionName} Chưa đúng rồi`);
+        playWrongSound();
 
         setTimeout(() => {
           setFeedback(null);
@@ -93,9 +93,6 @@ export function EmotionScenarioLesson({ activities, onComplete }: EmotionScenari
             priority
           />
         </div>
-        <h2 className="text-xl md:text-2xl font-bold text-blue-800 text-center leading-relaxed">
-          {currentActivity.situationText}
-        </h2>
       </div>
 
       {/* Emotion Options Grid */}
@@ -124,7 +121,7 @@ export function EmotionScenarioLesson({ activities, onComplete }: EmotionScenari
           return (
             <button
               key={optionId}
-              onClick={() => handleSelectOption(optionId)}
+              onClick={() => handleSelectOption(optionId, emotion.name)}
               disabled={feedback !== null}
               className={`
                 relative flex flex-col items-center justify-center p-4 md:p-6
@@ -147,10 +144,6 @@ export function EmotionScenarioLesson({ activities, onComplete }: EmotionScenari
               >
                 {emotion.name}
               </span>
-
-              {feedback === "correct" && isCorrectAnswer && (
-                <div className="absolute top-2 right-2 text-3xl animate-bounce">✨</div>
-              )}
             </button>
           );
         })}

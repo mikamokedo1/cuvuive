@@ -1,11 +1,10 @@
 "use client";
 
-import dynamic from "next/dynamic";
+import { Suspense, lazy } from "react";
 import { useUser } from "@/context/UserContext";
 
-const MissingInfoModal = dynamic(
-  () => import("./MissingInfoModal").then((m) => m.MissingInfoModal),
-  { ssr: false },
+const MissingInfoModal = lazy(() =>
+  import("./MissingInfoModal").then((m) => ({ default: m.MissingInfoModal })),
 );
 
 export function MissingInfoListener() {
@@ -14,12 +13,14 @@ export function MissingInfoListener() {
   if (!showMissingInfoModal) return null;
 
   return (
-    <MissingInfoModal
-      isOpen={showMissingInfoModal}
-      onSuccess={async () => {
-        setShowMissingInfoModal(false);
-        await checkMissingInfo();
-      }}
-    />
+    <Suspense fallback={null}>
+      <MissingInfoModal
+        isOpen={showMissingInfoModal}
+        onSuccess={async () => {
+          setShowMissingInfoModal(false);
+          await checkMissingInfo();
+        }}
+      />
+    </Suspense>
   );
 }

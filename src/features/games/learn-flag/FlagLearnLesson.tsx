@@ -9,6 +9,13 @@ interface FlagLearnLessonProps {
 
 export function FlagLearnLesson({ flags, descriptions, onComplete }: FlagLearnLessonProps) {
   return (
-    <ExploreLesson terrains={flags} descriptions={descriptions} onComplete={onComplete} additionText="quốc kỳ" />
+    <ExploreLesson
+      terrains={flags}
+      descriptions={descriptions}
+      onComplete={onComplete}
+      additionText="quốc kỳ"
+      containerClassName="aspect-[3/2]"
+      imageClassName="object-contain"
+    />
   );
 }

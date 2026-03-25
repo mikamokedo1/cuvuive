@@ -56,6 +56,7 @@ export default function FDLessonPage() {
       currentLessonNum={game.currentLessonNum}
       nextLessonNum={game.nextLessonNum}
       isGroupDone={game.isGroupDone}
+      isCourseComplete={game.isCourseComplete}
       isLoaded={game.isLoaded}
     />
   );
