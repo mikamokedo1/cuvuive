@@ -189,7 +189,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!group) return {};
 
-  const title = `Trò Chơi ${group.title} Cho Bé - Game Giáo Dục Online | Cú Thông Minh`;
+  const title = `Trò Chơi ${group.title} Cho Bé 3-8 Tuổi | Cú Thông Minh`;
   const description = GROUP_DESCRIPTIONS[group.id] || `Khám phá các trò chơi ${group.title} hấp dẫn giúp bé phát triển tư duy, sáng tạo và kỹ năng toàn diện tại Cú Thông Minh.`;
   const keywords = GROUP_KEYWORDS[group.id] || [];
 

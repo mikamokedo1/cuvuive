@@ -28,7 +28,7 @@ export const GameWrapGroups = ({ logo, gameId, groups, title }: GameWrapGroups) 
           <div className="relative w-24 h-24 md:w-48 md:h-48 mb-4">
             <Image src={logo} alt={title} fill className="object-contain" priority />
           </div>
-          <LessonTitle>{title}</LessonTitle>
+          <LessonTitle tag="h1">{title}</LessonTitle>
         </div>
 
         {/* Always render group cards so Googlebot sees content in initial HTML */}

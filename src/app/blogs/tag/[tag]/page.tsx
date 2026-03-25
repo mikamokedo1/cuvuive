@@ -117,8 +117,14 @@ export default async function TagPage({ params }: PageProps) {
         <h1 className="text-3xl md:text-5xl font-extrabold font-[family-name:var(--font-baloo-2)] text-slate-900 mb-4 tracking-tight">
           Bài viết về &ldquo;{canonicalTag}&rdquo;
         </h1>
-        <p className="text-lg text-slate-500 max-w-2xl mx-auto">
+        <p className="text-lg text-slate-500 max-w-2xl mx-auto mb-4">
           {filteredPosts.length} bài viết về chủ đề này
+        </p>
+        <p className="text-base text-slate-600 max-w-3xl mx-auto leading-relaxed">
+          Khám phá các bài viết chuyên sâu về chủ đề &ldquo;{canonicalTag}&rdquo; trên blog Cú Thông Minh.
+          Chúng tôi chia sẻ kiến thức giáo dục sớm, phương pháp dạy con hiệu quả và các hoạt động vui nhộn
+          giúp phụ huynh đồng hành cùng bé trong hành trình phát triển toàn diện từ 3-8 tuổi.
+          Mỗi bài viết đều được biên soạn bởi đội ngũ chuyên gia giáo dục mầm non của Cú Thông Minh.
         </p>
       </div>
 
@@ -149,9 +155,9 @@ export default async function TagPage({ params }: PageProps) {
                 </div>
               )}
               <div className="p-5">
-                <h2 className="text-lg font-bold text-slate-900 mb-2 line-clamp-2 group-hover:text-orange-600 transition-colors font-[family-name:var(--font-baloo-2)]">
+                <h3 className="text-lg font-bold text-slate-900 mb-2 line-clamp-2 group-hover:text-orange-600 transition-colors font-[family-name:var(--font-baloo-2)]">
                   {post.title}
-                </h2>
+                </h3>
                 <p className="text-sm text-slate-500 mb-3 line-clamp-2">{post.description}</p>
                 <div className="flex items-center gap-4 text-xs text-slate-400 font-medium">
                   <span className="flex items-center gap-1">

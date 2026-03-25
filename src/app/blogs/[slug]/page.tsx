@@ -71,7 +71,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const siteUrl = "https://cuthongminh.com";
 
   return {
-    title: `${post.title} | Cú Thông Minh Blog`,
+    title: `${post.title} | Cú Thông Minh`,
     description: post.description,
     alternates: {
       canonical: `/blogs/${post.slug}`,

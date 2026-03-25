@@ -109,7 +109,7 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Pr
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             {posts.map((post) => (
-              <BlogCard key={post.slug} post={post} />
+              <BlogCard key={post.slug} post={post} headingLevel="h3" />
             ))}
           </div>
 

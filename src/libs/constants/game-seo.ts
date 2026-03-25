@@ -36,9 +36,10 @@ function buildMetaTitle(gameId: string, title: string): string {
 }
 
 function buildMetaDescription(gameId: string, description: string): string {
+  const MAX_LENGTH = 155;
   const course = COURSES.find((item) => item.id === gameId);
   if (!course) {
-    return description;
+    return description.length > MAX_LENGTH ? description.slice(0, MAX_LENGTH - 1).trimEnd() + "…" : description;
   }
 
   const lessonThemes = course.groups
@@ -47,11 +48,19 @@ function buildMetaDescription(gameId: string, description: string): string {
     .join(", ");
 
   if (!lessonThemes) {
-    return description;
+    return description.length > MAX_LENGTH ? description.slice(0, MAX_LENGTH - 1).trimEnd() + "…" : description;
   }
 
   const normalizedDescription = description.endsWith(".") ? description.slice(0, -1) : description;
-  return `${normalizedDescription}. Chủ đề nổi bật: ${lessonThemes}.`;
+  const full = `${normalizedDescription}. Chủ đề nổi bật: ${lessonThemes}.`;
+
+  if (full.length <= MAX_LENGTH) {
+    return full;
+  }
+
+  // If too long, return just the base description (truncated if needed)
+  const base = normalizedDescription + ".";
+  return base.length > MAX_LENGTH ? base.slice(0, MAX_LENGTH - 1).trimEnd() + "…" : base;
 }
 
 const SEO_OVERRIDES: Record<string, SeoOverride> = {
