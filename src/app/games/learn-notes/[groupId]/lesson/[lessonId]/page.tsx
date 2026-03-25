@@ -41,7 +41,7 @@ export default function LearnNotesLessonPage() {
   const isCourseComplete = isLastLesson && groupId === lastGroup?.id;
 
   const handleComplete = () => {
-    markLessonComplete(groupId, lessonId, "learn-notes");
+    markLessonComplete("learn-notes", groupId, lessonId);
     setShowComplete(true);
   };
 

@@ -1,4 +1,5 @@
 import { COURSES } from "@/libs/constants/courses";
+import { safeJsonLd } from "@/libs/utils/safe-jsonld";
 
 export function GameSchema({ courseId }: { courseId: string }) {
   const course = COURSES.find((c) => c.id === courseId);
@@ -36,7 +37,7 @@ export function GameSchema({ courseId }: { courseId: string }) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }}
       key={`game-jsonld-${courseId}`}
     />
   );

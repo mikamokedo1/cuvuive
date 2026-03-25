@@ -3,6 +3,9 @@
  * Used to generate metadata, JSON-LD, and SEO description sections.
  */
 
+import { COURSES } from "@/libs/constants/courses";
+import { GROUPS } from "@/libs/constants/groups";
+
 export interface GameSeoData {
   title: string;
   description: string;
@@ -15,7 +18,102 @@ export interface GameSeoData {
   videoUrl?: string;
 }
 
-export const GAME_SEO: Record<string, GameSeoData> = {
+type SeoOverride = Partial<Pick<GameSeoData, "title" | "description">>;
+
+function stripBrandSuffix(title: string): string {
+  return title.replace(/\s*-\s*Trò chơi giáo dục Cú Thông Minh$/i, "").trim();
+}
+
+function buildMetaTitle(gameId: string, title: string): string {
+  const course = COURSES.find((item) => item.id === gameId);
+  const topic = course ? GROUPS.find((group) => group.id === course.type) : undefined;
+
+  if (!topic) {
+    return title;
+  }
+
+  return `${stripBrandSuffix(title)} | Chủ đề ${topic.title} | Cú Thông Minh`;
+}
+
+function buildMetaDescription(gameId: string, description: string): string {
+  const course = COURSES.find((item) => item.id === gameId);
+  if (!course) {
+    return description;
+  }
+
+  const lessonThemes = course.groups
+    .slice(0, 3)
+    .map((group) => group.title)
+    .join(", ");
+
+  if (!lessonThemes) {
+    return description;
+  }
+
+  const normalizedDescription = description.endsWith(".") ? description.slice(0, -1) : description;
+  return `${normalizedDescription}. Chủ đề nổi bật: ${lessonThemes}.`;
+}
+
+const SEO_OVERRIDES: Record<string, SeoOverride> = {
+  "learn-numbers": {
+    title: "Bé Học Đếm Số 1-20 | Trò Chơi Toán Cho Trẻ Mầm Non",
+    description: "Game học số giúp bé nhận biết số 1-20, đếm đồ vật và tập viết số qua 5 cấp độ từ dễ đến khó.",
+  },
+  "compare-quantity": {
+    title: "So Sánh Lớn Hơn Nhỏ Hơn | Game Toán Tư Duy Cho Bé",
+    description: "Bé học so sánh nhiều hơn, ít hơn và bằng nhau qua hình ảnh trực quan, luyện phản xạ và tư duy toán học sớm.",
+  },
+  "learn-math": {
+    title: "Phép Cộng Trừ Đơn Giản | Game Toán Cho Bé 3-8 Tuổi",
+    description: "Bé học phép cộng trừ trong phạm vi 20 bằng hình ảnh minh họa, bài tập tương tác và phần luyện tập theo nhóm.",
+  },
+  "learn-alphabet": {
+    title: "Bảng Chữ Cái Tiếng Việt | Game Học Chữ Cho Bé",
+    description: "Giúp bé học nguyên âm, phụ âm, tập nói, tập viết và nhận diện chữ cái tiếng Việt qua trò chơi tương tác.",
+  },
+  "learn-syllable": {
+    title: "Ghép Vần Tiếng Việt | Game Tập Đọc Cho Bé",
+    description: "Bé học ghép vần ie, uo, ươ, oa, uy và nhiều vần khác qua bài học ngắn, dễ nhớ và trò chơi chọn vần đúng.",
+  },
+  "learn-color": {
+    title: "Học Màu Sắc | Trò Chơi Nhận Biết Màu Cho Bé",
+    description: "Bé nhận biết màu cơ bản và nâng cao, nghe phát âm tên màu và chơi trò tìm màu giống nhau qua hình ảnh sinh động.",
+  },
+  "learn-shape": {
+    title: "Nhận Biết Hình Dạng | Game Hình Học Mầm Non Cho Bé",
+    description: "Giúp bé học hình tròn, vuông, tam giác và liên hệ với đồ vật thực tế qua trò chơi hình học vui nhộn.",
+  },
+  "learn-animal": {
+    title: "Học Động Vật | Game Nhận Biết Con Vật Cho Bé",
+    description: "Bé khám phá động vật nuôi, hoang dã và biển, nghe tên gọi, nhận diện qua hình ảnh và chơi ghép đôi con vật.",
+  },
+  "learn-vehicle": {
+    title: "Phương Tiện Giao Thông | Trò Chơi Nhận Biết Xe Cộ Cho Bé",
+    description: "Bé học tên các phương tiện đường bộ, đường thủy, hàng không và nhận biết công dụng qua trò chơi tương tác.",
+  },
+  "learn-weather": {
+    title: "Học Thời Tiết Cho Bé | Game Khám Phá Thiên Nhiên",
+    description: "Bé nhận biết nắng, mưa, gió, cầu vồng và 4 mùa trong năm qua hình ảnh, âm thanh và trò chơi mặc đồ đúng mùa.",
+  },
+  "find-pattern": {
+    title: "Tìm Quy Luật | Game Tư Duy Logic Cho Bé",
+    description: "Bé rèn tư duy logic bằng cách tìm quy luật màu sắc và hình dạng, điền phần còn thiếu và đoán bước tiếp theo.",
+  },
+  "find-differences": {
+    title: "Tìm Điểm Khác Biệt | Game Quan Sát Cho Bé",
+    description: "Trò chơi luyện mắt và tăng khả năng quan sát cho bé qua các bức tranh nhiều chủ đề từ dễ đến trung bình.",
+  },
+  "maze-runner": {
+    title: "Mê Cung Cho Bé | Game Phát Triển Tư Duy Không Gian",
+    description: "Bé tìm đường trong mê cung từ dễ đến khó, rèn kỹ năng định hướng, lập kế hoạch và giải quyết vấn đề.",
+  },
+  "learn-clock": {
+    title: "Học Xem Đồng Hồ | Game Kỹ Năng Sống Cho Bé",
+    description: "Giúp bé đọc đồng hồ kim, đồng hồ điện tử, chọn đúng giờ và luyện kỹ năng xem giờ qua tương tác trực quan.",
+  },
+};
+
+const RAW_GAME_SEO: Record<string, GameSeoData> = {
   "learn-tones": {
     title: "Học Dấu Tiếng Việt cho bé - Trò chơi giáo dục Cú Thông Minh",
     description:
@@ -770,3 +868,14 @@ export const GAME_SEO: Record<string, GameSeoData> = {
     ],
   },
 };
+
+export const GAME_SEO: Record<string, GameSeoData> = Object.fromEntries(
+  Object.entries(RAW_GAME_SEO).map(([gameId, seo]) => [
+    gameId,
+    {
+      ...seo,
+      title: SEO_OVERRIDES[gameId]?.title ?? buildMetaTitle(gameId, seo.title),
+      description: SEO_OVERRIDES[gameId]?.description ?? buildMetaDescription(gameId, seo.description),
+    },
+  ]),
+);

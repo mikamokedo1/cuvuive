@@ -25,7 +25,7 @@ export function useGroupLessons<G extends { id: string; title: string }>({
   const group = groups.find((g) => g.id === groupId) || null;
 
   const handleLessonClick = async (lessonId: string) => {
-    if (!isLessonUnlocked(groupId, lessonId, gameSlug)) {
+    if (!isLessonUnlocked(gameSlug, groupId, lessonId)) {
       return;
     }
 
@@ -50,7 +50,7 @@ export function useGroupLessons<G extends { id: string; title: string }>({
 
   if (!isGroupCompleted) {
     for (let i = lessons.length - 1; i >= 0; i--) {
-      if (isLessonUnlocked(groupId, lessons[i].id, gameSlug)) {
+      if (isLessonUnlocked(gameSlug, groupId, lessons[i].id)) {
         activeIndex = i;
         break;
       }

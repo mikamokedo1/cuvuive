@@ -1,12 +1,25 @@
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { permanentRedirect } from "next/navigation";
 import { notFound } from "next/navigation";
 import { getAllPosts } from "@/libs/blog";
 import { Tag, Clock, Calendar } from "lucide-react";
+import { safeJsonLd } from "@/libs/utils/safe-jsonld";
+import { normalizeTagPathSegment } from "@/libs/utils/tag-slug";
 
 interface PageProps {
   params: Promise<{ tag: string }>;
+}
+
+async function resolveCanonicalTag(rawTag: string): Promise<string | null> {
+  const decodedTag = decodeURIComponent(rawTag);
+  const posts = await getAllPosts();
+  const matchedTag = posts
+    .flatMap((post) => post.tags ?? [])
+    .find((tag) => tag.toLowerCase() === decodedTag.toLowerCase());
+
+  return matchedTag ?? null;
 }
 
 export async function generateStaticParams() {
@@ -14,23 +27,31 @@ export async function generateStaticParams() {
   const tagSet = new Set<string>();
   for (const post of posts) {
     if (post.tags) {
-      post.tags.forEach((tag) => tagSet.add(tag));
+      post.tags.forEach((tag) => tagSet.add(normalizeTagPathSegment(tag)));
     }
   }
-  return Array.from(tagSet).map((tag) => ({ tag }));
+  return Array.from(tagSet).map((tag) => ({ tag: decodeURIComponent(tag) }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { tag } = await params;
-  const decodedTag = decodeURIComponent(tag);
-  const title = `Bài viết về "${decodedTag}" | Blog Cú Thông Minh`;
-  const description = `Tổng hợp các bài viết về chủ đề "${decodedTag}" trên blog Cú Thông Minh - Kiến thức giáo dục sớm cho phụ huynh.`;
+  const canonicalTag = await resolveCanonicalTag(tag);
+
+  if (!canonicalTag) {
+    return {
+      title: "Không tìm thấy chủ đề",
+      robots: { index: false, follow: false },
+    };
+  }
+
+  const title = `Bài viết về "${canonicalTag}" | Blog Cú Thông Minh`;
+  const description = `Tổng hợp các bài viết về chủ đề "${canonicalTag}" trên blog Cú Thông Minh - Kiến thức giáo dục sớm cho phụ huynh.`;
 
   return {
     title,
     description,
     alternates: {
-      canonical: `/blogs/tag/${tag}`,
+      canonical: `/blogs/tag/${normalizeTagPathSegment(canonicalTag)}`,
     },
     openGraph: {
       title,
@@ -42,15 +63,21 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function TagPage({ params }: PageProps) {
   const { tag } = await params;
-  const decodedTag = decodeURIComponent(tag);
-  const allPosts = await getAllPosts();
-  const filteredPosts = allPosts.filter(
-    (post) => post.tags && post.tags.some((t) => t.toLowerCase() === decodedTag.toLowerCase()),
-  );
+  const canonicalTag = await resolveCanonicalTag(tag);
 
-  if (filteredPosts.length === 0) {
+  if (!canonicalTag) {
     notFound();
   }
+
+  const normalizedTag = normalizeTagPathSegment(canonicalTag);
+  if (tag !== normalizedTag) {
+    permanentRedirect(`/blogs/tag/${normalizedTag}`);
+  }
+
+  const allPosts = await getAllPosts();
+  const filteredPosts = allPosts.filter(
+    (post) => post.tags && post.tags.some((t) => t.toLowerCase() === canonicalTag.toLowerCase()),
+  );
 
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
@@ -71,24 +98,24 @@ export default async function TagPage({ params }: PageProps) {
       {
         "@type": "ListItem",
         position: 3,
-        name: decodedTag,
-        item: `https://cuthongminh.com/blogs/tag/${tag}`,
+        name: canonicalTag,
+        item: `https://cuthongminh.com/blogs/tag/${normalizedTag}`,
       },
     ],
   };
 
   return (
     <div className="container mx-auto px-6 max-w-5xl">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }} />
 
       {/* Header */}
       <div className="text-center mb-12">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-100 text-orange-600 font-bold text-sm mb-6">
           <Tag className="w-4 h-4" />
-          {decodedTag}
+          {canonicalTag}
         </div>
         <h1 className="text-3xl md:text-5xl font-extrabold font-[family-name:var(--font-baloo-2)] text-slate-900 mb-4 tracking-tight">
-          Bài viết về &ldquo;{decodedTag}&rdquo;
+          Bài viết về &ldquo;{canonicalTag}&rdquo;
         </h1>
         <p className="text-lg text-slate-500 max-w-2xl mx-auto">
           {filteredPosts.length} bài viết về chủ đề này

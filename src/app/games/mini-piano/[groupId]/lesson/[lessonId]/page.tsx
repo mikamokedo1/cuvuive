@@ -41,7 +41,7 @@ export default function MiniPianoGamePage() {
     const isCourseComplete = isLastLesson && groupId === lastGroup?.id;
 
     const handleComplete = () => {
-        markLessonComplete(groupId, lessonId, "mini-piano");
+        markLessonComplete("mini-piano", groupId, lessonId);
         setShowComplete(true);
     };
 

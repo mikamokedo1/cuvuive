@@ -21,6 +21,7 @@ import { HeaderHome } from "@/components/layout/HeaderHome";
 import { FAQSchema, type FAQItem } from "@/components/common/FAQSchema";
 import { SpeakableSchema } from "@/components/common/SpeakableSchema";
 import { ScrollReveal } from "@/components/common/ScrollReveal";
+import { safeJsonLd } from "@/libs/utils/safe-jsonld";
 
 const FloatingCTA = dynamic(() => import("@/components/common/FloatingCTA").then((mod) => mod.FloatingCTA));
 
@@ -92,12 +93,12 @@ export default function Home() {
       name: "Cú Thông Minh",
       logo: "https://cuthongminh.com/icons/favicon-32x32.png",
     },
-    screenshot: "https://cuthongminh.com/og-image.png",
+    screenshot: "https://cuthongminh.com/og-image.webp",
   };
 
   return (
     <div className="min-h-screen bg-slate-50 font-[family-name:var(--font-nunito-sans)] overflow-x-hidden">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }} />
       {/* Navigation */}
       <HeaderHome />
 

@@ -18,13 +18,11 @@ const iconMap: Record<string, React.ReactNode> = {
 export default function GroupLessonsPage() {
   const params = useParams();
   const router = useRouter();
-  const { allProgress } = useProgress();
+  const { getCourseProgress, isLessonUnlocked } = useProgress();
   const { checkAccess, showPaywall } = useAccess();
+  const courseId = "learn-divide";
 
-  const progress = allProgress["learn-divide"] || {
-    completedGroups: [],
-    completedLessons: {},
-  };
+  const progress = getCourseProgress(courseId);
 
   const groupId = typeof params.groupId === "string" ? params.groupId : "";
   const baseConfig = GROUP_CONFIG[groupId];
@@ -33,48 +31,27 @@ export default function GroupLessonsPage() {
     return <div>Group not found</div>;
   }
 
-  const lessons = baseConfig.lessons.map((lesson: any) => {
+  const lessons = baseConfig.lessons.map((lesson) => {
     return {
       ...lesson,
       icon: iconMap[lesson.icon],
     };
   });
 
-  const isGroupUnlocked = (gId: string) => {
-    if (gId === "group1") return true;
-    if (gId === "group2") return progress.completedGroups.includes("group1");
-    if (gId === "group3") return progress.completedGroups.includes("group2");
-    if (gId === "group4") return progress.completedGroups.includes("group3");
-    if (gId === "group5") return progress.completedGroups.includes("group4");
-    return false;
-  };
-
-  const isLessonUnlocked = (gId: string, lessonId: string) => {
-    if (!isGroupUnlocked(gId)) return false;
-    const completedInGroup = progress.completedLessons[gId] || [];
-    if (completedInGroup.includes(lessonId)) return true;
-    if (lessonId === "lesson1") return true;
-    if (lessonId === "lesson2") return completedInGroup.includes("lesson1");
-    if (lessonId === "lesson3") return completedInGroup.includes("lesson2");
-    if (lessonId === "lesson4") return completedInGroup.includes("lesson3");
-    if (lessonId === "lesson5") return completedInGroup.includes("lesson4");
-    return false;
-  };
-
   const handleLessonClick = async (lessonId: string) => {
-    if (!isLessonUnlocked(groupId, lessonId)) return;
+    if (!isLessonUnlocked(courseId, groupId, lessonId)) return;
 
-    const access = checkAccess("learn-divide", groupId, lessonId);
+    const access = checkAccess(courseId, groupId, lessonId);
     if (!access.userHasAccess) {
       if (access.reason === "not_logged_in") {
-        showPaywall("login", `/games/learn-divide/${groupId}/lesson/${lessonId}`);
+        showPaywall("login", `/games/${courseId}/${groupId}/lesson/${lessonId}`);
       } else if (access.reason === "premium_required") {
-        showPaywall("premium", `/games/learn-divide/${groupId}/lesson/${lessonId}`);
+        showPaywall("premium", `/games/${courseId}/${groupId}/lesson/${lessonId}`);
       }
       return;
     }
 
-    router.push(`/games/learn-divide/${groupId}/lesson/${lessonId}`);
+    router.push(`/games/${courseId}/${groupId}/lesson/${lessonId}`);
   };
 
   const isGroupCompleted = progress.completedGroups.includes(groupId);
@@ -82,7 +59,7 @@ export default function GroupLessonsPage() {
 
   if (!isGroupCompleted) {
     for (let i = lessons.length - 1; i >= 0; i--) {
-      if (isLessonUnlocked(groupId, lessons[i].id)) {
+      if (isLessonUnlocked(courseId, groupId, lessons[i].id)) {
         activeIndex = i;
         break;
       }

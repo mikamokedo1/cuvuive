@@ -1,5 +1,8 @@
 import Link from "next/link";
 import { GAME_SEO } from "@/libs/constants/game-seo";
+import { safeJsonLd } from "@/libs/utils/safe-jsonld";
+import { COURSES } from "@/libs/constants/courses";
+import { GROUPS } from "@/libs/constants/groups";
 
 interface GameSeoSectionProps {
   gameId: string;
@@ -12,6 +15,12 @@ interface GameSeoSectionProps {
 export function GameSeoSection({ gameId }: GameSeoSectionProps) {
   const seo = GAME_SEO[gameId];
   if (!seo) return null;
+
+  const course = COURSES.find((item) => item.id === gameId);
+  const topic = course ? GROUPS.find((group) => group.id === course.type) : undefined;
+  const siblingGames = course
+    ? COURSES.filter((item) => item.type === course.type && item.id !== gameId).slice(0, 3)
+    : [];
 
   const gameTitle = seo.title.split(" - ")[0];
   const gameUrl = `https://cuthongminh.com/games/${gameId}`;
@@ -97,10 +106,10 @@ export function GameSeoSection({ gameId }: GameSeoSectionProps) {
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }} />
       {videoJsonLd && (
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(videoJsonLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(videoJsonLd) }} />
       )}
 
       <section className="max-w-3xl mx-auto px-6 py-10 text-slate-600 font-[family-name:var(--font-nunito-sans)]">
@@ -108,6 +117,22 @@ export function GameSeoSection({ gameId }: GameSeoSectionProps) {
           {gameTitle}
         </h2>
         <p className="text-base leading-relaxed mb-6">{seo.seoText}</p>
+
+        {topic && (
+          <div className="mb-8 rounded-2xl border border-orange-200 bg-orange-50 p-5">
+            <p className="text-sm font-semibold uppercase tracking-wide text-orange-600 mb-2">
+              Thuộc chủ đề
+            </p>
+            <h3 className="text-xl font-bold text-slate-900 mb-2 font-[family-name:var(--font-baloo-2)]">
+              <Link href={`/${topic.slug}`} className="hover:text-orange-600 transition-colors">
+                Trò chơi {topic.title} cho bé
+              </Link>
+            </h3>
+            <p className="text-sm text-slate-600">
+              Khám phá thêm các bài học cùng chủ đề để tăng internal linking và giúp bé học theo cụm kiến thức.
+            </p>
+          </div>
+        )}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {seo.seoFeatures.map((feature, idx) => (
             <div key={idx} className="flex items-center gap-2">
@@ -142,6 +167,26 @@ export function GameSeoSection({ gameId }: GameSeoSectionProps) {
                   <span className="text-sm font-semibold text-slate-700 group-hover:text-orange-600 transition-colors line-clamp-2">
                     {game.title}
                   </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {siblingGames.length > 0 && (
+          <div className="mt-8 pt-8 border-t border-slate-200">
+            <h3 className="text-lg font-bold text-slate-800 mb-4 font-[family-name:var(--font-baloo-2)]">
+              Cùng chủ đề {topic?.title}
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {siblingGames.map((siblingGame) => (
+                <Link
+                  key={siblingGame.id}
+                  href={`/games/${siblingGame.id}`}
+                  className="rounded-xl border border-slate-200 bg-white p-4 hover:border-orange-200 hover:bg-orange-50 transition-colors"
+                >
+                  <h4 className="font-bold text-slate-800 mb-2 line-clamp-2">{siblingGame.title}</h4>
+                  <p className="text-sm text-slate-600 line-clamp-3">{siblingGame.description}</p>
                 </Link>
               ))}
             </div>

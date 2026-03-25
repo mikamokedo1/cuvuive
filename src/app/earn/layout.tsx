@@ -14,7 +14,7 @@ export const metadata: Metadata = {
       "Giới thiệu bạn bè và nhận hoa hồng 10% đơn hàng đầu tiên. Chương trình affiliate dành cho phụ huynh.",
     images: [{ url: "/og-image.webp", width: 1200, height: 630, alt: "Cú Thông Minh - Kiếm tiền" }],
   },
-  robots: { index: true, follow: true },
+  robots: { index: false, follow: false },
 };
 
 export default function EarnLayout({ children }: { children: React.ReactNode }) {

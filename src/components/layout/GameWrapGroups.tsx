@@ -34,7 +34,7 @@ export const GameWrapGroups = ({ logo, gameId, groups, title }: GameWrapGroups) 
         {/* Always render group cards so Googlebot sees content in initial HTML */}
         <div className={`flex flex-wrap items-center justify-center gap-5 transition-opacity duration-300 ${dataReady ? "opacity-100" : "opacity-70"}`}>
           {groups.map((group, index) => {
-            const unlocked = dataReady ? isGroupUnlocked(group.id, gameId) : index === 0;
+            const unlocked = dataReady ? isGroupUnlocked(gameId, group.id) : index === 0;
             const courseProgress = allProgress[gameId] || { completedGroups: [] };
             const isCompleted = dataReady ? courseProgress.completedGroups.includes(group.id) : false;
 

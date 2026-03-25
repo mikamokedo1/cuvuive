@@ -4,6 +4,7 @@ import Pagination from "@/components/common/Pagination";
 import BlogCard from "@/components/blog/BlogCard";
 import { SpeakableSchema } from "@/components/common/SpeakableSchema";
 import { safeJsonLd } from "@/libs/utils/safe-jsonld";
+import { normalizeTagPathSegment } from "@/libs/utils/tag-slug";
 import { Tag } from "lucide-react";
 
 /** Collect all tags with their post counts, sorted by count desc */
@@ -128,7 +129,7 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Pr
                   {tagsWithCounts.map(({ tag, count }) => (
                     <Link
                       key={tag}
-                      href={`/blogs/tag/${encodeURIComponent(tag)}`}
+                      href={`/blogs/tag/${normalizeTagPathSegment(tag)}`}
                       className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-semibold bg-white border border-slate-200 text-slate-600 hover:border-orange-300 hover:bg-orange-50 hover:text-orange-600 transition-all duration-200 shadow-sm"
                     >
                       {tag}
@@ -144,4 +145,3 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Pr
     </div>
   );
 }
-

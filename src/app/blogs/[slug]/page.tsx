@@ -9,6 +9,7 @@ import "@/styles/blog.css"; // Make sure to import the new blog styles
 import { HowToSchema, type HowToStep } from "@/components/common/HowToSchema";
 import { safeJsonLd } from "@/libs/utils/safe-jsonld";
 import Link from "next/link";
+import { GAME_SEO } from "@/libs/constants/game-seo";
 
 /**
  * Extracts HowTo steps from MDX content by parsing ## headings and their following text.
@@ -109,6 +110,28 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   if (!post) {
     notFound();
   }
+
+  const allPosts = await getAllPosts();
+  const relatedPosts = allPosts
+    .filter((candidate) => candidate.slug !== post.slug)
+    .map((candidate) => {
+      const sharedTags = candidate.tags?.filter((tag) => post.tags?.some((postTag) => postTag.toLowerCase() === tag.toLowerCase())) ?? [];
+      return { post: candidate, sharedTagsCount: sharedTags.length };
+    })
+    .filter((candidate) => candidate.sharedTagsCount > 0)
+    .sort((left, right) => right.sharedTagsCount - left.sharedTagsCount)
+    .slice(0, 3)
+    .map((candidate) => candidate.post);
+
+  const relatedGames = Object.entries(GAME_SEO)
+    .filter(([, seo]) => seo.relatedBlogs.some((blog) => blog.slug === post.slug))
+    .slice(0, 3)
+    .map(([gameId, seo]) => ({
+      gameId,
+      title: seo.title.split(" - ")[0],
+      description: seo.description,
+      image: seo.ogImage,
+    }));
 
   // Calculate word count for schema
   const wordCount = post.content.split(/\s+/).length;
@@ -257,6 +280,57 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       <div className="prose prose-lg prose-slate max-w-none hover:prose-a:text-orange-600 blog-content">
         <MDXRemote source={post.content} options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }} />
       </div>
+
+      {relatedGames.length > 0 && (
+        <section className="mt-16 pt-10 border-t border-slate-200">
+          <h2 className="text-2xl font-bold text-slate-900 mb-6 font-[family-name:var(--font-baloo-2)]">
+            Trò chơi phù hợp với bài viết này
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {relatedGames.map((game) => (
+              <Link
+                key={game.gameId}
+                href={`/games/${game.gameId}`}
+                className="group rounded-2xl border border-slate-200 bg-white overflow-hidden hover:shadow-lg transition-all"
+              >
+                <div className="relative aspect-[16/9] bg-slate-100">
+                  <Image
+                    src={game.image}
+                    alt={game.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="font-bold text-slate-900 mb-2 line-clamp-2">{game.title}</h3>
+                  <p className="text-sm text-slate-600 line-clamp-3">{game.description}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {relatedPosts.length > 0 && (
+        <section className="mt-16 pt-10 border-t border-slate-200">
+          <h2 className="text-2xl font-bold text-slate-900 mb-6 font-[family-name:var(--font-baloo-2)]">
+            Bài viết liên quan
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {relatedPosts.map((relatedPost) => (
+              <Link
+                key={relatedPost.slug}
+                href={`/blogs/${relatedPost.slug}`}
+                className="rounded-2xl border border-slate-200 bg-white p-5 hover:shadow-lg transition-shadow"
+              >
+                <h3 className="font-bold text-slate-900 mb-2 line-clamp-2">{relatedPost.title}</h3>
+                <p className="text-sm text-slate-600 line-clamp-3">{relatedPost.description}</p>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
     </article>
   );
 }

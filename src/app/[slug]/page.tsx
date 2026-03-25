@@ -6,10 +6,13 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { HeaderHome } from "@/components/layout/HeaderHome";
 import { Footer } from "@/components/layout/Footer";
-import { ArrowRight, Star, Play, Trophy } from "lucide-react";
+import { Star, Play, Trophy } from "lucide-react";
 import { FAQSchema, type FAQItem } from "@/components/common/FAQSchema";
 import { SpeakableSchema } from "@/components/common/SpeakableSchema";
 import { GameGroupType } from "@/libs/constants/groups";
+import { safeJsonLd } from "@/libs/utils/safe-jsonld";
+import { TOPIC_CLUSTERS } from "@/libs/seo/topic-clusters";
+import { getAllPosts } from "@/libs/blog";
 
 // FAQ data per group for AEO
 const GROUP_FAQ: Record<GameGroupType, FAQItem[]> = {
@@ -215,6 +218,9 @@ export default async function GroupLandingPage({ params }: PageProps) {
 
   const groupGames = COURSES.filter((course) => course.type === group.id);
   const faqItems = GROUP_FAQ[group.id] || [];
+  const allPosts = await getAllPosts();
+  const topicCluster = TOPIC_CLUSTERS[group.id];
+  const clusterPosts = allPosts.filter((post) => topicCluster.blogSlugs.includes(post.slug)).slice(0, 4);
 
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
@@ -251,8 +257,8 @@ export default async function GroupLandingPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-[#FFF9F0] font-[family-name:var(--font-nunito-sans)]">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(itemListJsonLd) }} />
 
       <div className="max-w-6xl mx-auto px-4 py-6">
         <HeaderHome />
@@ -320,6 +326,46 @@ export default async function GroupLandingPage({ params }: PageProps) {
               ))}
             </div>
           </section>
+
+          {clusterPosts.length > 0 && (
+            <section className="mb-20">
+              <div className="flex items-center justify-between mb-8 gap-4">
+                <div>
+                  <h2 className="text-3xl md:text-4xl font-bold font-[family-name:var(--font-baloo-2)] text-slate-800 mb-3">
+                    {topicCluster.heading}
+                  </h2>
+                  <p className="text-slate-600 max-w-3xl">{topicCluster.description}</p>
+                </div>
+                <Link
+                  href="/blogs"
+                  className="hidden md:inline-flex px-5 py-3 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition-colors"
+                >
+                  Xem blog
+                </Link>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {clusterPosts.map((post) => (
+                  <Link
+                    key={post.slug}
+                    href={`/blogs/${post.slug}`}
+                    className="group rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm hover:shadow-lg transition-all"
+                  >
+                    <div className="flex items-center justify-between gap-3 mb-3">
+                      <span className="inline-flex items-center px-3 py-1 rounded-full bg-orange-100 text-orange-600 text-xs font-bold">
+                        Blog cùng chủ đề
+                      </span>
+                      <span className="text-xs text-slate-400">{post.readingTime} phút đọc</span>
+                    </div>
+                    <h3 className="text-2xl font-bold text-slate-900 mb-3 font-[family-name:var(--font-baloo-2)] group-hover:text-orange-500 transition-colors">
+                      {post.title}
+                    </h3>
+                    <p className="text-slate-600 line-clamp-3">{post.description}</p>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
 
           {/* Call to Action */}
           <section className="bg-slate-900 rounded-[3rem] p-12 text-center text-white mb-20 relative overflow-hidden shadow-2xl">

@@ -33,7 +33,7 @@ export function useGameLesson<G extends { id: string }>({ gameSlug, lessonOrder,
   useEffect(() => {
     if (!isLoaded) return;
 
-    if (!isLessonUnlocked(groupId, lessonId, gameSlug)) {
+    if (!isLessonUnlocked(gameSlug, groupId, lessonId)) {
       router.push(`/games/${gameSlug}/${groupId}`);
       return;
     }
@@ -51,7 +51,7 @@ export function useGameLesson<G extends { id: string }>({ gameSlug, lessonOrder,
   }, [isLoaded, groupId, lessonId, gameSlug, isLessonUnlocked, checkAccess, showPaywall, router]);
 
   const handleComplete = useCallback(() => {
-    markLessonComplete(groupId, lessonId, gameSlug);
+    markLessonComplete(gameSlug, groupId, lessonId);
 
     const currentIdx = lessonOrder.indexOf(lessonId);
     setCurrentLessonNum(currentIdx + 1);

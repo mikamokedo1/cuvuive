@@ -1,8 +1,6 @@
 import { ActionButton } from "@/components/common/ActionButton";
 import { CourseDef } from "@/libs/actions/courses";
 import { useProgress } from "@/context/ProgressContext";
-import { CheckCircle, Lock, PlayCircle } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { useMemo } from "react";
 
@@ -11,7 +9,7 @@ interface CourseCardProps {
 }
 
 export function CourseCard({ course }: CourseCardProps) {
-  const { allProgress, isGroupUnlocked } = useProgress(); // Use isGroupUnlocked for simplicity or custom logic?
+  const { allProgress } = useProgress();
 
   const progress = allProgress[course.id];
 
@@ -28,9 +26,6 @@ export function CourseCard({ course }: CourseCardProps) {
 
       // Find first incomplete lesson to be "Next"
       if (!nextLessonUrl) {
-        // Check if group is unlocked (using context logic or simplified assumption based on previous group completion)
-        // Since isGroupUnlocked is legacy-tied to learn-numbers, let's replicate logic or assume group1 unlocked
-        // For now, let's iterate.
         const isGroupDone = doneInGroup.length >= group.lessons.length;
 
         if (!isGroupDone) {

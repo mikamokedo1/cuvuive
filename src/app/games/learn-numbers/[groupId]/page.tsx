@@ -14,15 +14,12 @@ const group3 = "https://assets.cuthongminh.com/games/learn-numbers/number-logo-3
 const group4 = "https://assets.cuthongminh.com/games/learn-numbers/number-logo-4.webp";
 const group5 = "https://assets.cuthongminh.com/games/compare-quantity/compare-quantity-logo-4.webp";
 
-import { LessonCard } from "@/components/games/LessonCard";
-// Note: User mentioned "own-sleep" but design shows lock icon for locked state.
-// Using LockCardIcon for the right side image of locked cards.
-
 export default function GroupLessonsPage() {
   const params = useParams();
   const router = useRouter();
-  const { isLessonUnlocked, progress } = useProgress();
+  const { getCourseProgress, isLessonUnlocked } = useProgress();
   const { checkAccess, showPaywall } = useAccess();
+  const courseId = "learn-numbers";
 
   // Ensure groupId is string
   const groupId =
@@ -45,26 +42,26 @@ export default function GroupLessonsPage() {
 
   const handleLessonClick = async (lessonId: string) => {
     // Step 1: Check progress - must complete previous lesson first
-    if (!isLessonUnlocked(groupId, lessonId)) {
+    if (!isLessonUnlocked(courseId, groupId, lessonId)) {
       // Lesson is locked due to progress (previous lesson not completed)
       // Don't show paywall, the UI already shows it as locked
       return;
     }
 
     // Step 2: Check access - lesson must be free OR user must be premium
-    const access = checkAccess("learn-numbers", groupId, lessonId);
+    const access = checkAccess(courseId, groupId, lessonId);
 
     if (!access.userHasAccess) {
       if (access.reason === "not_logged_in") {
-        showPaywall("login", `/games/learn-numbers/${groupId}/lesson/${lessonId}`);
+        showPaywall("login", `/games/${courseId}/${groupId}/lesson/${lessonId}`);
       } else if (access.reason === "premium_required") {
-        showPaywall("premium", `/games/learn-numbers/${groupId}/lesson/${lessonId}`);
+        showPaywall("premium", `/games/${courseId}/${groupId}/lesson/${lessonId}`);
       }
       return;
     }
 
     // Both checks passed - navigate to lesson
-    router.push(`/games/learn-numbers/${groupId}/lesson/${lessonId}`);
+    router.push(`/games/${courseId}/${groupId}/lesson/${lessonId}`);
   };
 
   // Regular lessons for groups 1-3
@@ -132,7 +129,7 @@ export default function GroupLessonsPage() {
   // Actually, standard game UI: Focus on the "Current Level".
   // Which is the first one that is NOT completed.
 
-  const groupProgress = progress.completedLessons[groupId] || [];
+  const progress = getCourseProgress(courseId);
 
   // Find the first lesson that is either locked (stop) or unlocked-and-not-completed.
   // Actually simpler: The first lesson that is Unlocked AND Not Completed is the current target.
@@ -150,7 +147,7 @@ export default function GroupLessonsPage() {
 
   if (!isGroupCompleted) {
     for (let i = lessons.length - 1; i >= 0; i--) {
-      if (isLessonUnlocked(groupId, lessons[i].id)) {
+      if (isLessonUnlocked(courseId, groupId, lessons[i].id)) {
         activeIndex = i;
         break;
       }

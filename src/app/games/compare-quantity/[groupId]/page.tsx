@@ -2,10 +2,9 @@
 
 import { useParams, useRouter } from "next/navigation";
 import { StaticImageData } from "next/image";
-import { GameLayout } from "@/components/layout/GameLayout";
 import { useProgress } from "@/context/ProgressContext";
 import { useAccess } from "@/context/AccessContext";
-import { BookOpen, Scale, Hash, PenTool, Dumbbell } from "lucide-react";
+import { BookOpen, Scale, Hash, PenTool } from "lucide-react";
 
 // Assets
 import { ThingImages } from "@/libs/constants/thingImages";
@@ -73,14 +72,11 @@ const groupConfig: Record<
 export default function GroupLessonsPage() {
   const params = useParams();
   const router = useRouter();
-  const { allProgress } = useProgress();
+  const { getCourseProgress, isLessonUnlocked } = useProgress();
   const { checkAccess, showPaywall } = useAccess();
+  const courseId = "compare-quantity";
 
-  // Get course-specific progress
-  const progress = allProgress["compare-quantity"] || {
-    completedGroups: [],
-    completedLessons: {},
-  };
+  const progress = getCourseProgress(courseId);
 
   const groupId = typeof params.groupId === "string" ? params.groupId : "";
   const config = groupConfig[groupId];
@@ -89,51 +85,29 @@ export default function GroupLessonsPage() {
     return <div>Group not found</div>;
   }
 
-  // Helper to check group unlock
-  const isGroupUnlocked = (gId: string) => {
-    if (gId === "group1") return true;
-    if (gId === "group2") return progress.completedGroups.includes("group1");
-    if (gId === "group3") return progress.completedGroups.includes("group2");
-    if (gId === "group4") return progress.completedGroups.includes("group3");
-    return false;
-  };
-
-  const isLessonUnlocked = (gId: string, lessonId: string) => {
-    if (!isGroupUnlocked(gId)) return false;
-    const completedInGroup = progress.completedLessons[gId] || [];
-    if (completedInGroup.includes(lessonId)) return true;
-    if (lessonId === "lesson1") return true;
-    if (lessonId === "lesson2") return completedInGroup.includes("lesson1");
-    if (lessonId === "lesson3") return completedInGroup.includes("lesson2");
-    if (lessonId === "lesson4") return completedInGroup.includes("lesson3");
-    return false;
-  };
-
   const handleLessonClick = async (lessonId: string) => {
-    if (!isLessonUnlocked(groupId, lessonId)) return;
+    if (!isLessonUnlocked(courseId, groupId, lessonId)) return;
 
-    const access = checkAccess("compare-quantity", groupId, lessonId);
+    const access = checkAccess(courseId, groupId, lessonId);
     if (!access.userHasAccess) {
       if (access.reason === "not_logged_in") {
-        showPaywall("login", `/games/compare-quantity/${groupId}/lesson/${lessonId}`);
+        showPaywall("login", `/games/${courseId}/${groupId}/lesson/${lessonId}`);
       } else if (access.reason === "premium_required") {
-        showPaywall("premium", `/games/compare-quantity/${groupId}/lesson/${lessonId}`);
+        showPaywall("premium", `/games/${courseId}/${groupId}/lesson/${lessonId}`);
       }
       return;
     }
 
-    router.push(`/games/compare-quantity/${groupId}/lesson/${lessonId}`);
+    router.push(`/games/${courseId}/${groupId}/lesson/${lessonId}`);
   };
 
-  // Determine active lesson (the first one that is Unlocked AND Not Completed)
-  const groupProgress = progress.completedLessons[groupId] || [];
   const isGroupCompleted = progress.completedGroups.includes(groupId);
 
   let activeIndex = -1;
 
   if (!isGroupCompleted) {
     for (let i = config.lessons.length - 1; i >= 0; i--) {
-      if (isLessonUnlocked(groupId, config.lessons[i].id)) {
+      if (isLessonUnlocked(courseId, groupId, config.lessons[i].id)) {
         activeIndex = i;
         break;
       }

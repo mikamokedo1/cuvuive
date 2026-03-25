@@ -26,6 +26,8 @@ const MAX_AUTO_RETRIES = 1;
 const RETRY_STORAGE_KEY = "auto-recovery-boundary-retry-count";
 
 export class AutoRecoveryBoundary extends Component<Props, State> {
+  private clearRetryTimeout: number | null = null;
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -36,8 +38,18 @@ export class AutoRecoveryBoundary extends Component<Props, State> {
 
   componentDidMount() {
     if (!this.state.hasError && this.state.retryCount > 0) {
-      sessionStorage.removeItem(RETRY_STORAGE_KEY);
-      this.setState({ retryCount: 0 });
+      // Keep the retry marker briefly after mount so post-mount crashes
+      // fall back instead of entering a reload loop.
+      this.clearRetryTimeout = window.setTimeout(() => {
+        sessionStorage.removeItem(RETRY_STORAGE_KEY);
+        this.setState({ retryCount: 0 });
+      }, 3000);
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.clearRetryTimeout !== null) {
+      window.clearTimeout(this.clearRetryTimeout);
     }
   }
 
@@ -66,23 +78,23 @@ export class AutoRecoveryBoundary extends Component<Props, State> {
     if (this.state.hasError && this.state.retryCount >= MAX_AUTO_RETRIES) {
       // Fallback UI after auto-retry exhausted
       return (
-        <div style={{
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "linear-gradient(to bottom, #fff7ed, #fef3c7)",
-          padding: "24px",
-          fontFamily: "system-ui, sans-serif",
-        }}>
+        <div
+          style={{
+            minHeight: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "linear-gradient(to bottom, #fff7ed, #fef3c7)",
+            padding: "24px",
+            fontFamily: "system-ui, sans-serif",
+          }}
+        >
           <div style={{ maxWidth: "400px", textAlign: "center" }}>
             <div style={{ fontSize: "80px", marginBottom: "16px" }}>🦉</div>
             <h1 style={{ fontSize: "24px", fontWeight: "bold", color: "#ea580c", marginBottom: "12px" }}>
               Ôi! Có lỗi xảy ra rồi!
             </h1>
-            <p style={{ color: "#6b7280", marginBottom: "24px" }}>
-              Đừng lo, hãy thử tải lại trang nhé!
-            </p>
+            <p style={{ color: "#6b7280", marginBottom: "24px" }}>Đừng lo, hãy thử tải lại trang nhé!</p>
             <button
               onClick={() => window.location.reload()}
               style={{

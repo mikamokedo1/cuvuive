@@ -10,8 +10,9 @@ import { FIND_DIFFERENCES_DATA } from "@/features/games/find-differences/constan
 export default function GroupLessonsPage() {
   const params = useParams();
   const router = useRouter();
-  const { isLessonUnlocked, allProgress } = useProgress();
+  const { getCourseProgress, isLessonUnlocked } = useProgress();
   const { checkAccess, showPaywall } = useAccess();
+  const courseId = "find-differences";
 
   const groupId = typeof params.groupId === "string" ? params.groupId : "";
   const group = FIND_DIFFERENCES_DATA.find((g) => g.id === groupId);
@@ -21,11 +22,11 @@ export default function GroupLessonsPage() {
   }
 
   const handleLessonClick = async (lessonId: string) => {
-    if (!isLessonUnlocked(groupId, lessonId, "find-differences")) {
+    if (!isLessonUnlocked(courseId, groupId, lessonId)) {
       return;
     }
 
-    const access = checkAccess("find-differences", groupId, lessonId);
+    const access = checkAccess(courseId, groupId, lessonId);
 
     if (!access.userHasAccess) {
       if (access.reason === "not_logged_in") {
@@ -52,13 +53,13 @@ export default function GroupLessonsPage() {
     isPremium: index > 0,
   }));
 
-  const findDifferencesProgress = allProgress["find-differences"] || { completedGroups: [], completedLessons: {} };
+  const findDifferencesProgress = getCourseProgress(courseId);
   const isGroupCompleted = findDifferencesProgress.completedGroups.includes(groupId);
   let activeIndex = -1;
 
   if (!isGroupCompleted) {
     for (let i = lessons.length - 1; i >= 0; i--) {
-      if (isLessonUnlocked(groupId, lessons[i].id, "find-differences")) {
+      if (isLessonUnlocked(courseId, groupId, lessons[i].id)) {
         activeIndex = i;
         break;
       }

@@ -18,6 +18,20 @@ export interface BlogPost {
 
 const blogsDirectory = path.join(process.cwd(), "content/blogs");
 
+function extractFirstImageFromContent(content: string): string | null {
+  const markdownImageMatch = content.match(/!\[[^\]]*\]\(([^)\s]+)(?:\s+"[^"]*")?\)/);
+  if (markdownImageMatch?.[1]) {
+    return markdownImageMatch[1];
+  }
+
+  const htmlImageMatch = content.match(/<img[^>]+src=["']([^"']+)["']/i);
+  if (htmlImageMatch?.[1]) {
+    return htmlImageMatch[1];
+  }
+
+  return null;
+}
+
 /**
  * Ensures the blogs directory exists
  */
@@ -49,6 +63,8 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
     // Parse the MDX frontmatter and content using gray-matter
     const { data, content } = matter(fileContents);
 
+    const image = data.image || extractFirstImageFromContent(content) || "/og-image.webp";
+
     return {
       slug,
       title: data.title || "Untitled",
@@ -57,7 +73,7 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
       dateModified: data.dateModified || data.date || "",
       author: data.author || "Cú Thông Minh",
       tags: data.tags || [],
-      image: data.image || "/og-image.png",
+      image,
       content,
       readingTime: calculateReadingTime(content),
     };

@@ -1,14 +1,18 @@
 "use client";
 
-import { createClient } from "@/libs/supabase/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
 import { useFormik } from "formik";
-import { object, string, number } from "yup";
 import { ActionButton } from "@/components/common/ActionButton";
-const owlHi = "https://assets.cuthongminh.com/games/common/owl-say-hi.webp";
 import { ExclamationIcon, PhoneIcon, UserIcon } from "@/components/common/Icons";
+import {
+  accountProfileSchema,
+  getAccountProfileInitialValues,
+  updateAccountProfile,
+} from "@/features/settings/account-profile";
+
+const owlHi = "https://assets.cuthongminh.com/games/common/owl-say-hi.webp";
 
 interface MissingInfoModalProps {
   isOpen: boolean;
@@ -17,44 +21,23 @@ interface MissingInfoModalProps {
 
 export function MissingInfoModal({ isOpen, onSuccess }: MissingInfoModalProps) {
   const router = useRouter();
-  const supabase = createClient();
   const [loading, setLoading] = useState(false);
   const [generalError, setGeneralError] = useState<string | null>(null);
 
   const formik = useFormik({
-    initialValues: {
-      kidName: "",
-      parentPhone: "",
-      age: 3,
-      sex: "male",
-    },
-    validationSchema: object({
-      kidName: string().required("Vui lòng nhập tên bé"),
-      parentPhone: string()
-        .required("Vui lòng nhập số điện thoại")
-        .matches(/^[0-9]{10,11}$/, "Số điện thoại không hợp lệ"),
-      age: number().required("Vui lòng chọn tuổi"),
-      sex: string().required("Vui lòng chọn giới tính"),
-    }),
+    initialValues: getAccountProfileInitialValues(null),
+    validationSchema: accountProfileSchema,
     onSubmit: async (values) => {
       setLoading(true);
       setGeneralError(null);
 
-      const { error } = await supabase.auth.updateUser({
-        data: {
-          kidName: values.kidName,
-          parentPhone: values.parentPhone,
-          age: values.age,
-          sex: values.sex,
-        },
-      });
+      const { error } = await updateAccountProfile(values);
 
       if (error) {
         setGeneralError(error.message);
         setLoading(false);
       } else {
         onSuccess();
-        // Refresh to ensure context updates
         router.refresh();
       }
     },

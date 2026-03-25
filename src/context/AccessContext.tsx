@@ -2,8 +2,8 @@
 
 import { createContext, useContext, useState, useMemo, ReactNode, useCallback } from "react";
 import { useUser } from "./UserContext";
-import { AccessCheckResult, AccessReason } from "@/libs/actions/access";
-import { COURSES } from "@/libs/constants/courses";
+import { AccessCheckResult } from "@/libs/actions/access";
+import { getLessonDefinition } from "@/libs/course-catalog";
 
 const REDIRECT_STORAGE_KEY = "auth_redirect_url";
 
@@ -56,10 +56,7 @@ export function AccessProvider({ children }: { children: ReactNode }) {
 
   const checkAccess = useCallback(
     (courseId: string, groupId: string, lessonId: string): AccessCheckResult => {
-      // Look up isFree from hardcoded COURSES constant (zero network cost)
-      const course = COURSES.find((c) => c.id === courseId);
-      const group = course?.groups.find((g) => g.id === groupId);
-      const lesson = group?.lessons.find((l) => l.id === lessonId);
+      const lesson = getLessonDefinition(courseId, groupId, lessonId);
       const isFree = lesson?.isFree ?? false;
 
       if (isFree) {

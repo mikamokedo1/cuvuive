@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 
 import { COURSES } from "@/libs/constants/courses";
 import { GROUPS } from "@/libs/constants/groups";
+import { safeJsonLd } from "@/libs/utils/safe-jsonld";
 
 export const metadata: Metadata = {
   title: "Kho Trò Chơi Giáo Dục - Cú Thông Minh",
@@ -55,7 +56,7 @@ export default async function GamesPage() {
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }} />
       <GamesMap courses={courses} staticCourses={staticCourses} groups={GROUPS} />
     </>
   );
