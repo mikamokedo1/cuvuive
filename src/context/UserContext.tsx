@@ -4,6 +4,7 @@ import { createClient } from "@/libs/supabase/client";
 import { User } from "@supabase/supabase-js";
 import { createContext, useContext, useEffect, useMemo, useRef, useState, startTransition, ReactNode } from "react";
 import { getSubscriptionDetailsAction } from "@/libs/actions/user";
+import type { Subscription } from "@supabase/supabase-js";
 
 interface UserContextType {
   user: User | null;
@@ -58,6 +59,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
+    let authSubscription: Subscription | null = null;
+    let isMounted = true;
+
     const initializeUser = async () => {
       try {
         await checkMissingInfo();
@@ -65,14 +69,28 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       } catch (error) {
         console.error("Error checking user info:", error);
       } finally {
-        setIsLoading(false);
+        if (isMounted) {
+          setIsLoading(false);
+        }
       }
 
       const {
         data: { subscription },
       } = supabase.auth.onAuthStateChange(async (event, session) => {
-        // Batch state updates to prevent multiple re-renders that could
-        // cause "Rendered more hooks" errors with lazy-loaded components
+        if (!isMounted) {
+          return;
+        }
+
+        // Only process meaningful auth transitions.
+        // TOKEN_REFRESHED just means the JWT was renewed — user data hasn't
+        // changed. Processing it causes unnecessary state cascades that can
+        // corrupt React's hook reconciliation during concurrent RSC streaming,
+        // resulting in "Rendered more hooks than during the previous render".
+        // INITIAL_SESSION is handled by initializeUser() above.
+        if (event === "TOKEN_REFRESHED" || event === "INITIAL_SESSION") {
+          return;
+        }
+
         startTransition(() => {
           if (session?.user) {
             setUser((prev) => {
@@ -102,13 +120,15 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
           refreshSubscription();
         }
       });
-
-      return () => {
-        subscription.unsubscribe();
-      };
+      authSubscription = subscription;
     };
 
     initializeUser();
+
+    return () => {
+      isMounted = false;
+      authSubscription?.unsubscribe();
+    };
   }, []);
 
   const handleLogout = async () => {

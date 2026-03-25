@@ -12,6 +12,7 @@ import { PlayTimerProvider } from "@/context/PlayTimerContext";
 import { ClientDynamicComponents } from "@/components/common/ClientDynamicComponents";
 import { ReferralTracker } from "@/features/referral/ReferralTracker";
 import TopProgressBar from "@/components/common/TopProgressBar";
+import { AutoRecoveryBoundary } from "@/components/common/AutoRecoveryBoundary";
 
 // Configure fonts
 const baloo2 = Baloo_2({
@@ -177,23 +178,25 @@ export default async function RootLayout({
         />
       </head>
       <body className={`${baloo2.variable} ${nunitoSans.variable} antialiased`} suppressHydrationWarning>
-        <UserProvider>
-          <AccessProvider>
-            <ProgressProvider>
-              <PlayTimerProvider>
-                <OwlProvider>
-                  <TopProgressBar />
-                  {children}
-                  <MissingInfoListener />
-                  <ReferralTracker />
-                  <Suspense fallback={null}>
-                    <ClientDynamicComponents />
-                  </Suspense>
-                </OwlProvider>
-              </PlayTimerProvider>
-            </ProgressProvider>
-          </AccessProvider>
-        </UserProvider>
+        <AutoRecoveryBoundary>
+          <UserProvider>
+            <AccessProvider>
+              <ProgressProvider>
+                <PlayTimerProvider>
+                  <OwlProvider>
+                    <TopProgressBar />
+                    {children}
+                    <MissingInfoListener />
+                    <ReferralTracker />
+                    <Suspense fallback={null}>
+                      <ClientDynamicComponents />
+                    </Suspense>
+                  </OwlProvider>
+                </PlayTimerProvider>
+              </ProgressProvider>
+            </AccessProvider>
+          </UserProvider>
+        </AutoRecoveryBoundary>
       </body>
       {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
         <>

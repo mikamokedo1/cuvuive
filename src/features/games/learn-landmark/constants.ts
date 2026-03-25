@@ -35,26 +35,26 @@ import { EntityData } from "@/types/game";
 export const LANDMARKS: EntityData[] = [
   // Asia
   { id: "greatwall", name: "Vạn Lý Trường Thành", image: ImgGreatWall, category: "asia" },
-  { id: "angkorwat", name: "Angkor Wat", image: ImgAngkorWat, category: "asia" },
-  { id: "tajmahal", name: "Taj Mahal", image: ImgTajMahal, category: "asia" },
+  { id: "angkorwat", name: "Angkor quát", image: ImgAngkorWat, category: "asia" },
+  { id: "tajmahal", name: "Ta Ma ha", image: ImgTajMahal, category: "asia" },
   { id: "mtfuji", name: "Núi Phú Sĩ", image: ImgMtFuji, category: "asia" },
   { id: "halongbay", name: "Vịnh Hạ Long", image: ImgHaLongBay, category: "asia" },
   { id: "phuket", name: "Voi Đá Phuket", image: ImgPhuket, category: "asia" },
 
   // Europe
-  { id: "eiffeltower", name: "Tháp Eiffel", image: ImgEiffelTower, category: "europe" },
+  { id: "eiffeltower", name: "Tháp ép phen", image: ImgEiffelTower, category: "europe" },
   { id: "colosseum", name: "Đấu Trường La Mã", image: ImgColosseum, category: "europe" },
-  { id: "bigben", name: "Tháp Big Ben", image: ImgBigBen, category: "europe" },
-  { id: "leaningtower", name: "Tháp Nghiêng Pisa", image: ImgLeaningTower, category: "europe" },
+  { id: "bigben", name: "Tháp Bíc Ben", image: ImgBigBen, category: "europe" },
+  { id: "leaningtower", name: "Tháp Nghiêng Pi sa", image: ImgLeaningTower, category: "europe" },
   { id: "windmills", name: "Cối Xay Gió", image: ImgWindmills, category: "europe" },
-  { id: "sagradafamilia", name: "Sagrada Familia", image: ImgSagradaFamilia, category: "europe" },
+  { id: "sagradafamilia", name: "sa gra da fa mi li a", image: ImgSagradaFamilia, category: "europe" },
 
   // Americas & Others
   { id: "statueofliberty", name: "Nữ Thần Tự Do", image: ImgStatueOfLiberty, category: "americas" },
-  { id: "chichenitza", name: "Chichen Itza", image: ImgChichenItza, category: "americas" },
+  { id: "chichenitza", name: "Chi chen It da", image: ImgChichenItza, category: "americas" },
   { id: "christtheredeemer", name: "Chúa Cứu Thế", image: ImgChristTheRedeemer, category: "americas" },
-  { id: "machupicchu", name: "Machu Picchu", image: Placeholder16, category: "americas" },
-  { id: "sydneyoperahouse", name: "Nhà Hát Sydney", image: Placeholder17, category: "americas" },
+  { id: "machupicchu", name: "Ma chu Pic chu", image: Placeholder16, category: "americas" },
+  { id: "sydneyoperahouse", name: "Nhà Hát Sít ni", image: Placeholder17, category: "americas" },
   { id: "moai", name: "Tượng Moai", image: Placeholder18, category: "americas" },
 ];
 
@@ -96,27 +96,27 @@ export const LANDMARK_DESCRIPTIONS: Record<string, string> = {
   // Asia
   greatwall:
     "Vạn Lý Trường Thành ở Trung Quốc dài hơn 21.000 km, được xây hàng ngàn năm trước để bảo vệ đất nước bởi vua tần thủy hoàng",
-  angkorwat: "Angkor Wat ở Campuchia là ngôi đền lớn nhất thế giới. Nhìn bóng đền in trên mặt hồ đẹp lắm!",
+  angkorwat: "Angkor quát ở Campuchia là ngôi đền lớn nhất thế giới. Nhìn bóng đền in trên mặt hồ đẹp lắm!",
   tajmahal:
-    "Taj Mahal ở Ấn Độ được xây bằng đá cẩm thạch trắng. Đây là món quà tình yêu của một vị vua dành cho hoàng hậu.",
+    "Ta Ma ha ở Ấn Độ được xây bằng đá cẩm thạch trắng. Đây là món quà tình yêu của một vị vua dành cho hoàng hậu.",
   mtfuji: "Núi Phú Sĩ là ngọn núi cao nhất Nhật Bản, đỉnh luôn phủ tuyết trắng. Người Nhật rất yêu quý ngọn núi này!",
   halongbay: "Vịnh Hạ Long ở Việt Nam có gần 2.000 hòn đảo đá nhô lên giữa biển xanh. Tuyệt đẹp!",
-  phuket: "Phuket là hòn đảo lớn nhất Thái Lan với bãi biển cát trắng và nước biển trong vắt. Thiên đường nghỉ mát!",
+  phuket: "Phu ket là hòn đảo lớn nhất Thái Lan với bãi biển cát trắng và nước biển trong vắt. Thiên đường nghỉ mát!",
 
   // Europe
-  eiffeltower: "Tháp Eiffel ở Paris, Pháp cao 330 mét, được làm bằng sắt. Đêm đến, tháp lấp lánh ánh đèn rất đẹp!",
+  eiffeltower: "Tháp ép phen ở Pa ri, Pháp cao 330 mét, được làm bằng sắt. Đêm đến, tháp lấp lánh ánh đèn rất đẹp!",
   colosseum: "Đấu trường La Mã ở Ý được xây gần 2.000 năm trước. Ngày xưa, người ta xem các võ sĩ thi đấu ở đây!",
-  bigben: "Tháp Big Ben ở London, Anh có chuông nặng 13 tấn! Tiếng chuông vang xa cả thành phố.",
-  leaningtower: "Tháp nghiêng Pisa ở Ý bị nghiêng vì đất mềm bên dưới. Tháp nghiêng nhưng không đổ, thú vị lắm!",
+  bigben: "Tháp Bíc Ben ở Luân Đôn, Anh có chuông nặng 13 tấn! Tiếng chuông vang xa cả thành phố.",
+  leaningtower: "Tháp nghiêng Pi sa ở Ý bị nghiêng vì đất mềm bên dưới. Tháp nghiêng nhưng không đổ, thú vị lắm!",
   windmills: "Cối xay gió ở Hà Lan dùng sức gió để bơm nước và xay bột. Trông như những chiếc quạt khổng lồ!",
   sagradafamilia: "Nhà thờ Sagrada Familia ở Tây Ban Nha được xây hơn 140 năm mà vẫn chưa xong! Kiến trúc rất độc đáo.",
 
   // Americas & Others
   statueofliberty: "Tượng Nữ Thần Tự Do ở New York, Mỹ cao 93 mét. Bà cầm đuốc sáng chào đón mọi người!",
-  chichenitza: "Chichen Itza ở Mexico là kim tự tháp bậc thang của người Maya cổ đại. Mỗi bậc là một ngày trong năm!",
+  chichenitza: "Chi chen It da ở Mexico là kim tự tháp bậc thang của người Maya cổ đại. Mỗi bậc là một ngày trong năm!",
   christtheredeemer:
     "Tượng Chúa Cứu Thế ở Brazil đứng trên đỉnh núi, dang rộng hai tay ôm cả thành phố Rio de Janeiro!",
-  machupicchu: "Machu Picchu ở Peru là thành phố cổ nằm trên đỉnh núi cao, ẩn mình trong mây. Bí ẩn lắm!",
-  sydneyoperahouse: "Nhà hát Sydney ở Úc có mái nhà hình cánh buồm trắng. Trông như những con thuyền đang lướt sóng!",
+  machupicchu: "Ma chu Pic chu ở Peru là thành phố cổ nằm trên đỉnh núi cao, ẩn mình trong mây. Bí ẩn lắm!",
+  sydneyoperahouse: "Nhà hát Sít ni ở Úc có mái nhà hình cánh buồm trắng. Trông như những con thuyền đang lướt sóng!",
   moai: "Tượng Moai trên đảo Phục Sinh là những bức tượng đá khổng lồ bí ẩn. Không ai biết chắc ai đã tạo ra chúng!",
 };
