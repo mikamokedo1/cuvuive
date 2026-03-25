@@ -9,19 +9,22 @@ interface UseGroupLessonsOptions<G extends { id: string; title: string }> {
   gameSlug: string;
   groups: G[];
   lessons: LessonData[];
+  initialGroupId?: string;
 }
 
 export function useGroupLessons<G extends { id: string; title: string }>({
   gameSlug,
   groups,
   lessons,
+  initialGroupId,
 }: UseGroupLessonsOptions<G>) {
   const params = useParams();
   const router = useRouter();
   const { isLessonUnlocked, allProgress } = useProgress();
   const { checkAccess, showPaywall } = useAccess();
 
-  const groupId = typeof params.groupId === "string" ? params.groupId : "";
+  const routeGroupId = typeof params.groupId === "string" ? params.groupId : "";
+  const groupId = initialGroupId ?? routeGroupId;
   const group = groups.find((g) => g.id === groupId) || null;
 
   const handleLessonClick = async (lessonId: string) => {
@@ -61,10 +64,24 @@ export function useGroupLessons<G extends { id: string; title: string }>({
     activeIndex = 0;
   }
 
+  const lessonsWithHref = lessons.map((lesson) => {
+    const unlocked = isLessonUnlocked(gameSlug, groupId, lesson.id);
+    if (!unlocked) {
+      return lesson;
+    }
+
+    const access = checkAccess(gameSlug, groupId, lesson.id);
+    return {
+      ...lesson,
+      href: access.userHasAccess ? `/games/${gameSlug}/${groupId}/lesson/${lesson.id}` : undefined,
+    };
+  });
+
   return {
     group,
     groupId,
     activeIndex,
     handleLessonClick,
+    lessonsWithHref,
   };
 }

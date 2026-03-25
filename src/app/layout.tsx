@@ -1,19 +1,15 @@
 import type { Metadata } from "next";
 import { Baloo_2, Nunito_Sans } from "next/font/google";
 import Script from "next/script";
-import { Suspense } from "react";
 import "./globals.css";
 import { AppStructuredData } from "@/app/AppStructuredData";
 import { OwlProvider } from "@/context/OwlContext";
 import { UserProvider } from "@/context/UserContext";
 import { AccessProvider } from "@/context/AccessContext";
-import { MissingInfoListener } from "@/features/auth/MissingInfoListener";
 import { ProgressProvider } from "@/context/ProgressContext";
 import { PlayTimerProvider } from "@/context/PlayTimerContext";
-import { ClientDynamicComponents } from "@/components/common/ClientDynamicComponents";
-import { ReferralTracker } from "@/features/referral/ReferralTracker";
-import TopProgressBar from "@/components/common/TopProgressBar";
 import { AutoRecoveryBoundary } from "@/components/common/AutoRecoveryBoundary";
+import { AppProviders } from "@/app/AppProviders";
 
 // Configure fonts
 const baloo2 = Baloo_2({
@@ -129,13 +125,8 @@ export default async function RootLayout({
               <ProgressProvider>
                 <PlayTimerProvider>
                   <OwlProvider>
-                    <TopProgressBar />
                     {children}
-                    <MissingInfoListener />
-                    <ReferralTracker />
-                    <Suspense fallback={null}>
-                      <ClientDynamicComponents />
-                    </Suspense>
+                    <AppProviders />
                   </OwlProvider>
                 </PlayTimerProvider>
               </ProgressProvider>

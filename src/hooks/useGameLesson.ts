@@ -10,9 +10,17 @@ interface UseGameLessonOptions<G extends { id: string }> {
   gameSlug: string;
   lessonOrder: string[];
   groups: G[];
+  initialGroupId?: string;
+  initialLessonId?: string;
 }
 
-export function useGameLesson<G extends { id: string }>({ gameSlug, lessonOrder, groups }: UseGameLessonOptions<G>) {
+export function useGameLesson<G extends { id: string }>({
+  gameSlug,
+  lessonOrder,
+  groups,
+  initialGroupId,
+  initialLessonId,
+}: UseGameLessonOptions<G>) {
   const params = useParams();
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
@@ -25,8 +33,10 @@ export function useGameLesson<G extends { id: string }>({ gameSlug, lessonOrder,
   const [isGroupDone, setIsGroupDone] = useState(false);
   const [isCourseComplete, setIsCourseComplete] = useState(false);
 
-  const groupId = typeof params.groupId === "string" ? params.groupId : "";
-  const lessonId = typeof params.lessonId === "string" ? params.lessonId : "";
+  const routeGroupId = typeof params.groupId === "string" ? params.groupId : "";
+  const routeLessonId = typeof params.lessonId === "string" ? params.lessonId : "";
+  const groupId = initialGroupId ?? routeGroupId;
+  const lessonId = initialLessonId ?? routeLessonId;
 
   const group = groups.find((g: G) => g.id === groupId);
 

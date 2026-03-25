@@ -2,6 +2,7 @@
 
 import { db } from "@/db";
 import { courses, groups, lessons } from "@/db/schema";
+import { COURSES as STATIC_COURSES } from "@/libs/constants/courses";
 import { asc, eq } from "drizzle-orm";
 
 // Types matching the frontend expectations (similar to constants)
@@ -25,71 +26,103 @@ export interface CourseDef {
   groups: GroupDef[];
 }
 
-export async function getCourses(): Promise<CourseDef[]> {
-  const allCourses = await db.query.courses.findMany({
-    orderBy: asc(courses.sortIndex),
-    with: {
-      groups: {
-        orderBy: asc(groups.sortIndex),
-        with: {
-          lessons: {
-            orderBy: asc(lessons.sortIndex),
-          },
-        },
-      },
-    },
-  });
-
-  // Map to the shape expected by frontend (using slugs as IDs where appropriate)
-  return allCourses.map((c) => ({
-    id: c.id,
-    title: c.title,
-    description: c.description,
-    thumbnail: c.thumbnail,
-    groups: c.groups.map((g) => ({
-      id: g.slug, // Use slug as logical ID for frontend routing ("group1")
-      title: g.title,
-      lessons: g.lessons.map((l) => ({
-        id: l.slug, // Use slug as logical ID for frontend routing ("lesson1")
-        title: l.title,
-        isFree: l.isFree || false,
-      })),
-    })),
-  }));
-}
-
-export async function getCourse(courseId: string): Promise<CourseDef | null> {
-  const course = await db.query.courses.findFirst({
-    where: eq(courses.id, courseId),
-    with: {
-      groups: {
-        orderBy: asc(groups.sortIndex),
-        with: {
-          lessons: {
-            orderBy: asc(lessons.sortIndex),
-          },
-        },
-      },
-    },
-  });
-
-  if (!course) return null;
-
+function mapStaticCourse(course: (typeof STATIC_COURSES)[number]): CourseDef {
   return {
     id: course.id,
     title: course.title,
     description: course.description,
-    thumbnail: course.thumbnail,
-    groups: course.groups.map((g) => ({
-      id: g.slug,
-      title: g.title,
-      lessons: g.lessons.map((l) => ({
-        id: l.slug,
-        title: l.title,
-        isFree: l.isFree || false,
+    thumbnail: null,
+    groups: course.groups.map((group) => ({
+      id: group.id,
+      title: group.title,
+      lessons: group.lessons.map((lesson) => ({
+        id: lesson.id,
+        title: lesson.title,
+        isFree: lesson.isFree || false,
       })),
     })),
   };
+}
+
+export async function getCourses(): Promise<CourseDef[]> {
+  try {
+    const allCourses = await db.query.courses.findMany({
+      orderBy: asc(courses.sortIndex),
+      with: {
+        groups: {
+          orderBy: asc(groups.sortIndex),
+          with: {
+            lessons: {
+              orderBy: asc(lessons.sortIndex),
+            },
+          },
+        },
+      },
+    });
+
+    // Map to the shape expected by frontend (using slugs as IDs where appropriate)
+    return allCourses.map((c) => ({
+      id: c.id,
+      title: c.title,
+      description: c.description,
+      thumbnail: c.thumbnail,
+      groups: c.groups.map((g) => ({
+        id: g.slug, // Use slug as logical ID for frontend routing ("group1")
+        title: g.title,
+        lessons: g.lessons.map((l) => ({
+          id: l.slug, // Use slug as logical ID for frontend routing ("lesson1")
+          title: l.title,
+          isFree: l.isFree || false,
+        })),
+      })),
+    }));
+  } catch (error) {
+    console.error("Error loading courses from database, falling back to static course catalog:", error);
+    return STATIC_COURSES.map(mapStaticCourse);
+  }
+}
+
+export async function getCourse(courseId: string): Promise<CourseDef | null> {
+  try {
+    const course = await db.query.courses.findFirst({
+      where: eq(courses.id, courseId),
+      with: {
+        groups: {
+          orderBy: asc(groups.sortIndex),
+          with: {
+            lessons: {
+              orderBy: asc(lessons.sortIndex),
+            },
+          },
+        },
+      },
+    });
+
+    if (!course) {
+      const staticCourse = STATIC_COURSES.find((item) => item.id === courseId);
+      return staticCourse ? mapStaticCourse(staticCourse) : null;
+    }
+
+    return {
+      id: course.id,
+      title: course.title,
+      description: course.description,
+      thumbnail: course.thumbnail,
+      groups: course.groups.map((g) => ({
+        id: g.slug,
+        title: g.title,
+        lessons: g.lessons.map((l) => ({
+          id: l.slug,
+          title: l.title,
+          isFree: l.isFree || false,
+        })),
+      })),
+    };
+  } catch (error) {
+    console.error(`Error loading course ${courseId} from database, falling back to static course catalog:`, error);
+    const staticCourse = STATIC_COURSES.find((item) => item.id === courseId);
+    return staticCourse ? mapStaticCourse(staticCourse) : null;
+  }
 }
 
 export async function getCourseStructureAction() {

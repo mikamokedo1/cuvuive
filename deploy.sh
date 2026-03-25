@@ -7,6 +7,7 @@ VPS_DIR="/var/www/cuthongminh.com/frontend"
 IMAGE_NAME="cuthongminh-web"
 IMAGE_TAG="latest"
 IMAGE_TAR="/tmp/${IMAGE_NAME}.tar"
+VPS_PASS='xAJz?#s5n20b'
 
 echo "🚀 Starting deployment to $VPS_IP..."
 
@@ -47,7 +48,7 @@ echo "✅ Docker image saved! Size: $(du -h ${IMAGE_TAR} | cut -f1)"
 
 # Step 3: Transfer image to VPS
 echo "📦 Transferring Docker image to server (this may take a while)..."
-rsync -avz --progress ${IMAGE_TAR} "$VPS_USER@$VPS_IP:/tmp/"
+sshpass -p "$VPS_PASS" rsync -avz --progress -e "ssh -o StrictHostKeyChecking=no" ${IMAGE_TAR} "$VPS_USER@$VPS_IP:/tmp/"
 
 if [ $? -ne 0 ]; then
     echo "❌ Failed to transfer image to server."
@@ -58,7 +59,7 @@ echo "✅ Image transferred successfully!"
 
 # Step 4: Sync docker-compose and env files
 echo "📄 Syncing config files to server..."
-rsync -avz docker-compose.deploy.yml "$VPS_USER@$VPS_IP:$VPS_DIR/"
+sshpass -p "$VPS_PASS" rsync -avz -e "ssh -o StrictHostKeyChecking=no" docker-compose.deploy.yml "$VPS_USER@$VPS_IP:$VPS_DIR/"
 
 if [ $? -ne 0 ]; then
     echo "❌ Failed to sync config files."
@@ -67,7 +68,7 @@ fi
 
 # Step 5: Load image and restart container on VPS
 echo "🐳 Loading image and starting container on server..."
-ssh "$VPS_USER@$VPS_IP" "\
+sshpass -p "$VPS_PASS" ssh -o StrictHostKeyChecking=no "$VPS_USER@$VPS_IP" "\
   docker load -i /tmp/${IMAGE_NAME}.tar && \
   rm -f /tmp/${IMAGE_NAME}.tar && \
   cd $VPS_DIR && \

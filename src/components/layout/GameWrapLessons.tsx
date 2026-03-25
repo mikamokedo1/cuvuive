@@ -10,6 +10,7 @@ export interface LessonData {
   icon: React.ReactNode;
   isPremium?: boolean;
   color?: string;
+  href?: string;
 }
 
 interface GameWrapLessonsProps {

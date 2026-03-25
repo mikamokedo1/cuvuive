@@ -25,13 +25,19 @@ export const metadata: Metadata = {
 export default function LearnNotesRootPage() {
   const course = COURSES.find((c) => c.id === "learn-notes");
   if (!course) return null;
+  const groups = course.groups.map((group) => ({
+    ...group,
+    description: group.description ?? group.title,
+    logo: group.logo ?? LearnNotesLogo,
+    variant: group.variant ?? "purple",
+  }));
 
   return (
     <>
       <GameWrapGroups
       logo={LearnNotesLogo}
       gameId="learn-notes"
-      groups={course.groups as any}
+      groups={groups}
       title="Học Nốt Nhạc"
     />
       <GameSeoSection gameId="learn-notes" />

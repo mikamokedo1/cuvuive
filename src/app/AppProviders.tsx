@@ -1,38 +1,39 @@
 "use client";
 
-import type { ReactNode } from "react";
-import { OwlProvider } from "@/context/OwlContext";
-import { UserProvider } from "@/context/UserContext";
-import { AccessProvider } from "@/context/AccessContext";
-import { ProgressProvider } from "@/context/ProgressContext";
-import { PlayTimerProvider } from "@/context/PlayTimerContext";
-import { MissingInfoListener } from "@/features/auth/MissingInfoListener";
-import { ReferralTracker } from "@/features/referral/ReferralTracker";
-import TopProgressBar from "@/components/common/TopProgressBar";
-import { ClientDynamicComponents } from "@/components/common/ClientDynamicComponents";
-import { AutoRecoveryBoundary } from "@/components/common/AutoRecoveryBoundary";
-import { Suspense } from "react";
+import dynamic from "next/dynamic";
 
-export function AppProviders({ children }: { children: ReactNode }) {
+const TopProgressBar = dynamic(() => import("@/components/common/TopProgressBar"), {
+  ssr: false,
+});
+
+const MissingInfoListener = dynamic(
+  () => import("@/features/auth/MissingInfoListener").then((mod) => mod.MissingInfoListener),
+  { ssr: false },
+);
+
+const ReferralTracker = dynamic(
+  () => import("@/features/referral/ReferralTracker").then((mod) => mod.ReferralTracker),
+  { ssr: false },
+);
+
+const PaywallListener = dynamic(
+  () => import("@/features/paywall/PaywallListener").then((mod) => mod.PaywallListener),
+  { ssr: false },
+);
+
+const ClientDynamicComponents = dynamic(
+  () => import("@/components/common/ClientDynamicComponents").then((mod) => mod.ClientDynamicComponents),
+  { ssr: false },
+);
+
+export function AppProviders() {
   return (
-    <AutoRecoveryBoundary>
-      <UserProvider>
-        <AccessProvider>
-          <ProgressProvider>
-            <PlayTimerProvider>
-              <OwlProvider>
-                <TopProgressBar />
-                {children}
-                <MissingInfoListener />
-                <ReferralTracker />
-                <Suspense fallback={null}>
-                  <ClientDynamicComponents />
-                </Suspense>
-              </OwlProvider>
-            </PlayTimerProvider>
-          </ProgressProvider>
-        </AccessProvider>
-      </UserProvider>
-    </AutoRecoveryBoundary>
+    <>
+      <TopProgressBar />
+      <MissingInfoListener />
+      <ReferralTracker />
+      <PaywallListener />
+      <ClientDynamicComponents />
+    </>
   );
 }
