@@ -29,19 +29,15 @@ function isPublicPath(pathname: string): boolean {
 }
 
 export async function updateSession(request: NextRequest) {
-  // PERF: For public paths, skip Supabase auth entirely.
-  // This avoids creating a Supabase client + calling getClaims() on every
-  // homepage/blog/about request, saving ~500ms TTFB.
-  if (isPublicPath(request.nextUrl.pathname)) {
-    return NextResponse.next({ request });
-  }
-
   let supabaseResponse = NextResponse.next({
     request,
   });
 
-  // With Fluid compute, don't put this client in a global environment
-  // variable. Always create a new one on each request.
+  // Always create the Supabase client to keep server-side cookies in sync
+  // with the client-side session. Without this, token refreshes on the client
+  // would leave the server cookies stale, causing RSC fetches (e.g.
+  // /games?_rsc=...) to fail with expired auth after the user returns to the
+  // site after hours — crashing the React tree with "Rendered more hooks".
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -65,8 +61,8 @@ export async function updateSession(request: NextRequest) {
   // supabase.auth.getClaims(). A simple mistake could make it very hard to debug
   // issues with users being randomly logged out.
 
-  // IMPORTANT: If you remove getClaims() and you use server-side rendering
-  // with the Supabase client, your users may be randomly logged out.
+  // IMPORTANT: getClaims() refreshes the session cookie if needed.
+  // We run this for ALL paths (including public) to keep cookies in sync.
   let user = null;
   try {
     const { data } = await supabase.auth.getClaims();
@@ -77,8 +73,13 @@ export async function updateSession(request: NextRequest) {
     await supabase.auth.signOut();
   }
 
+  // For public paths, allow access regardless of auth state
+  if (isPublicPath(request.nextUrl.pathname)) {
+    return supabaseResponse;
+  }
+
+  // For protected paths, redirect to login if no user
   if (!user) {
-    // no user, redirect to the login page
     const url = request.nextUrl.clone();
     url.pathname = "/auth/login";
     return NextResponse.redirect(url);
