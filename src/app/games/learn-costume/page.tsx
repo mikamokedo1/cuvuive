@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import { GAME_SEO } from "@/libs/constants/game-seo";
 import { GameSeoSection } from "@/components/seo/GameSeoSection";
 import { GROUPS } from "@/features/games/learn-costume/constants";
-const GameCostumeLogo = "https://assets.cuthongminh.com/games/learn-flag/logo.webp"; // Using placeholder for now
+const GameCostumeLogo = "https://assets.cuthongminh.com/games/learn-costume/logo.webp";
 import { GameWrapGroups } from "@/components/layout/GameWrapGroups";
-
 
 const seo = GAME_SEO["learn-costume"];
 
@@ -18,7 +17,7 @@ export const metadata: Metadata = {
     description: seo.description,
     url: `https://cuthongminh.com/games/learn-costume`,
     type: "website",
-  images: [{ url: seo.ogImage, width: 1200, height: 630, alt: seo.title }],
+    images: [{ url: seo.ogImage, width: 1200, height: 630, alt: seo.title }],
   },
 };
 

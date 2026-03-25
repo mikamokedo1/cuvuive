@@ -89,7 +89,7 @@ export function PatternLearnLesson({ groupId, onComplete }: PatternLearnLessonPr
     <div ref={swipeRef} className="flex flex-col items-center gap-6 w-full max-w-4xl px-4">
       {/* Pattern Display */}
       <div className="bg-white p-8 md:p-12 rounded-3xl border-4 shadow-xl mb-4 md:mb-8 border-blue-200">
-        <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4 min-h-[80px]">
+        <div className="flex flex-wrap items-center gap-3 md:gap-4 min-h-[80px]">
           {sequence.map((item, i) => (
             <div
               key={i}

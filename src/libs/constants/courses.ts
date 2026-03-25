@@ -1591,4 +1591,53 @@ export const COURSES: CourseDef[] = [
       },
     ],
   },
+  {
+    id: "mini-sudoku-kids",
+    title: "Sudoku",
+    description: "Bé học suy luận logic qua bảng hình đơn giản, tìm ô còn thiếu theo quy luật hàng và cột.",
+    icon: "https://assets.cuthongminh.com/games/mini-sudoku-kids/logo.webp",
+    type: "logic",
+    groups: [
+      {
+        id: "group1",
+        title: "Làm quen 2×2",
+        lessons: [
+          { id: "lesson1", title: "Học luật chơi", isFree: true },
+          { id: "lesson2", title: "Điền ô còn thiếu", isFree: true },
+          { id: "lesson3", title: "Chọn đáp án đúng", isFree: true },
+          { id: "lesson4", title: "Thử thách nhanh" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Sudoku hình ảnh 3×3",
+        lessons: [
+          { id: "lesson1", title: "Tìm hình còn thiếu", isFree: true },
+          { id: "lesson2", title: "Điền theo hàng và cột" },
+          { id: "lesson3", title: "Luyện phản xạ" },
+          { id: "lesson4", title: "Vượt màn logic" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Sudoku màu sắc",
+        lessons: [
+          { id: "lesson1", title: "Điền màu đúng", isFree: true },
+          { id: "lesson2", title: "Tránh trùng màu" },
+          { id: "lesson3", title: "Màn hỗn hợp" },
+          { id: "lesson4", title: "Thử thách cuối" },
+        ],
+      },
+      {
+        id: "group4",
+        title: "Sudoku con vật",
+        lessons: [
+          { id: "lesson1", title: "Nhận diện con vật", isFree: true },
+          { id: "lesson2", title: "Tìm ô đúng" },
+          { id: "lesson3", title: "Suy luận nhanh" },
+          { id: "lesson4", title: "Bé siêu logic" },
+        ],
+      },
+    ],
+  },
 ];
