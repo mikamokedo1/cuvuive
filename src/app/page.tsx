@@ -66,6 +66,14 @@ const TestimonialSlider = dynamic(() =>
 
 const LatestBlogs = dynamic(() => import("@/components/blog/LatestBlogs"));
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "/",
+  },
+};
+
 export default function Home() {
   const jsonLd = {
     "@context": "https://schema.org",

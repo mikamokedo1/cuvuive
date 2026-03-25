@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { GAME_SEO } from "@/libs/constants/game-seo";
+import { getGameMetadata } from "@/libs/utils/seo";
 import { GameSeoSection } from "@/components/seo/GameSeoSection";
 const Group1Logo = "https://assets.cuthongminh.com/games/compare-quantity/compare-quantity-logo-1.webp";
 const Group2Logo = "https://assets.cuthongminh.com/games/compare-quantity/compare-quantity-logo-2.webp";
@@ -46,21 +46,7 @@ const GROUPS = [
 ];
 
 
-const seo = GAME_SEO["compare-quantity"];
-
-export const metadata: Metadata = {
-  title: seo.title,
-  description: seo.description,
-  keywords: seo.keywords,
-  alternates: { canonical: `/games/compare-quantity` },
-  openGraph: {
-    title: seo.title,
-    description: seo.description,
-    url: `https://cuthongminh.com/games/compare-quantity`,
-    type: "website",
-  images: [{ url: seo.ogImage, width: 1200, height: 630, alt: seo.title }],
-  },
-};
+export const metadata: Metadata = getGameMetadata("compare-quantity");
 
 export default function CompareQuantityPage() {
   return (

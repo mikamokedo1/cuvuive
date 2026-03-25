@@ -3,6 +3,7 @@ import { GAME_SEO } from "@/libs/constants/game-seo";
 import { safeJsonLd } from "@/libs/utils/safe-jsonld";
 import { COURSES } from "@/libs/constants/courses";
 import { GROUPS } from "@/libs/constants/groups";
+import Image from "next/image";
 
 interface GameSeoSectionProps {
   gameId: string;
@@ -128,9 +129,6 @@ export function GameSeoSection({ gameId }: GameSeoSectionProps) {
                 Trò chơi {topic.title} cho bé
               </Link>
             </h3>
-            <p className="text-sm text-slate-600">
-              Khám phá thêm các bài học cùng chủ đề để tăng internal linking và giúp bé học theo cụm kiến thức.
-            </p>
           </div>
         )}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -155,14 +153,12 @@ export function GameSeoSection({ gameId }: GameSeoSectionProps) {
                   href={`/games/${game.id}`}
                   className="flex items-center gap-3 p-3 rounded-xl bg-slate-50 hover:bg-orange-50 border border-slate-100 hover:border-orange-200 transition-colors group"
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <Image
                     src={game.ogImage}
                     alt={game.title}
                     width={48}
                     height={48}
                     className="w-12 h-12 rounded-lg object-contain"
-                    loading="lazy"
                   />
                   <span className="text-sm font-semibold text-slate-700 group-hover:text-orange-600 transition-colors line-clamp-2">
                     {game.title}

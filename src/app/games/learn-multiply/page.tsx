@@ -1,26 +1,12 @@
 import type { Metadata } from "next";
-import { GAME_SEO } from "@/libs/constants/game-seo";
+import { getGameMetadata } from "@/libs/utils/seo";
 import { GameSeoSection } from "@/components/seo/GameSeoSection";
 import { GameWrapGroups } from "@/components/layout/GameWrapGroups";
 import { GROUPS } from "@/features/games/learn-multiply/constants";
 const MultiplyLogo = "https://assets.cuthongminh.com/games/learn-multiply/logo.webp";
 
 
-const seo = GAME_SEO["learn-multiply"];
-
-export const metadata: Metadata = {
-  title: seo.title,
-  description: seo.description,
-  keywords: seo.keywords,
-  alternates: { canonical: `/games/learn-multiply` },
-  openGraph: {
-    title: seo.title,
-    description: seo.description,
-    url: `https://cuthongminh.com/games/learn-multiply`,
-    type: "website",
-  images: [{ url: seo.ogImage, width: 1200, height: 630, alt: seo.title }],
-  },
-};
+export const metadata: Metadata = getGameMetadata("learn-multiply");
 
 export default function LearnMultiplyPage() {
   return (

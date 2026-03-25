@@ -32,6 +32,7 @@ export const metadata: Metadata = {
     canonical: "/",
     languages: {
       "vi": "https://cuthongminh.com",
+      "x-default": "https://cuthongminh.com",
     },
   },
   title: "Trò Chơi Giáo Dục Cho Bé 3-8 Tuổi | Cú Thông Minh - Vừa Học Vừa Chơi",

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getAllPosts, getPaginatedPosts } from "@/libs/blog";
+import type { Metadata } from "next";
 import Pagination from "@/components/common/Pagination";
 import BlogCard from "@/components/blog/BlogCard";
 import { SpeakableSchema } from "@/components/common/SpeakableSchema";
@@ -22,6 +23,24 @@ async function getTagsWithCounts(): Promise<{ tag: string; count: number }[]> {
     .map(([tag, count]) => ({ tag, count }))
     .sort((a, b) => b.count - a.count)
     .slice(0, 20);
+}
+
+export async function generateMetadata({ searchParams }: { searchParams: Promise<{ page?: string }> }): Promise<Metadata> {
+  const params = await searchParams;
+  const currentPage = parseInt(params.page || "1", 10);
+  const title = currentPage > 1 ? `Blog Kiến Thức & Nuôi Dạy Trẻ - Trang ${currentPage} | Cú Thông Minh` : "Blog Kiến Thức & Nuôi Dạy Trẻ | Cú Thông Minh";
+  const url = currentPage > 1 ? `https://cuthongminh.com/blogs?page=${currentPage}` : "https://cuthongminh.com/blogs";
+  
+  return {
+    title,
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title,
+      url,
+    }
+  };
 }
 
 export default async function BlogIndexPage({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
