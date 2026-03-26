@@ -1,11 +1,11 @@
 import { StaticImageData } from "next/image";
 
-// Import group logos (placeholder URLs - need to upload actual images)
-const LogoGroup1 = "/games/learn-cleaning/group1.png";
-const LogoGroup2 = "/games/learn-cleaning/group2.png";
-const LogoGroup3 = "/games/learn-cleaning/group3.png";
+// Group logos
+const LogoGroup1 = "https://assets.cuthongminh.com/games/learn-cleaning/group1.webp";
+const LogoGroup2 = "https://assets.cuthongminh.com/games/learn-cleaning/group2.webp";
+const LogoGroup3 = "https://assets.cuthongminh.com/games/learn-cleaning/group3.webp";
 
-// Import Dọn Phòng (Group 1)
+// Dọn Phòng (Group 1)
 const TidyBed = "https://assets.cuthongminh.com/games/learn-cleaning/tidy-bed.webp";
 const SweepFloor = "https://assets.cuthongminh.com/games/learn-cleaning/sweep-floor.webp";
 const TidyToys = "https://assets.cuthongminh.com/games/learn-cleaning/tidy-toys.webp";
@@ -13,7 +13,7 @@ const FoldBlanket = "https://assets.cuthongminh.com/games/learn-cleaning/fold-bl
 const ArrangeBooks = "https://assets.cuthongminh.com/games/learn-cleaning/arrange-books.webp";
 const WipeWindow = "https://assets.cuthongminh.com/games/learn-cleaning/wipe-window.webp";
 
-// Import Dọn Bếp (Group 2)
+// Dọn Bếp (Group 2)
 const WashDishes = "https://assets.cuthongminh.com/games/learn-cleaning/wash-dishes.webp";
 const WipeTable = "https://assets.cuthongminh.com/games/learn-cleaning/wipe-table.webp";
 const SweepKitchen = "https://assets.cuthongminh.com/games/learn-cleaning/sweep-kitchen.webp";
@@ -21,7 +21,7 @@ const ArrangeUtensils = "https://assets.cuthongminh.com/games/learn-cleaning/arr
 const CleanSink = "https://assets.cuthongminh.com/games/learn-cleaning/clean-sink.webp";
 const CoverFood = "https://assets.cuthongminh.com/games/learn-cleaning/cover-food.webp";
 
-// Import Phân Loại Rác (Group 3)
+// Phân Loại Rác (Group 3)
 const RecyclePaper = "https://assets.cuthongminh.com/games/learn-cleaning/recycle-paper.webp";
 const RecyclePlastic = "https://assets.cuthongminh.com/games/learn-cleaning/recycle-plastic.webp";
 const OrganicTrash = "https://assets.cuthongminh.com/games/learn-cleaning/organic-trash.webp";
