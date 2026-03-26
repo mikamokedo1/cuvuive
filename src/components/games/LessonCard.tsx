@@ -18,7 +18,6 @@ interface LessonCardProps {
   lesson: Lesson;
   unlocked: boolean;
   isActive: boolean;
-  completed?: boolean;
   onClick: (lessonId: string) => void;
 }
 
@@ -93,9 +92,7 @@ export const LessonCard = ({ lesson, unlocked, isActive, onClick }: LessonCardPr
 
   const className = cn(
     "relative w-full h-24 rounded-[24px] flex items-center px-4 border-2 transition-all cursor-pointer",
-    unlocked
-      ? "bg-white border-slate-100 shadow-sm hover:shadow-md"
-      : "bg-[#F0F0F0]/80 border-transparent shadow-none",
+    unlocked ? "bg-white border-slate-100 shadow-sm hover:shadow-md" : "bg-[#F0F0F0]/80 border-transparent shadow-none",
   );
 
   if (lesson.href) {
