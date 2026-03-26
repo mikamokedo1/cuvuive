@@ -1,71 +1,70 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { ActionButton } from "@/components/common/ActionButton";
-import Header from "@/components/layout/Header";
-import {
-  Share2,
-  Users,
-  Gift,
-  Wallet,
-  ArrowRight,
-  CheckCircle2,
-  Shield,
-  Clock,
-  HelpCircle,
-  ChevronDown,
-} from "lucide-react";
-import { useState } from "react";
+import { HeaderHome } from "@/components/layout/HeaderHome";
+import { Share2, Users, Gift, Wallet, ArrowRight, CheckCircle2, Shield, Clock, HelpCircle } from "lucide-react";
+import { FAQAccordionItem } from "@/components/common/FAQSchema";
+import { Footer } from "@/components/layout/Footer";
+import { safeJsonLd } from "@/libs/utils/safe-jsonld";
+
+const faqs = [
+  {
+    question: "Ai có thể tham gia chương trình giới thiệu?",
+    answer: "Bất kỳ ai có tài khoản Premium trên Cú Thông Minh đều có thể tạo link giới thiệu và bắt đầu kiếm tiền."
+  },
+  {
+    question: "Tôi nhận hoa hồng khi nào?",
+    answer: "Hoa hồng được ghi nhận ngay khi người bạn giới thiệu thanh toán thành công gói Premium đầu tiên. Bạn có thể xem số tiền trên dashboard."
+  },
+  {
+    question: "Hoa hồng được tính trên đơn hàng nào?",
+    answer: "Bạn nhận 10% trên đơn hàng Premium đầu tiên của mỗi người bạn giới thiệu. Ví dụ: bạn bè mua gói 299,000 ₫, bạn nhận 29,900 ₫."
+  },
+  {
+    question: "Tôi cần bao nhiêu để rút tiền?",
+    answer: "Bạn cần tích lũy tối thiểu 100,000 ₫ (100 nghìn VND) trong số dư hoa hồng để yêu cầu rút tiền."
+  },
+  {
+    question: "Rút tiền bao lâu thì nhận được?",
+    answer: "Sau khi gửi yêu cầu rút tiền, đội ngũ Cú Thông Minh sẽ xử lý và chuyển khoản trong vòng 1-3 ngày làm việc."
+  },
+  {
+    question: "Có giới hạn số người tôi giới thiệu không?",
+    answer: "Không! Bạn có thể giới thiệu bao nhiêu người cũng được, không giới hạn số lượng hay tổng hoa hồng."
+  },
+  {
+    question: "Người bạn bè có nhận được gì không?",
+    answer: "Người được giới thiệu sẽ trải nghiệm nền tảng học tập tuyệt vời trên Cú Thông Minh. Hiện tại chưa có ưu đãi đặc biệt cho người được giới thiệu."
+  }
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer,
+    },
+  })),
+};
 
 const owlHi = "https://assets.cuthongminh.com/games/common/owl-say-hi.webp";
-
-/* ============================================
-   FAQ Accordion Item
-   ============================================ */
-function FaqItem({
-  question,
-  answer,
-}: {
-  question: string;
-  answer: string;
-}) {
-  const [open, setOpen] = useState(false);
-  return (
-    <div className="border-b border-gray-100 last:border-b-0">
-      <button
-        onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between py-5 px-1 text-left cursor-pointer group"
-      >
-        <span className="text-gray-700 font-bold text-base pr-4 group-hover:text-emerald-600 transition-colors">
-          {question}
-        </span>
-        <ChevronDown
-          className={`w-5 h-5 text-gray-400 shrink-0 transition-transform duration-300 ${
-            open ? "rotate-180 text-emerald-500" : ""
-          }`}
-        />
-      </button>
-      <div
-        className={`overflow-hidden transition-all duration-300 ${
-          open ? "max-h-60 pb-4" : "max-h-0"
-        }`}
-      >
-        <p className="text-gray-500 font-medium text-sm leading-relaxed px-1">
-          {answer}
-        </p>
-      </div>
-    </div>
-  );
-}
 
 /* ============================================
    Main Page
    ============================================ */
 export default function ReferralIntroPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-emerald-50 via-teal-50 to-sky-50 relative overflow-hidden">
-      {/* Background Decorations */}
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(faqJsonLd) }}
+      />
+      <div className="min-h-screen bg-gradient-to-b from-emerald-50 via-teal-50 to-sky-50 relative overflow-hidden">
+        {/* Background Decorations */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-40 h-24 bg-white/50 rounded-full blur-2xl" />
         <div className="absolute top-40 right-10 w-56 h-28 bg-emerald-100/40 rounded-full blur-2xl" />
@@ -73,7 +72,7 @@ export default function ReferralIntroPage() {
         <div className="absolute bottom-20 right-1/3 w-48 h-24 bg-sky-100/40 rounded-full blur-2xl" />
       </div>
 
-      <Header />
+      <HeaderHome />
 
       <div className="relative z-10">
         {/* ===== HERO SECTION ===== */}
@@ -99,40 +98,27 @@ export default function ReferralIntroPage() {
             </h1>
 
             <p className="text-gray-500 font-medium text-lg md:text-xl max-w-xl mx-auto mb-8 leading-relaxed">
-              Giới thiệu bạn bè và nhận ngay{" "}
-              <span className="text-emerald-600 font-extrabold text-2xl">
-                10%
-              </span>{" "}
-              hoa hồng trên đơn hàng đầu tiên của họ!
+              Giới thiệu bạn bè và nhận ngay <span className="text-emerald-600 font-extrabold text-2xl">10%</span> hoa
+              hồng trên đơn hàng đầu tiên của họ!
             </p>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link href="/earn">
-                <ActionButton
-                  variant="glossy"
-                  color="green"
-                  className="px-10 py-4 text-lg"
-                >
+                <ActionButton variant="glossy" color="green" className="px-10 py-4 text-lg">
                   <Gift className="w-5 h-5 mr-2" />
                   Tham gia ngay
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </ActionButton>
               </Link>
               <Link href="/upgrade">
-                <ActionButton
-                  variant="glossy"
-                  color="orange"
-                  className="px-8 py-4 text-base"
-                >
+                <ActionButton variant="glossy" color="orange" className="px-8 py-4 text-base">
                   Nâng cấp Premium
                 </ActionButton>
               </Link>
             </div>
 
-            <p className="text-xs text-gray-400 mt-4 font-medium">
-              Yêu cầu tài khoản Premium để tạo link giới thiệu
-            </p>
+            <p className="text-xs text-gray-400 mt-4 font-medium">Yêu cầu tài khoản Premium để tạo link giới thiệu</p>
           </div>
         </section>
 
@@ -142,9 +128,7 @@ export default function ReferralIntroPage() {
             <h2 className="text-3xl md:text-4xl font-extrabold text-gray-800 font-[family-name:var(--font-baloo-2)] mb-3">
               Cách thức hoạt động
             </h2>
-            <p className="text-gray-500 font-medium max-w-md mx-auto">
-              Chỉ cần 3 bước đơn giản để bắt đầu kiếm tiền
-            </p>
+            <p className="text-gray-500 font-medium max-w-md mx-auto">Chỉ cần 3 bước đơn giản để bắt đầu kiếm tiền</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -167,10 +151,8 @@ export default function ReferralIntroPage() {
                 Chia sẻ link
               </h3>
               <p className="text-gray-500 font-medium text-sm leading-relaxed">
-                Đăng nhập vào trang{" "}
-                <span className="text-emerald-600 font-bold">Kiếm tiền</span>,
-                copy link giới thiệu cá nhân và gửi cho bạn bè qua Zalo,
-                Facebook, hoặc bất kỳ kênh nào.
+                Đăng nhập vào trang <span className="text-emerald-600 font-bold">Kiếm tiền</span>, copy link giới thiệu
+                cá nhân và gửi cho bạn bè qua Zalo, Facebook, hoặc bất kỳ kênh nào.
               </p>
             </div>
 
@@ -193,8 +175,8 @@ export default function ReferralIntroPage() {
                 Bạn bè đăng ký
               </h3>
               <p className="text-gray-500 font-medium text-sm leading-relaxed">
-                Bạn bè nhấp vào link, tạo tài khoản trên Cú Thông Minh. Hệ
-                thống tự động ghi nhận bạn là người giới thiệu.
+                Bạn bè nhấp vào link, tạo tài khoản trên Cú Thông Minh. Hệ thống tự động ghi nhận bạn là người giới
+                thiệu.
               </p>
             </div>
 
@@ -218,8 +200,8 @@ export default function ReferralIntroPage() {
               </h3>
               <p className="text-gray-500 font-medium text-sm leading-relaxed">
                 Khi bạn bè nâng cấp Premium, bạn nhận ngay{" "}
-                <span className="text-emerald-600 font-bold">10% giá trị đơn hàng</span>.
-                Số tiền được cộng vào tài khoản tự động.
+                <span className="text-emerald-600 font-bold">10% giá trị đơn hàng</span>. Số tiền được cộng vào tài
+                khoản tự động.
               </p>
             </div>
           </div>
@@ -241,37 +223,25 @@ export default function ReferralIntroPage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Example 1 */}
                 <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 text-center border border-green-100">
-                  <p className="text-sm font-bold text-gray-400 mb-1">
-                    Gói Lớp Mầm (1 tháng)
-                  </p>
+                  <p className="text-sm font-bold text-gray-400 mb-1">Gói Lớp Mầm (1 tháng)</p>
                   <p className="text-lg font-bold text-gray-600 mb-3">
                     Đơn hàng: <span className="text-gray-800">49,000 ₫</span>
                   </p>
                   <div className="bg-white rounded-xl p-4 shadow-sm">
-                    <p className="text-xs text-gray-400 font-bold mb-1">
-                      BẠN NHẬN
-                    </p>
-                    <p className="text-3xl font-extrabold text-emerald-600">
-                      4,900 ₫
-                    </p>
+                    <p className="text-xs text-gray-400 font-bold mb-1">BẠN NHẬN</p>
+                    <p className="text-3xl font-extrabold text-emerald-600">4,900 ₫</p>
                   </div>
                 </div>
 
                 {/* Example 2 */}
                 <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 text-center border border-blue-100">
-                  <p className="text-sm font-bold text-gray-400 mb-1">
-                    Gói Lớp Chồi (6 tháng)
-                  </p>
+                  <p className="text-sm font-bold text-gray-400 mb-1">Gói Lớp Chồi (6 tháng)</p>
                   <p className="text-lg font-bold text-gray-600 mb-3">
                     Đơn hàng: <span className="text-gray-800">199,000 ₫</span>
                   </p>
                   <div className="bg-white rounded-xl p-4 shadow-sm">
-                    <p className="text-xs text-gray-400 font-bold mb-1">
-                      BẠN NHẬN
-                    </p>
-                    <p className="text-3xl font-extrabold text-blue-600">
-                      19,900 ₫
-                    </p>
+                    <p className="text-xs text-gray-400 font-bold mb-1">BẠN NHẬN</p>
+                    <p className="text-3xl font-extrabold text-blue-600">19,900 ₫</p>
                   </div>
                 </div>
 
@@ -280,19 +250,13 @@ export default function ReferralIntroPage() {
                   <div className="absolute -top-3 right-4 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-md">
                     HOT
                   </div>
-                  <p className="text-sm font-bold text-gray-400 mb-1">
-                    Gói Lớp Lá (12 tháng)
-                  </p>
+                  <p className="text-sm font-bold text-gray-400 mb-1">Gói Lớp Lá (12 tháng)</p>
                   <p className="text-lg font-bold text-gray-600 mb-3">
                     Đơn hàng: <span className="text-gray-800">299,000 ₫</span>
                   </p>
                   <div className="bg-white rounded-xl p-4 shadow-sm">
-                    <p className="text-xs text-gray-400 font-bold mb-1">
-                      BẠN NHẬN
-                    </p>
-                    <p className="text-3xl font-extrabold text-amber-600">
-                      29,900 ₫
-                    </p>
+                    <p className="text-xs text-gray-400 font-bold mb-1">BẠN NHẬN</p>
+                    <p className="text-3xl font-extrabold text-amber-600">29,900 ₫</p>
                   </div>
                 </div>
               </div>
@@ -306,30 +270,22 @@ export default function ReferralIntroPage() {
                   <div>
                     <p className="text-3xl font-extrabold text-emerald-600">5</p>
                     <p className="text-xs text-gray-400 font-bold">bạn bè</p>
-                    <p className="text-sm font-bold text-gray-600 mt-1">
-                      ~100K - 150K ₫
-                    </p>
+                    <p className="text-sm font-bold text-gray-600 mt-1">~100K - 150K ₫</p>
                   </div>
                   <div>
                     <p className="text-3xl font-extrabold text-emerald-600">10</p>
                     <p className="text-xs text-gray-400 font-bold">bạn bè</p>
-                    <p className="text-sm font-bold text-gray-600 mt-1">
-                      ~200K - 300K ₫
-                    </p>
+                    <p className="text-sm font-bold text-gray-600 mt-1">~200K - 300K ₫</p>
                   </div>
                   <div>
                     <p className="text-3xl font-extrabold text-emerald-600">50</p>
                     <p className="text-xs text-gray-400 font-bold">bạn bè</p>
-                    <p className="text-sm font-bold text-gray-600 mt-1">
-                      ~1M - 1.5M ₫
-                    </p>
+                    <p className="text-sm font-bold text-gray-600 mt-1">~1M - 1.5M ₫</p>
                   </div>
                   <div>
                     <p className="text-3xl font-extrabold text-amber-600">100</p>
                     <p className="text-xs text-gray-400 font-bold">bạn bè</p>
-                    <p className="text-sm font-bold text-gray-600 mt-1">
-                      ~2M - 3M ₫
-                    </p>
+                    <p className="text-sm font-bold text-gray-600 mt-1">~2M - 3M ₫</p>
                   </div>
                 </div>
               </div>
@@ -352,8 +308,7 @@ export default function ReferralIntroPage() {
               </div>
               <h3 className="font-extrabold text-gray-800 mb-2">Thu nhập thụ động</h3>
               <p className="text-gray-500 font-medium text-sm">
-                Chỉ cần chia sẻ một lần, nhận tiền mỗi khi bạn bè mua gói
-                Premium.
+                Chỉ cần chia sẻ một lần, nhận tiền mỗi khi bạn bè mua gói Premium.
               </p>
             </div>
 
@@ -373,8 +328,7 @@ export default function ReferralIntroPage() {
               </div>
               <h3 className="font-extrabold text-gray-800 mb-2">Minh bạch 100%</h3>
               <p className="text-gray-500 font-medium text-sm">
-                Theo dõi số người giới thiệu, trạng thái, hoa hồng và lịch sử
-                rút tiền ngay trên dashboard.
+                Theo dõi số người giới thiệu, trạng thái, hoa hồng và lịch sử rút tiền ngay trên dashboard.
               </p>
             </div>
 
@@ -384,8 +338,7 @@ export default function ReferralIntroPage() {
               </div>
               <h3 className="font-extrabold text-gray-800 mb-2">Không giới hạn</h3>
               <p className="text-gray-500 font-medium text-sm">
-                Giới thiệu bao nhiêu bạn bè cũng được — không giới hạn số lượng
-                hay số tiền kiếm được.
+                Giới thiệu bao nhiêu bạn bè cũng được — không giới hạn số lượng hay số tiền kiếm được.
               </p>
             </div>
           </div>
@@ -404,12 +357,9 @@ export default function ReferralIntroPage() {
                   <span className="text-emerald-600 font-extrabold">1</span>
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-800 mb-1">
-                    Tích lũy đủ 100,000 ₫
-                  </h4>
+                  <h3 className="font-bold text-gray-800 mb-1">Tích lũy đủ 100,000 ₫</h3>
                   <p className="text-gray-500 text-sm font-medium">
-                    Số dư khả dụng của bạn phải đạt ít nhất 100,000 ₫ từ hoa
-                    hồng giới thiệu.
+                    Số dư khả dụng của bạn phải đạt ít nhất 100,000 ₫ từ hoa hồng giới thiệu.
                   </p>
                 </div>
               </div>
@@ -419,12 +369,9 @@ export default function ReferralIntroPage() {
                   <span className="text-blue-600 font-extrabold">2</span>
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-800 mb-1">
-                    Nhập thông tin ngân hàng
-                  </h4>
+                  <h3 className="font-bold text-gray-800 mb-1">Nhập thông tin ngân hàng</h3>
                   <p className="text-gray-500 text-sm font-medium">
-                    Nhấn &quot;Rút tiền&quot; trên dashboard, điền tên ngân hàng, số tài
-                    khoản và tên chủ tài khoản.
+                    Nhấn &quot;Rút tiền&quot; trên dashboard, điền tên ngân hàng, số tài khoản và tên chủ tài khoản.
                   </p>
                 </div>
               </div>
@@ -434,12 +381,9 @@ export default function ReferralIntroPage() {
                   <span className="text-amber-600 font-extrabold">3</span>
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-800 mb-1">
-                    Nhận tiền trong 1-3 ngày làm việc
-                  </h4>
+                  <h3 className="font-bold text-gray-800 mb-1">Nhận tiền trong 1-3 ngày làm việc</h3>
                   <p className="text-gray-500 text-sm font-medium">
-                    Đội ngũ Cú Thông Minh sẽ xử lý yêu cầu và chuyển khoản đến
-                    tài khoản ngân hàng của bạn.
+                    Đội ngũ Cú Thông Minh sẽ xử lý yêu cầu và chuyển khoản đến tài khoản ngân hàng của bạn.
                   </p>
                 </div>
               </div>
@@ -457,35 +401,14 @@ export default function ReferralIntroPage() {
               </h2>
             </div>
 
-            <div className="bg-white rounded-3xl shadow-xl p-6 md:p-8 border border-gray-100">
-              <FaqItem
-                question="Ai có thể tham gia chương trình giới thiệu?"
-                answer="Bất kỳ ai có tài khoản Premium trên Cú Thông Minh đều có thể tạo link giới thiệu và bắt đầu kiếm tiền."
-              />
-              <FaqItem
-                question="Tôi nhận hoa hồng khi nào?"
-                answer="Hoa hồng được ghi nhận ngay khi người bạn giới thiệu thanh toán thành công gói Premium đầu tiên. Bạn có thể xem số tiền trên dashboard."
-              />
-              <FaqItem
-                question="Hoa hồng được tính trên đơn hàng nào?"
-                answer="Bạn nhận 10% trên đơn hàng Premium đầu tiên của mỗi người bạn giới thiệu. Ví dụ: bạn bè mua gói 299,000 ₫, bạn nhận 29,900 ₫."
-              />
-              <FaqItem
-                question="Tôi cần bao nhiêu để rút tiền?"
-                answer="Bạn cần tích lũy tối thiểu 100,000 ₫ (100 nghìn VND) trong số dư hoa hồng để yêu cầu rút tiền."
-              />
-              <FaqItem
-                question="Rút tiền bao lâu thì nhận được?"
-                answer="Sau khi gửi yêu cầu rút tiền, đội ngũ Cú Thông Minh sẽ xử lý và chuyển khoản trong vòng 1-3 ngày làm việc."
-              />
-              <FaqItem
-                question="Có giới hạn số người tôi giới thiệu không?"
-                answer="Không! Bạn có thể giới thiệu bao nhiêu người cũng được, không giới hạn số lượng hay tổng hoa hồng."
-              />
-              <FaqItem
-                question="Người bạn bè có nhận được gì không?"
-                answer="Người được giới thiệu sẽ trải nghiệm nền tảng học tập tuyệt vời trên Cú Thông Minh. Hiện tại chưa có ưu đãi đặc biệt cho người được giới thiệu."
-              />
+            <div className="bg-white rounded-3xl shadow-xl p-6 md:p-8 border border-gray-100 flex flex-col gap-4">
+              {faqs.map((item, index) => (
+                <FAQAccordionItem
+                  key={index}
+                  question={item.question}
+                  answer={item.answer}
+                />
+              ))}
             </div>
           </div>
         </section>
@@ -502,16 +425,11 @@ export default function ReferralIntroPage() {
                 Bắt đầu kiếm tiền ngay! 🚀
               </h2>
               <p className="text-emerald-100 font-medium mb-8 max-w-md mx-auto">
-                Tạo link giới thiệu, chia sẻ cho bạn bè và nhận hoa hồng
-                không giới hạn.
+                Tạo link giới thiệu, chia sẻ cho bạn bè và nhận hoa hồng không giới hạn.
               </p>
 
               <Link href="/earn">
-                <ActionButton
-                  variant="glossy"
-                  color="orange"
-                  className="px-12 py-4 text-lg shadow-xl"
-                >
+                <ActionButton variant="glossy" color="orange" className="px-12 py-4 text-lg shadow-xl">
                   <Gift className="w-5 h-5 mr-2" />
                   Đi tới trang Kiếm tiền
                   <ArrowRight className="w-5 h-5 ml-2" />
@@ -521,6 +439,8 @@ export default function ReferralIntroPage() {
           </div>
         </section>
       </div>
+      <Footer />
     </div>
+    </>
   );
 }

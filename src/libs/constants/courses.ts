@@ -1516,9 +1516,9 @@ export const COURSES: CourseDef[] = [
         title: "Dọn phòng",
         lessons: [
           { id: "lesson1", title: "Học dọn dẹp", isFree: true },
-          { id: "lesson2", title: "Tập nói" },
-          { id: "lesson3", title: "Đúng hay Sai?" },
-          { id: "lesson4", title: "Sắp xếp thứ tự" },
+          { id: "lesson2", title: "Tập nói", isFree: true },
+          { id: "lesson3", title: "Đúng hay Sai?", isFree: true },
+          { id: "lesson4", title: "Sắp xếp thứ tự", isFree: true },
         ],
       },
       {
