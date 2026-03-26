@@ -58,7 +58,7 @@ export function FAQSchema({ items, title, subtitle }: FAQSchemaProps) {
   );
 }
 
-function FAQAccordionItem({ question, answer }: FAQItem) {
+export function FAQAccordionItem({ question, answer }: FAQItem) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (

@@ -1,18 +1,17 @@
-"use client";
-
-import { Suspense, useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
-import { ActionButton } from "@/components/common/ActionButton";
-const owlHi = "https://assets.cuthongminh.com/games/common/owl-say-hi.webp";
-import { toast } from "react-hot-toast";
 import { getPlans } from "@/libs/actions/plans";
 import Header from "@/components/layout/Header";
+import { UpgradeActionButton } from "./_components/UpgradeActionButton";
+
+const owlHi = "https://assets.cuthongminh.com/games/common/owl-say-hi.webp";
 const SeedImg = "https://assets.cuthongminh.com/assets/upgrade/seed.webp";
 const BuffImg = "https://assets.cuthongminh.com/assets/upgrade/buff.webp";
 const LeafImg = "https://assets.cuthongminh.com/assets/upgrade/leaf.webp";
-import Loading from "../loading";
-import { Loader2 } from "lucide-react";
+
+export const metadata = {
+  title: "Nâng Cấp Tài Khoản | Cú Thông Minh",
+  description: "Chọn gói phù hợp để học hành chăm chỉ nhé!",
+};
 
 // Define a type for the Plan structure from DB
 interface Plan {
@@ -32,57 +31,12 @@ function calculateDiscount(basePrice: number, currentPrice: number, months: numb
   return discount > 0 ? discount : null;
 }
 
-function UpgradeContent() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const nextUrl = searchParams.get("next") || "/games";
-  const [isLoading, setIsLoading] = useState<string | null>(null);
-  const [plans, setPlans] = useState<Plan[]>([]);
-  const [isFetchingPlans, setIsFetchingPlans] = useState(true);
-
-  useEffect(() => {
-    const fetchPlans = async () => {
-      try {
-        const data = await getPlans();
-        setPlans(data);
-      } catch (error) {
-        toast.error("Không thể tải danh sách gói cước");
-        console.error(error);
-      } finally {
-        setIsFetchingPlans(false);
-      }
-    };
-    fetchPlans();
-  }, []);
-
-  const handleUpgrade = async (packageId: string) => {
-    setIsLoading(packageId);
-
-    try {
-      const response = await fetch("/api/orders", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ planCode: packageId }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Không thể tạo đơn hàng");
-      }
-
-      // Redirect to the checkout page with the newly created order ID
-      router.push(`/upgrade/checkout?orderId=${data.order.id}`);
-    } catch (error: any) {
-      toast.error(error.message || "Đã xảy ra lỗi, vui lòng thử lại sau.");
-      console.error("Order creation error:", error);
-    } finally {
-      setIsLoading(null);
-    }
-  };
-
-  if (isFetchingPlans) {
-    return <Loading />;
+export default async function UpgradePage() {
+  let plans: Plan[] = [];
+  try {
+    plans = await getPlans();
+  } catch (error) {
+    console.error("Failed to fetch plans:", error);
   }
 
   // Find base price (price of 1 month plan) for discount calculation
@@ -225,39 +179,16 @@ function UpgradeContent() {
                 </div>
 
                 {/* Action Button */}
-                <ActionButton
-                  onClick={() => handleUpgrade(pkg.code)}
-                  variant="glossy"
-                  color={colorStyles.btn}
-                  className="w-full py-3 text-lg font-extrabold shadow-lg"
-                  disabled={isLoading !== null}
-                >
-                  {isLoading === pkg.code ? (
-                    <Loader2 className="w-6 h-6 animate-spin mx-auto" />
-                  ) : (
-                    `${pkg.price.toLocaleString("vi-VN")} VND`
-                  )}
-                </ActionButton>
+                <UpgradeActionButton 
+                  planCode={pkg.code} 
+                  priceFormatted={pkg.price.toLocaleString("vi-VN")}
+                  colorDef={colorStyles.btn}
+                />
               </div>
             );
           })}
         </div>
       </div>
     </div>
-  );
-}
-
-// Client Component Wrapper that handles hydration
-export default function UpgradePage() {
-  return (
-    <Suspense
-      fallback={
-        <div className="min-h-screen flex items-center justify-center bg-sky-100">
-          <Loader2 className="w-10 h-10 animate-spin text-sky-500" />
-        </div>
-      }
-    >
-      <UpgradeContent />
-    </Suspense>
   );
 }

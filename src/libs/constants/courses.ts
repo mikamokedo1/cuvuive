@@ -39,6 +39,7 @@ const GameLineConnectLogo = "https://assets.cuthongminh.com/games/line-connect/l
 const LineConnectGroup1Logo = "https://assets.cuthongminh.com/games/line-connect/group1.webp";
 const LineConnectGroup2Logo = "https://assets.cuthongminh.com/games/line-connect/group2.webp";
 const LineConnectGroup3Logo = "https://assets.cuthongminh.com/games/line-connect/group3.webp";
+const GameCleaningLogo = "https://assets.cuthongminh.com/games/learn-cleaning/logo.webp";
 const GameTrafficLogo = "https://assets.cuthongminh.com/games/learn-traffic/logo.webp";
 const LearnNotesLogo = "https://assets.cuthongminh.com/games/learn-notes/logo.webp";
 const LearnNotesGroup1Logo = "https://assets.cuthongminh.com/games/learn-notes/group1.webp";
@@ -1499,6 +1500,45 @@ export const COURSES: CourseDef[] = [
           { id: "lesson4", title: "Đây là gì?" },
           { id: "lesson5", title: "Cơ thể làm gì?" },
           { id: "lesson6", title: "Ghép đôi" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "learn-cleaning",
+    title: "Dọn Dẹp",
+    description: "Bé học cách dọn dẹp nhà cửa gọn gàng và phân loại rác đúng cách.",
+    icon: GameCleaningLogo,
+    type: "life-skill",
+    groups: [
+      {
+        id: "group1",
+        title: "Dọn phòng",
+        lessons: [
+          { id: "lesson1", title: "Học dọn dẹp", isFree: true },
+          { id: "lesson2", title: "Tập nói", isFree: true },
+          { id: "lesson3", title: "Đúng hay Sai?", isFree: true },
+          { id: "lesson4", title: "Sắp xếp thứ tự", isFree: true },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Dọn bếp",
+        lessons: [
+          { id: "lesson1", title: "Học dọn dẹp", isFree: true },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Đúng hay Sai?" },
+          { id: "lesson4", title: "Sắp xếp thứ tự" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Phân loại rác",
+        lessons: [
+          { id: "lesson1", title: "Học phân loại", isFree: true },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Đúng hay Sai?" },
+          { id: "lesson4", title: "Sắp xếp thứ tự" },
         ],
       },
     ],

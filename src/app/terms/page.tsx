@@ -1,6 +1,7 @@
 import { FileText } from "lucide-react";
 import type { Metadata } from "next";
 import { HeaderHome } from "@/components/layout/HeaderHome";
+import { Footer } from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
   title: "Điều khoản sử dụng | Cú Thông Minh",
@@ -123,12 +124,7 @@ export default function TermsPage() {
         </div>
       </main>
 
-      {/* Simplified Footer */}
-      <footer className="bg-white py-10 border-t border-slate-200 mt-10">
-        <div className="container mx-auto px-6 text-center text-slate-500 font-medium text-sm">
-          &copy; {new Date().getFullYear()} Cú Thông Minh. Bản quyền thuộc về Cú Thông Minh Educational.
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

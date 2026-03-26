@@ -52,6 +52,7 @@ export function useGroupLessons<G extends { id: string; title: string }>({
   let activeIndex = -1;
 
   if (!isGroupCompleted) {
+    const completedLessons = gameProgress.completedLessons[groupId] || [];
     for (let i = lessons.length - 1; i >= 0; i--) {
       if (isLessonUnlocked(gameSlug, groupId, lessons[i].id)) {
         activeIndex = i;
