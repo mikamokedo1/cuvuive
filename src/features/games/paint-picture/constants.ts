@@ -23,7 +23,7 @@ const ANIMAL_IMAGES: ColoringImage[] = [
   {
     id: "fish",
     name: "Con Cá",
-    svgPath: "/assets/games/paint-picture/svg/fish.svg",
+    svgPath: "https://assets.cuthongminh.com/games/paint-picture/svg/fish.svg",
     regions: [
       { id: "body", label: "Thân cá", guideColor: "#FF6B35" },
       { id: "tail", label: "Đuôi cá", guideColor: "#FFD700" },
@@ -35,7 +35,7 @@ const ANIMAL_IMAGES: ColoringImage[] = [
   {
     id: "butterfly",
     name: "Con Bướm",
-    svgPath: "/assets/games/paint-picture/svg/butterfly.svg",
+    svgPath: "https://assets.cuthongminh.com/games/paint-picture/svg/butterfly.svg",
     regions: [
       { id: "body", label: "Thân bướm", guideColor: "#8B4513" },
       { id: "head", label: "Đầu", guideColor: "#A0522D" },
@@ -48,7 +48,7 @@ const ANIMAL_IMAGES: ColoringImage[] = [
   {
     id: "cat",
     name: "Con Mèo",
-    svgPath: "/assets/games/paint-picture/svg/cat.svg",
+    svgPath: "https://assets.cuthongminh.com/games/paint-picture/svg/cat.svg",
     regions: [
       { id: "body", label: "Thân mèo", guideColor: "#FFA500" },
       { id: "head", label: "Đầu", guideColor: "#FFA500" },
@@ -66,7 +66,7 @@ const NATURE_IMAGES: ColoringImage[] = [
   {
     id: "flower",
     name: "Bông Hoa",
-    svgPath: "/assets/games/paint-picture/svg/flower.svg",
+    svgPath: "https://assets.cuthongminh.com/games/paint-picture/svg/flower.svg",
     regions: [
       { id: "center", label: "Nhụy hoa", guideColor: "#FFD700" },
       { id: "petal-top", label: "Cánh trên", guideColor: "#FF6347" },
@@ -81,7 +81,7 @@ const NATURE_IMAGES: ColoringImage[] = [
   {
     id: "tree",
     name: "Cái Cây",
-    svgPath: "/assets/games/paint-picture/svg/tree.svg",
+    svgPath: "https://assets.cuthongminh.com/games/paint-picture/svg/tree.svg",
     regions: [
       { id: "trunk", label: "Thân cây", guideColor: "#8B4513" },
       { id: "crown", label: "Tán cây", guideColor: "#228B22" },
@@ -94,7 +94,7 @@ const NATURE_IMAGES: ColoringImage[] = [
   {
     id: "sun",
     name: "Mặt Trời",
-    svgPath: "/assets/games/paint-picture/svg/sun.svg",
+    svgPath: "https://assets.cuthongminh.com/games/paint-picture/svg/sun.svg",
     regions: [
       { id: "sun-body", label: "Mặt trời", guideColor: "#FFD700" },
       { id: "ray-top", label: "Tia sáng", guideColor: "#FFA500" },
@@ -116,7 +116,7 @@ const TOY_IMAGES: ColoringImage[] = [
   {
     id: "car",
     name: "Xe Ô Tô",
-    svgPath: "/assets/games/paint-picture/svg/car.svg",
+    svgPath: "https://assets.cuthongminh.com/games/paint-picture/svg/car.svg",
     regions: [
       { id: "car-body", label: "Thân xe", guideColor: "#FF0000" },
       { id: "car-top", label: "Nóc xe", guideColor: "#CC0000" },
@@ -129,7 +129,7 @@ const TOY_IMAGES: ColoringImage[] = [
   {
     id: "robot",
     name: "Rô Bốt",
-    svgPath: "/assets/games/paint-picture/svg/robot.svg",
+    svgPath: "https://assets.cuthongminh.com/games/paint-picture/svg/robot.svg",
     regions: [
       { id: "body", label: "Thân", guideColor: "#4169E1" },
       { id: "head", label: "Đầu", guideColor: "#6495ED" },
@@ -142,7 +142,7 @@ const TOY_IMAGES: ColoringImage[] = [
   {
     id: "teddy",
     name: "Gấu Bông",
-    svgPath: "/assets/games/paint-picture/svg/teddy.svg",
+    svgPath: "https://assets.cuthongminh.com/games/paint-picture/svg/teddy.svg",
     regions: [
       { id: "body", label: "Thân gấu", guideColor: "#D2691E" },
       { id: "belly", label: "Bụng", guideColor: "#FFDEAD" },
@@ -162,9 +162,9 @@ export const ALL_IMAGES: Record<string, ColoringImage[]> = {
 };
 
 export const AI_BACKGROUNDS: Record<string, string> = {
-  group1: "/assets/games/paint-picture/ai/animal.webp",
-  group2: "/assets/games/paint-picture/ai/nature.webp",
-  group3: "/assets/games/paint-picture/ai/toys.webp",
+  group1: "https://assets.cuthongminh.com/games/paint-picture/ai/animal.webp",
+  group2: "https://assets.cuthongminh.com/games/paint-picture/ai/nature.webp",
+  group3: "https://assets.cuthongminh.com/games/paint-picture/ai/toys.webp",
 };
 
 export interface GroupData {

@@ -1,23 +1,47 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
-import { hasEnvVars } from "../utils/hasEnvVars";
+
+const publicPaths = [
+  "/",
+  "/games",
+  "/auth",
+  "/blogs",
+  "/about-us",
+  "/privacy",
+  "/terms",
+  "/feedback",
+  "/api/",
+  // Group landing pages (SEO)
+  "/tro-choi-tu-duy",
+  "/tro-choi-my-thuat",
+  "/ky-nang-song",
+  "/dia-ly-tu-nhien",
+  "/am-nhac",
+  "/khoa-hoc",
+  "/hoc-tieng-viet-cho-be",
+  "/tro-choi-toan-hoc",
+  "/gioi-thieu-kiem-tien",
+  "/share",
+  "/sounds",
+];
+
+function isPublicPath(pathname: string): boolean {
+  return pathname === "/" || publicPaths.some((path) => path !== "/" && pathname.startsWith(path));
+}
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
   });
 
-  // If the env vars are not set, skip proxy check. You can remove this
-  // once you setup the project.
-  if (!hasEnvVars) {
-    return supabaseResponse;
-  }
-
-  // With Fluid compute, don't put this client in a global environment
-  // variable. Always create a new one on each request.
+  // Always create the Supabase client to keep server-side cookies in sync
+  // with the client-side session. Without this, token refreshes on the client
+  // would leave the server cookies stale, causing RSC fetches (e.g.
+  // /games?_rsc=...) to fail with expired auth after the user returns to the
+  // site after hours — crashing the React tree with "Rendered more hooks".
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
         getAll() {
@@ -38,25 +62,32 @@ export async function updateSession(request: NextRequest) {
   // supabase.auth.getClaims(). A simple mistake could make it very hard to debug
   // issues with users being randomly logged out.
 
-  // IMPORTANT: If you remove getClaims() and you use server-side rendering
-  // with the Supabase client, your users may be randomly logged out.
-  const { data } = await supabase.auth.getClaims();
-  const user = data?.claims;
+  // IMPORTANT: getClaims() refreshes the session cookie if needed.
+  // We run this for ALL paths (including public) to keep cookies in sync.
+  let user = null;
+  try {
+    const { data } = await supabase.auth.getClaims();
+    user = data?.claims;
+  } catch {
+    // JWT has expired or is invalid — sign the user out so stale cookies are
+    // cleared and a fresh session can be established on next login.
+    await supabase.auth.signOut();
+  }
 
-  if (
-    request.nextUrl.pathname !== "/games" &&
-    !user &&
-    !request.nextUrl.pathname.startsWith("/login") &&
-    !request.nextUrl.pathname.startsWith("/auth")
-  ) {
-    // no user, potentially respond by redirecting the user to the login page
+  // For public paths, allow access regardless of auth state
+  if (isPublicPath(request.nextUrl.pathname)) {
+    return supabaseResponse;
+  }
+
+  // For protected paths, redirect to login if no user
+  if (!user) {
     const url = request.nextUrl.clone();
     url.pathname = "/auth/login";
     return NextResponse.redirect(url);
   }
 
-  // IMPORTANT: You *must* return the supabaseResponse object as it is.
-  // If you're creating a new response object with NextResponse.next() make sure to:
+  // IMPORTANT: You *must* return the supabaseResponse object as it is. If you're
+  // creating a new response object with NextResponse.next() make sure to:
   // 1. Pass the request in it, like so:
   //    const myNewResponse = NextResponse.next({ request })
   // 2. Copy over the cookies, like so:

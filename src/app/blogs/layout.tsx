@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Góc Chia Sẻ | Cú Thông Minh",
     description: "Kiến thức và phương pháp giáo dục sớm cho trẻ từ chuyên gia và cộng đồng phụ huynh.",
+    images: [{ url: "/og-image.webp", width: 1200, height: 630, alt: "Cú Thông Minh - Blog" }],
   },
 };
 
@@ -19,7 +20,7 @@ export default function BlogLayout({ children }: { children: React.ReactNode }) 
     <div className="min-h-screen bg-white font-[family-name:var(--font-nunito-sans)] flex flex-col">
       <HeaderHome />
 
-      <main className="py-4 lg:py-8 flex-1">{children}</main>
+      <main className="py-4 lg:py-8 flex-1 mt-16">{children}</main>
 
       <Footer />
     </div>

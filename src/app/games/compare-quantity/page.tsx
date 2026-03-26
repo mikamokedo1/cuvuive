@@ -1,3 +1,6 @@
+import type { Metadata } from "next";
+import { getGameMetadata } from "@/libs/utils/seo";
+import { GameSeoSection } from "@/components/seo/GameSeoSection";
 const Group1Logo = "https://assets.cuthongminh.com/games/compare-quantity/compare-quantity-logo-1.webp";
 const Group2Logo = "https://assets.cuthongminh.com/games/compare-quantity/compare-quantity-logo-2.webp";
 const Group3Logo = "https://assets.cuthongminh.com/games/compare-quantity/compare-quantity-logo-3.webp";
@@ -42,6 +45,14 @@ const GROUPS = [
   },
 ];
 
+
+export const metadata: Metadata = getGameMetadata("compare-quantity");
+
 export default function CompareQuantityPage() {
-  return <GameWrapGroups logo={compareLogo} gameId="compare-quantity" groups={GROUPS} title="So Sánh Số Lượng" />;
+  return (
+    <>
+      <GameWrapGroups logo={compareLogo} gameId="compare-quantity" groups={GROUPS} title="So Sánh Số Lượng" />
+      <GameSeoSection gameId="compare-quantity" />
+    </>
+  );
 }

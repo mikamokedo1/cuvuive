@@ -10,3 +10,13 @@ export interface EntityData {
 }
 
 export type FeedbackType = "correct" | "wrong" | null;
+
+export interface ScenarioQuestion {
+  id: string;
+  situationText: string;
+  image: string | StaticImageData;
+  options: { id: string; text: string; emoji: string }[];
+  correctOptionId: string;
+  explanation: string;
+  category: string;
+}

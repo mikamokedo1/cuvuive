@@ -24,7 +24,7 @@ COPY ${ENV_FILE} .env.production
 ENV NEXT_TELEMETRY_DISABLED=1
 
 # Increase Node.js memory limit for build
-ENV NODE_OPTIONS="--max-old-space-size=4096"
+ENV NODE_OPTIONS="--max-old-space-size=6144"
 
 RUN npm run build
 

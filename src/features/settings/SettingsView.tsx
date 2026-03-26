@@ -1,66 +1,47 @@
 "use client";
 
-import { createClient } from "@/libs/supabase/client";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useFormik } from "formik";
-import { object, string, number } from "yup";
 import { ActionButton } from "@/components/common/ActionButton";
 import { ExclamationIcon, PhoneIcon, UserIcon } from "@/components/common/Icons";
 import { useUser } from "@/context/UserContext";
 import Header from "@/components/layout/Header";
+import {
+  accountProfileSchema,
+  deleteCurrentAccount,
+  getAccountProfileInitialValues,
+  updateAccountProfile,
+} from "@/features/settings/account-profile";
 
 // Re-using the same owl image for settings header
 const owlHi = "https://assets.cuthongminh.com/games/common/owl-say-hi.webp";
 
 export function SettingsView() {
   const router = useRouter();
-  const supabase = createClient();
-  const { user, isPremium, premiumEndDate, refreshSubscription } = useUser();
+  const { user, isPremium, premiumEndDate } = useUser();
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [generalError, setGeneralError] = useState<string | null>(null);
 
   const formik = useFormik({
-    initialValues: {
-      kidName: user?.user_metadata?.kidName ?? "",
-      parentPhone: user?.user_metadata?.parentPhone ?? "",
-      age: user?.user_metadata?.age ?? 3,
-      sex: user?.user_metadata?.sex ?? "male",
-      playTimerMinutes: user?.user_metadata?.playTimerMinutes ?? 15,
-    },
+    initialValues: getAccountProfileInitialValues(user, { includePlayTimerMinutes: true }),
     enableReinitialize: true,
-    validationSchema: object({
-      kidName: string().required("Vui lòng nhập tên bé"),
-      parentPhone: string()
-        .required("Vui lòng nhập số điện thoại")
-        .matches(/^[0-9]{10,11}$/, "Số điện thoại không hợp lệ"),
-      age: number().required("Vui lòng chọn tuổi"),
-      sex: string().required("Vui lòng chọn giới tính"),
-      playTimerMinutes: number().min(0).required(),
-    }),
+    validationSchema: accountProfileSchema,
     onSubmit: async (values) => {
       setLoading(true);
       setGeneralError(null);
       setSuccessMessage(null);
 
-      const { error } = await supabase.auth.updateUser({
-        data: {
-          kidName: values.kidName,
-          parentPhone: values.parentPhone,
-          age: parseInt(values.age.toString(), 10),
-          sex: values.sex,
-          playTimerMinutes: parseInt(values.playTimerMinutes.toString(), 10),
-        },
-      });
+      const { error } = await updateAccountProfile(values, { includePlayTimerMinutes: true });
 
       if (error) {
         setGeneralError(error.message);
+        setLoading(false);
       } else {
         setSuccessMessage("Cập nhật thông tin thành công!");
-        // Small delay to allow user context to absorb changes and re-render header context if needed
         setTimeout(() => {
           router.refresh();
         }, 500);
@@ -74,18 +55,9 @@ export function SettingsView() {
     setSuccessMessage(null);
 
     try {
-      const response = await fetch("/api/user/delete", {
-        method: "DELETE",
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to delete account");
-      }
-
-      await supabase.auth.signOut();
+      await deleteCurrentAccount();
       setSuccessMessage("Tài khoản đã được xóa thành công. Đang chuyển hướng...");
 
-      // Delay to let user see the message, then redirect
       setTimeout(() => {
         router.push("/");
         router.refresh();

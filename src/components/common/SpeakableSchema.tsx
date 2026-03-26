@@ -1,3 +1,5 @@
+import { safeJsonLd } from "@/libs/utils/safe-jsonld";
+
 /**
  * SpeakableSchema: Adds Speakable structured data for voice search / AI reading.
  * Uses CSS selectors to identify content suitable for text-to-speech.
@@ -21,5 +23,5 @@ export function SpeakableSchema({
     },
   };
 
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />;
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }} />;
 }

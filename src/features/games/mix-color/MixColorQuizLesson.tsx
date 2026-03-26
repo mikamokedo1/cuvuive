@@ -68,7 +68,7 @@ export function MixColorQuizLesson({ rules, onComplete, requiredWins = 5 }: MixC
         } else {
           generateQuestion();
         }
-      }, 2000);
+      }, 3000);
     } else {
       setFeedback("wrong");
       setShakeIndex(index);

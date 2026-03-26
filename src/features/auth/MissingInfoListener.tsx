@@ -1,18 +1,26 @@
 "use client";
 
+import { Suspense, lazy } from "react";
 import { useUser } from "@/context/UserContext";
-import { MissingInfoModal } from "./MissingInfoModal";
+
+const MissingInfoModal = lazy(() =>
+  import("./MissingInfoModal").then((m) => ({ default: m.MissingInfoModal })),
+);
 
 export function MissingInfoListener() {
   const { showMissingInfoModal, setShowMissingInfoModal, checkMissingInfo } = useUser();
 
+  if (!showMissingInfoModal) return null;
+
   return (
-    <MissingInfoModal
-      isOpen={showMissingInfoModal}
-      onSuccess={async () => {
-        setShowMissingInfoModal(false);
-        await checkMissingInfo();
-      }}
-    />
+    <Suspense fallback={null}>
+      <MissingInfoModal
+        isOpen={showMissingInfoModal}
+        onSuccess={async () => {
+          setShowMissingInfoModal(false);
+          await checkMissingInfo();
+        }}
+      />
+    </Suspense>
   );
 }

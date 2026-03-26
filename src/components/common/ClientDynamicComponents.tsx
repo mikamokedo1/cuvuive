@@ -1,31 +1,48 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
 
-// Lazy-load client components that are not critical for initial render
-// Reduces initial JS bundle by ~60KB+ (framer-motion, paywall, install prompt)
-const OwlCompanion = dynamic(
-  () => import("@/components/common/OwlCompanion").then((m) => m.OwlCompanion),
-  { ssr: false },
-);
-const PaywallListener = dynamic(
-  () => import("@/features/paywall/PaywallListener").then((m) => m.PaywallListener),
-  { ssr: false },
-);
-const PlayTimerListener = dynamic(
-  () => import("@/features/parental/PlayTimerListener").then((m) => m.PlayTimerListener),
-  { ssr: false },
-);
-const InstallPrompt = dynamic(
-  () => import("@/components/common/InstallPrompt").then((m) => m.InstallPrompt),
-  { ssr: false },
-);
+const OwlCompanion = dynamic(() => import("@/components/common/OwlCompanion").then((mod) => mod.OwlCompanion));
+const PlayTimerListener = dynamic(() => import("@/features/parental/PlayTimerListener").then((mod) => mod.PlayTimerListener));
+const InstallPrompt = dynamic(() => import("@/components/common/InstallPrompt").then((mod) => mod.InstallPrompt));
 
 export function ClientDynamicComponents() {
+  const [showDeferredUi, setShowDeferredUi] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const revealDeferredUi = () => {
+      if (!cancelled) {
+        setShowDeferredUi(true);
+      }
+    };
+
+    if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+      const idleId = window.requestIdleCallback(revealDeferredUi, { timeout: 2000 });
+
+      return () => {
+        cancelled = true;
+        window.cancelIdleCallback(idleId);
+      };
+    }
+
+    const timeoutId = setTimeout(revealDeferredUi, 1200);
+
+    return () => {
+      cancelled = true;
+      clearTimeout(timeoutId);
+    };
+  }, []);
+
+  if (!showDeferredUi) {
+    return null;
+  }
+
   return (
     <>
       <OwlCompanion />
-      <PaywallListener />
       <PlayTimerListener />
       <InstallPrompt />
     </>

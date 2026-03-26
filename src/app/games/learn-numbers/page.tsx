@@ -1,3 +1,6 @@
+import type { Metadata } from "next";
+import { getGameMetadata } from "@/libs/utils/seo";
+import { GameSeoSection } from "@/components/seo/GameSeoSection";
 const group1 = "https://assets.cuthongminh.com/games/learn-numbers/number-logo-1.webp";
 const group2 = "https://assets.cuthongminh.com/games/learn-numbers/number-logo-2.webp";
 const group3 = "https://assets.cuthongminh.com/games/learn-numbers/number-logo-3.webp";
@@ -48,6 +51,14 @@ const GROUPS = [
   },
 ];
 
+
+export const metadata: Metadata = getGameMetadata("learn-numbers");
+
 export default function NumberGroupsPage() {
-  return <GameWrapGroups logo={group4} gameId="learn-numbers" groups={GROUPS} title="Học số" />;
+  return (
+    <>
+      <GameWrapGroups logo={group4} gameId="learn-numbers" groups={GROUPS} title="Học số" />
+      <GameSeoSection gameId="learn-numbers" />
+    </>
+  );
 }

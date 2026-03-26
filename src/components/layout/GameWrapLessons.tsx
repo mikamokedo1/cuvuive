@@ -10,6 +10,7 @@ export interface LessonData {
   icon: React.ReactNode;
   isPremium?: boolean;
   color?: string;
+  href?: string;
 }
 
 interface GameWrapLessonsProps {
@@ -40,7 +41,7 @@ export const GameWrapLessons = ({ gameId, lessons, title, activeIndex, handleLes
     <GameLayout title={title} backTo={`/games/${gameId}`}>
       <div className="w-full max-w-2xl px-4 flex flex-col items-center gap-6 pt-4">
         {lessons.map((lesson, index) => {
-          const unlocked = isLessonUnlocked(groupId, lesson.id, gameId);
+          const unlocked = isLessonUnlocked(gameId, groupId, lesson.id);
           const isActive = index === activeIndex;
 
           return (

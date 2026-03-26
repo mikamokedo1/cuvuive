@@ -6,10 +6,13 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { HeaderHome } from "@/components/layout/HeaderHome";
 import { Footer } from "@/components/layout/Footer";
-import { ArrowRight, Star, Play, Trophy } from "lucide-react";
+import { Star, Play, Trophy } from "lucide-react";
 import { FAQSchema, type FAQItem } from "@/components/common/FAQSchema";
 import { SpeakableSchema } from "@/components/common/SpeakableSchema";
 import { GameGroupType } from "@/libs/constants/groups";
+import { safeJsonLd } from "@/libs/utils/safe-jsonld";
+import { TOPIC_CLUSTERS } from "@/libs/seo/topic-clusters";
+import { getAllPosts } from "@/libs/blog";
 
 // FAQ data per group for AEO
 const GROUP_FAQ: Record<GameGroupType, FAQItem[]> = {
@@ -122,25 +125,85 @@ export async function generateStaticParams() {
   }));
 }
 
+// SEO keywords per group for better long-tail targeting
+const GROUP_KEYWORDS: Record<GameGroupType, string[]> = {
+  math: [
+    "trò chơi toán học cho bé mầm non", "bé học toán online", "phép cộng trừ cho trẻ",
+    "toán tư duy cho bé 5 tuổi", "dạy bé đếm số tại nhà", "game toán cho trẻ 3-8 tuổi",
+    "bài tập toán mẫu giáo", "học cộng trừ nhân chia đơn giản",
+  ],
+  logic: [
+    "trò chơi tư duy logic cho bé", "game phát triển trí tuệ trẻ em", "tìm quy luật cho bé",
+    "trò chơi mê cung online cho trẻ", "bài tập tư duy cho trẻ mầm non",
+    "rèn luyện tư duy logic trẻ 3-6 tuổi", "trò chơi tìm điểm khác biệt", "puzzle cho bé online",
+  ],
+  language: [
+    "học tiếng việt cho bé online", "bé học chữ cái tiếng việt", "tập đọc cho bé 4 tuổi",
+    "học bảng chữ cái cho trẻ mầm non", "bé học ghép vần", "dạy bé tập viết chữ",
+    "học dấu thanh tiếng việt", "giáo dục ngôn ngữ cho trẻ",
+  ],
+  science: [
+    "bé học khoa học vui", "trò chơi khám phá động vật cho bé", "bé học nhận biết trái cây",
+    "khủng long cho trẻ em", "thế giới động vật cho bé mầm non",
+    "dạy bé nhận biết hoa và cây", "khoa học tự nhiên cho trẻ 3-6 tuổi", "bé học bộ phận cơ thể",
+  ],
+  "life-skill": [
+    "kỹ năng sống cho bé mầm non", "dạy bé vệ sinh cá nhân", "an toàn giao thông cho trẻ",
+    "bé học nghề nghiệp", "nhận biết cảm xúc cho trẻ", "dạy bé nhận biết đồ vật nguy hiểm",
+    "kỹ năng tự phục vụ cho bé", "giáo dục kỹ năng sống trẻ em",
+  ],
+  geography: [
+    "bé học địa lý vui", "nhận biết cờ các nước cho bé", "địa danh nổi tiếng thế giới cho trẻ",
+    "trang phục truyền thống các nước", "khám phá địa hình tự nhiên",
+    "dạy bé về các quốc gia", "địa lý cho trẻ mầm non", "trò chơi địa lý online cho bé",
+  ],
+  music: [
+    "bé học âm nhạc online", "đàn piano cho trẻ em", "nhận biết nhạc cụ cho bé",
+    "học nốt nhạc cho bé", "bài hát thiếu nhi", "giáo dục âm nhạc cho trẻ mầm non",
+    "game chơi đàn piano online cho bé", "âm nhạc cho trẻ 3-6 tuổi",
+  ],
+  art: [
+    "bé học mỹ thuật online", "tô màu online cho bé miễn phí", "học pha màu cho trẻ",
+    "trò chơi vẽ tranh cho bé", "dạy bé nhận biết màu sắc", "sáng tạo nghệ thuật cho trẻ",
+    "game tô màu cho trẻ mầm non", "mỹ thuật cho bé 3-6 tuổi",
+  ],
+  history: [],
+};
+
+// SEO-optimized descriptions per group
+const GROUP_DESCRIPTIONS: Record<GameGroupType, string> = {
+  math: "Trò chơi Toán Học tương tác giúp bé 3-8 tuổi học đếm số, phép cộng trừ nhân chia, so sánh số lượng. Phương pháp học mà chơi hiệu quả trên Cú Thông Minh.",
+  logic: "Rèn luyện tư duy logic cho bé qua trò chơi tìm quy luật, mê cung, nối điểm, tìm điểm khác biệt. Phát triển trí tuệ toàn diện cho trẻ 3-8 tuổi.",
+  language: "Bé học tiếng Việt online: bảng chữ cái, dấu thanh, ghép vần qua trò chơi tương tác sinh động. Nền tảng ngôn ngữ vững chắc cho trẻ mầm non.",
+  science: "Khám phá thế giới khoa học cùng bé: động vật, trái cây, khủng long, thời tiết, cơ thể người. Trò chơi giáo dục tương tác cho trẻ 3-8 tuổi.",
+  "life-skill": "Dạy bé kỹ năng sống thiết yếu: an toàn giao thông, vệ sinh cá nhân, nghề nghiệp, quản lý cảm xúc qua trò chơi tương tác vui nhộn trên Cú Thông Minh.",
+  geography: "Bé khám phá thế giới: quốc kỳ các nước, địa danh nổi tiếng, trang phục truyền thống, địa hình tự nhiên qua trò chơi giáo dục tương tác.",
+  music: "Bé học âm nhạc vui: nhạc cụ, nốt nhạc, chơi đàn piano qua trò chơi tương tác. Phát triển thính giác và cảm thụ nghệ thuật cho trẻ mầm non.",
+  art: "Bé học mỹ thuật sáng tạo: nhận biết màu sắc, pha màu, tô tranh, vẽ tự do. Phát triển thẩm mỹ và khả năng sáng tạo cho trẻ 3-8 tuổi.",
+  history: "",
+};
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const group = GROUPS.find((g) => g.slug === slug);
 
   if (!group) return {};
 
-  const title = `${group.title} cho bé - Trò chơi giáo dục Cú Thông Minh`;
-  const description = `Khám phá các trò chơi ${group.title} hấp dẫn giúp bé phát triển tư duy, sáng tạo và kỹ năng toàn diện tại Cú Thông Minh.`;
+  const title = `Trò Chơi ${group.title} Cho Bé 3-8 Tuổi | Cú Thông Minh`;
+  const description = GROUP_DESCRIPTIONS[group.id] || `Khám phá các trò chơi ${group.title} hấp dẫn giúp bé phát triển tư duy, sáng tạo và kỹ năng toàn diện tại Cú Thông Minh.`;
+  const keywords = GROUP_KEYWORDS[group.id] || [];
 
   return {
     title,
     description,
+    keywords,
     alternates: {
       canonical: `/${slug}`,
     },
     openGraph: {
       title,
       description,
-      images: [{ url: typeof group.icon === "string" ? group.icon : group.icon.src }],
+      images: [{ url: "/og-image.webp", width: 1200, height: 630, alt: title }],
     },
   };
 }
@@ -155,6 +218,9 @@ export default async function GroupLandingPage({ params }: PageProps) {
 
   const groupGames = COURSES.filter((course) => course.type === group.id);
   const faqItems = GROUP_FAQ[group.id] || [];
+  const allPosts = await getAllPosts();
+  const topicCluster = TOPIC_CLUSTERS[group.id];
+  const clusterPosts = allPosts.filter((post) => topicCluster.blogSlugs.includes(post.slug)).slice(0, 4);
 
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
@@ -191,13 +257,13 @@ export default async function GroupLandingPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-[#FFF9F0] font-[family-name:var(--font-nunito-sans)]">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(itemListJsonLd) }} />
 
       <div className="max-w-6xl mx-auto px-4 py-6">
         <HeaderHome />
 
-        <main className="mt-8">
+        <main className="mt-16">
           {/* Hero Section */}
           <div className="relative overflow-hidden rounded-[3rem] bg-gradient-to-br from-orange-400 to-red-500 p-8 md:p-16 text-white mb-12 shadow-2xl">
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
@@ -260,6 +326,46 @@ export default async function GroupLandingPage({ params }: PageProps) {
               ))}
             </div>
           </section>
+
+          {clusterPosts.length > 0 && (
+            <section className="mb-20">
+              <div className="flex items-center justify-between mb-8 gap-4">
+                <div>
+                  <h2 className="text-3xl md:text-4xl font-bold font-[family-name:var(--font-baloo-2)] text-slate-800 mb-3">
+                    {topicCluster.heading}
+                  </h2>
+                  <p className="text-slate-600 max-w-3xl">{topicCluster.description}</p>
+                </div>
+                <Link
+                  href="/blogs"
+                  className="hidden md:inline-flex px-5 py-3 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition-colors"
+                >
+                  Xem blog
+                </Link>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {clusterPosts.map((post) => (
+                  <Link
+                    key={post.slug}
+                    href={`/blogs/${post.slug}`}
+                    className="group rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm hover:shadow-lg transition-all"
+                  >
+                    <div className="flex items-center justify-between gap-3 mb-3">
+                      <span className="inline-flex items-center px-3 py-1 rounded-full bg-orange-100 text-orange-600 text-xs font-bold">
+                        Blog cùng chủ đề
+                      </span>
+                      <span className="text-xs text-slate-400">{post.readingTime} phút đọc</span>
+                    </div>
+                    <h3 className="text-2xl font-bold text-slate-900 mb-3 font-[family-name:var(--font-baloo-2)] group-hover:text-orange-500 transition-colors">
+                      {post.title}
+                    </h3>
+                    <p className="text-slate-600 line-clamp-3">{post.description}</p>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
 
           {/* Call to Action */}
           <section className="bg-slate-900 rounded-[3rem] p-12 text-center text-white mb-20 relative overflow-hidden shadow-2xl">

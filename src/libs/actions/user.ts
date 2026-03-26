@@ -32,6 +32,34 @@ export async function getSubscriptionDetailsAction(): Promise<{ isPremium: boole
   return await getUserSubscriptionDetails(user.id);
 }
 
+/**
+ * Get "today" at midnight as a UTC Date, but computed in Vietnam timezone (UTC+7).
+ * This ensures all date logic uses Vietnam's calendar day, not the server's.
+ */
+function getVietnamToday(date: Date = new Date()): Date {
+  const vnFormatter = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Ho_Chi_Minh",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+  const parts = vnFormatter.format(date).split("-"); // "2026-03-23"
+  return new Date(Date.UTC(+parts[0], +parts[1] - 1, +parts[2]));
+}
+
+/**
+ * Get the day-of-week (0=Sunday..6=Saturday) for a date in Vietnam timezone.
+ */
+function getVietnamDayOfWeek(date: Date): number {
+  const vnWeekdayFormatter = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Asia/Ho_Chi_Minh",
+    weekday: "short",
+  });
+  const weekdayStr = vnWeekdayFormatter.format(date);
+  const map: Record<string, number> = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+  return map[weekdayStr] ?? 0;
+}
+
 export async function updateUserStreakAction(): Promise<{ currentStreak: number; streakUpdated: boolean }> {
   const supabase = await createClient();
   const {
@@ -51,7 +79,7 @@ export async function updateUserStreakAction(): Promise<{ currentStreak: number;
   }
 
   const now = new Date();
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const today = getVietnamToday(now);
 
   let currentStreak = userDb.currentStreak || 0;
   let streakUpdated = false;
@@ -61,9 +89,9 @@ export async function updateUserStreakAction(): Promise<{ currentStreak: number;
     currentStreak = 1;
     streakUpdated = true;
   } else {
-    // Compare dates
+    // Compare dates using Vietnam timezone
     const lastActive = new Date(userDb.lastActiveDate);
-    const lastActiveDateOnly = new Date(lastActive.getFullYear(), lastActive.getMonth(), lastActive.getDate());
+    const lastActiveDateOnly = getVietnamToday(lastActive);
 
     const diffTime = Math.abs(today.getTime() - lastActiveDateOnly.getTime());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -92,8 +120,8 @@ export async function updateUserStreakAction(): Promise<{ currentStreak: number;
   }
 
   // 2. Ensure today is logged in user_activity_logs
-  // Ignore time completely by setting the exact midnight boundary
-  const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  // Use Vietnam "today" midnight as the date key
+  const todayStart = today;
 
   // Upsert pattern: Insert if not exists based on the unique index (userId, date)
   // We use standard SELECT then INSERT to be safe since onConflictDoNothing depends on constraints
@@ -122,18 +150,18 @@ export async function getUserWeeklyActivityAction(): Promise<number[]> {
   }
 
   const now = new Date();
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const dayOfWeek = today.getDay(); // 0 (Sunday) to 6 (Saturday)
+  const today = getVietnamToday(now);
+  const dayOfWeek = getVietnamDayOfWeek(now); // 0 (Sunday) to 6 (Saturday)
 
   // Calculate start of the week (Monday)
   // If today is Sunday (0), go back 6 days; otherwise go back (dayOfWeek - 1) days
   const diffToMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
   const startOfWeek = new Date(today);
-  startOfWeek.setDate(today.getDate() - diffToMonday);
+  startOfWeek.setUTCDate(today.getUTCDate() - diffToMonday);
 
   // End of week (Sunday)
   const endOfWeek = new Date(startOfWeek);
-  endOfWeek.setDate(startOfWeek.getDate() + 6);
+  endOfWeek.setUTCDate(startOfWeek.getUTCDate() + 6);
 
   const logs = await db
     .select({ date: userActivityLogs.date })
@@ -146,11 +174,11 @@ export async function getUserWeeklyActivityAction(): Promise<number[]> {
       ),
     );
 
-  // Map dates out to their dayOfWeek boundaries as array of numbers [0..6]
+  // Map dates to their Vietnam day-of-week as array of numbers [0..6]
   const activeDays = logs
     .map((log) => {
       if (log.date) {
-        return log.date.getDay();
+        return getVietnamDayOfWeek(log.date);
       }
       return -1;
     })

@@ -1,7 +1,12 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
-export const createClient = async () => {
+/**
+ * Especially important if using Fluid compute: Don't put this client in a
+ * global variable. Always create a new client within each function when using
+ * it.
+ */
+export async function createClient() {
   const cookieStore = await cookies();
 
   return createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, {
@@ -11,17 +16,13 @@ export const createClient = async () => {
       },
       setAll(cookiesToSet) {
         try {
-          console.log(
-            "Supabase Server: setAll called with",
-            cookiesToSet.map((c) => `${c.name} (secure: ${c.options?.secure}, path: ${c.options?.path})`),
-          );
-          cookiesToSet.forEach(({ name, value, options }) => {
-            cookieStore.set(name, value, options);
-          });
-        } catch (error) {
-          console.error("Supabase Server: Error setting cookies", error);
+          cookiesToSet.forEach(({ name, value, options }) => cookieStore.set(name, value, options));
+        } catch {
+          // The `setAll` method was called from a Server Component.
+          // This can be ignored if you have proxy refreshing
+          // user sessions.
         }
       },
     },
   });
-};
+}

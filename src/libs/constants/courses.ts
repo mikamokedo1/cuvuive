@@ -1,5 +1,6 @@
-// Assets
 const NumberLogo = "https://assets.cuthongminh.com/games/learn-numbers/number-logo.webp";
+const GameMultiplyLogo = "https://assets.cuthongminh.com/games/learn-multiply/logo.webp";
+const GameDivideLogo = "https://assets.cuthongminh.com/games/learn-divide/logo.webp";
 const Game3Logo = "https://assets.cuthongminh.com/games/game-3-logo.webp";
 const GameColorLogo = "https://assets.cuthongminh.com/games/learn-color-color.webp";
 const ShapeLogo = "https://assets.cuthongminh.com/games/learn-shape/learn-shape-logo.webp";
@@ -39,6 +40,12 @@ const LineConnectGroup1Logo = "https://assets.cuthongminh.com/games/line-connect
 const LineConnectGroup2Logo = "https://assets.cuthongminh.com/games/line-connect/group2.webp";
 const LineConnectGroup3Logo = "https://assets.cuthongminh.com/games/line-connect/group3.webp";
 const GameCleaningLogo = "https://assets.cuthongminh.com/games/learn-cleaning/logo.webp";
+const GameTrafficLogo = "https://assets.cuthongminh.com/games/learn-traffic/logo.webp";
+const LearnNotesLogo = "https://assets.cuthongminh.com/games/learn-notes/logo.webp";
+const LearnNotesGroup1Logo = "https://assets.cuthongminh.com/games/learn-notes/group1.webp";
+const LearnNotesGroup2Logo = "https://assets.cuthongminh.com/games/learn-notes/group2.webp";
+const LearnNotesGroup3Logo = "https://assets.cuthongminh.com/games/learn-notes/group3.webp";
+const GameDangerLogo = "https://assets.cuthongminh.com/games/learn-danger/logo.webp";
 import { StaticImageData } from "next/image";
 import { GameGroupType } from "@/libs/constants/groups";
 
@@ -79,8 +86,8 @@ export const COURSES: CourseDef[] = [
         title: "Thanh Sắc",
         lessons: [
           { id: "lesson1", title: "Học dấu", isFree: true },
-          { id: "lesson2", title: "Tập nói" },
-          { id: "lesson3", title: "Tập viết" },
+          { id: "lesson2", title: "Tập nói", isFree: true },
+          { id: "lesson3", title: "Tập viết", isFree: true },
           { id: "lesson4", title: "Chữ nào đúng" },
         ],
       },
@@ -138,8 +145,8 @@ export const COURSES: CourseDef[] = [
         title: "Làm quen 1-3",
         lessons: [
           { id: "lesson1", title: "Học số 1-3", isFree: true },
-          { id: "lesson2", title: "Số nào đúng?" },
-          { id: "lesson3", title: "Đếm đồ vật" },
+          { id: "lesson2", title: "Số nào đúng?", isFree: true },
+          { id: "lesson3", title: "Đếm đồ vật", isFree: true },
           { id: "lesson4", title: "Tập viết" },
         ],
       },
@@ -185,7 +192,7 @@ export const COURSES: CourseDef[] = [
   },
   {
     id: "compare-quantity",
-    title: "So sánh số lượng",
+    title: "So sánh",
     description: "Bé học so sánh nhiều hơn, ít hơn, bằng nhau.",
     icon: Game3Logo,
     type: "math",
@@ -195,8 +202,8 @@ export const COURSES: CourseDef[] = [
         title: "Lớn hơn",
         lessons: [
           { id: "lesson1", title: "Học lớn hơn", isFree: true },
-          { id: "lesson2", title: "Luyện tập" },
-          { id: "lesson3", title: "Thử thách" },
+          { id: "lesson2", title: "Luyện tập", isFree: true },
+          { id: "lesson3", title: "Thử thách", isFree: true },
           { id: "lesson4", title: "Trò chơi" },
         ],
       },
@@ -242,8 +249,8 @@ export const COURSES: CourseDef[] = [
         title: "Màu cơ bản",
         lessons: [
           { id: "lesson1", title: "Học màu sắc", isFree: true },
-          { id: "lesson2", title: "Tìm màu giống" },
-          { id: "lesson3", title: "Trò chơi màu" },
+          { id: "lesson2", title: "Tìm màu giống", isFree: true },
+          { id: "lesson3", title: "Trò chơi màu", isFree: true },
         ],
       },
       {
@@ -259,8 +266,9 @@ export const COURSES: CourseDef[] = [
         id: "group3",
         title: "Luyện tập",
         lessons: [
-          { id: "lesson1", title: "Luyện tập màu", isFree: true },
-          { id: "lesson2", title: "Thử thách màu" },
+          { id: "lesson1", title: "Học màu sắc", isFree: true },
+          { id: "lesson2", title: "Tìm màu giống" },
+          { id: "lesson3", title: "Trò chơi màu" },
         ],
       },
     ],
@@ -277,8 +285,8 @@ export const COURSES: CourseDef[] = [
         title: "Hình cơ bản",
         lessons: [
           { id: "lesson1", title: "Học hình dạng", isFree: true },
-          { id: "lesson2", title: "Tìm hình giống" },
-          { id: "lesson3", title: "Tìm đồ vật" },
+          { id: "lesson2", title: "Tìm hình giống", isFree: true },
+          { id: "lesson3", title: "Tìm đồ vật", isFree: true },
           { id: "lesson4", title: "Trò chơi hình" },
         ],
       },
@@ -314,8 +322,8 @@ export const COURSES: CourseDef[] = [
         title: "Động vật nuôi",
         lessons: [
           { id: "lesson1", title: "Học tên động vật", isFree: true },
-          { id: "lesson2", title: "Tập nói" },
-          { id: "lesson3", title: "Đây là con gì?" },
+          { id: "lesson2", title: "Tập nói", isFree: true },
+          { id: "lesson3", title: "Đây là con gì?", isFree: true },
           { id: "lesson4", title: "Ghép đôi" },
         ],
       },
@@ -353,8 +361,8 @@ export const COURSES: CourseDef[] = [
         title: "Phương tiện đường bộ",
         lessons: [
           { id: "lesson1", title: "Học tên phương tiện", isFree: true },
-          { id: "lesson2", title: "Đây là gì?" },
-          { id: "lesson3", title: "Ghép đôi" },
+          { id: "lesson2", title: "Đây là gì?", isFree: true },
+          { id: "lesson3", title: "Ghép đôi", isFree: true },
         ],
       },
       {
@@ -398,8 +406,8 @@ export const COURSES: CourseDef[] = [
         title: "Trái cây phổ biến",
         lessons: [
           { id: "lesson1", title: "Học tên trái cây", isFree: true },
-          { id: "lesson2", title: "Đây là gì?" },
-          { id: "lesson3", title: "Ghép đôi" },
+          { id: "lesson2", title: "Đây là gì?", isFree: true },
+          { id: "lesson3", title: "Ghép đôi", isFree: true },
         ],
       },
       {
@@ -434,8 +442,8 @@ export const COURSES: CourseDef[] = [
         title: "Món ăn sáng",
         lessons: [
           { id: "lesson1", title: "Học tên món ăn", isFree: true },
-          { id: "lesson2", title: "Đây là gì?" },
-          { id: "lesson3", title: "Ghép đôi" },
+          { id: "lesson2", title: "Đây là gì?", isFree: true },
+          { id: "lesson3", title: "Ghép đôi", isFree: true },
         ],
       },
       {
@@ -470,8 +478,8 @@ export const COURSES: CourseDef[] = [
         title: "Khủng long ăn cỏ",
         lessons: [
           { id: "lesson1", title: "Học tên khủng long", isFree: true },
-          { id: "lesson2", title: "Đây là gì?" },
-          { id: "lesson3", title: "Ghép đôi" },
+          { id: "lesson2", title: "Đây là gì?", isFree: true },
+          { id: "lesson3", title: "Ghép đôi", isFree: true },
         ],
       },
       {
@@ -506,8 +514,8 @@ export const COURSES: CourseDef[] = [
         title: "Nhạc cụ dây",
         lessons: [
           { id: "lesson1", title: "Học nhạc cụ", isFree: true },
-          { id: "lesson2", title: "Đây là gì?" },
-          { id: "lesson3", title: "Ghép đôi" },
+          { id: "lesson2", title: "Đây là gì?", isFree: true },
+          { id: "lesson3", title: "Ghép đôi", isFree: true },
         ],
       },
       {
@@ -542,8 +550,8 @@ export const COURSES: CourseDef[] = [
         title: "Nghề cộng đồng",
         lessons: [
           { id: "lesson1", title: "Học tên nghề", isFree: true },
-          { id: "lesson2", title: "Đây là gì?" },
-          { id: "lesson3", title: "Nối dụng cụ" },
+          { id: "lesson2", title: "Đây là gì?", isFree: true },
+          { id: "lesson3", title: "Nối dụng cụ", isFree: true },
         ],
       },
       {
@@ -578,8 +586,8 @@ export const COURSES: CourseDef[] = [
         title: "Hoa phổ biến",
         lessons: [
           { id: "lesson1", title: "Học tên hoa", isFree: true },
-          { id: "lesson2", title: "Đây là gì?" },
-          { id: "lesson3", title: "Ghép đôi" },
+          { id: "lesson2", title: "Đây là gì?", isFree: true },
+          { id: "lesson3", title: "Ghép đôi", isFree: true },
         ],
       },
       {
@@ -614,8 +622,8 @@ export const COURSES: CourseDef[] = [
         title: "Thời tiết cơ bản",
         lessons: [
           { id: "lesson1", title: "Học tên thời tiết", isFree: true },
-          { id: "lesson2", title: "Tập nói" },
-          { id: "lesson3", title: "Đây là gì?" },
+          { id: "lesson2", title: "Tập nói", isFree: true },
+          { id: "lesson3", title: "Đây là gì?", isFree: true },
           { id: "lesson4", title: "Ghép đôi" },
         ],
       },
@@ -654,8 +662,8 @@ export const COURSES: CourseDef[] = [
         title: "Vệ sinh hàng ngày",
         lessons: [
           { id: "lesson1", title: "Học tên", isFree: true },
-          { id: "lesson2", title: "Tập nói" },
-          { id: "lesson3", title: "Đúng hay Sai?" },
+          { id: "lesson2", title: "Tập nói", isFree: true },
+          { id: "lesson3", title: "Đúng hay Sai?", isFree: true },
           { id: "lesson4", title: "Sắp xếp thứ tự" },
         ],
       },
@@ -682,6 +690,48 @@ export const COURSES: CourseDef[] = [
     ],
   },
   {
+    id: "learn-traffic",
+    title: "An Toàn Giao Thông",
+    description: "Bé học các quy tắc an toàn giao thông qua trò chơi tương tác, phiêu lưu và lắp ráp.",
+    icon: GameTrafficLogo,
+    type: "life-skill",
+    groups: [
+      {
+        id: "group1",
+        title: "Đèn & Biển Báo",
+        lessons: [
+          { id: "lesson1", title: "Học biển báo", isFree: true },
+          { id: "lesson2", title: "Khám phá phố", isFree: true },
+          { id: "lesson3", title: "Tìm biển đúng", isFree: true },
+          { id: "lesson4", title: "Chọn hành động" },
+          { id: "lesson5", title: "Lắp biển báo" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Đi Bộ An Toàn",
+        lessons: [
+          { id: "lesson1", title: "Học quy tắc đi bộ", isFree: true },
+          { id: "lesson2", title: "Khám phá đường" },
+          { id: "lesson3", title: "Tình huống đi bộ" },
+          { id: "lesson4", title: "An toàn đi bộ" },
+          { id: "lesson5", title: "Lắp biển đi bộ" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Đi Xe An Toàn",
+        lessons: [
+          { id: "lesson1", title: "Học quy tắc đi xe", isFree: true },
+          { id: "lesson2", title: "Khám phá xe cộ" },
+          { id: "lesson3", title: "Tình huống trên xe" },
+          { id: "lesson4", title: "Hành khách an toàn" },
+          { id: "lesson5", title: "Lắp biển xe" },
+        ],
+      },
+    ],
+  },
+  {
     id: "learn-emotion",
     title: "Cảm Xúc",
     description: "Bé học cách nhận biết và gọi tên cảm xúc qua hình ảnh và tình huống kịch bản.",
@@ -693,8 +743,8 @@ export const COURSES: CourseDef[] = [
         title: "Cảm xúc cơ bản",
         lessons: [
           { id: "lesson1", title: "Học cảm xúc", isFree: true },
-          { id: "lesson2", title: "Tập nói" },
-          { id: "lesson3", title: "Đúng hay Sai?" },
+          { id: "lesson2", title: "Tập nói", isFree: true },
+          { id: "lesson3", title: "Đúng hay Sai?", isFree: true },
           { id: "lesson4", title: "Chọn cảm xúc đúng" },
         ],
       },
@@ -722,8 +772,8 @@ export const COURSES: CourseDef[] = [
         title: "Châu Á",
         lessons: [
           { id: "lesson1", title: "Học tên quốc kỳ", isFree: true },
-          { id: "lesson2", title: "Chọn quốc kỳ đúng" },
-          { id: "lesson3", title: "Lật hình ghi nhớ" },
+          { id: "lesson2", title: "Chọn quốc kỳ đúng", isFree: true },
+          { id: "lesson3", title: "Lật hình ghi nhớ", isFree: true },
           { id: "lesson4", title: "Ghép hình" },
         ],
       },
@@ -771,8 +821,8 @@ export const COURSES: CourseDef[] = [
         title: "Châu Á",
         lessons: [
           { id: "lesson1", title: "Học địa danh", isFree: true },
-          { id: "lesson2", title: "Đây là đâu?" },
-          { id: "lesson3", title: "Ghép đôi" },
+          { id: "lesson2", title: "Đây là đâu?", isFree: true },
+          { id: "lesson3", title: "Ghép đôi", isFree: true },
           { id: "lesson4", title: "Xếp hình" },
         ],
       },
@@ -810,8 +860,8 @@ export const COURSES: CourseDef[] = [
         title: "Châu Á",
         lessons: [
           { id: "lesson1", title: "Học trang phục", isFree: true },
-          { id: "lesson2", title: "Trang phục nước nào?" },
-          { id: "lesson3", title: "Mặc Đúng Cho Bạn" },
+          { id: "lesson2", title: "Trang phục nước nào?", isFree: true },
+          { id: "lesson3", title: "Mặc Đúng Cho Bạn", isFree: true },
           { id: "lesson4", title: "Ghép đôi" },
         ],
       },
@@ -849,8 +899,8 @@ export const COURSES: CourseDef[] = [
         title: "Phép Cộng",
         lessons: [
           { id: "lesson1", title: "Giải thích phép cộng", isFree: true },
-          { id: "lesson2", title: "Cộng bằng hình" },
-          { id: "lesson3", title: "Cộng bằng số" },
+          { id: "lesson2", title: "Cộng bằng hình", isFree: true },
+          { id: "lesson3", title: "Cộng bằng số", isFree: true },
           { id: "lesson4", title: "Tập viết dấu" },
         ],
       },
@@ -875,6 +925,130 @@ export const COURSES: CourseDef[] = [
     ],
   },
   {
+    id: "learn-multiply",
+    title: "Phép Nhân",
+    description: "Bé học bảng nhân 2-5 qua hình ảnh và trò chơi tương tác.",
+    icon: GameMultiplyLogo,
+    type: "math",
+    groups: [
+      {
+        id: "group1",
+        title: "Bảng nhân 2",
+        lessons: [
+          { id: "lesson1", title: "Giải thích phép nhân", isFree: true },
+          { id: "lesson2", title: "Nhân bằng hình", isFree: true },
+          { id: "lesson3", title: "Nhân bằng số", isFree: true },
+          { id: "lesson4", title: "Điền số thiếu" },
+          { id: "lesson5", title: "Nhảy số" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Bảng nhân 3",
+        lessons: [
+          { id: "lesson1", title: "Giải thích phép nhân", isFree: true },
+          { id: "lesson2", title: "Nhân bằng hình" },
+          { id: "lesson3", title: "Nhân bằng số" },
+          { id: "lesson4", title: "Điền số thiếu" },
+          { id: "lesson5", title: "Nhảy số" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Bảng nhân 4",
+        lessons: [
+          { id: "lesson1", title: "Giải thích phép nhân", isFree: true },
+          { id: "lesson2", title: "Nhân bằng hình" },
+          { id: "lesson3", title: "Nhân bằng số" },
+          { id: "lesson4", title: "Điền số thiếu" },
+          { id: "lesson5", title: "Nhảy số" },
+        ],
+      },
+      {
+        id: "group4",
+        title: "Bảng nhân 5",
+        lessons: [
+          { id: "lesson1", title: "Giải thích phép nhân", isFree: true },
+          { id: "lesson2", title: "Nhân bằng hình" },
+          { id: "lesson3", title: "Nhân bằng số" },
+          { id: "lesson4", title: "Điền số thiếu" },
+          { id: "lesson5", title: "Nhảy số" },
+        ],
+      },
+      {
+        id: "group5",
+        title: "Luyện tập",
+        lessons: [
+          { id: "lesson1", title: "Nhân bằng hình", isFree: true },
+          { id: "lesson2", title: "Nhân bằng số" },
+          { id: "lesson3", title: "Điền số thiếu" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "learn-divide",
+    title: "Phép Chia",
+    description: "Bé học bảng chia 2-5 qua hình ảnh và trò chơi tương tác.",
+    icon: GameDivideLogo,
+    type: "math",
+    groups: [
+      {
+        id: "group1",
+        title: "Bảng chia 2",
+        lessons: [
+          { id: "lesson1", title: "Giải thích phép chia", isFree: true },
+          { id: "lesson2", title: "Chia bằng hình", isFree: true },
+          { id: "lesson3", title: "Chia bằng số", isFree: true },
+          { id: "lesson4", title: "Điền số thiếu" },
+          { id: "lesson5", title: "Nhân ngược" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Bảng chia 3",
+        lessons: [
+          { id: "lesson1", title: "Giải thích phép chia", isFree: true },
+          { id: "lesson2", title: "Chia bằng hình" },
+          { id: "lesson3", title: "Chia bằng số" },
+          { id: "lesson4", title: "Điền số thiếu" },
+          { id: "lesson5", title: "Nhân ngược" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Bảng chia 4",
+        lessons: [
+          { id: "lesson1", title: "Giải thích phép chia", isFree: true },
+          { id: "lesson2", title: "Chia bằng hình" },
+          { id: "lesson3", title: "Chia bằng số" },
+          { id: "lesson4", title: "Điền số thiếu" },
+          { id: "lesson5", title: "Nhân ngược" },
+        ],
+      },
+      {
+        id: "group4",
+        title: "Bảng chia 5",
+        lessons: [
+          { id: "lesson1", title: "Giải thích phép chia", isFree: true },
+          { id: "lesson2", title: "Chia bằng hình" },
+          { id: "lesson3", title: "Chia bằng số" },
+          { id: "lesson4", title: "Điền số thiếu" },
+          { id: "lesson5", title: "Nhân ngược" },
+        ],
+      },
+      {
+        id: "group5",
+        title: "Luyện tập",
+        lessons: [
+          { id: "lesson1", title: "Chia bằng hình", isFree: true },
+          { id: "lesson2", title: "Chia bằng số" },
+          { id: "lesson3", title: "Điền số thiếu" },
+        ],
+      },
+    ],
+  },
+  {
     id: "find-pattern",
     title: "Quy Luật",
     description: "Bé học tìm quy luật qua các hình dạng và màu sắc vui nhộn.",
@@ -886,8 +1060,8 @@ export const COURSES: CourseDef[] = [
         title: "Quy luật màu sắc",
         lessons: [
           { id: "lesson1", title: "Học quy luật", isFree: true },
-          { id: "lesson2", title: "Phần tiếp theo?" },
-          { id: "lesson3", title: "Điền vào chỗ trống" },
+          { id: "lesson2", title: "Phần tiếp theo?", isFree: true },
+          { id: "lesson3", title: "Điền vào chỗ trống", isFree: true },
         ],
       },
       {
@@ -913,8 +1087,8 @@ export const COURSES: CourseDef[] = [
         title: "Nguyên âm",
         lessons: [
           { id: "lesson1", title: "Học chữ cái", isFree: true },
-          { id: "lesson2", title: "Tập nói" },
-          { id: "lesson3", title: "Tập viết" },
+          { id: "lesson2", title: "Tập nói", isFree: true },
+          { id: "lesson3", title: "Tập viết", isFree: true },
           { id: "lesson4", title: "Chữ nào đúng?" },
           { id: "lesson5", title: "Ghép đôi" },
         ],
@@ -955,8 +1129,8 @@ export const COURSES: CourseDef[] = [
         title: "Dễ",
         lessons: [
           { id: "lesson1", title: "Phòng khách vui nhộn", isFree: true },
-          { id: "lesson2", title: "Khu vườn thú vị" },
-          { id: "lesson3", title: "Bãi biển đầy nắng" },
+          { id: "lesson2", title: "Khu vườn thú vị", isFree: true },
+          { id: "lesson3", title: "Bãi biển đầy nắng", isFree: true },
           { id: "lesson4", title: "Căn bếp ấm cúng" },
           { id: "lesson5", title: "Sân chơi nhộn nhịp" },
         ],
@@ -1061,8 +1235,8 @@ export const COURSES: CourseDef[] = [
         title: "Màu cơ bản",
         lessons: [
           { id: "lesson1", title: "Học pha màu", isFree: true },
-          { id: "lesson2", title: "Pha màu nào?" },
-          { id: "lesson3", title: "Thử thách pha màu" },
+          { id: "lesson2", title: "Pha màu nào?", isFree: true },
+          { id: "lesson3", title: "Thử thách pha màu", isFree: true },
         ],
       },
       {
@@ -1097,7 +1271,7 @@ export const COURSES: CourseDef[] = [
         title: "Động vật",
         lessons: [
           { id: "lesson1", title: "Tô tự do", isFree: true },
-          { id: "lesson2", title: "Hoạ Khám Phá" },
+          { id: "lesson2", title: "Hoạ Khám Phá", isFree: true },
         ],
       },
       {
@@ -1130,8 +1304,8 @@ export const COURSES: CourseDef[] = [
         title: "Đồng hồ kim",
         lessons: [
           { id: "lesson1", title: "Làm quen đồng hồ", isFree: true },
-          { id: "lesson2", title: "Chọn đúng giờ" },
-          { id: "lesson3", title: "Chỉnh kim đồng hồ" },
+          { id: "lesson2", title: "Chọn đúng giờ", isFree: true },
+          { id: "lesson3", title: "Chỉnh kim đồng hồ", isFree: true },
         ],
       },
       {
@@ -1167,8 +1341,8 @@ export const COURSES: CourseDef[] = [
         variant: "orange",
         lessons: [
           { id: "kia-con-buom-vang", title: "Kìa con bướm vàng", isFree: true },
-          { id: "happy-birthday", title: "Chúc mừng sinh nhật" },
-          { id: "ngoi-sao-lap-lanh", title: "Ngôi sao lấp lánh" },
+          { id: "happy-birthday", title: "Chúc mừng sinh nhật", isFree: true },
+          { id: "ngoi-sao-lap-lanh", title: "Ngôi sao lấp lánh", isFree: true },
           { id: "ba-oi-ba", title: "Bà ơi bà" },
           { id: "doi-ken-ti-hon", title: "Đội kèn tí hon" },
         ],
@@ -1198,7 +1372,7 @@ export const COURSES: CourseDef[] = [
         title: "Vần ie",
         lessons: [
           { id: "lesson1", title: "Học vần", isFree: true },
-          { id: "lesson2", title: "Chọn vần đúng" },
+          { id: "lesson2", title: "Chọn vần đúng", isFree: true },
         ],
       },
       {
@@ -1255,8 +1429,8 @@ export const COURSES: CourseDef[] = [
         title: "Trên cạn",
         lessons: [
           { id: "lesson1", title: "Khám phá địa hình", isFree: true },
-          { id: "lesson2", title: "Nghe đoán địa hình" },
-          { id: "lesson3", title: "Xếp lớp địa hình" },
+          { id: "lesson2", title: "Nghe đoán địa hình", isFree: true },
+          { id: "lesson3", title: "Xếp lớp địa hình", isFree: true },
           { id: "lesson4", title: "Ai sống ở đây?" },
           { id: "lesson5", title: "Phiêu lưu địa hình" },
         ],
@@ -1297,8 +1471,8 @@ export const COURSES: CourseDef[] = [
         title: "Đầu & Mặt",
         lessons: [
           { id: "lesson1", title: "Khám phá cơ thể", isFree: true },
-          { id: "lesson2", title: "Chạm và nói" },
-          { id: "lesson3", title: "Tập nói" },
+          { id: "lesson2", title: "Chạm và nói", isFree: true },
+          { id: "lesson3", title: "Tập nói", isFree: true },
           { id: "lesson4", title: "Đây là gì?" },
           { id: "lesson5", title: "Cơ thể làm gì?" },
           { id: "lesson6", title: "Ghép đôi" },
@@ -1365,6 +1539,143 @@ export const COURSES: CourseDef[] = [
           { id: "lesson2", title: "Tập nói" },
           { id: "lesson3", title: "Đúng hay Sai?" },
           { id: "lesson4", title: "Sắp xếp thứ tự" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "learn-notes",
+    title: "Học Nốt Nhạc",
+    description: "Bé làm quen với các nốt nhạc Đồ Rê Mi trên khuông nhạc qua hình ảnh và âm thanh.",
+    icon: LearnNotesLogo,
+    type: "music",
+    groups: [
+      {
+        id: "basic-notes",
+        title: "Nốt Nhạc Cơ Bản",
+        description: "Đồ, Rê, Mi, Fa",
+        logo: LearnNotesGroup1Logo,
+        variant: "green",
+        lessons: [
+          { id: "lesson1", title: "Học nốt nhạc", isFree: true },
+          { id: "lesson2", title: "Nghe và chọn", isFree: true },
+          { id: "lesson3", title: "Nốt nào đúng?", isFree: true },
+          { id: "lesson4", title: "Sắp xếp nốt" },
+        ],
+      },
+      {
+        id: "advanced-notes",
+        title: "Nốt Nhạc Nâng Cao",
+        description: "Sol, La, Si, Đố",
+        logo: LearnNotesGroup2Logo,
+        variant: "orange",
+        lessons: [
+          { id: "lesson1", title: "Học nốt nhạc", isFree: true },
+          { id: "lesson2", title: "Nghe và chọn" },
+          { id: "lesson3", title: "Nốt nào đúng?" },
+          { id: "lesson4", title: "Sắp xếp nốt" },
+        ],
+      },
+      {
+        id: "practice",
+        title: "Luyện Tập",
+        description: "Ôn tập tất cả các nốt",
+        logo: LearnNotesGroup3Logo,
+        variant: "purple",
+        lessons: [
+          { id: "lesson1", title: "Nghe và chọn", isFree: true },
+          { id: "lesson2", title: "Sắp xếp giai điệu" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "learn-danger",
+    title: "Đồ Vật Nguy Hiểm",
+    description: "Bé học nhận biết các đồ vật nguy hiểm trong nhà và cách giữ an toàn.",
+    icon: GameDangerLogo,
+    type: "life-skill",
+    groups: [
+      {
+        id: "group1",
+        title: "Trong bếp",
+        lessons: [
+          { id: "lesson1", title: "Học tên đồ vật", isFree: true },
+          { id: "lesson2", title: "Khám phá ngôi nhà", isFree: true },
+          { id: "lesson3", title: "Tình huống", isFree: true },
+          { id: "lesson4", title: "Hành động an toàn" },
+          { id: "lesson5", title: "Đúng hay Sai?" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Phòng tắm & xung quanh",
+        lessons: [
+          { id: "lesson1", title: "Học tên đồ vật", isFree: true },
+          { id: "lesson2", title: "Khám phá ngôi nhà" },
+          { id: "lesson3", title: "Tình huống" },
+          { id: "lesson4", title: "Hành động an toàn" },
+          { id: "lesson5", title: "Đúng hay Sai?" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Đồ điện",
+        lessons: [
+          { id: "lesson1", title: "Học tên đồ vật", isFree: true },
+          { id: "lesson2", title: "Khám phá ngôi nhà" },
+          { id: "lesson3", title: "Tình huống" },
+          { id: "lesson4", title: "Hành động an toàn" },
+          { id: "lesson5", title: "Đúng hay Sai?" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "mini-sudoku-kids",
+    title: "Sudoku",
+    description: "Bé học suy luận logic qua bảng hình đơn giản, tìm ô còn thiếu theo quy luật hàng và cột.",
+    icon: "https://assets.cuthongminh.com/games/mini-sudoku-kids/logo.webp",
+    type: "logic",
+    groups: [
+      {
+        id: "group1",
+        title: "Làm quen 2×2",
+        lessons: [
+          { id: "lesson1", title: "Học luật chơi", isFree: true },
+          { id: "lesson2", title: "Điền ô còn thiếu", isFree: true },
+          { id: "lesson3", title: "Chọn đáp án đúng", isFree: true },
+          { id: "lesson4", title: "Thử thách nhanh" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Sudoku hình ảnh 3×3",
+        lessons: [
+          { id: "lesson1", title: "Tìm hình còn thiếu", isFree: true },
+          { id: "lesson2", title: "Điền theo hàng và cột" },
+          { id: "lesson3", title: "Luyện phản xạ" },
+          { id: "lesson4", title: "Vượt màn logic" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Sudoku màu sắc",
+        lessons: [
+          { id: "lesson1", title: "Điền màu đúng", isFree: true },
+          { id: "lesson2", title: "Tránh trùng màu" },
+          { id: "lesson3", title: "Màn hỗn hợp" },
+          { id: "lesson4", title: "Thử thách cuối" },
+        ],
+      },
+      {
+        id: "group4",
+        title: "Sudoku con vật",
+        lessons: [
+          { id: "lesson1", title: "Nhận diện con vật", isFree: true },
+          { id: "lesson2", title: "Tìm ô đúng" },
+          { id: "lesson3", title: "Suy luận nhanh" },
+          { id: "lesson4", title: "Bé siêu logic" },
         ],
       },
     ],

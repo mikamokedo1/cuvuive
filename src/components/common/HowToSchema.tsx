@@ -1,3 +1,5 @@
+import { safeJsonLd } from "@/libs/utils/safe-jsonld";
+
 /**
  * HowToSchema: Adds HowTo structured data for step-by-step blog content.
  * AI answer engines (Google AI Overviews, Perplexity, etc.) can extract
@@ -33,5 +35,5 @@ export function HowToSchema({ name, description, steps, image }: HowToSchemaProp
     })),
   };
 
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />;
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }} />;
 }

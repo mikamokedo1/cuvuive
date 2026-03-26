@@ -5,9 +5,11 @@ import { BlogPost } from "@/libs/blog";
 
 interface BlogCardProps {
   post: BlogPost;
+  headingLevel?: "h2" | "h3";
 }
 
-export default function BlogCard({ post }: BlogCardProps) {
+export default function BlogCard({ post, headingLevel = "h2" }: BlogCardProps) {
+  const HeadingTag = headingLevel;
   return (
     <article className="group flex flex-col h-full bg-slate-50 rounded-3xl overflow-hidden hover:bg-white hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-orange-200">
       <Link href={`/blogs/${post.slug}`} className="flex-1 flex flex-col">
@@ -38,9 +40,9 @@ export default function BlogCard({ post }: BlogCardProps) {
             </span>
           </div>
 
-          <h2 className="text-2xl font-bold text-slate-900 mb-3 group-hover:text-orange-500 transition-colors font-[family-name:var(--font-baloo-2)] leading-tight">
+          <HeadingTag className="text-2xl font-bold text-slate-900 mb-3 group-hover:text-orange-500 transition-colors font-[family-name:var(--font-baloo-2)] leading-tight">
             {post.title}
-          </h2>
+          </HeadingTag>
 
           <p className="text-slate-600 mb-6 leading-relaxed flex-1 line-clamp-3">{post.description}</p>
 

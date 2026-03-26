@@ -7,6 +7,8 @@ import Header from "@/components/layout/Header";
 import { ActionButton } from "@/components/common/ActionButton";
 import { LessonTitle } from "@/components/games/LessonTitle";
 import { CourseDef } from "@/libs/actions/courses";
+import { COURSES } from "@/libs/constants/courses";
+import { GROUPS, GameGroupType } from "@/libs/constants/groups";
 
 interface ProfileViewProps {
   courses: CourseDef[];
@@ -16,7 +18,14 @@ interface ProfileViewProps {
 
 import { useProgress } from "@/context/ProgressContext";
 import Link from "next/link";
+import Image from "next/image";
 import { useMemo } from "react";
+
+// Build a static map: courseId → category type
+const COURSE_TYPE_MAP: Record<string, GameGroupType> = {};
+COURSES.forEach((c) => {
+  COURSE_TYPE_MAP[c.id] = c.type;
+});
 
 export function ProfileView({ courses, currentStreak, activeDays }: ProfileViewProps) {
   const { user, isPremium } = useUser();
@@ -70,6 +79,32 @@ export function ProfileView({ courses, currentStreak, activeDays }: ProfileViewP
     return { startedCourses: started, userLevel: 1 + completedCoursesCount };
   }, [courses, allProgress]);
 
+  // Group started courses by category
+  const groupedByCategory = useMemo(() => {
+    const grouped: Record<string, CourseDef[]> = {};
+
+    startedCourses.forEach((course) => {
+      const type = COURSE_TYPE_MAP[course.id] || "other";
+      if (!grouped[type]) grouped[type] = [];
+      grouped[type].push(course);
+    });
+
+    // Order categories following GROUPS order
+    const ordered: { type: GameGroupType; title: string; icon: string; courses: CourseDef[] }[] = [];
+    GROUPS.forEach((group) => {
+      if (grouped[group.id]) {
+        ordered.push({
+          type: group.id,
+          title: group.title,
+          icon: typeof group.icon === "string" ? group.icon : "",
+          courses: grouped[group.id],
+        });
+      }
+    });
+
+    return ordered;
+  }, [startedCourses]);
+
   return (
     <main className="min-h-screen bg-[#F0F7FF] py-6 px-4">
       <Header />
@@ -94,9 +129,21 @@ export function ProfileView({ courses, currentStreak, activeDays }: ProfileViewP
               <p className="text-gray-400">Hãy chọn một trò chơi để bắt đầu nhé!</p>
             </div>
           ) : (
-            <div className="flex flex-col gap-6">
-              {startedCourses.map((course) => (
-                <CourseCard key={course.id} course={course} />
+            <div className="flex flex-col gap-10">
+              {groupedByCategory.map((category) => (
+                <section key={category.type}>
+                  <div className="flex items-center gap-3 mb-4">
+                    {category.icon && (
+                      <Image src={category.icon} alt={category.title} width={40} height={40} className="rounded-xl" />
+                    )}
+                    <h2 className="text-2xl font-black text-orange-500 font-display">{category.title}</h2>
+                  </div>
+                  <div className="flex flex-col gap-4">
+                    {category.courses.map((course) => (
+                      <CourseCard key={course.id} course={course} />
+                    ))}
+                  </div>
+                </section>
               ))}
             </div>
           )}

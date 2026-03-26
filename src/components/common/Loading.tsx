@@ -10,9 +10,10 @@ const Loading = () => {
         <div className="w-32 h-40">
           <Image
             src={OwnLearning}
-            alt="own-learning"
-            fill
-            className="object-contain animate-bounce"
+            alt="Cú Thông Minh đang tải"
+            width={128}
+            height={160}
+            className="object-contain animate-bounce w-full h-full"
             priority
             sizes="(max-width: 768px) 128px, 160px"
           />

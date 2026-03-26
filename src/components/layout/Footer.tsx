@@ -27,6 +27,9 @@ export function Footer() {
               <Link href="/games" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
                 Kho trò chơi
               </Link>
+              <Link href="/gioi-thieu-kiem-tien" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
+                Kiếm tiền
+              </Link>
             </div>
 
             <div className="flex flex-col gap-4">

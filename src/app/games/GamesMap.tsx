@@ -90,6 +90,7 @@ export function GamesMap({ courses, staticCourses, groups }: GamesMapProps) {
     <main className="min-h-screen relative flex flex-col items-center pb-20 pt-6 px-4 isolate overflow-x-hidden overflow-y-auto bg-gradient-to-b from-[#e0f7fa] to-[#b2ebf2]">
       {/* Header */}
       <Header />
+      <h1 className="sr-only">Kho Trò Chơi Giáo Dục - Cú Thông Minh</h1>
 
       {/* Welcome Modal */}
       <WelcomeBackModal />

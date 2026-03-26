@@ -38,6 +38,12 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/about-us",
   },
+  openGraph: {
+    title: "Về Chúng Tôi | Cú Thông Minh",
+    description:
+      "Khám phá câu chuyện đằng sau Cú Thông Minh - Nơi những người thầy, bậc phụ huynh và trẻ nhỏ cùng nhau tạo nên thế giới học tập đầy màu sắc và an toàn.",
+    images: [{ url: "/og-image.webp", width: 1200, height: 630, alt: "Cú Thông Minh - Về chúng tôi" }],
+  },
 };
 
 export default function AboutUsPage() {

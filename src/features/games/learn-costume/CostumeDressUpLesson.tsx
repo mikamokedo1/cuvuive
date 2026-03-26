@@ -224,7 +224,7 @@ export function CostumeDressUpLesson({ costumes, onComplete }: CostumeDressUpLes
               <div className="relative w-full h-full">
                 <Image
                   src={costumes.find((c) => c.id === draggedCostumeId)!.image}
-                  alt=""
+                  alt={costumes.find((c) => c.id === draggedCostumeId)!.name}
                   fill
                   className="object-contain"
                 />

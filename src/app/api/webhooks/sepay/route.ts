@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
-import { orders, plans, subscriptions, users } from "@/db/schema";
-import { eq } from "drizzle-orm";
-const key = "Apikey code";
+import { orders, plans, subscriptions, users, referrals, referralCodes } from "@/db/schema";
+import { eq, and } from "drizzle-orm";
+const key = process.env.PAYMENT_WEBHOOK_SECRET;
 export async function POST(request: NextRequest) {
   try {
     // 1. Security Check via SePay API key set in Headers if configured
@@ -100,6 +100,47 @@ export async function POST(request: NextRequest) {
         subscriptionId: sub.id,
       })
       .where(eq(users.id, order.userId));
+
+    // 10. Process Referral Commission
+    try {
+      const pendingReferral = await db
+        .select()
+        .from(referrals)
+        .where(and(eq(referrals.referredUserId, order.userId), eq(referrals.status, "pending")))
+        .limit(1);
+
+      if (pendingReferral.length > 0) {
+        const referral = pendingReferral[0];
+
+        // Get commission percent from referrer's referral code
+        const referrerCode = await db
+          .select({ commissionPercent: referralCodes.commissionPercent })
+          .from(referralCodes)
+          .where(eq(referralCodes.userId, referral.referrerUserId))
+          .limit(1);
+
+        const commissionRate = referrerCode[0]?.commissionPercent ?? 10;
+        const commissionAmount = Math.floor((order.amount * commissionRate) / 100);
+
+        await db
+          .update(referrals)
+          .set({
+            orderId: order.id,
+            commissionRate,
+            commissionAmount,
+            status: "confirmed",
+            confirmedAt: new Date(),
+          })
+          .where(eq(referrals.id, referral.id));
+
+        console.log(
+          `💰 Referral commission recorded: ${commissionAmount} VND (${commissionRate}%) for referrer ${referral.referrerUserId}`,
+        );
+      }
+    } catch (refError) {
+      // Don't fail the webhook if referral processing fails
+      console.error("Error processing referral commission:", refError);
+    }
 
     console.log(`✅ SePay webhook processed. Order ${orderId} paid and subscription granted for user ${order.userId}`);
 

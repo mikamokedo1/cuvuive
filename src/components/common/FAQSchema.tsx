@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { safeJsonLd } from "@/libs/utils/safe-jsonld";
 
 export interface FAQItem {
   question: string;
@@ -35,7 +36,7 @@ export function FAQSchema({ items, title, subtitle }: FAQSchemaProps) {
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }} />
       <section className="py-24 bg-gradient-to-b from-white to-orange-50/30" id="faq">
         <div className="container mx-auto px-6 max-w-4xl">
           {title && (

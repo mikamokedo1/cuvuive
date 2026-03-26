@@ -8,6 +8,7 @@ export interface BlogPost {
   title: string;
   description: string;
   date: string; // ISO 8601 string, e.g., '2026-03-08'
+  dateModified: string; // ISO 8601 string, falls back to date if not specified
   author: string;
   tags?: string[];
   image?: string;
@@ -16,6 +17,20 @@ export interface BlogPost {
 }
 
 const blogsDirectory = path.join(process.cwd(), "content/blogs");
+
+function extractFirstImageFromContent(content: string): string | null {
+  const markdownImageMatch = content.match(/!\[[^\]]*\]\(([^)\s]+)(?:\s+"[^"]*")?\)/);
+  if (markdownImageMatch?.[1]) {
+    return markdownImageMatch[1];
+  }
+
+  const htmlImageMatch = content.match(/<img[^>]+src=["']([^"']+)["']/i);
+  if (htmlImageMatch?.[1]) {
+    return htmlImageMatch[1];
+  }
+
+  return null;
+}
 
 /**
  * Ensures the blogs directory exists
@@ -48,14 +63,17 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
     // Parse the MDX frontmatter and content using gray-matter
     const { data, content } = matter(fileContents);
 
+    const image = data.image || extractFirstImageFromContent(content) || "/og-image.webp";
+
     return {
       slug,
       title: data.title || "Untitled",
       description: data.description || "",
       date: data.date || "",
+      dateModified: data.dateModified || data.date || "",
       author: data.author || "Cú Thông Minh",
       tags: data.tags || [],
-      image: data.image || "/og-image.png",
+      image,
       content,
       readingTime: calculateReadingTime(content),
     };

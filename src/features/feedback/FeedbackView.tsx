@@ -79,7 +79,7 @@ export function FeedbackView() {
                   className="drop-shadow-lg object-contain"
                 />
               </div>
-              <h2 className="text-2xl text-purple-600 font-display mb-2 drop-shadow-sm">Góp Ý & Phản Hồi</h2>
+              <h1 className="text-2xl text-purple-600 font-display mb-2 drop-shadow-sm">Góp Ý & Phản Hồi</h1>
               <p className="text-gray-500 font-medium text-sm">Hãy chia sẻ ý kiến của bạn để giúp chúng tôi tốt hơn!</p>
             </div>
 

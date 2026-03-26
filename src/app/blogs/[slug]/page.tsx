@@ -3,9 +3,13 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug } from "@/libs/blog";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import remarkGfm from "remark-gfm";
 import { Clock, Calendar, User, Tag } from "lucide-react";
 import "@/styles/blog.css"; // Make sure to import the new blog styles
 import { HowToSchema, type HowToStep } from "@/components/common/HowToSchema";
+import { safeJsonLd } from "@/libs/utils/safe-jsonld";
+import Link from "next/link";
+import { GAME_SEO } from "@/libs/constants/game-seo";
 
 /**
  * Extracts HowTo steps from MDX content by parsing ## headings and their following text.
@@ -67,7 +71,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const siteUrl = "https://cuthongminh.com";
 
   return {
-    title: `${post.title} | Cú Thông Minh Blog`,
+    title: `${post.title} | Cú Thông Minh`,
     description: post.description,
     alternates: {
       canonical: `/blogs/${post.slug}`,
@@ -77,6 +81,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       description: post.description,
       type: "article",
       publishedTime: post.date,
+      modifiedTime: post.dateModified || post.date,
       authors: [post.author],
       url: `${siteUrl}/blogs/${post.slug}`,
       images: post.image
@@ -107,6 +112,28 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     notFound();
   }
 
+  const allPosts = await getAllPosts();
+  const relatedPosts = allPosts
+    .filter((candidate) => candidate.slug !== post.slug)
+    .map((candidate) => {
+      const sharedTags = candidate.tags?.filter((tag) => post.tags?.some((postTag) => postTag.toLowerCase() === tag.toLowerCase())) ?? [];
+      return { post: candidate, sharedTagsCount: sharedTags.length };
+    })
+    .filter((candidate) => candidate.sharedTagsCount > 0)
+    .sort((left, right) => right.sharedTagsCount - left.sharedTagsCount)
+    .slice(0, 3)
+    .map((candidate) => candidate.post);
+
+  const relatedGames = Object.entries(GAME_SEO)
+    .filter(([, seo]) => seo.relatedBlogs.some((blog) => blog.slug === post.slug))
+    .slice(0, 3)
+    .map(([gameId, seo]) => ({
+      gameId,
+      title: seo.title.split(" - ")[0],
+      description: seo.description,
+      image: seo.ogImage,
+    }));
+
   // Calculate word count for schema
   const wordCount = post.content.split(/\s+/).length;
   const articleSection = post.tags && post.tags.length > 0 ? post.tags[0] : "Giáo dục";
@@ -118,7 +145,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     description: post.description,
     image: post.image ? [`https://assets.cuthongminh.com${post.image}`] : [],
     datePublished: post.date,
-    dateModified: post.date,
+    dateModified: post.dateModified,
     wordCount,
     articleSection,
     inLanguage: "vi",
@@ -180,8 +207,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   return (
     <article className="container mx-auto px-6 max-w-3xl">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }} />
 
       {/* HowTo Schema for tutorial posts */}
       {howToSteps.length > 0 && (
@@ -189,7 +216,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           name={post.title}
           description={post.description}
           steps={howToSteps}
-          image={post.image ? (post.image.startsWith("http") ? post.image : `https://cuthongminh.com${post.image}`) : undefined}
+          image={
+            post.image
+              ? post.image.startsWith("http")
+                ? post.image
+                : `https://cuthongminh.com${post.image}`
+              : undefined
+          }
         />
       )}
 
@@ -198,13 +231,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         {post.tags && post.tags.length > 0 && (
           <div className="flex flex-wrap items-center justify-center gap-2 mb-6">
             {post.tags.map((tag) => (
-              <span
+              <Link
                 key={tag}
-                className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider px-3 py-1.5 bg-orange-100 text-orange-600 rounded-full"
+                href={`/blogs/tag/${encodeURIComponent(tag)}`}
+                className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider px-3 py-1.5 bg-orange-100 text-orange-600 rounded-full hover:bg-orange-200 transition-colors"
               >
                 <Tag className="w-3.5 h-3.5" />
                 {tag}
-              </span>
+              </Link>
             ))}
           </div>
         )}
@@ -245,8 +279,59 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
       {/* MDX Content area */}
       <div className="prose prose-lg prose-slate max-w-none hover:prose-a:text-orange-600 blog-content">
-        <MDXRemote source={post.content} />
+        <MDXRemote source={post.content} options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }} />
       </div>
+
+      {relatedGames.length > 0 && (
+        <section className="mt-16 pt-10 border-t border-slate-200">
+          <h2 className="text-2xl font-bold text-slate-900 mb-6 font-[family-name:var(--font-baloo-2)]">
+            Trò chơi phù hợp với bài viết này
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {relatedGames.map((game) => (
+              <Link
+                key={game.gameId}
+                href={`/games/${game.gameId}`}
+                className="group rounded-2xl border border-slate-200 bg-white overflow-hidden hover:shadow-lg transition-all"
+              >
+                <div className="relative aspect-[16/9] bg-slate-100">
+                  <Image
+                    src={game.image}
+                    alt={game.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="font-bold text-slate-900 mb-2 line-clamp-2">{game.title}</h3>
+                  <p className="text-sm text-slate-600 line-clamp-3">{game.description}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {relatedPosts.length > 0 && (
+        <section className="mt-16 pt-10 border-t border-slate-200">
+          <h2 className="text-2xl font-bold text-slate-900 mb-6 font-[family-name:var(--font-baloo-2)]">
+            Bài viết liên quan
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {relatedPosts.map((relatedPost) => (
+              <Link
+                key={relatedPost.slug}
+                href={`/blogs/${relatedPost.slug}`}
+                className="rounded-2xl border border-slate-200 bg-white p-5 hover:shadow-lg transition-shadow"
+              >
+                <h3 className="font-bold text-slate-900 mb-2 line-clamp-2">{relatedPost.title}</h3>
+                <p className="text-sm text-slate-600 line-clamp-3">{relatedPost.description}</p>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
     </article>
   );
 }

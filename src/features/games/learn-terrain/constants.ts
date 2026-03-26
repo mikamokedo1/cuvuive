@@ -145,7 +145,6 @@ export const HABITAT_MAP: Record<string, HabitatAnimal[]> = {
   plateau: [
     { id: "yak", name: "Bò Tây Tạng", emoji: "🐂" },
     { id: "llama", name: "Lạc Đà Không Bướu", emoji: "🦙" },
-    { id: "hawk", name: "Diều Hâu", emoji: "🦅" },
   ],
   valley: [
     { id: "bear", name: "Gấu", emoji: "🐻" },
@@ -203,7 +202,6 @@ export const HABITAT_MAP: Record<string, HabitatAnimal[]> = {
     { id: "rattlesnake", name: "Rắn", emoji: "🐍" },
   ],
   canyon: [
-    { id: "condor", name: "Kền Kền", emoji: "🦅" },
     { id: "rattlesnake", name: "Rắn", emoji: "🐍" },
     { id: "coyote", name: "Sói Xám", emoji: "🐺" },
   ],
@@ -292,7 +290,7 @@ export const ADVENTURES: Record<string, AdventureStep[]> = {
     {
       question: "Cú thấy núi đang phun lửa! Đây là gì?",
       correctTerrainId: "volcano",
-      options: ["volcano", "mountain", "canyon"],
+      options: ["volcano", "canyon", "glacier"],
     },
     {
       question: "Cú lạnh run! Toàn băng trắng di chuyển chậm!",
@@ -307,17 +305,17 @@ export const ADVENTURES: Record<string, AdventureStep[]> = {
     {
       question: "Cú nhìn xuống khe sâu hun hút! Đáng sợ quá!",
       correctTerrainId: "canyon",
-      options: ["canyon", "valley", "volcano"],
+      options: ["canyon", "volcano", "forest"],
     },
     {
       question: "Cú nghe chim hót, cây rậm rạp xung quanh! Đây là đâu?",
       correctTerrainId: "forest",
-      options: ["forest", "hill", "island"],
+      options: ["forest", "beach", "glacier"],
     },
     {
       question: "Cú thấy cát trắng và sóng biển! Thích quá!",
       correctTerrainId: "beach",
-      options: ["beach", "island", "desert"],
+      options: ["beach", "cave", "volcano"],
     },
   ],
 };

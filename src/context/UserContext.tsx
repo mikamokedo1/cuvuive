@@ -2,8 +2,9 @@
 
 import { createClient } from "@/libs/supabase/client";
 import { User } from "@supabase/supabase-js";
-import { createContext, useContext, useEffect, useMemo, useRef, useState, ReactNode } from "react";
+import { createContext, useContext, useEffect, useMemo, useRef, useState, startTransition, ReactNode } from "react";
 import { getSubscriptionDetailsAction } from "@/libs/actions/user";
+import type { Subscription } from "@supabase/supabase-js";
 
 interface UserContextType {
   user: User | null;
@@ -58,6 +59,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
+    let authSubscription: Subscription | null = null;
+    let isMounted = true;
+
     const initializeUser = async () => {
       try {
         await checkMissingInfo();
@@ -65,44 +69,66 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       } catch (error) {
         console.error("Error checking user info:", error);
       } finally {
-        setIsLoading(false);
+        if (isMounted) {
+          setIsLoading(false);
+        }
       }
 
       const {
         data: { subscription },
       } = supabase.auth.onAuthStateChange(async (event, session) => {
-        if (session?.user) {
-          setUser((prev) => {
-            if (
-              prev?.id === session.user.id &&
-              JSON.stringify(prev?.user_metadata) === JSON.stringify(session.user.user_metadata)
-            ) {
-              return prev;
+        if (!isMounted) {
+          return;
+        }
+
+        // Only process meaningful auth transitions.
+        // TOKEN_REFRESHED just means the JWT was renewed — user data hasn't
+        // changed. Processing it causes unnecessary state cascades that can
+        // corrupt React's hook reconciliation during concurrent RSC streaming,
+        // resulting in "Rendered more hooks than during the previous render".
+        // INITIAL_SESSION is handled by initializeUser() above.
+        if (event === "TOKEN_REFRESHED" || event === "INITIAL_SESSION") {
+          return;
+        }
+
+        startTransition(() => {
+          if (session?.user) {
+            setUser((prev) => {
+              if (
+                prev?.id === session.user.id &&
+                JSON.stringify(prev?.user_metadata) === JSON.stringify(session.user.user_metadata)
+              ) {
+                return prev;
+              }
+              return session.user;
+            });
+            // Check metadata on login
+            const { kidName, age, sex, parentPhone } = session.user.user_metadata || {};
+            if (!kidName || !age || !sex || !parentPhone) {
+              setShowMissingInfoModal(true);
+            } else {
+              setShowMissingInfoModal(false);
             }
-            return session.user;
-          });
-          // Check metadata on login
-          const { kidName, age, sex, parentPhone } = session.user.user_metadata || {};
-          if (!kidName || !age || !sex || !parentPhone) {
-            setShowMissingInfoModal(true);
           } else {
+            setUser(null);
             setShowMissingInfoModal(false);
           }
-          // Fetch fresh premium status on login
+          setIsLoading(false);
+        });
+        // Fetch fresh premium status outside startTransition (async)
+        if (session?.user) {
           refreshSubscription();
-        } else {
-          setUser(null);
-          setShowMissingInfoModal(false);
         }
-        setIsLoading(false);
       });
-
-      return () => {
-        subscription.unsubscribe();
-      };
+      authSubscription = subscription;
     };
 
     initializeUser();
+
+    return () => {
+      isMounted = false;
+      authSubscription?.unsubscribe();
+    };
   }, []);
 
   const handleLogout = async () => {

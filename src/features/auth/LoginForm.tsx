@@ -66,7 +66,11 @@ export function LoginForm() {
         clearRedirectUrl();
         setPaywallState({ isOpen: false, type: null, redirectUrl: null });
 
-        router.refresh();
+        // Navigate to the target page
+        // NOTE: Do NOT call router.refresh() here — it triggers the server-side
+        // login page to re-execute, which calls redirect('/games'), conflicting
+        // with client-side router.replace(). This race condition causes
+        // "Rendered more hooks than during the previous render" errors.
         router.replace(target);
       }
     },

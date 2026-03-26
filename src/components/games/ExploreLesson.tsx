@@ -16,9 +16,20 @@ interface ExploreLessonProps {
   descriptions: Record<string, string>;
   onComplete: () => void;
   additionText?: string;
+  /** Custom class for the image container, e.g. "aspect-[3/2]" for flags. Default: "aspect-square" */
+  containerClassName?: string;
+  /** Custom class for the <Image>, e.g. "object-contain" for flags. Default: "object-cover" */
+  imageClassName?: string;
 }
 
-export function ExploreLesson({ terrains, descriptions, onComplete, additionText }: ExploreLessonProps) {
+export function ExploreLesson({
+  terrains,
+  descriptions,
+  onComplete,
+  additionText,
+  containerClassName = "aspect-square",
+  imageClassName = "object-cover",
+}: ExploreLessonProps) {
   const { speak } = useTextToSpeech();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [discoveredIds, setDiscoveredIds] = useState<Set<string>>(new Set());
@@ -102,7 +113,7 @@ export function ExploreLesson({ terrains, descriptions, onComplete, additionText
     <div className="flex flex-col items-center gap-6 w-full max-w-4xl px-4">
       {/* Main terrain card */}
       <div
-        className={`relative w-full max-w-md aspect-square rounded-3xl overflow-hidden shadow-2xl border-4 cursor-pointer
+        className={`relative w-full max-w-md ${containerClassName} rounded-3xl overflow-hidden shadow-2xl border-4 cursor-pointer
           transition-all duration-500 hover:scale-[1.02] active:scale-[0.98]
           ${activeTerrainId === currentTerrain.id ? "border-green-500 ring-4 ring-green-200" : "border-white"}`}
         onClick={() => handleDiscover(currentTerrain)}
@@ -121,7 +132,7 @@ export function ExploreLesson({ terrains, descriptions, onComplete, additionText
           alt={currentTerrain.name}
           fill
           priority
-          className={`object-cover transition-opacity duration-300 ${isImageLoaded ? "opacity-100" : "opacity-0"}`}
+          className={`${imageClassName} transition-opacity duration-300 ${isImageLoaded ? "opacity-100" : "opacity-0"}`}
           sizes="(max-width: 640px) 100vw, 448px"
           onLoad={() => setIsImageLoaded(true)}
         />

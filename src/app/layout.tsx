@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 import { Baloo_2, Nunito_Sans } from "next/font/google";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import Script from "next/script";
 import "./globals.css";
+import { AppStructuredData } from "@/app/AppStructuredData";
 import { OwlProvider } from "@/context/OwlContext";
 import { UserProvider } from "@/context/UserContext";
 import { AccessProvider } from "@/context/AccessContext";
-import { MissingInfoListener } from "@/features/auth/MissingInfoListener";
 import { ProgressProvider } from "@/context/ProgressContext";
 import { PlayTimerProvider } from "@/context/PlayTimerContext";
-import { ClientDynamicComponents } from "@/components/common/ClientDynamicComponents";
-
+import { AutoRecoveryBoundary } from "@/components/common/AutoRecoveryBoundary";
+import { AppProviders } from "@/app/AppProviders";
 
 // Configure fonts
 const baloo2 = Baloo_2({
@@ -30,15 +30,35 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://cuthongminh.com"),
   alternates: {
     canonical: "/",
+    languages: {
+      "vi": "https://cuthongminh.com",
+      "x-default": "https://cuthongminh.com",
+    },
   },
-  title: "Cú Thông Minh - Vừa học vừa chơi | Ứng dụng học tập cho bé",
+  title: "Trò Chơi Giáo Dục Cho Bé 3-8 Tuổi | Cú Thông Minh - Vừa Học Vừa Chơi",
   description:
-    "Cú Thông Minh là ứng dụng giáo dục tương tác giúp bé vừa học vừa chơi, phát triển tư duy toán học và ngôn ngữ một cách tự nhiên.",
-  keywords: ["bé học toán", "học đếm", "giáo dục sớm", "trò chơi trí tuệ cho bé", "cú thông minh"],
+    "Ứng dụng giáo dục tương tác #1 cho trẻ mầm non. 20+ trò chơi học toán, chữ cái tiếng Việt, tư duy logic giúp bé 3-8 tuổi phát triển toàn diện. Miễn phí, an toàn, không quảng cáo.",
+  keywords: [
+    "trò chơi giáo dục cho bé",
+    "app học tập cho trẻ mầm non",
+    "bé học toán online",
+    "học chữ cái tiếng việt cho bé",
+    "trò chơi trí tuệ cho bé 3 tuổi",
+    "giáo dục sớm cho trẻ",
+    "game giáo dục miễn phí",
+    "bé học đếm số",
+    "trò chơi tư duy logic cho bé",
+    "ứng dụng học tập cho bé mầm non",
+    "dạy bé học toán tại nhà",
+    "trò chơi nhận biết màu sắc hình dạng",
+    "cú thông minh",
+    "học mà chơi cho trẻ em",
+    "phát triển trí tuệ trẻ em",
+  ],
   openGraph: {
-    title: "Cú Thông Minh - Vừa học vừa chơi | Ứng dụng học tập cho bé",
+    title: "Trò Chơi Giáo Dục Cho Bé 3-8 Tuổi | Cú Thông Minh",
     description:
-      "Cú Thông Minh là nền tảng học mà chơi số 1 cho bé từ 3-8 tuổi, giúp bé phát triển tư duy toán học và ngôn ngữ.",
+      "20+ trò chơi giáo dục tương tác giúp bé mầm non học toán, chữ cái, tư duy logic. Nền tảng học mà chơi #1 cho trẻ 3-8 tuổi tại Việt Nam.",
     url: "https://cuthongminh.com",
     siteName: "Cú Thông Minh",
     locale: "vi_VN",
@@ -48,14 +68,14 @@ export const metadata: Metadata = {
         url: "/og-image.webp",
         width: 1200,
         height: 630,
-        alt: "Cú Thông Minh - Ứng dụng học tập cho bé",
+        alt: "Cú Thông Minh - Trò chơi giáo dục cho bé 3-8 tuổi",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Cú Thông Minh - Vừa học vừa chơi",
-    description: "Ứng dụng giáo dục tương tác giúp bé phát triển tư duy toàn diện qua hàng trăm trò chơi lý thú.",
+    title: "Trò Chơi Giáo Dục Cho Bé 3-8 Tuổi | Cú Thông Minh",
+    description: "20+ trò chơi giáo dục tương tác giúp bé mầm non phát triển tư duy toàn diện. Miễn phí, an toàn, không quảng cáo.",
   },
   icons: {
     icon: [
@@ -91,87 +111,40 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const orgJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "EducationalOrganization",
-    name: "Cú Thông Minh",
-    url: "https://cuthongminh.com",
-    logo: {
-      "@type": "ImageObject",
-      url: "https://cuthongminh.com/icons/android-chrome-512x512.png",
-      width: "512",
-      height: "512",
-    },
-    description:
-      "Cú Thông Minh là nền tảng giáo dục tương tác cho trẻ em từ 3-8 tuổi, giúp bé vừa học vừa chơi qua hàng trăm trò chơi trí tuệ về toán học, ngôn ngữ và kỹ năng sống.",
-    foundingDate: "2024",
-    areaServed: {
-      "@type": "Country",
-      name: "Vietnam",
-    },
-    knowsAbout: [
-      "Early childhood education",
-      "Educational games for kids",
-      "Vietnamese language learning",
-      "Math learning for preschoolers",
-      "Interactive learning",
-    ],
-    contactPoint: {
-      "@type": "ContactPoint",
-      telephone: "+84-888-222-293",
-      contactType: "customer service",
-      areaServed: "VN",
-      availableLanguage: "Vietnamese",
-    },
-    sameAs: ["https://www.facebook.com/cuthongminh", "https://www.youtube.com/@cuthongminh"],
-  };
-
-  const websiteJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: "Cú Thông Minh",
-    url: "https://cuthongminh.com",
-    potentialAction: {
-      "@type": "SearchAction",
-      target: "https://cuthongminh.com/games?q={search_term_string}",
-      "query-input": "required name=search_term_string",
-    },
-  };
-
   return (
     <html lang="vi">
       <head>
         {/* Preconnect to external domains for faster resource loading */}
         <link rel="preconnect" href="https://assets.cuthongminh.com" />
         <link rel="dns-prefetch" href="https://assets.cuthongminh.com" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
-          key="org-jsonld"
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
-          key="website-jsonld"
-        />
+        <AppStructuredData />
       </head>
       <body className={`${baloo2.variable} ${nunitoSans.variable} antialiased`} suppressHydrationWarning>
-        <UserProvider>
-          <AccessProvider>
-            <ProgressProvider>
-              <PlayTimerProvider>
-                <OwlProvider>
-                  {children}
-                  <MissingInfoListener />
-                  <ClientDynamicComponents />
-                </OwlProvider>
-              </PlayTimerProvider>
-            </ProgressProvider>
-          </AccessProvider>
-        </UserProvider>
+        <AutoRecoveryBoundary>
+          <UserProvider>
+            <AccessProvider>
+              <ProgressProvider>
+                <PlayTimerProvider>
+                  <OwlProvider>
+                    {children}
+                    <AppProviders />
+                  </OwlProvider>
+                </PlayTimerProvider>
+              </ProgressProvider>
+            </AccessProvider>
+          </UserProvider>
+        </AutoRecoveryBoundary>
       </body>
       {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
-        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+        <>
+          <Script
+            src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
+            strategy="lazyOnload"
+          />
+          <Script id="gtag-init" strategy="lazyOnload">
+            {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}');`}
+          </Script>
+        </>
       )}
     </html>
   );
