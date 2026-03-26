@@ -27,25 +27,70 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://cuthongminh.com";
 
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: baseUrl, lastModified: getLatestMtime("src/app/page.tsx", "src/app/layout.tsx"), changeFrequency: "weekly", priority: 1 },
-    { url: `${baseUrl}/games`, lastModified: getLatestMtime("src/app/games/page.tsx", "src/libs/constants/courses.ts"), changeFrequency: "weekly", priority: 0.9 },
-    { url: `${baseUrl}/privacy`, lastModified: getLatestMtime("src/app/privacy/page.tsx"), changeFrequency: "yearly", priority: 0.5 },
-    { url: `${baseUrl}/terms`, lastModified: getLatestMtime("src/app/terms/page.tsx"), changeFrequency: "yearly", priority: 0.5 },
-    { url: `${baseUrl}/feedback`, lastModified: getLatestMtime("src/app/feedback/page.tsx"), changeFrequency: "monthly", priority: 0.5 },
-    { url: `${baseUrl}/about-us`, lastModified: getLatestMtime("src/app/about-us/page.tsx"), changeFrequency: "monthly", priority: 0.5 },
+    {
+      url: baseUrl,
+      lastModified: getLatestMtime("src/app/page.tsx", "src/app/layout.tsx"),
+      changeFrequency: "weekly",
+      priority: 1,
+    },
+    {
+      url: `${baseUrl}/games`,
+      lastModified: getLatestMtime("src/app/games/page.tsx", "src/libs/constants/courses.ts"),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/privacy`,
+      lastModified: getLatestMtime("src/app/privacy/page.tsx"),
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
+    {
+      url: `${baseUrl}/terms`,
+      lastModified: getLatestMtime("src/app/terms/page.tsx"),
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
+    {
+      url: `${baseUrl}/feedback`,
+      lastModified: getLatestMtime("src/app/feedback/page.tsx"),
+      changeFrequency: "monthly",
+      priority: 0.5,
+    },
+    {
+      url: `${baseUrl}/about-us`,
+      lastModified: getLatestMtime("src/app/about-us/page.tsx"),
+      changeFrequency: "monthly",
+      priority: 0.5,
+    },
     {
       url: `${baseUrl}/gioi-thieu-kiem-tien`,
       lastModified: getLatestMtime("src/app/gioi-thieu-kiem-tien/page.tsx", "src/app/gioi-thieu-kiem-tien/layout.tsx"),
       changeFrequency: "monthly",
       priority: 0.6,
     },
-    { url: `${baseUrl}/blogs`, lastModified: getLatestMtime("src/app/blogs/page.tsx", "content/blogs"), changeFrequency: "weekly", priority: 0.8 },
+    {
+      url: `${baseUrl}/blogs`,
+      lastModified: getLatestMtime("src/app/blogs/page.tsx", "content/blogs"),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/upgrade`,
+      lastModified: getLatestMtime("src/app/upgrade/page.tsx"),
+      changeFrequency: "monthly",
+      priority: 0.5,
+    },
   ];
 
   // Group landing pages (e.g. /tro-choi-tu-duy, /tro-choi-toan-hoc)
   const groupRoutes: MetadataRoute.Sitemap = GROUPS.map((group) => ({
     url: `${baseUrl}/${group.slug}`,
-    lastModified: getLatestMtime("src/app/[slug]/page.tsx", "src/libs/constants/groups.ts", "src/libs/constants/courses.ts"),
+    lastModified: getLatestMtime(
+      "src/app/[slug]/page.tsx",
+      "src/libs/constants/groups.ts",
+      "src/libs/constants/courses.ts",
+    ),
     changeFrequency: "weekly",
     priority: 0.8,
   }));
