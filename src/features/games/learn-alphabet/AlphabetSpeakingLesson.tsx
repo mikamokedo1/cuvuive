@@ -24,7 +24,7 @@ export function AlphabetSpeakingLesson({ letters, onComplete, isReviewMode = fal
 
   return (
     <div className="flex flex-col items-center gap-6 w-full max-w-4xl">
-      <SpeakPraticeLayout entities={entities} onComplete={onComplete} />
+      <SpeakPraticeLayout key={selectedIndex} entities={entities} onComplete={isReviewMode ? () => {} : onComplete} />
 
       {/* Letter selector - shown when revisiting a completed lesson */}
       {isReviewMode && <LetterSelector letters={letters} currentIndex={selectedIndex} onSelect={setSelectedIndex} />}

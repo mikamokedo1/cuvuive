@@ -18,6 +18,12 @@ const lessons = [
     icon: <HelpCircle className="text-white w-6 h-6" />,
     isPremium: true,
   },
+  {
+    id: "lesson3",
+    title: "Tập phát âm",
+    icon: <Mic className="text-white w-6 h-6" />,
+    isPremium: true,
+  },
 ];
 
 interface GroupLessonsClientProps {

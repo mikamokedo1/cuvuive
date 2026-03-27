@@ -7,7 +7,7 @@ import { SyllableSpeakLesson } from "@/features/games/learn-syllable/SyllableSpe
 import { SyllableQuizLesson } from "@/features/games/learn-syllable/SyllableQuizLesson";
 import { GameWrapGame } from "@/components/layout/GameWrapGame";
 
-const LESSON_ORDER = ["lesson1", "lesson2"];
+const LESSON_ORDER = ["lesson1", "lesson2", "lesson3"];
 
 interface LessonPageClientProps {
   groupId: string;
@@ -15,7 +15,7 @@ interface LessonPageClientProps {
 }
 
 export function LessonPageClient({ groupId, lessonId }: LessonPageClientProps) {
-  const game = useGameLesson({ gameSlug: "learn-syllable", lessonOrder: LESSON_ORDER, groups: GROUPS ,
+  const game = useGameLesson({ gameSlug: "learn-syllable", lessonOrder: LESSON_ORDER, groups: GROUPS,
     initialGroupId: groupId,
     initialLessonId: lessonId,
   });
@@ -30,10 +30,10 @@ export function LessonPageClient({ groupId, lessonId }: LessonPageClientProps) {
     switch (game.lessonId) {
       case "lesson1":
         return <SyllableLearnLesson syllables={syllables} onComplete={game.handleComplete} />;
-      // case "lesson2":
-      //   return <SyllableSpeakLesson syllables={syllables} onComplete={game.handleComplete} />;
       case "lesson2":
         return <SyllableQuizLesson syllables={syllables} onComplete={game.handleComplete} />;
+      case "lesson3":
+        return <SyllableSpeakLesson syllables={syllables} onComplete={game.handleComplete} />;
       default:
         return null;
     }

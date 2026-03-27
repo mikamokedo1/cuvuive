@@ -9,6 +9,7 @@ const analyzeBundles = withBundleAnalyzer({
 const nextConfig: NextConfig = {
   /* config options here */
   output: "standalone",
+  outputFileTracingRoot: process.cwd(),
   reactCompiler: true,
   images: {
     remotePatterns: [

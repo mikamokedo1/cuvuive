@@ -33,20 +33,7 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
   const [currentIndex, setCurrentIndex] = useState(0);
   const [feedback, setFeedback] = useState<FeedbackType>(null);
   const [hasTried, setHasTried] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const hasMatchedRef = useRef(false);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(
-        typeof window !== "undefined" &&
-          (window.innerWidth <= 768 || "ontouchstart" in window || navigator.maxTouchPoints > 0),
-      );
-    };
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
 
   const targetEntity = entities[currentIndex];
 
@@ -61,20 +48,10 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
     // Auto speak question after a short delay
     const speakTimer = setTimeout(() => {
       speak(`${targetEntity.name}`);
-
-      // Auto-start microphone after TTS finishes (approx 1.5 seconds)
-      // Only auto-start on desktop. On mobile, require explicit user tap.
-      if (!isMobile) {
-        const listenTimer = setTimeout(() => {
-          startListening();
-        }, 1500);
-
-        return () => clearTimeout(listenTimer);
-      }
     }, 800);
 
     return () => clearTimeout(speakTimer);
-  }, [currentIndex, targetEntity, speak, startListening, resetTranscript, isMobile]);
+  }, [currentIndex, targetEntity, speak, resetTranscript]);
 
   const goToNextQuestion = () => {
     if (currentIndex + 1 >= entities.length) {
@@ -101,9 +78,6 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
       setTimeout(() => {
         setFeedback(null);
         resetTranscript();
-        // Only auto-restart on desktop. On mobile, require explicit user tap
-        // to avoid TTS audio bleeding into the microphone.
-        if (!isMobile) startListening();
       }, 2000);
       return;
     }
@@ -117,12 +91,11 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
       setTimeout(() => {
         setFeedback(null);
         resetTranscript();
-        if (!isMobile) startListening();
       }, 2000);
     }, 2500);
 
     return () => clearTimeout(resetTimer);
-  }, [transcript, interimTranscript, isListening, feedback, speak, resetTranscript, startListening, stopListening]);
+  }, [transcript, interimTranscript, isListening, feedback, speak, resetTranscript, stopListening]);
 
   // Handle speech result — check both during listening (interim) and after listening stops (final)
   // On Android Chrome, interim results may show the correct answer but the final transcript
@@ -181,8 +154,6 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
         setTimeout(() => {
           setFeedback(null);
           resetTranscript();
-          // Only auto-restart on desktop. On mobile, let the kid tap the mic.
-          if (!isMobile) startListening();
         }, 2000);
       }
     }
@@ -378,7 +349,7 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
           onClick={() => !isListening && speak(targetEntity.name)}
         >
           {targetEntity.textRepresent ? (
-            <p className="text-8xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 leading-none text-center">
+            <p className="text-center text-8xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-br from-orange-500 via-pink-500 to-purple-500 drop-shadow-lg select-none leading-[150px]">
               {targetEntity.textRepresent}
             </p>
           ) : (

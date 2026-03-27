@@ -1432,6 +1432,7 @@ export const COURSES: CourseDef[] = [
         lessons: [
           { id: "lesson1", title: "Học vần", isFree: true },
           { id: "lesson2", title: "Chọn vần đúng", isFree: true },
+          { id: "lesson3", title: "Tập phát âm", isFree: true },
         ],
       },
       {
@@ -1440,6 +1441,7 @@ export const COURSES: CourseDef[] = [
         lessons: [
           { id: "lesson1", title: "Học vần", isFree: true },
           { id: "lesson2", title: "Chọn vần đúng" },
+          { id: "lesson3", title: "Tập phát âm" },
         ],
       },
       {
@@ -1448,6 +1450,7 @@ export const COURSES: CourseDef[] = [
         lessons: [
           { id: "lesson1", title: "Học vần", isFree: true },
           { id: "lesson2", title: "Chọn vần đúng" },
+          { id: "lesson3", title: "Tập phát âm" },
         ],
       },
       {
@@ -1456,6 +1459,7 @@ export const COURSES: CourseDef[] = [
         lessons: [
           { id: "lesson1", title: "Học vần", isFree: true },
           { id: "lesson2", title: "Chọn vần đúng" },
+          { id: "lesson3", title: "Tập phát âm" },
         ],
       },
       {
@@ -1464,6 +1468,7 @@ export const COURSES: CourseDef[] = [
         lessons: [
           { id: "lesson1", title: "Học vần", isFree: true },
           { id: "lesson2", title: "Chọn vần đúng" },
+          { id: "lesson3", title: "Tập phát âm" },
         ],
       },
       {
@@ -1472,6 +1477,7 @@ export const COURSES: CourseDef[] = [
         lessons: [
           { id: "lesson1", title: "Học vần", isFree: true },
           { id: "lesson2", title: "Chọn vần đúng" },
+          { id: "lesson3", title: "Tập phát âm" },
         ],
       },
     ],
