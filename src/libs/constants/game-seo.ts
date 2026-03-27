@@ -88,6 +88,10 @@ const SEO_OVERRIDES: Record<string, SeoOverride> = {
     description:
       "Bé học ghép vần ie, uo, ươ, oa, uy và nhiều vần khác qua bài học ngắn, dễ nhớ và trò chơi chọn vần đúng.",
   },
+  "learn-word": {
+    title: "Học Từ Vựng Tiếng Việt | Game Học Tiếng Việt Cho Bé",
+    description: "Giúp bé 3-6 tuổi học từ vựng tiếng Việt qua các chủ đề gia đình, trường học, thiên nhiên và đồ dùng.",
+  },
   "learn-color": {
     title: "Học Màu Sắc | Trò Chơi Nhận Biết Màu Cho Bé",
     description:
@@ -163,6 +167,23 @@ const RAW_GAME_SEO: Record<string, GameSeoData> = {
       { slug: "dau-tieng-viet-cho-be", title: "Dấu Tiếng Việt Cho Bé" },
       { slug: "day-be-hoc-bang-chu-cai-tai-nha", title: "Dạy Bé Học Bảng Chữ Cái Tại Nhà" },
     ],
+  },
+  "learn-word": {
+    title: "Học Từ Vựng Tiếng Việt cho bé - Trò chơi giáo dục Cú Thông Minh",
+    description:
+      "Bé học từ vựng tiếng Việt qua các chủ đề quen thuộc: gia đình, trường học, thiên nhiên, quần áo. Phát triển kỹ năng nghe, nói, đọc, viết toàn diện.",
+    keywords: ["học từ vựng tiếng việt", "bé học nói", "trò chơi học chữ cho bé", "từ vựng mầm non"],
+    seoText:
+      "Trò chơi Học Từ Vựng giúp bé từ 3-6 tuổi làm quen với vô vàn từ vựng tiếng Việt thông qua hình ảnh sinh động và âm thanh chuẩn xác. Bé sẽ được trải nghiệm các bài học đa dạng như học từ, tập phát âm, ghép từ thành tiếng và nghe hiểu, qua đó giúp bé giao tiếp tự tin hơn trong cuộc sống hàng ngày.",
+    seoFeatures: [
+      "Học từ vựng qua 5 chủ đề thân thuộc",
+      "Phát triển kỹ năng nói và phát âm",
+      "Trò chơi ghép vần sinh động",
+      "Bài tập nghe hiểu trực quan",
+    ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-word/logo.webp",
+    relatedGames: ["learn-syllable", "learn-alphabet", "learn-tones"],
+    relatedBlogs: [],
   },
   "learn-numbers": {
     title: "Học Đếm Số cho bé - Trò chơi giáo dục Cú Thông Minh",

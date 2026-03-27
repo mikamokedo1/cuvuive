@@ -116,7 +116,7 @@ export function TrafficNavigatorLesson({ streetMap, onComplete }: TrafficNavigat
       // Check win
       if (newR === streetMap.goal[0] && newC === streetMap.goal[1]) {
         setWon(true);
-        speak("Tuyệt vời! Bé đã đến đích an toàn!");
+        speak("Tuyệt vời! Pé đã đến đích an toàn!");
         playWinEffect(500);
         setTimeout(() => {
           onComplete();

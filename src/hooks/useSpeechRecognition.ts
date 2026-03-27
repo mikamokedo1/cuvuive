@@ -164,7 +164,7 @@ export function useSpeechRecognition(lang: string = "vi-VN"): UseSpeechRecogniti
 
     // ── Step 3: Create and start a fresh SpeechRecognition instance ──
     const recognition = new SpeechRecognitionAPI();
-    recognition.continuous = false;
+    recognition.continuous = true;
     recognition.interimResults = true;
     recognition.lang = langRef.current;
 

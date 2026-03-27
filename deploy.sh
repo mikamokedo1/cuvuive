@@ -11,10 +11,7 @@ VPS_PASS='xAJz?#s5n20b'
 
 echo "🚀 Starting deployment to $VPS_IP..."
 
-# Step 1: Build Docker image locally (Mac has more RAM than VPS)
-# Use .env.local for NEXT_PUBLIC_* vars that are baked in at build time
-echo "🔨 Building Docker image locally..."
-
+# Step 0: Ensure env is set up
 ENV_FILE=".env.local"
 if [ -f ".env.production" ]; then
     ENV_FILE=".env.production"
@@ -26,7 +23,20 @@ if [ ! -f "$ENV_FILE" ]; then
 fi
 
 echo "   Using env file: $ENV_FILE"
-docker build --platform linux/amd64 -t ${IMAGE_NAME}:${IMAGE_TAG} --build-arg ENV_FILE=${ENV_FILE} .
+
+# Step 1: Build Next.js locally (Mac has more RAM than VPS or Docker Desktop)
+echo "📦 Building Next.js locally (using full Mac RAM)..."
+npm run build
+
+if [ $? -ne 0 ]; then
+    echo "❌ Failed to build Next.js app locally."
+    exit 1
+fi
+
+# Step 1.5: Build Docker image with pre-built files
+echo "🔨 Building Docker image..."
+
+docker build --platform linux/amd64 -t ${IMAGE_NAME}:${IMAGE_TAG} .
 
 if [ $? -ne 0 ]; then
     echo "❌ Failed to build Docker image locally."

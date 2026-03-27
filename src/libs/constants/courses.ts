@@ -75,6 +75,65 @@ export interface CourseDef {
 
 export const COURSES: CourseDef[] = [
   {
+    id: "learn-word",
+    title: "Học Từ Vựng",
+    description: "Bé học từ vựng tiếng Việt qua các chủ đề quen thuộc hàng ngày.",
+    icon: "https://assets.cuthongminh.com/games/learn-word/logo.webp",
+    type: "language",
+    groups: [
+      {
+        id: "group1",
+        title: "Gia Đình",
+        lessons: [
+          { id: "lesson1", title: "Học từ vựng", isFree: true },
+          { id: "lesson2", title: "Tập nói", isFree: true },
+          { id: "lesson3", title: "Ghép từ", isFree: true },
+          { id: "lesson4", title: "Nghe hiểu", isFree: true },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Trường Học",
+        lessons: [
+          { id: "lesson1", title: "Học từ vựng", isFree: true },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Ghép từ" },
+          { id: "lesson4", title: "Nghe hiểu" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Thiên Nhiên",
+        lessons: [
+          { id: "lesson1", title: "Học từ vựng", isFree: true },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Ghép từ" },
+          { id: "lesson4", title: "Nghe hiểu" },
+        ],
+      },
+      {
+        id: "group4",
+        title: "Đồ Dùng",
+        lessons: [
+          { id: "lesson1", title: "Học từ vựng", isFree: true },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Ghép từ" },
+          { id: "lesson4", title: "Nghe hiểu" },
+        ],
+      },
+      {
+        id: "group5",
+        title: "Quần Áo",
+        lessons: [
+          { id: "lesson1", title: "Học từ vựng", isFree: true },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Ghép từ" },
+          { id: "lesson4", title: "Nghe hiểu" },
+        ],
+      },
+    ],
+  },
+  {
     id: "learn-tones",
     title: "Học Dấu Tiếng Việt",
     description: "Bé học nhận biết và phát âm các dấu thanh trong tiếng Việt.",

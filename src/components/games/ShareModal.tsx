@@ -101,7 +101,7 @@ export function ShareModal({ isOpen, onClose, gameSlug }: ShareModalProps) {
 
           {/* Congrats Message */}
           <p className="text-slate-600 text-base font-medium my-3 leading-relaxed">
-            Chúc mừng bé đã hoàn thành khóa học{" "}
+            Chúc mừng bé đã hoàn thành khóa học <br />
             <span className="bg-yellow-400 text-white px-2 py-0.5 rounded-lg font-bold shadow-sm">{gameTitle}</span>!
             Chia sẻ niềm vui với mọi người nhé!
           </p>
