@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 const LogoLong = "https://assets.cuthongminh.com/assets/logo-long.webp";
-import { Facebook, Video } from "lucide-react";
+import { Facebook, Video, Youtube } from "lucide-react";
 
 export function Footer() {
   return (
@@ -27,10 +27,16 @@ export function Footer() {
               <Link href="/games" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
                 Kho trò chơi
               </Link>
-              <Link href="/upgrade" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors font-medium">
+              <Link
+                href="/upgrade"
+                className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors font-medium"
+              >
                 Nâng cấp tài khoản
               </Link>
-              <Link href="/gioi-thieu-kiem-tien" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
+              <Link
+                href="/gioi-thieu-kiem-tien"
+                className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors"
+              >
                 Kiếm tiền
               </Link>
             </div>
@@ -53,17 +59,24 @@ export function Footer() {
               <div className="flex gap-4">
                 <Link
                   href="https://www.facebook.com/CuthongminhOffical"
-                  className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-[#1877F2] hover:text-white transition-all shadow-sm"
+                  className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-orange-600 hover:text-white transition-all shadow-sm"
                   aria-label="Facebook"
                 >
                   <Facebook size={20} />
                 </Link>
                 <Link
                   href="https://www.tiktok.com/@cuthongminh"
-                  className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-black hover:text-white transition-all shadow-sm"
+                  className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-orange-600 hover:text-white transition-all shadow-sm"
                   aria-label="TikTok"
                 >
                   <Video size={20} />
+                </Link>
+                <Link
+                  href="https://www.youtube.com/@cuthongminh"
+                  className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-orange-600 hover:text-white transition-all shadow-sm"
+                  aria-label="YouTube"
+                >
+                  <Youtube size={20} />
                 </Link>
               </div>
             </div>

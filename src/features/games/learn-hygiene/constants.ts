@@ -166,7 +166,7 @@ export const HYGIENE_DESCRIPTIONS: Record<string, string> = {
   // Tidy
   fold_clothes: "Gấp quần áo gọn gàng cất vào tủ. Quần áo gấp đẹp dễ tìm khi cần mặc!",
   tidy_toys: "Dọn đồ chơi sau khi chơi xong. Phòng gọn gàng trông sạch đẹp hơn!",
-  throw_trash: "Bỏ rác đúng nơi quy định. Giữ sạch môi trường là bảo vệ trái đất!",
+  throw_trash: "Bỏ rác đúng nơi qui định. Giữ sạch môi trường là bảo vệ trái đất!",
   wipe_table: "Lau bàn sạch sẽ trước và sau khi ăn. Bàn sạch giúp bữa ăn ngon hơn!",
   wear_shoes: "Đi giày dép khi ra ngoài để bảo vệ chân. Đi chân trần dễ bị đau và bẩn!",
   clean_clothes: "Mặc quần áo sạch mỗi ngày. Quần áo sạch giúp pé thơm tho và tự tin!",
