@@ -10,7 +10,7 @@
 export function getRandomItem<T>(
   items: T[],
   previousItem: T | null,
-  keyFn: (item: T) => string = (item: any) => item.id,
+  keyFn: (item: T) => string = (item: T) => String((item as Record<string, unknown>).id),
 ): T {
   if (items.length <= 1) return items[0];
 

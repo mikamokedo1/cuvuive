@@ -10,7 +10,7 @@ const mockSelect = vi.fn().mockReturnValue({ from: mockFrom });
 
 vi.mock('@/db', () => ({
   db: {
-    select: (...args: any) => mockSelect(...args),
+    select: (...args: unknown[]) => mockSelect(...args),
   }
 }));
 

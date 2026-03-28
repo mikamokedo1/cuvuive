@@ -25,8 +25,9 @@ export async function submitFeedbackAction(data: {
     });
 
     return { success: true };
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error submitting feedback:", error);
-    return { success: false, error: error.message || "Failed to submit feedback" };
+    const message = error instanceof Error ? error.message : "Failed to submit feedback";
+    return { success: false, error: message };
   }
 }

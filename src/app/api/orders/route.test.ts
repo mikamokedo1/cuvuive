@@ -19,9 +19,9 @@ const mockUpdate = vi.fn().mockReturnValue({ set: mockSet });
 
 vi.mock('@/db', () => ({
   db: {
-    select: (...args: any) => mockSelect(...args),
-    update: (...args: any) => mockUpdate(...args),
-    insert: (...args: any) => mockInsert(...args),
+    select: (...args: unknown[]) => mockSelect(...args),
+    update: (...args: unknown[]) => mockUpdate(...args),
+    insert: (...args: unknown[]) => mockInsert(...args),
   }
 }));
 
@@ -40,7 +40,7 @@ describe('POST /api/orders', () => {
     vi.clearAllMocks();
   });
 
-  const createRequest = (body: any) => {
+  const createRequest = (body: Record<string, unknown>) => {
     return new NextRequest('http://localhost:3000/api/orders', {
       method: 'POST',
       body: JSON.stringify(body),

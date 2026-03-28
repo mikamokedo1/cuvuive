@@ -20,11 +20,11 @@ interface SpeechRecognition extends EventTarget {
   start: () => void;
   stop: () => void;
   abort: () => void;
-  onresult: ((this: SpeechRecognition, ev: SpeechRecognitionEvent) => any) | null;
-  onerror: ((this: SpeechRecognition, ev: SpeechRecognitionErrorEvent) => any) | null;
-  onend: ((this: SpeechRecognition, ev: Event) => any) | null;
-  onstart: ((this: SpeechRecognition, ev: Event) => any) | null;
-  onaudiostart: ((this: SpeechRecognition, ev: Event) => any) | null;
+  onresult: ((this: SpeechRecognition, ev: SpeechRecognitionEvent) => void) | null;
+  onerror: ((this: SpeechRecognition, ev: SpeechRecognitionErrorEvent) => void) | null;
+  onend: ((this: SpeechRecognition, ev: Event) => void) | null;
+  onstart: ((this: SpeechRecognition, ev: Event) => void) | null;
+  onaudiostart: ((this: SpeechRecognition, ev: Event) => void) | null;
 }
 
 declare global {
@@ -35,6 +35,7 @@ declare global {
     webkitSpeechRecognition?: {
       new (): SpeechRecognition;
     };
+    __audioContext?: AudioContext | null;
   }
 }
 
@@ -134,14 +135,14 @@ export function useSpeechRecognition(lang: string = "vi-VN"): UseSpeechRecogniti
 
     // Close AudioContext entirely (not just suspend) so iOS fully releases the
     // audio session. playSound.ts will lazily recreate it when needed.
-    const ctx = (window as any).__audioContext as AudioContext | undefined;
+    const ctx = window.__audioContext;
     if (ctx && ctx.state !== "closed") {
       try {
         await ctx.close();
       } catch {
         // ignore
       }
-      (window as any).__audioContext = null;
+      window.__audioContext = null;
     }
 
     // ── Step 2: Force iOS to switch audio session to recording mode ──

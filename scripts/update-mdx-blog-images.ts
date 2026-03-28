@@ -198,7 +198,7 @@ async function main() {
       continue;
     }
 
-    let content = fs.readFileSync(mdxPath, "utf-8");
+    const content = fs.readFileSync(mdxPath, "utf-8");
     const lines = content.split("\n");
     let ogImageIndex = 0;
     let changed = false;

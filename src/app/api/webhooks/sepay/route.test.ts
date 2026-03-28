@@ -18,9 +18,9 @@ const mockInsert = vi.fn().mockReturnValue({ values: mockValues });
 
 vi.mock('@/db', () => ({
   db: {
-    select: (...args: any) => mockSelect(...args),
-    update: (...args: any) => mockUpdate(...args),
-    insert: (...args: any) => mockInsert(...args),
+    select: (...args: unknown[]) => mockSelect(...args),
+    update: (...args: unknown[]) => mockUpdate(...args),
+    insert: (...args: unknown[]) => mockInsert(...args),
   }
 }));
 

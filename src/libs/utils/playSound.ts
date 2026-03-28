@@ -1,6 +1,13 @@
 let audioContext: AudioContext | null = null;
 const audioBuffers = new Map<string, AudioBuffer>();
 
+declare global {
+  interface Window {
+    webkitAudioContext?: typeof AudioContext;
+    __audioContext?: AudioContext | null;
+  }
+}
+
 const getAudioContext = () => {
   if (typeof window === "undefined") return null;
   // If the context was closed (e.g. by speech recognition to release the
@@ -9,12 +16,12 @@ const getAudioContext = () => {
     audioContext = null;
   }
   if (!audioContext) {
-    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
     if (AudioContextClass) {
       audioContext = new AudioContextClass();
       // Expose on window so speech recognition can close it before using the microphone
       // (iOS Safari requires exclusive audio session access)
-      (window as any).__audioContext = audioContext;
+      window.__audioContext = audioContext;
     }
   }
   return audioContext;

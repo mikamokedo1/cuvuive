@@ -2,7 +2,7 @@
 
 import { createClient } from "@/libs/supabase/client";
 import { User } from "@supabase/supabase-js";
-import { createContext, useContext, useEffect, useMemo, useRef, useState, startTransition, ReactNode } from "react";
+import { createContext, useContext, useEffect, useMemo, useRef, useState, startTransition, ReactNode, useCallback } from "react";
 import { getSubscriptionDetailsAction } from "@/libs/actions/user";
 import type { Subscription } from "@supabase/supabase-js";
 
@@ -29,7 +29,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const supabaseRef = useRef(createClient());
   const supabase = supabaseRef.current;
 
-  const refreshSubscription = async () => {
+  const refreshSubscription = useCallback(async () => {
     try {
       const details = await getSubscriptionDetailsAction();
       setIsPremium(details.isPremium);
@@ -39,9 +39,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       setIsPremium(false);
       setPremiumEndDate(null);
     }
-  };
+  }, []);
 
-  const checkMissingInfo = async () => {
+  const checkMissingInfo = useCallback(async () => {
     const {
       data: { user },
     } = await supabase.auth.getUser();
@@ -56,7 +56,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         setShowMissingInfoModal(false);
       }
     }
-  };
+  }, [supabase.auth]);
 
   useEffect(() => {
     let authSubscription: Subscription | null = null;
@@ -129,14 +129,14 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       isMounted = false;
       authSubscription?.unsubscribe();
     };
-  }, []);
+  }, [checkMissingInfo, refreshSubscription, supabase.auth]);
 
-  const handleLogout = async () => {
+  const handleLogout = useCallback(async () => {
     await supabase.auth.signOut();
     setUser(null);
     setIsPremium(false);
     setPremiumEndDate(null);
-  };
+  }, [supabase.auth]);
 
   const contextValue = useMemo(
     () => ({
