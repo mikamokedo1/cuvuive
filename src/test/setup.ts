@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { vi } from 'vitest';
+import { vi, afterEach } from 'vitest';
 
 // Setting up environment variables that might be required by the webhook
 process.env.PAYMENT_WEBHOOK_SECRET = 'test_secret';
