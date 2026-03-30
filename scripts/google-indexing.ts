@@ -21,6 +21,11 @@ const SITE_URL_VARIANTS = [
 const SITEMAP_URL = `${SITE_URL}/sitemap.xml`;
 const MAX_SUBMIT = 10;
 
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 // File paths
 const SCRIPTS_DIR = __dirname;
 const INDEXED_LOG_FILE = path.join(SCRIPTS_DIR, "indexed-urls.log");

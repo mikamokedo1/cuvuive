@@ -183,7 +183,9 @@ const RAW_GAME_SEO: Record<string, GameSeoData> = {
     ],
     ogImage: "https://assets.cuthongminh.com/games/learn-word/logo.webp",
     relatedGames: ["learn-syllable", "learn-alphabet", "learn-tones"],
-    relatedBlogs: [],
+    relatedBlogs: [
+      { slug: "day-be-hoc-tu-vung-tieng-viet", title: "5 Cách Dạy Bé Học Từ Vựng Tiếng Việt Ghi Nhớ Nhanh, Phản Xạ Tốt" }
+    ],
   },
   "learn-numbers": {
     title: "Học Đếm Số cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -1223,6 +1225,33 @@ const RAW_GAME_SEO: Record<string, GameSeoData> = {
     relatedBlogs: [
       { slug: "day-be-nhan-biet-nguoi-la", title: "Dạy Bé Nhận Biết Người Lạ" },
       { slug: "ky-nang-tu-phuc-vu-cho-be", title: "Kỹ Năng Tự Phục Vụ Cho Bé" },
+    ],
+  },
+  "learn-cleaning": {
+    title: "Học Dọn Dẹp cho bé - Trò chơi giáo dục Cú Thông Minh",
+    description:
+      "Bé học cách dọn dẹp phòng, dọn bếp gọn gàng và phân loại rác đúng cách qua các tình huống tương tác thực tế.",
+    keywords: [
+      "dạy bé làm việc nhà",
+      "bé tự dọn dẹp đồ chơi",
+      "kỹ năng sống cho bé",
+      "phân loại rác",
+      "dạy trẻ ngăn nắp",
+      "trò chơi dọn dẹp nhà cửa",
+      "giáo dục trẻ mầm non",
+    ],
+    seoText:
+      "Trò chơi Học Dọn Dẹp giúp bé từ 3-6 tuổi rèn luyện kỹ năng sống tự lập thông qua việc làm quen với các công việc nhà phù hợp lứa tuổi. Bé học cách dọn dẹp phòng ngủ, sắp xếp đồ vật trong bếp và quan trọng nhất là biết cách phân loại rác bảo vệ môi trường.",
+    seoFeatures: [
+      "Biết cách dọn dẹp và sắp xếp phòng",
+      "Phân loại rác đúng cách",
+      "Rèn luyện kỹ năng sống tự lập",
+      "Hình thành thói quen ngăn nắp",
+    ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-cleaning/logo.webp",
+    relatedGames: ["learn-hygiene", "learn-danger", "learn-occupation"],
+    relatedBlogs: [
+      { slug: "day-be-lam-viec-nha", title: "Cách Dạy Bé Làm Việc Nhà Theo Độ Tuổi: Bí Quyết Để Con Tự Giác" },
     ],
   },
   "mini-sudoku-kids": {
