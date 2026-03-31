@@ -45,6 +45,7 @@ jobs:
           echo "SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}" >> .env.production
           echo "SENTRY_ORG=${{ secrets.SENTRY_ORG }}" >> .env.production
           echo "SENTRY_PROJECT=${{ secrets.SENTRY_PROJECT }}" >> .env.production
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env.production
 
       # ── 5. Build Next.js (standalone output) ──
       - name: Build Next.js

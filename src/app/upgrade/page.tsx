@@ -10,7 +10,7 @@ const LeafImg = "https://assets.cuthongminh.com/assets/upgrade/leaf.webp";
 
 import type { Metadata } from "next";
 
-export const revalidate = 86400; // ISR: revalidate once per day
+
 
 export const metadata: Metadata = {
   title: "Nâng Cấp Tài Khoản Nền Tảng Học Tập | Cú Thông Minh",
@@ -57,7 +57,7 @@ export default async function UpgradePage() {
   // Find base price (price of 1 month plan) for discount calculation
   const basePlan = plans.find((p) => p.durationMonths === 1);
   const baseMonthlyPrice = basePlan ? basePlan.price : 0;
-
+  console.log(plans);
   return (
     <>
       <div className="min-h-screen bg-sky-100 relative overflow-hidden font-nunito flex flex-col py-6 px-4">
