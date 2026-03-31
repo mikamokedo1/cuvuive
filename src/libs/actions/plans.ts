@@ -1,4 +1,4 @@
-"use server";
+// Server-side data fetching for plans (NOT a server action)
 
 import { db } from "@/db";
 import { plans } from "@/db/schema";

@@ -1,4 +1,4 @@
-"use server";
+// Server-side data fetching for courses (NOT a server action)
 
 import { db } from "@/db";
 import { courses, groups, lessons } from "@/db/schema";
