@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { GROUPS } from "@/libs/constants/groups";
+import { AGE_GROUPS } from "@/libs/constants/ages";
 import { normalizeTagPathSegment } from "@/libs/utils/tag-slug";
 
 function getLatestMtime(...relativePaths: string[]): Date {
@@ -95,6 +96,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
+  // Age landing pages
+  const ageRoutes: MetadataRoute.Sitemap = AGE_GROUPS.map((age) => ({
+    url: `${baseUrl}/do-tuoi/${age.slug}`,
+    lastModified: getLatestMtime(
+      "src/app/do-tuoi/[age]/page.tsx",
+      "src/libs/constants/ages.ts",
+      "src/libs/constants/courses.ts",
+    ),
+    changeFrequency: "weekly",
+    priority: 0.85,
+  }));
+
   // Dynamically get all game routes
   const gamesDir = path.join(process.cwd(), "src/app/games");
   let gameRoutes: MetadataRoute.Sitemap = [];
@@ -179,5 +192,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     console.error("Error generating sitemap for blog tags:", error);
   }
 
-  return [...staticRoutes, ...groupRoutes, ...gameRoutes, ...blogRoutes, ...tagRoutes];
+  return [...staticRoutes, ...groupRoutes, ...ageRoutes, ...gameRoutes, ...blogRoutes, ...tagRoutes];
 }

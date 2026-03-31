@@ -15,7 +15,7 @@ export function Footer() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-10 w-full md:w-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-10 w-full md:w-auto">
             <div className="flex flex-col gap-4">
               <h4 className="font-bold text-slate-900 mb-2">Khám phá</h4>
               <Link href="/about-us" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
@@ -51,6 +51,22 @@ export function Footer() {
               </Link>
               <Link href="/terms" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
                 Điều khoản
+              </Link>
+            </div>
+
+            <div className="flex flex-col gap-4">
+              <h4 className="font-bold text-slate-900 mb-2">Theo độ tuổi</h4>
+              <Link href="/do-tuoi/3-tuoi" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
+                Bé 3 tuổi
+              </Link>
+              <Link href="/do-tuoi/4-tuoi" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
+                Bé 4 tuổi
+              </Link>
+              <Link href="/do-tuoi/5-tuoi" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
+                Bé 5 tuổi (Tiền lớp 1)
+              </Link>
+              <Link href="/do-tuoi/6-8-tuoi" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
+                Bé 6-8 tuổi
               </Link>
             </div>
 

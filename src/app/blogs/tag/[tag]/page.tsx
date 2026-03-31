@@ -44,8 +44,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
+  // Count posts for this tag to decide indexing
+  const posts = await getAllPosts();
+  const postCount = posts.filter(
+    (post) => post.tags && post.tags.some((t) => t.toLowerCase() === canonicalTag.toLowerCase()),
+  ).length;
+
   const title = `Bài viết về "${canonicalTag}" | Blog Cú Thông Minh`;
-  const description = `Tổng hợp các bài viết về chủ đề "${canonicalTag}" trên blog Cú Thông Minh - Kiến thức giáo dục sớm cho phụ huynh.`;
+  const description = `Tổng hợp ${postCount} bài viết về chủ đề "${canonicalTag}" trên blog Cú Thông Minh - Kiến thức giáo dục sớm cho phụ huynh.`;
 
   return {
     title,
@@ -53,6 +59,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     alternates: {
       canonical: `/blogs/tag/${normalizeTagPathSegment(canonicalTag)}`,
     },
+    // Noindex tag pages with fewer than 3 posts to avoid thin content
+    ...(postCount < 3 && { robots: { index: false, follow: true } }),
     openGraph: {
       title,
       description,

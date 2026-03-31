@@ -29,17 +29,30 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
   const params = await searchParams;
   const currentPage = parseInt(params.page || "1", 10);
   const title = currentPage > 1 ? `Blog Kiến Thức & Nuôi Dạy Trẻ - Trang ${currentPage} | Cú Thông Minh` : "Blog Kiến Thức & Nuôi Dạy Trẻ | Cú Thông Minh";
-  const url = currentPage > 1 ? `https://cuthongminh.com/blogs?page=${currentPage}` : "https://cuthongminh.com/blogs";
+  const description = "Chia sẻ kiến thức giáo dục sớm, phương pháp dạy con khoa học và mẹo vặt học tập tại nhà cho trẻ 3-8 tuổi. Cập nhật hàng tuần bởi Cú Thông Minh.";
+  const canonical = currentPage > 1 ? `/blogs?page=${currentPage}` : "/blogs";
   
   return {
     title,
+    description,
+    keywords: [
+      "giáo dục sớm cho trẻ",
+      "phương pháp dạy con",
+      "nuôi dạy trẻ mầm non",
+      "mẹo dạy bé học tại nhà",
+      "kiến thức phụ huynh",
+      "phát triển trí tuệ trẻ em",
+      "dạy bé học toán chữ cái",
+      "hoạt động cho bé mầm non",
+    ],
     alternates: {
-      canonical: url,
+      canonical,
     },
     openGraph: {
       title,
-      url,
-    }
+      description,
+      url: `https://cuthongminh.com${canonical}`,
+    },
   };
 }
 

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Baloo_2, Nunito_Sans } from "next/font/google";
-import Script from "next/script";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import { AppStructuredData } from "@/app/AppStructuredData";
 import { OwlProvider } from "@/context/OwlContext";
@@ -136,15 +136,7 @@ export default async function RootLayout({
         </AutoRecoveryBoundary>
       </body>
       {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
-        <>
-          <Script
-            src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
-            strategy="lazyOnload"
-          />
-          <Script id="gtag-init" strategy="lazyOnload">
-            {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}');`}
-          </Script>
-        </>
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
       )}
     </html>
   );

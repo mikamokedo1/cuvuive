@@ -10,6 +10,16 @@ export const metadata: Metadata = {
   title: "Kho Trò Chơi Giáo Dục - Cú Thông Minh",
   description:
     "Khám phá hơn 20+ trò chơi giáo dục tương tác đa dạng chủ đề: Toán học, Âm nhạc, Động vật, Địa lý giúp bé phát triển trí tuệ toàn diện.",
+  keywords: [
+    "trò chơi giáo dục cho bé",
+    "game học tập cho trẻ mầm non",
+    "trò chơi trí tuệ cho bé 3 tuổi",
+    "game toán cho bé online",
+    "trò chơi học chữ cái",
+    "game giáo dục miễn phí cho trẻ",
+    "trò chơi phát triển tư duy cho bé",
+    "ứng dụng học tập cho bé mầm non",
+  ],
   alternates: {
     canonical: "/games",
   },

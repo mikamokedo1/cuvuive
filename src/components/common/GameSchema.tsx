@@ -32,6 +32,17 @@ export function GameSchema({ courseId }: { courseId: string }) {
       logo: "https://cuthongminh.com/icons/android-chrome-512x512.png",
     },
     inLanguage: "vi",
+    offers: {
+      "@type": "Offer",
+      category: "Free",
+      price: "0",
+      priceCurrency: "VND",
+    },
+    hasCourseInstance: {
+      "@type": "CourseInstance",
+      courseMode: "online",
+      location: "Vietnam",
+    },
   };
 
   return (
