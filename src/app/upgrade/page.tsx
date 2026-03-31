@@ -9,7 +9,7 @@ const BuffImg = "https://assets.cuthongminh.com/assets/upgrade/buff.webp";
 const LeafImg = "https://assets.cuthongminh.com/assets/upgrade/leaf.webp";
 
 import type { Metadata } from "next";
-
+export const dynamic = "force-dynamic";
 
 
 export const metadata: Metadata = {
