@@ -10,6 +10,8 @@ const LeafImg = "https://assets.cuthongminh.com/assets/upgrade/leaf.webp";
 
 import type { Metadata } from "next";
 
+export const revalidate = 86400; // ISR: revalidate once per day
+
 export const metadata: Metadata = {
   title: "Nâng Cấp Tài Khoản Nền Tảng Học Tập | Cú Thông Minh",
   description:
