@@ -9,6 +9,7 @@ import { AccessProvider } from "@/context/AccessContext";
 import { ProgressProvider } from "@/context/ProgressContext";
 import { PlayTimerProvider } from "@/context/PlayTimerContext";
 import { AutoRecoveryBoundary } from "@/components/common/AutoRecoveryBoundary";
+import { FacebookMessenger } from "@/components/common/FacebookMessenger";
 import { AppProviders } from "@/app/AppProviders";
 
 // Configure fonts
@@ -128,6 +129,7 @@ export default async function RootLayout({
                   <OwlProvider>
                     {children}
                     <AppProviders />
+                    <FacebookMessenger />
                   </OwlProvider>
                 </PlayTimerProvider>
               </ProgressProvider>
