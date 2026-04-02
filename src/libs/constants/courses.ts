@@ -46,6 +46,7 @@ const LearnNotesGroup1Logo = "https://assets.cuthongminh.com/games/learn-notes/g
 const LearnNotesGroup2Logo = "https://assets.cuthongminh.com/games/learn-notes/group2.webp";
 const LearnNotesGroup3Logo = "https://assets.cuthongminh.com/games/learn-notes/group3.webp";
 const GameDangerLogo = "https://assets.cuthongminh.com/games/learn-danger/logo.webp";
+const GameMoneyLogo = "https://assets.cuthongminh.com/games/learn-money/logo.webp";
 import { StaticImageData } from "next/image";
 import { GameGroupType } from "@/libs/constants/groups";
 
@@ -1103,6 +1104,41 @@ export const COURSES: CourseDef[] = [
           { id: "lesson1", title: "Chia bằng hình", isFree: true },
           { id: "lesson2", title: "Chia bằng số" },
           { id: "lesson3", title: "Điền số thiếu" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "learn-money",
+    title: "Tiền Việt Nam",
+    description: "Bé học nhận biết tiền giấy Việt Nam và tập tính tiền qua trò chơi đi chợ.",
+    icon: GameMoneyLogo,
+    type: "math",
+    groups: [
+      {
+        id: "group1",
+        title: "Nhận Biết Tiền",
+        lessons: [
+          { id: "lesson1", title: "Học nhận biết", isFree: true },
+          { id: "lesson2", title: "Đây là bao nhiêu?", isFree: true },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Kỹ Năng Tiền",
+        lessons: [
+          { id: "lesson1", title: "Xếp tiền nhỏ→lớn", isFree: true },
+          { id: "lesson2", title: "Đổi tiền" },
+          { id: "lesson3", title: "Ai nhiều hơn?" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Đi Chợ Cùng Cú",
+        lessons: [
+          { id: "lesson1", title: "Mua 1 món", isFree: true },
+          { id: "lesson2", title: "Gộp tiền" },
+          { id: "lesson3", title: "Tiền thừa" },
         ],
       },
     ],

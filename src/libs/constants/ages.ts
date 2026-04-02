@@ -93,7 +93,8 @@ export const AGE_GROUPS: AgeGroupDef[] = [
       "odd-one-out",
       "learn-instrument",
       "mini-sudoku-kids",
-      "find-differences"
+      "find-differences",
+      "learn-money"
     ],
     blogTags: ["tiền tiểu học", "chuẩn bị vào lớp 1", "trẻ 5 tuổi", "dạy con học toán", "sự tự tin"],
   },
@@ -122,7 +123,8 @@ export const AGE_GROUPS: AgeGroupDef[] = [
       "learn-terrain",
       "learn-flower",
       "learn-costume",
-      "learn-notes"
+      "learn-notes",
+      "learn-money"
     ],
     blogTags: ["trẻ tiểu học", "học toán", "trẻ 6 tuổi", "khám phá khoa học", "kỹ năng mềm"],
   }

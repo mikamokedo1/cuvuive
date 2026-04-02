@@ -130,6 +130,11 @@ const SEO_OVERRIDES: Record<string, SeoOverride> = {
     title: "Mê Cung Cho Bé | Game Phát Triển Tư Duy Không Gian",
     description: "Bé tìm đường trong mê cung từ dễ đến khó, rèn kỹ năng định hướng, lập kế hoạch và giải quyết vấn đề.",
   },
+  "learn-money": {
+    title: "Bé Học Tiền Việt Nam | Game Tính Tiền Cho Trẻ Mầm Non",
+    description:
+      "Bé nhận biết 9 mệnh giá tiền giấy Việt Nam từ 1.000đ đến 500.000đ và tập tính tiền qua trò chơi đi chợ.",
+  },
   "learn-clock": {
     title: "Học Xem Đồng Hồ | Game Kỹ Năng Sống Cho Bé",
     description:
@@ -802,6 +807,32 @@ const RAW_GAME_SEO: Record<string, GameSeoData> = {
       { slug: "phep-cong-tru-don-gian", title: "Bé Học Phép Cộng Trừ Đơn Giản" },
       { slug: "cach-day-be-hoc-so", title: "Cách Dạy Bé Học Số" },
     ],
+  },
+  "learn-money": {
+    title: "Học Tiền Việt Nam cho bé - Trò chơi giáo dục Cú Thông Minh",
+    description:
+      "Bé học nhận biết 9 mệnh giá tiền giấy Việt Nam và tập tính tiền qua trò chơi đi chợ cùng Cú.",
+    keywords: [
+      "học tiền việt nam",
+      "dạy bé nhận biết tiền",
+      "tiền giấy việt nam cho bé",
+      "tập tính tiền cho trẻ",
+      "trò chơi đi chợ cho bé",
+      "mệnh giá tiền việt nam",
+      "dạy bé dùng tiền",
+      "toán thực tế cho trẻ mầm non",
+      "game học tiền cho bé 5 tuổi",
+    ],
+    seoText:
+      "Trò chơi Học Tiền Việt Nam giúp bé 5-8 tuổi nhận biết 9 mệnh giá tiền giấy từ 1.000đ đến 500.000đ. Bé bắt đầu với việc học nhận biết, rồi tiến dần lên xếp tiền, đổi tiền và so sánh. Phần 'Đi Chợ Cùng Cú' giúp bé ứng dụng vào mua bán thực tế: chọn tờ tiền đúng, tính tổng và tính tiền thừa.",
+    seoFeatures: [
+      "Nhận biết 9 mệnh giá tiền giấy Việt Nam",
+      "Xếp tiền, đổi tiền và so sánh giá trị",
+      "Trò chơi đi chợ tính tiền thực tế",
+    ],
+    ogImage: "https://assets.cuthongminh.com/games/learn-money/logo.webp",
+    relatedGames: ["learn-math", "learn-numbers", "compare-quantity"],
+    relatedBlogs: [],
   },
   "find-pattern": {
     title: "Học Tìm Quy Luật cho bé - Trò chơi giáo dục Cú Thông Minh",

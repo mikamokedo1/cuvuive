@@ -46,7 +46,7 @@ export function useQuizLogic({
         setTimeout(() => {
           setFeedback(null);
           onNextQuestion();
-        }, 1500);
+        }, 3000);
       }
     } else {
       speak(wrongMessage);

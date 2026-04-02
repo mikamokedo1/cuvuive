@@ -88,7 +88,7 @@ export function Footer() {
                   <Video size={20} />
                 </Link>
                 <Link
-                  href="https://www.youtube.com/@cuthongminh"
+                  href="https://www.youtube.com/@cuthongminh-r1k"
                   className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-orange-600 hover:text-white transition-all shadow-sm"
                   aria-label="YouTube"
                 >

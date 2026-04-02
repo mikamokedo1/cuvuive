@@ -1,10 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export function FacebookMessenger() {
+  const pathname = usePathname();
   const pageId = "1034628276400741";
 
+  // Chỉ hiển thị ở trang chủ
+  if (pathname !== "/") return null;
   if (!pageId) return null;
 
   return (
