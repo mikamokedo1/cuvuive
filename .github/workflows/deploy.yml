@@ -79,6 +79,8 @@ jobs:
 
       # ── 9. Sync docker-compose.deploy.yml to VPS ──
       - name: Sync docker-compose to VPS
+        id: scp
+        continue-on-error: true
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.VPS_HOST }}
@@ -86,6 +88,21 @@ jobs:
           password: ${{ secrets.VPS_PASSWORD }}
           source: "docker-compose.deploy.yml"
           target: "/var/www/cuthongminh.com/frontend/"
+          timeout: 60s
+          command_timeout: 10m
+
+      # ── 10. Retry SCP if first attempt failed (network flake) ──
+      - name: Retry sync docker-compose to VPS
+        if: steps.scp.outcome == 'failure'
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          source: "docker-compose.deploy.yml"
+          target: "/var/www/cuthongminh.com/frontend/"
+          timeout: 120s
+          command_timeout: 10m
 
       # ── 11. Deploy to VPS ──
       - name: Deploy to VPS
@@ -96,6 +113,8 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           password: ${{ secrets.VPS_PASSWORD }}
+          timeout: 60s
+          command_timeout: 10m
           envs: GHCR_TOKEN
           script: |
             # Login to GHCR to pull private image
