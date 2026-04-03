@@ -1130,6 +1130,7 @@ export const COURSES: CourseDef[] = [
           { id: "lesson1", title: "Xếp tiền nhỏ→lớn", isFree: true },
           { id: "lesson2", title: "Đổi tiền" },
           { id: "lesson3", title: "Ai nhiều hơn?" },
+          { id: "lesson4", title: "Tiết kiệm" },
         ],
       },
       {

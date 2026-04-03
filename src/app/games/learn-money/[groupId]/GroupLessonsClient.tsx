@@ -11,6 +11,7 @@ import {
   ShoppingCart,
   Calculator,
   ReceiptText,
+  PiggyBank,
 } from "lucide-react";
 import { GROUP_CONFIG } from "@/features/games/learn-money/constants";
 import { GameWrapLessons } from "@/components/layout/GameWrapLessons";
@@ -25,6 +26,7 @@ const iconMap: Record<string, React.ReactNode> = {
   ShoppingCart: <ShoppingCart className="text-white w-6 h-6" />,
   Calculator: <Calculator className="text-white w-6 h-6" />,
   ReceiptText: <ReceiptText className="text-white w-6 h-6" />,
+  PiggyBank: <PiggyBank className="text-white w-6 h-6" />,
 };
 
 interface GroupLessonsClientProps {

@@ -13,6 +13,7 @@ import { CompareLesson } from "@/features/games/learn-money/CompareLesson";
 import { ShoppingLesson } from "@/features/games/learn-money/ShoppingLesson";
 import { SumBillsLesson } from "@/features/games/learn-money/SumBillsLesson";
 import { ChangeLesson } from "@/features/games/learn-money/ChangeLesson";
+import { SavingsLesson } from "@/features/games/learn-money/SavingsLesson";
 import { GROUP_CONFIG } from "@/features/games/learn-money/constants";
 
 const GROUPS = [
@@ -72,6 +73,9 @@ export function LessonPageClient({ groupId, lessonId }: LessonPageClientProps) {
           break;
         case "lesson3":
           LessonContent = <CompareLesson onComplete={game.handleComplete} />;
+          break;
+        case "lesson4":
+          LessonContent = <SavingsLesson onComplete={game.handleComplete} />;
           break;
       }
       break;

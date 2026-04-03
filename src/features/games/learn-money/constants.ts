@@ -170,6 +170,7 @@ export const GROUP_CONFIG: Record<string, MoneyGroupConfig> = {
       { id: "lesson1", title: "Xếp tiền nhỏ→lớn", icon: "ArrowUpDown" },
       { id: "lesson2", title: "Đổi tiền", icon: "ArrowLeftRight" },
       { id: "lesson3", title: "Ai nhiều hơn?", icon: "Scale" },
+      { id: "lesson4", title: "Bỏ heo tiết kiệm", icon: "PiggyBank" },
     ],
   },
   group3: {
@@ -441,4 +442,49 @@ export function generateCompareQuestion(prevKey?: string): {
     answer: totalA > totalB ? "A" : "B",
     questionKey: key,
   };
+}
+
+/** Generate a piggy-bank savings question: pick bills to reach exact target */
+export function generateSavingsQuestion(prevKey?: string): {
+  target: number;
+  bills: BillDef[];
+  questionKey: string;
+} {
+  const pool = [1000, 2000, 5000, 10000, 20000];
+  const singleBillValues = new Set(pool);
+
+  let correctValues: number[] = [];
+  let distractorValues: number[] = [];
+  let target = 0;
+  let key = "";
+  let attempts = 0;
+
+  do {
+    // Pick 2–4 bills as the intended correct combination
+    const correctCount = 2 + Math.floor(Math.random() * 3);
+    correctValues = Array.from(
+      { length: correctCount },
+      () => pool[Math.floor(Math.random() * pool.length)],
+    );
+    target = correctValues.reduce((a, b) => a + b, 0);
+
+    // Distractors fill the remaining slots (always 6 total)
+    const distractorCount = 6 - correctCount;
+    distractorValues = Array.from(
+      { length: distractorCount },
+      () => pool[Math.floor(Math.random() * pool.length)],
+    );
+
+    key = `savings-${target}`;
+    attempts++;
+  } while (
+    (singleBillValues.has(target) || target > 60000 || key === prevKey) &&
+    attempts < 30
+  );
+
+  // Combine & shuffle
+  const allValues = [...correctValues, ...distractorValues].sort(() => Math.random() - 0.5);
+  const bills = allValues.map((v) => getBill(v));
+
+  return { target, bills, questionKey: key };
 }

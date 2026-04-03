@@ -39,7 +39,7 @@ export function ExplainMoneyLesson({ onComplete }: ExplainMoneyLessonProps) {
   const swipeRef = useSwipe({ onSwipeLeft: handleNext, onSwipeRight: handleBack });
 
   useEffect(() => {
-    speak(`Đây là tờ ${bill.labelFull}. Chạm để lật xem 2 mặt nhé`);
+    speak(`Đây là tờ ${bill.labelFull}. ${billIdx === 0 ? "Chạm để lật xem 2 mặt nhé" : ""}`);
   }, [billIdx]);
 
   return (
