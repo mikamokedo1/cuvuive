@@ -168,7 +168,6 @@ const RAW_GAME_SEO: Record<string, GameSeoData> = {
     ogImage: "https://assets.cuthongminh.com/games/learn-tones/logo.webp",
     relatedGames: ["learn-alphabet", "learn-syllable"],
     relatedBlogs: [
-      { slug: "be-hoc-dau-tieng-viet", title: "Bé Học Dấu Tiếng Việt" },
       { slug: "dau-tieng-viet-cho-be", title: "Dấu Tiếng Việt Cho Bé" },
       { slug: "day-be-hoc-bang-chu-cai-tai-nha", title: "Dạy Bé Học Bảng Chữ Cái Tại Nhà" },
     ],
@@ -272,7 +271,6 @@ const RAW_GAME_SEO: Record<string, GameSeoData> = {
     ogImage: "https://assets.cuthongminh.com/games/learn-color-color.webp",
     relatedGames: ["mix-color", "paint-picture"],
     relatedBlogs: [
-      { slug: "hoc-mau-sac", title: "Bé Học Màu Sắc: Kích Thích Thị Giác" },
       { slug: "mau-sac-cho-tre-mau-giao", title: "Màu Sắc Cho Trẻ Mẫu Giáo" },
     ],
   },
@@ -970,7 +968,6 @@ const RAW_GAME_SEO: Record<string, GameSeoData> = {
     relatedGames: ["find-pattern", "find-differences", "line-connect"],
     relatedBlogs: [
       { slug: "me-cung-cho-be", title: "Mê Cung Cho Bé: Rèn Luyện IQ" },
-      { slug: "tro-choi-me-cung", title: "Trò Chơi Mê Cung: Tư Duy Không Gian" },
     ],
   },
   "line-connect": {
@@ -1086,7 +1083,6 @@ const RAW_GAME_SEO: Record<string, GameSeoData> = {
     relatedGames: ["learn-numbers", "compare-quantity", "learn-math"],
     relatedBlogs: [
       { slug: "hoc-xem-dong-ho-cho-be", title: "Học Xem Đồng Hồ Cho Bé" },
-      { slug: "hoc-xem-dong-ho", title: "Bé Học Xem Đồng Hồ" },
     ],
   },
   "mini-piano": {
@@ -1143,7 +1139,6 @@ const RAW_GAME_SEO: Record<string, GameSeoData> = {
     relatedGames: ["learn-tones", "learn-alphabet"],
     relatedBlogs: [
       { slug: "be-hoc-ghep-van", title: "Bé Học Ghép Vần" },
-      { slug: "be-hoc-ghep-van-nhu-the-nao", title: "Bé Học Ghép Vần Như Thế Nào" },
     ],
   },
   "learn-terrain": {

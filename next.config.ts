@@ -92,6 +92,41 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      // Blog merges — consolidate cannibalized content
+      // Pair 1: tro-choi-me-cung → me-cung-cho-be
+      {
+        source: '/blogs/tro-choi-me-cung',
+        destination: '/blogs/me-cung-cho-be',
+        permanent: true,
+      },
+      // Pair 3: be-hoc-ghep-van-nhu-the-nao → be-hoc-ghep-van
+      {
+        source: '/blogs/be-hoc-ghep-van-nhu-the-nao',
+        destination: '/blogs/be-hoc-ghep-van',
+        permanent: true,
+      },
+      // Pair 4: hoc-xem-dong-ho → hoc-xem-dong-ho-cho-be
+      {
+        source: '/blogs/hoc-xem-dong-ho',
+        destination: '/blogs/hoc-xem-dong-ho-cho-be',
+        permanent: true,
+      },
+      // Pair 5: be-hoc-dau-tieng-viet → dau-tieng-viet-cho-be
+      {
+        source: '/blogs/be-hoc-dau-tieng-viet',
+        destination: '/blogs/dau-tieng-viet-cho-be',
+        permanent: true,
+      },
+      // Pair 7: hoc-mau-sac → mau-sac-cho-tre-mau-giao
+      {
+        source: '/blogs/hoc-mau-sac',
+        destination: '/blogs/mau-sac-cho-tre-mau-giao',
+        permanent: true,
+      },
+    ];
+  },
   experimental: {
     optimizePackageImports: ["lucide-react", "framer-motion", "react-hot-toast", "clsx", "class-variance-authority", "formik", "yup"],
   },

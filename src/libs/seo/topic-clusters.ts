@@ -25,7 +25,7 @@ export const TOPIC_CLUSTERS: Record<GameGroupType, TopicCluster> = {
       "hoc-quy-luat-logic",
       "day-be-tu-duy-logic",
       "tro-choi-tim-diem-khac-biet",
-      "tro-choi-me-cung",
+      "me-cung-cho-be",
       "bai-tap-tu-duy-tim-hinh-khac-loai",
     ],
   },
@@ -35,7 +35,7 @@ export const TOPIC_CLUSTERS: Record<GameGroupType, TopicCluster> = {
     blogSlugs: [
       "hoc-bang-chu-cai-tieng-viet",
       "day-be-hoc-bang-chu-cai-tai-nha",
-      "be-hoc-dau-tieng-viet",
+      "dau-tieng-viet-cho-be",
       "be-hoc-ghep-van",
       "day-tre-tap-doc-som",
     ],
@@ -85,7 +85,6 @@ export const TOPIC_CLUSTERS: Record<GameGroupType, TopicCluster> = {
     heading: "Cụm nội dung Mỹ Thuật",
     description: "Từ nhận biết màu sắc đến pha màu, tô màu và vẽ tranh đơn giản cho trẻ mầm non.",
     blogSlugs: [
-      "hoc-mau-sac",
       "mau-sac-cho-tre-mau-giao",
       "be-hoc-pha-mau-nghe-thuat",
       "be-tap-to-mau-sang-tao",
