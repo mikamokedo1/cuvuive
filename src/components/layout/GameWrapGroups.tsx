@@ -22,7 +22,7 @@ export const GameWrapGroups = ({ logo, gameId, groups, title }: GameWrapGroups) 
   const dataReady = isLoaded || !!allProgress[gameId];
 
   return (
-    <GameLayout showBackButton={false} backTo="/games">
+    <GameLayout showBackButton={true} backTo="/games">
       <main className="w-full">
         <div className="w-full max-w-6xl mx-auto flex flex-col items-center justify-center relative mb-8 pt-4">
           <div className="relative w-24 h-24 md:w-48 md:h-48 mb-4">
@@ -32,7 +32,9 @@ export const GameWrapGroups = ({ logo, gameId, groups, title }: GameWrapGroups) 
         </div>
 
         {/* Always render group cards so Googlebot sees content in initial HTML */}
-        <div className={`flex flex-wrap items-center justify-center gap-5 transition-opacity duration-300 ${dataReady ? "opacity-100" : "opacity-70"}`}>
+        <div
+          className={`flex flex-wrap items-center justify-center gap-5 transition-opacity duration-300 ${dataReady ? "opacity-100" : "opacity-70"}`}
+        >
           {groups.map((group, index) => {
             const unlocked = dataReady ? isGroupUnlocked(gameId, group.id) : index === 0;
             const courseProgress = allProgress[gameId] || { completedGroups: [] };

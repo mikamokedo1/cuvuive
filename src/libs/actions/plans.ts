@@ -10,9 +10,7 @@ export async function getPlans() {
       console.error("[getPlans] ❌ DATABASE_URL is not set!");
       return [];
     }
-    console.log("[getPlans] DATABASE_URL exists, querying plans...");
     const allPlans = await db.select().from(plans).orderBy(asc(plans.price));
-    console.log(`[getPlans] ✅ Found ${allPlans.length} plans`);
     return allPlans;
   } catch (error) {
     console.error("[getPlans] ❌ Error fetching plans:", error);
