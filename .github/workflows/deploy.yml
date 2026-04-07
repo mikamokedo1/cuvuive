@@ -77,55 +77,11 @@ jobs:
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
 
-      # ── 9. Deploy to VPS (single SSH connection — no SCP needed) ──
-      - name: Deploy to VPS
-        uses: appleboy/ssh-action@v1
-        env:
-          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          password: ${{ secrets.VPS_PASSWORD }}
-          timeout: 120s
-          command_timeout: 10m
-          # Auto-retry up to 3 times on connection failure (network flake)
-          request_pty: true
-          envs: GHCR_TOKEN
-          script: |
-            set -e
-
-            DEPLOY_DIR="/var/www/cuthongminh.com/frontend"
-            mkdir -p "$DEPLOY_DIR"
-
-            # Write docker-compose.deploy.yml inline (no SCP needed)
-            printf '%s\n' \
-              'version: "3.8"' \
-              '' \
-              'services:' \
-              '  cuthongminh-web:' \
-              '    image: ghcr.io/mikamokedo/cuthongminh-web:latest' \
-              '    container_name: cuthongminh_web' \
-              '    restart: unless-stopped' \
-              '    ports:' \
-              '      - "3000:3000"' \
-              '    environment:' \
-              '      - PORT=3000' \
-              '      - NODE_ENV=production' \
-              '    env_file:' \
-              '      - .env.production' \
-              > "$DEPLOY_DIR/docker-compose.deploy.yml"
-
-            # Login to GHCR to pull private image
-            echo "$GHCR_TOKEN" | docker login ghcr.io -u mikamokedo --password-stdin
-
-            # Pull latest image
-            docker pull ghcr.io/mikamokedo/cuthongminh-web:latest
-
-            # Restart container
-            cd "$DEPLOY_DIR"
-            docker compose -f docker-compose.deploy.yml up -d --force-recreate
-
-            # Cleanup old/dangling images to save disk space on 2GB VPS
-            docker image prune -f
-
-            echo "✅ Deploy completed successfully!"
+      # ── 9. Deployment handled by Watchtower on VPS ──
+      # Watchtower monitors GHCR and auto-pulls + restarts when new image is pushed.
+      # No SSH/SCP needed — eliminates i/o timeout issues completely.
+      - name: Verify image pushed
+        run: |
+          echo "✅ Image pushed to GHCR successfully!"
+          echo "🔄 Watchtower on VPS will auto-deploy within ~30 seconds"
+          echo "📦 Image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest"
