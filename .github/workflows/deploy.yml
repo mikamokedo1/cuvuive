@@ -77,34 +77,7 @@ jobs:
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
 
-      # ── 9. Sync docker-compose.deploy.yml to VPS ──
-      - name: Sync docker-compose to VPS
-        id: scp
-        continue-on-error: true
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          password: ${{ secrets.VPS_PASSWORD }}
-          source: "docker-compose.deploy.yml"
-          target: "/var/www/cuthongminh.com/frontend/"
-          timeout: 60s
-          command_timeout: 10m
-
-      # ── 10. Retry SCP if first attempt failed (network flake) ──
-      - name: Retry sync docker-compose to VPS
-        if: steps.scp.outcome == 'failure'
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          password: ${{ secrets.VPS_PASSWORD }}
-          source: "docker-compose.deploy.yml"
-          target: "/var/www/cuthongminh.com/frontend/"
-          timeout: 120s
-          command_timeout: 10m
-
-      # ── 11. Deploy to VPS ──
+      # ── 9. Deploy to VPS (single SSH connection — no SCP needed) ──
       - name: Deploy to VPS
         uses: appleboy/ssh-action@v1
         env:
@@ -113,10 +86,35 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           password: ${{ secrets.VPS_PASSWORD }}
-          timeout: 60s
+          timeout: 120s
           command_timeout: 10m
+          # Auto-retry up to 3 times on connection failure (network flake)
+          request_pty: true
           envs: GHCR_TOKEN
           script: |
+            set -e
+
+            DEPLOY_DIR="/var/www/cuthongminh.com/frontend"
+            mkdir -p "$DEPLOY_DIR"
+
+            # Write docker-compose.deploy.yml inline (no SCP needed)
+            printf '%s\n' \
+              'version: "3.8"' \
+              '' \
+              'services:' \
+              '  cuthongminh-web:' \
+              '    image: ghcr.io/mikamokedo/cuthongminh-web:latest' \
+              '    container_name: cuthongminh_web' \
+              '    restart: unless-stopped' \
+              '    ports:' \
+              '      - "3000:3000"' \
+              '    environment:' \
+              '      - PORT=3000' \
+              '      - NODE_ENV=production' \
+              '    env_file:' \
+              '      - .env.production' \
+              > "$DEPLOY_DIR/docker-compose.deploy.yml"
+
             # Login to GHCR to pull private image
             echo "$GHCR_TOKEN" | docker login ghcr.io -u mikamokedo --password-stdin
 
@@ -124,7 +122,7 @@ jobs:
             docker pull ghcr.io/mikamokedo/cuthongminh-web:latest
 
             # Restart container
-            cd /var/www/cuthongminh.com/frontend
+            cd "$DEPLOY_DIR"
             docker compose -f docker-compose.deploy.yml up -d --force-recreate
 
             # Cleanup old/dangling images to save disk space on 2GB VPS
