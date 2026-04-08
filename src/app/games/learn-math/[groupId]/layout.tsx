@@ -16,7 +16,6 @@ export async function generateMetadata(): Promise<Metadata> {
       description: seo.description,
       images: [{ url: seo.ogImage, width: 1200, height: 630, alt: gameTitle }],
     },
-    robots: { index: false, follow: true },
   };
 }
 
