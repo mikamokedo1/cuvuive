@@ -22,8 +22,6 @@ const Header = () => {
   const { user, handleLogout, isPremium } = useUser();
   const { setPaywallState } = useAccess();
 
-
-
   return (
     <header className="w-full flex justify-between items-center mb-8 bg-[#F8EEDD] backdrop-blur-sm rounded-3xl shadow-xl px-6 border-4 border-white relative z-50">
       <Link href="/games" aria-label="Go to homepage">
@@ -37,8 +35,8 @@ const Header = () => {
         <Image
           src={LogoLong}
           alt="Cú Thông Minh Logo"
-          width={200}
-          height={80}
+          width={256}
+          height={56}
           className="hidden md:block cursor-pointer h-20 w-auto object-contain drop-shadow-md transition-transform duration-300 hover:scale-105"
         />
       </Link>
@@ -53,7 +51,10 @@ const Header = () => {
                 aria-label="User menu"
               >
                 <div className="relative">
-                  <Image width={56} height={56} src={user?.user_metadata?.sex === "female" ? avatarGirl : avatarBoy}
+                  <Image
+                    width={56}
+                    height={56}
+                    src={user?.user_metadata?.sex === "female" ? avatarGirl : avatarBoy}
                     alt="User Avatar"
                     className="w-14 h-14 rounded-full border-4 border-white shadow-md bg-blue-200 object-cover"
                   />
