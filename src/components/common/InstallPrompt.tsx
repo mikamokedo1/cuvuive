@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { X, Download, Share } from "lucide-react";
 import Image from "next/image";
 import { useUser } from "@/context/UserContext";
+// Only show install prompt to logged-in premium users, with limited frequency
 
 interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
@@ -12,9 +13,9 @@ interface BeforeInstallPromptEvent extends Event {
 
 const STORAGE_KEY = "a2hs_dismissed";
 const SESSION_KEY = "a2hs_shown_this_session";
-const MAX_DISMISSALS = 3;
-const DISMISS_COOLDOWN_DAYS = 7;
-const SHOW_DELAY_MS = 3000;
+const MAX_DISMISSALS = 2;
+const DISMISS_COOLDOWN_DAYS = 14;
+const SHOW_DELAY_MS = 5000;
 
 function shouldShowPrompt(): boolean {
   if (typeof window === "undefined") return false;
@@ -74,7 +75,7 @@ function isIOS(): boolean {
 }
 
 export function InstallPrompt() {
-  const { user, isLoading } = useUser();
+  const { user, isLoading, isPremium } = useUser();
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [showIOSGuide, setShowIOSGuide] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -82,7 +83,7 @@ export function InstallPrompt() {
 
   // Listen for the browser's install prompt event (Android / Chrome)
   useEffect(() => {
-    if (isLoading || !user || !shouldShowPrompt()) return;
+    if (isLoading || !user || !isPremium || !shouldShowPrompt()) return;
 
     const handler = (e: Event) => {
       e.preventDefault();
@@ -91,15 +92,15 @@ export function InstallPrompt() {
 
     window.addEventListener("beforeinstallprompt", handler);
     return () => window.removeEventListener("beforeinstallprompt", handler);
-  }, [user, isLoading]);
+  }, [user, isLoading, isPremium]);
 
   // Detect iOS and show manual guide
   useEffect(() => {
-    if (isLoading || !user || !shouldShowPrompt()) return;
+    if (isLoading || !user || !isPremium || !shouldShowPrompt()) return;
     if (isIOS()) {
       setShowIOSGuide(true);
     }
-  }, [user, isLoading]);
+  }, [user, isLoading, isPremium]);
 
   // Delayed reveal
   useEffect(() => {
