@@ -25,6 +25,7 @@ const Header = () => {
   return (
     <header className="w-full flex justify-between items-center mb-8 bg-[#F8EEDD] backdrop-blur-sm rounded-3xl shadow-xl px-6 border-4 border-white relative z-50">
       <Link href="/games" aria-label="Go to homepage">
+        <span className="sr-only">Cú Thông Minh Kho Trò Chơi</span>
         <Image
           src={LogoShort}
           alt="Cú Thông Minh Logo"

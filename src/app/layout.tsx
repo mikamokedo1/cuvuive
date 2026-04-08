@@ -118,9 +118,9 @@ export default async function RootLayout({
         {/* Preconnect to external domains for faster resource loading */}
         <link rel="preconnect" href="https://assets.cuthongminh.com" />
         <link rel="dns-prefetch" href="https://assets.cuthongminh.com" />
-        <AppStructuredData />
       </head>
       <body className={`${baloo2.variable} ${nunitoSans.variable} antialiased`} suppressHydrationWarning>
+        <AppStructuredData />
         <AutoRecoveryBoundary>
           <UserProvider>
             <AccessProvider>

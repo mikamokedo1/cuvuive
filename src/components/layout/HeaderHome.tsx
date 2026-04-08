@@ -27,6 +27,7 @@ export const HeaderHome = () => {
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
         <Link href="/">
+          <span className="sr-only">Trang chủ Cú Thông Minh</span>
           <Image
             className="md:block hidden"
             src={LogoLong}

@@ -15,7 +15,7 @@ export function Footer() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-10 w-full md:w-auto">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-10 w-full md:w-auto">
             <div className="flex flex-col gap-4">
               <h4 className="font-bold text-slate-900 mb-2">Khám phá</h4>
               <Link href="/about-us" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
@@ -42,19 +42,6 @@ export function Footer() {
             </div>
 
             <div className="flex flex-col gap-4">
-              <h4 className="font-bold text-slate-900 mb-2">Hỗ trợ</h4>
-              <Link href="/feedback" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
-                Góp ý
-              </Link>
-              <Link href="/privacy" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
-                Bảo mật
-              </Link>
-              <Link href="/terms" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
-                Điều khoản
-              </Link>
-            </div>
-
-            <div className="flex flex-col gap-4">
               <h4 className="font-bold text-slate-900 mb-2">Theo độ tuổi</h4>
               <Link href="/do-tuoi/3-tuoi" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
                 Bé 3 tuổi
@@ -70,6 +57,49 @@ export function Footer() {
               </Link>
             </div>
 
+            <div className="flex flex-col gap-4">
+              <h4 className="font-bold text-slate-900 mb-2">Môn học</h4>
+              <div className="grid grid-cols-2 gap-x-8 gap-y-4 text-sm">
+                <Link href="/tro-choi-tu-duy" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
+                  Tư Duy
+                </Link>
+                <Link href="/tro-choi-my-thuat" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
+                  Mỹ Thuật
+                </Link>
+                <Link href="/ky-nang-song" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
+                  Kỹ Năng Sống
+                </Link>
+                <Link href="/dia-ly-tu-nhien" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
+                  Địa Lý Tự Nhiên
+                </Link>
+                <Link href="/am-nhac" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
+                  Âm Nhạc
+                </Link>
+                <Link href="/khoa-hoc" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
+                  Khoa Học
+                </Link>
+                <Link href="/hoc-tieng-viet-cho-be" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
+                  Ngôn Ngữ
+                </Link>
+                <Link href="/tro-choi-toan-hoc" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
+                  Toán Học
+                </Link>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-4">
+              <h4 className="font-bold text-slate-900 mb-2">Hỗ trợ</h4>
+              <Link href="/feedback" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
+                Góp ý
+              </Link>
+              <Link href="/privacy" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
+                Bảo mật
+              </Link>
+              <Link href="/terms" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
+                Điều khoản
+              </Link>
+            </div>
+
             <div className="flex flex-col gap-4 col-span-2 sm:col-span-1">
               <h4 className="font-bold text-slate-900 mb-2">Kết nối</h4>
               <div className="flex gap-4">
@@ -78,6 +108,7 @@ export function Footer() {
                   className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-orange-600 hover:text-white transition-all shadow-sm"
                   aria-label="Facebook"
                 >
+                  <span className="sr-only">Facebook Cú Thông Minh</span>
                   <Facebook size={20} />
                 </Link>
                 <Link
@@ -85,6 +116,7 @@ export function Footer() {
                   className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-orange-600 hover:text-white transition-all shadow-sm"
                   aria-label="TikTok"
                 >
+                  <span className="sr-only">TikTok Cú Thông Minh</span>
                   <Video size={20} />
                 </Link>
                 <Link
@@ -92,6 +124,7 @@ export function Footer() {
                   className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-orange-600 hover:text-white transition-all shadow-sm"
                   aria-label="YouTube"
                 >
+                  <span className="sr-only">YouTube Cú Thông Minh</span>
                   <Youtube size={20} />
                 </Link>
               </div>

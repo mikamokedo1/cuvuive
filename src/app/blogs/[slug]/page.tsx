@@ -113,7 +113,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   }
 
   const allPosts = await getAllPosts();
-  const relatedPosts = allPosts
+  let relatedPosts = allPosts
     .filter((candidate) => candidate.slug !== post.slug)
     .map((candidate) => {
       const sharedTags = candidate.tags?.filter((tag) => post.tags?.some((postTag) => postTag.toLowerCase() === tag.toLowerCase())) ?? [];
@@ -121,8 +121,18 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     })
     .filter((candidate) => candidate.sharedTagsCount > 0)
     .sort((left, right) => right.sharedTagsCount - left.sharedTagsCount)
-    .slice(0, 3)
     .map((candidate) => candidate.post);
+
+  // Focus on fixing orphan blog posts by falling back to latest posts if < 3 related
+  if (relatedPosts.length < 3) {
+    const remainingPosts = allPosts
+      .filter((candidate) => candidate.slug !== post.slug && !relatedPosts.some(rp => rp.slug === candidate.slug))
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    
+    relatedPosts = [...relatedPosts, ...remainingPosts].slice(0, 3);
+  } else {
+    relatedPosts = relatedPosts.slice(0, 3);
+  }
 
   const relatedGames = Object.entries(GAME_SEO)
     .filter(([, seo]) => seo.relatedBlogs.some((blog) => blog.slug === post.slug))

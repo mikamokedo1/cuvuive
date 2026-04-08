@@ -2,7 +2,7 @@ import { safeJsonLd } from "@/libs/utils/safe-jsonld";
 
 const orgJsonLd = {
   "@context": "https://schema.org",
-  "@type": "EducationalOrganization",
+  "@type": ["Organization", "EducationalOrganization"],
   name: "Cú Thông Minh",
   url: "https://cuthongminh.com",
   logo: {
@@ -47,6 +47,25 @@ const websiteJsonLd = {
   },
 };
 
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Trang chủ",
+      item: "https://cuthongminh.com",
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Trò chơi",
+      item: "https://cuthongminh.com/games",
+    },
+  ],
+};
+
 export function AppStructuredData() {
   return (
     <>
@@ -59,6 +78,11 @@ export function AppStructuredData() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: safeJsonLd(websiteJsonLd) }}
         key="website-jsonld"
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }}
+        key="breadcrumb-jsonld"
       />
     </>
   );

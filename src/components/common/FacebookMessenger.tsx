@@ -19,6 +19,7 @@ export function FacebookMessenger() {
       className="fixed bottom-20 right-4 md:bottom-6 md:right-6 z-[9999] flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-tr from-[#00c6ff] to-[#0072ff] text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-300"
       aria-label="Chat với chúng tôi qua Messenger"
     >
+      <span className="sr-only">Chat Facebook Messenger</span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"

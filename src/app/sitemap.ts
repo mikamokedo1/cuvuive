@@ -192,5 +192,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     console.error("Error generating sitemap for blog tags:", error);
   }
 
-  return [...staticRoutes, ...groupRoutes, ...ageRoutes, ...gameRoutes, ...blogRoutes, ...tagRoutes];
+  return [...staticRoutes, ...groupRoutes, ...ageRoutes, ...gameRoutes, ...blogRoutes];
 }
