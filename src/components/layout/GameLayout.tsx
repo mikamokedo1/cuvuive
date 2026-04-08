@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { ActionButton } from "@/components/common/ActionButton";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -8,6 +9,7 @@ import Image from "next/image";
 const BgImage = "https://assets.cuthongminh.com/assets/bg.webp";
 import Header from "./Header";
 import { LessonTitle } from "@/components/games/LessonTitle";
+import { initGameSounds } from "@/libs/utils/playSound";
 
 interface GameLayoutProps {
   children: React.ReactNode;
@@ -19,6 +21,10 @@ interface GameLayoutProps {
 export const GameLayout = ({ children, title, backTo, showBackButton = true }: GameLayoutProps) => {
   const router = useRouter();
 
+  // Preload game sounds only when a game page is visited
+  useEffect(() => {
+    initGameSounds();
+  }, []);
   return (
     <div className="min-h-screen relative flex flex-col py-6 px-4 overflow-hidden">
       <Header />

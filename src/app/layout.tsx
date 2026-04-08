@@ -15,14 +15,14 @@ import { AppProviders } from "@/app/AppProviders";
 // Configure fonts
 const baloo2 = Baloo_2({
   subsets: ["vietnamese", "latin"],
-  weight: ["600", "700", "800"],
+  weight: ["700", "800"],
   variable: "--font-baloo-2",
   display: "swap",
 });
 
 const nunitoSans = Nunito_Sans({
   subsets: ["vietnamese", "latin"],
-  weight: ["400", "600", "700"],
+  weight: ["400", "700"],
   variable: "--font-nunito-sans",
   display: "swap",
 });
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
     languages: {
-      "vi": "https://cuthongminh.com",
+      vi: "https://cuthongminh.com",
       "x-default": "https://cuthongminh.com",
     },
   },
@@ -76,7 +76,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Trò Chơi Giáo Dục Cho Bé 3-8 Tuổi | Cú Thông Minh",
-    description: "20+ trò chơi giáo dục tương tác giúp bé mầm non phát triển tư duy toàn diện. Miễn phí, an toàn, không quảng cáo.",
+    description:
+      "20+ trò chơi giáo dục tương tác giúp bé mầm non phát triển tư duy toàn diện. Miễn phí, an toàn, không quảng cáo.",
   },
   icons: {
     icon: [

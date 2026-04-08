@@ -44,12 +44,15 @@ export const preloadSound = async (path: string) => {
   }
 };
 
-// Preload common sounds in the browser
-if (typeof window !== "undefined") {
+// Lazy preload — call this from game pages only (not homepage)
+let _soundsInitialized = false;
+export const initGameSounds = () => {
+  if (_soundsInitialized || typeof window === "undefined") return;
+  _soundsInitialized = true;
   preloadSound("/sounds/ting.mp3");
   preloadSound("/sounds/correct.mp3");
   preloadSound("/sounds/wrong.mp3");
-}
+};
 
 export const playSound = (path: string, volumn = 0.5) => {
   if (typeof window === "undefined") return;

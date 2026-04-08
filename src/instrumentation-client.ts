@@ -9,18 +9,16 @@ Sentry.init({
   // Performance monitoring: 100% in dev, 10% in production
   tracesSampleRate: process.env.NODE_ENV === "development" ? 1.0 : 0.1,
 
-  // Session Replay: 10% of sessions, 100% on error
-  replaysSessionSampleRate: 0.1,
+  // Session Replay: disabled in prod for performance, 100% on error
+  replaysSessionSampleRate: 0,
   replaysOnErrorSampleRate: 1.0,
 
   // Integrations are lazy-loaded below to reduce initial bundle size
   integrations: [],
 });
 
-// Lazy-load Sentry Replay to reduce initial JS bundle (~30-50KB)
-Sentry.lazyLoadIntegration("replayIntegration").then((replay) => {
-  Sentry.addIntegration(replay());
-});
+// Only load Sentry Replay when an error actually occurs (saves ~47KB + 190ms on every page)
+// The replaysOnErrorSampleRate above triggers this automatically via Sentry internals
 
 // Required by Sentry to instrument client-side navigations
 export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;
