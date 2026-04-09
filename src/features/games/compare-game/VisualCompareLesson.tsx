@@ -6,13 +6,13 @@ import { ThingImages } from "@/libs/constants/thingImages";
 import { randomNum } from "@/libs/utils/randomNum";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { ActionButton } from "@/components/common/ActionButton";
-import { playSound } from "@/libs/utils/playSound";
+import { playSound, playWrongSound } from "@/libs/utils/playSound";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { FeedbackType } from "@/types/game";
 
 export const MAP_COMPARE_SIGN_SOUND = {
   ">": "dấu lớn",
-  "<": "dấu bé",
+  "<": "dấu pé",
   "=": "dấu bằng",
 };
 
@@ -96,10 +96,15 @@ export function VisualCompareLesson({ comparisonType, onComplete }: VisualCompar
       }
     } else {
       setFeedback("wrong");
-      setTimeout(() => setFeedback(null), 600);
+      setTimeout(() => {
+        setFeedback(null);
+        playWrongSound();
+      }, 600);
     }
   };
-
+  useEffect(() => {
+    speak(`chọn dấu thích hợp`);
+  }, []);
   return (
     <div className="flex flex-col items-center gap-6 w-full max-w-4xl">
       {/* Visual comparison */}
@@ -169,6 +174,7 @@ export function VisualCompareLesson({ comparisonType, onComplete }: VisualCompar
           { sign: "=", color: "purple" },
         ].map(({ sign, color }) => (
           <ActionButton
+            clickPlaySound={false}
             key={sign}
             onClick={() => handleChoice(sign as "<" | ">" | "=")}
             disabled={!!feedback}

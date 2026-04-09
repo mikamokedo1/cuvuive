@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { ThingImages } from "@/libs/constants/thingImages";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
@@ -131,6 +131,10 @@ export function ExplainLesson({ comparisonType, onComplete }: ExplainLessonProps
 
   // Use different icons for left vs right
   const IconIndex = currentIndex % ThingImages.length;
+
+  useEffect(() => {
+    speak(example.sound);
+  }, [currentIndex]);
 
   return (
     <div ref={swipeRef} className="flex flex-col items-center gap-6 w-full max-w-4xl">

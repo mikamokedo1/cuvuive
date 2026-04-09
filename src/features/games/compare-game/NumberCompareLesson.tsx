@@ -4,7 +4,7 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import { randomNum } from "@/libs/utils/randomNum";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { ActionButton } from "@/components/common/ActionButton";
-import { playSound } from "@/libs/utils/playSound";
+import { playSound, playWrongSound } from "@/libs/utils/playSound";
 import { MAP_COMPARE_SIGN_SOUND } from "./VisualCompareLesson";
 import { FeedbackType } from "@/types/game";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
@@ -62,7 +62,7 @@ export function NumberCompareLesson({ comparisonType, onComplete }: NumberCompar
 
   const handleChoice = (sign: "<" | ">" | "=") => {
     if (feedback) return;
-    playSound(MAP_COMPARE_SIGN_SOUND[sign]);
+    speak(MAP_COMPARE_SIGN_SOUND[sign]);
 
     let isCorrect = false;
 
@@ -87,9 +87,16 @@ export function NumberCompareLesson({ comparisonType, onComplete }: NumberCompar
       }
     } else {
       setFeedback("wrong");
-      setTimeout(() => setFeedback(null), 600);
+      setTimeout(() => {
+        setFeedback(null);
+        playWrongSound();
+      }, 600);
     }
   };
+
+  useEffect(() => {
+    speak(`chọn dấu thích hợp`);
+  }, []);
 
   return (
     <div className="flex flex-col items-center gap-6 w-full max-w-2xl">
@@ -142,6 +149,7 @@ export function NumberCompareLesson({ comparisonType, onComplete }: NumberCompar
           { sign: "=", color: "purple" },
         ].map(({ sign, color }) => (
           <ActionButton
+            clickPlaySound={false}
             key={sign}
             onClick={() => handleChoice(sign as "<" | ">" | "=")}
             disabled={!!feedback}
