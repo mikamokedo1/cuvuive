@@ -20,6 +20,7 @@
   margin-bottom: 1.25rem;
   font-weight: 700;
   line-height: 1.3;
+  scroll-margin-top: 90px; /* Offset for fixed header navigation when clicked from TOC */
 }
 
 .blog-content h2 {

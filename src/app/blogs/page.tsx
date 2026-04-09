@@ -6,7 +6,8 @@ import BlogCard from "@/components/blog/BlogCard";
 import { SpeakableSchema } from "@/components/common/SpeakableSchema";
 import { safeJsonLd } from "@/libs/utils/safe-jsonld";
 import { normalizeTagPathSegment } from "@/libs/utils/tag-slug";
-import { Tag } from "lucide-react";
+import { Tag, TrendingUp } from "lucide-react";
+import { GENERAL_PARENTING_SLUGS } from "@/libs/seo/topic-clusters";
 
 /** Collect all tags with their post counts, sorted by count desc */
 async function getTagsWithCounts(): Promise<{ tag: string; count: number }[]> {
@@ -62,6 +63,11 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Pr
   const limit = 6;
   const [{ posts, total }, tagsWithCounts] = await Promise.all([getPaginatedPosts(currentPage, limit), getTagsWithCounts()]);
   const totalPages = Math.ceil(total / limit);
+
+  const allPosts = await getAllPosts();
+  const featuredPosts = allPosts
+    .filter(post => GENERAL_PARENTING_SLUGS.includes(post.slug))
+    .slice(0, 3);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -170,6 +176,29 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Pr
                   ))}
                 </div>
               </div>
+              
+              {featuredPosts.length > 0 && (
+                <div className="bg-white rounded-2xl border border-slate-100 p-6 mt-6 shadow-sm">
+                  <h3 className="text-lg font-bold font-[family-name:var(--font-baloo-2)] text-slate-800 mb-4 flex items-center gap-2">
+                    <TrendingUp className="w-5 h-5 text-red-500" />
+                    Bài viết chọn lọc
+                  </h3>
+                  <div className="flex flex-col gap-4">
+                    {featuredPosts.map((featured) => (
+                      <Link
+                        key={featured.slug}
+                        href={`/blogs/${featured.slug}`}
+                        className="group flex flex-col gap-1 border-b border-slate-50 pb-4 last:border-0 last:pb-0"
+                      >
+                        <h4 className="font-bold text-slate-700 text-sm group-hover:text-orange-500 transition-colors line-clamp-2">
+                          {featured.title}
+                        </h4>
+                        <span className="text-xs text-slate-400 font-medium">Khuyên đọc</span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </aside>
         )}

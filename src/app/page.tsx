@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import { GROUPS } from "@/libs/constants/groups";
+import { GROUPS, GROUP_DESCRIPTIONS } from "@/libs/constants/groups";
 import { Footer } from "@/components/layout/Footer";
 import { HeaderHome } from "@/components/layout/HeaderHome";
 import { FAQSchema, type FAQItem } from "@/components/common/FAQSchema";
@@ -319,21 +319,26 @@ export default function Home() {
                     <Link
                       key={group.id}
                       href={`/${group.slug}`}
-                      className={`aspect-square sm:aspect-auto sm:h-64 rounded-3xl bg-gradient-to-br ${bgGradient} p-6 flex flex-col items-center justify-center text-white hover:scale-[1.03] transition-transform duration-300 shadow-lg hover:shadow-2xl relative overflow-hidden group`}
+                      className={`h-auto sm:min-h-[16rem] rounded-3xl bg-gradient-to-br ${bgGradient} p-6 flex flex-col items-center justify-center text-white hover:scale-[1.03] transition-transform duration-300 shadow-lg hover:shadow-2xl relative overflow-hidden group`}
                     >
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
-                      <div className="relative w-20 h-20 sm:w-24 sm:h-24 mb-4 transform group-hover:scale-110 group-hover:-translate-y-2 transition-transform duration-300 drop-shadow-md">
+                      <div className="relative w-16 h-16 sm:w-20 sm:h-20 mb-4 transform group-hover:scale-110 group-hover:-translate-y-2 transition-transform duration-300 drop-shadow-md">
                         <Image
                           src={group.icon}
                           alt={group.title}
                           fill
-                          sizes="(max-width: 640px) 80px, (max-width: 1024px) 100px, 120px"
+                          sizes="(max-width: 640px) 64px, 80px"
                           className="object-contain"
                         />
                       </div>
                       <span className="font-bold text-xl sm:text-2xl font-[family-name:var(--font-baloo-2)] text-center drop-shadow-md leading-tight mb-2">
                         {group.title}
                       </span>
+                      {GROUP_DESCRIPTIONS[group.id] && (
+                        <p className="hidden md:block text-sm text-white/95 text-center line-clamp-3 font-medium mt-1 leading-relaxed drop-shadow-sm">
+                          {GROUP_DESCRIPTIONS[group.id]}
+                        </p>
+                      )}
                     </Link>
                   );
                 })}
@@ -356,6 +361,58 @@ export default function Home() {
         <ScrollReveal delay={100}>
           <LatestBlogs />
         </ScrollReveal>
+
+        {/* Educational Methodology Section */}
+        <ScrollReveal delay={100}>
+          <section className="py-24 bg-slate-50 relative border-y border-slate-100">
+            <div className="container mx-auto px-6 max-w-5xl">
+              <div className="text-center mb-16">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-100 text-orange-600 font-bold mb-6">
+                  <Star className="w-4 h-4" /> Phương pháp học tập
+                </div>
+                <h2 className="text-4xl md:text-5xl font-bold font-[family-name:var(--font-baloo-2)] text-slate-900 mb-6 tracking-tight">
+                  Phương pháp <span className="text-orange-500">Giáo dục sớm</span> tại Cú Thông Minh
+                </h2>
+              </div>
+              <div className="flex flex-col gap-8 md:gap-12">
+                <div className="bg-white p-8 md:p-12 rounded-[2.5rem] shadow-sm border border-slate-100 flex flex-col md:flex-row items-center gap-8 md:gap-12 hover:shadow-md transition-shadow">
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-slate-900 mb-4 font-[family-name:var(--font-baloo-2)]">
+                      Lấy cảm hứng từ Montessori & Play-based Learning
+                    </h3>
+                    <p className="text-lg text-slate-600 leading-relaxed mb-4">
+                      Tại Cú Thông Minh, chúng tôi áp dụng triết lý "Vừa học vừa chơi" (Play-based learning) kết hợp cùng tinh hoa của phương pháp giáo dục sớm Montessori. Chúng tôi tin rằng trẻ em ở độ tuổi mầm non học hỏi tốt nhất khi được tự do khám phá trong một môi trường an toàn, vui vẻ và đầy màu sắc.
+                    </p>
+                    <p className="text-lg text-slate-600 leading-relaxed">
+                      Lộ trình học tập được thiết kế cá nhân hóa cho từng bé từ 3 đến 8 tuổi. Bắt đầu từ những khái niệm cơ bản về màu sắc, hình chữ cái, bé sẽ dần làm quen với các khái niệm phức tạp hơn như toán học tư duy, quy luật logic và khoa học tự nhiên. Mọi bài học đều kích thích đa giác quan qua hình ảnh sắc nét và âm thanh sống động.
+                    </p>
+                  </div>
+                  <div className="w-40 h-40 md:w-56 md:h-56 shrink-0 bg-orange-50 rounded-full flex items-center justify-center relative overflow-hidden group">
+                    <Brain className="w-20 h-20 md:w-24 md:h-24 text-orange-500 group-hover:scale-110 transition-transform duration-500 drop-shadow-md" />
+                  </div>
+                </div>
+
+                <div className="bg-white p-8 md:p-12 rounded-[2.5rem] shadow-sm border border-slate-100 flex flex-col md:flex-row-reverse items-center gap-8 md:gap-12 hover:shadow-md transition-shadow">
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-slate-900 mb-4 font-[family-name:var(--font-baloo-2)]">
+                      Môi trường học tập chủ động và an toàn
+                    </h3>
+                     <p className="text-lg text-slate-600 leading-relaxed mb-4">
+                      Chúng tôi hiểu nỗi lo của phụ huynh về thời gian sử dụng thiết bị điện tử. Vì vậy, Cú Thông Minh được thiết kế giúp bé tương tác chủ động thay vì xem thụ động. Các trò chơi đòi hỏi bé phải suy nghĩ, kéo thả, ghép nối và đưa ra quyết định liên tục.
+                    </p>
+                    <p className="text-lg text-slate-600 leading-relaxed">
+                      Đặc biệt, hệ thống hoạt động hoàn toàn không chứa quảng cáo, đảm bảo 100% môi trường giáo dục trực tuyến trong sạch. Phụ huynh cũng được cung cấp công cụ giới hạn thời gian học tập và cấu hình độ khó chuyên sâu để đồng hành sát sao cùng tiến trình phát triển trí tuệ của con mình mỗi ngày.
+                    </p>
+                  </div>
+                  <div className="w-40 h-40 md:w-56 md:h-56 shrink-0 bg-green-50 rounded-full flex items-center justify-center relative overflow-hidden group">
+                   <ShieldCheck className="w-20 h-20 md:w-24 md:h-24 text-green-500 group-hover:scale-110 transition-transform duration-500 drop-shadow-md" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </ScrollReveal>
+
 
         {/* Testimonial / Social Proof (Slider) */}
         <ScrollReveal delay={100}>

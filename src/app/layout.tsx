@@ -36,9 +36,9 @@ export const metadata: Metadata = {
       "x-default": "https://cuthongminh.com",
     },
   },
-  title: "Trò Chơi Giáo Dục Cho Bé 3-8 Tuổi | Cú Thông Minh - Vừa Học Vừa Chơi",
+  title: "Trò Chơi Giáo Dục Cho Bé 3-8 Tuổi | Cú Thông Minh",
   description:
-    "Ứng dụng giáo dục tương tác #1 cho trẻ mầm non. 20+ trò chơi học toán, chữ cái tiếng Việt, tư duy logic giúp bé 3-8 tuổi phát triển toàn diện. Miễn phí, an toàn, không quảng cáo.",
+    "Ứng dụng giáo dục tương tác #1 cho trẻ mầm non. 20+ trò chơi học toán, chữ cái, tư duy logic giúp bé 3-8 tuổi phát triển toàn diện.",
   keywords: [
     "trò chơi giáo dục cho bé",
     "app học tập cho trẻ mầm non",
@@ -75,6 +75,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+    site: "@cuthongminh",
+    creator: "@cuthongminh",
     title: "Trò Chơi Giáo Dục Cho Bé 3-8 Tuổi | Cú Thông Minh",
     description:
       "20+ trò chơi giáo dục tương tác giúp bé mầm non phát triển tư duy toàn diện. Miễn phí, an toàn, không quảng cáo.",
@@ -116,6 +118,9 @@ export default async function RootLayout({
   return (
     <html lang="vi">
       <head>
+        {/* Explicit hreflang tags for global SEO */}
+        <link rel="alternate" hrefLang="vi" href="https://cuthongminh.com/" />
+        <link rel="alternate" hrefLang="x-default" href="https://cuthongminh.com/" />
         {/* Preconnect to external domains for faster resource loading */}
         <link rel="preconnect" href="https://assets.cuthongminh.com" />
         <link rel="dns-prefetch" href="https://assets.cuthongminh.com" />

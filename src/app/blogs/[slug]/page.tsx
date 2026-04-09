@@ -7,10 +7,45 @@ import remarkGfm from "remark-gfm";
 import { Clock, Calendar, User, Tag } from "lucide-react";
 import "@/styles/blog.css"; // Make sure to import the new blog styles
 
+function slugifyVi(text: string) {
+  return text
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/đ/g, "d")
+    .replace(/Đ/g, "D")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)+/g, "");
+}
+
+const rehypeVietnameseSlug = () => {
+  return (tree: any) => {
+    const traverse = (node: any) => {
+      if (node.type === "element" && /^h[1-6]$/.test(node.tagName)) {
+        if (!node.properties) node.properties = {};
+        if (!node.properties.id) {
+          const getText = (n: any): string => {
+            if (n.type === "text") return n.value || "";
+            if (n.children) return n.children.map(getText).join("");
+            return "";
+          };
+          node.properties.id = slugifyVi(getText(node));
+        }
+      }
+      if (node.children && Array.isArray(node.children)) {
+        node.children.forEach(traverse);
+      }
+    };
+    traverse(tree);
+  };
+};
+
+
 import { safeJsonLd } from "@/libs/utils/safe-jsonld";
 import Link from "next/link";
 import { GAME_SEO } from "@/libs/constants/game-seo";
-
+import { TOPIC_CLUSTERS, GENERAL_PARENTING_SLUGS } from "@/libs/seo/topic-clusters";
+import AIFact from "@/components/blog/AIFact";
 
 
 export async function generateStaticParams() {
@@ -76,26 +111,67 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   }
 
   const allPosts = await getAllPosts();
-  let relatedPosts = allPosts
-    .filter((candidate) => candidate.slug !== post.slug)
-    .map((candidate) => {
-      const sharedTags = candidate.tags?.filter((tag) => post.tags?.some((postTag) => postTag.toLowerCase() === tag.toLowerCase())) ?? [];
-      return { post: candidate, sharedTagsCount: sharedTags.length };
-    })
-    .filter((candidate) => candidate.sharedTagsCount > 0)
-    .sort((left, right) => right.sharedTagsCount - left.sharedTagsCount)
-    .map((candidate) => candidate.post);
+  let relatedPosts: any[] = [];
+  
+  // 1. Find which cluster (if any) the current post belongs to
+  let currentClusterSlugs: string[] = [];
+  
+  if (GENERAL_PARENTING_SLUGS.includes(post.slug)) {
+    currentClusterSlugs = GENERAL_PARENTING_SLUGS;
+  } else {
+    for (const cluster of Object.values(TOPIC_CLUSTERS)) {
+      if (cluster.blogSlugs.includes(post.slug)) {
+        currentClusterSlugs = cluster.blogSlugs;
+        break;
+      }
+    }
+  }
 
-  // Focus on fixing orphan blog posts by falling back to latest posts if < 3 related
+  // 2. Ring algorithm: get the next 3 posts in the cluster
+  if (currentClusterSlugs.length > 1) {
+    const currentIndex = currentClusterSlugs.indexOf(post.slug);
+    const numPosts = currentClusterSlugs.length;
+    
+    for (let i = 1; i <= 3; i++) {
+        // Wrap around to start if necessary
+        const nextIndex = (currentIndex + i) % numPosts;
+        const nextSlug = currentClusterSlugs[nextIndex];
+        
+        // Don't link to self (happens if cluster has < 4 items)
+        if (nextSlug !== post.slug) {
+            const nextPost = allPosts.find((p) => p.slug === nextSlug);
+            if (nextPost && !relatedPosts.some(rp => rp.slug === nextSlug)) {
+                relatedPosts.push(nextPost);
+            }
+        }
+    }
+  }
+
+  // 3. Fallback: If we still don't have enough posts (e.g., small cluster or unmapped post)
+  // Use tag-based matching, then newest posts
   if (relatedPosts.length < 3) {
-    const remainingPosts = allPosts
+    const tagMatchedPosts = allPosts
+      .filter((candidate) => candidate.slug !== post.slug && !relatedPosts.some(rp => rp.slug === candidate.slug))
+      .map((candidate) => {
+        const sharedTags = candidate.tags?.filter((tag) => post.tags?.some((postTag) => postTag.toLowerCase() === tag.toLowerCase())) ?? [];
+        return { post: candidate, sharedTagsCount: sharedTags.length };
+      })
+      .filter((candidate) => candidate.sharedTagsCount > 0)
+      .sort((a, b) => b.sharedTagsCount - a.sharedTagsCount)
+      .map(c => c.post);
+      
+    relatedPosts = [...relatedPosts, ...tagMatchedPosts];
+  }
+  
+  if (relatedPosts.length < 3) {
+    const newestPosts = allPosts
       .filter((candidate) => candidate.slug !== post.slug && !relatedPosts.some(rp => rp.slug === candidate.slug))
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     
-    relatedPosts = [...relatedPosts, ...remainingPosts].slice(0, 3);
-  } else {
-    relatedPosts = relatedPosts.slice(0, 3);
+    relatedPosts = [...relatedPosts, ...newestPosts];
   }
+
+  relatedPosts = relatedPosts.slice(0, 3);
 
   const relatedGames = Object.entries(GAME_SEO)
     .filter(([, seo]) => seo.relatedBlogs.some((blog) => blog.slug === post.slug))
@@ -150,35 +226,74 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     day: "numeric",
   });
 
+  const breadcrumbItems = [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Trang chủ",
+      item: "https://cuthongminh.com/",
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Blog",
+      item: "https://cuthongminh.com/blogs",
+    },
+  ];
+
+  if (post.tags && post.tags.length > 0) {
+    breadcrumbItems.push({
+      "@type": "ListItem",
+      position: 3,
+      name: post.tags[0],
+      item: `https://cuthongminh.com/blogs/tag/${encodeURIComponent(post.tags[0])}`,
+    });
+    breadcrumbItems.push({
+      "@type": "ListItem",
+      position: 4,
+      name: post.title,
+      item: `https://cuthongminh.com/blogs/${post.slug}`,
+    });
+  } else {
+    breadcrumbItems.push({
+      "@type": "ListItem",
+      position: 3,
+      name: post.title,
+      item: `https://cuthongminh.com/blogs/${post.slug}`,
+    });
+  }
+
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Trang chủ",
-        item: "https://cuthongminh.com",
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Blog",
-        item: "https://cuthongminh.com/blogs",
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: post.title,
-        item: `https://cuthongminh.com/blogs/${post.slug}`,
-      },
-    ],
+    itemListElement: breadcrumbItems,
   };
 
   return (
     <article className="container mx-auto px-6 max-w-3xl">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }} />
+
+      {/* Visual Breadcrumb */}
+      <nav aria-label="Breadcrumb" className="mb-8 pt-6">
+        <ol className="flex items-center space-x-2 text-sm text-slate-500 font-medium font-[family-name:var(--font-nunito-sans)] flex-wrap">
+          <li>
+            <Link href="/" className="hover:text-orange-500 transition-colors">Trang chủ</Link>
+          </li>
+          <li><span className="text-slate-300">/</span></li>
+          <li>
+            <Link href="/blogs" className="hover:text-orange-500 transition-colors">Blog</Link>
+          </li>
+          {post.tags && post.tags.length > 0 && (
+            <>
+              <li><span className="text-slate-300">/</span></li>
+              <li>
+                <Link href={`/blogs/tag/${encodeURIComponent(post.tags[0])}`} className="hover:text-orange-500 transition-colors">{post.tags[0]}</Link>
+              </li>
+            </>
+          )}
+        </ol>
+      </nav>
 
       {/* Article Header */}
       <header className="mb-12 text-center">
@@ -233,7 +348,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
       {/* MDX Content area */}
       <div className="prose prose-lg prose-slate max-w-none hover:prose-a:text-orange-600 blog-content">
-        <MDXRemote source={post.content} options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }} />
+        <MDXRemote 
+          source={post.content} 
+          components={{ AIFact }}
+          options={{ mdxOptions: { remarkPlugins: [remarkGfm], rehypePlugins: [rehypeVietnameseSlug] } }} 
+        />
       </div>
 
       {relatedGames.length > 0 && (

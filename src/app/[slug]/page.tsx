@@ -9,7 +9,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Star, Play, Trophy } from "lucide-react";
 import { FAQSchema, type FAQItem } from "@/components/common/FAQSchema";
 import { SpeakableSchema } from "@/components/common/SpeakableSchema";
-import { GameGroupType } from "@/libs/constants/groups";
+import { GameGroupType, GROUP_DESCRIPTIONS } from "@/libs/constants/groups";
 import { safeJsonLd } from "@/libs/utils/safe-jsonld";
 import { TOPIC_CLUSTERS } from "@/libs/seo/topic-clusters";
 import { getAllPosts } from "@/libs/blog";
@@ -170,18 +170,6 @@ const GROUP_KEYWORDS: Record<GameGroupType, string[]> = {
   history: [],
 };
 
-// SEO-optimized descriptions per group
-const GROUP_DESCRIPTIONS: Record<GameGroupType, string> = {
-  math: "Trò chơi Toán Học tương tác giúp bé 3-8 tuổi học đếm số, phép cộng trừ nhân chia, so sánh số lượng. Phương pháp học mà chơi hiệu quả trên Cú Thông Minh.",
-  logic: "Rèn luyện tư duy logic cho bé qua trò chơi tìm quy luật, mê cung, nối điểm, tìm điểm khác biệt. Phát triển trí tuệ toàn diện cho trẻ 3-8 tuổi.",
-  language: "Bé học tiếng Việt online: bảng chữ cái, dấu thanh, ghép vần qua trò chơi tương tác sinh động. Nền tảng ngôn ngữ vững chắc cho trẻ mầm non.",
-  science: "Khám phá thế giới khoa học cùng bé: động vật, trái cây, khủng long, thời tiết, cơ thể người. Trò chơi giáo dục tương tác cho trẻ 3-8 tuổi.",
-  "life-skill": "Dạy bé kỹ năng sống thiết yếu: an toàn giao thông, vệ sinh cá nhân, nghề nghiệp, quản lý cảm xúc qua trò chơi tương tác vui nhộn trên Cú Thông Minh.",
-  geography: "Bé khám phá thế giới: quốc kỳ các nước, địa danh nổi tiếng, trang phục truyền thống, địa hình tự nhiên qua trò chơi giáo dục tương tác.",
-  music: "Bé học âm nhạc vui: nhạc cụ, nốt nhạc, chơi đàn piano qua trò chơi tương tác. Phát triển thính giác và cảm thụ nghệ thuật cho trẻ mầm non.",
-  art: "Bé học mỹ thuật sáng tạo: nhận biết màu sắc, pha màu, tô tranh, vẽ tự do. Phát triển thẩm mỹ và khả năng sáng tạo cho trẻ 3-8 tuổi.",
-  history: "",
-};
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
