@@ -125,9 +125,9 @@ export default function Home() {
             </div>
 
             <h1 className="text-5xl md:text-7xl lg:text-[5rem] font-extrabold font-[family-name:var(--font-baloo-2)] text-slate-900 leading-[1.1] mb-8 max-w-5xl mx-auto tracking-tight">
-              Cùng bé yêu khám phá <br className="hidden md:block" />
+              Trò Chơi Giáo Dục <br className="hidden md:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-500">
-                thế giới tri thức vui nhộn
+                Tương Tác Cho Bé 3-8 Tuổi
               </span>
             </h1>
 

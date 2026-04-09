@@ -208,7 +208,7 @@ export default async function GroupLandingPage({ params }: PageProps) {
   const faqItems = GROUP_FAQ[group.id] || [];
   const allPosts = await getAllPosts();
   const topicCluster = TOPIC_CLUSTERS[group.id];
-  const clusterPosts = allPosts.filter((post) => topicCluster.blogSlugs.includes(post.slug)).slice(0, 6);
+  const clusterPosts = allPosts.filter((post) => topicCluster.blogSlugs.includes(post.slug));
 
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",

@@ -164,33 +164,43 @@ export default function sitemap(): MetadataRoute.Sitemap {
     console.error("Error generating sitemap for blogs:", error);
   }
 
-  // Collect unique blog tags for tag pages
+  // Collect unique blog tags for tag pages (only include tags with ≥3 posts to match noindex threshold)
   let tagRoutes: MetadataRoute.Sitemap = [];
   try {
     if (fs.existsSync(blogsDir)) {
       const blogFiles = fs.readdirSync(blogsDir).filter((file) => file.endsWith(".mdx"));
-      const tagSet = new Set<string>();
+      const tagCountMap = new Map<string, { normalizedTag: string; count: number }>();
       for (const file of blogFiles) {
         try {
           const content = fs.readFileSync(path.join(blogsDir, file), "utf8");
           const { data } = matter(content);
           if (data.tags && Array.isArray(data.tags)) {
-            data.tags.forEach((tag: string) => tagSet.add(normalizeTagPathSegment(tag)));
+            data.tags.forEach((tag: string) => {
+              const normalized = normalizeTagPathSegment(tag);
+              const existing = tagCountMap.get(normalized);
+              tagCountMap.set(normalized, {
+                normalizedTag: normalized,
+                count: (existing?.count || 0) + 1,
+              });
+            });
           }
         } catch {
           // skip
         }
       }
-      tagRoutes = Array.from(tagSet).map((tag) => ({
-        url: `${baseUrl}/blogs/tag/${tag}`,
-        lastModified: getLatestMtime("src/app/blogs/tag/[tag]/page.tsx", "content/blogs"),
-        changeFrequency: "weekly",
-        priority: 0.5,
-      }));
+      // Only include tag pages with ≥3 posts (pages with <3 posts are noindex'd)
+      tagRoutes = Array.from(tagCountMap.values())
+        .filter(({ count }) => count >= 3)
+        .map(({ normalizedTag }) => ({
+          url: `${baseUrl}/blogs/tag/${normalizedTag}`,
+          lastModified: getLatestMtime("src/app/blogs/tag/[tag]/page.tsx", "content/blogs"),
+          changeFrequency: "weekly",
+          priority: 0.5,
+        }));
     }
   } catch (error) {
     console.error("Error generating sitemap for blog tags:", error);
   }
 
-  return [...staticRoutes, ...groupRoutes, ...ageRoutes, ...gameRoutes, ...blogRoutes];
+  return [...staticRoutes, ...groupRoutes, ...ageRoutes, ...gameRoutes, ...blogRoutes, ...tagRoutes];
 }

@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug } from "@/libs/blog";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
-import { Clock, Calendar, User, Tag } from "lucide-react";
+import { Clock, Calendar, Tag } from "lucide-react";
 import "@/styles/blog.css"; // Make sure to import the new blog styles
 
 function slugifyVi(text: string) {
@@ -40,13 +40,11 @@ const rehypeVietnameseSlug = () => {
   };
 };
 
-
 import { safeJsonLd } from "@/libs/utils/safe-jsonld";
 import Link from "next/link";
 import { GAME_SEO } from "@/libs/constants/game-seo";
 import { TOPIC_CLUSTERS, GENERAL_PARENTING_SLUGS } from "@/libs/seo/topic-clusters";
 import AIFact from "@/components/blog/AIFact";
-
 
 export async function generateStaticParams() {
   const posts = await getAllPosts();
@@ -112,10 +110,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   const allPosts = await getAllPosts();
   let relatedPosts: any[] = [];
-  
+
   // 1. Find which cluster (if any) the current post belongs to
   let currentClusterSlugs: string[] = [];
-  
+
   if (GENERAL_PARENTING_SLUGS.includes(post.slug)) {
     currentClusterSlugs = GENERAL_PARENTING_SLUGS;
   } else {
@@ -131,19 +129,19 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   if (currentClusterSlugs.length > 1) {
     const currentIndex = currentClusterSlugs.indexOf(post.slug);
     const numPosts = currentClusterSlugs.length;
-    
+
     for (let i = 1; i <= 3; i++) {
-        // Wrap around to start if necessary
-        const nextIndex = (currentIndex + i) % numPosts;
-        const nextSlug = currentClusterSlugs[nextIndex];
-        
-        // Don't link to self (happens if cluster has < 4 items)
-        if (nextSlug !== post.slug) {
-            const nextPost = allPosts.find((p) => p.slug === nextSlug);
-            if (nextPost && !relatedPosts.some(rp => rp.slug === nextSlug)) {
-                relatedPosts.push(nextPost);
-            }
+      // Wrap around to start if necessary
+      const nextIndex = (currentIndex + i) % numPosts;
+      const nextSlug = currentClusterSlugs[nextIndex];
+
+      // Don't link to self (happens if cluster has < 4 items)
+      if (nextSlug !== post.slug) {
+        const nextPost = allPosts.find((p) => p.slug === nextSlug);
+        if (nextPost && !relatedPosts.some((rp) => rp.slug === nextSlug)) {
+          relatedPosts.push(nextPost);
         }
+      }
     }
   }
 
@@ -151,23 +149,25 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   // Use tag-based matching, then newest posts
   if (relatedPosts.length < 3) {
     const tagMatchedPosts = allPosts
-      .filter((candidate) => candidate.slug !== post.slug && !relatedPosts.some(rp => rp.slug === candidate.slug))
+      .filter((candidate) => candidate.slug !== post.slug && !relatedPosts.some((rp) => rp.slug === candidate.slug))
       .map((candidate) => {
-        const sharedTags = candidate.tags?.filter((tag) => post.tags?.some((postTag) => postTag.toLowerCase() === tag.toLowerCase())) ?? [];
+        const sharedTags =
+          candidate.tags?.filter((tag) => post.tags?.some((postTag) => postTag.toLowerCase() === tag.toLowerCase())) ??
+          [];
         return { post: candidate, sharedTagsCount: sharedTags.length };
       })
       .filter((candidate) => candidate.sharedTagsCount > 0)
       .sort((a, b) => b.sharedTagsCount - a.sharedTagsCount)
-      .map(c => c.post);
-      
+      .map((c) => c.post);
+
     relatedPosts = [...relatedPosts, ...tagMatchedPosts];
   }
-  
+
   if (relatedPosts.length < 3) {
     const newestPosts = allPosts
-      .filter((candidate) => candidate.slug !== post.slug && !relatedPosts.some(rp => rp.slug === candidate.slug))
+      .filter((candidate) => candidate.slug !== post.slug && !relatedPosts.some((rp) => rp.slug === candidate.slug))
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-    
+
     relatedPosts = [...relatedPosts, ...newestPosts];
   }
 
@@ -189,10 +189,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": "BlogPosting",
     headline: post.title,
     description: post.description,
-    image: post.image ? [`https://assets.cuthongminh.com${post.image}`] : [],
+    image: post.image
+      ? [post.image.startsWith("http") ? post.image : `https://cuthongminh.com${post.image}`]
+      : [],
     datePublished: post.date,
     dateModified: post.dateModified,
     wordCount,
@@ -205,6 +207,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     author: {
       "@type": "Person",
       name: post.author,
+      url: "https://cuthongminh.com/about-us",
+      description: "Chuyên gia giáo dục mầm non tại Cú Thông Minh",
     },
     publisher: {
       "@type": "Organization",
@@ -278,17 +282,30 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       <nav aria-label="Breadcrumb" className="mb-8 pt-6">
         <ol className="flex items-center space-x-2 text-sm text-slate-500 font-medium font-[family-name:var(--font-nunito-sans)] flex-wrap">
           <li>
-            <Link href="/" className="hover:text-orange-500 transition-colors">Trang chủ</Link>
+            <Link href="/" className="hover:text-orange-500 transition-colors">
+              Trang chủ
+            </Link>
           </li>
-          <li><span className="text-slate-300">/</span></li>
           <li>
-            <Link href="/blogs" className="hover:text-orange-500 transition-colors">Blog</Link>
+            <span className="text-slate-300">/</span>
+          </li>
+          <li>
+            <Link href="/blogs" className="hover:text-orange-500 transition-colors">
+              Blog
+            </Link>
           </li>
           {post.tags && post.tags.length > 0 && (
             <>
-              <li><span className="text-slate-300">/</span></li>
               <li>
-                <Link href={`/blogs/tag/${encodeURIComponent(post.tags[0])}`} className="hover:text-orange-500 transition-colors">{post.tags[0]}</Link>
+                <span className="text-slate-300">/</span>
+              </li>
+              <li>
+                <Link
+                  href={`/blogs/tag/${encodeURIComponent(post.tags[0])}`}
+                  className="hover:text-orange-500 transition-colors"
+                >
+                  {post.tags[0]}
+                </Link>
               </li>
             </>
           )}
@@ -316,18 +333,39 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           {post.title}
         </h1>
 
-        <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-slate-500 font-medium font-[family-name:var(--font-nunito-sans)]">
-          <div className="flex items-center gap-2 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">
-            <User className="w-4 h-4 text-orange-500" />
-            <span>{post.author}</span>
+        <div className="flex flex-col items-center gap-4 mt-6">
+          {/* Author Byline — E-E-A-T */}
+          <div className="flex items-center gap-4 bg-slate-50 px-5 py-3 rounded-2xl border border-slate-100">
+            <div className="relative w-12 h-12 rounded-full overflow-hidden bg-orange-100 flex-shrink-0 border-2 border-orange-200">
+              <Image
+                src="/icons/android-chrome-512x512.png"
+                alt={post.author}
+                fill
+                sizes="48px"
+                className="object-cover"
+              />
+            </div>
+            <div className="text-left">
+              <Link
+                href="/about-us"
+                className="font-bold text-slate-900 hover:text-orange-500 transition-colors text-sm"
+              >
+                {post.author}
+              </Link>
+              <p className="text-xs text-slate-500">Chuyên gia giáo dục mầm non • Cú Thông Minh</p>
+            </div>
           </div>
-          <div className="flex items-center gap-2 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">
-            <Calendar className="w-4 h-4 text-orange-500" />
-            <time dateTime={post.date}>{formattedDate}</time>
-          </div>
-          <div className="flex items-center gap-2 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">
-            <Clock className="w-4 h-4 text-orange-500" />
-            <span>{post.readingTime} phút đọc</span>
+
+          {/* Date & Reading Time */}
+          <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-slate-500 font-medium font-[family-name:var(--font-nunito-sans)]">
+            <div className="flex items-center gap-2 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">
+              <Calendar className="w-4 h-4 text-orange-500" />
+              <time dateTime={post.date}>{formattedDate}</time>
+            </div>
+            <div className="flex items-center gap-2 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">
+              <Clock className="w-4 h-4 text-orange-500" />
+              <span>{post.readingTime} phút đọc</span>
+            </div>
           </div>
         </div>
       </header>
@@ -348,10 +386,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
       {/* MDX Content area */}
       <div className="prose prose-lg prose-slate max-w-none hover:prose-a:text-orange-600 blog-content">
-        <MDXRemote 
-          source={post.content} 
+        <MDXRemote
+          source={post.content}
           components={{ AIFact }}
-          options={{ mdxOptions: { remarkPlugins: [remarkGfm], rehypePlugins: [rehypeVietnameseSlug] } }} 
+          options={{ mdxOptions: { remarkPlugins: [remarkGfm], rehypePlugins: [rehypeVietnameseSlug] } }}
         />
       </div>
 

@@ -72,7 +72,7 @@ export default async function AgeGroupLandingPage({ params }: PageProps) {
   const generalPosts = allPosts.filter((post) => GENERAL_PARENTING_SLUGS.includes(post.slug));
   generalPosts.forEach((post) => tagMatchedSlugs.add(post.slug));
 
-  const clusterPosts = allPosts.filter((post) => tagMatchedSlugs.has(post.slug)).slice(0, 6);
+  const clusterPosts = allPosts.filter((post) => tagMatchedSlugs.has(post.slug));
 
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",

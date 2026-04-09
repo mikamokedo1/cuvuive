@@ -6,8 +6,9 @@ import BlogCard from "@/components/blog/BlogCard";
 import { SpeakableSchema } from "@/components/common/SpeakableSchema";
 import { safeJsonLd } from "@/libs/utils/safe-jsonld";
 import { normalizeTagPathSegment } from "@/libs/utils/tag-slug";
-import { Tag, TrendingUp } from "lucide-react";
+import { Tag, TrendingUp, BookOpen } from "lucide-react";
 import { GENERAL_PARENTING_SLUGS } from "@/libs/seo/topic-clusters";
+import { GROUPS } from "@/libs/constants/groups";
 
 /** Collect all tags with their post counts, sorted by count desc */
 async function getTagsWithCounts(): Promise<{ tag: string; count: number }[]> {
@@ -199,6 +200,25 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Pr
                   </div>
                 </div>
               )}
+              {/* Category Pages — internal linking hub */}
+              <div className="bg-slate-50 rounded-2xl border border-slate-100 p-6 mt-6">
+                <h3 className="text-lg font-bold font-[family-name:var(--font-baloo-2)] text-slate-800 mb-4 flex items-center gap-2">
+                  <BookOpen className="w-5 h-5 text-blue-500" />
+                  Khám phá theo môn học
+                </h3>
+                <div className="flex flex-col gap-2">
+                  {GROUPS.filter((g) => g.id !== "history").map((group) => (
+                    <Link
+                      key={group.id}
+                      href={`/${group.slug}`}
+                      className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:bg-orange-50 hover:text-orange-600 transition-all duration-200"
+                    >
+                      <span className="text-base">📚</span>
+                      {group.title}
+                    </Link>
+                  ))}
+                </div>
+              </div>
             </div>
           </aside>
         )}

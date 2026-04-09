@@ -32,7 +32,7 @@ const orgJsonLd = {
     areaServed: "VN",
     availableLanguage: "Vietnamese",
   },
-  sameAs: ["https://www.facebook.com/cuthongminh", "https://www.youtube.com/@cuthongminh"],
+  sameAs: ["https://www.facebook.com/cuthongminh", "https://www.youtube.com/@cuthongminh", "https://www.tiktok.com/@cuthongminh"],
 };
 
 const websiteJsonLd = {
