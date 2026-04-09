@@ -240,6 +240,9 @@ export default function Home() {
                   </h3>
                   <p className="text-slate-600 leading-relaxed font-medium relative z-10">
                     Rèn luyện khả năng quan sát, tư duy chiến lược và xử lý vấn đề qua từng thử thách lôi cuốn.
+                    Bé được học toán đếm số, phép cộng trừ, nhận biết hình dạng, chữ cái tiếng Việt và tư duy logic
+                    — tất cả qua phương pháp giáo dục sớm Montessori, giúp trẻ mầm non 3-8 tuổi phát triển
+                    trí tuệ theo đúng lộ trình chuẩn bị vào lớp 1.
                   </p>
                 </div>
 
@@ -253,6 +256,9 @@ export default function Home() {
                   </h3>
                   <p className="text-slate-600 leading-relaxed font-medium relative z-10">
                     Hình ảnh sắc nét, âm thanh sống động và nhân vật ngộ nghĩnh truyền cảm hứng học tập mỗi ngày.
+                    Mỗi trò chơi giáo dục được thiết kế dựa trên nghiên cứu tâm lý trẻ em, kết hợp hoạt hình
+                    tương tác và phản hồi tích cực để bé chủ động khám phá kiến thức về toán học,
+                    ngôn ngữ, khoa học và kỹ năng sống.
                   </p>
                 </div>
 
@@ -265,7 +271,9 @@ export default function Home() {
                     Môi trường An toàn
                   </h3>
                   <p className="text-slate-600 leading-relaxed font-medium relative z-10">
-                    Tuyệt đối không có quảng cáo, hỗ trợ tính năng theo dõi tiến độ dành riêng cho ba mẹ.
+                    Tuyệt đối không có quảng cáo, không nội dung độc hại. Hệ thống theo dõi tiến độ học tập
+                    cho phép ba mẹ nắm bắt quá trình phát triển của bé mỗi ngày. Dữ liệu cá nhân
+                    được bảo mật hoàn toàn, tuân thủ quy định bảo vệ trẻ em trên không gian mạng.
                   </p>
                 </div>
               </div>

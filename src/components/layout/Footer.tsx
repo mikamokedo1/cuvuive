@@ -19,41 +19,41 @@ export function Footer() {
             <div className="flex flex-col gap-4">
               <h4 className="font-bold text-slate-900 mb-2">Khám phá</h4>
               <Link href="/about-us" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
-                Về chúng tôi
+                Giới thiệu về Cú Thông Minh
               </Link>
               <Link href="/blogs" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
-                Chia sẻ (Blog)
+                Blog giáo dục mầm non
               </Link>
               <Link href="/games" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
-                Kho trò chơi
+                Kho trò chơi giáo dục
               </Link>
               <Link
                 href="/upgrade"
                 className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors font-medium"
               >
-                Nâng cấp tài khoản
+                Nâng cấp Premium
               </Link>
               <Link
                 href="/gioi-thieu-kiem-tien"
                 className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors"
               >
-                Kiếm tiền
+                Giới thiệu bạn bè — Nhận hoa hồng
               </Link>
             </div>
 
             <div className="flex flex-col gap-4">
               <h4 className="font-bold text-slate-900 mb-2">Theo độ tuổi</h4>
               <Link href="/do-tuoi/3-tuoi" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
-                Bé 3 tuổi
+                Trò chơi cho bé 3 tuổi
               </Link>
               <Link href="/do-tuoi/4-tuoi" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
-                Bé 4 tuổi
+                Trò chơi cho bé 4 tuổi
               </Link>
               <Link href="/do-tuoi/5-tuoi" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
-                Bé 5 tuổi (Tiền lớp 1)
+                Bé 5 tuổi chuẩn bị vào lớp 1
               </Link>
               <Link href="/do-tuoi/6-8-tuoi" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
-                Bé 6-8 tuổi
+                Trò chơi trí tuệ cho bé 6-8 tuổi
               </Link>
             </div>
 
@@ -61,28 +61,28 @@ export function Footer() {
               <h4 className="font-bold text-slate-900 mb-2">Môn học</h4>
               <div className="grid grid-cols-2 gap-x-8 gap-y-4 text-sm">
                 <Link href="/tro-choi-tu-duy" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
-                  Tư Duy
+                  Trò chơi tư duy logic
                 </Link>
                 <Link href="/tro-choi-my-thuat" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
-                  Mỹ Thuật
+                  Bé học mỹ thuật sáng tạo
                 </Link>
                 <Link href="/ky-nang-song" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
-                  Kỹ Năng Sống
+                  Kỹ năng sống cho bé
                 </Link>
                 <Link href="/dia-ly-tu-nhien" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
-                  Địa Lý Tự Nhiên
+                  Khám phá địa lý tự nhiên
                 </Link>
                 <Link href="/am-nhac" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
-                  Âm Nhạc
+                  Bé làm quen âm nhạc
                 </Link>
                 <Link href="/khoa-hoc" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
-                  Khoa Học
+                  Khoa học vui cho trẻ
                 </Link>
                 <Link href="/hoc-tieng-viet-cho-be" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
-                  Ngôn Ngữ
+                  Học tiếng Việt cho bé
                 </Link>
                 <Link href="/tro-choi-toan-hoc" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
-                  Toán Học
+                  Toán học qua trò chơi
                 </Link>
               </div>
             </div>
@@ -90,13 +90,13 @@ export function Footer() {
             <div className="flex flex-col gap-4">
               <h4 className="font-bold text-slate-900 mb-2">Hỗ trợ</h4>
               <Link href="/feedback" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
-                Góp ý
+                Gửi góp ý cho Cú Thông Minh
               </Link>
               <Link href="/privacy" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
-                Bảo mật
+                Chính sách bảo mật
               </Link>
               <Link href="/terms" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
-                Điều khoản
+                Điều khoản sử dụng
               </Link>
             </div>
 

@@ -6,6 +6,14 @@ export interface TopicCluster {
   blogSlugs: string[];
 }
 
+/**
+ * Topic clusters map each game category to related blog posts.
+ * This drives internal linking from category pages to blog content,
+ * which is critical for SEO (prevents orphan pages).
+ *
+ * IMPORTANT: Every blog post should appear in at least one cluster.
+ * Posts can appear in multiple clusters if relevant.
+ */
 export const TOPIC_CLUSTERS: Record<GameGroupType, TopicCluster> = {
   math: {
     heading: "Cụm nội dung Toán Học",
@@ -16,6 +24,14 @@ export const TOPIC_CLUSTERS: Record<GameGroupType, TopicCluster> = {
       "so-sanh-so-luong",
       "phep-cong-tru-don-gian",
       "hoc-xem-dong-ho-cho-be",
+      // Previously orphaned posts
+      "bang-cuu-chuong-cho-be",
+      "game-cong-tru-cho-be",
+      "phep-tinh-don-gian-cho-be-mau-giao",
+      "so-sanh-lon-nho-nhieu-it-cho-be",
+      "nhan-biet-hinh-dang",
+      "day-be-nhan-biet-tien",
+      "sudoku-cho-be-mam-non",
     ],
   },
   logic: {
@@ -27,6 +43,9 @@ export const TOPIC_CLUSTERS: Record<GameGroupType, TopicCluster> = {
       "tro-choi-tim-diem-khac-biet",
       "me-cung-cho-be",
       "bai-tap-tu-duy-tim-hinh-khac-loai",
+      // Previously orphaned posts
+      "loi-ich-tro-choi-tri-tue",
+      "sudoku-cho-be-mam-non",
     ],
   },
   language: {
@@ -38,6 +57,10 @@ export const TOPIC_CLUSTERS: Record<GameGroupType, TopicCluster> = {
       "dau-tieng-viet-cho-be",
       "be-hoc-ghep-van",
       "day-tre-tap-doc-som",
+      // Previously orphaned posts
+      "day-be-ghep-van-tai-nha",
+      "day-be-hoc-tu-vung-tieng-viet",
+      "game-hoc-chu-cho-be",
     ],
   },
   science: {
@@ -49,6 +72,14 @@ export const TOPIC_CLUSTERS: Record<GameGroupType, TopicCluster> = {
       "hoc-thoi-tiet-va-khi-hau",
       "be-hoc-bo-phan-co-the",
       "kham-pha-dia-hinh",
+      // Previously orphaned posts
+      "the-gioi-khung-long",
+      "tim-hieu-hoa-va-cay",
+      "nhan-biet-trai-cay",
+      "day-be-nhan-biet-trai-cay-rau-cu",
+      "kham-pha-thoi-tiet-cung-be",
+      "be-hoc-ve-co-the-nguoi",
+      "kham-pha-mon-an",
     ],
   },
   "life-skill": {
@@ -60,6 +91,15 @@ export const TOPIC_CLUSTERS: Record<GameGroupType, TopicCluster> = {
       "ky-nang-ve-sinh-ca-nhan",
       "day-be-biet-cac-nghe-nghiep",
       "day-be-nhan-biet-nguoi-la",
+      // Previously orphaned posts
+      "day-be-giu-ve-sinh-ca-nhan",
+      "day-be-quan-ly-cam-xuc",
+      "goi-ten-cam-xuc",
+      "day-be-lam-viec-nha",
+      "ky-nang-tu-phuc-vu-cho-be",
+      "hoc-nghe-nghiep",
+      "khung-hoang-tuoi-len-3",
+      "lich-sinh-hoat-cho-be-mam-non",
     ],
   },
   geography: {
@@ -89,6 +129,8 @@ export const TOPIC_CLUSTERS: Record<GameGroupType, TopicCluster> = {
       "be-hoc-pha-mau-nghe-thuat",
       "be-tap-to-mau-sang-tao",
       "day-be-ve-tranh-don-gian",
+      // Previously orphaned posts
+      "day-be-to-mau-dung-cach",
     ],
   },
   history: {
@@ -97,3 +139,20 @@ export const TOPIC_CLUSTERS: Record<GameGroupType, TopicCluster> = {
     blogSlugs: [],
   },
 };
+
+/**
+ * Cross-cutting "general parenting" posts that should be linked from
+ * the blog listing page and age-based pages, not tied to a single subject.
+ * These include age-milestone guides, early education philosophy,
+ * and screen-time management.
+ */
+export const GENERAL_PARENTING_SLUGS = [
+  "be-2-tuoi-nen-hoc-gi",
+  "be-3-tuoi-nen-hoc-gi",
+  "be-4-tuoi-nen-hoc-gi",
+  "be-5-tuoi-can-biet-nhung-gi",
+  "be-6-tuoi-nen-hoc-gi",
+  "be-chuan-bi-vao-lop-1-can-hoc-gi",
+  "giao-duc-som-la-gi",
+  "tre-xem-tivi-dien-thoai-qua-nhieu",
+];

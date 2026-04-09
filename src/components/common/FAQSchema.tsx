@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { safeJsonLd } from "@/libs/utils/safe-jsonld";
 
 export interface FAQItem {
   question: string;
@@ -16,27 +15,16 @@ interface FAQSchemaProps {
 }
 
 /**
- * AEO-optimized FAQ component that renders:
- * 1. FAQPage JSON-LD structured data for AI answer engines
- * 2. Visual accordion FAQ section for users
+ * FAQ component that renders a visual accordion FAQ section for users.
+ *
+ * NOTE: FAQPage JSON-LD was removed because Google restricted FAQPage schema
+ * to government and healthcare authority sites only (August 2023).
+ * The FAQ content is still valuable for users and AI answer engines via
+ * the semantic HTML structure.
  */
 export function FAQSchema({ items, title, subtitle }: FAQSchemaProps) {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: items.map((item) => ({
-      "@type": "Question",
-      name: item.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: item.answer,
-      },
-    })),
-  };
-
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }} />
       <section className="py-24 bg-gradient-to-b from-white to-orange-50/30" id="faq">
         <div className="container mx-auto px-6 max-w-4xl">
           {title && (

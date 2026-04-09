@@ -10,6 +10,7 @@ import { Star, Play, Trophy, Sparkles } from "lucide-react";
 import { SpeakableSchema } from "@/components/common/SpeakableSchema";
 import { safeJsonLd } from "@/libs/utils/safe-jsonld";
 import { getAllPosts } from "@/libs/blog";
+import { GENERAL_PARENTING_SLUGS } from "@/libs/seo/topic-clusters";
 
 interface PageProps {
   params: Promise<{ age: string }>;
@@ -57,13 +58,21 @@ export default async function AgeGroupLandingPage({ params }: PageProps) {
   // Lọc game thuộc độ tuổi này
   const groupGames = COURSES.filter((course) => group.gameIds.includes(course.id));
 
-  // Lọc bài blog phù hợp độ tuổi
+  // Lọc bài blog phù hợp độ tuổi (tag-matched + general parenting posts)
   const allPosts = await getAllPosts();
-  const clusterPosts = allPosts
-    .filter(
-      (post) => post.tags && post.tags.some((t) => group.blogTags.some((bt) => bt.toLowerCase() === t.toLowerCase())),
-    )
-    .slice(0, 4);
+  const tagMatchedSlugs = new Set(
+    allPosts
+      .filter(
+        (post) => post.tags && post.tags.some((t) => group.blogTags.some((bt) => bt.toLowerCase() === t.toLowerCase())),
+      )
+      .map((post) => post.slug),
+  );
+
+  // Merge tag-matched posts with general parenting posts (deduplicated)
+  const generalPosts = allPosts.filter((post) => GENERAL_PARENTING_SLUGS.includes(post.slug));
+  generalPosts.forEach((post) => tagMatchedSlugs.add(post.slug));
+
+  const clusterPosts = allPosts.filter((post) => tagMatchedSlugs.has(post.slug)).slice(0, 6);
 
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",

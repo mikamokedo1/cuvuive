@@ -5,7 +5,6 @@ import { HeaderHome } from "@/components/layout/HeaderHome";
 import { Share2, Users, Gift, Wallet, ArrowRight, CheckCircle2, Shield, Clock, HelpCircle } from "lucide-react";
 import { FAQAccordionItem } from "@/components/common/FAQSchema";
 import { Footer } from "@/components/layout/Footer";
-import { safeJsonLd } from "@/libs/utils/safe-jsonld";
 
 const faqs = [
   {
@@ -38,19 +37,6 @@ const faqs = [
   }
 ];
 
-const faqJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqs.map((item) => ({
-    "@type": "Question",
-    name: item.question,
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: item.answer,
-    },
-  })),
-};
-
 const owlHi = "https://assets.cuthongminh.com/games/common/owl-say-hi.webp";
 
 /* ============================================
@@ -59,10 +45,6 @@ const owlHi = "https://assets.cuthongminh.com/games/common/owl-say-hi.webp";
 export default function ReferralIntroPage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: safeJsonLd(faqJsonLd) }}
-      />
       <div className="min-h-screen bg-gradient-to-b from-emerald-50 via-teal-50 to-sky-50 relative overflow-hidden">
         {/* Background Decorations */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">

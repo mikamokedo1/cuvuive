@@ -6,49 +6,12 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import { Clock, Calendar, User, Tag } from "lucide-react";
 import "@/styles/blog.css"; // Make sure to import the new blog styles
-import { HowToSchema, type HowToStep } from "@/components/common/HowToSchema";
+
 import { safeJsonLd } from "@/libs/utils/safe-jsonld";
 import Link from "next/link";
 import { GAME_SEO } from "@/libs/constants/game-seo";
 
-/**
- * Extracts HowTo steps from MDX content by parsing ## headings and their following text.
- * Only applies to tutorial-style blog posts.
- */
-function extractHowToSteps(content: string): HowToStep[] {
-  const headingRegex = /^## \d+\.\s*(.+)$/gm;
-  const steps: HowToStep[] = [];
-  let match;
 
-  while ((match = headingRegex.exec(content)) !== null) {
-    const stepName = match[1].trim();
-    const startIdx = match.index + match[0].length;
-    // Find text until the next ## heading or end of content
-    const nextHeading = content.indexOf("\n## ", startIdx);
-    const stepText = content
-      .slice(startIdx, nextHeading === -1 ? undefined : nextHeading)
-      .replace(/^[\s\n]+/, "")
-      .split("\n")
-      .filter((line) => line.trim() && !line.startsWith("![") && !line.startsWith("---"))
-      .slice(0, 3)
-      .join(" ")
-      .trim();
-
-    if (stepName && stepText) {
-      steps.push({ name: stepName, text: stepText });
-    }
-  }
-
-  return steps;
-}
-
-/**
- * Checks if a blog post title suggests it's a tutorial/how-to article
- */
-function isHowToPost(title: string): boolean {
-  const howToKeywords = ["Cách", "Hướng dẫn", "Phương Pháp", "phương pháp", "Bước", "bước"];
-  return howToKeywords.some((kw) => title.includes(kw));
-}
 
 export async function generateStaticParams() {
   const posts = await getAllPosts();
@@ -212,29 +175,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     ],
   };
 
-  // Extract HowTo steps if this is a tutorial post
-  const howToSteps = isHowToPost(post.title) ? extractHowToSteps(post.content) : [];
-
   return (
     <article className="container mx-auto px-6 max-w-3xl">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }} />
-
-      {/* HowTo Schema for tutorial posts */}
-      {howToSteps.length > 0 && (
-        <HowToSchema
-          name={post.title}
-          description={post.description}
-          steps={howToSteps}
-          image={
-            post.image
-              ? post.image.startsWith("http")
-                ? post.image
-                : `https://cuthongminh.com${post.image}`
-              : undefined
-          }
-        />
-      )}
 
       {/* Article Header */}
       <header className="mb-12 text-center">

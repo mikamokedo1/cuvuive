@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 const DISALLOWED_PATHS = ["/auth/", "/settings/", "/learn-progress/", "/api/", "/share/"];
 
-// AI crawler bot user agents that should be explicitly allowed
+// AI crawler bot user agents that should be explicitly managed
 const AI_BOTS = [
   "GPTBot",            // OpenAI - GPT model training
   "ChatGPT-User",      // OpenAI - ChatGPT browsing
@@ -14,6 +14,10 @@ const AI_BOTS = [
   "Applebot-Extended", // Apple Intelligence
   "Google-Extended",   // Google Gemini AI
   "cohere-ai",         // Cohere AI
+  "Bytespider",        // ByteDance - TikTok AI training
+  "CCBot",             // Common Crawl - AI dataset builder
+  "anthropic-ai",      // Anthropic - AI model training
+  "Amazonbot",         // Amazon - Alexa/AI training
 ];
 
 // Social media bots for link previews (OG images, cards)
