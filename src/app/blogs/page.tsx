@@ -61,7 +61,7 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
 export default async function BlogIndexPage({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
   const params = await searchParams;
   const currentPage = parseInt(params.page || "1", 10);
-  const limit = 6;
+  const limit = 12;
   const [{ posts, total }, tagsWithCounts] = await Promise.all([getPaginatedPosts(currentPage, limit), getTagsWithCounts()]);
   const totalPages = Math.ceil(total / limit);
 

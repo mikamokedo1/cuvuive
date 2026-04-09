@@ -15,9 +15,10 @@ import { AppProviders } from "@/app/AppProviders";
 // Configure fonts
 const baloo2 = Baloo_2({
   subsets: ["vietnamese", "latin"],
-  weight: ["700", "800"],
+  weight: ["700"],
   variable: "--font-baloo-2",
   display: "swap",
+  preload: true,
 });
 
 const nunitoSans = Nunito_Sans({
@@ -25,6 +26,7 @@ const nunitoSans = Nunito_Sans({
   weight: ["400", "700"],
   variable: "--font-nunito-sans",
   display: "swap",
+  preload: true,
 });
 
 export const metadata: Metadata = {
@@ -142,10 +144,10 @@ export default async function RootLayout({
             </AccessProvider>
           </UserProvider>
         </AutoRecoveryBoundary>
+        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+        )}
       </body>
-      {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
-        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
-      )}
     </html>
   );
 }
