@@ -24,6 +24,7 @@ const publicPaths = [
   "/share",
   "/sounds",
   "/upgrade",
+  "/do-tuoi",
 ];
 
 function isPublicPath(pathname: string): boolean {

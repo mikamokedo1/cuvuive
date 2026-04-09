@@ -44,6 +44,7 @@ import { safeJsonLd } from "@/libs/utils/safe-jsonld";
 import Link from "next/link";
 import { GAME_SEO } from "@/libs/constants/game-seo";
 import { TOPIC_CLUSTERS, GENERAL_PARENTING_SLUGS } from "@/libs/seo/topic-clusters";
+import { GROUPS } from "@/libs/constants/groups";
 import AIFact from "@/components/blog/AIFact";
 
 export async function generateStaticParams() {
@@ -113,17 +114,21 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   // 1. Find which cluster (if any) the current post belongs to
   let currentClusterSlugs: string[] = [];
+  let currentClusterKey: string | null = null;
 
   if (GENERAL_PARENTING_SLUGS.includes(post.slug)) {
     currentClusterSlugs = GENERAL_PARENTING_SLUGS;
   } else {
-    for (const cluster of Object.values(TOPIC_CLUSTERS)) {
+    for (const [key, cluster] of Object.entries(TOPIC_CLUSTERS)) {
       if (cluster.blogSlugs.includes(post.slug)) {
         currentClusterSlugs = cluster.blogSlugs;
+        currentClusterKey = key;
         break;
       }
     }
   }
+
+  const currentGroup = currentClusterKey ? GROUPS.find((g) => g.id === currentClusterKey) : null;
 
   // 2. Ring algorithm: get the next 3 posts in the cluster
   if (currentClusterSlugs.length > 1) {
@@ -192,9 +197,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     "@type": "BlogPosting",
     headline: post.title,
     description: post.description,
-    image: post.image
-      ? [post.image.startsWith("http") ? post.image : `https://cuthongminh.com${post.image}`]
-      : [],
+    image: post.image ? [post.image.startsWith("http") ? post.image : `https://cuthongminh.com${post.image}`] : [],
     datePublished: post.date,
     dateModified: post.dateModified,
     wordCount,
@@ -326,6 +329,16 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 {tag}
               </Link>
             ))}
+
+            {currentGroup && (
+              <Link
+                href={`/${currentGroup.slug}`}
+                className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider px-3 py-1.5 bg-indigo-100 text-indigo-600 rounded-full hover:bg-indigo-200 transition-colors"
+              >
+                <Tag className="w-3.5 h-3.5" />
+                Chủ đề: {currentGroup.title}
+              </Link>
+            )}
           </div>
         )}
 

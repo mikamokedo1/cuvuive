@@ -27,6 +27,16 @@ export function TestimonialSlider() {
       author: "Mẹ Bảo Ngọc",
       role: "Phụ huynh bé 4 tuổi",
     },
+    {
+      text: "Các trò chơi toán học được lồng ghép cực kỳ khéo léo. Bé nhà mình trước đây ghét học số, giờ lại chủ động xin mẹ cho đếm cà rốt trên ứng dụng.",
+      author: "Mẹ Tuấn Khang",
+      role: "Phụ huynh bé 5 tuổi",
+    },
+    {
+      text: "Tuyệt vời! App chạy mượt trên cả điện thoại và iPad mà không cần tải. Hình ảnh các con vật rất đáng yêu, âm thanh cực kỳ chuẩn tiếng Việt.",
+      author: "Bố Minh Nhật",
+      role: "Kỹ sư công nghệ",
+    },
   ];
 
   useEffect(() => {
