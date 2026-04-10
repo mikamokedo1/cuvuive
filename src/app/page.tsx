@@ -60,11 +60,20 @@ const HOME_FAQ_ITEMS: FAQItem[] = [
   },
 ];
 
-const TestimonialSlider = dynamic(() =>
-  import("@/components/common/TestimonialSlider").then((mod) => mod.TestimonialSlider),
+const TestimonialSlider = dynamic(
+  () => import("@/components/common/TestimonialSlider").then((mod) => mod.TestimonialSlider),
+  {
+    loading: () => (
+      <div className="bg-orange-50 rounded-[3rem] p-8 lg:p-16 border border-orange-100 text-center animate-pulse">
+        <div className="h-8 bg-orange-100 rounded-xl w-3/4 mx-auto mb-8" />
+        <div className="h-6 bg-orange-100 rounded-xl w-1/2 mx-auto mb-4" />
+        <div className="h-4 bg-orange-100 rounded-xl w-1/3 mx-auto" />
+      </div>
+    ),
+  },
 );
 
-const LatestBlogs = dynamic(() => import("@/components/blog/LatestBlogs"));
+import LatestBlogs from "@/components/blog/LatestBlogs";
 
 import type { Metadata } from "next";
 
@@ -213,12 +222,11 @@ export default function Home() {
           <div id="hero-sentinel" className="absolute bottom-0 h-1 w-full" aria-hidden="true" />
         </header>
 
-        {/* Features Showcase */}
-        <ScrollReveal>
-          <section
-            id="features"
-            className="py-24 bg-white relative z-20 shadow-[0_-20px_40px_-20px_rgba(0,0,0,0.03)] rounded-t-[3rem]"
-          >
+        {/* Features Showcase — rendered immediately (near-fold, no ScrollReveal delay) */}
+        <section
+          id="features"
+          className="py-24 bg-white relative z-20 shadow-[0_-20px_40px_-20px_rgba(0,0,0,0.03)] rounded-t-[3rem]"
+        >
             <div className="container mx-auto px-6">
               <div className="text-center mb-20">
                 <h2 className="text-4xl md:text-5xl font-bold font-[family-name:var(--font-baloo-2)] text-slate-900 mb-6 tracking-tight">
@@ -278,8 +286,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </section>
-        </ScrollReveal>
+        </section>
 
         {/* Games Preview Section */}
         <ScrollReveal delay={100}>
