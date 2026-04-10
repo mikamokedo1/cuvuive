@@ -31,6 +31,7 @@ const Header = () => {
           alt="Cú Thông Minh Logo"
           width={64}
           height={64}
+          priority
           className="md:hidden cursor-pointer object-contain drop-shadow-md transition-transform duration-300 hover:scale-105"
         />
         <Image
@@ -38,6 +39,7 @@ const Header = () => {
           alt="Cú Thông Minh Logo"
           width={256}
           height={56}
+          priority
           className="hidden md:block cursor-pointer drop-shadow-md transition-transform duration-300 hover:scale-105"
         />
       </Link>
