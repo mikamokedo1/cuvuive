@@ -47,11 +47,11 @@ export function SortBillsLesson({ onComplete }: SortBillsLessonProps) {
     setDragIdx(null);
     setOverIdx(null);
     setFeedback(null);
-    setTimeout(() => speak("Pé xếp các tờ tiền từ nhỏ đến lớn nhé"), 500);
   }, []);
 
   useEffect(() => {
     generateRound();
+    setTimeout(() => speak("Pé xếp các tờ tiền từ nhỏ đến lớn nhé"), 500);
   }, [generateRound]);
 
   const checkSorted = (arr: BillDef[]) => {
