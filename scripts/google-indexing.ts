@@ -1,5 +1,62 @@
+// Polyfill for Node 16 (googleapis v171+ expects global Headers)
+if (typeof globalThis.Headers === "undefined") {
+  (globalThis as any).Headers = class Headers {
+    private _headers: Record<string, string> = {};
+    constructor(init?: Record<string, string> | [string, string][]) {
+      if (init) {
+        if (Array.isArray(init)) {
+          for (const [k, v] of init) this._headers[k.toLowerCase()] = v;
+        } else {
+          for (const [k, v] of Object.entries(init)) this._headers[k.toLowerCase()] = v;
+        }
+      }
+    }
+    get(name: string) { return this._headers[name.toLowerCase()] ?? null; }
+    set(name: string, value: string) { this._headers[name.toLowerCase()] = value; }
+    has(name: string) { return name.toLowerCase() in this._headers; }
+    delete(name: string) { delete this._headers[name.toLowerCase()]; }
+    forEach(cb: (value: string, key: string) => void) {
+      for (const [k, v] of Object.entries(this._headers)) cb(v, k);
+    }
+    entries() { return Object.entries(this._headers)[Symbol.iterator](); }
+    keys() { return Object.keys(this._headers)[Symbol.iterator](); }
+    values() { return Object.values(this._headers)[Symbol.iterator](); }
+    [Symbol.iterator]() { return this.entries(); }
+  };
+}
+if (typeof globalThis.Request === "undefined") {
+  (globalThis as any).Request = class Request {
+    url: string;
+    method: string;
+    headers: any;
+    body: any;
+    constructor(url: string, init?: any) {
+      this.url = url;
+      this.method = init?.method || "GET";
+      this.headers = new (globalThis as any).Headers(init?.headers);
+      this.body = init?.body || null;
+    }
+  };
+}
+if (typeof globalThis.Response === "undefined") {
+  (globalThis as any).Response = class Response {
+    body: any;
+    status: number;
+    headers: any;
+    constructor(body?: any, init?: any) {
+      this.body = body;
+      this.status = init?.status || 200;
+      this.headers = new (globalThis as any).Headers(init?.headers);
+    }
+    async text() { return String(this.body); }
+    async json() { return JSON.parse(String(this.body)); }
+  };
+}
+
 import { google } from "googleapis";
 import fs from "fs";
+import path from "path";
+import https from "https";
 import path from "path";
 
 // ============================================================
@@ -209,6 +266,40 @@ async function checkIndexing(auth: any, urls: string[]): Promise<{
   return { indexed, notIndexed };
 }
 
+function httpsPost(url: string, accessToken: string, body: any): Promise<any> {
+  return new Promise((resolve, reject) => {
+    const postData = JSON.stringify(body);
+    const parsed = new URL(url);
+
+    const req = https.request(
+      {
+        hostname: parsed.hostname,
+        path: parsed.pathname + parsed.search,
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+          "Content-Length": Buffer.byteLength(postData),
+        },
+      },
+      (res) => {
+        let data = "";
+        res.on("data", (chunk: any) => (data += chunk));
+        res.on("end", () => {
+          try {
+            resolve(JSON.parse(data));
+          } catch {
+            reject(new Error(`Parse error: ${data}`));
+          }
+        });
+      }
+    );
+    req.on("error", reject);
+    req.write(postData);
+    req.end();
+  });
+}
+
 // ============================================================
 // SUBMIT: Submit non-indexed URLs via Indexing API
 // ============================================================
@@ -217,7 +308,7 @@ async function submitUrls(
   auth: any,
   urls: string[]
 ): Promise<{ submitted: string[]; failed: string[] }> {
-  const indexing = google.indexing({ version: "v3", auth });
+  const token = await auth.getAccessToken();
   const submitted: string[] = [];
   const failed: string[] = [];
 
@@ -226,9 +317,16 @@ async function submitUrls(
     const num = `[${i + 1}/${urls.length}]`;
 
     try {
-      await indexing.urlNotifications.publish({
-        requestBody: { url, type: "URL_UPDATED" },
-      });
+      const response = await httpsPost(
+        "https://indexing.googleapis.com/v3/urlNotifications:publish",
+        token,
+        { url, type: "URL_UPDATED" }
+      );
+
+      if (response.error) {
+        throw new Error(response.error.message || "API Error");
+      }
+
       submitted.push(url);
       console.log(`${num} ✅ ${getUrlCategory(url)} ${decodeURIComponent(url)}`);
     } catch (error: any) {
