@@ -25,10 +25,10 @@ const ImgSagradaFamilia = "https://assets.cuthongminh.com/games/learn-landmark/s
 const ImgStatueOfLiberty = "https://assets.cuthongminh.com/games/learn-landmark/statueofliberty.webp";
 const ImgChristTheRedeemer = "https://assets.cuthongminh.com/games/learn-landmark/christtheredeemer.webp";
 const ImgChichenItza = "https://assets.cuthongminh.com/games/learn-landmark/chichenitza.webp";
-// Placeholders for the remaining 3 that hit rate limit
-const Placeholder16 = "https://assets.cuthongminh.com/games/learn-flag/egypt.webp";
-const Placeholder17 = "https://assets.cuthongminh.com/games/learn-flag/australia.webp";
-const Placeholder18 = "https://assets.cuthongminh.com/games/learn-flag/southafrica.webp";
+// Group 3 continued
+const ImgMachuPicchu = "https://assets.cuthongminh.com/games/learn-landmark/machupicchu.webp";
+const ImgSydneyOperaHouse = "https://assets.cuthongminh.com/games/learn-landmark/sydneyoperahouse.webp";
+const ImgMoai = "https://assets.cuthongminh.com/games/learn-landmark/moai.webp";
 
 import { EntityData } from "@/types/game";
 
@@ -53,9 +53,9 @@ export const LANDMARKS: EntityData[] = [
   { id: "statueofliberty", name: "Nữ Thần Tự Do", image: ImgStatueOfLiberty, category: "americas" },
   { id: "chichenitza", name: "Chi chen It da", image: ImgChichenItza, category: "americas" },
   { id: "christtheredeemer", name: "Chúa Cứu Thế", image: ImgChristTheRedeemer, category: "americas" },
-  { id: "machupicchu", name: "Ma chu Pic chu", image: Placeholder16, category: "americas" },
-  { id: "sydneyoperahouse", name: "Nhà Hát Sít ni", image: Placeholder17, category: "americas" },
-  { id: "moai", name: "Tượng Moai", image: Placeholder18, category: "americas" },
+  { id: "machupicchu", name: "Ma chu Pic chu", image: ImgMachuPicchu, category: "americas" },
+  { id: "sydneyoperahouse", name: "Nhà Hát Sít ni", image: ImgSydneyOperaHouse, category: "americas" },
+  { id: "moai", name: "Tượng Moai", image: ImgMoai, category: "americas" },
 ];
 
 export const GROUPS = [
