@@ -38,9 +38,12 @@ export const metadata: Metadata = {
       "x-default": "https://cuthongminh.com",
     },
   },
-  title: "Trò Chơi Giáo Dục Cho Bé 3-8 Tuổi | Cú Thông Minh",
+  title: {
+    default: "Cú Thông Minh — Trò Chơi Giáo Dục Miễn Phí Cho Bé 3-8 Tuổi | Vừa Học Vừa Chơi",
+    template: "%s | Cú Thông Minh",
+  },
   description:
-    "Ứng dụng giáo dục tương tác #1 cho trẻ mầm non. 20+ trò chơi học toán, chữ cái, tư duy logic giúp bé 3-8 tuổi phát triển toàn diện.",
+    "Cho bé vừa học vừa chơi với 20+ trò chơi tương tác: học toán, chữ cái, tư duy logic, mê cung, pha màu. An toàn 100%, không quảng cáo. 1,000+ phụ huynh tin dùng. Trải nghiệm miễn phí ngay!",
   keywords: [
     "trò chơi giáo dục cho bé",
     "app học tập cho trẻ mầm non",
@@ -59,9 +62,9 @@ export const metadata: Metadata = {
     "phát triển trí tuệ trẻ em",
   ],
   openGraph: {
-    title: "Trò Chơi Giáo Dục Cho Bé 3-8 Tuổi | Cú Thông Minh",
+    title: "Cú Thông Minh — Trò Chơi Giáo Dục Miễn Phí Cho Bé 3-8 Tuổi",
     description:
-      "20+ trò chơi giáo dục tương tác giúp bé mầm non học toán, chữ cái, tư duy logic. Nền tảng học mà chơi #1 cho trẻ 3-8 tuổi tại Việt Nam.",
+      "Cho bé vừa học vừa chơi với 20+ trò chơi tương tác: toán, chữ cái, mê cung, pha màu. An toàn, không quảng cáo. 1,000+ phụ huynh tin dùng!",
     url: "https://cuthongminh.com",
     siteName: "Cú Thông Minh",
     locale: "vi_VN",
@@ -79,9 +82,9 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@cuthongminh",
     creator: "@cuthongminh",
-    title: "Trò Chơi Giáo Dục Cho Bé 3-8 Tuổi | Cú Thông Minh",
+    title: "Cú Thông Minh — Trò Chơi Giáo Dục Miễn Phí Cho Bé 3-8 Tuổi",
     description:
-      "20+ trò chơi giáo dục tương tác giúp bé mầm non phát triển tư duy toàn diện. Miễn phí, an toàn, không quảng cáo.",
+      "Cho bé vừa học vừa chơi với 20+ trò chơi tương tác: toán, chữ cái, mê cung, pha màu. An toàn, không quảng cáo. Trải nghiệm ngay!",
   },
   icons: {
     icon: [
