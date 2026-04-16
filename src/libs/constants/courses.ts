@@ -1782,4 +1782,53 @@ export const COURSES: CourseDef[] = [
       },
     ],
   },
+  {
+    id: "learn-english-vocab",
+    title: "Học Từ Vựng Tiếng Anh",
+    description: "Bé học từ vựng tiếng Anh cơ bản qua hình ảnh và phát âm: động vật, trái cây, màu sắc, số đếm.",
+    icon: "https://assets.cuthongminh.com/games/learn-english-vocab/logo.webp",
+    type: "english",
+    groups: [
+      {
+        id: "group1",
+        title: "Động Vật",
+        lessons: [
+          { id: "lesson1", title: "Học từ vựng", isFree: true },
+          { id: "lesson2", title: "Nghe & Chọn", isFree: true },
+          { id: "lesson3", title: "Ghép từ" },
+          { id: "lesson4", title: "Kiểm tra" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Trái Cây",
+        lessons: [
+          { id: "lesson1", title: "Học từ vựng", isFree: true },
+          { id: "lesson2", title: "Nghe & Chọn" },
+          { id: "lesson3", title: "Ghép từ" },
+          { id: "lesson4", title: "Kiểm tra" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Màu Sắc",
+        lessons: [
+          { id: "lesson1", title: "Học từ vựng", isFree: true },
+          { id: "lesson2", title: "Nghe & Chọn" },
+          { id: "lesson3", title: "Ghép từ" },
+          { id: "lesson4", title: "Kiểm tra" },
+        ],
+      },
+      {
+        id: "group4",
+        title: "Số Đếm",
+        lessons: [
+          { id: "lesson1", title: "Học từ vựng", isFree: true },
+          { id: "lesson2", title: "Nghe & Chọn" },
+          { id: "lesson3", title: "Ghép từ" },
+          { id: "lesson4", title: "Kiểm tra" },
+        ],
+      },
+    ],
+  },
 ];

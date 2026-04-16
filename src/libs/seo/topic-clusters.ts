@@ -138,6 +138,11 @@ export const TOPIC_CLUSTERS: Record<GameGroupType, TopicCluster> = {
     description: "Nhóm chủ đề lịch sử đang được cập nhật thêm nội dung.",
     blogSlugs: [],
   },
+  english: {
+    heading: "Cụm nội dung Tiếng Anh",
+    description: "Bé làm quen với tiếng Anh qua từ vựng cơ bản, phát âm và trò chơi tương tác cho trẻ mầm non.",
+    blogSlugs: [],
+  },
 };
 
 /**
