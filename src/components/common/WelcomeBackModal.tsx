@@ -12,6 +12,7 @@ export function WelcomeBackModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [streak, setStreak] = useState(0);
   const [activeDays, setActiveDays] = useState<number[]>([]);
+  const [isFirstTime, setIsFirstTime] = useState(false);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const { allProgress } = useProgress();
@@ -36,6 +37,7 @@ export function WelcomeBackModal() {
 
         setStreak(streakResult.currentStreak);
         setActiveDays(weeklyActivity);
+        setIsFirstTime(streakResult.isFirstTime ?? false);
 
         if (streakResult.streakUpdated) {
           setIsOpen(true);
@@ -64,14 +66,18 @@ export function WelcomeBackModal() {
 
         <div className="text-[80px] leading-none mb-6 origin-bottom animate-bounce drop-shadow-lg">🔥</div>
 
-        <h2 className="text-3xl font-black text-gray-800 font-display mb-2">Chào mừng bé quay lại!</h2>
+        <h2 className="text-3xl font-black text-gray-800 font-display mb-2">
+          {isFirstTime ? "Bé bắt đầu hành trình!" : "Chào mừng bé quay lại!"}
+        </h2>
 
         <p className="text-gray-500 font-medium mb-6">
-          {streak <= 1
-            ? "Hãy học hành chăm chỉ nhé."
-            : streak === 2
-              ? "Chuỗi học tập của bé đang rất tuyệt!"
-              : "Đừng bỏ lỡ chuỗi nhé!"}
+          {isFirstTime
+            ? "Hãy bắt đầu chuỗi học tập ngay nhé!"
+            : streak <= 1
+              ? "Hãy học hành chăm chỉ nhé."
+              : streak === 2
+                ? "Chuỗi học tập của bé đang rất tuyệt!"
+                : "Đừng bỏ lỡ chuỗi nhé!"}
         </p>
 
         <div className="mb-4">
@@ -87,7 +93,7 @@ export function WelcomeBackModal() {
             router.push(activeGameLink);
           }}
         >
-          Tiếp tục học ngay
+          {isFirstTime ? "Bắt đầu học ngay" : "Tiếp tục học ngay"}
         </ActionButton>
       </div>
     </div>
