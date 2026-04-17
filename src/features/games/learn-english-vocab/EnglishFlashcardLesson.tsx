@@ -64,15 +64,16 @@ export function EnglishFlashcardLesson({ words, onComplete }: EnglishFlashcardLe
 
       {/* Flashcard */}
       <div
+        key={currentIndex}
         onClick={handleFlip}
-        className={`
-          relative w-72 h-80 sm:w-80 sm:h-96 cursor-pointer perspective-1000
-          transition-transform duration-700 transform-style-3d
-          ${isFlipped ? "[transform:rotateY(180deg)]" : ""}
-        `}
+        className="relative w-72 h-80 sm:w-80 sm:h-96 cursor-pointer"
       >
         {/* Front - Image + Vietnamese */}
-        <div className="absolute inset-0 backface-hidden bg-white rounded-3xl shadow-2xl border-4 border-blue-200 flex flex-col items-center justify-center gap-4 p-6">
+        <div
+          className={`absolute inset-0 bg-white rounded-3xl shadow-2xl border-4 border-blue-200 flex flex-col items-center justify-center gap-4 p-6 transition-all duration-500 ${
+            isFlipped ? "opacity-0 scale-95 pointer-events-none z-0" : "opacity-100 scale-100 z-10"
+          }`}
+        >
           <div className="relative w-40 h-40 sm:w-48 sm:h-48">
             <Image
               src={currentWord.image}
@@ -87,7 +88,11 @@ export function EnglishFlashcardLesson({ words, onComplete }: EnglishFlashcardLe
         </div>
 
         {/* Back - English word */}
-        <div className="absolute inset-0 backface-hidden [transform:rotateY(180deg)] bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl shadow-2xl flex flex-col items-center justify-center gap-4 p-6">
+        <div
+          className={`absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl shadow-2xl flex flex-col items-center justify-center gap-4 p-6 transition-all duration-500 ${
+            isFlipped ? "opacity-100 scale-100 z-10" : "opacity-0 scale-95 pointer-events-none z-0"
+          }`}
+        >
           <div className="relative w-32 h-32 sm:w-40 sm:h-40">
             <Image
               src={currentWord.image}
