@@ -10,7 +10,7 @@ const LanguageLogo = "https://assets.cuthongminh.com/games/home/ngon_ngu.webp";
 const MathLogo = "https://assets.cuthongminh.com/games/home/toan.webp";
 const LogicLogo = "https://assets.cuthongminh.com/games/home/tu_duy.webp";
 const ArtLogo = "https://assets.cuthongminh.com/games/home/ve.webp";
-const EnglishLogo = "https://assets.cuthongminh.com/games/home/tieng_anh.webp";
+const EnglishLogo = "https://assets.cuthongminh.com/games/learn-english-vocab/tieng_anh.webp";
 
 export type GameGroupType =
   | "math"

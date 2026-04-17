@@ -58,6 +58,7 @@
     "googleapis": "^171.4.0",
     "jsdom": "^29.0.1",
     "tailwindcss": "^4",
+    "tsx": "^4.21.0",
     "tumblr.js": "^5.0.1",
     "twitter-api-v2": "^1.29.0",
     "typescript": "^5",
