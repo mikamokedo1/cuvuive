@@ -64,7 +64,31 @@ export function DifferenceBoard({
   };
 
   return (
-    <div className="flex flex-col md:flex-row gap-4 w-full h-full max-h-full justify-center items-center">
+    <div className="flex flex-col w-full h-full max-h-full justify-center items-center gap-3">
+      {/* Difference Counter */}
+      <div className="flex items-center gap-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-5 py-2.5 rounded-full shadow-lg">
+        <span className="text-lg">🔍</span>
+        <div className="flex items-center gap-1.5">
+          {differences.map((_, index) => (
+            <span
+              key={index}
+              className={`text-xl transition-all duration-300 ${
+                foundIndices.includes(index)
+                  ? "scale-125 drop-shadow-[0_0_6px_rgba(255,255,0,0.8)]"
+                  : "opacity-40 grayscale"
+              }`}
+            >
+              ⭐
+            </span>
+          ))}
+        </div>
+        <span className="font-bold text-base ml-1">
+          {foundIndices.length}/{differences.length}
+        </span>
+      </div>
+
+      {/* Images Row */}
+      <div className="flex flex-col md:flex-row gap-4 w-full flex-1 max-h-full justify-center items-center">
       {/* Original Image */}
       <div
         className="relative w-full aspect-[4/3] md:w-1/2 max-h-[45vh] md:max-h-[70vh] rounded-2xl overflow-hidden border-4 border-white shadow-xl bg-gray-200 cursor-crosshair transform transition duration-300 hover:scale-[1.02]"
@@ -139,6 +163,7 @@ export function DifferenceBoard({
             ✗
           </div>
         )}
+      </div>
       </div>
     </div>
   );
