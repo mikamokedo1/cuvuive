@@ -5,6 +5,7 @@ import { Check, Info } from "lucide-react";
 import { CostumeData } from "./constants";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { playButtonSound } from "@/libs/utils/playSound";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 
 interface CostumeDressUpLessonProps {
   costumes: CostumeData[];
@@ -13,6 +14,7 @@ interface CostumeDressUpLessonProps {
 
 export function CostumeDressUpLesson({ costumes, onComplete }: CostumeDressUpLessonProps) {
   const [currentRound, setCurrentRound] = useState(0);
+  const { speak } = useTextToSpeech("vi");
   const [options, setOptions] = useState<CostumeData[]>([]);
   // We determine full completion by finishing all costumes in the group
   const totalRounds = costumes.length;
@@ -40,13 +42,25 @@ export function CostumeDressUpLesson({ costumes, onComplete }: CostumeDressUpLes
     setOptions(roundOptions);
     setIsMatched(false);
     setDropError(false);
-  }, [currentRound, costumes, totalRounds]);
+
+    const timer = setTimeout(() => {
+      speak(`Hãy chọn trang phục của ${target.category}`);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [currentRound, costumes, totalRounds, speak]);
 
   const handleDragStart = (e: React.MouseEvent | React.TouchEvent, costumeId: string) => {
     if (isMatched) return;
     setIsDragging(true);
     setDraggedCostumeId(costumeId);
     setDropError(false);
+
+    // Speak the costume name when touched/dragged
+    const clickedCostume = costumes.find((c) => c.id === costumeId);
+    if (clickedCostume) {
+      speak(clickedCostume.name);
+    }
 
     let clientX, clientY;
     if ("touches" in e) {
@@ -154,6 +168,18 @@ export function CostumeDressUpLesson({ costumes, onComplete }: CostumeDressUpLes
               <div className="w-20 h-32 bg-sky-200 rounded-2xl"></div>
               <div className="absolute top-4 right-4 text-slate-400">
                 <Info className="w-6 h-6" />
+              </div>
+
+              {/* Hint: Flag and country */}
+              <div 
+                className="absolute top-6 w-full flex flex-col items-center justify-center text-center cursor-pointer pointer-events-auto transition-transform hover:scale-105 active:scale-95"
+                onClick={() => speak(`Hãy chọn trang phục của ${currentTarget.category}`)}
+              >
+                {currentTarget.flag && (
+                  <div className="relative w-16 h-10 rounded shadow-md border-2 border-white z-10 overflow-hidden bg-slate-100">
+                    <Image src={currentTarget.flag} alt={currentTarget.category || "Quốc kỳ"} fill className="object-cover" />
+                  </div>
+                )}
               </div>
             </div>
           </div>
