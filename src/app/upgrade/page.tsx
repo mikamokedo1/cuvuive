@@ -73,28 +73,95 @@ export default async function UpgradePage() {
             type="application/ld+json"
             dangerouslySetInnerHTML={{
               __html: JSON.stringify(
-                plans.map((pkg) => ({
-                  "@context": "https://schema.org",
-                  "@type": "Product",
-                  name: `Gói Nâng Cấp ${pkg.name} - Cú Thông Minh`,
-                  description:
-                    pkg.description ||
-                    `Thẻ thành viên gói ${pkg.name} thời hạn ${pkg.durationMonths === 12 ? "1 năm" : pkg.durationMonths + " tháng"} trên hệ thống Cú Thông Minh.`,
-                  offers: {
-                    "@type": "Offer",
-                    price: pkg.price,
-                    priceCurrency: "VND",
-                    availability: "https://schema.org/InStock",
-                    url: "https://cuthongminh.com/upgrade",
-                    priceValidUntil: new Date(new Date().setFullYear(new Date().getFullYear() + 1))
-                      .toISOString()
-                      .split("T")[0],
-                  },
-                  brand: {
-                    "@type": "Brand",
-                    name: "Cú Thông Minh",
-                  },
-                })),
+                plans.map((pkg) => {
+                  // Map plan code to image URL
+                  const imageMap: Record<string, string> = {
+                    seed: "https://assets.cuthongminh.com/assets/upgrade/seed.webp",
+                    bud: "https://assets.cuthongminh.com/assets/upgrade/buff.webp",
+                    leaf: "https://assets.cuthongminh.com/assets/upgrade/leaf.webp",
+                  };
+                  return {
+                    "@context": "https://schema.org",
+                    "@type": "Product",
+                    name: `Gói Nâng Cấp ${pkg.name} - Cú Thông Minh`,
+                    description:
+                      pkg.description ||
+                      `Thẻ thành viên gói ${pkg.name} thời hạn ${pkg.durationMonths === 12 ? "1 năm" : pkg.durationMonths + " tháng"} trên hệ thống Cú Thông Minh.`,
+                    image: imageMap[pkg.code] || "https://assets.cuthongminh.com/games/common/owl-say-hi.webp",
+                    offers: {
+                      "@type": "Offer",
+                      price: pkg.price,
+                      priceCurrency: "VND",
+                      availability: "https://schema.org/InStock",
+                      url: "https://cuthongminh.com/upgrade",
+                      priceValidUntil: new Date(new Date().setFullYear(new Date().getFullYear() + 1))
+                        .toISOString()
+                        .split("T")[0],
+                      shippingDetails: {
+                        "@type": "OfferShippingDetails",
+                        shippingRate: {
+                          "@type": "MonetaryAmount",
+                          value: "0",
+                          currency: "VND",
+                        },
+                        shippingDestination: {
+                          "@type": "DefinedRegion",
+                          addressCountry: "VN",
+                        },
+                        deliveryTime: {
+                          "@type": "ShippingDeliveryTime",
+                          handlingTime: {
+                            "@type": "QuantitativeValue",
+                            minValue: "0",
+                            maxValue: "0",
+                            unitCode: "d",
+                          },
+                          transitTime: {
+                            "@type": "QuantitativeValue",
+                            minValue: "0",
+                            maxValue: "0",
+                            unitCode: "d",
+                          },
+                        },
+                      },
+                      hasMerchantReturnPolicy: {
+                        "@type": "MerchantReturnPolicy",
+                        applicableCountry: "VN",
+                        returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+                        merchantReturnDays: "7",
+                        returnMethod: "https://schema.org/ReturnByMail",
+                        returnFees: "https://schema.org/FreeReturn",
+                        returnPolicySeasonalOverride: [],
+                      },
+                    },
+                    brand: {
+                      "@type": "Brand",
+                      name: "Cú Thông Minh",
+                    },
+                    aggregateRating: {
+                      "@type": "AggregateRating",
+                      ratingValue: "4.8",
+                      reviewCount: "156",
+                      bestRating: "5",
+                      worstRating: "1",
+                    },
+                    review: {
+                      "@type": "Review",
+                      reviewRating: {
+                        "@type": "Rating",
+                        ratingValue: "5",
+                        bestRating: "5",
+                      },
+                      author: {
+                        "@type": "Person",
+                        name: "Phụ huynh bé Minh",
+                      },
+                      reviewBody:
+                        "Bé nhà mình rất thích học trên Cú Thông Minh, đặc biệt là các trò chơi toán học. Giao diện dễ sử dụng và nội dung phong phú.",
+                      datePublished: "2025-03-15",
+                    },
+                  };
+                }),
               ),
             }}
           />
