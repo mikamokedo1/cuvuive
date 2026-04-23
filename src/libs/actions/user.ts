@@ -60,14 +60,14 @@ function getVietnamDayOfWeek(date: Date): number {
   return map[weekdayStr] ?? 0;
 }
 
-export async function updateUserStreakAction(): Promise<{ currentStreak: number; streakUpdated: boolean }> {
+export async function updateUserStreakAction(): Promise<{ currentStreak: number; streakUpdated: boolean; isFirstTime: boolean }> {
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return { currentStreak: 0, streakUpdated: false };
+    return { currentStreak: 0, streakUpdated: false, isFirstTime: false };
   }
 
   const userDb = await db.query.users.findFirst({
@@ -75,7 +75,7 @@ export async function updateUserStreakAction(): Promise<{ currentStreak: number;
   });
 
   if (!userDb) {
-    return { currentStreak: 0, streakUpdated: false };
+    return { currentStreak: 0, streakUpdated: false, isFirstTime: false };
   }
 
   const now = new Date();
@@ -83,11 +83,13 @@ export async function updateUserStreakAction(): Promise<{ currentStreak: number;
 
   let currentStreak = userDb.currentStreak || 0;
   let streakUpdated = false;
+  let isFirstTime = false;
 
   if (!userDb.lastActiveDate) {
     // First time active
     currentStreak = 1;
     streakUpdated = true;
+    isFirstTime = true;
   } else {
     // Compare dates using Vietnam timezone
     const lastActive = new Date(userDb.lastActiveDate);
@@ -136,7 +138,7 @@ export async function updateUserStreakAction(): Promise<{ currentStreak: number;
     });
   }
 
-  return { currentStreak, streakUpdated };
+  return { currentStreak, streakUpdated, isFirstTime };
 }
 
 export async function getUserWeeklyActivityAction(): Promise<number[]> {
