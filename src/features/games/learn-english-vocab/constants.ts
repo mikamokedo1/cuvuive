@@ -30,6 +30,9 @@ export interface EnglishWord {
   category: "animal" | "fruit" | "color" | "number";
 }
 
+const numSvg = (num: string, bg: string, color: string) => 
+  `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' rx='40' fill='%23${bg}'/%3E%3Ctext x='100' y='145' font-family='Arial, sans-serif' font-size='120' font-weight='bold' fill='%23${color}' text-anchor='middle'%3E${num}%3C/text%3E%3C/svg%3E`;
+
 export const ENGLISH_WORDS: EnglishWord[] = [
   // Animals (group1)
   { id: "dog", english: "Dog", vietnamese: "Con Chó", image: Dog, category: "animal" },
@@ -48,24 +51,24 @@ export const ENGLISH_WORDS: EnglishWord[] = [
   { id: "strawberry", english: "Strawberry", vietnamese: "Quả Dâu Tây", image: Strawberry, category: "fruit" },
 
   // Colors (group3) - using emoji-style color blocks
-  { id: "red", english: "Red", vietnamese: "Màu Đỏ", image: "https://assets.cuthongminh.com/games/learn-color/red.webp", category: "color" },
-  { id: "blue", english: "Blue", vietnamese: "Màu Xanh Dương", image: "https://assets.cuthongminh.com/games/learn-color/blue.webp", category: "color" },
-  { id: "green", english: "Green", vietnamese: "Màu Xanh Lá", image: "https://assets.cuthongminh.com/games/learn-color/green.webp", category: "color" },
-  { id: "yellow", english: "Yellow", vietnamese: "Màu Vàng", image: "https://assets.cuthongminh.com/games/learn-color/yellow.webp", category: "color" },
-  { id: "pink", english: "Pink", vietnamese: "Màu Hồng", image: "https://assets.cuthongminh.com/games/learn-color/pink.webp", category: "color" },
-  { id: "purple", english: "Purple", vietnamese: "Màu Tím", image: "https://assets.cuthongminh.com/games/learn-color/purple.webp", category: "color" },
+  { id: "red", english: "Red", vietnamese: "Màu Đỏ", image: "https://assets.cuthongminh.com/games/learn-color/red-apple.webp", category: "color" },
+  { id: "blue", english: "Blue", vietnamese: "Màu Xanh Dương", image: "https://assets.cuthongminh.com/games/learn-color/blue-whale.webp", category: "color" },
+  { id: "green", english: "Green", vietnamese: "Màu Xanh Lá", image: "https://assets.cuthongminh.com/games/learn-color/green-frog.webp", category: "color" },
+  { id: "yellow", english: "Yellow", vietnamese: "Màu Vàng", image: "https://assets.cuthongminh.com/games/learn-color/yellow-banana.webp", category: "color" },
+  { id: "pink", english: "Pink", vietnamese: "Màu Hồng", image: "https://assets.cuthongminh.com/games/learn-color/pink-pig.webp", category: "color" },
+  { id: "purple", english: "Purple", vietnamese: "Màu Tím", image: "https://assets.cuthongminh.com/games/learn-color/purple-grape.webp", category: "color" },
 
-  // Numbers (group4) - using number images
-  { id: "one", english: "One", vietnamese: "Số 1", image: "https://assets.cuthongminh.com/games/learn-numbers/1.webp", category: "number" },
-  { id: "two", english: "Two", vietnamese: "Số 2", image: "https://assets.cuthongminh.com/games/learn-numbers/2.webp", category: "number" },
-  { id: "three", english: "Three", vietnamese: "Số 3", image: "https://assets.cuthongminh.com/games/learn-numbers/3.webp", category: "number" },
-  { id: "four", english: "Four", vietnamese: "Số 4", image: "https://assets.cuthongminh.com/games/learn-numbers/4.webp", category: "number" },
-  { id: "five", english: "Five", vietnamese: "Số 5", image: "https://assets.cuthongminh.com/games/learn-numbers/5.webp", category: "number" },
-  { id: "six", english: "Six", vietnamese: "Số 6", image: "https://assets.cuthongminh.com/games/learn-numbers/6.webp", category: "number" },
-  { id: "seven", english: "Seven", vietnamese: "Số 7", image: "https://assets.cuthongminh.com/games/learn-numbers/7.webp", category: "number" },
-  { id: "eight", english: "Eight", vietnamese: "Số 8", image: "https://assets.cuthongminh.com/games/learn-numbers/8.webp", category: "number" },
-  { id: "nine", english: "Nine", vietnamese: "Số 9", image: "https://assets.cuthongminh.com/games/learn-numbers/9.webp", category: "number" },
-  { id: "ten", english: "Ten", vietnamese: "Số 10", image: "https://assets.cuthongminh.com/games/learn-numbers/10.webp", category: "number" },
+  // Numbers (group4) - using generated SVG images
+  { id: "one", english: "One", vietnamese: "Số 1", image: numSvg("1", "FFEBEE", "C62828"), category: "number" },
+  { id: "two", english: "Two", vietnamese: "Số 2", image: numSvg("2", "E3F2FD", "1565C0"), category: "number" },
+  { id: "three", english: "Three", vietnamese: "Số 3", image: numSvg("3", "E8F5E9", "2E7D32"), category: "number" },
+  { id: "four", english: "Four", vietnamese: "Số 4", image: numSvg("4", "FFF3E0", "EF6C00"), category: "number" },
+  { id: "five", english: "Five", vietnamese: "Số 5", image: numSvg("5", "F3E5F5", "6A1B9A"), category: "number" },
+  { id: "six", english: "Six", vietnamese: "Số 6", image: numSvg("6", "E0F7FA", "00838F"), category: "number" },
+  { id: "seven", english: "Seven", vietnamese: "Số 7", image: numSvg("7", "FBE9E7", "D84315"), category: "number" },
+  { id: "eight", english: "Eight", vietnamese: "Số 8", image: numSvg("8", "ECEFF1", "37474F"), category: "number" },
+  { id: "nine", english: "Nine", vietnamese: "Số 9", image: numSvg("9", "FCE4EC", "AD1457"), category: "number" },
+  { id: "ten", english: "Ten", vietnamese: "Số 10", image: numSvg("10", "E8EAF6", "283593"), category: "number" },
 ];
 
 const CATEGORY_MAP: Record<string, string[]> = {
