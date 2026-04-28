@@ -4,9 +4,9 @@
 VPS_IP="180.93.225.157"
 VPS_USER="root"
 VPS_DIR="/var/www/cuthongminh.com/frontend"
-IMAGE_NAME="cuthongminh-web"
+IMAGE_NAME="ghcr.io/mikamokedo/cuthongminh-web"
 IMAGE_TAG="latest"
-IMAGE_TAR="/tmp/${IMAGE_NAME}.tar"
+IMAGE_TAR="/tmp/cuthongminh-web.tar"
 VPS_PASS='xAJz?#s5n20b'
 
 echo "🚀 Starting deployment to $VPS_IP..."
@@ -76,20 +76,39 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# Step 5: Load image and restart container on VPS
+# Step 5: Stop Watchtower (prevents it from pulling old GHCR image over our local deploy)
+echo "🛑 Stopping Watchtower to prevent GHCR overwrite..."
+sshpass -p "$VPS_PASS" ssh -o StrictHostKeyChecking=no "$VPS_USER@$VPS_IP" "\
+  docker stop watchtower 2>/dev/null; \
+  docker rm watchtower 2>/dev/null; \
+  echo 'Watchtower stopped'"
+
+# Step 6: Load image and restart container on VPS
 echo "🐳 Loading image and starting container on server..."
 sshpass -p "$VPS_PASS" ssh -o StrictHostKeyChecking=no "$VPS_USER@$VPS_IP" "\
-  docker load -i /tmp/${IMAGE_NAME}.tar && \
-  rm -f /tmp/${IMAGE_NAME}.tar && \
+  docker load -i /tmp/cuthongminh-web.tar && \
+  rm -f /tmp/cuthongminh-web.tar && \
   cd $VPS_DIR && \
-  docker compose -f docker-compose.deploy.yml up -d --force-recreate"
+  docker stop cuthongminh_web 2>/dev/null; \
+  docker rm cuthongminh_web 2>/dev/null; \
+  docker run -d --name cuthongminh_web \
+    --restart unless-stopped \
+    -p 3000:3000 \
+    -e PORT=3000 \
+    -e NODE_ENV=production \
+    --env-file .env.production \
+    ${IMAGE_NAME}:${IMAGE_TAG}"
 
 if [ $? -ne 0 ]; then
     echo "❌ Failed to start container on server."
     exit 1
 fi
 
-# Step 6: Clean up local tar
+# Step 7: Clean up local tar
 rm -f ${IMAGE_TAR}
 
 echo "🎉 Deployment completed successfully! Your changes are running on the server."
+echo ""
+echo "⚠️  Watchtower has been stopped. When GitHub Actions quota is restored,"
+echo "   re-enable it by running on VPS:"
+echo "   cd /var/www/cuthongminh.com/frontend && docker compose -f docker-compose.deploy.yml up -d"
