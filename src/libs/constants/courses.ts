@@ -1829,6 +1829,36 @@ export const COURSES: CourseDef[] = [
           { id: "lesson4", title: "Kiểm tra" },
         ],
       },
+      {
+        id: "group5",
+        title: "Giao Thông",
+        lessons: [
+          { id: "lesson1", title: "Học từ vựng", isFree: true },
+          { id: "lesson2", title: "Nghe & Chọn" },
+          { id: "lesson3", title: "Ghép từ" },
+          { id: "lesson4", title: "Kiểm tra" },
+        ],
+      },
+      {
+        id: "group6",
+        title: "Gia Đình",
+        lessons: [
+          { id: "lesson1", title: "Học từ vựng", isFree: true },
+          { id: "lesson2", title: "Nghe & Chọn" },
+          { id: "lesson3", title: "Ghép từ" },
+          { id: "lesson4", title: "Kiểm tra" },
+        ],
+      },
+      {
+        id: "group7",
+        title: "Cơ Thể Người",
+        lessons: [
+          { id: "lesson1", title: "Học từ vựng", isFree: true },
+          { id: "lesson2", title: "Nghe & Chọn" },
+          { id: "lesson3", title: "Ghép từ" },
+          { id: "lesson4", title: "Kiểm tra" },
+        ],
+      },
     ],
   },
 ];
