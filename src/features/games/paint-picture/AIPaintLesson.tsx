@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { Camera, Eraser, RotateCcw } from "lucide-react";
+import { Camera, CheckCircle, Eraser, RotateCcw, X } from "lucide-react";
 import { AI_BACKGROUNDS, COLOR_PALETTE } from "./constants";
 
 interface AIPaintLessonProps {
@@ -21,6 +21,7 @@ export function AIPaintLesson({ groupId, onComplete }: AIPaintLessonProps) {
   const [isEraser, setIsEraser] = useState(false);
   const [lineWidth, setLineWidth] = useState(10);
   const [hasStartedDrawing, setHasStartedDrawing] = useState(false);
+  const [showCompleteModal, setShowCompleteModal] = useState(false);
 
   const backgroundImage = AI_BACKGROUNDS[groupId];
 
@@ -165,52 +166,69 @@ export function AIPaintLesson({ groupId, onComplete }: AIPaintLessonProps) {
     const fileName = `Cuthongminh-Tomau-${groupId}-${Date.now()}.jpg`;
 
     // Use canvas.toBlob for better mobile compatibility
-    exportCanvas.toBlob(
-      async (blob) => {
-        if (!blob) return;
-
-        // Try Web Share API first (works great on iOS Safari)
-        if (navigator.share && navigator.canShare) {
-          try {
-            const file = new File([blob], fileName, { type: "image/jpeg" });
-            if (navigator.canShare({ files: [file] })) {
-              await navigator.share({
-                files: [file],
-                title: "Cú Thông Minh - Tô màu",
-              });
-              setTimeout(onComplete, 1000);
-              return;
-            }
-          } catch (err) {
-            // User cancelled share or share failed — fall through
-            if ((err as DOMException)?.name === "AbortError") return;
+    return new Promise<void>((resolve) => {
+      exportCanvas.toBlob(
+        async (blob) => {
+          if (!blob) {
+            resolve();
+            return;
           }
-        }
 
-        // Fallback: create a blob URL and use <a download>
-        const blobUrl = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = blobUrl;
-        link.download = fileName;
+          // Try Web Share API first (works great on iOS Safari)
+          if (navigator.share && navigator.canShare) {
+            try {
+              const file = new File([blob], fileName, { type: "image/jpeg" });
+              if (navigator.canShare({ files: [file] })) {
+                await navigator.share({
+                  files: [file],
+                  title: "Cú Thông Minh - Tô màu",
+                });
+                resolve();
+                return;
+              }
+            } catch (err) {
+              // User cancelled share or share failed — fall through
+              if ((err as DOMException)?.name === "AbortError") {
+                resolve();
+                return;
+              }
+            }
+          }
 
-        // For Safari: open in new tab if download attribute isn't supported
-        const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-        if (isSafari) {
-          link.target = "_blank";
-          link.rel = "noopener noreferrer";
-        }
+          // Fallback: create a blob URL and use <a download>
+          const blobUrl = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = blobUrl;
+          link.download = fileName;
 
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+          // For Safari: open in new tab if download attribute isn't supported
+          const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+          if (isSafari) {
+            link.target = "_blank";
+            link.rel = "noopener noreferrer";
+          }
 
-        // Trigger completion if they took a photo
-        setTimeout(onComplete, 1000);
-      },
-      "image/jpeg",
-      0.9
-    );
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+          resolve();
+        },
+        "image/jpeg",
+        0.9
+      );
+    });
+  };
+
+  const handleCompleteWithPhoto = async () => {
+    await handleSavePhoto();
+    setShowCompleteModal(false);
+    setTimeout(onComplete, 500);
+  };
+
+  const handleCompleteWithoutPhoto = () => {
+    setShowCompleteModal(false);
+    onComplete();
   };
 
   if (!backgroundImage) {
@@ -242,11 +260,11 @@ export function AIPaintLesson({ groupId, onComplete }: AIPaintLessonProps) {
         </div>
 
         <button
-          onClick={handleSavePhoto}
+          onClick={() => setShowCompleteModal(true)}
           className="flex items-center gap-2 bg-gradient-to-r from-green-400 to-emerald-500 text-white px-4 py-2 rounded-xl shadow-md hover:scale-105 transition-transform active:scale-95 font-bold"
         >
-          <Camera className="w-5 h-5" />
-          <span className="hidden sm:inline">Chụp Ảnh</span>
+          <CheckCircle className="w-5 h-5" />
+          <span className="hidden sm:inline">Hoàn Thành</span>
         </button>
       </div>
 
@@ -331,6 +349,56 @@ export function AIPaintLesson({ groupId, onComplete }: AIPaintLessonProps) {
           </button>
         </div>
       </div>
+
+      {/* Complete Lesson Modal */}
+      {showCompleteModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm px-4">
+          <div className="bg-white rounded-3xl shadow-2xl p-6 sm:p-8 max-w-sm w-full relative animate-[scaleIn_0.3s_ease-out]">
+            {/* Close button */}
+            <button
+              onClick={() => setShowCompleteModal(false)}
+              className="absolute top-3 right-3 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
+            >
+              <X className="w-4 h-4 text-gray-500" />
+            </button>
+
+            {/* Icon */}
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg">
+                <span className="text-3xl">🎨</span>
+              </div>
+            </div>
+
+            {/* Title */}
+            <h3 className="text-xl font-bold text-center text-gray-800 mb-2">
+              Hoàn thành bài học!
+            </h3>
+
+            {/* Description */}
+            <p className="text-center text-gray-500 mb-6 text-sm">
+              Bạn có muốn chụp ảnh tác phẩm trước khi hoàn thành không?
+            </p>
+
+            {/* Buttons */}
+            <div className="flex flex-col gap-3">
+              <button
+                onClick={handleCompleteWithPhoto}
+                className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-green-400 to-emerald-500 text-white py-3 rounded-2xl shadow-md hover:scale-[1.02] transition-transform active:scale-95 font-bold text-base"
+              >
+                <Camera className="w-5 h-5" />
+                Có, chụp ảnh
+              </button>
+
+              <button
+                onClick={handleCompleteWithoutPhoto}
+                className="flex items-center justify-center gap-2 w-full bg-gray-100 hover:bg-gray-200 text-gray-600 py-3 rounded-2xl transition-colors font-semibold text-base"
+              >
+                Không, bỏ qua
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
