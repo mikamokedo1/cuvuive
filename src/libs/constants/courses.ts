@@ -1861,4 +1861,51 @@ export const COURSES: CourseDef[] = [
       },
     ],
   },
+  {
+    id: "learn-english-alphabet",
+    title: "Bảng Chữ Cái Tiếng Anh",
+    description: "Bé học bảng chữ cái tiếng Anh từ A-Z qua các từ vựng sinh động.",
+    icon: "https://assets.cuthongminh.com/games/learn-english-alphabet/logo.webp",
+    type: "english",
+    groups: [
+      {
+        id: "group1",
+        title: "Bảng Chữ Cái (A-M)",
+        lessons: [
+          { id: "lesson1", title: "Học chữ cái", isFree: true },
+          { id: "lesson2", title: "Nghe & Chọn", isFree: true },
+          { id: "lesson3", title: "Ghép từ" },
+          { id: "lesson4", title: "Kiểm tra" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Bảng Chữ Cái (N-Z)",
+        lessons: [
+          { id: "lesson1", title: "Học chữ cái", isFree: true },
+          { id: "lesson2", title: "Nghe & Chọn" },
+          { id: "lesson3", title: "Ghép từ" },
+          { id: "lesson4", title: "Kiểm tra" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "learn-english-songs",
+    title: "Học Qua Bài Hát",
+    description: "Bé học tiếng Anh vui nhộn qua các bài hát thiếu nhi sôi động.",
+    icon: "https://assets.cuthongminh.com/games/learn-english-songs/logo.webp",
+    type: "english",
+    groups: [
+      {
+        id: "group1",
+        title: "Bài Hát Vui Nhộn",
+        lessons: [
+          { id: "lesson1", title: "ABC Song", isFree: true },
+          { id: "lesson2", title: "Twinkle Twinkle", isFree: true },
+          { id: "lesson3", title: "Wheels on the Bus" },
+        ],
+      },
+    ],
+  },
 ];

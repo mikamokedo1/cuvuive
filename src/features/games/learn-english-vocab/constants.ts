@@ -30,10 +30,10 @@ export interface EnglishWord {
   category: "animal" | "fruit" | "color" | "number" | "vehicle" | "family" | "body";
 }
 
-const numSvg = (num: string, bg: string, color: string) => 
+const numSvg = (num: string, bg: string, color: string) =>
   `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' rx='40' fill='%23${bg}'/%3E%3Ctext x='100' y='145' font-family='Arial, sans-serif' font-size='120' font-weight='bold' fill='%23${color}' text-anchor='middle'%3E${num}%3C/text%3E%3C/svg%3E`;
 
-const emojiSvg = (emoji: string, bg: string) => 
+const emojiSvg = (emoji: string, bg: string) =>
   `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' rx='40' fill='%23${bg}'/%3E%3Ctext x='100' y='145' font-family='Arial, sans-serif' font-size='100' text-anchor='middle'%3E${encodeURIComponent(emoji)}%3C/text%3E%3C/svg%3E`;
 
 export const ENGLISH_WORDS: EnglishWord[] = [
