@@ -1,0 +1,58 @@
+# ══════════════════════════════════════════════════════════════
+# Build & Deploy to VPS via GitLab Container Registry
+# Replaces old GitHub Actions deploy.yml
+# ══════════════════════════════════════════════════════════════
+
+stages:
+  - build-and-deploy
+
+variables:
+  IMAGE_NAME: $CI_REGISTRY/mikamokedo/cuthongminh
+
+# ── Build Next.js + Push Docker Image ──
+build-and-deploy:
+  stage: build-and-deploy
+  image: docker:24
+  timeout: 15 minutes
+
+  # Only run on main branch or manual trigger
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+    - when: manual
+      allow_failure: true
+
+  services:
+    - docker:24-dind
+
+  variables:
+    DOCKER_HOST: tcp://docker:2376
+    DOCKER_TLS_CERTDIR: "/certs"
+    DOCKER_TLS_VERIFY: 1
+    DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client"
+
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+
+  script:
+    # ── 1. Build multi-stage Docker image (includes npm ci + next build) ──
+    - docker build -f Dockerfile.ci
+      --build-arg NEXT_PUBLIC_SUPABASE_URL="$NEXT_PUBLIC_SUPABASE_URL"
+      --build-arg NEXT_PUBLIC_SUPABASE_ANON_KEY="$NEXT_PUBLIC_SUPABASE_ANON_KEY"
+      --build-arg NEXT_PUBLIC_GA_MEASUREMENT_ID="$NEXT_PUBLIC_GA_MEASUREMENT_ID"
+      --build-arg NEXT_PUBLIC_SENTRY_DSN="$NEXT_PUBLIC_SENTRY_DSN"
+      --build-arg SENTRY_AUTH_TOKEN="$SENTRY_AUTH_TOKEN"
+      --build-arg SENTRY_ORG="$SENTRY_ORG"
+      --build-arg SENTRY_PROJECT="$SENTRY_PROJECT"
+      --build-arg DATABASE_URL="$DATABASE_URL"
+      -t "$IMAGE_NAME:latest"
+      -t "$IMAGE_NAME:$CI_COMMIT_SHORT_SHA"
+      .
+
+    # ── 2. Push to GitLab Container Registry ──
+    - docker push "$IMAGE_NAME:latest"
+    - docker push "$IMAGE_NAME:$CI_COMMIT_SHORT_SHA"
+
+    # ── 3. Done — Watchtower handles deployment ──
+    - echo "✅ Image pushed to GitLab Container Registry!"
+    - echo "🔄 Watchtower on VPS will auto-deploy within ~30 seconds"
+    - echo "📦 Image → $IMAGE_NAME:latest"

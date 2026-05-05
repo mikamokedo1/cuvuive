@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   cuthongminh-web:
-    image: ghcr.io/mikamokedo/cuthongminh-web:latest
+    image: registry.gitlab.com/mikamokedo/cuthongminh:latest
     container_name: cuthongminh_web
     restart: unless-stopped
     ports:

@@ -1,3 +1,7 @@
+# ══════════════════════════════════════════════════════════════
+# Dockerfile (Production Runner Only)
+# Used by deploy.sh — expects pre-built .next/standalone from local build
+# ══════════════════════════════════════════════════════════════
 FROM node:20-alpine AS runner
 WORKDIR /app
 
