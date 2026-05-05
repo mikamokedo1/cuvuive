@@ -1,6 +1,10 @@
-import { LessonParams } from "@/types/lesson";
 import { LessonPageClient } from "./LessonPageClient";
 
-export default function LessonPage({ params }: { params: LessonParams }) {
-  return <LessonPageClient groupId={params.groupId} lessonId={params.lessonId} />;
+export default async function LessonPage({
+  params,
+}: {
+  params: Promise<{ groupId: string; lessonId: string }>;
+}) {
+  const { groupId, lessonId } = await params;
+  return <LessonPageClient groupId={groupId} lessonId={lessonId} />;
 }

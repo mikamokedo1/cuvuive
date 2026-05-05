@@ -31,13 +31,13 @@ export function LessonPageClient({ groupId, lessonId }: LessonPageClientProps) {
 
   const handleNext = () => {
      if (songIndex < songs.length - 1) {
-        window.location.href = `/games/learn-english-songs/${groupId}/lesson/${LESSON_ORDER[songIndex + 1]}`;
+        router.push(`/games/learn-english-songs/${groupId}/lesson/${LESSON_ORDER[songIndex + 1]}`);
      }
   };
 
   const handlePrev = () => {
     if (songIndex > 0) {
-       window.location.href = `/games/learn-english-songs/${groupId}/lesson/${LESSON_ORDER[songIndex - 1]}`;
+       router.push(`/games/learn-english-songs/${groupId}/lesson/${LESSON_ORDER[songIndex - 1]}`);
     }
  };
 

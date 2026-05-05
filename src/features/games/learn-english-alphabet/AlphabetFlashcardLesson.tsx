@@ -18,11 +18,12 @@ export function AlphabetFlashcardLesson({ words, onComplete }: AlphabetFlashcard
   const currentWord = words[currentIndex];
 
   const handleFlip = useCallback(() => {
+    if (!currentWord) return;
     if (!isFlipped) {
       setIsFlipped(true);
       speakEnglish(currentWord.letter + ", " + currentWord.word);
     }
-  }, [isFlipped, currentWord.letter, currentWord.word]);
+  }, [isFlipped, currentWord]);
 
   const handleNext = useCallback(() => {
     if (currentIndex < words.length - 1) {
@@ -42,8 +43,10 @@ export function AlphabetFlashcardLesson({ words, onComplete }: AlphabetFlashcard
   }, [currentIndex]);
 
   const handleSpeak = useCallback(() => {
-    speakEnglish(currentWord.letter + ", " + currentWord.word);
-  }, [currentWord.letter, currentWord.word]);
+    if (currentWord) speakEnglish(currentWord.letter + ", " + currentWord.word);
+  }, [currentWord]);
+
+  if (!currentWord) return null;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] gap-6 px-4">

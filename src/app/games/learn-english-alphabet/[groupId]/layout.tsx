@@ -1,9 +1,13 @@
-import { LessonParams } from "@/types/lesson";
 import { getGameMetadata } from "@/libs/utils/seo";
 import { Metadata } from "next";
 
-export async function generateMetadata({ params }: { params: LessonParams }): Promise<Metadata> {
-  return getGameMetadata("learn-english-alphabet", params.groupId);
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ groupId: string }>;
+}): Promise<Metadata> {
+  const { groupId } = await params;
+  return getGameMetadata("learn-english-alphabet", groupId);
 }
 
 export default function GroupLayout({ children }: { children: React.ReactNode }) {
