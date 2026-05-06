@@ -1,13 +1,5 @@
-import * as Sentry from "@sentry/nextjs";
+// Server-side instrumentation (Sentry removed for performance)
 
 export async function register() {
-  if (process.env.NEXT_RUNTIME === "nodejs") {
-    await import("../sentry.server.config");
-  }
-
-  if (process.env.NEXT_RUNTIME === "edge") {
-    await import("../sentry.edge.config");
-  }
+  // No-op — Sentry has been removed
 }
-
-export const onRequestError = Sentry.captureRequestError;

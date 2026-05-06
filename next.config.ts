@@ -1,5 +1,4 @@
 import type { NextConfig } from "next";
-import { withSentryConfig } from "@sentry/nextjs";
 import withBundleAnalyzer from "@next/bundle-analyzer";
 
 const analyzeBundles = withBundleAnalyzer({
@@ -64,7 +63,7 @@ const nextConfig: NextConfig = {
       {
         key: "Content-Security-Policy",
         value:
-          "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://browser.sentry-cdn.com; style-src 'self' 'unsafe-inline'; img-src 'self' https://assets.cuthongminh.com https://vnlppyavpkuerviyszxg.supabase.co https://qr.sepay.vn data: blob:; font-src 'self' data:; connect-src 'self' wss://*.supabase.co https://*.supabase.co https://www.google-analytics.com https://*.sentry.io https://assets.cuthongminh.com; media-src 'self' https://assets.cuthongminh.com;",
+          "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' https://assets.cuthongminh.com https://vnlppyavpkuerviyszxg.supabase.co https://qr.sepay.vn data: blob:; font-src 'self' data:; connect-src 'self' wss://*.supabase.co https://*.supabase.co https://www.google-analytics.com https://assets.cuthongminh.com; media-src 'self' https://assets.cuthongminh.com;",
       },
     ];
 
@@ -158,15 +157,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withSentryConfig(analyzeBundles(nextConfig), {
-  // Upload source maps for readable stack traces
-  org: process.env.SENTRY_ORG,
-  project: process.env.SENTRY_PROJECT,
-  authToken: process.env.SENTRY_AUTH_TOKEN,
-
-  // Route Sentry requests through your server (avoids ad-blockers)
-  tunnelRoute: "/monitoring",
-
-  // Suppress source map upload logs outside CI
-  silent: !process.env.CI,
-});
+export default analyzeBundles(nextConfig);

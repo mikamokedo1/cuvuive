@@ -1,7 +1,6 @@
 "use client";
 
 import React, { Component, ErrorInfo, ReactNode } from "react";
-import * as Sentry from "@sentry/nextjs";
 
 interface Props {
   children: ReactNode;
@@ -58,11 +57,9 @@ export class AutoRecoveryBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    Sentry.captureException(error, {
-      extra: {
-        componentStack: errorInfo.componentStack,
-        retryCount: this.state.retryCount,
-      },
+    console.error("AutoRecoveryBoundary caught error:", error, {
+      componentStack: errorInfo.componentStack,
+      retryCount: this.state.retryCount,
     });
 
     // Auto-refresh on first error — this fixes stale auth/RSC state
