@@ -10,7 +10,7 @@ export const SONGS: Song[] = [
   {
     id: "abc-song",
     title: "ABC Song",
-    audioUrl: "https://assets.cuthongminh.com/audio/songs/abc-song.mp3",
+    audioUrl: "/sounds/abc-song.mp3",
     imageUrl: "https://assets.cuthongminh.com/games/learn-english-songs/abc-song.webp",
     lyrics: [
       { time: 0, text: "A B C D E F G" },
@@ -24,7 +24,7 @@ export const SONGS: Song[] = [
   {
     id: "twinkle-twinkle",
     title: "Twinkle Twinkle Little Star",
-    audioUrl: "https://assets.cuthongminh.com/audio/songs/twinkle.mp3",
+    audioUrl: "/sounds/twinkle.mp3",
     imageUrl: "https://assets.cuthongminh.com/games/learn-english-songs/twinkle.webp",
     lyrics: [
       { time: 0, text: "Twinkle, twinkle, little star" },
@@ -38,7 +38,7 @@ export const SONGS: Song[] = [
   {
     id: "wheels-on-the-bus",
     title: "The Wheels on the Bus",
-    audioUrl: "https://assets.cuthongminh.com/audio/songs/wheels-on-the-bus.mp3",
+    audioUrl: "/sounds/wheels-on-the-bus.mp3",
     imageUrl: "https://assets.cuthongminh.com/games/learn-english-songs/wheels-on-the-bus.webp",
     lyrics: [
       { time: 0, text: "The wheels on the bus go round and round" },

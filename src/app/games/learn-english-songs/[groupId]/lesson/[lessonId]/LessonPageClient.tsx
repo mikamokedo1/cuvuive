@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useGameLesson } from "@/hooks/useGameLesson";
 import { GROUPS, getSongsForGroup } from "@/features/games/learn-english-songs/constants";
 import { SongPlayer } from "@/features/games/learn-english-songs/SongPlayer";
@@ -13,6 +14,7 @@ interface LessonPageClientProps {
 }
 
 export function LessonPageClient({ groupId, lessonId }: LessonPageClientProps) {
+  const router = useRouter();
   const game = useGameLesson({
     gameSlug: "learn-english-songs",
     lessonOrder: LESSON_ORDER,
