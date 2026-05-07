@@ -1890,22 +1890,4 @@ export const COURSES: CourseDef[] = [
       },
     ],
   },
-  {
-    id: "learn-english-songs",
-    title: "Học Qua Bài Hát",
-    description: "Bé học tiếng Anh vui nhộn qua các bài hát thiếu nhi sôi động.",
-    icon: "https://assets.cuthongminh.com/games/learn-english-songs/logo.webp",
-    type: "english",
-    groups: [
-      {
-        id: "group1",
-        title: "Bài Hát Vui Nhộn",
-        lessons: [
-          { id: "lesson1", title: "ABC Song", isFree: true },
-          { id: "lesson2", title: "Twinkle Twinkle", isFree: true },
-          { id: "lesson3", title: "Wheels on the Bus" },
-        ],
-      },
-    ],
-  },
 ];

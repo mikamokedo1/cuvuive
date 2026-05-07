@@ -149,10 +149,6 @@ const SEO_OVERRIDES: Record<string, SeoOverride> = {
     title: "Bảng Chữ Cái Tiếng Anh | Game Học Chữ Cho Bé",
     description: "Bé học bảng chữ cái tiếng Anh từ A-Z qua hình ảnh minh họa sinh động, nghe phát âm và tập đánh vần từ vựng.",
   },
-  "learn-english-songs": {
-    title: "Học Tiếng Anh Qua Bài Hát | Game Nhạc Tiếng Anh Cho Bé",
-    description: "Bé học tiếng Anh vui nhộn qua các bài hát thiếu nhi phổ biến, kèm theo lời bài hát và hình ảnh minh họa dễ thương.",
-  },
 };
 
 const RAW_GAME_SEO: Record<string, GameSeoData> = {
@@ -1355,16 +1351,6 @@ const RAW_GAME_SEO: Record<string, GameSeoData> = {
     seoFeatures: ["Học 26 chữ cái tiếng Anh", "Phát âm chuẩn từng chữ cái", "Hình ảnh minh họa sinh động", "Trò chơi ghép chữ cái"],
     ogImage: "https://assets.cuthongminh.com/games/learn-english-alphabet/logo.webp",
     relatedGames: ["learn-english-vocab", "learn-alphabet"],
-    relatedBlogs: [],
-  },
-  "learn-english-songs": {
-    title: "Học Tiếng Anh Qua Bài Hát cho bé - Trò chơi giáo dục Cú Thông Minh",
-    description: "Bé học tiếng Anh vui nhộn qua các bài hát thiếu nhi phổ biến, kèm theo lời bài hát và hình ảnh minh họa dễ thương.",
-    keywords: ["bài hát tiếng anh thiếu nhi", "english songs for kids", "học tiếng anh qua bài hát", "nhạc tiếng anh trẻ em"],
-    seoText: "Trò chơi Học Tiếng Anh Qua Bài Hát mang đến những giai điệu vui nhộn từ các bài hát thiếu nhi nổi tiếng thế giới. Bé sẽ được vừa nghe nhạc, vừa xem lời bài hát và hình ảnh minh họa, giúp việc học tiếng Anh trở nên tự nhiên và thú vị hơn bao giờ hết.",
-    seoFeatures: ["Các bài hát tiếng Anh phổ biến", "Âm thanh chất lượng cao", "Hình ảnh minh họa dễ thương", "Lời bài hát đồng bộ"],
-    ogImage: "https://assets.cuthongminh.com/games/learn-english-songs/logo.webp",
-    relatedGames: ["learn-english-vocab", "mini-piano"],
     relatedBlogs: [],
   },
 };
