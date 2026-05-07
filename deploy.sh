@@ -4,7 +4,7 @@
 VPS_IP="180.93.225.157"
 VPS_USER="root"
 VPS_DIR="/var/www/cuthongminh.com/frontend"
-IMAGE_NAME="ghcr.io/mikamokedo/cuthongminh-web"
+IMAGE_NAME="registry.gitlab.com/mikamokedo/cuthongminh"
 IMAGE_TAG="latest"
 IMAGE_TAR="/tmp/cuthongminh-web.tar"
 VPS_PASS='xAJz?#s5n20b'
@@ -109,6 +109,6 @@ rm -f ${IMAGE_TAR}
 
 echo "🎉 Deployment completed successfully! Your changes are running on the server."
 echo ""
-echo "⚠️  Watchtower has been stopped. When GitHub Actions quota is restored,"
-echo "   re-enable it by running on VPS:"
+echo "⚠️  Watchtower has been stopped. To re-enable auto-deploy via GitLab CI,"
+echo "   run on VPS:"
 echo "   cd /var/www/cuthongminh.com/frontend && docker compose -f docker-compose.deploy.yml up -d"

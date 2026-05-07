@@ -32,6 +32,7 @@ export const TOPIC_CLUSTERS: Record<GameGroupType, TopicCluster> = {
       "nhan-biet-hinh-dang",
       "day-be-nhan-biet-tien",
       "sudoku-cho-be-mam-non",
+      "day-be-phep-cong-trong-pham-vi-10",
     ],
   },
   logic: {
@@ -46,6 +47,8 @@ export const TOPIC_CLUSTERS: Record<GameGroupType, TopicCluster> = {
       // Previously orphaned posts
       "loi-ich-tro-choi-tri-tue",
       "sudoku-cho-be-mam-non",
+      "cach-ren-luyen-su-tap-trung-cho-tre-mam-non",
+      "phat-trien-tri-nho-cho-tre-mam-non",
     ],
   },
   language: {
@@ -100,6 +103,7 @@ export const TOPIC_CLUSTERS: Record<GameGroupType, TopicCluster> = {
       "hoc-nghe-nghiep",
       "khung-hoang-tuoi-len-3",
       "lich-sinh-hoat-cho-be-mam-non",
+      "nguy-hiem-khi-giao-xe-may-cho-hoc-sinh",
     ],
   },
   geography: {
@@ -160,4 +164,5 @@ export const GENERAL_PARENTING_SLUGS = [
   "be-chuan-bi-vao-lop-1-can-hoc-gi",
   "giao-duc-som-la-gi",
   "tre-xem-tivi-dien-thoai-qua-nhieu",
+  "day-be-hoc-qua-tro-choi",
 ];
