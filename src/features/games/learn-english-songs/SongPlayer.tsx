@@ -81,7 +81,7 @@ export function SongPlayer({ song, onNext, onPrev, onComplete }: SongPlayerProps
             alt={song.title}
             fill
             className={`object-cover transition-transform duration-[10s] linear ${isPlaying ? "rotate-[360deg] scale-110" : ""}`}
-            style={{ transitionIterationCount: "infinite" }}
+            style={{ animationIterationCount: "infinite" }}
             sizes="(max-width: 640px) 192px, 256px"
           />
           {!isPlaying && (
