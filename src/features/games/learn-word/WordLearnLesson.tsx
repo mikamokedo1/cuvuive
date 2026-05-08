@@ -32,8 +32,7 @@ export function WordLearnLesson({ words, onComplete }: WordLearnLessonProps) {
   const nextWord = currentIndex < words.length - 1 ? words[currentIndex + 1] : null;
 
   const handleTapWord = useCallback(() => {
-    playButtonSound();
-    speak(currentWord.name);
+    speak(currentWord.pronounce ?? currentWord.name);
 
     // Brief speaking lock
     setIsSpeaking(true);

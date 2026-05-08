@@ -5,6 +5,7 @@ export interface EntityData {
   name: string;
   image: string | StaticImageData;
   category?: string;
+  pronounce?: string;
   textRepresent?: string;
   acceptedAnswers?: string[]; // Alternative answers for speech recognition
 }
