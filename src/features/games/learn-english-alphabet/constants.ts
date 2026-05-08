@@ -62,7 +62,7 @@ export const GROUPS = [
     title: "Bảng Chữ Cái (A-M)",
     description: "Học các chữ cái từ A đến M",
     words: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m"],
-    logo: emojiSvg("🅰️", "E3F2FD"),
+    logo: "https://assets.cuthongminh.com/games/learn-english-alphabet/group1.webp",
     variant: "blue" as const,
   },
   {
@@ -70,7 +70,7 @@ export const GROUPS = [
     title: "Bảng Chữ Cái (N-Z)",
     description: "Học các chữ cái từ N đến Z",
     words: ["n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
-    logo: emojiSvg("🆖", "FCE4EC"),
+    logo: "https://assets.cuthongminh.com/games/learn-english-alphabet/group2.webp",
     variant: "purple" as const,
   },
 ];
