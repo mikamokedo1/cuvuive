@@ -146,7 +146,7 @@ export const GROUPS = [
     title: "Giao Thông",
     description: "Học tên các phương tiện giao thông",
     words: CATEGORY_MAP.group5,
-    logo: emojiSvg("🚗", "E3F2FD"),
+    logo: "https://assets.cuthongminh.com/games/learn-english-vocab/group5.webp",
     variant: "orange" as const,
   },
   {
@@ -154,7 +154,7 @@ export const GROUPS = [
     title: "Gia Đình",
     description: "Học từ vựng về các thành viên trong gia đình",
     words: CATEGORY_MAP.group6,
-    logo: emojiSvg("👨‍👩‍👧", "FCE4EC"),
+    logo: "https://assets.cuthongminh.com/games/learn-english-vocab/group6.webp",
     variant: "green" as const,
   },
   {
@@ -162,7 +162,7 @@ export const GROUPS = [
     title: "Cơ Thể Người",
     description: "Học từ vựng về các bộ phận cơ thể",
     words: CATEGORY_MAP.group7,
-    logo: emojiSvg("👤", "FFF3E0"),
+    logo: "https://assets.cuthongminh.com/games/learn-english-vocab/group7.webp",
     variant: "purple" as const,
   },
 ];
