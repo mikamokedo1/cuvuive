@@ -53,7 +53,7 @@ export const LETTERS: LetterData[] = [
   { id: "a", letter: "A", name: "Chữ A", word: "Cà chua", image: ImgCachua, category: "vowel" },
   { id: "ă", letter: "Ă", name: "Chữ Ă", word: "Con rắn", image: ImgRan, category: "vowel" },
   { id: "â", letter: "Â", name: "Chữ Â", word: "Bồ câu", image: ImgBocau, category: "vowel" },
-  { id: "e", letter: "E", name: "Chữ E", word: "Em Pé", image: ImgEmPe, category: "vowel" },
+  { id: "e", letter: "E", name: "Chữ E", word: "Em Bé", pronounce: "Em Pé", image: ImgEmPe, category: "vowel" },
   { id: "ê", letter: "Ê", name: "Chữ Ê", word: "Con ếch", image: ImgEch, category: "vowel" },
   { id: "i", letter: "I", name: "Chữ I", word: "Con vịt", image: ImgVit, category: "vowel" },
   { id: "o", letter: "O", name: "Chữ O", word: "Con ong", image: ImgOng, category: "vowel" },

@@ -7,12 +7,49 @@ export interface WordData extends EntityData {
 
 export const WORDS: WordData[] = [
   // Group 1: Gia Đình
-  { id: "bo", name: "Bố", image: "https://assets.cuthongminh.com/games/learn-word/bo.webp", category: "group1", syllables: ["b", "ố"] },
-  { id: "me", name: "Mẹ", image: "https://assets.cuthongminh.com/games/learn-word/me.webp", category: "group1", syllables: ["m", "ẹ"] },
-  { id: "anh", name: "Anh", image: "https://assets.cuthongminh.com/games/learn-word/anh.webp", category: "group1", syllables: ["a", "nh"] },
-  { id: "chi", name: "Chị", image: "https://assets.cuthongminh.com/games/learn-word/chi.webp", category: "group1", syllables: ["ch", "ị"] },
-  { id: "em-be", name: "Em Pé", image: "https://assets.cuthongminh.com/games/learn-word/em-be.webp", category: "group1", syllables: ["Em", "bé"] },
-  { id: "ong-ba", name: "Ông bà", image: "https://assets.cuthongminh.com/games/learn-word/ong-ba.webp", category: "group1", syllables: ["Ông", "bà"] },
+  {
+    id: "bo",
+    name: "Bố",
+    image: "https://assets.cuthongminh.com/games/learn-word/bo.webp",
+    category: "group1",
+    syllables: ["b", "ố"],
+  },
+  {
+    id: "me",
+    name: "Mẹ",
+    image: "https://assets.cuthongminh.com/games/learn-word/me.webp",
+    category: "group1",
+    syllables: ["m", "ẹ"],
+  },
+  {
+    id: "anh",
+    name: "Anh",
+    image: "https://assets.cuthongminh.com/games/learn-word/anh.webp",
+    category: "group1",
+    syllables: ["a", "nh"],
+  },
+  {
+    id: "chi",
+    name: "Chị",
+    image: "https://assets.cuthongminh.com/games/learn-word/chi.webp",
+    category: "group1",
+    syllables: ["ch", "ị"],
+  },
+  {
+    id: "em-be",
+    name: "Em Bé",
+    pronounce: "Em Pé",
+    image: "https://assets.cuthongminh.com/games/learn-word/em-be.webp",
+    category: "group1",
+    syllables: ["Em", "bé"],
+  },
+  {
+    id: "ong-ba",
+    name: "Ông bà",
+    image: "https://assets.cuthongminh.com/games/learn-word/ong-ba.webp",
+    category: "group1",
+    syllables: ["Ông", "bà"],
+  },
 
   // Group 2: Trường Học
   {
@@ -36,7 +73,13 @@ export const WORDS: WordData[] = [
     category: "group2",
     syllables: ["Thước", "kẻ"],
   },
-  { id: "sach", name: "Sách", image: "https://assets.cuthongminh.com/games/learn-word/sach.webp", category: "group2", syllables: ["s", "ách"] },
+  {
+    id: "sach",
+    name: "Sách",
+    image: "https://assets.cuthongminh.com/games/learn-word/sach.webp",
+    category: "group2",
+    syllables: ["s", "ách"],
+  },
   {
     id: "cap-sach",
     name: "Cặp sách",
@@ -44,7 +87,13 @@ export const WORDS: WordData[] = [
     category: "group2",
     syllables: ["Cặp", "sách"],
   },
-  { id: "bang", name: "Bảng", image: "https://assets.cuthongminh.com/games/learn-word/bang.webp", category: "group2", syllables: ["b", "ảng"] },
+  {
+    id: "bang",
+    name: "Bảng",
+    image: "https://assets.cuthongminh.com/games/learn-word/bang.webp",
+    category: "group2",
+    syllables: ["b", "ảng"],
+  },
 
   // Group 3: Thiên Nhiên
   {
@@ -75,13 +124,43 @@ export const WORDS: WordData[] = [
     category: "group3",
     syllables: ["Đám", "mây"],
   },
-  { id: "cay", name: "Cây", image: "https://assets.cuthongminh.com/games/learn-word/cay.webp", category: "group3", syllables: ["c", "ây"] },
-  { id: "nui", name: "Núi", image: "https://assets.cuthongminh.com/games/learn-word/nui.webp", category: "group3", syllables: ["n", "úi"] },
+  {
+    id: "cay",
+    name: "Cây",
+    image: "https://assets.cuthongminh.com/games/learn-word/cay.webp",
+    category: "group3",
+    syllables: ["c", "ây"],
+  },
+  {
+    id: "nui",
+    name: "Núi",
+    image: "https://assets.cuthongminh.com/games/learn-word/nui.webp",
+    category: "group3",
+    syllables: ["n", "úi"],
+  },
 
   // Group 4: Đồ Dùng Trong Nhà
-  { id: "ban", name: "Bàn", image: "https://assets.cuthongminh.com/games/learn-word/ban.webp", category: "group4", syllables: ["b", "àn"] },
-  { id: "ghe", name: "Ghế", image: "https://assets.cuthongminh.com/games/learn-word/ghe.webp", category: "group4", syllables: ["gh", "ế"] },
-  { id: "tu", name: "Tủ", image: "https://assets.cuthongminh.com/games/learn-word/tu.webp", category: "group4", syllables: ["t", "ủ"] },
+  {
+    id: "ban",
+    name: "Bàn",
+    image: "https://assets.cuthongminh.com/games/learn-word/ban.webp",
+    category: "group4",
+    syllables: ["b", "àn"],
+  },
+  {
+    id: "ghe",
+    name: "Ghế",
+    image: "https://assets.cuthongminh.com/games/learn-word/ghe.webp",
+    category: "group4",
+    syllables: ["gh", "ế"],
+  },
+  {
+    id: "tu",
+    name: "Tủ",
+    image: "https://assets.cuthongminh.com/games/learn-word/tu.webp",
+    category: "group4",
+    syllables: ["t", "ủ"],
+  },
   {
     id: "giuong",
     name: "Giường",
@@ -89,16 +168,64 @@ export const WORDS: WordData[] = [
     category: "group4",
     syllables: ["gi", "ường"],
   },
-  { id: "cua", name: "Cửa", image: "https://assets.cuthongminh.com/games/learn-word/cua.webp", category: "group4", syllables: ["c", "ửa"] },
-  { id: "den", name: "Đèn", image: "https://assets.cuthongminh.com/games/learn-word/den.webp", category: "group4", syllables: ["đ", "èn"] },
+  {
+    id: "cua",
+    name: "Cửa",
+    image: "https://assets.cuthongminh.com/games/learn-word/cua.webp",
+    category: "group4",
+    syllables: ["c", "ửa"],
+  },
+  {
+    id: "den",
+    name: "Đèn",
+    image: "https://assets.cuthongminh.com/games/learn-word/den.webp",
+    category: "group4",
+    syllables: ["đ", "èn"],
+  },
 
   // Group 5: Quần Áo
-  { id: "ao", name: "Áo", image: "https://assets.cuthongminh.com/games/learn-word/ao.webp", category: "group5", syllables: ["á", "o"] },
-  { id: "quan", name: "Quần", image: "https://assets.cuthongminh.com/games/learn-word/quan.webp", category: "group5", syllables: ["qu", "ần"] },
-  { id: "giay", name: "Giày", image: "https://assets.cuthongminh.com/games/learn-word/giay.webp", category: "group5", syllables: ["gi", "ày"] },
-  { id: "mu", name: "Mũ", image: "https://assets.cuthongminh.com/games/learn-word/mu.webp", category: "group5", syllables: ["m", "ũ"] },
-  { id: "vay", name: "Váy", image: "https://assets.cuthongminh.com/games/learn-word/vay.webp", category: "group5", syllables: ["v", "áy"] },
-  { id: "dep", name: "Dép", image: "https://assets.cuthongminh.com/games/learn-word/dep.webp", category: "group5", syllables: ["d", "ép"] },
+  {
+    id: "ao",
+    name: "Áo",
+    image: "https://assets.cuthongminh.com/games/learn-word/ao.webp",
+    category: "group5",
+    syllables: ["á", "o"],
+  },
+  {
+    id: "quan",
+    name: "Quần",
+    image: "https://assets.cuthongminh.com/games/learn-word/quan.webp",
+    category: "group5",
+    syllables: ["qu", "ần"],
+  },
+  {
+    id: "giay",
+    name: "Giày",
+    image: "https://assets.cuthongminh.com/games/learn-word/giay.webp",
+    category: "group5",
+    syllables: ["gi", "ày"],
+  },
+  {
+    id: "mu",
+    name: "Mũ",
+    image: "https://assets.cuthongminh.com/games/learn-word/mu.webp",
+    category: "group5",
+    syllables: ["m", "ũ"],
+  },
+  {
+    id: "vay",
+    name: "Váy",
+    image: "https://assets.cuthongminh.com/games/learn-word/vay.webp",
+    category: "group5",
+    syllables: ["v", "áy"],
+  },
+  {
+    id: "dep",
+    name: "Dép",
+    image: "https://assets.cuthongminh.com/games/learn-word/dep.webp",
+    category: "group5",
+    syllables: ["d", "ép"],
+  },
 ];
 
 export interface GroupData {
