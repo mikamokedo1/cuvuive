@@ -51,7 +51,7 @@ export const ALPHABET_WORDS: AlphabetWord[] = [
   { id: "u", letter: "U", word: "Umbrella", vietnamese: "Cái Ô", image: emojiSvg("☂️", "E1F5FE") },
   { id: "v", letter: "V", word: "Van", vietnamese: "Xe Tải", image: emojiSvg("🚐", "F1F8E9") },
   { id: "w", letter: "W", word: "Watermelon", vietnamese: "Dưa Hấu", image: Watermelon },
-  { id: "x", letter: "X", word: "X-ray", vietnamese: "Tia X", image: emojiSvg("🩻", "F5F5F5") },
+  { id: "x", letter: "X", word: "X-ray", vietnamese: "Tia X", image: "https://assets.cuthongminh.com/games/learn-english-alphabet/xray.webp" },
   { id: "y", letter: "Y", word: "Yo-yo", vietnamese: "Cái Yo-yo", image: emojiSvg("🪀", "FFF3E0") },
   { id: "z", letter: "Z", word: "Zebra", vietnamese: "Ngựa Vằn", image: emojiSvg("🦓", "FAFAFA") },
 ];
