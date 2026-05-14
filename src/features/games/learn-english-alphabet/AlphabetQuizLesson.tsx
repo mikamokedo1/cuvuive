@@ -30,7 +30,7 @@ export function AlphabetQuizLesson({ words, onComplete }: AlphabetQuizLessonProp
   const { speak: speakVi } = useTextToSpeech("vi-VN");
 
   useEffect(() => {
-    // Read the question when entering the lesson
+    // Read the instruction on mount
     const timeout = setTimeout(() => {
       speakVi("Đâu là chữ cái bắt đầu của từ này?");
     }, 500);
@@ -47,6 +47,17 @@ export function AlphabetQuizLesson({ words, onComplete }: AlphabetQuizLessonProp
   }, [words, requiredRounds]);
 
   const round = rounds[currentRound];
+
+  useEffect(() => {
+    if (round) {
+      // Delay longer on the first round to wait for the Vietnamese instruction
+      const delay = currentRound === 0 ? 3000 : 500;
+      const timeout = setTimeout(() => {
+        speakEn(round.correctWord.word);
+      }, delay);
+      return () => clearTimeout(timeout);
+    }
+  }, [currentRound, round, speakEn]);
 
   const handleSelect = useCallback(
     (option: string) => {
