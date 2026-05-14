@@ -1784,7 +1784,7 @@ export const COURSES: CourseDef[] = [
   },
   {
     id: "learn-english-vocab",
-    title: "Học Từ Vựng Tiếng Anh",
+    title: "Học Từ Vựng",
     description: "Bé học từ vựng tiếng Anh cơ bản qua hình ảnh và phát âm: động vật, trái cây, màu sắc, số đếm.",
     icon: "https://assets.cuthongminh.com/games/learn-english-vocab/logo.webp",
     type: "english",
@@ -1863,7 +1863,7 @@ export const COURSES: CourseDef[] = [
   },
   {
     id: "learn-english-alphabet",
-    title: "Bảng Chữ Cái Tiếng Anh",
+    title: "Bảng Chữ Cái",
     description: "Bé học bảng chữ cái tiếng Anh từ A-Z qua các từ vựng sinh động.",
     icon: "https://assets.cuthongminh.com/games/learn-english-alphabet/logo.webp",
     type: "english",
