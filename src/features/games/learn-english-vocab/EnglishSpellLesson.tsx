@@ -4,7 +4,6 @@ import { useState, useCallback, useEffect, useMemo } from "react";
 import Image from "next/image";
 import { EnglishWord } from "./constants";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
-import { Volume2 } from "lucide-react";
 
 interface EnglishSpellLessonProps {
   words: EnglishWord[];
@@ -26,6 +25,7 @@ export function EnglishSpellLesson({ words, onComplete }: EnglishSpellLessonProp
   const [availableLetters, setAvailableLetters] = useState<{ letter: string; originalIndex: number; used: boolean }[]>([]);
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
   const { speak: speakEn } = useTextToSpeech("en-US");
+  const { speak: speakVi } = useTextToSpeech("vi-VN");
 
   const orderedWords = useMemo(() => {
     return shuffleArray(words).slice(0, Math.min(words.length, 6));
@@ -45,11 +45,20 @@ export function EnglishSpellLesson({ words, onComplete }: EnglishSpellLessonProp
     setFeedback(null);
 
     // Auto speak
-    const timeout = setTimeout(() => {
-      speakEn(currentWord.english);
-    }, 300);
-    return () => clearTimeout(timeout);
-  }, [currentIndex, currentWord, speakEn]);
+    if (currentIndex === 0) {
+      speakVi("Bé hãy ghép các chữ cái thành từ đúng nhé");
+
+      const timeout = setTimeout(() => {
+        speakEn(currentWord.english);
+      }, 3000);
+      return () => clearTimeout(timeout);
+    } else {
+      const timeout = setTimeout(() => {
+        speakEn(currentWord.english);
+      }, 300);
+      return () => clearTimeout(timeout);
+    }
+  }, [currentIndex, currentWord, speakEn, speakVi]);
 
   const handleSelectLetter = useCallback(
     (index: number) => {
@@ -134,9 +143,17 @@ export function EnglishSpellLesson({ words, onComplete }: EnglishSpellLessonProp
         />
       </div>
 
+      {/* Question */}
+      <div className="text-center mt-2 mb-1">
+        <p className="text-lg font-semibold text-gray-700">🧩 Ghép các chữ cái thành từ đúng</p>
+      </div>
+
       {/* Image + Vietnamese hint */}
       <div className="flex flex-col items-center gap-3">
-        <div className="relative w-32 h-32 sm:w-40 sm:h-40">
+        <div
+          className="relative w-32 h-32 sm:w-40 sm:h-40 cursor-pointer transition-transform hover:scale-105 active:scale-95"
+          onClick={() => speakEn(currentWord.english)}
+        >
           <Image
             src={currentWord.image}
             alt={currentWord.vietnamese}
@@ -146,13 +163,6 @@ export function EnglishSpellLesson({ words, onComplete }: EnglishSpellLessonProp
           />
         </div>
         <p className="text-gray-500 text-sm">{currentWord.vietnamese}</p>
-        <button
-          onClick={() => speakEn(currentWord.english)}
-          className="flex items-center gap-1 text-blue-500 hover:text-blue-600 transition-colors"
-        >
-          <Volume2 className="w-5 h-5" />
-          <span className="text-sm">Nghe</span>
-        </button>
       </div>
 
       {/* Spelling area */}

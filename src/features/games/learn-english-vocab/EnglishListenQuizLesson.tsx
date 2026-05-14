@@ -26,6 +26,7 @@ export function EnglishListenQuizLesson({ words, onComplete }: EnglishListenQuiz
   const [score, setScore] = useState(0);
   const requiredRounds = Math.min(words.length, 6);
   const { speak: speakEn } = useTextToSpeech("en-US");
+  const { speak: speakVi } = useTextToSpeech("vi-VN");
 
   const rounds = useMemo(() => {
     const shuffledWords = shuffleArray(words);
@@ -39,13 +40,22 @@ export function EnglishListenQuizLesson({ words, onComplete }: EnglishListenQuiz
   const round = rounds[currentRound];
 
   useEffect(() => {
-    if (round) {
+    if (!round) return;
+
+    if (currentRound === 0) {
+      speakVi("Bé hãy nghe và chọn hình ảnh đúng nhé");
+
+      const timeout = setTimeout(() => {
+        speakEn(round.correctWord.english);
+      }, 3000);
+      return () => clearTimeout(timeout);
+    } else {
       const timeout = setTimeout(() => {
         speakEn(round.correctWord.english);
       }, 500);
       return () => clearTimeout(timeout);
     }
-  }, [currentRound, round, speakEn]);
+  }, [currentRound, round, speakEn, speakVi]);
 
   const handleSelect = useCallback(
     (selectedId: string) => {

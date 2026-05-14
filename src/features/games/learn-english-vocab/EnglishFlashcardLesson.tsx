@@ -4,7 +4,7 @@ import { useState, useCallback } from "react";
 import Image from "next/image";
 import { EnglishWord } from "./constants";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
-import { Volume2, ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
+import { ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
 
 interface EnglishFlashcardLessonProps {
   words: EnglishWord[];
@@ -22,8 +22,8 @@ export function EnglishFlashcardLesson({ words, onComplete }: EnglishFlashcardLe
   const handleFlip = useCallback(() => {
     if (!isFlipped) {
       setIsFlipped(true);
-      speakEn(currentWord.english);
     }
+    speakEn(currentWord.english);
   }, [isFlipped, currentWord.english, speakEn]);
 
   const handleNext = useCallback(() => {
@@ -42,10 +42,6 @@ export function EnglishFlashcardLesson({ words, onComplete }: EnglishFlashcardLe
       setIsFlipped(false);
     }
   }, [currentIndex]);
-
-  const handleSpeak = useCallback(() => {
-    speakEn(currentWord.english);
-  }, [currentWord.english, speakEn]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] gap-6 px-4">
@@ -68,56 +64,52 @@ export function EnglishFlashcardLesson({ words, onComplete }: EnglishFlashcardLe
       <div
         key={currentIndex}
         onClick={handleFlip}
-        className="relative w-72 h-80 sm:w-80 sm:h-96 cursor-pointer"
+        className="relative w-[90vw] max-w-[340px] h-[220px] sm:max-w-none sm:w-[520px] sm:h-[300px] cursor-pointer group [perspective:1000px]"
       >
-        {/* Front - Image + Vietnamese */}
-        <div
-          className={`absolute inset-0 bg-white rounded-3xl shadow-2xl border-4 border-blue-200 flex flex-col items-center justify-center gap-4 p-6 transition-all duration-500 ${
-            isFlipped ? "opacity-0 scale-95 pointer-events-none z-0" : "opacity-100 scale-100 z-10"
+        <div 
+          className={`relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] ${
+            isFlipped ? "[transform:rotateY(180deg)]" : ""
           }`}
         >
-          <div className="relative w-40 h-40 sm:w-48 sm:h-48">
-            <Image
-              src={currentWord.image}
-              alt={currentWord.vietnamese}
-              fill
-              className="object-contain drop-shadow-lg"
-              sizes="(max-width: 640px) 160px, 192px"
-            />
-          </div>
-          <p className="text-xl font-bold text-gray-700">{currentWord.vietnamese}</p>
-          <p className="text-sm text-gray-400 animate-pulse">👆 Chạm để lật</p>
-        </div>
-
-        {/* Back - English word */}
-        <div
-          className={`absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl shadow-2xl flex flex-col items-center justify-center gap-4 p-6 transition-all duration-500 ${
-            isFlipped ? "opacity-100 scale-100 z-10" : "opacity-0 scale-95 pointer-events-none z-0"
-          }`}
-        >
-          <div className="relative w-32 h-32 sm:w-40 sm:h-40">
-            <Image
-              src={currentWord.image}
-              alt={currentWord.english}
-              fill
-              className="object-contain drop-shadow-lg"
-              sizes="(max-width: 640px) 128px, 160px"
-            />
-          </div>
-          <p className="text-3xl sm:text-4xl font-extrabold text-white drop-shadow-md">
-            {currentWord.english}
-          </p>
-          <p className="text-lg text-white/80">{currentWord.vietnamese}</p>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              handleSpeak();
-            }}
-            className="mt-2 flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full transition-all"
+          {/* Front - Image + Vietnamese */}
+          <div
+            className={`absolute inset-0 bg-white rounded-3xl shadow-2xl border-4 border-blue-200 flex flex-row items-center justify-center gap-4 sm:gap-8 p-6 [backface-visibility:hidden]`}
           >
-            <Volume2 className="w-5 h-5" />
-            <span className="text-sm font-medium">Nghe lại</span>
-          </button>
+            <div className="relative w-28 h-28 sm:w-48 sm:h-48 shrink-0">
+              <Image
+                src={currentWord.image}
+                alt={currentWord.vietnamese}
+                fill
+                className="object-contain drop-shadow-lg p-2"
+                sizes="(max-width: 640px) 112px, 192px"
+              />
+            </div>
+            <div className="text-left flex flex-col justify-center items-center">
+              <p className="text-2xl sm:text-4xl font-bold text-gray-700 text-center mb-4">{currentWord.vietnamese}</p>
+              <p className="text-sm text-gray-400 animate-pulse mt-2">👆 Chạm để học</p>
+            </div>
+          </div>
+
+          {/* Back - Image + English */}
+          <div
+            className={`absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl shadow-2xl flex flex-row items-center justify-center gap-4 sm:gap-8 p-6 [backface-visibility:hidden] [transform:rotateY(180deg)]`}
+          >
+            <div className="relative w-28 h-28 sm:w-48 sm:h-48 bg-white/20 rounded-2xl p-2 shrink-0">
+              <Image
+                src={currentWord.image}
+                alt={currentWord.english}
+                fill
+                className="object-contain drop-shadow-lg p-2"
+                sizes="(max-width: 640px) 112px, 192px"
+              />
+            </div>
+            <div className="text-left flex flex-col justify-center max-w-[150px] sm:max-w-[200px]">
+              <p className="text-3xl sm:text-5xl font-extrabold text-white drop-shadow-md mb-1 sm:mb-2 break-words">
+                {currentWord.english}
+              </p>
+              <p className="text-lg sm:text-2xl text-white/80 font-medium mb-3">{currentWord.vietnamese}</p>
+            </div>
+          </div>
         </div>
       </div>
 

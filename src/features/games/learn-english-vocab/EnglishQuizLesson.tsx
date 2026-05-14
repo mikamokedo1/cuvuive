@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import Image from "next/image";
 import { EnglishWord } from "./constants";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
@@ -27,6 +27,11 @@ export function EnglishQuizLesson({ words, onComplete }: EnglishQuizLessonProps)
   const [score, setScore] = useState(0);
   const requiredRounds = Math.min(words.length, 6);
   const { speak: speakEn } = useTextToSpeech("en-US");
+  const { speak: speakVi } = useTextToSpeech("vi-VN");
+
+  useEffect(() => {
+    speakVi("Bé hãy chọn từ tiếng anh đúng với hình ảnh nhé");
+  }, [speakVi]);
 
   const rounds = useMemo(() => {
     const shuffled = shuffleArray(words);
