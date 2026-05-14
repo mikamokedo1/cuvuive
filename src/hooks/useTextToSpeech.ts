@@ -91,11 +91,16 @@ export const useTextToSpeech = (defaultLang: string = "vi"): UseTextToSpeechRetu
       clearTimeout(speakTimeoutRef.current);
     }
 
+    // Cancel any ongoing speech immediately
+    window.speechSynthesis.cancel();
+
+    // Chrome bug workaround: after cancel(), we need a sufficient delay before
+    // calling speak() again. Without this, Chrome creates a "silent" utterance
+    // where the speaker icon shows but no audio is produced.
     speakTimeoutRef.current = setTimeout(() => {
-      // Cancel any ongoing speech to prevent getting stuck (Chrome bug)
+      // Double-check: cancel again and resume if paused (belt-and-suspenders)
       window.speechSynthesis.cancel();
 
-      // Explicitly resume if it somehow got paused
       if (window.speechSynthesis.paused) {
         window.speechSynthesis.resume();
       }
@@ -110,11 +115,41 @@ export const useTextToSpeech = (defaultLang: string = "vi"): UseTextToSpeechRetu
         utterance.lang = selectedVoiceRef.current.lang; // Use exact language of the chosen voice
       }
 
-      // Optional: tweak rate/pitch if needed for Vietnamese
-      // utterance.rate = 0.9;
+      // Chrome bug workaround: Chrome stops speaking after ~15 seconds for
+      // long utterances. We use a keep-alive interval that calls pause/resume
+      // periodically to prevent this.
+      let keepAlive: ReturnType<typeof setInterval> | null = null;
+
+      utterance.onstart = () => {
+        keepAlive = setInterval(() => {
+          if (!window.speechSynthesis.speaking) {
+            if (keepAlive) clearInterval(keepAlive);
+            return;
+          }
+          window.speechSynthesis.pause();
+          window.speechSynthesis.resume();
+        }, 10000);
+      };
+
+      const cleanup = () => {
+        if (keepAlive) {
+          clearInterval(keepAlive);
+          keepAlive = null;
+        }
+      };
+
+      utterance.onend = cleanup;
+      utterance.onerror = (e) => {
+        cleanup();
+        // Chrome sometimes fires 'interrupted' when cancel() is called —
+        // this is expected and not a real error.
+        if (e.error !== "interrupted" && e.error !== "canceled") {
+          console.warn("SpeechSynthesis error:", e.error);
+        }
+      };
 
       window.speechSynthesis.speak(utterance);
-    }, 50);
+    }, 150); // 150ms delay — enough for Chrome to fully clean up after cancel()
   }, []);
 
   return {
