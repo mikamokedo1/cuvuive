@@ -41,17 +41,7 @@ export function useGameLesson<G extends { id: string }>({
   const group = groups.find((g: G) => g.id === groupId);
 
   useEffect(() => {
-    if (!isLoaded || !groupId || !lessonId) return;
-
-    // Check if lesson exists in definitions
-    const lesson = COURSES.find(c => c.id === gameSlug)
-      ?.groups.find(g => g.id === groupId)
-      ?.lessons.find(l => l.id === lessonId);
-    
-    if (!lesson) {
-      console.warn(`Lesson ${lessonId} not found in ${gameSlug}/${groupId}`);
-      return;
-    }
+    if (!isLoaded) return;
 
     if (!isLessonUnlocked(gameSlug, groupId, lessonId)) {
       router.push(`/games/${gameSlug}/${groupId}`);
@@ -71,15 +61,9 @@ export function useGameLesson<G extends { id: string }>({
   }, [isLoaded, groupId, lessonId, gameSlug, isLessonUnlocked, checkAccess, showPaywall, router]);
 
   const handleComplete = useCallback(() => {
-    if (!groupId || !lessonId) return;
     markLessonComplete(gameSlug, groupId, lessonId);
 
     const currentIdx = lessonOrder.indexOf(lessonId);
-    if (currentIdx === -1) {
-       setShowModal(true);
-       return;
-    }
-
     setCurrentLessonNum(currentIdx + 1);
 
     if (currentIdx < lessonOrder.length - 1) {
@@ -90,6 +74,7 @@ export function useGameLesson<G extends { id: string }>({
       setIsGroupDone(true);
       setNextLessonNum(null);
 
+      // Check if this is the last group in the course → entire course is complete
       const course = COURSES.find((c) => c.id === gameSlug);
       if (course) {
         const lastGroup = course.groups[course.groups.length - 1];
