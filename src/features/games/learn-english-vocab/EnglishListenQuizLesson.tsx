@@ -23,6 +23,8 @@ function shuffleArray<T>(array: T[]): T[] {
 export function EnglishListenQuizLesson({ words, onComplete }: EnglishListenQuizLessonProps) {
   const [currentRound, setCurrentRound] = useState(0);
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [hasMistake, setHasMistake] = useState(false);
   const [score, setScore] = useState(0);
   const requiredRounds = Math.min(words.length, 6);
   const { speak: speakEn } = useTextToSpeech("en-US");
@@ -58,26 +60,40 @@ export function EnglishListenQuizLesson({ words, onComplete }: EnglishListenQuiz
   }, [currentRound, round, speakEn, speakVi]);
 
   const handleSelect = useCallback(
-    (selectedId: string) => {
+    (id: string) => {
       if (feedback) return;
 
-      const isCorrect = selectedId === round.correctWord.id;
+      setSelectedId(id);
+      const isCorrect = id === round.correctWord.id;
       setFeedback(isCorrect ? "correct" : "wrong");
 
-      if (isCorrect) {
-        setScore((prev) => prev + 1);
+      const selectedOption = round.options.find((o) => o.id === id);
+      if (selectedOption) {
+        speakEn(selectedOption.english);
       }
 
-      setTimeout(() => {
-        setFeedback(null);
-        if (currentRound < requiredRounds - 1) {
-          setCurrentRound((prev) => prev + 1);
-        } else {
-          onComplete();
+      if (isCorrect) {
+        if (!hasMistake) {
+          setScore((prev) => prev + 1);
         }
-      }, 1200);
+        setTimeout(() => {
+          setFeedback(null);
+          setSelectedId(null);
+          setHasMistake(false);
+          if (currentRound < requiredRounds - 1) {
+            setCurrentRound((prev) => prev + 1);
+          } else {
+            onComplete();
+          }
+        }, 1500);
+      } else {
+        setTimeout(() => {
+          setFeedback(null);
+          setSelectedId(null);
+        }, 1500);
+      }
     },
-    [feedback, round, currentRound, requiredRounds, onComplete]
+    [feedback, round, currentRound, requiredRounds, onComplete, hasMistake, speakEn]
   );
 
   const handleReplay = useCallback(() => {
@@ -120,8 +136,9 @@ export function EnglishListenQuizLesson({ words, onComplete }: EnglishListenQuiz
       <div className="grid grid-cols-2 gap-4 max-w-md w-full">
         {round.options.map((option) => {
           const isCorrectOption = option.id === round.correctWord.id;
+          const isSelected = selectedId === option.id;
           const showCorrect = feedback === "correct" && isCorrectOption;
-          const showWrong = feedback === "wrong" && !isCorrectOption;
+          const showWrong = feedback === "wrong" && isSelected;
 
           return (
             <button
@@ -133,8 +150,8 @@ export function EnglishListenQuizLesson({ words, onComplete }: EnglishListenQuiz
                 transition-all duration-300 
                 ${feedback === null ? "hover:scale-105 hover:shadow-xl border-gray-200 cursor-pointer" : "cursor-default"}
                 ${showCorrect ? "border-green-500 bg-green-50 scale-105" : ""}
-                ${feedback === "wrong" && isCorrectOption ? "border-green-500 bg-green-50" : ""}
-                ${showWrong ? "border-red-300 opacity-50" : ""}
+                ${showWrong ? "border-red-400 bg-red-50 animate-shake" : ""}
+                ${feedback !== null && !isSelected && !showCorrect ? "opacity-50" : ""}
               `}
             >
               <div className="relative w-20 h-20 sm:w-24 sm:h-24">
@@ -149,14 +166,14 @@ export function EnglishListenQuizLesson({ words, onComplete }: EnglishListenQuiz
               <p className="text-sm font-medium text-gray-600">{option.vietnamese}</p>
 
               {/* Feedback icon */}
-              {feedback && isCorrectOption && (
+              {showCorrect && (
                 <div className="absolute -top-2 -right-2">
                   <CheckCircle2 className="w-8 h-8 text-green-500 fill-white" />
                 </div>
               )}
-              {feedback === "wrong" && !isCorrectOption && (
+              {showWrong && (
                 <div className="absolute -top-2 -right-2">
-                  <XCircle className="w-8 h-8 text-red-400 fill-white" />
+                  <XCircle className="w-8 h-8 text-red-500 fill-white" />
                 </div>
               )}
             </button>

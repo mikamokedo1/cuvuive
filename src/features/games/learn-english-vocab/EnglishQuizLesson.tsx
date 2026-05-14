@@ -24,6 +24,7 @@ export function EnglishQuizLesson({ words, onComplete }: EnglishQuizLessonProps)
   const [currentRound, setCurrentRound] = useState(0);
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [hasMistake, setHasMistake] = useState(false);
   const [score, setScore] = useState(0);
   const requiredRounds = Math.min(words.length, 6);
   const { speak: speakEn } = useTextToSpeech("en-US");
@@ -51,22 +52,31 @@ export function EnglishQuizLesson({ words, onComplete }: EnglishQuizLessonProps)
       const isCorrect = option === round.correctWord.english;
       setFeedback(isCorrect ? "correct" : "wrong");
 
-      if (isCorrect) {
-        setScore((prev) => prev + 1);
-        speakEn(round.correctWord.english);
-      }
+      speakEn(option);
 
-      setTimeout(() => {
-        setFeedback(null);
-        setSelectedId(null);
-        if (currentRound < requiredRounds - 1) {
-          setCurrentRound((prev) => prev + 1);
-        } else {
-          onComplete();
+      if (isCorrect) {
+        if (!hasMistake) {
+          setScore((prev) => prev + 1);
         }
-      }, 1200);
+        setTimeout(() => {
+          setFeedback(null);
+          setSelectedId(null);
+          setHasMistake(false);
+          if (currentRound < requiredRounds - 1) {
+            setCurrentRound((prev) => prev + 1);
+          } else {
+            onComplete();
+          }
+        }, 1500);
+      } else {
+        setHasMistake(true);
+        setTimeout(() => {
+          setFeedback(null);
+          setSelectedId(null);
+        }, 1500);
+      }
     },
-    [feedback, round, currentRound, requiredRounds, onComplete, speakEn]
+    [feedback, round, currentRound, requiredRounds, onComplete, hasMistake, speakEn]
   );
 
   if (!round) return null;
@@ -117,13 +127,12 @@ export function EnglishQuizLesson({ words, onComplete }: EnglishQuizLessonProps)
                 transition-all duration-300
                 ${feedback === null ? "bg-white hover:bg-blue-50 hover:scale-105 border-gray-200 cursor-pointer shadow-md" : "cursor-default"}
                 ${feedback === "correct" && isSelected ? "bg-green-100 border-green-500 scale-105 text-green-700" : ""}
-                ${feedback === "wrong" && isSelected ? "bg-red-100 border-red-400 text-red-600" : ""}
-                ${feedback === "wrong" && isCorrectOption ? "bg-green-100 border-green-500 text-green-700" : ""}
+                ${feedback === "wrong" && isSelected ? "bg-red-100 border-red-400 text-red-600 animate-shake" : ""}
                 ${feedback !== null && !isSelected && !isCorrectOption ? "opacity-40" : ""}
               `}
             >
               {option}
-              {feedback && isCorrectOption && (
+              {feedback === "correct" && isCorrectOption && (
                 <CheckCircle2 className="absolute -top-2 -right-2 w-7 h-7 text-green-500 fill-white" />
               )}
               {feedback === "wrong" && isSelected && !isCorrectOption && (
