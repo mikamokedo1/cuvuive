@@ -2,7 +2,8 @@
 
 import { useState, useCallback } from "react";
 import Image from "next/image";
-import { AlphabetWord, speakEnglish } from "./constants";
+import { AlphabetWord } from "./constants";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { Volume2, ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
 
 interface AlphabetFlashcardLessonProps {
@@ -14,6 +15,7 @@ export function AlphabetFlashcardLesson({ words, onComplete }: AlphabetFlashcard
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const [completedCount, setCompletedCount] = useState(0);
+  const { speak: speakEn } = useTextToSpeech("en-US");
 
   const currentWord = words[currentIndex];
 
@@ -21,9 +23,9 @@ export function AlphabetFlashcardLesson({ words, onComplete }: AlphabetFlashcard
     if (!currentWord) return;
     if (!isFlipped) {
       setIsFlipped(true);
-      speakEnglish(currentWord.letter + ", " + currentWord.word);
     }
-  }, [isFlipped, currentWord]);
+    speakEn(currentWord.letter + ", " + currentWord.word);
+  }, [isFlipped, currentWord, speakEn]);
 
   const handleNext = useCallback(() => {
     if (currentIndex < words.length - 1) {
@@ -43,8 +45,8 @@ export function AlphabetFlashcardLesson({ words, onComplete }: AlphabetFlashcard
   }, [currentIndex]);
 
   const handleSpeak = useCallback(() => {
-    if (currentWord) speakEnglish(currentWord.letter + ", " + currentWord.word);
-  }, [currentWord]);
+    if (currentWord) speakEn(currentWord.letter + ", " + currentWord.word);
+  }, [currentWord, speakEn]);
 
   if (!currentWord) return null;
 
@@ -69,55 +71,47 @@ export function AlphabetFlashcardLesson({ words, onComplete }: AlphabetFlashcard
       <div
         key={currentIndex}
         onClick={handleFlip}
-        className="relative w-72 h-80 sm:w-80 sm:h-96 cursor-pointer"
+        className="relative w-72 h-80 sm:w-80 sm:h-96 cursor-pointer group [perspective:1000px]"
       >
-        {/* Front - BIG LETTER */}
-        <div
-          className={`absolute inset-0 bg-white rounded-3xl shadow-2xl border-4 border-blue-200 flex flex-col items-center justify-center gap-4 p-6 transition-all duration-500 ${
-            isFlipped ? "opacity-0 scale-95 pointer-events-none z-0" : "opacity-100 scale-100 z-10"
+        <div 
+          className={`relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] ${
+            isFlipped ? "[transform:rotateY(180deg)]" : ""
           }`}
         >
-          <div className="text-9xl font-black text-blue-600 drop-shadow-sm">
-            {currentWord.letter}
-          </div>
-          <div className="text-4xl font-bold text-blue-400">
-            {currentWord.letter.toLowerCase()}
-          </div>
-          <p className="text-sm text-gray-400 animate-pulse mt-4">👆 Chạm để học từ vựng</p>
-        </div>
-
-        {/* Back - Image + Word */}
-        <div
-          className={`absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl shadow-2xl flex flex-col items-center justify-center gap-4 p-6 transition-all duration-500 ${
-            isFlipped ? "opacity-100 scale-100 z-10" : "opacity-0 scale-95 pointer-events-none z-0"
-          }`}
-        >
-          <div className="relative w-32 h-32 sm:w-40 sm:h-40 bg-white/20 rounded-2xl p-4">
-            <Image
-              src={currentWord.image}
-              alt={currentWord.word}
-              fill
-              className="object-contain drop-shadow-lg p-2"
-              sizes="(max-width: 640px) 128px, 160px"
-            />
-          </div>
-          <div className="text-center">
-            <p className="text-4xl sm:text-5xl font-extrabold text-white drop-shadow-md">
-              <span className="text-yellow-300">{currentWord.letter}</span>
-              {currentWord.word.slice(1)}
-            </p>
-            <p className="text-xl text-white/80 font-medium">{currentWord.vietnamese}</p>
-          </div>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              handleSpeak();
-            }}
-            className="mt-2 flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full transition-all"
+          {/* Front - BIG LETTER */}
+          <div
+            className={`absolute inset-0 bg-white rounded-3xl shadow-2xl border-4 border-blue-200 flex flex-col items-center justify-center gap-4 p-6 [backface-visibility:hidden]`}
           >
-            <Volume2 className="w-5 h-5" />
-            <span className="text-sm font-medium">Nghe lại</span>
-          </button>
+            <div className="text-9xl font-black text-blue-600 drop-shadow-sm">
+              {currentWord.letter}
+            </div>
+            <div className="text-4xl font-bold text-blue-400">
+              {currentWord.letter.toLowerCase()}
+            </div>
+            <p className="text-sm text-gray-400 animate-pulse mt-4">👆 Chạm để học từ vựng</p>
+          </div>
+
+          {/* Back - Image + Word */}
+          <div
+            className={`absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl shadow-2xl flex flex-col items-center justify-center gap-4 p-6 [backface-visibility:hidden] [transform:rotateY(180deg)]`}
+          >
+            <div className="relative w-32 h-32 sm:w-40 sm:h-40 bg-white/20 rounded-2xl p-4">
+              <Image
+                src={currentWord.image}
+                alt={currentWord.word}
+                fill
+                className="object-contain drop-shadow-lg p-2"
+                sizes="(max-width: 640px) 128px, 160px"
+              />
+            </div>
+            <div className="text-center">
+              <p className="text-4xl sm:text-5xl font-extrabold text-white drop-shadow-md">
+                <span className="text-yellow-300">{currentWord.letter}</span>
+                {currentWord.word.slice(1)}
+              </p>
+              <p className="text-xl text-white/80 font-medium">{currentWord.vietnamese}</p>
+            </div>
+          </div>
         </div>
       </div>
 

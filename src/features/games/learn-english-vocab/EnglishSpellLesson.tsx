@@ -2,7 +2,8 @@
 
 import { useState, useCallback, useEffect, useMemo } from "react";
 import Image from "next/image";
-import { EnglishWord, speakEnglish } from "./constants";
+import { EnglishWord } from "./constants";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { Volume2 } from "lucide-react";
 
 interface EnglishSpellLessonProps {
@@ -24,6 +25,7 @@ export function EnglishSpellLesson({ words, onComplete }: EnglishSpellLessonProp
   const [selectedLetters, setSelectedLetters] = useState<{ letter: string; originalIndex: number }[]>([]);
   const [availableLetters, setAvailableLetters] = useState<{ letter: string; originalIndex: number; used: boolean }[]>([]);
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
+  const { speak: speakEn } = useTextToSpeech("en-US");
 
   const orderedWords = useMemo(() => {
     return shuffleArray(words).slice(0, Math.min(words.length, 6));
@@ -44,10 +46,10 @@ export function EnglishSpellLesson({ words, onComplete }: EnglishSpellLessonProp
 
     // Auto speak
     const timeout = setTimeout(() => {
-      speakEnglish(currentWord.english);
+      speakEn(currentWord.english);
     }, 300);
     return () => clearTimeout(timeout);
-  }, [currentIndex, currentWord]);
+  }, [currentIndex, currentWord, speakEn]);
 
   const handleSelectLetter = useCallback(
     (index: number) => {
@@ -70,7 +72,7 @@ export function EnglishSpellLesson({ words, onComplete }: EnglishSpellLessonProp
 
         if (spelled === correct) {
           setFeedback("correct");
-          speakEnglish(currentWord.english);
+          speakEn(currentWord.english);
           setTimeout(() => {
             if (currentIndex < orderedWords.length - 1) {
               setCurrentIndex((prev) => prev + 1);
@@ -92,7 +94,7 @@ export function EnglishSpellLesson({ words, onComplete }: EnglishSpellLessonProp
         }
       }
     },
-    [feedback, availableLetters, selectedLetters, currentWord, currentIndex, orderedWords.length, onComplete]
+    [feedback, availableLetters, selectedLetters, currentWord, currentIndex, orderedWords.length, onComplete, speakEn]
   );
 
   const handleRemoveLetter = useCallback(
@@ -145,7 +147,7 @@ export function EnglishSpellLesson({ words, onComplete }: EnglishSpellLessonProp
         </div>
         <p className="text-gray-500 text-sm">{currentWord.vietnamese}</p>
         <button
-          onClick={() => speakEnglish(currentWord.english)}
+          onClick={() => speakEn(currentWord.english)}
           className="flex items-center gap-1 text-blue-500 hover:text-blue-600 transition-colors"
         >
           <Volume2 className="w-5 h-5" />

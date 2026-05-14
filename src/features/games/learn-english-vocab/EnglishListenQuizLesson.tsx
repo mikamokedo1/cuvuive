@@ -2,7 +2,8 @@
 
 import { useState, useCallback, useEffect, useMemo } from "react";
 import Image from "next/image";
-import { EnglishWord, speakEnglish } from "./constants";
+import { EnglishWord } from "./constants";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { Volume2, CheckCircle2, XCircle } from "lucide-react";
 
 interface EnglishListenQuizLessonProps {
@@ -24,6 +25,7 @@ export function EnglishListenQuizLesson({ words, onComplete }: EnglishListenQuiz
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
   const [score, setScore] = useState(0);
   const requiredRounds = Math.min(words.length, 6);
+  const { speak: speakEn } = useTextToSpeech("en-US");
 
   const rounds = useMemo(() => {
     const shuffledWords = shuffleArray(words);
@@ -39,11 +41,11 @@ export function EnglishListenQuizLesson({ words, onComplete }: EnglishListenQuiz
   useEffect(() => {
     if (round) {
       const timeout = setTimeout(() => {
-        speakEnglish(round.correctWord.english);
+        speakEn(round.correctWord.english);
       }, 500);
       return () => clearTimeout(timeout);
     }
-  }, [currentRound, round]);
+  }, [currentRound, round, speakEn]);
 
   const handleSelect = useCallback(
     (selectedId: string) => {
@@ -70,9 +72,9 @@ export function EnglishListenQuizLesson({ words, onComplete }: EnglishListenQuiz
 
   const handleReplay = useCallback(() => {
     if (round) {
-      speakEnglish(round.correctWord.english);
+      speakEn(round.correctWord.english);
     }
-  }, [round]);
+  }, [round, speakEn]);
 
   if (!round) return null;
 

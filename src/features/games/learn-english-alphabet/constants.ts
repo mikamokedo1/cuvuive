@@ -81,11 +81,4 @@ export function getWordsForGroup(groupId: string): AlphabetWord[] {
   return ALPHABET_WORDS.filter((word) => group.words.includes(word.id));
 }
 
-export function speakEnglish(text: string) {
-  if (typeof window === "undefined" || !window.speechSynthesis) return;
-  window.speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "en-US";
-  utterance.rate = 0.8;
-  window.speechSynthesis.speak(utterance);
-}
+

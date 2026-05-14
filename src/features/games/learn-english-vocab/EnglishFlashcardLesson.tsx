@@ -2,7 +2,8 @@
 
 import { useState, useCallback } from "react";
 import Image from "next/image";
-import { EnglishWord, speakEnglish } from "./constants";
+import { EnglishWord } from "./constants";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { Volume2, ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
 
 interface EnglishFlashcardLessonProps {
@@ -14,15 +15,16 @@ export function EnglishFlashcardLesson({ words, onComplete }: EnglishFlashcardLe
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const [completedCount, setCompletedCount] = useState(0);
+  const { speak: speakEn } = useTextToSpeech("en-US");
 
   const currentWord = words[currentIndex];
 
   const handleFlip = useCallback(() => {
     if (!isFlipped) {
       setIsFlipped(true);
-      speakEnglish(currentWord.english);
+      speakEn(currentWord.english);
     }
-  }, [isFlipped, currentWord.english]);
+  }, [isFlipped, currentWord.english, speakEn]);
 
   const handleNext = useCallback(() => {
     if (currentIndex < words.length - 1) {
@@ -42,8 +44,8 @@ export function EnglishFlashcardLesson({ words, onComplete }: EnglishFlashcardLe
   }, [currentIndex]);
 
   const handleSpeak = useCallback(() => {
-    speakEnglish(currentWord.english);
-  }, [currentWord.english]);
+    speakEn(currentWord.english);
+  }, [currentWord.english, speakEn]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] gap-6 px-4">

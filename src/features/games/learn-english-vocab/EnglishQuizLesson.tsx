@@ -2,7 +2,8 @@
 
 import { useState, useCallback, useMemo } from "react";
 import Image from "next/image";
-import { EnglishWord, speakEnglish } from "./constants";
+import { EnglishWord } from "./constants";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { CheckCircle2, XCircle } from "lucide-react";
 
 interface EnglishQuizLessonProps {
@@ -25,6 +26,7 @@ export function EnglishQuizLesson({ words, onComplete }: EnglishQuizLessonProps)
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [score, setScore] = useState(0);
   const requiredRounds = Math.min(words.length, 6);
+  const { speak: speakEn } = useTextToSpeech("en-US");
 
   const rounds = useMemo(() => {
     const shuffled = shuffleArray(words);
@@ -46,7 +48,7 @@ export function EnglishQuizLesson({ words, onComplete }: EnglishQuizLessonProps)
 
       if (isCorrect) {
         setScore((prev) => prev + 1);
-        speakEnglish(round.correctWord.english);
+        speakEn(round.correctWord.english);
       }
 
       setTimeout(() => {
@@ -59,7 +61,7 @@ export function EnglishQuizLesson({ words, onComplete }: EnglishQuizLessonProps)
         }
       }, 1200);
     },
-    [feedback, round, currentRound, requiredRounds, onComplete]
+    [feedback, round, currentRound, requiredRounds, onComplete, speakEn]
   );
 
   if (!round) return null;

@@ -173,14 +173,3 @@ export function getWordsForGroup(groupId: string): EnglishWord[] {
   if (!group) return [];
   return ENGLISH_WORDS.filter((word) => group.words.includes(word.id));
 }
-
-// Helper: speak English text using Web Speech API
-export function speakEnglish(text: string) {
-  if (typeof window === "undefined" || !window.speechSynthesis) return;
-  window.speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "en-US";
-  utterance.rate = 0.8;
-  utterance.pitch = 1.1;
-  window.speechSynthesis.speak(utterance);
-}

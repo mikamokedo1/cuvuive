@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import Image from "next/image";
-import { AlphabetWord, speakEnglish } from "./constants";
+import { AlphabetWord } from "./constants";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { CheckCircle2, XCircle } from "lucide-react";
 
 interface AlphabetQuizLessonProps {
@@ -25,6 +26,16 @@ export function AlphabetQuizLesson({ words, onComplete }: AlphabetQuizLessonProp
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [score, setScore] = useState(0);
   const requiredRounds = Math.min(words.length, 6);
+  const { speak: speakEn } = useTextToSpeech("en-US");
+  const { speak: speakVi } = useTextToSpeech("vi-VN");
+
+  useEffect(() => {
+    // Read the question when entering the lesson
+    const timeout = setTimeout(() => {
+      speakVi("Đâu là chữ cái bắt đầu của từ này?");
+    }, 500);
+    return () => clearTimeout(timeout);
+  }, [speakVi]);
 
   const rounds = useMemo(() => {
     const shuffled = shuffleArray(words);
@@ -44,22 +55,25 @@ export function AlphabetQuizLesson({ words, onComplete }: AlphabetQuizLessonProp
       const isCorrect = option === round.correctWord.letter;
       setFeedback(isCorrect ? "correct" : "wrong");
 
+      speakEn(option);
+
       if (isCorrect) {
         setScore((prev) => prev + 1);
-        speakEnglish(round.correctWord.letter);
       }
 
       setTimeout(() => {
         setFeedback(null);
         setSelectedId(null);
-        if (currentRound < requiredRounds - 1) {
-          setCurrentRound((prev) => prev + 1);
-        } else {
-          onComplete();
+        if (isCorrect) {
+          if (currentRound < requiredRounds - 1) {
+            setCurrentRound((prev) => prev + 1);
+          } else {
+            onComplete();
+          }
         }
       }, 1200);
     },
-    [feedback, round, currentRound, requiredRounds, onComplete]
+    [feedback, round, currentRound, requiredRounds, onComplete, speakEn]
   );
 
   if (!round) return null;
@@ -80,9 +94,12 @@ export function AlphabetQuizLesson({ words, onComplete }: AlphabetQuizLessonProp
       </div>
 
       {/* Question */}
-      <div className="flex flex-col items-center gap-4 text-center">
-        <p className="text-lg font-semibold text-gray-700">🤔 Đâu là chữ cái bắt đầu của từ này?</p>
-        <div className="relative w-40 h-40 sm:w-48 sm:h-48 bg-white rounded-3xl shadow-xl p-4 border-4 border-orange-200">
+      <div 
+        className="flex flex-col items-center gap-4 text-center cursor-pointer group"
+        onClick={() => speakEn(round.correctWord.word)}
+      >
+        <p className="text-lg font-semibold text-gray-700 group-hover:text-blue-500 transition-colors">🤔 Đâu là chữ cái bắt đầu của từ này?</p>
+        <div className="relative w-40 h-40 sm:w-48 sm:h-48 bg-white rounded-3xl shadow-xl p-4 border-4 border-orange-200 transition-transform duration-300 group-hover:scale-105">
           <Image
             src={round.correctWord.image}
             alt={round.correctWord.word}
@@ -91,8 +108,8 @@ export function AlphabetQuizLesson({ words, onComplete }: AlphabetQuizLessonProp
             sizes="(max-width: 640px) 160px, 192px"
           />
         </div>
-        <div className="space-y-1">
-            <p className="text-2xl font-bold text-blue-600">{round.correctWord.word}</p>
+        <div className="space-y-1 transition-transform duration-300 group-hover:scale-105">
+            <p className="text-2xl font-bold text-blue-600 group-hover:text-blue-500 transition-colors">{round.correctWord.word}</p>
             <p className="text-gray-500 italic">{round.correctWord.vietnamese}</p>
         </div>
       </div>
@@ -113,16 +130,15 @@ export function AlphabetQuizLesson({ words, onComplete }: AlphabetQuizLessonProp
                 transition-all duration-300
                 ${feedback === null ? "bg-white hover:bg-blue-50 hover:scale-105 border-gray-200 cursor-pointer shadow-md" : "cursor-default"}
                 ${feedback === "correct" && isSelected ? "bg-green-100 border-green-500 scale-105 text-green-700" : ""}
-                ${feedback === "wrong" && isSelected ? "bg-red-100 border-red-400 text-red-600" : ""}
-                ${feedback === "wrong" && isCorrectOption ? "bg-green-100 border-green-500 text-green-700" : ""}
-                ${feedback !== null && !isSelected && !isCorrectOption ? "opacity-40" : ""}
+                ${feedback === "wrong" && isSelected ? "bg-red-100 border-red-400 text-red-600 animate-shake" : ""}
+                ${feedback !== null && !isSelected ? "opacity-40" : ""}
               `}
             >
               {option}
-              {feedback && isCorrectOption && (
+              {feedback === "correct" && isCorrectOption && (
                 <CheckCircle2 className="absolute -top-2 -right-2 w-7 h-7 text-green-500 fill-white" />
               )}
-              {feedback === "wrong" && isSelected && !isCorrectOption && (
+              {feedback === "wrong" && isSelected && (
                 <XCircle className="absolute -top-2 -right-2 w-7 h-7 text-red-400 fill-white" />
               )}
             </button>

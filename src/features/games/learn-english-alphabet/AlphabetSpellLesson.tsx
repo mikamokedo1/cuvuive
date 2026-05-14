@@ -2,7 +2,8 @@
 
 import { useState, useCallback, useEffect, useMemo } from "react";
 import Image from "next/image";
-import { AlphabetWord, speakEnglish } from "./constants";
+import { AlphabetWord } from "./constants";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { Volume2 } from "lucide-react";
 
 interface AlphabetSpellLessonProps {
@@ -24,12 +25,21 @@ export function AlphabetSpellLesson({ words, onComplete }: AlphabetSpellLessonPr
   const [selectedLetters, setSelectedLetters] = useState<{ letter: string; originalIndex: number }[]>([]);
   const [availableLetters, setAvailableLetters] = useState<{ letter: string; originalIndex: number; used: boolean }[]>([]);
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
+  const { speak: speakEn } = useTextToSpeech("en-US");
+  const { speak: speakVi } = useTextToSpeech("vi-VN");
 
   const orderedWords = useMemo(() => {
     return shuffleArray(words).slice(0, Math.min(words.length, 6));
   }, [words]);
 
   const currentWord = orderedWords[currentIndex];
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      speakVi("Hãy chọn chữ cái để ghép thành từ đúng nhé!");
+    }, 500);
+    return () => clearTimeout(timeout);
+  }, [speakVi]);
 
   useEffect(() => {
     if (!currentWord) return;
@@ -41,11 +51,12 @@ export function AlphabetSpellLesson({ words, onComplete }: AlphabetSpellLessonPr
     setSelectedLetters([]);
     setFeedback(null);
 
+    const delay = currentIndex === 0 ? 3500 : 500;
     const timeout = setTimeout(() => {
-      speakEnglish(currentWord.word);
-    }, 300);
+      speakEn(currentWord.word);
+    }, delay);
     return () => clearTimeout(timeout);
-  }, [currentIndex, currentWord]);
+  }, [currentIndex, currentWord, speakEn]);
 
   const handleSelectLetter = useCallback(
     (index: number) => {
@@ -67,7 +78,7 @@ export function AlphabetSpellLesson({ words, onComplete }: AlphabetSpellLessonPr
 
         if (spelled === correct) {
           setFeedback("correct");
-          speakEnglish(currentWord.word);
+          speakEn(currentWord.word);
           setTimeout(() => {
             if (currentIndex < orderedWords.length - 1) {
               setCurrentIndex((prev) => prev + 1);
@@ -88,7 +99,7 @@ export function AlphabetSpellLesson({ words, onComplete }: AlphabetSpellLessonPr
         }
       }
     },
-    [feedback, availableLetters, selectedLetters, currentWord, currentIndex, orderedWords.length, onComplete]
+    [feedback, availableLetters, selectedLetters, currentWord, currentIndex, orderedWords.length, onComplete, speakEn]
   );
 
   const handleRemoveLetter = useCallback(
@@ -126,8 +137,13 @@ export function AlphabetSpellLesson({ words, onComplete }: AlphabetSpellLessonPr
         />
       </div>
 
-      <div className="flex flex-col items-center gap-3">
-        <div className="relative w-32 h-32 sm:w-40 sm:h-40">
+      <p className="text-lg font-semibold text-gray-700 text-center">🧩 Hãy chọn chữ cái để ghép thành từ đúng nhé!</p>
+
+      <div 
+        className="flex flex-col items-center gap-3 cursor-pointer group"
+        onClick={() => speakEn(currentWord.word)}
+      >
+        <div className="relative w-32 h-32 sm:w-40 sm:h-40 transition-transform duration-300 group-hover:scale-110">
           <Image
             src={currentWord.image}
             alt={currentWord.word}
@@ -136,14 +152,9 @@ export function AlphabetSpellLesson({ words, onComplete }: AlphabetSpellLessonPr
             sizes="(max-width: 640px) 128px, 160px"
           />
         </div>
-        <p className="text-gray-500 text-sm">{currentWord.vietnamese}</p>
-        <button
-          onClick={() => speakEnglish(currentWord.word)}
-          className="flex items-center gap-1 text-blue-500 hover:text-blue-600 transition-colors"
-        >
-          <Volume2 className="w-5 h-5" />
-          <span className="text-sm">Nghe</span>
-        </button>
+        <p className="text-gray-500 text-sm font-medium group-hover:text-blue-500 transition-colors">
+          {currentWord.vietnamese}
+        </p>
       </div>
 
       <div className="flex flex-wrap justify-center gap-2 min-h-[52px]">
