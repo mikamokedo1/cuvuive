@@ -128,7 +128,7 @@ export function EnglishQuizLesson({ words, onComplete }: EnglishQuizLessonProps)
                 ${feedback === null ? "bg-white hover:bg-blue-50 hover:scale-105 border-gray-200 cursor-pointer shadow-md" : "cursor-default"}
                 ${feedback === "correct" && isSelected ? "bg-green-100 border-green-500 scale-105 text-green-700" : ""}
                 ${feedback === "wrong" && isSelected ? "bg-red-100 border-red-400 text-red-600 animate-shake" : ""}
-                ${feedback !== null && !isSelected && !isCorrectOption ? "opacity-40" : ""}
+                ${feedback !== null && !isSelected ? "opacity-40" : ""}
               `}
             >
               {option}
