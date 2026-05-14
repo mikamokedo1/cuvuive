@@ -3,6 +3,7 @@
 import { useGameLesson } from "@/hooks/useGameLesson";
 import { GROUPS, getWordsForGroup } from "@/features/games/learn-english-alphabet/constants";
 import { AlphabetFlashcardLesson } from "@/features/games/learn-english-alphabet/AlphabetFlashcardLesson";
+import { AlphabetListenChooseLesson } from "@/features/games/learn-english-alphabet/AlphabetListenChooseLesson";
 import { AlphabetQuizLesson } from "@/features/games/learn-english-alphabet/AlphabetQuizLesson";
 import { AlphabetSpellLesson } from "@/features/games/learn-english-alphabet/AlphabetSpellLesson";
 import { GameWrapGame } from "@/components/layout/GameWrapGame";
@@ -34,6 +35,7 @@ export function LessonPageClient({ groupId, lessonId }: LessonPageClientProps) {
       case "lesson1":
         return <AlphabetFlashcardLesson words={words} onComplete={game.handleComplete} />;
       case "lesson2":
+        return <AlphabetListenChooseLesson words={words} onComplete={game.handleComplete} />;
       case "lesson4":
         return <AlphabetQuizLesson words={words} onComplete={game.handleComplete} />;
       case "lesson3":

@@ -36,7 +36,7 @@ export function AlphabetSpellLesson({ words, onComplete }: AlphabetSpellLessonPr
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      speakVi("Hãy chọn chữ cái để ghép thành từ đúng nhé!");
+      speakVi("Từ này được ghép như thế nào?");
     }, 500);
     return () => clearTimeout(timeout);
   }, [speakVi]);
@@ -51,7 +51,7 @@ export function AlphabetSpellLesson({ words, onComplete }: AlphabetSpellLessonPr
     setSelectedLetters([]);
     setFeedback(null);
 
-    const delay = currentIndex === 0 ? 3500 : 500;
+    const delay = currentIndex === 0 ? 3000 : 500;
     const timeout = setTimeout(() => {
       speakEn(currentWord.word);
     }, delay);
@@ -137,7 +137,12 @@ export function AlphabetSpellLesson({ words, onComplete }: AlphabetSpellLessonPr
         />
       </div>
 
-      <p className="text-lg font-semibold text-gray-700 text-center">🧩 Hãy chọn chữ cái để ghép thành từ đúng nhé!</p>
+      <p 
+        className="text-lg font-semibold text-gray-700 text-center cursor-pointer hover:text-blue-500 transition-colors"
+        onClick={() => speakVi("Từ này được ghép như thế nào?")}
+      >
+        🤔 Từ này được ghép như thế nào?
+      </p>
 
       <div 
         className="flex flex-col items-center gap-3 cursor-pointer group"

@@ -71,7 +71,7 @@ export function AlphabetFlashcardLesson({ words, onComplete }: AlphabetFlashcard
       <div
         key={currentIndex}
         onClick={handleFlip}
-        className="relative w-72 h-80 sm:w-80 sm:h-96 cursor-pointer group [perspective:1000px]"
+        className="relative w-[90vw] max-w-[340px] h-[220px] sm:max-w-none sm:w-[520px] sm:h-[300px] cursor-pointer group [perspective:1000px]"
       >
         <div 
           className={`relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] ${
@@ -80,36 +80,38 @@ export function AlphabetFlashcardLesson({ words, onComplete }: AlphabetFlashcard
         >
           {/* Front - BIG LETTER */}
           <div
-            className={`absolute inset-0 bg-white rounded-3xl shadow-2xl border-4 border-blue-200 flex flex-col items-center justify-center gap-4 p-6 [backface-visibility:hidden]`}
+            className={`absolute inset-0 bg-white rounded-3xl shadow-2xl border-4 border-blue-200 flex flex-col items-center justify-center p-6 [backface-visibility:hidden]`}
           >
-            <div className="text-9xl font-black text-blue-600 drop-shadow-sm">
-              {currentWord.letter}
+            <div className="flex items-baseline gap-4 mt-4">
+              <span className="text-8xl sm:text-[140px] leading-none font-black text-blue-600 drop-shadow-sm">
+                {currentWord.letter}
+              </span>
+              <span className="text-6xl sm:text-[90px] leading-none font-bold text-blue-400">
+                {currentWord.letter.toLowerCase()}
+              </span>
             </div>
-            <div className="text-4xl font-bold text-blue-400">
-              {currentWord.letter.toLowerCase()}
-            </div>
-            <p className="text-sm text-gray-400 animate-pulse mt-4">👆 Chạm để học từ vựng</p>
+            <p className="text-sm text-gray-400 animate-pulse mt-auto">👆 Chạm để học từ vựng</p>
           </div>
 
           {/* Back - Image + Word */}
           <div
-            className={`absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl shadow-2xl flex flex-col items-center justify-center gap-4 p-6 [backface-visibility:hidden] [transform:rotateY(180deg)]`}
+            className={`absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl shadow-2xl flex flex-row items-center justify-center gap-4 sm:gap-8 p-6 [backface-visibility:hidden] [transform:rotateY(180deg)]`}
           >
-            <div className="relative w-32 h-32 sm:w-40 sm:h-40 bg-white/20 rounded-2xl p-4">
+            <div className="relative w-28 h-28 sm:w-48 sm:h-48 bg-white/20 rounded-2xl p-2 shrink-0">
               <Image
                 src={currentWord.image}
                 alt={currentWord.word}
                 fill
                 className="object-contain drop-shadow-lg p-2"
-                sizes="(max-width: 640px) 128px, 160px"
+                sizes="(max-width: 640px) 112px, 192px"
               />
             </div>
-            <div className="text-center">
-              <p className="text-4xl sm:text-5xl font-extrabold text-white drop-shadow-md">
+            <div className="text-left flex flex-col justify-center max-w-[150px] sm:max-w-[200px]">
+              <p className="text-3xl sm:text-5xl font-extrabold text-white drop-shadow-md mb-1 sm:mb-2 break-words">
                 <span className="text-yellow-300">{currentWord.letter}</span>
                 {currentWord.word.slice(1)}
               </p>
-              <p className="text-xl text-white/80 font-medium">{currentWord.vietnamese}</p>
+              <p className="text-lg sm:text-2xl text-white/80 font-medium">{currentWord.vietnamese}</p>
             </div>
           </div>
         </div>

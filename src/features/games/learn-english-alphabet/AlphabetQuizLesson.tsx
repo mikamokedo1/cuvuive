@@ -98,7 +98,15 @@ export function AlphabetQuizLesson({ words, onComplete }: AlphabetQuizLessonProp
         className="flex flex-col items-center gap-4 text-center cursor-pointer group"
         onClick={() => speakEn(round.correctWord.word)}
       >
-        <p className="text-lg font-semibold text-gray-700 group-hover:text-blue-500 transition-colors">🤔 Đâu là chữ cái bắt đầu của từ này?</p>
+        <p 
+          className="text-lg font-semibold text-gray-700 group-hover:text-blue-500 transition-colors cursor-pointer"
+          onClick={(e) => {
+            e.stopPropagation();
+            speakVi("Đâu là chữ cái bắt đầu của từ này?");
+          }}
+        >
+          🤔 Đâu là chữ cái bắt đầu của từ này?
+        </p>
         <div className="relative w-40 h-40 sm:w-48 sm:h-48 bg-white rounded-3xl shadow-xl p-4 border-4 border-orange-200 transition-transform duration-300 group-hover:scale-105">
           <Image
             src={round.correctWord.image}
