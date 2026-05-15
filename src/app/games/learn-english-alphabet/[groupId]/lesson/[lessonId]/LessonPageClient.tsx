@@ -3,12 +3,14 @@
 import { useGameLesson } from "@/hooks/useGameLesson";
 import { GROUPS, getWordsForGroup } from "@/features/games/learn-english-alphabet/constants";
 import { AlphabetFlashcardLesson } from "@/features/games/learn-english-alphabet/AlphabetFlashcardLesson";
+import { AlphabetSpeakingLesson } from "@/features/games/learn-english-alphabet/AlphabetSpeakingLesson";
 import { AlphabetListenChooseLesson } from "@/features/games/learn-english-alphabet/AlphabetListenChooseLesson";
 import { AlphabetQuizLesson } from "@/features/games/learn-english-alphabet/AlphabetQuizLesson";
 import { AlphabetSpellLesson } from "@/features/games/learn-english-alphabet/AlphabetSpellLesson";
 import { GameWrapGame } from "@/components/layout/GameWrapGame";
+import { useProgress } from "@/context/ProgressContext";
 
-const LESSON_ORDER = ["lesson1", "lesson2", "lesson3", "lesson4"];
+const LESSON_ORDER = ["lesson1", "lesson2", "lesson3", "lesson4", "lesson5"];
 
 interface LessonPageClientProps {
   groupId: string;
@@ -23,6 +25,7 @@ export function LessonPageClient({ groupId, lessonId }: LessonPageClientProps) {
     initialGroupId: groupId,
     initialLessonId: lessonId,
   });
+  const { allProgress } = useProgress();
 
   if (!game.group || !game.lessonId) {
     return <div>Bài học không tồn tại</div>;
@@ -30,16 +33,23 @@ export function LessonPageClient({ groupId, lessonId }: LessonPageClientProps) {
 
   const words = getWordsForGroup(game.groupId);
 
+  // Check if this lesson was previously completed (for showing LetterSelector)
+  const courseProgress = allProgress["learn-english-alphabet"] || { completedGroups: [], completedLessons: {} };
+  const completedInGroup = courseProgress.completedLessons[game.groupId] || [];
+  const isReviewMode = completedInGroup.includes(game.lessonId);
+
   const renderLesson = () => {
     switch (game.lessonId) {
       case "lesson1":
-        return <AlphabetFlashcardLesson words={words} onComplete={game.handleComplete} />;
+        return <AlphabetFlashcardLesson words={words} onComplete={game.handleComplete} isReviewMode={isReviewMode} />;
       case "lesson2":
+        return <AlphabetSpeakingLesson words={words} onComplete={game.handleComplete} isReviewMode={isReviewMode} />;
+      case "lesson3":
         return <AlphabetListenChooseLesson words={words} onComplete={game.handleComplete} />;
       case "lesson4":
-        return <AlphabetQuizLesson words={words} onComplete={game.handleComplete} />;
-      case "lesson3":
         return <AlphabetSpellLesson words={words} onComplete={game.handleComplete} />;
+      case "lesson5":
+        return <AlphabetQuizLesson words={words} onComplete={game.handleComplete} />;
       default:
         return null;
     }

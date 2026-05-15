@@ -1,148 +1,171 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { AlphabetWord } from "./constants";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
-import { Volume2, ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
+import { BackLessonButton } from "@/components/games/BackLessonButton";
+import { NextLessonButton } from "@/components/games/NextLessonButton";
+import { useSwipe } from "@/hooks/useSwipe";
+
+// EnglishAlphabetCard component
+function EnglishAlphabetCard({
+  word,
+  active = false,
+  showName = true,
+  onClick,
+}: {
+  word: AlphabetWord;
+  active?: boolean;
+  showName?: boolean;
+  onClick?: () => void;
+}) {
+  const { speak } = useTextToSpeech("en-US");
+  const { speak: speakVi } = useTextToSpeech("vi-VN");
+
+  useEffect(() => {
+    if (active && showName) {
+      const timeout = setTimeout(() => {
+        speak(`${word.letter}, ${word.word}`);
+      }, 500);
+      return () => clearTimeout(timeout);
+    }
+  }, [active, word.letter, word.word, showName, speak]);
+
+  const handleClick = () => {
+    speak(`${word.letter}`);
+    onClick?.();
+  };
+
+  return (
+    <div
+      className={`
+        relative flex flex-col items-center gap-4 p-6 rounded-3xl cursor-pointer
+        transition-all duration-300 transform
+        ${active ? "scale-100 opacity-100" : "scale-90 opacity-60"}
+      `}
+    >
+      {/* Large Letter Display */}
+      <div
+        className="text-8xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-br from-orange-500 via-pink-500 to-purple-500 drop-shadow-lg select-none leading-none flex items-baseline gap-2"
+        onClick={handleClick}
+      >
+        <span>{word.letter}</span>
+        <span className="text-6xl md:text-7xl">{word.letter.toLowerCase()}</span>
+      </div>
+
+      {/* Representative image */}
+      <div className="relative w-40 h-40 md:w-48 md:h-48" onClick={() => speak(`${word.word}`)}>
+        <Image
+          src={word.image}
+          alt={word.word}
+          fill
+          className="object-contain drop-shadow-lg"
+          sizes="(max-width: 768px) 160px, 192px"
+        />
+      </div>
+
+      {/* Word below */}
+      <div className="text-center mt-2" onClick={() => speak(`${word.word}`)}>
+        <p className="text-3xl md:text-4xl font-extrabold text-[#38BDF8] drop-shadow-sm mb-1">{word.word}</p>
+        <p
+          className="text-xl md:text-2xl text-gray-500 font-medium"
+          onClick={(e) => {
+            e.stopPropagation();
+            speakVi(word.vietnamese);
+          }}
+        >
+          {word.vietnamese}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// EnglishLetterSelector component
+function EnglishLetterSelector({
+  words,
+  currentIndex,
+  onSelect,
+}: {
+  words: AlphabetWord[];
+  currentIndex: number;
+  onSelect: (index: number) => void;
+}) {
+  return (
+    <div className="w-full max-w-lg px-2">
+      <div className="flex flex-wrap justify-center gap-2">
+        {words.map((word, index) => {
+          const isActive = index === currentIndex;
+          return (
+            <button
+              key={word.id}
+              onClick={() => onSelect(index)}
+              className={`
+                relative w-12 h-12 rounded-xl font-bold text-lg cursor-pointer
+                transition-all duration-200 transform active:scale-95
+                ${
+                  isActive
+                    ? "bg-gradient-to-br from-orange-400 to-pink-500 text-white scale-110 shadow-lg shadow-orange-200"
+                    : "bg-white border-2 border-gray-200 text-gray-700 hover:border-orange-300 hover:scale-105"
+                }
+              `}
+            >
+              <div className="relative w-full h-full flex flex-col items-center justify-center">
+                <span className="text-base leading-none">{word.letter}</span>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
 interface AlphabetFlashcardLessonProps {
   words: AlphabetWord[];
   onComplete: () => void;
+  isReviewMode?: boolean;
 }
 
-export function AlphabetFlashcardLesson({ words, onComplete }: AlphabetFlashcardLessonProps) {
+export function AlphabetFlashcardLesson({ words, onComplete, isReviewMode = false }: AlphabetFlashcardLessonProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isFlipped, setIsFlipped] = useState(false);
-  const [completedCount, setCompletedCount] = useState(0);
-  const { speak: speakEn } = useTextToSpeech("en-US");
 
-  const currentWord = words[currentIndex];
-
-  const handleFlip = useCallback(() => {
-    if (!currentWord) return;
-    if (!isFlipped) {
-      setIsFlipped(true);
-    }
-    speakEn(currentWord.letter + ", " + currentWord.word);
-  }, [isFlipped, currentWord, speakEn]);
-
-  const handleNext = useCallback(() => {
+  const handleNext = () => {
     if (currentIndex < words.length - 1) {
-      setCurrentIndex((prev) => prev + 1);
-      setIsFlipped(false);
-      setCompletedCount((prev) => prev + 1);
+      setCurrentIndex(currentIndex + 1);
     } else {
       onComplete();
     }
-  }, [currentIndex, words.length, onComplete]);
+  };
 
-  const handlePrev = useCallback(() => {
+  const handlePrev = () => {
     if (currentIndex > 0) {
-      setCurrentIndex((prev) => prev - 1);
-      setIsFlipped(false);
+      setCurrentIndex(currentIndex - 1);
     }
-  }, [currentIndex]);
+  };
 
-  const handleSpeak = useCallback(() => {
-    if (currentWord) speakEn(currentWord.letter + ", " + currentWord.word);
-  }, [currentWord, speakEn]);
+  const swipeRef = useSwipe({ onSwipeLeft: handleNext, onSwipeRight: handlePrev });
+
+  const isLast = currentIndex === words.length - 1;
+  const currentWord = words[currentIndex];
 
   if (!currentWord) return null;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[60vh] gap-6 px-4">
-      {/* Progress */}
-      <div className="flex items-center gap-2 text-sm font-medium text-gray-500">
-        <span>{currentIndex + 1}</span>
-        <span>/</span>
-        <span>{words.length}</span>
+    <div ref={swipeRef} className="flex flex-col items-center gap-6 md:gap-8 w-full max-w-4xl px-4">
+      {/* Word Display */}
+      <div className="flex items-center justify-center w-full min-h-[300px]">
+        <EnglishAlphabetCard word={currentWord} active={true} showName={true} />
+      </div>
+      {/* Controls */}
+      <div className="flex items-center gap-6 mt-4">
+        <BackLessonButton onClick={handlePrev} disabled={currentIndex === 0} />
+        <NextLessonButton onClick={handleNext} isLast={isLast} />
       </div>
 
-      {/* Progress bar */}
-      <div className="w-full max-w-xs h-2 bg-gray-200 rounded-full overflow-hidden">
-        <div
-          className="h-full bg-gradient-to-r from-blue-400 to-blue-600 rounded-full transition-all duration-500"
-          style={{ width: `${((completedCount) / words.length) * 100}%` }}
-        />
-      </div>
-
-      {/* Flashcard */}
-      <div
-        key={currentIndex}
-        onClick={handleFlip}
-        className="relative w-[90vw] max-w-[340px] h-[220px] sm:max-w-none sm:w-[520px] sm:h-[300px] cursor-pointer group [perspective:1000px]"
-      >
-        <div 
-          className={`relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] ${
-            isFlipped ? "[transform:rotateY(180deg)]" : ""
-          }`}
-        >
-          {/* Front - BIG LETTER */}
-          <div
-            className={`absolute inset-0 bg-white rounded-3xl shadow-2xl border-4 border-blue-200 flex flex-col items-center justify-center p-6 [backface-visibility:hidden]`}
-          >
-            <div className="flex items-baseline gap-4 mt-4">
-              <span className="text-8xl sm:text-[140px] leading-none font-black text-blue-600 drop-shadow-sm">
-                {currentWord.letter}
-              </span>
-              <span className="text-6xl sm:text-[90px] leading-none font-bold text-blue-400">
-                {currentWord.letter.toLowerCase()}
-              </span>
-            </div>
-            <p className="text-sm text-gray-400 animate-pulse mt-auto">👆 Chạm để học từ vựng</p>
-          </div>
-
-          {/* Back - Image + Word */}
-          <div
-            className={`absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl shadow-2xl flex flex-row items-center justify-center gap-4 sm:gap-8 p-6 [backface-visibility:hidden] [transform:rotateY(180deg)]`}
-          >
-            <div className="relative w-28 h-28 sm:w-48 sm:h-48 bg-white/20 rounded-2xl p-2 shrink-0">
-              <Image
-                src={currentWord.image}
-                alt={currentWord.word}
-                fill
-                className="object-contain drop-shadow-lg p-2"
-                sizes="(max-width: 640px) 112px, 192px"
-              />
-            </div>
-            <div className="text-left flex flex-col justify-center max-w-[150px] sm:max-w-[200px]">
-              <p className="text-3xl sm:text-5xl font-extrabold text-white drop-shadow-md mb-1 sm:mb-2 break-words">
-                <span className="text-yellow-300">{currentWord.letter}</span>
-                {currentWord.word.slice(1)}
-              </p>
-              <p className="text-lg sm:text-2xl text-white/80 font-medium">{currentWord.vietnamese}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Navigation */}
-      <div className="flex items-center gap-4">
-        <button
-          onClick={handlePrev}
-          disabled={currentIndex === 0}
-          className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
-        >
-          <ChevronLeft className="w-6 h-6" />
-        </button>
-
-        <button
-          onClick={() => {
-            setIsFlipped(false);
-          }}
-          className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 transition-all"
-        >
-          <RotateCcw className="w-5 h-5" />
-        </button>
-
-        <button
-          onClick={handleNext}
-          className="p-3 rounded-full bg-blue-500 hover:bg-blue-600 text-white transition-all shadow-lg"
-        >
-          <ChevronRight className="w-6 h-6" />
-        </button>
-      </div>
+      {/* Letter selector - shown when revisiting a completed lesson */}
+      {isReviewMode && <EnglishLetterSelector words={words} currentIndex={currentIndex} onSelect={setCurrentIndex} />}
     </div>
   );
 }

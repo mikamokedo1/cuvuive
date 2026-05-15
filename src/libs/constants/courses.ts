@@ -1880,9 +1880,10 @@ export const COURSES: CourseDef[] = [
         title: "Bảng Chữ Cái (A-M)",
         lessons: [
           { id: "lesson1", title: "Học chữ cái", isFree: true },
-          { id: "lesson2", title: "Nghe & Chọn", isFree: true },
-          { id: "lesson3", title: "Ghép từ" },
-          { id: "lesson4", title: "Kiểm tra" },
+          { id: "lesson2", title: "Tập nói", isFree: true },
+          { id: "lesson3", title: "Nghe & Chọn", isFree: true },
+          { id: "lesson4", title: "Ghép từ" },
+          { id: "lesson5", title: "Kiểm tra" },
         ],
       },
       {
@@ -1890,9 +1891,10 @@ export const COURSES: CourseDef[] = [
         title: "Bảng Chữ Cái (N-Z)",
         lessons: [
           { id: "lesson1", title: "Học chữ cái", isFree: true },
-          { id: "lesson2", title: "Nghe & Chọn" },
-          { id: "lesson3", title: "Ghép từ" },
-          { id: "lesson4", title: "Kiểm tra" },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Nghe & Chọn" },
+          { id: "lesson4", title: "Ghép từ" },
+          { id: "lesson5", title: "Kiểm tra" },
         ],
       },
     ],

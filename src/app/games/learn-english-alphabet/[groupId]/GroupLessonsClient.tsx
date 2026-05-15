@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen, Headphones, Puzzle, HelpCircle } from "lucide-react";
+import { BookOpen, Headphones, Puzzle, HelpCircle, Mic } from "lucide-react";
 import { GameWrapLessons } from "@/components/layout/GameWrapLessons";
 import { GROUPS } from "@/features/games/learn-english-alphabet/constants";
 import { useGroupLessons } from "@/hooks/useGroupLessons";
@@ -14,18 +14,24 @@ const lessons = [
   },
   {
     id: "lesson2",
+    title: "Tập nói",
+    icon: <Mic className="text-white w-6 h-6" />,
+    isPremium: false,
+  },
+  {
+    id: "lesson3",
     title: "Nghe & Chọn",
     icon: <Headphones className="text-white w-6 h-6" />,
     isPremium: false,
   },
   {
-    id: "lesson3",
+    id: "lesson4",
     title: "Ghép từ",
     icon: <Puzzle className="text-white w-6 h-6" />,
     isPremium: true,
   },
   {
-    id: "lesson4",
+    id: "lesson5",
     title: "Kiểm tra",
     icon: <HelpCircle className="text-white w-6 h-6" />,
     isPremium: true,
