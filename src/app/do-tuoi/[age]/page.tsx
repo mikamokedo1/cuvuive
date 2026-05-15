@@ -132,6 +132,7 @@ export default async function AgeGroupLandingPage({ params }: PageProps) {
                   src="https://assets.cuthongminh.com/assets/own-learning.webp"
                   alt="Cú Thông Minh"
                   fill
+                  sizes="(max-width: 768px) 160px, 224px"
                   className="object-contain p-4 drop-shadow-md"
                   priority
                 />
@@ -177,6 +178,7 @@ export default async function AgeGroupLandingPage({ params }: PageProps) {
                       src={game.icon as string}
                       alt={game.title}
                       fill
+                      sizes="128px"
                       className="object-contain filter drop-shadow-md"
                     />
                   </div>

@@ -104,6 +104,7 @@ export const TOPIC_CLUSTERS: Record<GameGroupType, TopicCluster> = {
       "khung-hoang-tuoi-len-3",
       "lich-sinh-hoat-cho-be-mam-non",
       "nguy-hiem-khi-giao-xe-may-cho-hoc-sinh",
+      "phong-chong-bao-hanh-tre-em",
     ],
   },
   geography: {

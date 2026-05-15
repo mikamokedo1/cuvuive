@@ -447,10 +447,25 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               <Link
                 key={relatedPost.slug}
                 href={`/blogs/${relatedPost.slug}`}
-                className="rounded-2xl border border-slate-200 bg-white p-5 hover:shadow-lg transition-shadow"
+                className="group rounded-2xl border border-slate-200 bg-white overflow-hidden hover:shadow-lg transition-all"
               >
-                <h3 className="font-bold text-slate-900 mb-2 line-clamp-2">{relatedPost.title}</h3>
-                <p className="text-sm text-slate-600 line-clamp-3">{relatedPost.description}</p>
+                {relatedPost.image && (
+                  <div className="relative aspect-[16/9] bg-slate-100">
+                    <Image
+                      src={relatedPost.image}
+                      alt={relatedPost.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                )}
+                <div className="p-4">
+                  <h3 className="font-bold text-slate-900 mb-2 line-clamp-2 group-hover:text-orange-500 transition-colors">
+                    {relatedPost.title}
+                  </h3>
+                  <p className="text-sm text-slate-600 line-clamp-3">{relatedPost.description}</p>
+                </div>
               </Link>
             ))}
           </div>

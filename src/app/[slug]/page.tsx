@@ -257,7 +257,7 @@ export default async function GroupLandingPage({ params }: PageProps) {
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
             <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-16">
               <div className="w-40 h-40 md:w-56 md:h-56 relative shrink-0 bg-white/20 backdrop-blur-md rounded-[2rem] p-4 shadow-xl animate-float">
-                <Image src={group.icon} alt={group.title} fill className="object-contain p-4" priority />
+                <Image src={group.icon} alt={group.title} fill sizes="(max-width: 768px) 160px, 224px" className="object-contain p-4" priority />
               </div>
               <div className="text-center md:text-left">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 text-white font-bold text-sm mb-6 backdrop-blur-sm border border-white/30">
@@ -297,7 +297,7 @@ export default async function GroupLandingPage({ params }: PageProps) {
                   <div className="absolute top-0 left-0 w-24 h-24 bg-orange-50 rounded-br-[4rem] group-hover:bg-orange-100 transition-colors -z-10"></div>
 
                   <div className="w-32 h-32 relative mb-6 transform group-hover:scale-110 transition-transform duration-300">
-                    <Image src={game.icon} alt={game.title} fill className="object-contain filter drop-shadow-md" />
+                    <Image src={game.icon} alt={game.title} fill sizes="128px" className="object-contain filter drop-shadow-md" />
                   </div>
 
                   <h3 className="text-2xl font-bold text-slate-900 mb-3 font-[family-name:var(--font-baloo-2)] group-hover:text-orange-500 transition-colors">
