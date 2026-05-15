@@ -1,143 +1,169 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import Image from "next/image";
 import { EnglishWord } from "./constants";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
-import { ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
+import { playButtonSound } from "@/libs/utils/playSound";
+import { playWinEffect } from "@/libs/utils/playWinEffect";
+import { BackLessonButton } from "@/components/games/BackLessonButton";
+import { NextLessonButton } from "@/components/games/NextLessonButton";
 
 interface EnglishFlashcardLessonProps {
   words: EnglishWord[];
   onComplete: () => void;
+  isReviewMode?: boolean;
 }
 
 export function EnglishFlashcardLesson({ words, onComplete }: EnglishFlashcardLessonProps) {
+  const { speak } = useTextToSpeech("en-US");
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isFlipped, setIsFlipped] = useState(false);
-  const [completedCount, setCompletedCount] = useState(0);
-  const { speak: speakEn } = useTextToSpeech("en-US");
+  const [viewedIds, setViewedIds] = useState<Set<string>>(new Set());
+  const [showAllDone, setShowAllDone] = useState(false);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const speakTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const currentWord = words[currentIndex];
+  const isLast = currentIndex === words.length - 1 && viewedIds.size >= words.length;
 
-  const handleFlip = useCallback(() => {
-    if (!isFlipped) {
-      setIsFlipped(true);
+  // Preload adjacent images
+  const prevWord = currentIndex > 0 ? words[currentIndex - 1] : null;
+  const nextWord = currentIndex < words.length - 1 ? words[currentIndex + 1] : null;
+
+  const handleTapWord = useCallback(() => {
+    speak(currentWord.english);
+
+    // Brief speaking lock
+    setIsSpeaking(true);
+    if (speakTimerRef.current) clearTimeout(speakTimerRef.current);
+    speakTimerRef.current = setTimeout(() => setIsSpeaking(false), 1500);
+
+    // Mark as viewed
+    setViewedIds((prev) => {
+      const next = new Set(prev);
+      next.add(currentWord.id);
+      return next;
+    });
+  }, [currentWord, speak]);
+
+  const handlePrev = () => {
+    if (currentIndex > 0) {
+      playButtonSound();
+      setIsImageLoaded(false);
+      setCurrentIndex(currentIndex - 1);
     }
-    speakEn(currentWord.english);
-  }, [isFlipped, currentWord.english, speakEn]);
+  };
 
   const handleNext = useCallback(() => {
+    playButtonSound();
     if (currentIndex < words.length - 1) {
-      setCurrentIndex((prev) => prev + 1);
-      setIsFlipped(false);
-      setCompletedCount((prev) => prev + 1);
-    } else {
-      onComplete();
+      setIsImageLoaded(false);
+      setCurrentIndex(currentIndex + 1);
+      setIsSpeaking(false);
+      if (speakTimerRef.current) clearTimeout(speakTimerRef.current);
+    } else if (viewedIds.size >= words.length) {
+      setShowAllDone(true);
+      playWinEffect(500);
+      speak("Great job!");
+      setTimeout(() => {
+        onComplete();
+      }, 2500);
     }
-  }, [currentIndex, words.length, onComplete]);
+  }, [currentIndex, words.length, viewedIds.size, speak, onComplete]);
 
-  const handlePrev = useCallback(() => {
-    if (currentIndex > 0) {
-      setCurrentIndex((prev) => prev - 1);
-      setIsFlipped(false);
-    }
-  }, [currentIndex]);
+  if (showAllDone) {
+    return (
+      <div className="flex flex-col items-center gap-6 w-full max-w-4xl animate-bounce-in">
+        <div className="text-6xl">🎉</div>
+        <h2 className="text-2xl font-bold text-green-600">Học từ vựng hoàn tất!</h2>
+      </div>
+    );
+  }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[60vh] gap-6 px-4">
-      {/* Progress */}
-      <div className="flex items-center gap-2 text-sm font-medium text-gray-500">
-        <span>{currentIndex + 1}</span>
-        <span>/</span>
-        <span>{words.length}</span>
-      </div>
-
-      {/* Progress bar */}
-      <div className="w-full max-w-xs h-2 bg-gray-200 rounded-full overflow-hidden">
-        <div
-          className="h-full bg-gradient-to-r from-blue-400 to-blue-600 rounded-full transition-all duration-500"
-          style={{ width: `${((completedCount) / words.length) * 100}%` }}
-        />
-      </div>
-
-      {/* Flashcard */}
+    <div className="flex flex-col items-center gap-4 w-full max-w-4xl px-4">
+      {/* Image card */}
       <div
-        key={currentIndex}
-        onClick={handleFlip}
-        className="relative w-[90vw] max-w-[340px] h-[220px] sm:max-w-none sm:w-[520px] sm:h-[300px] cursor-pointer group [perspective:1000px]"
+        className="relative w-full max-w-md aspect-square rounded-3xl overflow-hidden shadow-2xl border-4 border-white cursor-pointer
+          transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+        onClick={handleTapWord}
       >
-        <div 
-          className={`relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] ${
-            isFlipped ? "[transform:rotateY(180deg)]" : ""
-          }`}
-        >
-          {/* Front - Image + Vietnamese */}
-          <div
-            className={`absolute inset-0 bg-white rounded-3xl shadow-2xl border-4 border-blue-200 flex flex-row items-center justify-center gap-4 sm:gap-8 p-6 [backface-visibility:hidden]`}
-          >
-            <div className="relative w-28 h-28 sm:w-48 sm:h-48 shrink-0">
-              <Image
-                src={currentWord.image}
-                alt={currentWord.vietnamese}
-                fill
-                className="object-contain drop-shadow-lg p-2"
-                sizes="(max-width: 640px) 112px, 192px"
-              />
-            </div>
-            <div className="text-left flex flex-col justify-center items-center">
-              <p className="text-2xl sm:text-4xl font-bold text-gray-700 text-center mb-4">{currentWord.vietnamese}</p>
-              <p className="text-sm text-gray-400 animate-pulse mt-2">👆 Chạm để học</p>
-            </div>
+        {/* Loading skeleton */}
+        {!isImageLoaded && (
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200 animate-pulse flex items-center justify-center z-10">
+            <div className="w-12 h-12 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin" />
           </div>
+        )}
 
-          {/* Back - Image + English */}
-          <div
-            className={`absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl shadow-2xl flex flex-row items-center justify-center gap-4 sm:gap-8 p-6 [backface-visibility:hidden] [transform:rotateY(180deg)]`}
-          >
-            <div className="relative w-28 h-28 sm:w-48 sm:h-48 bg-white/20 rounded-2xl p-2 shrink-0">
-              <Image
-                src={currentWord.image}
-                alt={currentWord.english}
-                fill
-                className="object-contain drop-shadow-lg p-2"
-                sizes="(max-width: 640px) 112px, 192px"
-              />
-            </div>
-            <div className="text-left flex flex-col justify-center max-w-[150px] sm:max-w-[200px]">
-              <p className="text-3xl sm:text-5xl font-extrabold text-white drop-shadow-md mb-1 sm:mb-2 break-words">
-                {currentWord.english}
-              </p>
-              <p className="text-lg sm:text-2xl text-white/80 font-medium mb-3">{currentWord.vietnamese}</p>
+        {/* Current image */}
+        <Image
+          key={currentWord.id}
+          src={currentWord.image}
+          alt={currentWord.english}
+          fill
+          priority
+          className={`object-cover transition-opacity duration-300 ${isImageLoaded ? "opacity-100" : "opacity-0"}`}
+          sizes="(max-width: 640px) 100vw, 448px"
+          onLoad={() => setIsImageLoaded(true)}
+        />
+
+        {/* Preload adjacent images */}
+        {prevWord && (
+          <Image
+            key={`preload-prev-${prevWord.id}`}
+            src={prevWord.image}
+            alt=""
+            fill
+            className="opacity-0 pointer-events-none absolute"
+            sizes="1px"
+            aria-hidden="true"
+          />
+        )}
+        {nextWord && (
+          <Image
+            key={`preload-next-${nextWord.id}`}
+            src={nextWord.image}
+            alt=""
+            fill
+            className="opacity-0 pointer-events-none absolute"
+            sizes="1px"
+            aria-hidden="true"
+          />
+        )}
+
+        {/* Tap hint for unviewed words */}
+        {!viewedIds.has(currentWord.id) && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black/10">
+            <div className="bg-white/90 backdrop-blur-sm rounded-2xl px-6 py-3 shadow-lg animate-pulse">
+              <span className="text-lg font-bold text-gray-700">🔊 Chạm để nghe!</span>
             </div>
           </div>
+        )}
+      </div>
+
+      {/* Vocabulary word below */}
+      <div
+        className="bg-white rounded-2xl px-8 py-4 shadow-lg border-4 border-blue-100 cursor-pointer
+          hover:scale-105 active:scale-95 transition-transform duration-200 w-full max-w-md text-center"
+        onClick={handleTapWord}
+      >
+        <div className="text-4xl md:text-5xl font-extrabold text-[#38BDF8] capitalize select-none mb-1">
+          {currentWord.english}
+        </div>
+        <div className="text-xl md:text-2xl font-medium text-gray-500 capitalize select-none">
+          {currentWord.vietnamese}
         </div>
       </div>
 
       {/* Navigation */}
-      <div className="flex items-center gap-4">
-        <button
-          onClick={handlePrev}
-          disabled={currentIndex === 0}
-          className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
-        >
-          <ChevronLeft className="w-6 h-6" />
-        </button>
-
-        <button
-          onClick={() => {
-            setIsFlipped(false);
-          }}
-          className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 transition-all"
-        >
-          <RotateCcw className="w-5 h-5" />
-        </button>
-
-        <button
+      <div className="flex items-center gap-6 mt-2">
+        <BackLessonButton onClick={handlePrev} disabled={currentIndex === 0 || isSpeaking} />
+        <NextLessonButton
           onClick={handleNext}
-          className="p-3 rounded-full bg-blue-500 hover:bg-blue-600 text-white transition-all shadow-lg"
-        >
-          <ChevronRight className="w-6 h-6" />
-        </button>
+          isLast={isLast}
+          disabled={!viewedIds.has(currentWord.id) || isSpeaking}
+        />
       </div>
     </div>
   );

@@ -3,12 +3,13 @@
 import { useGameLesson } from "@/hooks/useGameLesson";
 import { GROUPS, getWordsForGroup } from "@/features/games/learn-english-vocab/constants";
 import { EnglishFlashcardLesson } from "@/features/games/learn-english-vocab/EnglishFlashcardLesson";
+import { EnglishSpeakingLesson } from "@/features/games/learn-english-vocab/EnglishSpeakingLesson";
 import { EnglishListenQuizLesson } from "@/features/games/learn-english-vocab/EnglishListenQuizLesson";
 import { EnglishSpellLesson } from "@/features/games/learn-english-vocab/EnglishSpellLesson";
 import { EnglishQuizLesson } from "@/features/games/learn-english-vocab/EnglishQuizLesson";
 import { GameWrapGame } from "@/components/layout/GameWrapGame";
 
-const LESSON_ORDER = ["lesson1", "lesson2", "lesson3", "lesson4"];
+const LESSON_ORDER = ["lesson1", "lesson2", "lesson3", "lesson4", "lesson5"];
 
 interface LessonPageClientProps {
   groupId: string;
@@ -35,10 +36,12 @@ export function LessonPageClient({ groupId, lessonId }: LessonPageClientProps) {
       case "lesson1":
         return <EnglishFlashcardLesson words={words} onComplete={game.handleComplete} />;
       case "lesson2":
-        return <EnglishListenQuizLesson words={words} onComplete={game.handleComplete} />;
+        return <EnglishSpeakingLesson words={words} onComplete={game.handleComplete} />;
       case "lesson3":
-        return <EnglishSpellLesson words={words} onComplete={game.handleComplete} />;
+        return <EnglishListenQuizLesson words={words} onComplete={game.handleComplete} />;
       case "lesson4":
+        return <EnglishSpellLesson words={words} onComplete={game.handleComplete} />;
+      case "lesson5":
         return <EnglishQuizLesson words={words} onComplete={game.handleComplete} />;
       default:
         return null;

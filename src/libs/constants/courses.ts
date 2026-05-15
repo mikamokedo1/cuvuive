@@ -1794,9 +1794,10 @@ export const COURSES: CourseDef[] = [
         title: "Động Vật",
         lessons: [
           { id: "lesson1", title: "Học từ vựng", isFree: true },
-          { id: "lesson2", title: "Nghe & Chọn", isFree: true },
-          { id: "lesson3", title: "Ghép từ" },
-          { id: "lesson4", title: "Kiểm tra" },
+          { id: "lesson2", title: "Tập nói", isFree: true },
+          { id: "lesson3", title: "Nghe & Chọn", isFree: true },
+          { id: "lesson4", title: "Ghép từ" },
+          { id: "lesson5", title: "Kiểm tra" },
         ],
       },
       {
@@ -1804,9 +1805,10 @@ export const COURSES: CourseDef[] = [
         title: "Trái Cây",
         lessons: [
           { id: "lesson1", title: "Học từ vựng", isFree: true },
-          { id: "lesson2", title: "Nghe & Chọn" },
-          { id: "lesson3", title: "Ghép từ" },
-          { id: "lesson4", title: "Kiểm tra" },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Nghe & Chọn" },
+          { id: "lesson4", title: "Ghép từ" },
+          { id: "lesson5", title: "Kiểm tra" },
         ],
       },
       {
@@ -1814,9 +1816,10 @@ export const COURSES: CourseDef[] = [
         title: "Màu Sắc",
         lessons: [
           { id: "lesson1", title: "Học từ vựng", isFree: true },
-          { id: "lesson2", title: "Nghe & Chọn" },
-          { id: "lesson3", title: "Ghép từ" },
-          { id: "lesson4", title: "Kiểm tra" },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Nghe & Chọn" },
+          { id: "lesson4", title: "Ghép từ" },
+          { id: "lesson5", title: "Kiểm tra" },
         ],
       },
       {
@@ -1824,9 +1827,10 @@ export const COURSES: CourseDef[] = [
         title: "Số Đếm",
         lessons: [
           { id: "lesson1", title: "Học từ vựng", isFree: true },
-          { id: "lesson2", title: "Nghe & Chọn" },
-          { id: "lesson3", title: "Ghép từ" },
-          { id: "lesson4", title: "Kiểm tra" },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Nghe & Chọn" },
+          { id: "lesson4", title: "Ghép từ" },
+          { id: "lesson5", title: "Kiểm tra" },
         ],
       },
       {
@@ -1834,9 +1838,10 @@ export const COURSES: CourseDef[] = [
         title: "Giao Thông",
         lessons: [
           { id: "lesson1", title: "Học từ vựng", isFree: true },
-          { id: "lesson2", title: "Nghe & Chọn" },
-          { id: "lesson3", title: "Ghép từ" },
-          { id: "lesson4", title: "Kiểm tra" },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Nghe & Chọn" },
+          { id: "lesson4", title: "Ghép từ" },
+          { id: "lesson5", title: "Kiểm tra" },
         ],
       },
       {
@@ -1844,9 +1849,10 @@ export const COURSES: CourseDef[] = [
         title: "Gia Đình",
         lessons: [
           { id: "lesson1", title: "Học từ vựng", isFree: true },
-          { id: "lesson2", title: "Nghe & Chọn" },
-          { id: "lesson3", title: "Ghép từ" },
-          { id: "lesson4", title: "Kiểm tra" },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Nghe & Chọn" },
+          { id: "lesson4", title: "Ghép từ" },
+          { id: "lesson5", title: "Kiểm tra" },
         ],
       },
       {
@@ -1854,9 +1860,10 @@ export const COURSES: CourseDef[] = [
         title: "Cơ Thể Người",
         lessons: [
           { id: "lesson1", title: "Học từ vựng", isFree: true },
-          { id: "lesson2", title: "Nghe & Chọn" },
-          { id: "lesson3", title: "Ghép từ" },
-          { id: "lesson4", title: "Kiểm tra" },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Nghe & Chọn" },
+          { id: "lesson4", title: "Ghép từ" },
+          { id: "lesson5", title: "Kiểm tra" },
         ],
       },
     ],

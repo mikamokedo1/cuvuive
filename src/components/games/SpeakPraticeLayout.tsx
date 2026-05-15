@@ -14,10 +14,11 @@ import { playButtonSound } from "@/libs/utils/playSound";
 interface SpeakPraticeLayoutProps {
   entities: EntityData[];
   onComplete: () => void;
+  language?: string;
 }
 
-const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) => {
-  const { speak } = useTextToSpeech();
+const SpeakPraticeLayout = ({ entities, onComplete, language = "vi-VN" }: SpeakPraticeLayoutProps) => {
+  const { speak } = useTextToSpeech(language.startsWith("en") ? "en-US" : "vi");
   const {
     isListening,
     transcript,
@@ -27,7 +28,7 @@ const SpeakPraticeLayout = ({ entities, onComplete }: SpeakPraticeLayoutProps) =
     startListening,
     stopListening,
     resetTranscript,
-  } = useSpeechRecognition("vi-VN");
+  } = useSpeechRecognition(language);
   const { status: micStatus, requestPermission } = useMicrophonePermission();
 
   const [currentIndex, setCurrentIndex] = useState(0);
