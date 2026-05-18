@@ -113,6 +113,18 @@ const GROUP_FAQ: Record<GameGroupType, FAQItem[]> = {
     },
   ],
   history: [],
+  english: [
+    {
+      question: "Bé học Tiếng Anh trên Cú Thông Minh như thế nào?",
+      answer:
+        "Bé sẽ học từ vựng tiếng Anh cơ bản qua 4 chủ đề: động vật, trái cây, màu sắc và số đếm. Mỗi chủ đề có bài học flashcard, nghe phát âm chọn hình, ghép chữ cái thành từ và kiểm tra tổng hợp.",
+    },
+    {
+      question: "Trò chơi Tiếng Anh có phù hợp cho bé chưa biết đọc không?",
+      answer:
+        "Hoàn toàn phù hợp! Các bài học sử dụng hình ảnh trực quan và phát âm bằng giọng bản ngữ, giúp bé làm quen với tiếng Anh một cách tự nhiên qua trò chơi mà không cần biết đọc trước.",
+    },
+  ],
 };
 
 interface PageProps {
@@ -168,6 +180,11 @@ const GROUP_KEYWORDS: Record<GameGroupType, string[]> = {
     "game tô màu cho trẻ mầm non", "mỹ thuật cho bé 3-6 tuổi",
   ],
   history: [],
+  english: [
+    "học tiếng anh cho bé mầm non", "bé học từ vựng tiếng anh", "game tiếng anh cho trẻ em",
+    "tiếng anh cho bé 3-8 tuổi", "flashcard tiếng anh cho bé", "dạy bé học tiếng anh tại nhà",
+    "trò chơi tiếng anh online cho trẻ", "english for kids online",
+  ],
 };
 
 

@@ -1,0 +1,219 @@
+"use client";
+
+import { useState, useCallback, useEffect, useMemo } from "react";
+import Image from "next/image";
+import { AlphabetWord } from "./constants";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
+import { Volume2 } from "lucide-react";
+
+interface AlphabetSpellLessonProps {
+  words: AlphabetWord[];
+  onComplete: () => void;
+}
+
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
+export function AlphabetSpellLesson({ words, onComplete }: AlphabetSpellLessonProps) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [selectedLetters, setSelectedLetters] = useState<{ letter: string; originalIndex: number }[]>([]);
+  const [availableLetters, setAvailableLetters] = useState<{ letter: string; originalIndex: number; used: boolean }[]>([]);
+  const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
+  const { speak: speakEn } = useTextToSpeech("en-US");
+  const { speak: speakVi } = useTextToSpeech("vi-VN");
+
+  const orderedWords = useMemo(() => {
+    return shuffleArray(words).slice(0, Math.min(words.length, 6));
+  }, [words]);
+
+  const currentWord = orderedWords[currentIndex];
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      speakVi("Từ này được ghép như thế nào?");
+    }, 500);
+    return () => clearTimeout(timeout);
+  }, [speakVi]);
+
+  useEffect(() => {
+    if (!currentWord) return;
+    const letters = currentWord.word.toUpperCase().split("");
+    const shuffled = shuffleArray(
+      letters.map((letter, index) => ({ letter, originalIndex: index, used: false }))
+    );
+    setAvailableLetters(shuffled);
+    setSelectedLetters([]);
+    setFeedback(null);
+
+    const delay = currentIndex === 0 ? 3000 : 500;
+    const timeout = setTimeout(() => {
+      speakEn(currentWord.word);
+    }, delay);
+    return () => clearTimeout(timeout);
+  }, [currentIndex, currentWord, speakEn]);
+
+  const handleSelectLetter = useCallback(
+    (index: number) => {
+      if (feedback) return;
+
+      const letter = availableLetters[index];
+      if (letter.used) return;
+
+      const newSelected = [...selectedLetters, { letter: letter.letter, originalIndex: letter.originalIndex }];
+      setSelectedLetters(newSelected);
+
+      const newAvailable = [...availableLetters];
+      newAvailable[index] = { ...newAvailable[index], used: true };
+      setAvailableLetters(newAvailable);
+
+      if (newSelected.length === currentWord.word.length) {
+        const spelled = newSelected.map((s) => s.letter).join("");
+        const correct = currentWord.word.toUpperCase();
+
+        if (spelled === correct) {
+          speakVi("Đúng rồi, giỏi quá!");
+          setFeedback("correct");
+          setTimeout(() => {
+            if (currentIndex < orderedWords.length - 1) {
+              setCurrentIndex((prev) => prev + 1);
+            } else {
+              onComplete();
+            }
+          }, 1500);
+        } else {
+          speakVi("Sai rồi, thử lại nhé!");
+          setFeedback("wrong");
+          setTimeout(() => {
+            setSelectedLetters([]);
+            const letters = currentWord.word.toUpperCase().split("");
+            setAvailableLetters(
+              shuffleArray(letters.map((l, i) => ({ letter: l, originalIndex: i, used: false })))
+            );
+            setFeedback(null);
+          }, 1000);
+        }
+      }
+    },
+    [feedback, availableLetters, selectedLetters, currentWord, currentIndex, orderedWords.length, onComplete, speakEn]
+  );
+
+  const handleRemoveLetter = useCallback(
+    (index: number) => {
+      if (feedback) return;
+
+      const removed = selectedLetters[index];
+      const newSelected = selectedLetters.filter((_, i) => i !== index);
+      setSelectedLetters(newSelected);
+
+      const availableIndex = availableLetters.findIndex(
+        (l) => l.originalIndex === removed.originalIndex && l.used
+      );
+      if (availableIndex >= 0) {
+        const newAvailable = [...availableLetters];
+        newAvailable[availableIndex] = { ...newAvailable[availableIndex], used: false };
+        setAvailableLetters(newAvailable);
+      }
+    },
+    [feedback, selectedLetters, availableLetters]
+  );
+
+  if (!currentWord) return null;
+
+  return (
+    <div className="flex flex-col items-center justify-center min-h-[60vh] gap-5 px-4">
+      <div className="text-sm font-medium text-gray-500">
+        {currentIndex + 1} / {orderedWords.length}
+      </div>
+
+      <div className="w-full max-w-xs h-2 bg-gray-200 rounded-full overflow-hidden">
+        <div
+          className="h-full bg-gradient-to-r from-purple-400 to-pink-500 rounded-full transition-all duration-500"
+          style={{ width: `${(currentIndex / orderedWords.length) * 100}%` }}
+        />
+      </div>
+
+      <p 
+        className="text-lg font-semibold text-gray-700 text-center cursor-pointer hover:text-blue-500 transition-colors"
+        onClick={() => speakVi("Từ này được ghép như thế nào?")}
+      >
+        🤔 Từ này được ghép như thế nào?
+      </p>
+
+      <div 
+        className="flex flex-col items-center gap-3 cursor-pointer group"
+        onClick={() => speakEn(currentWord.word)}
+      >
+        <div className="relative w-32 h-32 sm:w-40 sm:h-40 transition-transform duration-300 group-hover:scale-110">
+          <Image
+            src={currentWord.image}
+            alt={currentWord.word}
+            fill
+            className="object-contain drop-shadow-lg"
+            sizes="(max-width: 640px) 128px, 160px"
+          />
+        </div>
+        <p className="text-gray-500 text-sm font-medium group-hover:text-blue-500 transition-colors">
+          {currentWord.vietnamese}
+        </p>
+      </div>
+
+      <div className="flex flex-wrap justify-center gap-2 min-h-[52px]">
+        {Array.from({ length: currentWord.word.length }).map((_, i) => {
+          const letter = selectedLetters[i];
+          return (
+            <div
+              key={i}
+              onClick={() => letter && handleRemoveLetter(i)}
+              className={`
+                w-10 h-12 sm:w-12 sm:h-14 rounded-xl border-2 flex items-center justify-center
+                text-xl sm:text-2xl font-bold transition-all duration-200
+                ${letter ? "bg-blue-500 text-white border-blue-600 hover:bg-blue-400 cursor-pointer" : "bg-gray-100 border-dashed border-gray-300"}
+                ${feedback === "correct" && letter ? "bg-green-500 border-green-600 animate-bounce" : ""}
+                ${feedback === "wrong" && letter ? "bg-red-400 border-red-500" : ""}
+              `}
+            >
+              {letter?.letter || ""}
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="flex flex-wrap justify-center gap-2 max-w-sm">
+        {availableLetters.map((item, index) => (
+          <button
+            key={`${item.letter}-${item.originalIndex}`}
+            onClick={() => handleSelectLetter(index)}
+            disabled={item.used || feedback !== null}
+            className={`
+              w-10 h-12 sm:w-12 sm:h-14 rounded-xl border-2 flex items-center justify-center
+              text-xl sm:text-2xl font-bold transition-all duration-200
+              ${item.used
+                ? "bg-gray-100 border-gray-200 text-gray-300 cursor-default"
+                : "bg-white border-purple-300 text-purple-700 hover:bg-purple-50 hover:scale-110 cursor-pointer shadow-md active:scale-95"
+              }
+            `}
+          >
+            {item.letter}
+          </button>
+        ))}
+      </div>
+
+      {feedback === "correct" && (
+        <div className="text-green-600 font-bold text-lg animate-bounce">
+          ✅ Tuyệt vời! {currentWord.word}
+        </div>
+      )}
+      {feedback === "wrong" && (
+        <div className="text-red-500 font-medium text-sm">
+          ❌ Thử lại nhé!
+        </div>
+      )}
+    </div>
+  );
+}
