@@ -15,10 +15,19 @@ interface SpeakPraticeLayoutProps {
   entities: EntityData[];
   onComplete: () => void;
   language?: string;
+  currentIndex?: number;
+  onIndexChange?: (index: number) => void;
 }
 
-const SpeakPraticeLayout = ({ entities, onComplete, language = "vi-VN" }: SpeakPraticeLayoutProps) => {
-  const { speak } = useTextToSpeech(language.startsWith("en") ? "en-US" : "vi");
+const SpeakPraticeLayout = ({
+  entities,
+  onComplete,
+  language = "vi-VN",
+  currentIndex: externalIndex,
+  onIndexChange,
+}: SpeakPraticeLayoutProps) => {
+  const { speak: speakTarget } = useTextToSpeech(language.startsWith("en") ? "en-US" : "vi");
+  const { speak: speakSystem } = useTextToSpeech("vi");
   const {
     isListening,
     transcript,
@@ -31,12 +40,14 @@ const SpeakPraticeLayout = ({ entities, onComplete, language = "vi-VN" }: SpeakP
   } = useSpeechRecognition(language);
   const { status: micStatus, requestPermission } = useMicrophonePermission();
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [internalIndex, setInternalIndex] = useState(0);
+  const activeIndex = externalIndex !== undefined ? externalIndex : internalIndex;
+
   const [feedback, setFeedback] = useState<FeedbackType>(null);
   const [hasTried, setHasTried] = useState(false);
   const hasMatchedRef = useRef(false);
 
-  const targetEntity = entities[currentIndex];
+  const targetEntity = entities[activeIndex];
 
   // Auto speak question when target changes
   useEffect(() => {
@@ -48,17 +59,25 @@ const SpeakPraticeLayout = ({ entities, onComplete, language = "vi-VN" }: SpeakP
 
     // Auto speak question after a short delay
     const speakTimer = setTimeout(() => {
-      speak(`${targetEntity.name}`);
+      speakTarget(`${targetEntity.name}`);
     }, 800);
 
     return () => clearTimeout(speakTimer);
-  }, [currentIndex, targetEntity, speak, resetTranscript]);
+  }, [activeIndex, targetEntity, speakTarget, resetTranscript]);
+
+  const handleIndexChange = (newIndex: number) => {
+    if (externalIndex !== undefined && onIndexChange) {
+      onIndexChange(newIndex);
+    } else {
+      setInternalIndex(newIndex);
+    }
+  };
 
   const goToNextQuestion = () => {
-    if (currentIndex + 1 >= entities.length) {
+    if (activeIndex + 1 >= entities.length) {
       onComplete();
     } else {
-      setCurrentIndex((prev) => prev + 1);
+      handleIndexChange(activeIndex + 1);
     }
   };
 
@@ -71,7 +90,7 @@ const SpeakPraticeLayout = ({ entities, onComplete, language = "vi-VN" }: SpeakP
 
     // 1. Instant reset if too many words (>= 10)
     if (words.length >= 10) {
-      speak("Thử lại nhé!");
+      speakSystem("Thử lại nhé!");
       setFeedback("wrong");
       // Stop listening immediately, restart after TTS finishes
       stopListening();
@@ -85,7 +104,7 @@ const SpeakPraticeLayout = ({ entities, onComplete, language = "vi-VN" }: SpeakP
 
     // 2. Time-based reset (2.5 seconds without a correct answer)
     const resetTimer = setTimeout(() => {
-      speak("Thử lại nhé!");
+      speakSystem("Thử lại nhé!");
       setFeedback("wrong");
       stopListening();
 
@@ -96,7 +115,7 @@ const SpeakPraticeLayout = ({ entities, onComplete, language = "vi-VN" }: SpeakP
     }, 2500);
 
     return () => clearTimeout(resetTimer);
-  }, [transcript, interimTranscript, isListening, feedback, speak, resetTranscript, stopListening]);
+  }, [transcript, interimTranscript, isListening, feedback, speakSystem, resetTranscript, stopListening]);
 
   // Handle speech result — check both during listening (interim) and after listening stops (final)
   // On Android Chrome, interim results may show the correct answer but the final transcript
@@ -105,7 +124,7 @@ const SpeakPraticeLayout = ({ entities, onComplete, language = "vi-VN" }: SpeakP
   // Reset match flag when moving to next question
   useEffect(() => {
     hasMatchedRef.current = false;
-  }, [currentIndex]);
+  }, [activeIndex]);
 
   // Real-time check: match during listening using combined transcript + interim
   useEffect(() => {
@@ -122,7 +141,7 @@ const SpeakPraticeLayout = ({ entities, onComplete, language = "vi-VN" }: SpeakP
       setHasTried(true);
       stopListening();
       playWinEffect(500);
-      speak("Giỏi quá!");
+      speakSystem("Giỏi quá!");
       setFeedback("correct");
 
       setTimeout(() => {
@@ -142,7 +161,7 @@ const SpeakPraticeLayout = ({ entities, onComplete, language = "vi-VN" }: SpeakP
       if (isCorrect) {
         hasMatchedRef.current = true;
         playWinEffect(500);
-        speak("Giỏi quá!");
+        speakSystem("Giỏi quá!");
         setFeedback("correct");
 
         setTimeout(() => {
@@ -151,7 +170,7 @@ const SpeakPraticeLayout = ({ entities, onComplete, language = "vi-VN" }: SpeakP
       } else {
         // Wrong
         setFeedback("wrong");
-        speak("Thử lại nhé!");
+        speakSystem("Thử lại nhé!");
         setTimeout(() => {
           setFeedback(null);
           resetTranscript();
@@ -347,7 +366,7 @@ const SpeakPraticeLayout = ({ entities, onComplete, language = "vi-VN" }: SpeakP
             ${feedback === "correct" ? "scale-110" : "hover:scale-105"}
             ${isListening ? "cursor-not-allowed" : "cursor-pointer"}
           `}
-          onClick={() => !isListening && speak(targetEntity.name)}
+          onClick={() => !isListening && speakTarget(targetEntity.name)}
         >
           {targetEntity.textRepresent ? (
             <p className="text-center text-8xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-br from-orange-500 via-pink-500 to-purple-500 drop-shadow-lg select-none leading-[150px]">

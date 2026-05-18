@@ -54,22 +54,18 @@ export function AlphabetSpeakingLesson({ words, onComplete, isReviewMode = false
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   // Map words to include accepted answers for better speech recognition
-  const entities = (isReviewMode ? [words[selectedIndex]] : words).map((w) => ({
+  const entities = words.map((w) => ({
     id: w.id,
-    name: w.word,
+    name: w.letter,
     image: w.image,
     textRepresent: w.letter,
-    // Accept the letter or the word
-    acceptedAnswers: [w.letter.toLowerCase(), w.letter, w.word, w.word.toLowerCase()],
+    // Accept the letter
+    acceptedAnswers: [w.letter.toLowerCase(), w.letter],
   }));
 
   const handleNext = () => {
     if (selectedIndex < words.length - 1) {
       setSelectedIndex(selectedIndex + 1);
-    } else {
-      if (!isReviewMode) {
-        onComplete();
-      }
     }
   };
 
@@ -84,8 +80,9 @@ export function AlphabetSpeakingLesson({ words, onComplete, isReviewMode = false
   return (
     <div ref={swipeRef} className="flex flex-col items-center gap-6 w-full max-w-4xl px-4">
       <SpeakPraticeLayout
-        key={selectedIndex}
         entities={entities}
+        currentIndex={selectedIndex}
+        onIndexChange={setSelectedIndex}
         onComplete={isReviewMode ? () => {} : onComplete}
         language="en-US"
       />
