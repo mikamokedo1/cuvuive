@@ -4,7 +4,7 @@ import { getPaginatedPosts } from "@/libs/blog";
 import BlogCard from "./BlogCard";
 
 export default async function LatestBlogs() {
-  const { posts } = await getPaginatedPosts(1, 6);
+  const { posts } = await getPaginatedPosts(1, 8);
 
   if (posts.length === 0) return null;
 
