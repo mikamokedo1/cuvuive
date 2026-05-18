@@ -10,6 +10,7 @@ const LanguageLogo = "https://assets.cuthongminh.com/games/home/ngon_ngu.webp";
 const MathLogo = "https://assets.cuthongminh.com/games/home/toan.webp";
 const LogicLogo = "https://assets.cuthongminh.com/games/home/tu_duy.webp";
 const ArtLogo = "https://assets.cuthongminh.com/games/home/ve.webp";
+const EnglishLogo = "https://assets.cuthongminh.com/games/learn-english-vocab/tieng_anh.webp";
 
 export type GameGroupType =
   | "math"
@@ -20,7 +21,8 @@ export type GameGroupType =
   | "history"
   | "language"
   | "art"
-  | "logic";
+  | "logic"
+  | "english";
 
 export interface Group {
   id: GameGroupType;
@@ -39,6 +41,7 @@ export const GROUPS: Group[] = [
   // { id: "history", title: "Lịch Sử", icon: HistoryLogo },
   { id: "language", title: "Ngôn Ngữ", slug: "hoc-tieng-viet-cho-be", icon: LanguageLogo },
   { id: "math", title: "Toán Học", slug: "tro-choi-toan-hoc", icon: MathLogo },
+  { id: "english", title: "Tiếng Anh", slug: "hoc-tieng-anh", icon: EnglishLogo },
 ];
 
 export const GROUP_DESCRIPTIONS: Record<GameGroupType, string> = {
@@ -51,4 +54,5 @@ export const GROUP_DESCRIPTIONS: Record<GameGroupType, string> = {
   music: "Bé học âm nhạc vui: nhạc cụ, nốt nhạc, chơi đàn piano qua trò chơi tương tác. Phát triển thính giác và cảm thụ nghệ thuật cho trẻ mầm non.",
   art: "Bé học mỹ thuật sáng tạo: nhận biết màu sắc, pha màu, tô tranh, vẽ tự do. Phát triển thẩm mỹ và khả năng sáng tạo cho trẻ 3-8 tuổi.",
   history: "",
+  english: "Bé học tiếng Anh qua trò chơi tương tác: từ vựng, phát âm, ghép từ với hình ảnh sinh động. Nền tảng ngoại ngữ vững chắc cho trẻ 3-8 tuổi trên Cú Thông Minh.",
 };

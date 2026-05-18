@@ -1782,4 +1782,121 @@ export const COURSES: CourseDef[] = [
       },
     ],
   },
+  {
+    id: "learn-english-vocab",
+    title: "Học Từ Vựng",
+    description: "Bé học từ vựng tiếng Anh cơ bản qua hình ảnh và phát âm: động vật, trái cây, màu sắc, số đếm.",
+    icon: "https://assets.cuthongminh.com/games/learn-english-vocab/logo.webp",
+    type: "english",
+    groups: [
+      {
+        id: "group1",
+        title: "Động Vật",
+        lessons: [
+          { id: "lesson1", title: "Học từ vựng", isFree: true },
+          { id: "lesson2", title: "Tập nói", isFree: true },
+          { id: "lesson3", title: "Nghe & Chọn", isFree: true },
+          { id: "lesson4", title: "Ghép từ" },
+          { id: "lesson5", title: "Kiểm tra" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Trái Cây",
+        lessons: [
+          { id: "lesson1", title: "Học từ vựng", isFree: true },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Nghe & Chọn" },
+          { id: "lesson4", title: "Ghép từ" },
+          { id: "lesson5", title: "Kiểm tra" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Màu Sắc",
+        lessons: [
+          { id: "lesson1", title: "Học từ vựng", isFree: true },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Nghe & Chọn" },
+          { id: "lesson4", title: "Ghép từ" },
+          { id: "lesson5", title: "Kiểm tra" },
+        ],
+      },
+      {
+        id: "group4",
+        title: "Số Đếm",
+        lessons: [
+          { id: "lesson1", title: "Học từ vựng", isFree: true },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Nghe & Chọn" },
+          { id: "lesson4", title: "Ghép từ" },
+          { id: "lesson5", title: "Kiểm tra" },
+        ],
+      },
+      {
+        id: "group5",
+        title: "Giao Thông",
+        lessons: [
+          { id: "lesson1", title: "Học từ vựng", isFree: true },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Nghe & Chọn" },
+          { id: "lesson4", title: "Ghép từ" },
+          { id: "lesson5", title: "Kiểm tra" },
+        ],
+      },
+      {
+        id: "group6",
+        title: "Gia Đình",
+        lessons: [
+          { id: "lesson1", title: "Học từ vựng", isFree: true },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Nghe & Chọn" },
+          { id: "lesson4", title: "Ghép từ" },
+          { id: "lesson5", title: "Kiểm tra" },
+        ],
+      },
+      {
+        id: "group7",
+        title: "Cơ Thể Người",
+        lessons: [
+          { id: "lesson1", title: "Học từ vựng", isFree: true },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Nghe & Chọn" },
+          { id: "lesson4", title: "Ghép từ" },
+          { id: "lesson5", title: "Kiểm tra" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "learn-english-alphabet",
+    title: "Bảng Chữ Cái",
+    description: "Bé học bảng chữ cái tiếng Anh từ A-Z qua các từ vựng sinh động.",
+    icon: "https://assets.cuthongminh.com/games/learn-english-alphabet/logo.webp",
+    type: "english",
+    groups: [
+      {
+        id: "group1",
+        title: "Bảng Chữ Cái (A-M)",
+        lessons: [
+          { id: "lesson1", title: "Học chữ cái", isFree: true },
+          { id: "lesson2", title: "Tập nói", isFree: true },
+          { id: "lesson3", title: "Nghe & Chọn", isFree: true },
+          { id: "lesson4", title: "Ghép từ" },
+          { id: "lesson5", title: "Kiểm tra" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Bảng Chữ Cái (N-Z)",
+        lessons: [
+          { id: "lesson1", title: "Học chữ cái", isFree: true },
+          { id: "lesson2", title: "Tập nói" },
+          { id: "lesson3", title: "Nghe & Chọn" },
+          { id: "lesson4", title: "Ghép từ" },
+          { id: "lesson5", title: "Kiểm tra" },
+        ],
+      },
+    ],
+  },
 ];
