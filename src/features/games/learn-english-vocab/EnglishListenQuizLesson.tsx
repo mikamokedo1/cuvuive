@@ -67,12 +67,8 @@ export function EnglishListenQuizLesson({ words, onComplete }: EnglishListenQuiz
       const isCorrect = id === round.correctWord.id;
       setFeedback(isCorrect ? "correct" : "wrong");
 
-      const selectedOption = round.options.find((o) => o.id === id);
-      if (selectedOption) {
-        speakEn(selectedOption.english);
-      }
-
       if (isCorrect) {
+        speakVi("Đúng rồi, giỏi quá!");
         if (!hasMistake) {
           setScore((prev) => prev + 1);
         }
@@ -87,6 +83,7 @@ export function EnglishListenQuizLesson({ words, onComplete }: EnglishListenQuiz
           }
         }, 1500);
       } else {
+        speakVi("Sai rồi, thử lại nhé!");
         setTimeout(() => {
           setFeedback(null);
           setSelectedId(null);

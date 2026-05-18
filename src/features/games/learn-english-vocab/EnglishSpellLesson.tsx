@@ -80,8 +80,8 @@ export function EnglishSpellLesson({ words, onComplete }: EnglishSpellLessonProp
         const correct = currentWord.english.toUpperCase();
 
         if (spelled === correct) {
+          speakVi("Đúng rồi, giỏi quá!");
           setFeedback("correct");
-          speakEn(currentWord.english);
           setTimeout(() => {
             if (currentIndex < orderedWords.length - 1) {
               setCurrentIndex((prev) => prev + 1);
@@ -90,6 +90,7 @@ export function EnglishSpellLesson({ words, onComplete }: EnglishSpellLessonProp
             }
           }, 1500);
         } else {
+          speakVi("Sai rồi, thử lại nhé!");
           setFeedback("wrong");
           setTimeout(() => {
             // Reset

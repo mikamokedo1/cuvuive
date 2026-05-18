@@ -64,11 +64,11 @@ export function AlphabetListenChooseLesson({ words, onComplete }: AlphabetListen
       setSelectedId(option);
       const isCorrect = option === round.correctWord.letter;
       setFeedback(isCorrect ? "correct" : "wrong");
-
-      speakEn(option);
-
       if (isCorrect) {
+        speakVi("Đúng rồi, giỏi quá!");
         setScore((prev) => prev + 1);
+      } else {
+        speakVi("Sai rồi, thử lại nhé!");
       }
 
       setTimeout(() => {

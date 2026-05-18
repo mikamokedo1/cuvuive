@@ -52,9 +52,8 @@ export function EnglishQuizLesson({ words, onComplete }: EnglishQuizLessonProps)
       const isCorrect = option === round.correctWord.english;
       setFeedback(isCorrect ? "correct" : "wrong");
 
-      speakEn(option);
-
       if (isCorrect) {
+        speakVi("Đúng rồi, giỏi quá!");
         if (!hasMistake) {
           setScore((prev) => prev + 1);
         }
@@ -69,6 +68,7 @@ export function EnglishQuizLesson({ words, onComplete }: EnglishQuizLessonProps)
           }
         }, 1500);
       } else {
+        speakVi("Sai rồi, thử lại nhé!");
         setHasMistake(true);
         setTimeout(() => {
           setFeedback(null);

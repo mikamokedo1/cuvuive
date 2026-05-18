@@ -53,11 +53,11 @@ export function AlphabetQuizLesson({ words, onComplete }: AlphabetQuizLessonProp
       // Delay longer on the first round to wait for the Vietnamese instruction
       const delay = currentRound === 0 ? 3000 : 500;
       const timeout = setTimeout(() => {
-        speakEn(round.correctWord.word);
+        speakVi(round.correctWord.vietnamese);
       }, delay);
       return () => clearTimeout(timeout);
     }
-  }, [currentRound, round, speakEn]);
+  }, [currentRound, round, speakVi]);
 
   const handleSelect = useCallback(
     (option: string) => {
@@ -65,11 +65,11 @@ export function AlphabetQuizLesson({ words, onComplete }: AlphabetQuizLessonProp
       setSelectedId(option);
       const isCorrect = option === round.correctWord.letter;
       setFeedback(isCorrect ? "correct" : "wrong");
-
-      speakEn(option);
-
       if (isCorrect) {
+        speakVi("Đúng rồi, giỏi quá!");
         setScore((prev) => prev + 1);
+      } else {
+        speakVi("Sai rồi, thử lại nhé!");
       }
 
       setTimeout(() => {
@@ -107,7 +107,7 @@ export function AlphabetQuizLesson({ words, onComplete }: AlphabetQuizLessonProp
       {/* Question */}
       <div 
         className="flex flex-col items-center gap-4 text-center cursor-pointer group"
-        onClick={() => speakEn(round.correctWord.word)}
+        onClick={() => speakVi(round.correctWord.vietnamese)}
       >
         <p 
           className="text-lg font-semibold text-gray-700 group-hover:text-blue-500 transition-colors cursor-pointer"
@@ -128,8 +128,7 @@ export function AlphabetQuizLesson({ words, onComplete }: AlphabetQuizLessonProp
           />
         </div>
         <div className="space-y-1 transition-transform duration-300 group-hover:scale-105">
-            <p className="text-2xl font-bold text-blue-600 group-hover:text-blue-500 transition-colors">{round.correctWord.word}</p>
-            <p className="text-gray-500 italic">{round.correctWord.vietnamese}</p>
+            <p className="text-2xl font-bold text-blue-600 group-hover:text-blue-500 transition-colors capitalize">{round.correctWord.vietnamese}</p>
         </div>
       </div>
 
