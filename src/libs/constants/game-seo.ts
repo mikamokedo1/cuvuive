@@ -143,7 +143,7 @@ const SEO_OVERRIDES: Record<string, SeoOverride> = {
   "learn-english-vocab": {
     title: "Học Từ Vựng Tiếng Anh | Game Tiếng Anh Cho Bé 3-8 Tuổi",
     description:
-      "Bé học từ vựng tiếng Anh cơ bản qua flashcard, nghe phát âm và ghép chữ. 4 chủ đề: động vật, trái cây, màu sắc, số đếm.",
+      "Bé học từ vựng tiếng Anh cơ bản qua flashcard, nghe phát âm và ghép chữ. 7 chủ đề sinh động: động vật, trái cây, màu sắc, số đếm, gia đình, giao thông...",
   },
   "learn-english-alphabet": {
     title: "Bảng Chữ Cái Tiếng Anh | Game Học Chữ Cho Bé",
@@ -1320,7 +1320,7 @@ const RAW_GAME_SEO: Record<string, GameSeoData> = {
   "learn-english-vocab": {
     title: "Học Từ Vựng Tiếng Anh cho bé - Trò chơi giáo dục Cú Thông Minh",
     description:
-      "Bé học từ vựng tiếng Anh cơ bản qua hình ảnh và phát âm: động vật, trái cây, màu sắc, số đếm. Trò chơi flashcard, nghe chọn và ghép từ tương tác.",
+      "Bé học từ vựng tiếng Anh cơ bản qua hình ảnh và phát âm: động vật, trái cây, màu sắc, số đếm, gia đình, giao thông. Trò chơi flashcard, nghe chọn và ghép từ tương tác.",
     keywords: [
       "học tiếng anh cho bé",
       "từ vựng tiếng anh trẻ em",
@@ -1332,9 +1332,9 @@ const RAW_GAME_SEO: Record<string, GameSeoData> = {
       "trò chơi tiếng anh cho trẻ 3-6 tuổi",
     ],
     seoText:
-      "Trò chơi Học Từ Vựng Tiếng Anh giúp bé từ 3-8 tuổi làm quen với tiếng Anh qua 4 chủ đề quen thuộc: Động Vật (dog, cat, fish), Trái Cây (apple, banana, orange), Màu Sắc (red, blue, green) và Số Đếm (one, two, three). Mỗi chủ đề có 4 bài học: flashcard học từ, nghe phát âm chọn hình đúng, ghép chữ cái thành từ và kiểm tra tổng hợp.",
+      "Trò chơi Học Từ Vựng Tiếng Anh giúp bé từ 3-8 tuổi làm quen với tiếng Anh qua 7 chủ đề quen thuộc: Động Vật, Trái Cây, Màu Sắc, Số Đếm, Giao Thông, Gia Đình và Cơ Thể Người. Mỗi chủ đề có các bài học tương tác: flashcard học từ, tập phát âm giọng bản ngữ, nghe phát âm chọn hình đúng, ghép chữ cái thành từ và bài kiểm tra tổng hợp.",
     seoFeatures: [
-      "Học từ vựng tiếng Anh qua 4 chủ đề",
+      "Học từ vựng tiếng Anh qua 7 chủ đề",
       "Phát âm chuẩn bằng giọng bản ngữ",
       "Trò chơi ghép chữ cái thành từ",
       "Quiz kiểm tra tổng hợp",
@@ -1346,7 +1346,16 @@ const RAW_GAME_SEO: Record<string, GameSeoData> = {
   "learn-english-alphabet": {
     title: "Bảng Chữ Cái Tiếng Anh cho bé - Trò chơi giáo dục Cú Thông Minh",
     description: "Bé học bảng chữ cái tiếng Anh từ A-Z qua hình ảnh minh họa sinh động, nghe phát âm và tập đánh vần từ vựng.",
-    keywords: ["bảng chữ cái tiếng anh", "alphabet for kids", "học chữ cái tiếng anh online", "tiếng anh mầm non"],
+    keywords: [
+      "bảng chữ cái tiếng anh",
+      "alphabet for kids",
+      "học chữ cái tiếng anh online",
+      "tiếng anh mầm non",
+      "học tiếng anh cho bé",
+      "bé học bảng chữ cái tiếng anh",
+      "trò chơi bảng chữ cái tiếng anh",
+      "english alphabet for kids"
+    ],
     seoText: "Trò chơi Bảng Chữ Cái Tiếng Anh giúp bé nhận diện 26 chữ cái từ A đến Z. Mỗi chữ cái đi kèm với một từ vựng minh họa, giúp bé không chỉ nhớ mặt chữ mà còn mở rộng vốn từ vựng cơ bản.",
     seoFeatures: ["Học 26 chữ cái tiếng Anh", "Phát âm chuẩn từng chữ cái", "Hình ảnh minh họa sinh động", "Trò chơi ghép chữ cái"],
     ogImage: "https://assets.cuthongminh.com/games/learn-english-alphabet/logo.webp",
