@@ -26,7 +26,10 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [premiumEndDate, setPremiumEndDate] = useState<Date | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showMissingInfoModal, setShowMissingInfoModal] = useState(false);
-  const supabaseRef = useRef(createClient());
+  const supabaseRef = useRef<ReturnType<typeof createClient> | null>(null);
+  if (!supabaseRef.current) {
+    supabaseRef.current = createClient();
+  }
   const supabase = supabaseRef.current;
 
   const refreshSubscription = useCallback(async () => {

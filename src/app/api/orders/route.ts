@@ -3,8 +3,13 @@ import { db } from "@/db";
 import { orders, plans } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { createClient } from "@/libs/supabase/server";
+import { applyRateLimit } from "@/libs/utils/rate-limit";
 
 export async function POST(request: NextRequest) {
+  // Rate limit: 5 requests per minute per IP
+  const rateLimited = applyRateLimit(request, { limit: 5 });
+  if (rateLimited) return rateLimited;
+
   try {
     const supabase = await createClient();
     const {

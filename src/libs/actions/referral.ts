@@ -5,6 +5,7 @@ import { referralCodes, referrals, users, withdrawals } from "@/db/schema";
 import { eq, and, sql, desc } from "drizzle-orm";
 import { createClient } from "@/libs/supabase/server";
 import crypto from "crypto";
+import { checkServerActionRateLimit } from "@/libs/utils/rate-limit";
 
 const WITHDRAWAL_MIN_AMOUNT = 100_000; // 100,000 VND
 
@@ -33,6 +34,10 @@ export async function getOrCreateReferralCode(): Promise<{
   code: string | null;
   error?: string;
 }> {
+  // Rate limit: 5 requests per minute per IP
+  const rl = await checkServerActionRateLimit({ limit: 5, prefix: "referral-code" });
+  if (rl.limited) return { code: null, error: "rate_limited" };
+
   try {
     const user = await getAuthUser();
     if (!user) return { code: null, error: "not_authenticated" };
@@ -289,6 +294,10 @@ export async function requestWithdrawal(
   bankAccount: string,
   bankAccountName: string,
 ): Promise<{ success: boolean; error?: string }> {
+  // Rate limit: 3 requests per minute per IP
+  const rl = await checkServerActionRateLimit({ limit: 3, prefix: "withdrawal" });
+  if (rl.limited) return { success: false, error: "rate_limited" };
+
   try {
     const user = await getAuthUser();
     if (!user) return { success: false, error: "not_authenticated" };

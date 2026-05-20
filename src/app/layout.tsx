@@ -3,14 +3,11 @@ import { Baloo_2, Nunito_Sans } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import { AppStructuredData } from "@/app/AppStructuredData";
-import { OwlProvider } from "@/context/OwlContext";
-import { UserProvider } from "@/context/UserContext";
-import { AccessProvider } from "@/context/AccessContext";
-import { ProgressProvider } from "@/context/ProgressContext";
-import { PlayTimerProvider } from "@/context/PlayTimerContext";
+import { ClientProviders } from "@/context/ClientProviders";
 import { AutoRecoveryBoundary } from "@/components/common/AutoRecoveryBoundary";
 import { FacebookMessenger } from "@/components/common/FacebookMessenger";
 import { AppProviders } from "@/app/AppProviders";
+import { Suspense } from "react";
 
 // Configure fonts
 const baloo2 = Baloo_2({
@@ -133,19 +130,13 @@ export default async function RootLayout({
       <body className={`${baloo2.variable} ${nunitoSans.variable} antialiased`} suppressHydrationWarning>
         <AppStructuredData />
         <AutoRecoveryBoundary>
-          <UserProvider>
-            <AccessProvider>
-              <ProgressProvider>
-                <PlayTimerProvider>
-                  <OwlProvider>
-                    {children}
-                    <AppProviders />
-                    <FacebookMessenger />
-                  </OwlProvider>
-                </PlayTimerProvider>
-              </ProgressProvider>
-            </AccessProvider>
-          </UserProvider>
+          <ClientProviders>
+            {children}
+            <Suspense>
+              <AppProviders />
+              <FacebookMessenger />
+            </Suspense>
+          </ClientProviders>
         </AutoRecoveryBoundary>
         {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />

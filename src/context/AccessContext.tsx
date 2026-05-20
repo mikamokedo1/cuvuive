@@ -85,6 +85,9 @@ export function AccessProvider({ children }: { children: ReactNode }) {
 
   const hidePaywall = useCallback(() => {
     setPaywallState({ isOpen: false, type: null, redirectUrl: null });
+    // Clear sessionStorage to prevent redirect loop when user dismisses
+    // the paywall without upgrading (e.g., visited /upgrade but didn't pay)
+    clearRedirectUrl();
   }, []);
 
   const contextValue = useMemo(

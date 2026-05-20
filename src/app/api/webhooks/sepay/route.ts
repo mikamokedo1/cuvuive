@@ -2,8 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
 import { orders, plans, subscriptions, users, referrals, referralCodes } from "@/db/schema";
 import { eq, and } from "drizzle-orm";
+import { applyRateLimit } from "@/libs/utils/rate-limit";
+
 const key = process.env.PAYMENT_WEBHOOK_SECRET;
 export async function POST(request: NextRequest) {
+  // Rate limit: 30 requests per minute per IP (payment providers may retry)
+  const rateLimited = applyRateLimit(request, { limit: 30 });
+  if (rateLimited) return rateLimited;
+
   try {
     // 1. Security Check via SePay API key set in Headers if configured
     // Alternatively, SePay usually puts an Authorization header or we verify IP.

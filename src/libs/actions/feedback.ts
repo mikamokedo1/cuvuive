@@ -3,6 +3,7 @@
 import { db } from "@/db";
 import { feedbacks } from "@/db/schema";
 import { createClient } from "@/libs/supabase/server";
+import { checkServerActionRateLimit } from "@/libs/utils/rate-limit";
 
 export async function submitFeedbackAction(data: {
   title: string;
@@ -10,6 +11,10 @@ export async function submitFeedbackAction(data: {
   email: string;
   phone?: string;
 }) {
+  // Rate limit: 3 requests per minute per IP (guests can submit)
+  const rl = await checkServerActionRateLimit({ limit: 3, prefix: "feedback" });
+  if (rl.limited) return { success: false, error: "Bạn đã gửi quá nhiều lần. Vui lòng thử lại sau." };
+
   try {
     const supabase = await createClient();
     const {

@@ -309,7 +309,7 @@ export default function Home() {
                 Hơn 20+ thể loại trò chơi từ thế giới muôn loài, đồ vật, học chữ cái đến rèn luyện khả năng tính toán.
               </p>
 
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto">
                 {GROUPS.map((group, i) => {
                   const bgGradient = [
                     "from-blue-400 to-blue-600 shadow-blue-500/30",

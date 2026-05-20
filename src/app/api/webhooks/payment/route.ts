@@ -2,8 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
 import { plans, subscriptions, users } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { applyRateLimit } from "@/libs/utils/rate-limit";
 
 export async function POST(request: NextRequest) {
+  // Rate limit: 30 requests per minute per IP (payment providers may retry)
+  const rateLimited = applyRateLimit(request, { limit: 30 });
+  if (rateLimited) return rateLimited;
+
   try {
     // 1. Security Check
     const secret = request.headers.get("x-webhook-secret");

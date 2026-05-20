@@ -27,7 +27,10 @@ const ProgressContext = createContext<ProgressContextType | undefined>(undefined
 
 export function ProgressProvider({ children }: { children: React.ReactNode }) {
   const { user } = useUser();
-  const supabaseRef = useRef(createClient());
+  const supabaseRef = useRef<ReturnType<typeof createClient> | null>(null);
+  if (!supabaseRef.current) {
+    supabaseRef.current = createClient();
+  }
   const supabase = supabaseRef.current;
   const latestProgressRef = useRef<Record<string, ProgressState>>({});
 
