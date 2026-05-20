@@ -146,7 +146,10 @@ export const TOPIC_CLUSTERS: Record<GameGroupType, TopicCluster> = {
   english: {
     heading: "Cụm nội dung Tiếng Anh",
     description: "Bé làm quen với tiếng Anh qua từ vựng cơ bản, phát âm và trò chơi tương tác cho trẻ mầm non.",
-    blogSlugs: [],
+    blogSlugs: [
+      "day-tu-vung-tieng-anh-cho-be-mam-non",
+      "day-be-hoc-bang-chu-cai-tieng-anh",
+    ],
   },
 };
 
@@ -166,4 +169,7 @@ export const GENERAL_PARENTING_SLUGS = [
   "giao-duc-som-la-gi",
   "tre-xem-tivi-dien-thoai-qua-nhieu",
   "day-be-hoc-qua-tro-choi",
+  "screen-time-cho-tre-mam-non",
+  "ap-dung-montessori-tai-nha",
+  "steam-cho-tre-mam-non",
 ];
