@@ -216,7 +216,7 @@ function PremiumGate() {
         <Link href="/upgrade">
           <ActionButton variant="glossy" color="orange" className="px-10 py-4 text-lg">
             <Gift className="w-5 h-5 mr-2" />
-            Nâng cấp Premium để tham gia
+            Nâng cấp để tham gia
             <ArrowRight className="w-5 h-5 ml-2" />
           </ActionButton>
         </Link>

@@ -1,6 +1,6 @@
 -- =============================================
 -- AUTO-GENERATED from constants/courses.ts
--- Generated at: 2026-05-13T02:23:34.589Z
+-- Generated at: 2026-05-20T04:12:28.986Z
 -- Do NOT edit manually. Run: npm run db:generate-seed
 -- =============================================
 
@@ -50,8 +50,8 @@ INSERT INTO courses (id, title, description, thumbnail, sort_index) VALUES
   ('learn-notes', 'Học Nốt Nhạc', 'Bé làm quen với các nốt nhạc Đồ Rê Mi trên khuông nhạc qua hình ảnh và âm thanh.', 'https://assets.cuthongminh.com/games/learn-notes/logo.webp', 40),
   ('learn-danger', 'Đồ Vật Nguy Hiểm', 'Bé học nhận biết các đồ vật nguy hiểm trong nhà và cách giữ an toàn.', 'https://assets.cuthongminh.com/games/learn-danger/logo.webp', 41),
   ('mini-sudoku-kids', 'Sudoku', 'Bé học suy luận logic qua bảng hình đơn giản, tìm ô còn thiếu theo quy luật hàng và cột.', 'https://assets.cuthongminh.com/games/mini-sudoku-kids/logo.webp', 42),
-  ('learn-english-vocab', 'Học Từ Vựng Tiếng Anh', 'Bé học từ vựng tiếng Anh cơ bản qua hình ảnh và phát âm: động vật, trái cây, màu sắc, số đếm.', 'https://assets.cuthongminh.com/games/learn-english-vocab/logo.webp', 43),
-  ('learn-english-alphabet', 'Bảng Chữ Cái Tiếng Anh', 'Bé học bảng chữ cái tiếng Anh từ A-Z qua các từ vựng sinh động.', 'https://assets.cuthongminh.com/games/learn-english-alphabet/logo.webp', 44)
+  ('learn-english-vocab', 'Học Từ Vựng', 'Bé học từ vựng tiếng Anh cơ bản qua hình ảnh và phát âm: động vật, trái cây, màu sắc, số đếm.', 'https://assets.cuthongminh.com/games/learn-english-vocab/logo.webp', 43),
+  ('learn-english-alphabet', 'Bảng Chữ Cái', 'Bé học bảng chữ cái tiếng Anh từ A-Z qua các từ vựng sinh động.', 'https://assets.cuthongminh.com/games/learn-english-alphabet/logo.webp', 44)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   description = EXCLUDED.description,
@@ -453,7 +453,7 @@ ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   sort_index = EXCLUDED.sort_index;
 
--- Học Từ Vựng Tiếng Anh Groups
+-- Học Từ Vựng Groups
 INSERT INTO groups (id, slug, course_id, title, sort_index) VALUES
   ('learn-english-vocab-group1', 'group1', 'learn-english-vocab', 'Động Vật', 1),
   ('learn-english-vocab-group2', 'group2', 'learn-english-vocab', 'Trái Cây', 2),
@@ -466,7 +466,7 @@ ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   sort_index = EXCLUDED.sort_index;
 
--- Bảng Chữ Cái Tiếng Anh Groups
+-- Bảng Chữ Cái Groups
 INSERT INTO groups (id, slug, course_id, title, sort_index) VALUES
   ('learn-english-alphabet-group1', 'group1', 'learn-english-alphabet', 'Bảng Chữ Cái (A-M)', 1),
   ('learn-english-alphabet-group2', 'group2', 'learn-english-alphabet', 'Bảng Chữ Cái (N-Z)', 2)
@@ -1091,6 +1091,7 @@ INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) 
   ('learn-clock-group1-lesson1', 'lesson1', 'learn-clock-group1', 'learn-clock', 'Làm quen đồng hồ', true, 1),
   ('learn-clock-group1-lesson2', 'lesson2', 'learn-clock-group1', 'learn-clock', 'Chọn đúng giờ', true, 2),
   ('learn-clock-group1-lesson3', 'lesson3', 'learn-clock-group1', 'learn-clock', 'Chỉnh kim đồng hồ', true, 3),
+  ('learn-clock-group1-lesson4', 'lesson4', 'learn-clock-group1', 'learn-clock', 'Giờ nào làm gì?', true, 4),
   ('learn-clock-group2-lesson1', 'lesson1', 'learn-clock-group2', 'learn-clock', 'Làm quen đồng hồ', true, 1),
   ('learn-clock-group2-lesson2', 'lesson2', 'learn-clock-group2', 'learn-clock', 'Chọn đúng giờ', false, 2)
 ON CONFLICT (id) DO UPDATE SET
@@ -1266,51 +1267,60 @@ ON CONFLICT (id) DO UPDATE SET
   is_free = EXCLUDED.is_free,
   sort_index = EXCLUDED.sort_index;
 
--- Học Từ Vựng Tiếng Anh Lessons
+-- Học Từ Vựng Lessons
 INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) VALUES
   ('learn-english-vocab-group1-lesson1', 'lesson1', 'learn-english-vocab-group1', 'learn-english-vocab', 'Học từ vựng', true, 1),
-  ('learn-english-vocab-group1-lesson2', 'lesson2', 'learn-english-vocab-group1', 'learn-english-vocab', 'Nghe & Chọn', true, 2),
-  ('learn-english-vocab-group1-lesson3', 'lesson3', 'learn-english-vocab-group1', 'learn-english-vocab', 'Ghép từ', false, 3),
-  ('learn-english-vocab-group1-lesson4', 'lesson4', 'learn-english-vocab-group1', 'learn-english-vocab', 'Kiểm tra', false, 4),
+  ('learn-english-vocab-group1-lesson2', 'lesson2', 'learn-english-vocab-group1', 'learn-english-vocab', 'Tập nói', true, 2),
+  ('learn-english-vocab-group1-lesson3', 'lesson3', 'learn-english-vocab-group1', 'learn-english-vocab', 'Nghe & Chọn', true, 3),
+  ('learn-english-vocab-group1-lesson4', 'lesson4', 'learn-english-vocab-group1', 'learn-english-vocab', 'Ghép từ', false, 4),
+  ('learn-english-vocab-group1-lesson5', 'lesson5', 'learn-english-vocab-group1', 'learn-english-vocab', 'Kiểm tra', false, 5),
   ('learn-english-vocab-group2-lesson1', 'lesson1', 'learn-english-vocab-group2', 'learn-english-vocab', 'Học từ vựng', true, 1),
-  ('learn-english-vocab-group2-lesson2', 'lesson2', 'learn-english-vocab-group2', 'learn-english-vocab', 'Nghe & Chọn', false, 2),
-  ('learn-english-vocab-group2-lesson3', 'lesson3', 'learn-english-vocab-group2', 'learn-english-vocab', 'Ghép từ', false, 3),
-  ('learn-english-vocab-group2-lesson4', 'lesson4', 'learn-english-vocab-group2', 'learn-english-vocab', 'Kiểm tra', false, 4),
+  ('learn-english-vocab-group2-lesson2', 'lesson2', 'learn-english-vocab-group2', 'learn-english-vocab', 'Tập nói', false, 2),
+  ('learn-english-vocab-group2-lesson3', 'lesson3', 'learn-english-vocab-group2', 'learn-english-vocab', 'Nghe & Chọn', false, 3),
+  ('learn-english-vocab-group2-lesson4', 'lesson4', 'learn-english-vocab-group2', 'learn-english-vocab', 'Ghép từ', false, 4),
+  ('learn-english-vocab-group2-lesson5', 'lesson5', 'learn-english-vocab-group2', 'learn-english-vocab', 'Kiểm tra', false, 5),
   ('learn-english-vocab-group3-lesson1', 'lesson1', 'learn-english-vocab-group3', 'learn-english-vocab', 'Học từ vựng', true, 1),
-  ('learn-english-vocab-group3-lesson2', 'lesson2', 'learn-english-vocab-group3', 'learn-english-vocab', 'Nghe & Chọn', false, 2),
-  ('learn-english-vocab-group3-lesson3', 'lesson3', 'learn-english-vocab-group3', 'learn-english-vocab', 'Ghép từ', false, 3),
-  ('learn-english-vocab-group3-lesson4', 'lesson4', 'learn-english-vocab-group3', 'learn-english-vocab', 'Kiểm tra', false, 4),
+  ('learn-english-vocab-group3-lesson2', 'lesson2', 'learn-english-vocab-group3', 'learn-english-vocab', 'Tập nói', false, 2),
+  ('learn-english-vocab-group3-lesson3', 'lesson3', 'learn-english-vocab-group3', 'learn-english-vocab', 'Nghe & Chọn', false, 3),
+  ('learn-english-vocab-group3-lesson4', 'lesson4', 'learn-english-vocab-group3', 'learn-english-vocab', 'Ghép từ', false, 4),
+  ('learn-english-vocab-group3-lesson5', 'lesson5', 'learn-english-vocab-group3', 'learn-english-vocab', 'Kiểm tra', false, 5),
   ('learn-english-vocab-group4-lesson1', 'lesson1', 'learn-english-vocab-group4', 'learn-english-vocab', 'Học từ vựng', true, 1),
-  ('learn-english-vocab-group4-lesson2', 'lesson2', 'learn-english-vocab-group4', 'learn-english-vocab', 'Nghe & Chọn', false, 2),
-  ('learn-english-vocab-group4-lesson3', 'lesson3', 'learn-english-vocab-group4', 'learn-english-vocab', 'Ghép từ', false, 3),
-  ('learn-english-vocab-group4-lesson4', 'lesson4', 'learn-english-vocab-group4', 'learn-english-vocab', 'Kiểm tra', false, 4),
+  ('learn-english-vocab-group4-lesson2', 'lesson2', 'learn-english-vocab-group4', 'learn-english-vocab', 'Tập nói', false, 2),
+  ('learn-english-vocab-group4-lesson3', 'lesson3', 'learn-english-vocab-group4', 'learn-english-vocab', 'Nghe & Chọn', false, 3),
+  ('learn-english-vocab-group4-lesson4', 'lesson4', 'learn-english-vocab-group4', 'learn-english-vocab', 'Ghép từ', false, 4),
+  ('learn-english-vocab-group4-lesson5', 'lesson5', 'learn-english-vocab-group4', 'learn-english-vocab', 'Kiểm tra', false, 5),
   ('learn-english-vocab-group5-lesson1', 'lesson1', 'learn-english-vocab-group5', 'learn-english-vocab', 'Học từ vựng', true, 1),
-  ('learn-english-vocab-group5-lesson2', 'lesson2', 'learn-english-vocab-group5', 'learn-english-vocab', 'Nghe & Chọn', false, 2),
-  ('learn-english-vocab-group5-lesson3', 'lesson3', 'learn-english-vocab-group5', 'learn-english-vocab', 'Ghép từ', false, 3),
-  ('learn-english-vocab-group5-lesson4', 'lesson4', 'learn-english-vocab-group5', 'learn-english-vocab', 'Kiểm tra', false, 4),
+  ('learn-english-vocab-group5-lesson2', 'lesson2', 'learn-english-vocab-group5', 'learn-english-vocab', 'Tập nói', false, 2),
+  ('learn-english-vocab-group5-lesson3', 'lesson3', 'learn-english-vocab-group5', 'learn-english-vocab', 'Nghe & Chọn', false, 3),
+  ('learn-english-vocab-group5-lesson4', 'lesson4', 'learn-english-vocab-group5', 'learn-english-vocab', 'Ghép từ', false, 4),
+  ('learn-english-vocab-group5-lesson5', 'lesson5', 'learn-english-vocab-group5', 'learn-english-vocab', 'Kiểm tra', false, 5),
   ('learn-english-vocab-group6-lesson1', 'lesson1', 'learn-english-vocab-group6', 'learn-english-vocab', 'Học từ vựng', true, 1),
-  ('learn-english-vocab-group6-lesson2', 'lesson2', 'learn-english-vocab-group6', 'learn-english-vocab', 'Nghe & Chọn', false, 2),
-  ('learn-english-vocab-group6-lesson3', 'lesson3', 'learn-english-vocab-group6', 'learn-english-vocab', 'Ghép từ', false, 3),
-  ('learn-english-vocab-group6-lesson4', 'lesson4', 'learn-english-vocab-group6', 'learn-english-vocab', 'Kiểm tra', false, 4),
+  ('learn-english-vocab-group6-lesson2', 'lesson2', 'learn-english-vocab-group6', 'learn-english-vocab', 'Tập nói', false, 2),
+  ('learn-english-vocab-group6-lesson3', 'lesson3', 'learn-english-vocab-group6', 'learn-english-vocab', 'Nghe & Chọn', false, 3),
+  ('learn-english-vocab-group6-lesson4', 'lesson4', 'learn-english-vocab-group6', 'learn-english-vocab', 'Ghép từ', false, 4),
+  ('learn-english-vocab-group6-lesson5', 'lesson5', 'learn-english-vocab-group6', 'learn-english-vocab', 'Kiểm tra', false, 5),
   ('learn-english-vocab-group7-lesson1', 'lesson1', 'learn-english-vocab-group7', 'learn-english-vocab', 'Học từ vựng', true, 1),
-  ('learn-english-vocab-group7-lesson2', 'lesson2', 'learn-english-vocab-group7', 'learn-english-vocab', 'Nghe & Chọn', false, 2),
-  ('learn-english-vocab-group7-lesson3', 'lesson3', 'learn-english-vocab-group7', 'learn-english-vocab', 'Ghép từ', false, 3),
-  ('learn-english-vocab-group7-lesson4', 'lesson4', 'learn-english-vocab-group7', 'learn-english-vocab', 'Kiểm tra', false, 4)
+  ('learn-english-vocab-group7-lesson2', 'lesson2', 'learn-english-vocab-group7', 'learn-english-vocab', 'Tập nói', false, 2),
+  ('learn-english-vocab-group7-lesson3', 'lesson3', 'learn-english-vocab-group7', 'learn-english-vocab', 'Nghe & Chọn', false, 3),
+  ('learn-english-vocab-group7-lesson4', 'lesson4', 'learn-english-vocab-group7', 'learn-english-vocab', 'Ghép từ', false, 4),
+  ('learn-english-vocab-group7-lesson5', 'lesson5', 'learn-english-vocab-group7', 'learn-english-vocab', 'Kiểm tra', false, 5)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   is_free = EXCLUDED.is_free,
   sort_index = EXCLUDED.sort_index;
 
--- Bảng Chữ Cái Tiếng Anh Lessons
+-- Bảng Chữ Cái Lessons
 INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) VALUES
   ('learn-english-alphabet-group1-lesson1', 'lesson1', 'learn-english-alphabet-group1', 'learn-english-alphabet', 'Học chữ cái', true, 1),
-  ('learn-english-alphabet-group1-lesson2', 'lesson2', 'learn-english-alphabet-group1', 'learn-english-alphabet', 'Nghe & Chọn', true, 2),
-  ('learn-english-alphabet-group1-lesson3', 'lesson3', 'learn-english-alphabet-group1', 'learn-english-alphabet', 'Ghép từ', false, 3),
-  ('learn-english-alphabet-group1-lesson4', 'lesson4', 'learn-english-alphabet-group1', 'learn-english-alphabet', 'Kiểm tra', false, 4),
+  ('learn-english-alphabet-group1-lesson2', 'lesson2', 'learn-english-alphabet-group1', 'learn-english-alphabet', 'Tập nói', true, 2),
+  ('learn-english-alphabet-group1-lesson3', 'lesson3', 'learn-english-alphabet-group1', 'learn-english-alphabet', 'Nghe & Chọn', true, 3),
+  ('learn-english-alphabet-group1-lesson4', 'lesson4', 'learn-english-alphabet-group1', 'learn-english-alphabet', 'Ghép từ', false, 4),
+  ('learn-english-alphabet-group1-lesson5', 'lesson5', 'learn-english-alphabet-group1', 'learn-english-alphabet', 'Kiểm tra', false, 5),
   ('learn-english-alphabet-group2-lesson1', 'lesson1', 'learn-english-alphabet-group2', 'learn-english-alphabet', 'Học chữ cái', true, 1),
-  ('learn-english-alphabet-group2-lesson2', 'lesson2', 'learn-english-alphabet-group2', 'learn-english-alphabet', 'Nghe & Chọn', false, 2),
-  ('learn-english-alphabet-group2-lesson3', 'lesson3', 'learn-english-alphabet-group2', 'learn-english-alphabet', 'Ghép từ', false, 3),
-  ('learn-english-alphabet-group2-lesson4', 'lesson4', 'learn-english-alphabet-group2', 'learn-english-alphabet', 'Kiểm tra', false, 4)
+  ('learn-english-alphabet-group2-lesson2', 'lesson2', 'learn-english-alphabet-group2', 'learn-english-alphabet', 'Tập nói', false, 2),
+  ('learn-english-alphabet-group2-lesson3', 'lesson3', 'learn-english-alphabet-group2', 'learn-english-alphabet', 'Nghe & Chọn', false, 3),
+  ('learn-english-alphabet-group2-lesson4', 'lesson4', 'learn-english-alphabet-group2', 'learn-english-alphabet', 'Ghép từ', false, 4),
+  ('learn-english-alphabet-group2-lesson5', 'lesson5', 'learn-english-alphabet-group2', 'learn-english-alphabet', 'Kiểm tra', false, 5)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   is_free = EXCLUDED.is_free,

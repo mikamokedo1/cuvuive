@@ -5,10 +5,11 @@ import { GROUPS } from "@/features/games/learn-clock/constants";
 import { ClockLearnLesson } from "@/features/games/learn-clock/ClockLearnLesson";
 import { ClockQuizLesson } from "@/features/games/learn-clock/ClockQuizLesson";
 import { ClockAdjustLesson } from "@/features/games/learn-clock/ClockAdjustLesson";
+import { ClockActivityLesson } from "@/features/games/learn-clock/ClockActivityLesson";
 import { GameWrapGame } from "@/components/layout/GameWrapGame";
 
 // Define a maximum possible order to cover analog lessons (1-3)
-const LESSON_ORDER = ["lesson1", "lesson2", "lesson3"];
+const LESSON_ORDER = ["lesson1", "lesson2", "lesson3", "lesson4"];
 
 interface LessonPageClientProps {
   groupId: string;
@@ -36,6 +37,11 @@ export function LessonPageClient({ groupId, lessonId }: LessonPageClientProps) {
       case "lesson3":
         if (type === "analog") {
           return <ClockAdjustLesson onComplete={game.handleComplete} />;
+        }
+        return null;
+      case "lesson4":
+        if (type === "analog") {
+          return <ClockActivityLesson onComplete={game.handleComplete} />;
         }
         return null;
       default:

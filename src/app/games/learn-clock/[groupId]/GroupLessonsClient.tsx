@@ -1,6 +1,6 @@
 "use client";
 
-import { Eye, Edit, Pointer } from "lucide-react";
+import { Eye, Edit, Pointer, Clock } from "lucide-react";
 import { GameWrapLessons, LessonData } from "@/components/layout/GameWrapLessons";
 import { GROUPS } from "@/features/games/learn-clock/constants";
 import { useGroupLessons } from "@/hooks/useGroupLessons";
@@ -16,6 +16,7 @@ export function GroupLessonsClient({ groupId }: GroupLessonsClientProps) {
     { id: "lesson1", title: "Làm quen đồng hồ kim", icon: <Eye className="text-white w-6 h-6" />, isPremium: false },
     { id: "lesson2", title: "Chọn đúng giờ", icon: <Pointer className="text-white w-6 h-6" />, isPremium: true },
     { id: "lesson3", title: "Chỉnh kim đồng hồ", icon: <Edit className="text-white w-6 h-6" />, isPremium: true },
+    { id: "lesson4", title: "Giờ nào làm gì?", icon: <Clock className="text-white w-6 h-6" />, isPremium: true },
   ];
 
   const digitalLessons: LessonData[] = [

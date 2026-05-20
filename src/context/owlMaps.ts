@@ -261,6 +261,7 @@ export const MAP_PATHNAME_TO_TEXT: Record<string, string> = {
   "/games/learn-clock/group1/lesson/lesson1": "Pé làm quen với đồng hồ kim nhé",
   "/games/learn-clock/group1/lesson/lesson2": "Pé chọn đúng giờ trên đồng hồ kim nhé",
   "/games/learn-clock/group1/lesson/lesson3": "Pé chỉnh kim đồng hồ cho đúng giờ nhé",
+  "/games/learn-clock/group1/lesson/lesson4": "Mấy giờ rồi? Pé đoán xem đang làm gì nhé",
   "/games/learn-clock/group2/lesson/lesson1": "Pé làm quen với đồng hồ điện tử nhé",
   "/games/learn-clock/group2/lesson/lesson2": "Pé chọn đúng giờ trên đồng hồ điện tử nhé",
   // learn-costume

@@ -1402,6 +1402,7 @@ export const COURSES: CourseDef[] = [
           { id: "lesson1", title: "Làm quen đồng hồ", isFree: true },
           { id: "lesson2", title: "Chọn đúng giờ", isFree: true },
           { id: "lesson3", title: "Chỉnh kim đồng hồ", isFree: true },
+          { id: "lesson4", title: "Giờ nào làm gì?", isFree: true },
         ],
       },
       {
