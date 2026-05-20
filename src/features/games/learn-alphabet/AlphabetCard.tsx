@@ -39,10 +39,11 @@ export function AlphabetCard({ letter, active = false, showName = true, onClick 
     >
       {/* Large Letter Display */}
       <div
-        className="text-8xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-br from-orange-500 via-pink-500 to-purple-500 drop-shadow-lg select-none leading-none"
+        className="text-8xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-br from-orange-500 via-pink-500 to-purple-500 drop-shadow-lg select-none leading-tight py-4 px-4 flex gap-2"
         onClick={handleClick}
       >
-        {letter.id}
+        <span>{letter.letter}</span>
+        <span>{letter.id}</span>
       </div>
 
       {/* Representative image */}

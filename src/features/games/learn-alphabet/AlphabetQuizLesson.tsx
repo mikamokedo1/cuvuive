@@ -130,7 +130,7 @@ export function AlphabetQuizLesson({ letters, onComplete, requiredWins = 6 }: Al
               ${feedback === "correct" && option.id === targetLetter.id ? "border-green-500 scale-110 shadow-green-200" : "border-white"}
             `}
           >
-            <span className="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-orange-500 via-pink-500 to-purple-500 select-none">
+            <span className="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-orange-500 via-pink-500 to-purple-500 select-none px-4 py-2 leading-tight">
               {option.id}
             </span>
           </div>

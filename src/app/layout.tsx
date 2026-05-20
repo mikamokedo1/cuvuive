@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Baloo_2, Nunito_Sans } from "next/font/google";
+import { Baloo_2, Nunito_Sans, Be_Vietnam_Pro } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import { AppStructuredData } from "@/app/AppStructuredData";
@@ -22,6 +22,14 @@ const nunitoSans = Nunito_Sans({
   subsets: ["vietnamese", "latin"],
   weight: ["400", "700"],
   variable: "--font-nunito-sans",
+  display: "swap",
+  preload: true,
+});
+
+const beVietnamPro = Be_Vietnam_Pro({
+  subsets: ["vietnamese", "latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  variable: "--font-be-vietnam-pro",
   display: "swap",
   preload: true,
 });
@@ -127,7 +135,7 @@ export default async function RootLayout({
         <link rel="preconnect" href="https://assets.cuthongminh.com" />
         <link rel="dns-prefetch" href="https://assets.cuthongminh.com" />
       </head>
-      <body className={`${baloo2.variable} ${nunitoSans.variable} antialiased`} suppressHydrationWarning>
+      <body className={`${baloo2.variable} ${nunitoSans.variable} ${beVietnamPro.variable} antialiased`} suppressHydrationWarning>
         <AppStructuredData />
         <AutoRecoveryBoundary>
           <ClientProviders>
