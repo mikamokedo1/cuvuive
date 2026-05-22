@@ -1,211 +1,83 @@
 {
-  "generatedAt": "2026-05-20T02:48:05.664Z",
-  "totalUrls": 20,
-  "indexed": 18,
-  "notIndexed": 2,
+  "generatedAt": "2026-05-22T07:14:32.545Z",
+  "totalUrls": 30,
+  "indexed": 23,
+  "notIndexed": 7,
   "summary": {
-    "PASS": 18,
-    "NEUTRAL": 2
+    "PASS": 23,
+    "NEUTRAL": 7
   },
   "coverageBreakdown": {
     "Submitted and indexed": [
-      "",
-      "/games",
-      "/privacy",
-      "/terms",
-      "/about-us",
-      "/gioi-thieu-kiem-tien",
       "/blogs",
-      "/upgrade",
-      "/tro-choi-tu-duy",
-      "/tro-choi-my-thuat",
-      "/ky-nang-song",
-      "/dia-ly-tu-nhien",
-      "/am-nhac",
-      "/khoa-hoc",
-      "/hoc-tieng-viet-cho-be",
-      "/tro-choi-toan-hoc",
-      "/do-tuoi/3-tuoi",
-      "/do-tuoi/4-tuoi"
+      "/blogs/am-nhac-cho-tre-mam-non",
+      "/blogs/an-toan-giao-thong-cho-be",
+      "/blogs/bai-tap-tu-duy-tim-hinh-khac-loai",
+      "/blogs/bang-cuu-chuong-cho-be",
+      "/blogs/be-2-tuoi-nen-hoc-gi",
+      "/blogs/be-3-tuoi-nen-hoc-gi",
+      "/blogs/be-4-tuoi-nen-hoc-gi",
+      "/blogs/be-6-tuoi-nen-hoc-gi",
+      "/blogs/be-chuan-bi-vao-lop-1-can-hoc-gi",
+      "/blogs/be-hoc-ghep-van",
+      "/blogs/be-hoc-pha-mau-nghe-thuat",
+      "/blogs/be-hoc-ve-co-the-nguoi",
+      "/blogs/be-tap-to-mau-sang-tao",
+      "/blogs/cach-day-be-hoc-so",
+      "/blogs/dau-tieng-viet-cho-be",
+      "/blogs/day-be-biet-cac-nghe-nghiep",
+      "/blogs/day-be-ghep-van-tai-nha",
+      "/blogs/day-be-giu-ve-sinh-ca-nhan",
+      "/blogs/day-be-hoc-bang-chu-cai-tai-nha",
+      "/blogs/day-be-hoc-dem",
+      "/blogs/day-be-hoc-tu-vung-tieng-viet",
+      "/blogs/day-be-lam-viec-nha"
     ],
     "Discovered - currently not indexed": [
-      "/feedback",
-      "/hoc-tieng-anh"
+      "/blogs/ap-dung-montessori-tai-nha",
+      "/blogs/cach-ren-luyen-su-tap-trung-cho-tre-mam-non",
+      "/blogs/day-be-hoc-bang-chu-cai-tieng-anh",
+      "/blogs/day-be-hoc-qua-tro-choi"
+    ],
+    "Crawled - currently not indexed": [
+      "/blogs/be-5-tuoi-can-biet-nhung-gi",
+      "/blogs/be-hoc-bo-phan-co-the",
+      "/blogs/dan-piano-ti-hon"
     ]
   },
   "results": [
-    {
-      "url": "",
-      "verdict": "PASS",
-      "coverageState": "Submitted and indexed",
-      "robotsTxtState": "ALLOWED",
-      "indexingState": "INDEXING_ALLOWED",
-      "lastCrawlTime": "2026-05-18T02:26:04Z",
-      "pageFetchState": "SUCCESSFUL",
-      "crawledAs": "MOBILE"
-    },
-    {
-      "url": "/games",
-      "verdict": "PASS",
-      "coverageState": "Submitted and indexed",
-      "robotsTxtState": "ALLOWED",
-      "indexingState": "INDEXING_ALLOWED",
-      "lastCrawlTime": "2026-05-17T21:41:33Z",
-      "pageFetchState": "SUCCESSFUL",
-      "crawledAs": "MOBILE"
-    },
-    {
-      "url": "/privacy",
-      "verdict": "PASS",
-      "coverageState": "Submitted and indexed",
-      "robotsTxtState": "ALLOWED",
-      "indexingState": "INDEXING_ALLOWED",
-      "lastCrawlTime": "2026-05-08T17:39:11Z",
-      "pageFetchState": "SUCCESSFUL",
-      "crawledAs": "MOBILE"
-    },
-    {
-      "url": "/terms",
-      "verdict": "PASS",
-      "coverageState": "Submitted and indexed",
-      "robotsTxtState": "ALLOWED",
-      "indexingState": "INDEXING_ALLOWED",
-      "lastCrawlTime": "2026-05-08T20:56:14Z",
-      "pageFetchState": "SUCCESSFUL",
-      "crawledAs": "MOBILE"
-    },
-    {
-      "url": "/feedback",
-      "verdict": "NEUTRAL",
-      "coverageState": "Discovered - currently not indexed",
-      "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
-      "indexingState": "INDEXING_STATE_UNSPECIFIED",
-      "lastCrawlTime": "",
-      "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
-      "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
-    },
-    {
-      "url": "/about-us",
-      "verdict": "PASS",
-      "coverageState": "Submitted and indexed",
-      "robotsTxtState": "ALLOWED",
-      "indexingState": "INDEXING_ALLOWED",
-      "lastCrawlTime": "2026-04-29T16:05:51Z",
-      "pageFetchState": "SUCCESSFUL",
-      "crawledAs": "MOBILE"
-    },
-    {
-      "url": "/gioi-thieu-kiem-tien",
-      "verdict": "PASS",
-      "coverageState": "Submitted and indexed",
-      "robotsTxtState": "ALLOWED",
-      "indexingState": "INDEXING_ALLOWED",
-      "lastCrawlTime": "2026-05-08T12:49:36Z",
-      "pageFetchState": "SUCCESSFUL",
-      "crawledAs": "MOBILE"
-    },
     {
       "url": "/blogs",
       "verdict": "PASS",
       "coverageState": "Submitted and indexed",
       "robotsTxtState": "ALLOWED",
       "indexingState": "INDEXING_ALLOWED",
-      "lastCrawlTime": "2026-05-08T22:35:10Z",
+      "lastCrawlTime": "2026-05-18T19:46:07Z",
       "pageFetchState": "SUCCESSFUL",
       "crawledAs": "MOBILE"
     },
     {
-      "url": "/upgrade",
+      "url": "/blogs/am-nhac-cho-tre-mam-non",
       "verdict": "PASS",
       "coverageState": "Submitted and indexed",
       "robotsTxtState": "ALLOWED",
       "indexingState": "INDEXING_ALLOWED",
-      "lastCrawlTime": "2026-05-10T23:41:23Z",
+      "lastCrawlTime": "2026-04-20T10:00:51Z",
       "pageFetchState": "SUCCESSFUL",
       "crawledAs": "MOBILE"
     },
     {
-      "url": "/tro-choi-tu-duy",
+      "url": "/blogs/an-toan-giao-thong-cho-be",
       "verdict": "PASS",
       "coverageState": "Submitted and indexed",
       "robotsTxtState": "ALLOWED",
       "indexingState": "INDEXING_ALLOWED",
-      "lastCrawlTime": "2026-05-17T13:55:15Z",
+      "lastCrawlTime": "2026-04-09T10:38:33Z",
       "pageFetchState": "SUCCESSFUL",
       "crawledAs": "MOBILE"
     },
     {
-      "url": "/tro-choi-my-thuat",
-      "verdict": "PASS",
-      "coverageState": "Submitted and indexed",
-      "robotsTxtState": "ALLOWED",
-      "indexingState": "INDEXING_ALLOWED",
-      "lastCrawlTime": "2026-05-15T16:40:33Z",
-      "pageFetchState": "SUCCESSFUL",
-      "crawledAs": "MOBILE"
-    },
-    {
-      "url": "/ky-nang-song",
-      "verdict": "PASS",
-      "coverageState": "Submitted and indexed",
-      "robotsTxtState": "ALLOWED",
-      "indexingState": "INDEXING_ALLOWED",
-      "lastCrawlTime": "2026-05-10T11:25:13Z",
-      "pageFetchState": "SUCCESSFUL",
-      "crawledAs": "MOBILE"
-    },
-    {
-      "url": "/dia-ly-tu-nhien",
-      "verdict": "PASS",
-      "coverageState": "Submitted and indexed",
-      "robotsTxtState": "ALLOWED",
-      "indexingState": "INDEXING_ALLOWED",
-      "lastCrawlTime": "2026-05-10T10:52:13Z",
-      "pageFetchState": "SUCCESSFUL",
-      "crawledAs": "MOBILE"
-    },
-    {
-      "url": "/am-nhac",
-      "verdict": "PASS",
-      "coverageState": "Submitted and indexed",
-      "robotsTxtState": "ALLOWED",
-      "indexingState": "INDEXING_ALLOWED",
-      "lastCrawlTime": "2026-05-10T09:51:42Z",
-      "pageFetchState": "SUCCESSFUL",
-      "crawledAs": "MOBILE"
-    },
-    {
-      "url": "/khoa-hoc",
-      "verdict": "PASS",
-      "coverageState": "Submitted and indexed",
-      "robotsTxtState": "ALLOWED",
-      "indexingState": "INDEXING_ALLOWED",
-      "lastCrawlTime": "2026-05-10T12:20:43Z",
-      "pageFetchState": "SUCCESSFUL",
-      "crawledAs": "MOBILE"
-    },
-    {
-      "url": "/hoc-tieng-viet-cho-be",
-      "verdict": "PASS",
-      "coverageState": "Submitted and indexed",
-      "robotsTxtState": "ALLOWED",
-      "indexingState": "INDEXING_ALLOWED",
-      "lastCrawlTime": "2026-05-12T15:43:12Z",
-      "pageFetchState": "SUCCESSFUL",
-      "crawledAs": "MOBILE"
-    },
-    {
-      "url": "/tro-choi-toan-hoc",
-      "verdict": "PASS",
-      "coverageState": "Submitted and indexed",
-      "robotsTxtState": "ALLOWED",
-      "indexingState": "INDEXING_ALLOWED",
-      "lastCrawlTime": "2026-05-18T09:07:25Z",
-      "pageFetchState": "SUCCESSFUL",
-      "crawledAs": "MOBILE"
-    },
-    {
-      "url": "/hoc-tieng-anh",
+      "url": "/blogs/ap-dung-montessori-tai-nha",
       "verdict": "NEUTRAL",
       "coverageState": "Discovered - currently not indexed",
       "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
@@ -215,22 +87,262 @@
       "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
     },
     {
-      "url": "/do-tuoi/3-tuoi",
+      "url": "/blogs/bai-tap-tu-duy-tim-hinh-khac-loai",
       "verdict": "PASS",
       "coverageState": "Submitted and indexed",
       "robotsTxtState": "ALLOWED",
       "indexingState": "INDEXING_ALLOWED",
-      "lastCrawlTime": "2026-05-11T00:00:16Z",
+      "lastCrawlTime": "2026-05-17T10:45:13Z",
       "pageFetchState": "SUCCESSFUL",
       "crawledAs": "MOBILE"
     },
     {
-      "url": "/do-tuoi/4-tuoi",
+      "url": "/blogs/bang-cuu-chuong-cho-be",
       "verdict": "PASS",
       "coverageState": "Submitted and indexed",
       "robotsTxtState": "ALLOWED",
       "indexingState": "INDEXING_ALLOWED",
-      "lastCrawlTime": "2026-05-11T00:38:02Z",
+      "lastCrawlTime": "2026-04-12T09:24:03Z",
+      "pageFetchState": "SUCCESSFUL",
+      "crawledAs": "MOBILE"
+    },
+    {
+      "url": "/blogs/be-2-tuoi-nen-hoc-gi",
+      "verdict": "PASS",
+      "coverageState": "Submitted and indexed",
+      "robotsTxtState": "ALLOWED",
+      "indexingState": "INDEXING_ALLOWED",
+      "lastCrawlTime": "2026-04-20T13:46:14Z",
+      "pageFetchState": "SUCCESSFUL",
+      "crawledAs": "MOBILE"
+    },
+    {
+      "url": "/blogs/be-3-tuoi-nen-hoc-gi",
+      "verdict": "PASS",
+      "coverageState": "Submitted and indexed",
+      "robotsTxtState": "ALLOWED",
+      "indexingState": "INDEXING_ALLOWED",
+      "lastCrawlTime": "2026-05-21T05:03:23Z",
+      "pageFetchState": "SUCCESSFUL",
+      "crawledAs": "MOBILE"
+    },
+    {
+      "url": "/blogs/be-4-tuoi-nen-hoc-gi",
+      "verdict": "PASS",
+      "coverageState": "Submitted and indexed",
+      "robotsTxtState": "ALLOWED",
+      "indexingState": "INDEXING_ALLOWED",
+      "lastCrawlTime": "2026-04-09T09:17:52Z",
+      "pageFetchState": "SUCCESSFUL",
+      "crawledAs": "MOBILE"
+    },
+    {
+      "url": "/blogs/be-5-tuoi-can-biet-nhung-gi",
+      "verdict": "NEUTRAL",
+      "coverageState": "Crawled - currently not indexed",
+      "robotsTxtState": "ALLOWED",
+      "indexingState": "INDEXING_ALLOWED",
+      "lastCrawlTime": "2026-03-25T12:17:51Z",
+      "pageFetchState": "SUCCESSFUL",
+      "crawledAs": "MOBILE"
+    },
+    {
+      "url": "/blogs/be-6-tuoi-nen-hoc-gi",
+      "verdict": "PASS",
+      "coverageState": "Submitted and indexed",
+      "robotsTxtState": "ALLOWED",
+      "indexingState": "INDEXING_ALLOWED",
+      "lastCrawlTime": "2026-05-14T20:45:12Z",
+      "pageFetchState": "SUCCESSFUL",
+      "crawledAs": "MOBILE"
+    },
+    {
+      "url": "/blogs/be-chuan-bi-vao-lop-1-can-hoc-gi",
+      "verdict": "PASS",
+      "coverageState": "Submitted and indexed",
+      "robotsTxtState": "ALLOWED",
+      "indexingState": "INDEXING_ALLOWED",
+      "lastCrawlTime": "2026-05-14T15:59:55Z",
+      "pageFetchState": "SUCCESSFUL",
+      "crawledAs": "MOBILE"
+    },
+    {
+      "url": "/blogs/be-hoc-bo-phan-co-the",
+      "verdict": "NEUTRAL",
+      "coverageState": "Crawled - currently not indexed",
+      "robotsTxtState": "ALLOWED",
+      "indexingState": "INDEXING_ALLOWED",
+      "lastCrawlTime": "2026-04-09T19:57:13Z",
+      "pageFetchState": "SUCCESSFUL",
+      "crawledAs": "MOBILE"
+    },
+    {
+      "url": "/blogs/be-hoc-ghep-van",
+      "verdict": "PASS",
+      "coverageState": "Submitted and indexed",
+      "robotsTxtState": "ALLOWED",
+      "indexingState": "INDEXING_ALLOWED",
+      "lastCrawlTime": "2026-04-15T23:56:59Z",
+      "pageFetchState": "SUCCESSFUL",
+      "crawledAs": "MOBILE"
+    },
+    {
+      "url": "/blogs/be-hoc-pha-mau-nghe-thuat",
+      "verdict": "PASS",
+      "coverageState": "Submitted and indexed",
+      "robotsTxtState": "ALLOWED",
+      "indexingState": "INDEXING_ALLOWED",
+      "lastCrawlTime": "2026-05-17T07:19:11Z",
+      "pageFetchState": "SUCCESSFUL",
+      "crawledAs": "MOBILE"
+    },
+    {
+      "url": "/blogs/be-hoc-ve-co-the-nguoi",
+      "verdict": "PASS",
+      "coverageState": "Submitted and indexed",
+      "robotsTxtState": "ALLOWED",
+      "indexingState": "INDEXING_ALLOWED",
+      "lastCrawlTime": "2026-04-11T10:58:52Z",
+      "pageFetchState": "SUCCESSFUL",
+      "crawledAs": "MOBILE"
+    },
+    {
+      "url": "/blogs/be-tap-to-mau-sang-tao",
+      "verdict": "PASS",
+      "coverageState": "Submitted and indexed",
+      "robotsTxtState": "ALLOWED",
+      "indexingState": "INDEXING_ALLOWED",
+      "lastCrawlTime": "2026-04-12T00:07:16Z",
+      "pageFetchState": "SUCCESSFUL",
+      "crawledAs": "MOBILE"
+    },
+    {
+      "url": "/blogs/cach-day-be-hoc-so",
+      "verdict": "PASS",
+      "coverageState": "Submitted and indexed",
+      "robotsTxtState": "ALLOWED",
+      "indexingState": "INDEXING_ALLOWED",
+      "lastCrawlTime": "2026-05-19T18:20:49Z",
+      "pageFetchState": "SUCCESSFUL",
+      "crawledAs": "MOBILE"
+    },
+    {
+      "url": "/blogs/cach-ren-luyen-su-tap-trung-cho-tre-mam-non",
+      "verdict": "NEUTRAL",
+      "coverageState": "Discovered - currently not indexed",
+      "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+      "indexingState": "INDEXING_STATE_UNSPECIFIED",
+      "lastCrawlTime": "",
+      "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+      "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+    },
+    {
+      "url": "/blogs/dan-piano-ti-hon",
+      "verdict": "NEUTRAL",
+      "coverageState": "Crawled - currently not indexed",
+      "robotsTxtState": "ALLOWED",
+      "indexingState": "INDEXING_STATE_UNSPECIFIED",
+      "lastCrawlTime": "2026-04-04T07:50:14Z",
+      "pageFetchState": "SUCCESSFUL",
+      "crawledAs": "MOBILE"
+    },
+    {
+      "url": "/blogs/dau-tieng-viet-cho-be",
+      "verdict": "PASS",
+      "coverageState": "Submitted and indexed",
+      "robotsTxtState": "ALLOWED",
+      "indexingState": "INDEXING_ALLOWED",
+      "lastCrawlTime": "2026-05-21T11:29:29Z",
+      "pageFetchState": "SUCCESSFUL",
+      "crawledAs": "MOBILE"
+    },
+    {
+      "url": "/blogs/day-be-biet-cac-nghe-nghiep",
+      "verdict": "PASS",
+      "coverageState": "Submitted and indexed",
+      "robotsTxtState": "ALLOWED",
+      "indexingState": "INDEXING_ALLOWED",
+      "lastCrawlTime": "2026-04-18T10:47:18Z",
+      "pageFetchState": "SUCCESSFUL",
+      "crawledAs": "MOBILE"
+    },
+    {
+      "url": "/blogs/day-be-ghep-van-tai-nha",
+      "verdict": "PASS",
+      "coverageState": "Submitted and indexed",
+      "robotsTxtState": "ALLOWED",
+      "indexingState": "INDEXING_ALLOWED",
+      "lastCrawlTime": "2026-04-20T04:08:24Z",
+      "pageFetchState": "SUCCESSFUL",
+      "crawledAs": "MOBILE"
+    },
+    {
+      "url": "/blogs/day-be-giu-ve-sinh-ca-nhan",
+      "verdict": "PASS",
+      "coverageState": "Submitted and indexed",
+      "robotsTxtState": "ALLOWED",
+      "indexingState": "INDEXING_ALLOWED",
+      "lastCrawlTime": "2026-04-10T18:43:55Z",
+      "pageFetchState": "SUCCESSFUL",
+      "crawledAs": "MOBILE"
+    },
+    {
+      "url": "/blogs/day-be-hoc-bang-chu-cai-tai-nha",
+      "verdict": "PASS",
+      "coverageState": "Submitted and indexed",
+      "robotsTxtState": "ALLOWED",
+      "indexingState": "INDEXING_ALLOWED",
+      "lastCrawlTime": "2026-04-12T06:16:13Z",
+      "pageFetchState": "SUCCESSFUL",
+      "crawledAs": "MOBILE"
+    },
+    {
+      "url": "/blogs/day-be-hoc-bang-chu-cai-tieng-anh",
+      "verdict": "NEUTRAL",
+      "coverageState": "Discovered - currently not indexed",
+      "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+      "indexingState": "INDEXING_STATE_UNSPECIFIED",
+      "lastCrawlTime": "",
+      "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+      "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+    },
+    {
+      "url": "/blogs/day-be-hoc-dem",
+      "verdict": "PASS",
+      "coverageState": "Submitted and indexed",
+      "robotsTxtState": "ALLOWED",
+      "indexingState": "INDEXING_ALLOWED",
+      "lastCrawlTime": "2026-05-21T05:46:22Z",
+      "pageFetchState": "SUCCESSFUL",
+      "crawledAs": "MOBILE"
+    },
+    {
+      "url": "/blogs/day-be-hoc-qua-tro-choi",
+      "verdict": "NEUTRAL",
+      "coverageState": "Discovered - currently not indexed",
+      "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+      "indexingState": "INDEXING_STATE_UNSPECIFIED",
+      "lastCrawlTime": "",
+      "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+      "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED"
+    },
+    {
+      "url": "/blogs/day-be-hoc-tu-vung-tieng-viet",
+      "verdict": "PASS",
+      "coverageState": "Submitted and indexed",
+      "robotsTxtState": "ALLOWED",
+      "indexingState": "INDEXING_ALLOWED",
+      "lastCrawlTime": "2026-04-05T01:46:33Z",
+      "pageFetchState": "SUCCESSFUL",
+      "crawledAs": "MOBILE"
+    },
+    {
+      "url": "/blogs/day-be-lam-viec-nha",
+      "verdict": "PASS",
+      "coverageState": "Submitted and indexed",
+      "robotsTxtState": "ALLOWED",
+      "indexingState": "INDEXING_ALLOWED",
+      "lastCrawlTime": "2026-05-10T14:42:24Z",
       "pageFetchState": "SUCCESSFUL",
       "crawledAs": "MOBILE"
     }

@@ -146,8 +146,11 @@ const nextConfig: NextConfig = {
       "class-variance-authority",
       "formik",
       "yup",
+      "@supabase/supabase-js",
+      "@supabase/ssr",
     ],
   },
+  turbopack: {},
   webpack: (config) => {
     config.module.rules.push({
       test: /\.mp3$/,
