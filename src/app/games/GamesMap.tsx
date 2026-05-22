@@ -34,6 +34,7 @@ export function GamesMap({ courses, staticCourses, groups }: GamesMapProps) {
   const { user } = useUser();
   const [activeGroupId, setActiveGroupId] = useState<string | null>(null);
   const activeGroupRef = useRef<HTMLDivElement>(null);
+  const lastClosedAtRef = useRef(0);
   const [transformStyles, setTransformStyles] = useState<{ [key: string]: React.CSSProperties }>({});
   const { allProgress, lastPlayedCourseId } = useProgress();
 
@@ -71,6 +72,7 @@ export function GamesMap({ courses, staticCourses, groups }: GamesMapProps) {
 
   useClickOutside(activeGroupRef, () => {
     if (activeGroupId) {
+      lastClosedAtRef.current = Date.now();
       setActiveGroupId(null);
       setTransformStyles({});
     }
@@ -106,6 +108,7 @@ export function GamesMap({ courses, staticCourses, groups }: GamesMapProps) {
           fetchPriority="high"
           sizes="(max-width: 1024px) 100vw, 1024px"
         />
+
         <div className="flex flex-wrap justify-center gap-x-10 md:gap-x-20 gap-y-10 relative z-20 w-full h-full">
           {groups.map((group, i) => {
             const isActive = activeGroupId === group.id;
@@ -115,8 +118,15 @@ export function GamesMap({ courses, staticCourses, groups }: GamesMapProps) {
             const isLastPlayedGroup = lastPlayedGroupType === group.id;
 
             const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+              // Guard: ignore clicks that occur right after closing a group
+              // (prevents the touchstart→rerender→click race condition on mobile)
+              if (Date.now() - lastClosedAtRef.current < 400) {
+                return;
+              }
+
               playButtonSound();
               if (isActive) {
+                lastClosedAtRef.current = Date.now();
                 setActiveGroupId(null);
                 setTransformStyles((prev) => ({ ...prev, [group.id]: {} }));
                 return;
