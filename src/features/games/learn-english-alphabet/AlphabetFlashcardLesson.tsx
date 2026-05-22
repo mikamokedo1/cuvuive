@@ -26,14 +26,14 @@ function EnglishAlphabetCard({
   useEffect(() => {
     if (active && showName) {
       const timeout = setTimeout(() => {
-        speak(`${word.letter}, ${word.word}`);
+        speak(`${word.letter.toLocaleLowerCase()}, ${word.word}`);
       }, 500);
       return () => clearTimeout(timeout);
     }
   }, [active, word.letter, word.word, showName, speak]);
 
   const handleClick = () => {
-    speak(`${word.letter}`);
+    speak(`${word.letter.toLocaleLowerCase()}`);
     onClick?.();
   };
 

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { Baloo_2, Nunito_Sans } from "next/font/google";
 import Script from "next/script";
+import { Baloo_2, Nunito_Sans, Be_Vietnam_Pro } from "next/font/google";
 import "./globals.css";
 import { AppStructuredData } from "@/app/AppStructuredData";
 import { ClientProviders } from "@/context/ClientProviders";
@@ -26,6 +26,14 @@ const nunitoSans = Nunito_Sans({
   display: "swap",
   preload: true,
   adjustFontFallback: true,
+});
+
+const beVietnamPro = Be_Vietnam_Pro({
+  subsets: ["vietnamese", "latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  variable: "--font-be-vietnam-pro",
+  display: "swap",
+  preload: true,
 });
 
 export const metadata: Metadata = {
@@ -132,7 +140,10 @@ export default async function RootLayout({
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
       </head>
-      <body className={`${baloo2.variable} ${nunitoSans.variable} antialiased`} suppressHydrationWarning>
+      <body
+        className={`${baloo2.variable} ${nunitoSans.variable} ${beVietnamPro.variable} antialiased`}
+        suppressHydrationWarning
+      >
         <AppStructuredData />
         <AutoRecoveryBoundary>
           <ClientProviders>

@@ -69,6 +69,7 @@ export function ClockActivityLesson({ onComplete }: ClockActivityLessonProps) {
   useEffect(() => {
     const shuffled = shuffleArray(DAILY_ACTIVITIES).slice(0, 6);
     const qs = shuffled.map((a) => generateActivityQuestion(a));
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setQuestions(qs);
   }, []);
 
@@ -80,14 +81,13 @@ export function ClockActivityLesson({ onComplete }: ClockActivityLessonProps) {
     speak(
       `${timeToText(q.correct.hours, q.correct.minutes)} ${periodText}. nên làm gì?`,
     );
-  }, [currentIndex, questions]);
+  }, [currentIndex, questions, speak]);
 
   const handleSelect = (option: ActivityScenario) => {
     if (selectedOption !== null) return;
     setSelectedOption(option);
-    speak(option.activity);
-
-    setTimeout(() => {
+    
+    speak(option.activity, () => {
       const isCorrect = option.activity === questions[currentIndex].correct.activity;
 
       if (isCorrect) {
@@ -108,7 +108,7 @@ export function ClockActivityLesson({ onComplete }: ClockActivityLessonProps) {
           setSelectedOption(null);
         }, 1000);
       }
-    }, 800);
+    });
   };
 
   const periodIcon = useMemo(() => {

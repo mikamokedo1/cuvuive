@@ -4,6 +4,7 @@
 @theme {
   --font-sans: "Nunito Sans", system-ui, sans-serif;
   --font-display: "Baloo 2", cursive;
+  --font-be: "Be Vietnam Pro", sans-serif;
   /* Background & text */
   --background: #f9fafb; /* off-white, dịu mắt */
   --foreground: #1f2937; /* gray-800 */

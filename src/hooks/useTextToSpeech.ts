@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 
 interface UseTextToSpeechReturn {
-  speak: (text: string) => void;
+  speak: (text: string, onEnd?: () => void) => void;
   voices: SpeechSynthesisVoice[];
   selectedVoice: SpeechSynthesisVoice | null;
   setSelectedVoice: (voice: SpeechSynthesisVoice | null) => void;
@@ -81,9 +81,10 @@ export const useTextToSpeech = (defaultLang: string = "vi"): UseTextToSpeechRetu
     }
   }, [defaultLang]);
 
-  const speak = useCallback((text: string) => {
+  const speak = useCallback((text: string, onEnd?: () => void) => {
     if (typeof window === "undefined" || !("speechSynthesis" in window)) {
       console.warn("Text-to-speech not supported");
+      if (onEnd) onEnd();
       return;
     }
 
@@ -136,6 +137,7 @@ export const useTextToSpeech = (defaultLang: string = "vi"): UseTextToSpeechRetu
           clearInterval(keepAlive);
           keepAlive = null;
         }
+        if (onEnd) onEnd();
       };
 
       utterance.onend = cleanup;
