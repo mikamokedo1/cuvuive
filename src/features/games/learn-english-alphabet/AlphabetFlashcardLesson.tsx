@@ -26,14 +26,16 @@ function EnglishAlphabetCard({
   useEffect(() => {
     if (active && showName) {
       const timeout = setTimeout(() => {
-        speak(`${word.letter}, ${word.word}`);
+        const pronunciation = word.acceptedAnswers?.[1] || word.letter;
+        speak(`${pronunciation}, ${word.word}`);
       }, 500);
       return () => clearTimeout(timeout);
     }
   }, [active, word.letter, word.word, showName, speak]);
 
   const handleClick = () => {
-    speak(`${word.letter}`);
+    const pronunciation = word.acceptedAnswers?.[1] || word.letter;
+    speak(`${pronunciation}`);
     onClick?.();
   };
 
