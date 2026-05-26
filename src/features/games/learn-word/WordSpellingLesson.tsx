@@ -15,7 +15,7 @@ interface WordSpellingLessonProps {
   requiredWins?: number;
 }
 
-export function WordSpellingLesson({ words, onComplete, requiredWins = 5 }: WordSpellingLessonProps) {
+export function WordSpellingLesson({ words, onComplete, requiredWins = 15 }: WordSpellingLessonProps) {
   const { speak } = useTextToSpeech();
   const [target, setTarget] = useState<WordData | null>(null);
   const prevTargetRef = useRef<WordData | null>(null);

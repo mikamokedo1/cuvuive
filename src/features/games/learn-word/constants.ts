@@ -5,6 +5,9 @@ export interface WordData extends EntityData {
   syllables: string[];
 }
 
+const emojiSvg = (emoji: string, bg: string = "E0F7FA") =>
+  `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23${bg}" rx="20"/><text x="50" y="50" font-size="50" text-anchor="middle" dominant-baseline="central">${encodeURIComponent(emoji)}</text></svg>`;
+
 export const WORDS: WordData[] = [
   // Group 1: Gia Đình
   {
@@ -226,6 +229,61 @@ export const WORDS: WordData[] = [
     category: "group5",
     syllables: ["d", "ép"],
   },
+
+  // Gia Đình (Group 1) - additional
+  { id: "chu", name: "Chú", image: emojiSvg("👨", "E3F2FD"), category: "group1", syllables: ["ch", "ú"] },
+  { id: "di", name: "Dì", image: emojiSvg("👩", "FCE4EC"), category: "group1", syllables: ["d", "ì"] },
+  { id: "cau", name: "Cậu", image: emojiSvg("👨", "E8F5E9"), category: "group1", syllables: ["c", "ậu"] },
+  { id: "mo", name: "Mợ", image: emojiSvg("👩", "FFF3E0"), category: "group1", syllables: ["m", "ợ"] },
+  { id: "bac", name: "Bác", image: emojiSvg("🧑", "E0F7FA"), category: "group1", syllables: ["b", "ác"] },
+  { id: "co", name: "Cô", image: emojiSvg("👩", "F3E5F5"), category: "group1", syllables: ["c", "ô"] },
+  { id: "chau", name: "Cháu", image: emojiSvg("🧒", "ECEFF1"), category: "group1", syllables: ["ch", "áu"] },
+  { id: "vo", name: "Vợ", image: emojiSvg("👰", "FFEBEE"), category: "group1", syllables: ["v", "ợ"] },
+  { id: "chong", name: "Chồng", image: emojiSvg("🤵", "E8F5E9"), category: "group1", syllables: ["ch", "ồng"] },
+
+  // Trường Học (Group 2) - additional
+  { id: "but-muc", name: "Bút mực", image: emojiSvg("🖋️", "E3F2FD"), category: "group2", syllables: ["Bút", "mực"] },
+  { id: "phan", name: "Phấn", image: emojiSvg("🖍️", "FCE4EC"), category: "group2", syllables: ["ph", "ấn"] },
+  { id: "vo-hoc", name: "Vở", image: emojiSvg("📓", "E8F5E9"), category: "group2", syllables: ["v", "ở"] },
+  { id: "muc", name: "Mực", image: emojiSvg("🫙", "FFF3E0"), category: "group2", syllables: ["m", "ực"] },
+  { id: "hop-but", name: "Hộp bút", image: emojiSvg("👝", "E0F7FA"), category: "group2", syllables: ["Hộp", "bút"] },
+  { id: "keo", name: "Kéo", image: emojiSvg("✂️", "F3E5F5"), category: "group2", syllables: ["k", "éo"] },
+  { id: "ho-dan", name: "Hồ dán", image: emojiSvg("🧴", "ECEFF1"), category: "group2", syllables: ["Hồ", "dán"] },
+  { id: "mau-ve", name: "Màu vẽ", image: emojiSvg("🎨", "FFEBEE"), category: "group2", syllables: ["Màu", "vẽ"] },
+  { id: "ghe-go", name: "Ghế gỗ", image: emojiSvg("🪑", "E8F5E9"), category: "group2", syllables: ["Ghế", "gỗ"] },
+
+  // Thiên Nhiên (Group 3) - additional
+  { id: "song", name: "Sông", image: emojiSvg("🏞️", "E3F2FD"), category: "group3", syllables: ["s", "ông"] },
+  { id: "mua", name: "Mưa", image: emojiSvg("🌧️", "FCE4EC"), category: "group3", syllables: ["m", "ưa"] },
+  { id: "bien", name: "Biển", image: emojiSvg("🌊", "E8F5E9"), category: "group3", syllables: ["b", "iển"] },
+  { id: "dao", name: "Đảo", image: emojiSvg("🏝️", "FFF3E0"), category: "group3", syllables: ["đ", "ảo"] },
+  { id: "dat", name: "Đất", image: emojiSvg("🟤", "E0F7FA"), category: "group3", syllables: ["đ", "ất"] },
+  { id: "da", name: "Đá", image: emojiSvg("🪨", "F3E5F5"), category: "group3", syllables: ["đ", "á"] },
+  { id: "hoa", name: "Hoa", image: emojiSvg("🌸", "ECEFF1"), category: "group3", syllables: ["h", "oa"] },
+  { id: "co-cay", name: "Cỏ", image: emojiSvg("🌿", "FFEBEE"), category: "group3", syllables: ["c", "ỏ"] },
+  { id: "rung", name: "Rừng", image: emojiSvg("🌲", "E8F5E9"), category: "group3", syllables: ["r", "ừng"] },
+
+  // Đồ Dùng (Group 4) - additional
+  { id: "tivi", name: "Ti vi", image: emojiSvg("📺", "E3F2FD"), category: "group4", syllables: ["Ti", "vi"] },
+  { id: "quat", name: "Quạt", image: emojiSvg("🪭", "FCE4EC"), category: "group4", syllables: ["qu", "ạt"] },
+  { id: "coc", name: "Cốc", image: emojiSvg("🥛", "E8F5E9"), category: "group4", syllables: ["c", "ốc"] },
+  { id: "bat", name: "Bát", image: emojiSvg("🥣", "FFF3E0"), category: "group4", syllables: ["b", "át"] },
+  { id: "dua", name: "Đũa", image: emojiSvg("🥢", "E0F7FA"), category: "group4", syllables: ["đ", "ũa"] },
+  { id: "thia", name: "Thìa", image: emojiSvg("🥄", "F3E5F5"), category: "group4", syllables: ["th", "ìa"] },
+  { id: "noi", name: "Nồi", image: emojiSvg("🍲", "ECEFF1"), category: "group4", syllables: ["n", "ồi"] },
+  { id: "chao", name: "Chảo", image: emojiSvg("🍳", "FFEBEE"), category: "group4", syllables: ["ch", "ảo"] },
+  { id: "guong", name: "Gương", image: emojiSvg("🪞", "E8F5E9"), category: "group4", syllables: ["g", "ương"] },
+
+  // Quần Áo (Group 5) - additional
+  { id: "tat", name: "Tất", image: emojiSvg("🧦", "E3F2FD"), category: "group5", syllables: ["t", "ất"] },
+  { id: "khan", name: "Khăn", image: emojiSvg("🧣", "FCE4EC"), category: "group5", syllables: ["kh", "ăn"] },
+  { id: "gang-tay", name: "Găng tay", image: emojiSvg("🧤", "E8F5E9"), category: "group5", syllables: ["Găng", "tay"] },
+  { id: "that-lung", name: "Thắt lưng", image: emojiSvg("🥋", "FFF3E0"), category: "group5", syllables: ["Thắt", "lưng"] },
+  { id: "ao-khoac", name: "Áo khoác", image: emojiSvg("🧥", "E0F7FA"), category: "group5", syllables: ["Áo", "khoác"] },
+  { id: "quan-dui", name: "Quần đùi", image: emojiSvg("🩳", "F3E5F5"), category: "group5", syllables: ["Quần", "đùi"] },
+  { id: "kinh", name: "Kính", image: emojiSvg("👓", "ECEFF1"), category: "group5", syllables: ["k", "ính"] },
+  { id: "nhan", name: "Nhẫn", image: emojiSvg("💍", "FFEBEE"), category: "group5", syllables: ["nh", "ẫn"] },
+  { id: "vong", name: "Vòng", image: emojiSvg("📿", "E8F5E9"), category: "group5", syllables: ["v", "òng"] },
 ];
 
 export interface GroupData {
@@ -244,7 +302,7 @@ export const GROUPS: GroupData[] = [
     description: "Học từ vựng về các thành viên trong gia đình",
     logo: "https://assets.cuthongminh.com/games/learn-word/group1.webp",
     variant: "green",
-    words: ["bo", "me", "anh", "chi", "em-be", "ong-ba"],
+    words: ["bo", "me", "anh", "chi", "em-be", "ong-ba", "chu", "di", "cau", "mo", "bac", "co", "chau", "vo", "chong"],
   },
   {
     id: "group2",
@@ -252,7 +310,7 @@ export const GROUPS: GroupData[] = [
     description: "Học từ vựng về đồ dùng học tập",
     logo: "https://assets.cuthongminh.com/games/learn-word/group2.webp",
     variant: "blue",
-    words: ["but-chi", "cuc-tay", "thuoc-ke", "sach", "cap-sach", "bang"],
+    words: ["but-chi", "cuc-tay", "thuoc-ke", "sach", "cap-sach", "bang", "but-muc", "phan", "vo-hoc", "muc", "hop-but", "keo", "ho-dan", "mau-ve", "ghe-go"],
   },
   {
     id: "group3",
@@ -260,7 +318,7 @@ export const GROUPS: GroupData[] = [
     description: "Học từ vựng về sự vật trong thiên nhiên",
     logo: "https://assets.cuthongminh.com/games/learn-word/group3.webp",
     variant: "orange",
-    words: ["mat-troi", "mat-trang", "ngoi-sao", "dam-may", "cay", "nui"],
+    words: ["mat-troi", "mat-trang", "ngoi-sao", "dam-may", "cay", "nui", "song", "mua", "bien", "dao", "dat", "da", "hoa", "co-cay", "rung"],
   },
   {
     id: "group4",
@@ -268,7 +326,7 @@ export const GROUPS: GroupData[] = [
     description: "Học từ vựng về đồ dùng trong gia đình",
     logo: "https://assets.cuthongminh.com/games/learn-word/group4.webp",
     variant: "purple",
-    words: ["ban", "ghe", "tu", "giuong", "cua", "den"],
+    words: ["ban", "ghe", "tu", "giuong", "cua", "den", "tivi", "quat", "coc", "bat", "dua", "thia", "noi", "chao", "guong"],
   },
   {
     id: "group5",
@@ -276,7 +334,7 @@ export const GROUPS: GroupData[] = [
     description: "Học từ vựng về trang phục hàng ngày",
     logo: "https://assets.cuthongminh.com/games/learn-word/group5.webp",
     variant: "green",
-    words: ["ao", "quan", "giay", "mu", "vay", "dep"],
+    words: ["ao", "quan", "giay", "mu", "vay", "dep", "tat", "khan", "gang-tay", "that-lung", "ao-khoac", "quan-dui", "kinh", "nhan", "vong"],
   },
 ];
 
@@ -315,6 +373,61 @@ export const WORD_DESCRIPTIONS: Record<string, string> = {
   mu: "Đây là cái mũ. Mũ dùng để đội che nắng.",
   vay: "Đây là cái váy. Bé gái mặc váy rất xinh.",
   dep: "Đây là đôi dép. Đôi dép màu sắc sặc sỡ.",
+
+  // Gia đình
+  chu: "Đây là Chú. Chú là em trai của bố.",
+  di: "Đây là Dì. Dì là chị em gái của mẹ.",
+  cau: "Đây là Cậu. Cậu là anh em trai của mẹ.",
+  mo: "Đây là Mợ. Mợ là vợ của cậu.",
+  bac: "Đây là Bác. Bác là anh chị của bố mẹ.",
+  co: "Đây là Cô. Cô là chị em gái của bố.",
+  chau: "Đây là Cháu. Cháu rất ngoan ngoãn.",
+  vo: "Đây là Vợ. Vợ chăm sóc cho gia đình.",
+  chong: "Đây là Chồng. Chồng làm việc chăm chỉ.",
+
+  // Trường học
+  "but-muc": "Đây là chiếc bút mực. Dùng để viết chữ rất đẹp.",
+  phan: "Đây là viên phấn. Phấn dùng để viết lên bảng.",
+  "vo-hoc": "Đây là quyển vở. Bé viết bài vào vở.",
+  muc: "Đây là lọ mực. Mực dùng để bơm vào bút.",
+  "hop-but": "Đây là hộp bút. Hộp đựng các loại bút gọn gàng.",
+  keo: "Đây là cái kéo. Kéo dùng để cắt giấy.",
+  "ho-dan": "Đây là lọ hồ dán. Dùng để dán giấy.",
+  "mau-ve": "Đây là hộp màu vẽ. Dùng để tô màu bức tranh.",
+  "ghe-go": "Đây là chiếc ghế gỗ. Ghế gỗ để ngồi học.",
+
+  // Thiên nhiên
+  song: "Đây là con sông. Sông có nước chảy dài.",
+  mua: "Đây là cơn mưa. Mưa tưới mát cho cây cối.",
+  bien: "Đây là bãi biển. Biển có cát trắng và sóng xanh.",
+  dao: "Đây là hòn đảo. Hòn đảo nằm giữa biển xanh.",
+  dat: "Đây là mặt đất. Đất để trồng cây xanh.",
+  da: "Đây là hòn đá. Hòn đá rất cứng.",
+  hoa: "Đây là bông hoa. Bông hoa nở rất đẹp.",
+  "co-cay": "Đây là cây cỏ. Cỏ mọc xanh tươi.",
+  rung: "Đây là khu rừng. Rừng có rất nhiều cây.",
+
+  // Đồ dùng
+  tivi: "Đây là cái ti vi. Ti vi có nhiều chương trình hay.",
+  quat: "Đây là cái quạt. Quạt quay cho gió mát.",
+  coc: "Đây là cái cốc. Cốc dùng để uống nước.",
+  bat: "Đây là cái bát. Bát dùng để ăn cơm.",
+  dua: "Đây là đôi đũa. Đũa dùng để gắp thức ăn.",
+  thia: "Đây là cái thìa. Thìa dùng để xúc cơm.",
+  noi: "Đây là cái nồi. Nồi dùng để nấu canh.",
+  chao: "Đây là cái chảo. Chảo dùng để rán trứng.",
+  guong: "Đây là cái gương. Gương dùng để soi mặt.",
+
+  // Quần áo
+  tat: "Đây là đôi tất. Tất giữ ấm cho đôi chân.",
+  khan: "Đây là chiếc khăn. Khăn quàng cổ cho ấm.",
+  "gang-tay": "Đây là đôi găng tay. Găng tay giữ ấm đôi bàn tay.",
+  "that-lung": "Đây là chiếc thắt lưng. Dùng để giữ chặt quần.",
+  "ao-khoac": "Đây là chiếc áo khoác. Mặc áo khoác khi trời lạnh.",
+  "quan-dui": "Đây là chiếc quần đùi. Quần đùi mặc rất mát mẻ.",
+  kinh: "Đây là chiếc kính. Đeo kính bảo vệ đôi mắt.",
+  nhan: "Đây là chiếc nhẫn. Nhẫn đeo trên ngón tay.",
+  vong: "Đây là chiếc vòng. Vòng đeo trên cổ tay rất đẹp.",
 };
 
 export function getWordsForGroup(groupId: string): WordData[] {
