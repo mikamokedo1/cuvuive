@@ -231,15 +231,15 @@ export const WORDS: WordData[] = [
   },
 
   // Gia Đình (Group 1) - additional
-  { id: "chu", name: "Chú", image: emojiSvg("👨", "E3F2FD"), category: "group1", syllables: ["ch", "ú"] },
-  { id: "di", name: "Dì", image: emojiSvg("👩", "FCE4EC"), category: "group1", syllables: ["d", "ì"] },
-  { id: "cau", name: "Cậu", image: emojiSvg("👨", "E8F5E9"), category: "group1", syllables: ["c", "ậu"] },
-  { id: "mo", name: "Mợ", image: emojiSvg("👩", "FFF3E0"), category: "group1", syllables: ["m", "ợ"] },
-  { id: "bac", name: "Bác", image: emojiSvg("🧑", "E0F7FA"), category: "group1", syllables: ["b", "ác"] },
-  { id: "co", name: "Cô", image: emojiSvg("👩", "F3E5F5"), category: "group1", syllables: ["c", "ô"] },
-  { id: "chau", name: "Cháu", image: emojiSvg("🧒", "ECEFF1"), category: "group1", syllables: ["ch", "áu"] },
-  { id: "vo", name: "Vợ", image: emojiSvg("👰", "FFEBEE"), category: "group1", syllables: ["v", "ợ"] },
-  { id: "chong", name: "Chồng", image: emojiSvg("🤵", "E8F5E9"), category: "group1", syllables: ["ch", "ồng"] },
+  { id: "chu", name: "Chú", image: "https://assets.cuthongminh.com/games/learn-word/family/chu.webp", category: "group1", syllables: ["ch", "ú"] },
+  { id: "di", name: "Dì", image: "https://assets.cuthongminh.com/games/learn-word/family/di.webp", category: "group1", syllables: ["d", "ì"] },
+  { id: "cau", name: "Cậu", image: "https://assets.cuthongminh.com/games/learn-word/family/cau.webp", category: "group1", syllables: ["c", "ậu"] },
+  { id: "mo", name: "Mợ", image: "https://assets.cuthongminh.com/games/learn-word/family/mo.webp", category: "group1", syllables: ["m", "ợ"] },
+  { id: "bac", name: "Bác", image: "https://assets.cuthongminh.com/games/learn-word/family/bac.webp", category: "group1", syllables: ["b", "ác"] },
+  { id: "co", name: "Cô", image: "https://assets.cuthongminh.com/games/learn-word/family/co.webp", category: "group1", syllables: ["c", "ô"] },
+  { id: "chau", name: "Cháu", image: "https://assets.cuthongminh.com/games/learn-word/family/chau.webp", category: "group1", syllables: ["ch", "áu"] },
+  { id: "vo", name: "Vợ", image: "https://assets.cuthongminh.com/games/learn-word/family/vo.webp", category: "group1", syllables: ["v", "ợ"] },
+  { id: "chong", name: "Chồng", image: "https://assets.cuthongminh.com/games/learn-word/family/chong.webp", category: "group1", syllables: ["ch", "ồng"] },
 
   // Trường Học (Group 2) - additional
   { id: "but-muc", name: "Bút mực", image: emojiSvg("🖋️", "E3F2FD"), category: "group2", syllables: ["Bút", "mực"] },

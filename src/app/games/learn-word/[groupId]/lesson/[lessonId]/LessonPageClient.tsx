@@ -37,9 +37,9 @@ export function LessonPageClient({ groupId, lessonId }: LessonPageClientProps) {
       case "lesson2":
         return <WordSpeakingLesson words={words} onComplete={game.handleComplete} />;
       case "lesson3":
-        return <WordSpellingLesson words={words} onComplete={game.handleComplete} requiredWins={5} />;
+        return <WordSpellingLesson words={words} onComplete={game.handleComplete} requiredWins={Math.min(words.length, 15)} />;
       case "lesson4":
-        return <WordListeningLesson words={words} onComplete={game.handleComplete} requiredWins={5} />;
+        return <WordListeningLesson words={words} onComplete={game.handleComplete} requiredWins={Math.min(words.length, 15)} />;
       default:
         return null;
     }
