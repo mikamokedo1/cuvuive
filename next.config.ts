@@ -63,7 +63,7 @@ const nextConfig: NextConfig = {
       {
         key: "Content-Security-Policy",
         value:
-          "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' https://assets.cuthongminh.com https://vnlppyavpkuerviyszxg.supabase.co https://qr.sepay.vn data: blob:; font-src 'self' data:; connect-src 'self' wss://*.supabase.co https://*.supabase.co https://www.google-analytics.com https://assets.cuthongminh.com; media-src 'self' https://assets.cuthongminh.com;",
+          "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' https://assets.cuthongminh.com https://vnlppyavpkuerviyszxg.supabase.co https://qr.sepay.vn data: blob:; font-src 'self' data:; connect-src 'self' ws://localhost:* wss://localhost:* wss://*.supabase.co https://*.supabase.co https://www.google-analytics.com https://assets.cuthongminh.com; media-src 'self' https://assets.cuthongminh.com blob:;",
       },
     ];
 
