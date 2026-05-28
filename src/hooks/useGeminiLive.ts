@@ -4,7 +4,8 @@ import { useCallback, useRef, useState, useEffect } from "react";
 import { useAudioCapture } from "./useAudioCapture";
 import { useAudioPlayback } from "./useAudioPlayback";
 
-export type GeminiLiveStatus = "idle" | "connecting" | "live" | "error";
+export type GeminiLiveStatus = "idle" | "connecting" | "live" | "error" | "quota_exceeded";
+export type DisconnectReason = "idle_timeout" | "session_expired" | "user" | null;
 
 interface TranscriptEntry {
   role: "user" | "model";
@@ -18,6 +19,10 @@ interface UseGeminiLiveOptions {
   voice?: string;
   /** System instructions for the AI */
   instructions?: string;
+  /** Supabase JWT token for auth + quota tracking */
+  token?: string;
+  /** Optional greeting prompt sent after connection — triggers AI to speak first */
+  greeting?: string;
 }
 
 interface UseGeminiLiveReturn {
@@ -26,8 +31,9 @@ interface UseGeminiLiveReturn {
   micLevel: number;
   speakerLevel: number;
   isAiSpeaking: boolean;
+  disconnectReason: DisconnectReason;
   connect: () => Promise<void>;
-  disconnect: () => void;
+  disconnect: (reason?: DisconnectReason) => void;
   sendText: (text: string) => void;
 }
 
@@ -40,13 +46,21 @@ export function useGeminiLive(options: UseGeminiLiveOptions = {}): UseGeminiLive
     relayUrl = "ws://localhost:8081",
     voice = "Skye",
     instructions = "",
+    token,
+    greeting,
   } = options;
 
   const [status, setStatus] = useState<GeminiLiveStatus>("idle");
+  const [disconnectReason, setDisconnectReason] = useState<DisconnectReason>(null);
   const [transcript, setTranscript] = useState<TranscriptEntry[]>([]);
 
   const wsRef = useRef<WebSocket | null>(null);
   const statusRef = useRef<GeminiLiveStatus>("idle");
+  const idleTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const disconnectRef = useRef<((reason?: DisconnectReason) => void) | null>(null);
+  const lastActivityRef = useRef<number>(Date.now());
+
+  const IDLE_TIMEOUT_MS = 30_000; // 30 seconds
 
   const { isCapturing, micLevel, startCapture, stopCapture } = useAudioCapture();
   const {
@@ -95,11 +109,13 @@ export function useGeminiLive(options: UseGeminiLiveOptions = {}): UseGeminiLive
       // Input transcription (what user said)
       if (sc.inputTranscription?.text?.trim()) {
         appendTranscript("user", sc.inputTranscription.text.trim());
+        lastActivityRef.current = Date.now(); // user spoke
       }
 
       // Output transcription (what AI said)
       if (sc.outputTranscription?.text?.trim()) {
         appendTranscript("model", sc.outputTranscription.text.trim());
+        lastActivityRef.current = Date.now(); // AI responded
       }
 
       // Model turn parts (audio + text)
@@ -107,15 +123,18 @@ export function useGeminiLive(options: UseGeminiLiveOptions = {}): UseGeminiLive
         if (part.thought) continue;
         if (part.text?.trim()) {
           appendTranscript("model", part.text.trim());
+          lastActivityRef.current = Date.now();
         }
         if (part.inlineData?.data) {
           playPcm16(part.inlineData.data, 24000);
+          lastActivityRef.current = Date.now(); // AI sent audio
         }
       }
 
       // Barge-in: user interrupted AI
       if (sc.interrupted) {
         stopPlayback();
+        lastActivityRef.current = Date.now();
       }
 
       // Turn complete
@@ -136,7 +155,9 @@ export function useGeminiLive(options: UseGeminiLiveOptions = {}): UseGeminiLive
   // ── Connect ──
   const connect = useCallback(async () => {
     if (statusRef.current !== "idle") return;
+    console.log("🔌 [Client] connect() triggered. greeting:", greeting);
     setStatus("connecting");
+    setDisconnectReason(null);
     setTranscript([]);
 
     // Initialize audio playback (needs user gesture)
@@ -148,12 +169,13 @@ export function useGeminiLive(options: UseGeminiLiveOptions = {}): UseGeminiLive
 
       await new Promise<void>((resolve, reject) => {
         ws.onopen = () => {
-          // Send start message with voice + instructions
+          // Send start message with voice + instructions + token
           ws.send(
             JSON.stringify({
               type: "start",
               voiceName: voice,
               instructions,
+              token: token || undefined,
             }),
           );
         };
@@ -167,8 +189,19 @@ export function useGeminiLive(options: UseGeminiLiveOptions = {}): UseGeminiLive
           }
 
           if (msg.type === "server.ready") {
+            console.log("🟢 [Client] server.ready received! Status -> live. greeting:", greeting);
             setStatus("live");
             resolve();
+
+            // Start idle check interval — auto disconnect if no activity for 30s
+            lastActivityRef.current = Date.now();
+            idleTimerRef.current = setInterval(() => {
+              const elapsed = Date.now() - lastActivityRef.current;
+              if (elapsed >= IDLE_TIMEOUT_MS) {
+                console.log(`⏰ Idle ${Math.round(elapsed / 1000)}s — auto disconnecting`);
+                disconnectRef.current?.("idle_timeout");
+              }
+            }, 5_000); // check every 5s
 
             // Start mic capture after session is ready
             startCapture((base64) => {
@@ -177,6 +210,18 @@ export function useGeminiLive(options: UseGeminiLiveOptions = {}): UseGeminiLive
                 audio: { data: base64, mimeType: "audio/pcm;rate=16000" },
               });
             }).catch(console.error);
+
+            // Send greeting prompt with a natural 800ms delay to make AI speak first
+            // (Allows Live audio negotiation to settle and feels more lifelike to the child)
+            if (greeting) {
+              console.log("📤 [Client] Scheduling greeting send in 800ms:", greeting);
+              setTimeout(() => {
+                console.log("📤 [Client] Sending greeting text to relay:", greeting);
+                sendToRelay({ type: "text", text: greeting });
+              }, 800);
+            } else {
+              console.warn("⚠️ [Client] No greeting provided, owl will not speak first.");
+            }
 
             return;
           }
@@ -187,12 +232,19 @@ export function useGeminiLive(options: UseGeminiLiveOptions = {}): UseGeminiLive
           }
 
           if (msg.type === "server.status") {
-            // Could show status in UI
             return;
           }
 
           if (msg.type === "server.closed") {
             setStatus("idle");
+            return;
+          }
+
+          if (msg.type === "server.quota_exceeded") {
+            console.log("Quota exceeded:", msg);
+            setStatus("quota_exceeded");
+            stopCapture();
+            stopPlayback();
             return;
           }
 
@@ -226,6 +278,8 @@ export function useGeminiLive(options: UseGeminiLiveOptions = {}): UseGeminiLive
     relayUrl,
     voice,
     instructions,
+    token,
+    greeting,
     initPlayback,
     startCapture,
     stopCapture,
@@ -236,14 +290,24 @@ export function useGeminiLive(options: UseGeminiLiveOptions = {}): UseGeminiLive
   ]);
 
   // ── Disconnect ──
-  const disconnect = useCallback(() => {
+  const disconnect = useCallback((reason: DisconnectReason = "user") => {
+    if (idleTimerRef.current) {
+      clearInterval(idleTimerRef.current);
+      idleTimerRef.current = null;
+    }
     sendToRelay({ type: "close" });
     wsRef.current?.close(1000, "client_stop");
     wsRef.current = null;
     stopCapture();
     disposePlayback();
+    setDisconnectReason(reason);
     setStatus("idle");
   }, [sendToRelay, stopCapture, disposePlayback]);
+
+  // Keep disconnect ref in sync for timer callbacks
+  useEffect(() => {
+    disconnectRef.current = disconnect;
+  }, [disconnect]);
 
   // ── Send text message ──
   const sendText = useCallback(
@@ -255,9 +319,9 @@ export function useGeminiLive(options: UseGeminiLiveOptions = {}): UseGeminiLive
     [sendToRelay, appendTranscript],
   );
 
-  // Cleanup on unmount
   useEffect(() => {
     return () => {
+      if (idleTimerRef.current) clearInterval(idleTimerRef.current);
       wsRef.current?.close();
       stopCapture();
       disposePlayback();
@@ -271,6 +335,7 @@ export function useGeminiLive(options: UseGeminiLiveOptions = {}): UseGeminiLive
     micLevel,
     speakerLevel,
     isAiSpeaking,
+    disconnectReason,
     connect,
     disconnect,
     sendText,

@@ -1900,4 +1900,64 @@ export const COURSES: CourseDef[] = [
       },
     ],
   },
+  {
+    id: "talk-with-owl",
+    title: "Giao Tiếp",
+    description:
+      "Bé luyện giao tiếp tiếng Anh trực tiếp với Cú Thông Minh qua giọng nói AI. Cú dạy bé chào hỏi, hỏi đáp và trò chuyện bằng tiếng Anh.",
+    icon: "https://assets.cuthongminh.com/games/talk-with-owl/logo.webp",
+    type: "english",
+    groups: [
+      {
+        id: "group1",
+        title: "Chào hỏi",
+        lessons: [{ id: "lesson1", title: "Chào hỏi", isFree: true }],
+      },
+      {
+        id: "group2",
+        title: "Trái Cây",
+        lessons: [{ id: "lesson1", title: "Trái cây", isFree: true }],
+      },
+      {
+        id: "group3",
+        title: "Màu Sắc",
+        lessons: [{ id: "lesson1", title: "Màu sắc", isFree: true }],
+      },
+      {
+        id: "group4",
+        title: "Số Đếm",
+        lessons: [{ id: "lesson1", title: "Số đếm", isFree: true }],
+      },
+      {
+        id: "group5",
+        title: "Động Vật",
+        lessons: [{ id: "lesson1", title: "Động vật", isFree: true }],
+      },
+      {
+        id: "group6",
+        title: "Đồ ăn",
+        lessons: [{ id: "lesson1", title: "Đồ ăn", isFree: true }],
+      },
+      {
+        id: "group7",
+        title: "Giao thông",
+        lessons: [{ id: "lesson1", title: "Giao thông", isFree: true }],
+      },
+      {
+        id: "group8",
+        title: "Gia Đình",
+        lessons: [{ id: "lesson1", title: "Gia đình", isFree: true }],
+      },
+      {
+        id: "group9",
+        title: "Cơ thể",
+        lessons: [{ id: "lesson1", title: "Cơ thể", isFree: true }],
+      },
+      {
+        id: "group10",
+        title: "Dụng cụ học tập",
+        lessons: [{ id: "lesson1", title: "Dụng cụ học tập", isFree: true }],
+      },
+    ],
+  },
 ];

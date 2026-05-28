@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
-import { VoiceChat } from "@/features/games/talk-with-owl/VoiceChat";
+import { getGameMetadata } from "@/libs/utils/seo";
+import { GameSeoSection } from "@/components/seo/GameSeoSection";
+import { GROUPS } from "@/features/games/talk-with-owl/constants";
+import { GameWrapGroupsFree } from "@/components/layout/GameWrapGroupsFree";
 
-export const metadata: Metadata = {
-  title: "Nói Chuyện Với Cú — Trợ Lý AI Giọng Nói Cho Bé",
-  description:
-    "Bé trò chuyện trực tiếp với Cú Thông Minh bằng giọng nói. Cú kể chuyện, đố vui, dạy bé học chữ số và nhiều kiến thức thú vị. An toàn, thân thiện cho trẻ 3-8 tuổi.",
-  openGraph: {
-    title: "Nói Chuyện Với Cú — Trợ Lý AI Giọng Nói Cho Bé",
-    description:
-      "Bé trò chuyện trực tiếp với Cú Thông Minh bằng giọng nói. Cú kể chuyện, đố vui, dạy bé học chữ số.",
-  },
-};
+const LOGO = "https://assets.cuthongminh.com/assets/logo.webp";
+
+export const metadata: Metadata = getGameMetadata("talk-with-owl");
 
 export default function TalkWithOwlPage() {
-  return <VoiceChat />;
+  return (
+    <>
+      <GameWrapGroupsFree logo={LOGO} gameId="talk-with-owl" groups={GROUPS} title="Giao Tiếp Tiếng Anh" />
+      <GameSeoSection gameId="talk-with-owl" />
+    </>
+  );
 }

@@ -48,14 +48,41 @@ export function useAudioCapture(): UseAudioCaptureReturn {
 
   const startCapture = useCallback(
     async (onChunk: (base64: string) => void) => {
-      // Request mic with noise/echo settings
-      const stream = await navigator.mediaDevices.getUserMedia({
-        audio: {
-          echoCancellation: true,
-          noiseSuppression: true,
-          autoGainControl: true,
-        },
-      });
+      // ── Step 1: Kill competing audio sources (iOS Safari fix) ──
+      if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+
+      // ── Step 2: Check permission state before requesting ──
+      try {
+        if (navigator.permissions && navigator.permissions.query) {
+          const permResult = await navigator.permissions.query({
+            name: "microphone" as PermissionName,
+          });
+          if (permResult.state === "denied") {
+            console.error("Microphone permission denied");
+            return;
+          }
+        }
+      } catch {
+        // permissions.query may not be supported — continue anyway
+      }
+
+      // ── Step 3: Request mic with noise/echo settings ──
+      let stream: MediaStream;
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          audio: {
+            echoCancellation: true,
+            noiseSuppression: true,
+            autoGainControl: true,
+          },
+        });
+      } catch (err) {
+        console.error("Microphone access failed:", err);
+        return;
+      }
+
       micStreamRef.current = stream;
 
       const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
