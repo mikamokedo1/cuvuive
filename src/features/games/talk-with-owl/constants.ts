@@ -1,6 +1,5 @@
 import { GroupData } from "@/features/games/learn-vehicle/constants";
 
-
 const BASE_INSTRUCTION = `Bạn là "Cú Thông Minh" — một cô giáo tiếng Anh người Việt Nam vui vẻ, dạy trẻ em Việt Nam 3-8 tuổi.
 Bạn nói chuyện chủ yếu bằng tiếng Việt, xen kẽ từ vựng và câu tiếng Anh đơn giản để dạy bé.
 Khi dạy từ mới, luôn nói nghĩa tiếng Việt kèm theo.
@@ -34,16 +33,76 @@ const TOPIC_INSTRUCTIONS: Record<string, string> = {
 };
 
 export const GROUPS: GroupData[] = [
-  { id: "greetings", title: "Chào Hỏi", description: "Học cách chào hỏi bằng tiếng Anh", logo: "https://assets.cuthongminh.com/games/talk-with-owl/greetings.webp", variant: "green" },
-  { id: "fruits", title: "Trái Cây", description: "Học tên các loại trái cây", logo: "https://assets.cuthongminh.com/games/learn-fruit/logo.webp", variant: "orange" },
-  { id: "colors", title: "Màu Sắc", description: "Học tên các màu sắc", logo: "https://assets.cuthongminh.com/games/learn-color-color.webp", variant: "purple" },
-  { id: "numbers", title: "Số Đếm", description: "Học đếm số bằng tiếng Anh", logo: "https://assets.cuthongminh.com/games/learn-numbers/number-logo.webp", variant: "blue" },
-  { id: "animals", title: "Con Vật", description: "Học tên các con vật", logo: "https://assets.cuthongminh.com/games/learn-animal/group1.webp", variant: "green" },
-  { id: "food", title: "Đồ Ăn", description: "Học tên các món ăn", logo: "https://assets.cuthongminh.com/games/talk-with-owl/food.webp", variant: "orange" },
-  { id: "transport", title: "Giao Thông", description: "Học tên phương tiện giao thông", logo: "https://assets.cuthongminh.com/games/learn-english-vocab/group5.webp", variant: "blue" },
-  { id: "family", title: "Gia Đình", description: "Học từ vựng về gia đình", logo: "https://assets.cuthongminh.com/games/learn-english-vocab/group6.webp", variant: "purple" },
-  { id: "body", title: "Cơ Thể", description: "Học tên bộ phận cơ thể", logo: "https://assets.cuthongminh.com/games/learn-english-vocab/group7.webp", variant: "green" },
-  { id: "school", title: "Dụng Cụ Học Tập", description: "Học tên đồ dùng học tập", logo: "https://assets.cuthongminh.com/games/talk-with-owl/school.webp", variant: "blue" },
+  {
+    id: "greetings",
+    title: "Chào Hỏi",
+    description: "Học cách chào hỏi bằng tiếng Anh",
+    logo: "https://assets.cuthongminh.com/games/talk-with-owl/greetings.webp",
+    variant: "green",
+  },
+  {
+    id: "fruits",
+    title: "Trái Cây",
+    description: "Học tên các loại trái cây",
+    logo: "https://assets.cuthongminh.com/games/learn-fruit/logo.webp",
+    variant: "orange",
+  },
+  {
+    id: "colors",
+    title: "Màu Sắc",
+    description: "Học tên các màu sắc",
+    logo: "https://assets.cuthongminh.com/games/learn-color-color.webp",
+    variant: "purple",
+  },
+  {
+    id: "numbers",
+    title: "Số Đếm",
+    description: "Học đếm số bằng tiếng Anh",
+    logo: "https://assets.cuthongminh.com/games/learn-numbers/number-logo.webp",
+    variant: "blue",
+  },
+  {
+    id: "animals",
+    title: "Con Vật",
+    description: "Học tên các con vật",
+    logo: "https://assets.cuthongminh.com/games/learn-animal/group1.webp",
+    variant: "green",
+  },
+  {
+    id: "food",
+    title: "Đồ Ăn",
+    description: "Học tên các món ăn",
+    logo: "https://assets.cuthongminh.com/games/talk-with-owl/food.webp",
+    variant: "orange",
+  },
+  {
+    id: "transport",
+    title: "Giao Thông",
+    description: "Học tên phương tiện giao thông",
+    logo: "https://assets.cuthongminh.com/games/learn-english-vocab/group5.webp",
+    variant: "blue",
+  },
+  {
+    id: "family",
+    title: "Gia Đình",
+    description: "Học từ vựng về gia đình",
+    logo: "https://assets.cuthongminh.com/games/learn-english-vocab/group6.webp",
+    variant: "purple",
+  },
+  {
+    id: "body",
+    title: "Cơ Thể",
+    description: "Học tên bộ phận cơ thể",
+    logo: "https://assets.cuthongminh.com/games/learn-english-vocab/group7.webp",
+    variant: "green",
+  },
+  {
+    id: "school",
+    title: "Dụng Cụ Học Tập",
+    description: "Học tên đồ dùng học tập",
+    logo: "https://assets.cuthongminh.com/games/talk-with-owl/school.webp",
+    variant: "blue",
+  },
 ];
 
 export function getTopicInstruction(groupId: string): string {

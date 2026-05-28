@@ -33,8 +33,9 @@ if (GEMINI_API_KEYS.length === 0) {
   process.exit(1);
 }
 
-console.log(`🔑 Loaded ${GEMINI_API_KEYS.length} Gemini API key(s) for rotation:`, 
-  GEMINI_API_KEYS.map(k => k.slice(0, 6) + "..." + k.slice(-4))
+console.log(
+  `🔑 Loaded ${GEMINI_API_KEYS.length} Gemini API key(s) for rotation:`,
+  GEMINI_API_KEYS.map((k) => k.slice(0, 6) + "..." + k.slice(-4)),
 );
 
 let currentKeyIndex = 0;
@@ -260,7 +261,9 @@ wss.on("connection", (clientWs: WebSocket) => {
         connectionAttempts++;
         const currentKey = getNextApiKey();
         const maskedKey = currentKey.slice(0, 6) + "..." + currentKey.slice(-4);
-        console.log(`🔧 [Attempt ${connectionAttempts}/${maxAttempts}] Connecting with voice=${voiceName}, key=${maskedKey}, model=gemini-3.1-flash-live-preview...`);
+        console.log(
+          `🔧 [Attempt ${connectionAttempts}/${maxAttempts}] Connecting with voice=${voiceName}, key=${maskedKey}, model=gemini-3.1-flash-live-preview...`,
+        );
 
         const ai = new GoogleGenAI({ apiKey: currentKey });
 
@@ -270,6 +273,7 @@ wss.on("connection", (clientWs: WebSocket) => {
             config: {
               responseModalities: [Modality.AUDIO],
               speechConfig: {
+                languageCode: "vi-VN",
                 voiceConfig: {
                   prebuiltVoiceConfig: {
                     voiceName: voiceName as any,
@@ -319,14 +323,16 @@ wss.on("connection", (clientWs: WebSocket) => {
               },
               onerror: async (err: any) => {
                 console.error(`❌ Gemini error on key ${maskedKey}:`, err);
-                
+
                 // If the session is not ready yet, it means connection failed to establish (e.g. 429 rate limit or invalid key)
                 // We should clean up this failed session and immediately attempt with the next available key
                 if (!isReady && connectionAttempts < maxAttempts && !isClosing) {
                   console.log(`🔄 Connection failed before open. Retrying with next key...`);
                   // Reset state before retry
                   if (geminiSession) {
-                    try { await geminiSession.close(); } catch {}
+                    try {
+                      await geminiSession.close();
+                    } catch {}
                     geminiSession = null;
                   }
                   await tryConnect();
@@ -339,7 +345,7 @@ wss.on("connection", (clientWs: WebSocket) => {
               },
               onclose: async (event: any) => {
                 console.log(`🔴 Gemini session closed for key ${maskedKey}`, event?.code, event?.reason);
-                
+
                 // If it closed before becoming ready (some web socket close events occur instead of onError)
                 // and we still have other keys to try, attempt fallback
                 if (!isReady && connectionAttempts < maxAttempts && !isClosing) {
