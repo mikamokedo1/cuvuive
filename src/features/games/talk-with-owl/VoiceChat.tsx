@@ -13,8 +13,8 @@ import "./voice-chat.css";
 const RELAY_URL =
   typeof window !== "undefined"
     ? window.location.protocol === "https:"
-      ? `wss://${window.location.host}/ws/voice`    // production: nginx proxies to relay
-      : `ws://${window.location.hostname}:8081`      // dev: direct to relay port
+      ? `wss://${window.location.host}/ws/voice` // production: nginx proxies to relay
+      : `ws://${window.location.hostname}:8081` // dev: direct to relay port
     : "ws://localhost:8081";
 
 /** Free/guest users: max 60 seconds per session */
@@ -176,9 +176,7 @@ export function VoiceChat({ topicInstruction, greeting }: VoiceChatProps) {
               },
         // Free/guest users: no secondary action after trial used
         // They must login or upgrade to continue
-        secondaryAction: isPremium
-          ? { label: "Đóng", onClick: dismissModal }
-          : undefined,
+        secondaryAction: isPremium ? { label: "Đóng", onClick: dismissModal } : undefined,
       };
     }
     return null;
@@ -285,9 +283,10 @@ export function VoiceChat({ topicInstruction, greeting }: VoiceChatProps) {
         {!isLive ? (
           <button
             className="vc-call-btn vc-call-start"
-            onClick={freeTrialUsed && !isPremium
-              ? () => showPaywall(isLoggedIn ? "premium" : "login", "/games/talk-with-owl")
-              : handleStart
+            onClick={
+              freeTrialUsed && !isPremium
+                ? () => showPaywall(isLoggedIn ? "premium" : "login", "/games/talk-with-owl")
+                : handleStart
             }
             disabled={isConnecting}
           >

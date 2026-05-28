@@ -62,7 +62,7 @@ export function useGeminiLive(options: UseGeminiLiveOptions = {}): UseGeminiLive
 
   const IDLE_TIMEOUT_MS = 30_000; // 30 seconds
 
-  const { isCapturing, micLevel, startCapture, stopCapture } = useAudioCapture();
+  const { isCapturing, micLevel, startCapture, stopCapture, muteMic, unmuteMic } = useAudioCapture();
   const {
     speakerLevel,
     isPlaying: isAiSpeaking,
@@ -76,6 +76,17 @@ export function useGeminiLive(options: UseGeminiLiveOptions = {}): UseGeminiLive
   useEffect(() => {
     statusRef.current = status;
   }, [status]);
+
+  // Auto-mute mic when AI is speaking to prevent echo on mobile
+  // (phone speaker audio gets picked up by the nearby mic)
+  useEffect(() => {
+    if (statusRef.current !== "live") return;
+    if (isAiSpeaking) {
+      muteMic();
+    } else {
+      unmuteMic();
+    }
+  }, [isAiSpeaking, muteMic, unmuteMic]);
 
   // Append to transcript, merging consecutive same-role entries
   const appendTranscript = useCallback(
@@ -287,6 +298,7 @@ export function useGeminiLive(options: UseGeminiLiveOptions = {}): UseGeminiLive
     disposePlayback,
     sendToRelay,
     handleGeminiMessage,
+    unmuteMic,
   ]);
 
   // ── Disconnect ──

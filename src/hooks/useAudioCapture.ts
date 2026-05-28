@@ -12,6 +12,10 @@ interface UseAudioCaptureReturn {
   startCapture: (onChunk: (base64: string) => void) => Promise<void>;
   /** Stop capturing and release resources */
   stopCapture: () => void;
+  /** Mute mic (disable track without releasing it) — prevents echo on mobile */
+  muteMic: () => void;
+  /** Unmute mic (re-enable track) */
+  unmuteMic: () => void;
 }
 
 /**
@@ -44,6 +48,20 @@ export function useAudioCapture(): UseAudioCaptureReturn {
 
     setIsCapturing(false);
     setMicLevel(0);
+  }, []);
+
+  /** Mute mic by disabling track — prevents echo when AI speaks on mobile speakers */
+  const muteMic = useCallback(() => {
+    micStreamRef.current?.getAudioTracks().forEach((t) => {
+      t.enabled = false;
+    });
+  }, []);
+
+  /** Unmute mic by re-enabling track */
+  const unmuteMic = useCallback(() => {
+    micStreamRef.current?.getAudioTracks().forEach((t) => {
+      t.enabled = true;
+    });
   }, []);
 
   const startCapture = useCallback(
@@ -120,5 +138,5 @@ export function useAudioCapture(): UseAudioCaptureReturn {
     [],
   );
 
-  return { isCapturing, micLevel, startCapture, stopCapture };
+  return { isCapturing, micLevel, startCapture, stopCapture, muteMic, unmuteMic };
 }
