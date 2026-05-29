@@ -99,6 +99,7 @@ export default function Home() {
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": "https://cuthongminh.com",
+      "dateModified": "2026-05-29T12:00:00+07:00",
     },
     offers: {
       "@type": "Offer",
@@ -229,11 +230,11 @@ export default function Home() {
         >
             <div className="container mx-auto px-6">
               <div className="text-center mb-20">
-                <h2 className="text-4xl md:text-5xl font-bold font-[family-name:var(--font-baloo-2)] text-slate-900 mb-6 tracking-tight">
+                <h2 id="loi-ich" className="text-4xl md:text-5xl font-bold font-[family-name:var(--font-baloo-2)] text-slate-900 mb-6 tracking-tight">
                   Lợi ích khi là <span className="text-orange-500">Cú Thông Minh</span>
                 </h2>
                 <p className="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
-                  Ứng dụng được thiết kế kỹ lưỡng dựa trên phương pháp giáo dục sớm, phù hợp với tâm lý trẻ nhỏ.
+                  Ứng dụng được thiết kế kỹ lưỡng dựa trên <strong>phương pháp giáo dục sớm</strong>, phù hợp với tâm lý trẻ nhỏ.
                 </p>
               </div>
 
@@ -248,8 +249,8 @@ export default function Home() {
                   </h3>
                   <p className="text-slate-600 leading-relaxed font-medium relative z-10">
                     Rèn luyện khả năng quan sát, tư duy chiến lược và xử lý vấn đề qua từng thử thách lôi cuốn.
-                    Bé được học toán đếm số, phép cộng trừ, nhận biết hình dạng, chữ cái tiếng Việt và tư duy logic
-                    — tất cả qua phương pháp giáo dục sớm Montessori, giúp trẻ mầm non 3-8 tuổi phát triển
+                    Bé được <strong>học toán đếm số</strong>, phép cộng trừ, nhận biết hình dạng, <strong>chữ cái tiếng Việt</strong> và <strong>tư duy logic</strong>
+                    — tất cả qua phương pháp giáo dục sớm Montessori, giúp <strong>trẻ mầm non 3-8 tuổi</strong> phát triển
                     trí tuệ theo đúng lộ trình chuẩn bị vào lớp 1.
                   </p>
                 </div>
@@ -264,9 +265,9 @@ export default function Home() {
                   </h3>
                   <p className="text-slate-600 leading-relaxed font-medium relative z-10">
                     Hình ảnh sắc nét, âm thanh sống động và nhân vật ngộ nghĩnh truyền cảm hứng học tập mỗi ngày.
-                    Mỗi trò chơi giáo dục được thiết kế dựa trên nghiên cứu tâm lý trẻ em, kết hợp hoạt hình
+                    Mỗi <strong>trò chơi giáo dục</strong> được thiết kế dựa trên nghiên cứu tâm lý trẻ em, kết hợp hoạt hình
                     tương tác và phản hồi tích cực để bé chủ động khám phá kiến thức về toán học,
-                    ngôn ngữ, khoa học và kỹ năng sống.
+                    ngôn ngữ, khoa học và <strong>kỹ năng sống</strong>.
                   </p>
                 </div>
 
@@ -302,7 +303,7 @@ export default function Home() {
                 <Trophy className="w-4 h-4 text-yellow-400" />
                 Kho tàng tri thức
               </div>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-[family-name:var(--font-baloo-2)] text-white mb-6">
+              <h2 id="games" className="text-4xl md:text-5xl lg:text-6xl font-bold font-[family-name:var(--font-baloo-2)] text-white mb-6">
                 Thế giới giải trí bất tận
               </h2>
               <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-16 leading-relaxed font-medium">
@@ -377,7 +378,7 @@ export default function Home() {
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-100 text-orange-600 font-bold mb-6">
                   <Star className="w-4 h-4" /> Phương pháp học tập
                 </div>
-                <h2 className="text-4xl md:text-5xl font-bold font-[family-name:var(--font-baloo-2)] text-slate-900 mb-6 tracking-tight">
+                <h2 id="phuong-phap" className="text-4xl md:text-5xl font-bold font-[family-name:var(--font-baloo-2)] text-slate-900 mb-6 tracking-tight">
                   Phương pháp <span className="text-orange-500">Giáo dục sớm</span> tại Cú Thông Minh
                 </h2>
               </div>
@@ -391,7 +392,7 @@ export default function Home() {
                       Tại Cú Thông Minh, chúng tôi áp dụng triết lý "Vừa học vừa chơi" (Play-based learning) kết hợp cùng tinh hoa của phương pháp giáo dục sớm Montessori. Chúng tôi tin rằng trẻ em ở độ tuổi mầm non học hỏi tốt nhất khi được tự do khám phá trong một môi trường an toàn, vui vẻ và đầy màu sắc.
                     </p>
                     <p className="text-lg text-slate-600 leading-relaxed">
-                      Lộ trình học tập được thiết kế cá nhân hóa cho từng bé từ 3 đến 8 tuổi. Bắt đầu từ những khái niệm cơ bản về màu sắc, hình chữ cái, bé sẽ dần làm quen với các khái niệm phức tạp hơn như toán học tư duy, quy luật logic và khoa học tự nhiên. Mọi bài học đều kích thích đa giác quan qua hình ảnh sắc nét và âm thanh sống động.
+                      Lộ trình học tập được thiết kế cá nhân hóa cho từng bé từ 3 đến 8 tuổi. Bắt đầu từ những khái niệm cơ bản về màu sắc, hình chữ cái, bé sẽ dần làm quen với các khái niệm phức tạp hơn như toán học tư duy, quy luật logic và khoa học tự nhiên. Mọi bài học đều kích thích đa giác quan qua hình ảnh sắc nét và âm thanh sống động. Ba mẹ có thể khám phá thêm <Link href="/about-us" className="text-orange-500 font-bold hover:underline">về chúng tôi và đội ngũ giáo viên sáng lập</Link>.
                     </p>
                   </div>
                   <div className="w-40 h-40 md:w-56 md:h-56 shrink-0 bg-orange-50 rounded-full flex items-center justify-center relative overflow-hidden group">
@@ -426,7 +427,7 @@ export default function Home() {
           <section className="py-24 bg-white relative">
             <div className="container mx-auto px-6 max-w-5xl">
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold font-[family-name:var(--font-baloo-2)] text-slate-900 mb-6 tracking-tight">
+                <h2 id="phu-huynh" className="text-4xl md:text-5xl font-bold font-[family-name:var(--font-baloo-2)] text-slate-900 mb-6 tracking-tight">
                   Phụ huynh nói gì về <span className="text-orange-500">Cú Thông Minh</span>?
                 </h2>
                 <p className="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
@@ -444,7 +445,7 @@ export default function Home() {
           <section className="py-24 relative overflow-hidden bg-gradient-to-br from-[#FF9C01] to-orange-500">
             <div className="absolute inset-0 bg-[url('/patterns/cubes.png')] opacity-5 md:opacity-10 md:mix-blend-overlay"></div>
             <div className="container mx-auto px-6 relative z-10 text-center text-white">
-              <h2 className="text-4xl md:text-6xl font-extrabold font-[family-name:var(--font-baloo-2)] mb-8 tracking-tight drop-shadow-md">
+              <h2 id="bat-dau" className="text-4xl md:text-6xl font-extrabold font-[family-name:var(--font-baloo-2)] mb-8 tracking-tight drop-shadow-md">
                 Khơi dậy tiềm năng cùng bé
               </h2>
               <p className="text-xl md:text-2xl text-white/90 max-w-2xl mx-auto mb-12 font-medium drop-shadow-sm">

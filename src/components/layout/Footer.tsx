@@ -17,7 +17,7 @@ export function Footer() {
 
           <div className="grid grid-cols-2 md:grid-cols-5 gap-10 w-full md:w-auto">
             <div className="flex flex-col gap-4">
-              <h4 className="font-bold text-slate-900 mb-2">Khám phá</h4>
+              <h3 className="font-bold text-slate-900 mb-2">Khám phá</h3>
               <Link href="/about-us" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
                 Giới thiệu về Cú Thông Minh
               </Link>
@@ -42,7 +42,7 @@ export function Footer() {
             </div>
 
             <div className="flex flex-col gap-4">
-              <h4 className="font-bold text-slate-900 mb-2">Theo độ tuổi</h4>
+              <h3 className="font-bold text-slate-900 mb-2">Theo độ tuổi</h3>
               <Link href="/do-tuoi/3-tuoi" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
                 Trò chơi cho bé 3 tuổi
               </Link>
@@ -58,7 +58,7 @@ export function Footer() {
             </div>
 
             <div className="flex flex-col gap-4">
-              <h4 className="font-bold text-slate-900 mb-2">Môn học</h4>
+              <h3 className="font-bold text-slate-900 mb-2">Môn học</h3>
               <div className="grid grid-cols-2 gap-x-8 gap-y-4 text-sm">
                 <Link href="/tro-choi-tu-duy" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
                   Trò chơi tư duy logic
@@ -88,9 +88,12 @@ export function Footer() {
             </div>
 
             <div className="flex flex-col gap-4">
-              <h4 className="font-bold text-slate-900 mb-2">Hỗ trợ</h4>
+              <h3 className="font-bold text-slate-900 mb-2">Hỗ trợ</h3>
               <Link href="/feedback" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
                 Gửi góp ý cho Cú Thông Minh
+              </Link>
+              <Link href="/editorial-policy" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
+                Chính sách biên tập & Giáo dục
               </Link>
               <Link href="/privacy" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
                 Chính sách bảo mật
@@ -101,7 +104,7 @@ export function Footer() {
             </div>
 
             <div className="flex flex-col gap-4 col-span-2 sm:col-span-1">
-              <h4 className="font-bold text-slate-900 mb-2">Kết nối</h4>
+              <h3 className="font-bold text-slate-900 mb-2">Kết nối</h3>
               <div className="flex gap-4">
                 <Link
                   href="https://www.facebook.com/CuthongminhOffical"

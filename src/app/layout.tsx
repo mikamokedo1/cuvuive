@@ -33,7 +33,7 @@ const beVietnamPro = Be_Vietnam_Pro({
   weight: ["400", "500", "600", "700", "800", "900"],
   variable: "--font-be-vietnam-pro",
   display: "swap",
-  preload: true,
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -46,11 +46,11 @@ export const metadata: Metadata = {
     },
   },
   title: {
-    default: "Cú Thông Minh — Trò Chơi Giáo Dục Miễn Phí Cho Bé 3-8 Tuổi | Vừa Học Vừa Chơi",
+    default: "Cú Thông Minh — Trò Chơi Giáo Dục Miễn Phí Cho Bé 3-8 Tuổi",
     template: "%s | Cú Thông Minh",
   },
   description:
-    "Cho bé vừa học vừa chơi với 20+ trò chơi tương tác: học toán, chữ cái, tư duy logic, mê cung, pha màu. An toàn 100%, không quảng cáo. 1,000+ phụ huynh tin dùng. Trải nghiệm miễn phí ngay!",
+    "Cho bé vừa học vừa chơi với 100+ trò chơi tương tác: toán, chữ cái, tư duy logic, mê cung, tiếng anh... An toàn 100%, không quảng cáo. 1,000+ phụ huynh tin dùng!",
   keywords: [
     "trò chơi giáo dục cho bé",
     "app học tập cho trẻ mầm non",

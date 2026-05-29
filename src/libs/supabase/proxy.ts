@@ -7,6 +7,7 @@ const publicPaths = [
   "/auth",
   "/blogs",
   "/about-us",
+  "/editorial-policy",
   "/privacy",
   "/terms",
   "/feedback",

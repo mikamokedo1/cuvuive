@@ -65,6 +65,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.5,
     },
     {
+      url: `${baseUrl}/editorial-policy`,
+      lastModified: getLatestMtime("src/app/editorial-policy/page.tsx"),
+      changeFrequency: "monthly",
+      priority: 0.5,
+    },
+    {
       url: `${baseUrl}/gioi-thieu-kiem-tien`,
       lastModified: getLatestMtime("src/app/gioi-thieu-kiem-tien/page.tsx", "src/app/gioi-thieu-kiem-tien/layout.tsx"),
       changeFrequency: "monthly",
