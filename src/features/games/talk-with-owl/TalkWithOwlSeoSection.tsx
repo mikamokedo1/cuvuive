@@ -346,7 +346,7 @@ export function TalkWithOwlSeoSection({ groupId }: TalkWithOwlSeoSectionProps) {
               {config.relatedGames.map((game) => (
                 <Link
                   key={game.id}
-                  href={game.path}
+                  href={`/games/${game.id}`}
                   className="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 hover:bg-orange-50 border border-slate-100 hover:border-orange-200 transition-all group"
                 >
                   <img
@@ -381,7 +381,7 @@ export function TalkWithOwlSeoSection({ groupId }: TalkWithOwlSeoSectionProps) {
                 className="flex flex-col items-center p-3 rounded-2xl border border-slate-100 bg-white hover:border-orange-200 hover:bg-orange-50/50 hover:shadow-sm text-center transition-all group"
               >
                 <img
-                  src={topic.logo}
+                  src={typeof topic.logo === "string" ? topic.logo : undefined}
                   alt={topic.title}
                   width={40}
                   height={40}

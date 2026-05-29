@@ -25,6 +25,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const title = `Luyện Nói Tiếng Anh Chủ Đề ${group.title} Với Cô Giáo AI | Cú Thông Minh`;
   const description = `Bé luyện nói và giao tiếp tiếng Anh chủ đề ${group.title} trực tiếp qua giọng nói với cô giáo AI Cú Thông Minh. ${group.description}. Hạn mức miễn phí hàng ngày!`;
   const pageUrl = `https://cuthongminh.com/games/talk-with-owl/${groupId}`;
+  const imageUrl = typeof group.logo === "string" ? group.logo : "https://assets.cuthongminh.com/assets/logo.webp";
 
   return {
     title,
@@ -39,7 +40,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       type: "website",
       images: [
         {
-          url: group.logo || "https://assets.cuthongminh.com/assets/logo.webp",
+          url: imageUrl,
           width: 1200,
           height: 630,
           alt: title,
@@ -50,7 +51,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       card: "summary_large_image",
       title,
       description,
-      images: [group.logo || "https://assets.cuthongminh.com/assets/logo.webp"],
+      images: [imageUrl],
     },
   };
 }
