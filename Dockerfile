@@ -1,6 +1,7 @@
 # ══════════════════════════════════════════════════════════════
 # Dockerfile (Production Runner Only)
 # Used by deploy.sh — expects pre-built .next/standalone from local build
+# Runs both Next.js (port 3000) and Voice Relay (port 8081)
 # ══════════════════════════════════════════════════════════════
 FROM node:20-alpine AS runner
 WORKDIR /app
@@ -22,12 +23,15 @@ COPY --chown=nextjs:nodejs .next/standalone ./
 COPY --chown=nextjs:nodejs .next/static ./.next/static
 COPY --chown=nextjs:nodejs public ./public
 
+# Entrypoint script to run both processes
+COPY --chown=nextjs:nodejs docker-entrypoint.sh ./
+
 USER nextjs
 
-EXPOSE 3000
+EXPOSE 3000 8081
 
 ENV PORT=3000
 # set hostname to localhost
 ENV HOSTNAME="0.0.0.0"
 
-CMD ["node", "server.js"]
+CMD ["sh", "docker-entrypoint.sh"]

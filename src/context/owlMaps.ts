@@ -373,4 +373,16 @@ export const MAP_PATHNAME_TO_TEXT: Record<string, string> = {
   "/games/mini-piano/mini-musician/lesson/doi-ken-ti-hon": "Pé tập đánh bài Đội Kèn Tí Hon nhé",
   "/games/mini-piano/ear-training/lesson/find-the-note": "Pé tìm nốt nhạc đúng nhé",
   "/games/mini-piano/ear-training/lesson/repeat-melody": "Pé lặp lại giai điệu nhé",
+
+  // talk-with-owl
+  "/games/talk-with-owl/greetings": "Pé nói chuyện với cú nhé",
+  "/games/talk-with-owl/fruits": "Pé tập nói về trái cây nhé",
+  "/games/talk-with-owl/colors": "Pé tập nói về màu sắc nhé",
+  "/games/talk-with-owl/numbers": "Pé tập nói về số đếm nhé",
+  "/games/talk-with-owl/animals": "Pé tập nói về con vật nhé",
+  "/games/talk-with-owl/food": "Pé tập nói về đồ ăn nhé",
+  "/games/talk-with-owl/transport": "Pé tập nói về phương tiện giao thông nhé",
+  "/games/talk-with-owl/family": "Pé tập nói về gia đình nhé",
+  "/games/talk-with-owl/body": "Pé tập nói về các bộ phận trên cơ thể nhé",
+  "/games/talk-with-owl/school": "Pé tập nói về các dụng cụ học tập nhé",
 };

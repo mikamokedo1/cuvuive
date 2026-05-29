@@ -1,6 +1,6 @@
 -- =============================================
 -- AUTO-GENERATED from constants/courses.ts
--- Generated at: 2026-05-20T04:12:28.986Z
+-- Generated at: 2026-05-28T04:04:03.730Z
 -- Do NOT edit manually. Run: npm run db:generate-seed
 -- =============================================
 
@@ -51,7 +51,8 @@ INSERT INTO courses (id, title, description, thumbnail, sort_index) VALUES
   ('learn-danger', 'Đồ Vật Nguy Hiểm', 'Bé học nhận biết các đồ vật nguy hiểm trong nhà và cách giữ an toàn.', 'https://assets.cuthongminh.com/games/learn-danger/logo.webp', 41),
   ('mini-sudoku-kids', 'Sudoku', 'Bé học suy luận logic qua bảng hình đơn giản, tìm ô còn thiếu theo quy luật hàng và cột.', 'https://assets.cuthongminh.com/games/mini-sudoku-kids/logo.webp', 42),
   ('learn-english-vocab', 'Học Từ Vựng', 'Bé học từ vựng tiếng Anh cơ bản qua hình ảnh và phát âm: động vật, trái cây, màu sắc, số đếm.', 'https://assets.cuthongminh.com/games/learn-english-vocab/logo.webp', 43),
-  ('learn-english-alphabet', 'Bảng Chữ Cái', 'Bé học bảng chữ cái tiếng Anh từ A-Z qua các từ vựng sinh động.', 'https://assets.cuthongminh.com/games/learn-english-alphabet/logo.webp', 44)
+  ('learn-english-alphabet', 'Bảng Chữ Cái', 'Bé học bảng chữ cái tiếng Anh từ A-Z qua các từ vựng sinh động.', 'https://assets.cuthongminh.com/games/learn-english-alphabet/logo.webp', 44),
+  ('talk-with-owl', 'Giao Tiếp', 'Bé luyện giao tiếp tiếng Anh trực tiếp với Cú Thông Minh qua giọng nói AI. Cú dạy bé chào hỏi, hỏi đáp và trò chuyện bằng tiếng Anh.', 'https://assets.cuthongminh.com/games/talk-with-owl/logo.webp', 45)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   description = EXCLUDED.description,
@@ -470,6 +471,22 @@ ON CONFLICT (id) DO UPDATE SET
 INSERT INTO groups (id, slug, course_id, title, sort_index) VALUES
   ('learn-english-alphabet-group1', 'group1', 'learn-english-alphabet', 'Bảng Chữ Cái (A-M)', 1),
   ('learn-english-alphabet-group2', 'group2', 'learn-english-alphabet', 'Bảng Chữ Cái (N-Z)', 2)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  sort_index = EXCLUDED.sort_index;
+
+-- Giao Tiếp Groups
+INSERT INTO groups (id, slug, course_id, title, sort_index) VALUES
+  ('talk-with-owl-group1', 'group1', 'talk-with-owl', 'Chào hỏi', 1),
+  ('talk-with-owl-group2', 'group2', 'talk-with-owl', 'Trái Cây', 2),
+  ('talk-with-owl-group3', 'group3', 'talk-with-owl', 'Màu Sắc', 3),
+  ('talk-with-owl-group4', 'group4', 'talk-with-owl', 'Số Đếm', 4),
+  ('talk-with-owl-group5', 'group5', 'talk-with-owl', 'Động Vật', 5),
+  ('talk-with-owl-group6', 'group6', 'talk-with-owl', 'Đồ ăn', 6),
+  ('talk-with-owl-group7', 'group7', 'talk-with-owl', 'Giao thông', 7),
+  ('talk-with-owl-group8', 'group8', 'talk-with-owl', 'Gia Đình', 8),
+  ('talk-with-owl-group9', 'group9', 'talk-with-owl', 'Cơ thể', 9),
+  ('talk-with-owl-group10', 'group10', 'talk-with-owl', 'Dụng cụ học tập', 10)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   sort_index = EXCLUDED.sort_index;
@@ -1321,6 +1338,23 @@ INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) 
   ('learn-english-alphabet-group2-lesson3', 'lesson3', 'learn-english-alphabet-group2', 'learn-english-alphabet', 'Nghe & Chọn', false, 3),
   ('learn-english-alphabet-group2-lesson4', 'lesson4', 'learn-english-alphabet-group2', 'learn-english-alphabet', 'Ghép từ', false, 4),
   ('learn-english-alphabet-group2-lesson5', 'lesson5', 'learn-english-alphabet-group2', 'learn-english-alphabet', 'Kiểm tra', false, 5)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  is_free = EXCLUDED.is_free,
+  sort_index = EXCLUDED.sort_index;
+
+-- Giao Tiếp Lessons
+INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) VALUES
+  ('talk-with-owl-group1-lesson1', 'lesson1', 'talk-with-owl-group1', 'talk-with-owl', 'Chào hỏi', true, 1),
+  ('talk-with-owl-group2-lesson1', 'lesson1', 'talk-with-owl-group2', 'talk-with-owl', 'Trái cây', true, 1),
+  ('talk-with-owl-group3-lesson1', 'lesson1', 'talk-with-owl-group3', 'talk-with-owl', 'Màu sắc', true, 1),
+  ('talk-with-owl-group4-lesson1', 'lesson1', 'talk-with-owl-group4', 'talk-with-owl', 'Số đếm', true, 1),
+  ('talk-with-owl-group5-lesson1', 'lesson1', 'talk-with-owl-group5', 'talk-with-owl', 'Động vật', true, 1),
+  ('talk-with-owl-group6-lesson1', 'lesson1', 'talk-with-owl-group6', 'talk-with-owl', 'Đồ ăn', true, 1),
+  ('talk-with-owl-group7-lesson1', 'lesson1', 'talk-with-owl-group7', 'talk-with-owl', 'Giao thông', true, 1),
+  ('talk-with-owl-group8-lesson1', 'lesson1', 'talk-with-owl-group8', 'talk-with-owl', 'Gia đình', true, 1),
+  ('talk-with-owl-group9-lesson1', 'lesson1', 'talk-with-owl-group9', 'talk-with-owl', 'Cơ thể', true, 1),
+  ('talk-with-owl-group10-lesson1', 'lesson1', 'talk-with-owl-group10', 'talk-with-owl', 'Dụng cụ học tập', true, 1)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   is_free = EXCLUDED.is_free,

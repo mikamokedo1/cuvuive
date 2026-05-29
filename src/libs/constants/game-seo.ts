@@ -1362,6 +1362,33 @@ const RAW_GAME_SEO: Record<string, GameSeoData> = {
     relatedGames: ["learn-english-vocab", "learn-alphabet"],
     relatedBlogs: [],
   },
+  "talk-with-owl": {
+    title: "Giao Tiếp Tiếng Anh với AI - Trò chơi giáo dục Cú Thông Minh",
+    description: "Bé luyện nói tiếng Anh với cô giáo AI Cú Thông Minh. 10 chủ đề: Chào hỏi, Trái cây, Màu sắc, Số đếm, Con vật, Đồ ăn, Giao thông, Gia đình, Cơ thể, Dụng cụ học tập.",
+    keywords: [
+      "học giao tiếp tiếng anh cho bé",
+      "luyện nói tiếng anh trẻ em",
+      "tiếng anh giao tiếp mầm non",
+      "trò chuyện tiếng anh AI",
+      "học tiếng anh online cho bé",
+      "cô giáo AI dạy tiếng anh",
+      "tập nói tiếng anh cho trẻ",
+      "learn english speaking for kids",
+      "english conversation for children",
+      "tiếng anh cho bé 3-8 tuổi",
+    ],
+    seoText:
+      "Trò chơi Giao Tiếp Tiếng Anh giúp bé từ 3-8 tuổi luyện nói tiếng Anh qua cuộc trò chuyện thực tế với cô giáo AI Cú Thông Minh. 10 chủ đề quen thuộc: Chào Hỏi, Trái Cây, Màu Sắc, Số Đếm, Con Vật, Đồ Ăn, Giao Thông, Gia Đình, Cơ Thể Người và Dụng Cụ Học Tập. Cô giáo AI nói tiếng Việt xen kẽ tiếng Anh, giúp bé dễ hiểu và tự tin hơn khi học ngoại ngữ.",
+    seoFeatures: [
+      "Trò chuyện tiếng Anh với AI thông minh",
+      "10 chủ đề từ vựng phong phú",
+      "Cô giáo AI nói tiếng Việt xen tiếng Anh",
+      "Luyện phát âm và giao tiếp thực tế",
+    ],
+    ogImage: "https://assets.cuthongminh.com/assets/logo.webp",
+    relatedGames: ["learn-english-vocab", "learn-english-alphabet", "learn-animal"],
+    relatedBlogs: [],
+  },
 };
 
 export const GAME_SEO: Record<string, GameSeoData> = Object.fromEntries(
