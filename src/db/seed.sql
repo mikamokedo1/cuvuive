@@ -1,6 +1,6 @@
 -- =============================================
 -- AUTO-GENERATED from constants/courses.ts
--- Generated at: 2026-05-28T04:04:03.730Z
+-- Generated at: 2026-05-30T07:30:26.979Z
 -- Do NOT edit manually. Run: npm run db:generate-seed
 -- =============================================
 
@@ -477,16 +477,16 @@ ON CONFLICT (id) DO UPDATE SET
 
 -- Giao Tiếp Groups
 INSERT INTO groups (id, slug, course_id, title, sort_index) VALUES
-  ('talk-with-owl-group1', 'group1', 'talk-with-owl', 'Chào hỏi', 1),
-  ('talk-with-owl-group2', 'group2', 'talk-with-owl', 'Trái Cây', 2),
-  ('talk-with-owl-group3', 'group3', 'talk-with-owl', 'Màu Sắc', 3),
-  ('talk-with-owl-group4', 'group4', 'talk-with-owl', 'Số Đếm', 4),
-  ('talk-with-owl-group5', 'group5', 'talk-with-owl', 'Động Vật', 5),
-  ('talk-with-owl-group6', 'group6', 'talk-with-owl', 'Đồ ăn', 6),
-  ('talk-with-owl-group7', 'group7', 'talk-with-owl', 'Giao thông', 7),
-  ('talk-with-owl-group8', 'group8', 'talk-with-owl', 'Gia Đình', 8),
-  ('talk-with-owl-group9', 'group9', 'talk-with-owl', 'Cơ thể', 9),
-  ('talk-with-owl-group10', 'group10', 'talk-with-owl', 'Dụng cụ học tập', 10)
+  ('talk-with-owl-greetings', 'greetings', 'talk-with-owl', 'Chào hỏi', 1),
+  ('talk-with-owl-fruits', 'fruits', 'talk-with-owl', 'Trái Cây', 2),
+  ('talk-with-owl-colors', 'colors', 'talk-with-owl', 'Màu Sắc', 3),
+  ('talk-with-owl-numbers', 'numbers', 'talk-with-owl', 'Số Đếm', 4),
+  ('talk-with-owl-animals', 'animals', 'talk-with-owl', 'Động Vật', 5),
+  ('talk-with-owl-food', 'food', 'talk-with-owl', 'Đồ ăn', 6),
+  ('talk-with-owl-transport', 'transport', 'talk-with-owl', 'Giao thông', 7),
+  ('talk-with-owl-family', 'family', 'talk-with-owl', 'Gia Đình', 8),
+  ('talk-with-owl-body', 'body', 'talk-with-owl', 'Cơ thể', 9),
+  ('talk-with-owl-school', 'school', 'talk-with-owl', 'Dụng cụ học tập', 10)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   sort_index = EXCLUDED.sort_index;
@@ -1345,16 +1345,36 @@ ON CONFLICT (id) DO UPDATE SET
 
 -- Giao Tiếp Lessons
 INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) VALUES
-  ('talk-with-owl-group1-lesson1', 'lesson1', 'talk-with-owl-group1', 'talk-with-owl', 'Chào hỏi', true, 1),
-  ('talk-with-owl-group2-lesson1', 'lesson1', 'talk-with-owl-group2', 'talk-with-owl', 'Trái cây', true, 1),
-  ('talk-with-owl-group3-lesson1', 'lesson1', 'talk-with-owl-group3', 'talk-with-owl', 'Màu sắc', true, 1),
-  ('talk-with-owl-group4-lesson1', 'lesson1', 'talk-with-owl-group4', 'talk-with-owl', 'Số đếm', true, 1),
-  ('talk-with-owl-group5-lesson1', 'lesson1', 'talk-with-owl-group5', 'talk-with-owl', 'Động vật', true, 1),
-  ('talk-with-owl-group6-lesson1', 'lesson1', 'talk-with-owl-group6', 'talk-with-owl', 'Đồ ăn', true, 1),
-  ('talk-with-owl-group7-lesson1', 'lesson1', 'talk-with-owl-group7', 'talk-with-owl', 'Giao thông', true, 1),
-  ('talk-with-owl-group8-lesson1', 'lesson1', 'talk-with-owl-group8', 'talk-with-owl', 'Gia đình', true, 1),
-  ('talk-with-owl-group9-lesson1', 'lesson1', 'talk-with-owl-group9', 'talk-with-owl', 'Cơ thể', true, 1),
-  ('talk-with-owl-group10-lesson1', 'lesson1', 'talk-with-owl-group10', 'talk-with-owl', 'Dụng cụ học tập', true, 1)
+  ('talk-with-owl-greetings-lesson1', 'lesson1', 'talk-with-owl-greetings', 'talk-with-owl', 'Học Từ Mới', true, 1),
+  ('talk-with-owl-greetings-lesson2', 'lesson2', 'talk-with-owl-greetings', 'talk-with-owl', 'Học Câu', true, 2),
+  ('talk-with-owl-greetings-lesson3', 'lesson3', 'talk-with-owl-greetings', 'talk-with-owl', 'Hỏi Đáp', true, 3),
+  ('talk-with-owl-fruits-lesson1', 'lesson1', 'talk-with-owl-fruits', 'talk-with-owl', 'Học Từ Mới', true, 1),
+  ('talk-with-owl-fruits-lesson2', 'lesson2', 'talk-with-owl-fruits', 'talk-with-owl', 'Học Câu', true, 2),
+  ('talk-with-owl-fruits-lesson3', 'lesson3', 'talk-with-owl-fruits', 'talk-with-owl', 'Hỏi Đáp', true, 3),
+  ('talk-with-owl-colors-lesson1', 'lesson1', 'talk-with-owl-colors', 'talk-with-owl', 'Học Từ Mới', true, 1),
+  ('talk-with-owl-colors-lesson2', 'lesson2', 'talk-with-owl-colors', 'talk-with-owl', 'Học Câu', true, 2),
+  ('talk-with-owl-colors-lesson3', 'lesson3', 'talk-with-owl-colors', 'talk-with-owl', 'Hỏi Đáp', true, 3),
+  ('talk-with-owl-numbers-lesson1', 'lesson1', 'talk-with-owl-numbers', 'talk-with-owl', 'Học Từ Mới', true, 1),
+  ('talk-with-owl-numbers-lesson2', 'lesson2', 'talk-with-owl-numbers', 'talk-with-owl', 'Học Câu', true, 2),
+  ('talk-with-owl-numbers-lesson3', 'lesson3', 'talk-with-owl-numbers', 'talk-with-owl', 'Hỏi Đáp', true, 3),
+  ('talk-with-owl-animals-lesson1', 'lesson1', 'talk-with-owl-animals', 'talk-with-owl', 'Học Từ Mới', true, 1),
+  ('talk-with-owl-animals-lesson2', 'lesson2', 'talk-with-owl-animals', 'talk-with-owl', 'Học Câu', true, 2),
+  ('talk-with-owl-animals-lesson3', 'lesson3', 'talk-with-owl-animals', 'talk-with-owl', 'Hỏi Đáp', true, 3),
+  ('talk-with-owl-food-lesson1', 'lesson1', 'talk-with-owl-food', 'talk-with-owl', 'Học Từ Mới', true, 1),
+  ('talk-with-owl-food-lesson2', 'lesson2', 'talk-with-owl-food', 'talk-with-owl', 'Học Câu', true, 2),
+  ('talk-with-owl-food-lesson3', 'lesson3', 'talk-with-owl-food', 'talk-with-owl', 'Hỏi Đáp', true, 3),
+  ('talk-with-owl-transport-lesson1', 'lesson1', 'talk-with-owl-transport', 'talk-with-owl', 'Học Từ Mới', true, 1),
+  ('talk-with-owl-transport-lesson2', 'lesson2', 'talk-with-owl-transport', 'talk-with-owl', 'Học Câu', true, 2),
+  ('talk-with-owl-transport-lesson3', 'lesson3', 'talk-with-owl-transport', 'talk-with-owl', 'Hỏi Đáp', true, 3),
+  ('talk-with-owl-family-lesson1', 'lesson1', 'talk-with-owl-family', 'talk-with-owl', 'Học Từ Mới', true, 1),
+  ('talk-with-owl-family-lesson2', 'lesson2', 'talk-with-owl-family', 'talk-with-owl', 'Học Câu', true, 2),
+  ('talk-with-owl-family-lesson3', 'lesson3', 'talk-with-owl-family', 'talk-with-owl', 'Hỏi Đáp', true, 3),
+  ('talk-with-owl-body-lesson1', 'lesson1', 'talk-with-owl-body', 'talk-with-owl', 'Học Từ Mới', true, 1),
+  ('talk-with-owl-body-lesson2', 'lesson2', 'talk-with-owl-body', 'talk-with-owl', 'Học Câu', true, 2),
+  ('talk-with-owl-body-lesson3', 'lesson3', 'talk-with-owl-body', 'talk-with-owl', 'Hỏi Đáp', true, 3),
+  ('talk-with-owl-school-lesson1', 'lesson1', 'talk-with-owl-school', 'talk-with-owl', 'Học Từ Mới', true, 1),
+  ('talk-with-owl-school-lesson2', 'lesson2', 'talk-with-owl-school', 'talk-with-owl', 'Học Câu', true, 2),
+  ('talk-with-owl-school-lesson3', 'lesson3', 'talk-with-owl-school', 'talk-with-owl', 'Hỏi Đáp', true, 3)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   is_free = EXCLUDED.is_free,

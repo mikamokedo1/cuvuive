@@ -282,7 +282,27 @@ export function TalkWithOwlSeoSection({ groupId }: TalkWithOwlSeoSectionProps) {
       "@type": "Organization",
       name: "Cú Thông Minh",
       sameAs: "https://cuthongminh.com"
-    }
+    },
+    hasCourseInstance: [
+      {
+        "@type": "CourseInstance",
+        name: `Học Từ Mới - ${group.title}`,
+        description: `AI dạy bé từng từ vựng tiếng Anh chủ đề ${group.title}, cho bé phát âm theo và sửa lỗi ngay lập tức.`,
+        courseMode: "online",
+      },
+      {
+        "@type": "CourseInstance",
+        name: `Học Câu - ${group.title}`,
+        description: `AI dạy bé các câu giao tiếp thông dụng chủ đề ${group.title}, đặt trong ngữ cảnh thực tế.`,
+        courseMode: "online",
+      },
+      {
+        "@type": "CourseInstance",
+        name: `Hỏi Đáp Giao Tiếp - ${group.title}`,
+        description: `AI hội thoại tự do với bé về chủ đề ${group.title}, đóng vai tình huống vui nhộn.`,
+        courseMode: "online",
+      },
+    ],
   };
 
   // Other dynamic sibling topics (excluding current one)
@@ -329,11 +349,16 @@ export function TalkWithOwlSeoSection({ groupId }: TalkWithOwlSeoSectionProps) {
         {/* Method explanation */}
         <div className="mb-10 rounded-2xl border border-orange-100 bg-orange-50/50 p-6">
           <h4 className="text-base font-bold text-orange-800 mb-2 font-[family-name:var(--font-baloo-2)]">
-            💡 Phương pháp Luyện nói Phản xạ Tiếng Anh cùng AI
+            💡 Phương pháp 3 bước luyện nói Tiếng Anh cùng AI
           </h4>
-          <p className="text-sm leading-relaxed text-slate-600">
-            Hệ thống áp dụng công nghệ **Gemini Live AI** cho phép trẻ mầm non (3-8 tuổi) giao tiếp trực tiếp qua giọng nói mà không cần bàn phím. Cô giáo AI Cú Thông Minh nói chuyện song ngữ (nói tiếng Việt xen kẽ tiếng Anh) giúp bé dễ hiểu, sửa lỗi phát âm ngay lập tức, động viên kịp thời để bé luôn hứng thú học tập và tiến bộ vượt trội.
+          <p className="text-sm leading-relaxed text-slate-600 mb-3">
+            Mỗi chủ đề gồm <strong>3 bài học</strong> theo phương pháp học ngôn ngữ tự nhiên, tất cả đều sử dụng công nghệ <strong>Gemini Live AI</strong> cho phép trẻ (3-8 tuổi) giao tiếp trực tiếp qua giọng nói:
           </p>
+          <ul className="text-sm leading-relaxed text-slate-600 space-y-2">
+            <li><strong>📚 Bài 1 — Học Từ Mới:</strong> AI dạy bé từng từ vựng, cho bé phát âm theo, sửa lỗi và ôn tập ngay lập tức.</li>
+            <li><strong>💬 Bài 2 — Học Câu:</strong> AI dạy bé các câu giao tiếp liên quan chủ đề, đặt trong ngữ cảnh thực tế để bé dễ hiểu.</li>
+            <li><strong>🎤 Bài 3 — Hỏi Đáp:</strong> AI hội thoại tự do với bé, đóng vai tình huống vui nhộn, giúp bé tự tin phản xạ nói.</li>
+          </ul>
         </div>
 
         {/* Related Games */}

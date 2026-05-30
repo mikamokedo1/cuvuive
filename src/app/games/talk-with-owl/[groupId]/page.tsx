@@ -1,7 +1,7 @@
-import type { Metadata } from "next";
 import { TalkWithOwlGroupClient } from "./TalkWithOwlGroupClient";
 import { TalkWithOwlSeoSection } from "@/features/games/talk-with-owl/TalkWithOwlSeoSection";
 import { GROUPS } from "@/features/games/talk-with-owl/constants";
+import type { Metadata } from "next";
 
 interface PageProps {
   params: Promise<{ groupId: string }>;
@@ -22,8 +22,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  const title = `Luyện Nói Tiếng Anh Chủ Đề ${group.title} Với Cô Giáo AI | Cú Thông Minh`;
-  const description = `Bé luyện nói và giao tiếp tiếng Anh chủ đề ${group.title} trực tiếp qua giọng nói với cô giáo AI Cú Thông Minh. ${group.description}. Hạn mức miễn phí hàng ngày!`;
+  const title = `Luyện Nói Tiếng Anh Chủ Đề ${group.title} | Cú Thông Minh`;
+  const description = `Bé luyện nói và giao tiếp tiếng Anh chủ đề ${group.title} qua 3 bài học: Học từ mới, Học câu, Hỏi đáp giao tiếp với cô giáo AI. ${group.description}.`;
   const pageUrl = `https://cuthongminh.com/games/talk-with-owl/${groupId}`;
   const imageUrl = typeof group.logo === "string" ? group.logo : "https://assets.cuthongminh.com/assets/logo.webp";
 
@@ -65,4 +65,3 @@ export default async function TalkWithOwlGroupPage({ params }: PageProps) {
     </>
   );
 }
-
