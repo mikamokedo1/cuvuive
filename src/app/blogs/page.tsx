@@ -99,6 +99,13 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Pr
       author: {
         "@type": "Person",
         name: post.author,
+        url: "https://cuthongminh.com/about-us",
+        jobTitle: "Chuyên gia giáo dục sớm",
+        worksFor: {
+          "@type": "Organization",
+          name: "Cú Thông Minh",
+          url: "https://cuthongminh.com",
+        },
       },
     })),
   };

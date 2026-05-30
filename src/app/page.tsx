@@ -303,7 +303,7 @@ export default function Home() {
                 <Trophy className="w-4 h-4 text-yellow-400" />
                 Kho tàng tri thức
               </div>
-              <h2 id="games" className="text-4xl md:text-5xl lg:text-6xl font-bold font-[family-name:var(--font-baloo-2)] text-white mb-6">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-[family-name:var(--font-baloo-2)] text-white mb-6">
                 Thế giới giải trí bất tận
               </h2>
               <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-16 leading-relaxed font-medium">

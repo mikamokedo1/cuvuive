@@ -6,6 +6,7 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import { Clock, Calendar, Tag } from "lucide-react";
 import "@/styles/blog.css"; // Make sure to import the new blog styles
+import { ShareButtons } from "@/components/blog/ShareButtons";
 
 function slugifyVi(text: string) {
   return text
@@ -213,6 +214,22 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       name: post.author,
       url: "https://cuthongminh.com/about-us",
       description: "Chuyên gia giáo dục mầm non tại Cú Thông Minh",
+      jobTitle: "Chuyên gia giáo dục sớm",
+      worksFor: {
+        "@type": "Organization",
+        name: "Cú Thông Minh",
+        url: "https://cuthongminh.com",
+      },
+      sameAs: [
+        "https://cuthongminh.com/about-us",
+        "https://www.facebook.com/CuthongminhOffical",
+      ],
+      knowsAbout: [
+        "Giáo dục mầm non",
+        "Phương pháp Montessori",
+        "Play-based Learning",
+        "Phát triển tư duy trẻ em",
+      ],
     },
     publisher: {
       "@type": "Organization",
@@ -344,6 +361,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           components={{ AIFact }}
           options={{ mdxOptions: { remarkPlugins: [remarkGfm], rehypePlugins: [rehypeVietnameseSlug] } }}
         />
+      </div>
+
+      {/* Share Buttons */}
+      <div className="mt-12 pt-8 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <ShareButtons url={`/blogs/${post.slug}`} title={post.title} />
+        <p className="text-xs text-slate-400 font-medium">Bài viết hữu ích? Hãy chia sẻ với bạn bè!</p>
       </div>
 
       {relatedGames.length > 0 && (

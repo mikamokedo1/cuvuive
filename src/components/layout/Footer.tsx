@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 const LogoLong = "https://assets.cuthongminh.com/assets/logo-long.webp";
-import { Facebook, Video, Youtube } from "lucide-react";
+import { Facebook, Video, Youtube, Mail, Phone, ShieldCheck, Ban, Lock } from "lucide-react";
 
 export function Footer() {
   return (
@@ -105,7 +105,7 @@ export function Footer() {
 
             <div className="flex flex-col gap-4 col-span-2 sm:col-span-1">
               <h3 className="font-bold text-slate-900 mb-2">Kết nối</h3>
-              <div className="flex gap-4">
+              <div className="flex gap-4 mb-4">
                 <Link
                   href="https://www.facebook.com/CuthongminhOffical"
                   className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-orange-600 hover:text-white transition-all shadow-sm"
@@ -131,11 +131,45 @@ export function Footer() {
                   <Youtube size={20} />
                 </Link>
               </div>
+
+              {/* Contact Info — E-E-A-T */}
+              <div className="flex flex-col gap-3">
+                <a
+                  href="mailto:support@cuthongminh.com"
+                  className="flex items-center gap-2.5 text-sm text-slate-500 hover:text-orange-500 transition-colors"
+                >
+                  <Mail size={16} className="text-orange-400 shrink-0" />
+                  support@cuthongminh.com
+                </a>
+                <a
+                  href="tel:+84888222293"
+                  className="flex items-center gap-2.5 text-sm text-slate-500 hover:text-orange-500 transition-colors"
+                >
+                  <Phone size={16} className="text-orange-400 shrink-0" />
+                  0888 222 293
+                </a>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="pt-8 border-t border-slate-50 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-400 text-xs font-medium">
+        {/* Trust Badges Strip */}
+        <div className="flex flex-wrap items-center justify-center gap-6 py-6 mb-6 border-t border-slate-100">
+          <div className="flex items-center gap-2 text-sm font-semibold text-slate-500">
+            <ShieldCheck className="w-4.5 h-4.5 text-green-500" />
+            <span>An toàn cho bé</span>
+          </div>
+          <div className="flex items-center gap-2 text-sm font-semibold text-slate-500">
+            <Ban className="w-4.5 h-4.5 text-blue-500" />
+            <span>Không quảng cáo</span>
+          </div>
+          <div className="flex items-center gap-2 text-sm font-semibold text-slate-500">
+            <Lock className="w-4.5 h-4.5 text-purple-500" />
+            <span>Bảo mật thông tin</span>
+          </div>
+        </div>
+
+        <div className="pt-6 border-t border-slate-50 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-400 text-xs font-medium">
           <p>&copy; {new Date().getFullYear()} Cú Thông Minh Educational. All rights reserved.</p>
           <p>Mỗi bài học là một nụ cười cho con.</p>
         </div>
