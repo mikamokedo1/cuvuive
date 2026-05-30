@@ -4,6 +4,7 @@ import { safeJsonLd } from "@/libs/utils/safe-jsonld";
 import { COURSES } from "@/libs/constants/courses";
 import { GROUPS } from "@/libs/constants/groups";
 import Image from "next/image";
+import { Breadcrumbs } from "@/components/common/Breadcrumbs";
 
 interface GameSeoSectionProps {
   gameId: string;
@@ -114,6 +115,14 @@ export function GameSeoSection({ gameId }: GameSeoSectionProps) {
       )}
 
       <section className="max-w-3xl mx-auto px-6 py-10 text-slate-600 font-[family-name:var(--font-nunito-sans)]">
+        {/* Visual Breadcrumb */}
+        <Breadcrumbs items={[
+          { label: "Trang chủ", href: "/" },
+          { label: "Trò chơi", href: "/games" },
+          ...(topic ? [{ label: topic.title, href: `/${topic.slug}` }] : []),
+          { label: gameTitle },
+        ]} />
+
         <h2 className="text-2xl font-bold text-slate-800 mb-4 font-[family-name:var(--font-baloo-2)]">
           {gameTitle}
         </h2>

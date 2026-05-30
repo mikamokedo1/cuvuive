@@ -9,6 +9,7 @@ import { normalizeTagPathSegment } from "@/libs/utils/tag-slug";
 import { Tag, TrendingUp, BookOpen } from "lucide-react";
 import { GENERAL_PARENTING_SLUGS } from "@/libs/seo/topic-clusters";
 import { GROUPS } from "@/libs/constants/groups";
+import { Breadcrumbs } from "@/components/common/Breadcrumbs";
 
 /** Collect all tags with their post counts, sorted by count desc */
 async function getTagsWithCounts(): Promise<{ tag: string; count: number }[]> {
@@ -102,29 +103,15 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Pr
     })),
   };
 
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Trang chủ",
-        item: "https://cuthongminh.com",
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Blog",
-        item: "https://cuthongminh.com/blogs",
-      },
-    ],
-  };
-
   return (
     <div className="container mx-auto px-6 max-w-6xl">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }} />
+
+      {/* Breadcrumbs — visual + JSON-LD */}
+      <Breadcrumbs items={[
+        { label: "Trang chủ", href: "/" },
+        { label: "Blog" },
+      ]} />
 
       {/* Speakable Schema for AI voice reading */}
       <SpeakableSchema url="https://cuthongminh.com/blogs" cssSelectors={["h1", "h1 + p"]} />

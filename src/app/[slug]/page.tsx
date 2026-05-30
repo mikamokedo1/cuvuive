@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
-import { HeaderHome } from "@/components/layout/HeaderHome";
+import { HeaderHomeWithSearch } from "@/components/layout/HeaderHomeWithSearch";
 import { Footer } from "@/components/layout/Footer";
 import { Star, Play, Trophy } from "lucide-react";
 import { FAQSchema, type FAQItem } from "@/components/common/FAQSchema";
@@ -13,6 +13,7 @@ import { GameGroupType, GROUP_DESCRIPTIONS } from "@/libs/constants/groups";
 import { safeJsonLd } from "@/libs/utils/safe-jsonld";
 import { TOPIC_CLUSTERS } from "@/libs/seo/topic-clusters";
 import { getAllPosts } from "@/libs/blog";
+import { Breadcrumbs } from "@/components/common/Breadcrumbs";
 
 // FAQ data per group for AEO
 const GROUP_FAQ: Record<GameGroupType, FAQItem[]> = {
@@ -266,9 +267,17 @@ export default async function GroupLandingPage({ params }: PageProps) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(itemListJsonLd) }} />
 
       <div className="max-w-6xl mx-auto px-4 py-6">
-        <HeaderHome />
+        <HeaderHomeWithSearch />
 
-        <main className="mt-16">
+        {/* Breadcrumbs — visual */}
+        <div className="mt-16 mb-4">
+          <Breadcrumbs items={[
+            { label: "Trang chủ", href: "/" },
+            { label: group.title },
+          ]} />
+        </div>
+
+        <main>
           {/* Hero Section */}
           <div className="relative overflow-hidden rounded-[3rem] bg-gradient-to-br from-orange-400 to-red-500 p-8 md:p-16 text-white mb-12 shadow-2xl">
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>

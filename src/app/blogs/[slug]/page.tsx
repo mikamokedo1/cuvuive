@@ -46,6 +46,7 @@ import { GAME_SEO } from "@/libs/constants/game-seo";
 import { TOPIC_CLUSTERS, GENERAL_PARENTING_SLUGS } from "@/libs/seo/topic-clusters";
 import { GROUPS } from "@/libs/constants/groups";
 import AIFact from "@/components/blog/AIFact";
+import { Breadcrumbs, type BreadcrumbItem } from "@/components/common/Breadcrumbs";
 
 export async function generateStaticParams() {
   const posts = await getAllPosts();
@@ -233,87 +234,26 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     day: "numeric",
   });
 
-  const breadcrumbItems = [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Trang chủ",
-      item: "https://cuthongminh.com/",
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "Blog",
-      item: "https://cuthongminh.com/blogs",
-    },
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { label: "Trang chủ", href: "/" },
+    { label: "Blog", href: "/blogs" },
   ];
 
   if (post.tags && post.tags.length > 0) {
     breadcrumbItems.push({
-      "@type": "ListItem",
-      position: 3,
-      name: post.tags[0],
-      item: `https://cuthongminh.com/blogs/tag/${encodeURIComponent(post.tags[0])}`,
-    });
-    breadcrumbItems.push({
-      "@type": "ListItem",
-      position: 4,
-      name: post.title,
-      item: `https://cuthongminh.com/blogs/${post.slug}`,
-    });
-  } else {
-    breadcrumbItems.push({
-      "@type": "ListItem",
-      position: 3,
-      name: post.title,
-      item: `https://cuthongminh.com/blogs/${post.slug}`,
+      label: post.tags[0],
+      href: `/blogs/tag/${encodeURIComponent(post.tags[0])}`,
     });
   }
 
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: breadcrumbItems,
-  };
+  breadcrumbItems.push({ label: post.title });
 
   return (
     <article className="container mx-auto px-6 max-w-3xl">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }} />
 
-      {/* Visual Breadcrumb */}
-      <nav aria-label="Breadcrumb" className="mb-8 pt-6">
-        <ol className="flex items-center space-x-2 text-sm text-slate-500 font-medium font-[family-name:var(--font-nunito-sans)] flex-wrap">
-          <li>
-            <Link href="/" className="hover:text-orange-500 transition-colors">
-              Trang chủ
-            </Link>
-          </li>
-          <li>
-            <span className="text-slate-300">/</span>
-          </li>
-          <li>
-            <Link href="/blogs" className="hover:text-orange-500 transition-colors">
-              Blog
-            </Link>
-          </li>
-          {post.tags && post.tags.length > 0 && (
-            <>
-              <li>
-                <span className="text-slate-300">/</span>
-              </li>
-              <li>
-                <Link
-                  href={`/blogs/tag/${encodeURIComponent(post.tags[0])}`}
-                  className="hover:text-orange-500 transition-colors"
-                >
-                  {post.tags[0]}
-                </Link>
-              </li>
-            </>
-          )}
-        </ol>
-      </nav>
+      {/* Breadcrumbs — visual + JSON-LD */}
+      <Breadcrumbs items={breadcrumbItems} className="pt-6" />
 
       {/* Article Header */}
       <header className="mb-12 text-center">

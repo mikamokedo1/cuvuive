@@ -1,6 +1,6 @@
 import { FileText } from "lucide-react";
 import type { Metadata } from "next";
-import { HeaderHome } from "@/components/layout/HeaderHome";
+import { HeaderHomeWithSearch } from "@/components/layout/HeaderHomeWithSearch";
 import { Footer } from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 export default function TermsPage() {
   return (
     <div className="min-h-screen bg-slate-50 font-[family-name:var(--font-nunito-sans)]">
-      <HeaderHome />
+      <HeaderHomeWithSearch />
 
       {/* Main Content */}
       <main className="container mx-auto px-6 py-12 md:py-20 max-w-4xl">

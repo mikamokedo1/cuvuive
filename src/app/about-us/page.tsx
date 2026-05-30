@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { HeaderHome } from "@/components/layout/HeaderHome";
+import { HeaderHomeWithSearch } from "@/components/layout/HeaderHomeWithSearch";
 import { Footer } from "@/components/layout/Footer";
 import { Brain, Heart, BookOpenText, Users, Gamepad2, Rocket, ShieldCheck, MessageSquareHeart } from "lucide-react";
 const LogoLong = "https://assets.cuthongminh.com/assets/logo.webp";
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
 export default function AboutUsPage() {
   return (
     <div className="min-h-screen bg-white font-[family-name:var(--font-nunito-sans)]">
-      <HeaderHome />
+      <HeaderHomeWithSearch />
 
       <main>
         {/* Hero Section */}

@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
-import { HeaderHome } from "@/components/layout/HeaderHome";
+import { HeaderHomeWithSearch } from "@/components/layout/HeaderHomeWithSearch";
 import { Footer } from "@/components/layout/Footer";
 import { Star, Play, Trophy, Sparkles } from "lucide-react";
 import { SpeakableSchema } from "@/components/common/SpeakableSchema";
@@ -118,7 +118,7 @@ export default async function AgeGroupLandingPage({ params }: PageProps) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(itemListJsonLd) }} />
 
       <div className="max-w-6xl mx-auto px-4 py-6">
-        <HeaderHome />
+        <HeaderHomeWithSearch />
 
         <main className="mt-16">
           {/* Hero Section */}

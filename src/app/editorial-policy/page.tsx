@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { HeaderHome } from "@/components/layout/HeaderHome";
+import { HeaderHomeWithSearch } from "@/components/layout/HeaderHomeWithSearch";
 import { Footer } from "@/components/layout/Footer";
 import {
   ShieldCheck,
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
 export default function EditorialPolicyPage() {
   return (
     <div className="min-h-screen bg-white font-[family-name:var(--font-nunito-sans)]">
-      <HeaderHome />
+      <HeaderHomeWithSearch />
 
       <main className="pt-[72px]">
         {/* Decorative Hero Section */}

@@ -17,7 +17,7 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import { GROUPS, GROUP_DESCRIPTIONS } from "@/libs/constants/groups";
 import { Footer } from "@/components/layout/Footer";
-import { HeaderHome } from "@/components/layout/HeaderHome";
+import { HeaderHomeWithSearch } from "@/components/layout/HeaderHomeWithSearch";
 import { FAQSchema, type FAQItem } from "@/components/common/FAQSchema";
 import { SpeakableSchema } from "@/components/common/SpeakableSchema";
 import { ScrollReveal } from "@/components/common/ScrollReveal";
@@ -118,7 +118,7 @@ export default function Home() {
     <div className="min-h-screen bg-slate-50 font-[family-name:var(--font-nunito-sans)] overflow-x-hidden">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }} />
       {/* Navigation */}
-      <HeaderHome />
+      <HeaderHomeWithSearch />
 
       <main className="pt-[72px]">
         {/* Hero Section */}
