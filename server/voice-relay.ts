@@ -59,8 +59,48 @@ const supabase: SupabaseClient = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY
 
 // ─── Quota Config ───────────────────────────────────────────────────
 
+/** Free/guest users: max 3 minutes per day (by IP) */
+const FREE_DAILY_LIMIT_SECONDS = 3 * 60; // 180s
 /** Premium users: max 20 minutes per day */
 const PREMIUM_DAILY_LIMIT_SECONDS = 20 * 60; // 1200s
+
+// ─── In-Memory IP Rate Limiter (free/guest users) ───────────────────
+
+interface IpUsage {
+  usedSeconds: number;
+  date: string; // YYYY-MM-DD — auto-resets on new day
+}
+
+const ipUsageMap = new Map<string, IpUsage>();
+
+function getIpUsage(ip: string): number {
+  const today = new Date().toISOString().split("T")[0];
+  const entry = ipUsageMap.get(ip);
+  if (!entry || entry.date !== today) {
+    ipUsageMap.set(ip, { usedSeconds: 0, date: today });
+    return 0;
+  }
+  return entry.usedSeconds;
+}
+
+function addIpUsage(ip: string, seconds: number): void {
+  if (seconds <= 0) return;
+  const today = new Date().toISOString().split("T")[0];
+  const entry = ipUsageMap.get(ip);
+  if (!entry || entry.date !== today) {
+    ipUsageMap.set(ip, { usedSeconds: seconds, date: today });
+  } else {
+    entry.usedSeconds += seconds;
+  }
+}
+
+// Clean up stale IPs every hour to prevent memory leaks
+setInterval(() => {
+  const today = new Date().toISOString().split("T")[0];
+  for (const [ip, entry] of ipUsageMap) {
+    if (entry.date !== today) ipUsageMap.delete(ip);
+  }
+}, 60 * 60 * 1000);
 
 // ─── Types ──────────────────────────────────────────────────────────
 
@@ -157,8 +197,13 @@ async function addUsedSeconds(userId: string, seconds: number): Promise<void> {
 const wss = new WebSocketServer({ port: PORT });
 console.log(`🦉 Voice Relay Server running on ws://localhost:${PORT}`);
 
-wss.on("connection", (clientWs: WebSocket) => {
-  console.log("📱 Client connected");
+wss.on("connection", (clientWs: WebSocket, req) => {
+  // Extract client IP (supports X-Forwarded-For behind nginx/proxy)
+  const clientIp =
+    (req.headers["x-forwarded-for"] as string)?.split(",")[0]?.trim() ||
+    req.socket.remoteAddress ||
+    "unknown";
+  console.log(`📱 Client connected from ${clientIp}`);
 
   let geminiSession: any = null;
   let isReady = false;
@@ -170,6 +215,7 @@ wss.on("connection", (clientWs: WebSocket) => {
   let sessionStartTime: number | null = null;
   let remainingQuotaSeconds: number | null = null;
   let quotaCutoffTimer: ReturnType<typeof setTimeout> | null = null;
+  let isGuestSession = false;
 
   // Send typed message to client
   function sendToClient(data: Record<string, unknown>) {
@@ -178,13 +224,18 @@ wss.on("connection", (clientWs: WebSocket) => {
     }
   }
 
-  // Save session usage to DB
+  // Save session usage to DB (premium) or in-memory (guest)
   async function saveSessionUsage() {
-    if (!sessionUserId || !sessionStartTime) return;
+    if (!sessionStartTime) return;
     const elapsed = Math.round((Date.now() - sessionStartTime) / 1000);
     if (elapsed > 0) {
-      console.log(`💾 Saving usage: user=${sessionUserId}, seconds=${elapsed}`);
-      await addUsedSeconds(sessionUserId, elapsed);
+      if (sessionUserId) {
+        console.log(`💾 Saving usage: user=${sessionUserId}, seconds=${elapsed}`);
+        await addUsedSeconds(sessionUserId, elapsed);
+      } else if (isGuestSession) {
+        console.log(`💾 Saving guest IP usage: ip=${clientIp}, seconds=${elapsed}`);
+        addIpUsage(clientIp, elapsed);
+      }
     }
     sessionStartTime = null; // prevent double-save
   }
@@ -228,7 +279,7 @@ wss.on("connection", (clientWs: WebSocket) => {
       if (token) {
         const userId = await verifyToken(token);
         if (!userId) {
-          // Token is invalid/expired — continue as guest (free 1-min session)
+          // Token is invalid/expired — fall through to guest rate limit below
           console.log("⚠️ Invalid token — falling back to guest mode");
         } else {
           sessionUserId = userId;
@@ -251,7 +302,26 @@ wss.on("connection", (clientWs: WebSocket) => {
           remainingQuotaSeconds = remaining;
         }
       }
-      // If no token or invalid token → guest/free user (no backend tracking)
+
+      // Guest/free user: enforce IP-based rate limit (3 min/day)
+      if (!sessionUserId) {
+        isGuestSession = true;
+        const ipUsed = getIpUsage(clientIp);
+        const ipRemaining = FREE_DAILY_LIMIT_SECONDS - ipUsed;
+        console.log(`📊 Guest ${clientIp}: used=${ipUsed}s, remaining=${ipRemaining}s`);
+
+        if (ipRemaining <= 0) {
+          sendToClient({
+            type: "server.quota_exceeded",
+            usedSeconds: ipUsed,
+            limitSeconds: FREE_DAILY_LIMIT_SECONDS,
+            remainingSeconds: 0,
+          });
+          return;
+        }
+
+        remainingQuotaSeconds = ipRemaining;
+      }
 
       let connectionAttempts = 0;
       const maxAttempts = GEMINI_API_KEYS.length;
@@ -302,12 +372,13 @@ wss.on("connection", (clientWs: WebSocket) => {
 
                 // Auto-cut timer: force disconnect when quota runs out
                 if (remainingQuotaSeconds !== null && remainingQuotaSeconds > 0) {
+                  const effectiveLimit = isGuestSession ? FREE_DAILY_LIMIT_SECONDS : PREMIUM_DAILY_LIMIT_SECONDS;
                   quotaCutoffTimer = setTimeout(async () => {
-                    console.log(`⏰ Quota cutoff for user ${sessionUserId}`);
+                    console.log(`⏰ Quota cutoff for ${sessionUserId ?? `guest ${clientIp}`}`);
                     sendToClient({
                       type: "server.quota_exceeded",
-                      usedSeconds: PREMIUM_DAILY_LIMIT_SECONDS,
-                      limitSeconds: PREMIUM_DAILY_LIMIT_SECONDS,
+                      usedSeconds: effectiveLimit,
+                      limitSeconds: effectiveLimit,
                       remainingSeconds: 0,
                     });
                     await closeGeminiSession();

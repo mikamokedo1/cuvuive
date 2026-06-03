@@ -17,8 +17,8 @@ const RELAY_URL =
       : `ws://${window.location.hostname}:8081` // dev: direct to relay port
     : "ws://localhost:8081";
 
-/** Free/guest users: max 60 seconds per session */
-const FREE_SESSION_LIMIT_MS = 60_000;
+/** Free/guest users: max 3 minutes per session */
+const FREE_SESSION_LIMIT_MS = 3 * 60_000;
 /** Premium users: max 10 minutes per session */
 const PREMIUM_SESSION_LIMIT_MS = 10 * 60_000;
 
@@ -154,7 +154,7 @@ export function VoiceChat({ topicInstruction, greeting }: VoiceChatProps) {
         title: "Phiên trò chuyện đã hết",
         description: isPremium
           ? "Bạn đã trò chuyện được 10 phút. Bấm kết nối lại để tiếp tục nhé!"
-          : "Phiên miễn phí 1 phút đã hết. Đăng ký Premium để tiếp tục trò chuyện!",
+          : "Phiên miễn phí 3 phút đã hết. Đăng ký Premium để tiếp tục trò chuyện!",
         primaryAction: isPremium
           ? { label: "Kết nối lại", onClick: handleStart, color: "green" as const }
           : !isLoggedIn
