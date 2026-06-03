@@ -88,6 +88,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.5,
     },
+    {
+      url: `${baseUrl}/cong-cu`,
+      lastModified: getLatestMtime("src/app/cong-cu/page.tsx"),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/cong-cu/chieu-cao-can-nang`,
+      lastModified: getLatestMtime("src/app/cong-cu/chieu-cao-can-nang/page.tsx"),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/cong-cu/ten-tieng-anh-cho-be`,
+      lastModified: getLatestMtime("src/app/cong-cu/ten-tieng-anh-cho-be/page.tsx"),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
   ];
 
   // Group landing pages (e.g. /tro-choi-tu-duy, /tro-choi-toan-hoc)
