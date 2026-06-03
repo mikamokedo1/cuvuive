@@ -71,7 +71,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Cú Thông Minh — Trò Chơi Giáo Dục Miễn Phí Cho Bé 3-8 Tuổi",
     description:
-      "Cho bé vừa học vừa chơi với 20+ trò chơi tương tác: toán, chữ cái, mê cung, pha màu. An toàn, không quảng cáo. 1,000+ phụ huynh tin dùng!",
+      "Cho bé vừa học vừa chơi với 100+ trò chơi tương tác: toán, chữ cái, tư duy logic, mê cung. An toàn 100%, không quảng cáo. 1,000+ phụ huynh tin dùng!",
     url: "https://cuthongminh.com",
     siteName: "Cú Thông Minh",
     locale: "vi_VN",
@@ -91,7 +91,7 @@ export const metadata: Metadata = {
     creator: "@cuthongminh",
     title: "Cú Thông Minh — Trò Chơi Giáo Dục Miễn Phí Cho Bé 3-8 Tuổi",
     description:
-      "Cho bé vừa học vừa chơi với 20+ trò chơi tương tác: toán, chữ cái, mê cung, pha màu. An toàn, không quảng cáo. Trải nghiệm ngay!",
+      "Cho bé vừa học vừa chơi với 100+ trò chơi tương tác: toán, chữ cái, tư duy logic, mê cung. An toàn 100%, không quảng cáo. Trải nghiệm ngay!",
   },
   icons: {
     icon: [
@@ -131,8 +131,8 @@ export default async function RootLayout({
     <html lang="vi">
       <head>
         {/* Explicit hreflang tags for global SEO */}
-        <link rel="alternate" hrefLang="vi" href="https://cuthongminh.com/" />
-        <link rel="alternate" hrefLang="x-default" href="https://cuthongminh.com/" />
+        <link rel="alternate" hrefLang="vi" href="https://cuthongminh.com" />
+        <link rel="alternate" hrefLang="x-default" href="https://cuthongminh.com" />
         {/* Preconnect to external domains for faster resource loading */}
         <link rel="preconnect" href="https://assets.cuthongminh.com" />
         <link rel="dns-prefetch" href="https://assets.cuthongminh.com" />
