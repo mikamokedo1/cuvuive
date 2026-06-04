@@ -25,8 +25,8 @@ fi
 echo "   Using env file: $ENV_FILE"
 
 # Step 1: Build Next.js locally (Mac has more RAM than VPS or Docker Desktop)
-echo "📦 Building Next.js locally (using full Mac RAM)..."
-npm run build
+echo "📦 Building Next.js + Voice Relay locally (using full Mac RAM)..."
+npm run build:all
 
 if [ $? -ne 0 ]; then
     echo "❌ Failed to build Next.js app locally."
@@ -94,6 +94,7 @@ sshpass -p "$VPS_PASS" ssh -o StrictHostKeyChecking=no "$VPS_USER@$VPS_IP" "\
   docker run -d --name cuthongminh_web \
     --restart unless-stopped \
     -p 3000:3000 \
+    -p 8081:8081 \
     -e PORT=3000 \
     -e NODE_ENV=production \
     --env-file .env.production \

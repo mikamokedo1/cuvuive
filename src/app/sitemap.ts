@@ -65,6 +65,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.5,
     },
     {
+      url: `${baseUrl}/editorial-policy`,
+      lastModified: getLatestMtime("src/app/editorial-policy/page.tsx"),
+      changeFrequency: "monthly",
+      priority: 0.5,
+    },
+    {
       url: `${baseUrl}/gioi-thieu-kiem-tien`,
       lastModified: getLatestMtime("src/app/gioi-thieu-kiem-tien/page.tsx", "src/app/gioi-thieu-kiem-tien/layout.tsx"),
       changeFrequency: "monthly",
@@ -81,6 +87,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: getLatestMtime("src/app/upgrade/page.tsx"),
       changeFrequency: "monthly",
       priority: 0.5,
+    },
+    {
+      url: `${baseUrl}/cong-cu`,
+      lastModified: getLatestMtime("src/app/cong-cu/page.tsx"),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/cong-cu/chieu-cao-can-nang`,
+      lastModified: getLatestMtime("src/app/cong-cu/chieu-cao-can-nang/page.tsx"),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/cong-cu/ten-tieng-anh-cho-be`,
+      lastModified: getLatestMtime("src/app/cong-cu/ten-tieng-anh-cho-be/page.tsx"),
+      changeFrequency: "monthly",
+      priority: 0.8,
     },
   ];
 

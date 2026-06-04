@@ -2,7 +2,7 @@
 
 import { createClient } from "@/libs/supabase/client";
 import type { User } from "@supabase/supabase-js";
-import { number, object, string } from "yup";
+import { boolean, number, object, string } from "yup";
 
 export interface AccountProfileFormValues {
   kidName: string;
@@ -10,6 +10,7 @@ export interface AccountProfileFormValues {
   age: number;
   sex: string;
   playTimerMinutes?: number;
+  weeklyReport?: boolean;
 }
 
 export const accountProfileSchema = object({
@@ -20,6 +21,7 @@ export const accountProfileSchema = object({
   age: number().required("Vui lòng chọn tuổi"),
   sex: string().required("Vui lòng chọn giới tính"),
   playTimerMinutes: number().min(0).notRequired(),
+  weeklyReport: boolean().notRequired(),
 });
 
 export function getAccountProfileInitialValues(
@@ -36,6 +38,7 @@ export function getAccountProfileInitialValues(
     ...(includePlayTimerMinutes
       ? { playTimerMinutes: Number(user?.user_metadata?.playTimerMinutes ?? 15) }
       : {}),
+    weeklyReport: (user?.user_metadata?.weeklyReport as boolean | undefined) ?? true,
   };
 }
 
@@ -46,6 +49,15 @@ export async function updateAccountProfile(
   const supabase = createClient();
   const includePlayTimerMinutes = options?.includePlayTimerMinutes ?? false;
 
+  // Also update the weeklyReportEnabled flag in the users DB table
+  if (values.weeklyReport !== undefined) {
+    fetch("/api/user/weekly-report", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ enabled: values.weeklyReport }),
+    }).catch(console.error);
+  }
+
   return supabase.auth.updateUser({
     data: {
       kidName: values.kidName,
@@ -55,6 +67,7 @@ export async function updateAccountProfile(
       ...(includePlayTimerMinutes && values.playTimerMinutes !== undefined
         ? { playTimerMinutes: Number(values.playTimerMinutes) }
         : {}),
+      weeklyReport: values.weeklyReport ?? true,
     },
   });
 }

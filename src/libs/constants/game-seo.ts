@@ -1362,6 +1362,35 @@ const RAW_GAME_SEO: Record<string, GameSeoData> = {
     relatedGames: ["learn-english-vocab", "learn-alphabet"],
     relatedBlogs: [],
   },
+  "talk-with-owl": {
+    title: "Giao Tiếp Tiếng Anh với AI - Trò chơi giáo dục Cú Thông Minh",
+    description: "Bé luyện nói tiếng Anh với cô giáo AI Cú Thông Minh qua 3 bài học: Học từ mới, Học câu, Hỏi đáp giao tiếp. 10 chủ đề: Chào hỏi, Trái cây, Màu sắc, Số đếm, Con vật, Đồ ăn, Giao thông, Gia đình, Cơ thể, Dụng cụ học tập.",
+    keywords: [
+      "học giao tiếp tiếng anh cho bé",
+      "luyện nói tiếng anh trẻ em",
+      "tiếng anh giao tiếp mầm non",
+      "trò chuyện tiếng anh AI",
+      "học tiếng anh online cho bé",
+      "cô giáo AI dạy tiếng anh",
+      "tập nói tiếng anh cho trẻ",
+      "learn english speaking for kids",
+      "english conversation for children",
+      "tiếng anh cho bé 3-8 tuổi",
+    ],
+    seoText:
+      "Trò chơi Giao Tiếp Tiếng Anh giúp bé từ 3-8 tuổi luyện nói tiếng Anh qua 3 bài học AI với cô giáo Cú Thông Minh: Bài 1 — Học Từ Mới (AI dạy từng từ vựng), Bài 2 — Học Câu (AI dạy câu giao tiếp trong ngữ cảnh thực tế), Bài 3 — Hỏi Đáp (AI hội thoại tự do, đóng vai tình huống). 10 chủ đề quen thuộc: Chào Hỏi, Trái Cây, Màu Sắc, Số Đếm, Con Vật, Đồ Ăn, Giao Thông, Gia Đình, Cơ Thể Người và Dụng Cụ Học Tập.",
+    seoFeatures: [
+      "3 bài học AI: Học Từ Mới → Học Câu → Hỏi Đáp",
+      "10 chủ đề từ vựng phong phú",
+      "Cô giáo AI nói tiếng Việt xen tiếng Anh",
+      "Luyện phát âm và giao tiếp thực tế",
+    ],
+    ogImage: "https://assets.cuthongminh.com/assets/logo.webp",
+    relatedGames: ["learn-english-vocab", "learn-english-alphabet", "learn-animal"],
+    relatedBlogs: [
+      { slug: "luyen-noi-tieng-anh-cho-be-voi-ai", title: "Luyện Nói Tiếng Anh Cho Bé Với AI: Phương Pháp Vượt Trội" },
+    ],
+  },
 };
 
 export const GAME_SEO: Record<string, GameSeoData> = Object.fromEntries(

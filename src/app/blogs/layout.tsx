@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { HeaderHome } from "@/components/layout/HeaderHome";
+import { HeaderHomeWithSearch } from "@/components/layout/HeaderHomeWithSearch";
 import { Footer } from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export default function BlogLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-white font-[family-name:var(--font-nunito-sans)] flex flex-col">
-      <HeaderHome />
+      <HeaderHomeWithSearch />
 
       <main className="py-4 lg:py-8 flex-1 mt-16">{children}</main>
 

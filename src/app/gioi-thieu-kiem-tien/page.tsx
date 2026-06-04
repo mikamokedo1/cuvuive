@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ActionButton } from "@/components/common/ActionButton";
-import { HeaderHome } from "@/components/layout/HeaderHome";
+import { HeaderHomeWithSearch } from "@/components/layout/HeaderHomeWithSearch";
 import { Share2, Users, Gift, Wallet, ArrowRight, CheckCircle2, Shield, Clock, HelpCircle } from "lucide-react";
 import { FAQAccordionItem } from "@/components/common/FAQSchema";
 import { Footer } from "@/components/layout/Footer";
@@ -54,7 +54,7 @@ export default function ReferralIntroPage() {
         <div className="absolute bottom-20 right-1/3 w-48 h-24 bg-sky-100/40 rounded-full blur-2xl" />
       </div>
 
-      <HeaderHome />
+      <HeaderHomeWithSearch />
 
       <div className="relative z-10">
         {/* ===== HERO SECTION ===== */}

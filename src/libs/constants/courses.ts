@@ -1900,4 +1900,104 @@ export const COURSES: CourseDef[] = [
       },
     ],
   },
+  {
+    id: "talk-with-owl",
+    title: "Giao Tiếp",
+    description:
+      "Bé luyện giao tiếp tiếng Anh trực tiếp với Cú Thông Minh qua giọng nói AI. Cú dạy bé chào hỏi, hỏi đáp và trò chuyện bằng tiếng Anh.",
+    icon: "https://assets.cuthongminh.com/games/talk-with-owl/logo.webp",
+    type: "english",
+    groups: [
+      {
+        id: "greetings",
+        title: "Chào hỏi",
+        lessons: [
+          { id: "lesson1", title: "Học Từ Mới", isFree: true },
+          { id: "lesson2", title: "Học Câu", isFree: true },
+          { id: "lesson3", title: "Hỏi Đáp", isFree: true },
+        ],
+      },
+      {
+        id: "fruits",
+        title: "Trái Cây",
+        lessons: [
+          { id: "lesson1", title: "Học Từ Mới", isFree: true },
+          { id: "lesson2", title: "Học Câu", isFree: true },
+          { id: "lesson3", title: "Hỏi Đáp", isFree: true },
+        ],
+      },
+      {
+        id: "colors",
+        title: "Màu Sắc",
+        lessons: [
+          { id: "lesson1", title: "Học Từ Mới", isFree: true },
+          { id: "lesson2", title: "Học Câu", isFree: true },
+          { id: "lesson3", title: "Hỏi Đáp", isFree: true },
+        ],
+      },
+      {
+        id: "numbers",
+        title: "Số Đếm",
+        lessons: [
+          { id: "lesson1", title: "Học Từ Mới", isFree: true },
+          { id: "lesson2", title: "Học Câu", isFree: true },
+          { id: "lesson3", title: "Hỏi Đáp", isFree: true },
+        ],
+      },
+      {
+        id: "animals",
+        title: "Động Vật",
+        lessons: [
+          { id: "lesson1", title: "Học Từ Mới", isFree: true },
+          { id: "lesson2", title: "Học Câu", isFree: true },
+          { id: "lesson3", title: "Hỏi Đáp", isFree: true },
+        ],
+      },
+      {
+        id: "food",
+        title: "Đồ ăn",
+        lessons: [
+          { id: "lesson1", title: "Học Từ Mới", isFree: true },
+          { id: "lesson2", title: "Học Câu", isFree: true },
+          { id: "lesson3", title: "Hỏi Đáp", isFree: true },
+        ],
+      },
+      {
+        id: "transport",
+        title: "Giao thông",
+        lessons: [
+          { id: "lesson1", title: "Học Từ Mới", isFree: true },
+          { id: "lesson2", title: "Học Câu", isFree: true },
+          { id: "lesson3", title: "Hỏi Đáp", isFree: true },
+        ],
+      },
+      {
+        id: "family",
+        title: "Gia Đình",
+        lessons: [
+          { id: "lesson1", title: "Học Từ Mới", isFree: true },
+          { id: "lesson2", title: "Học Câu", isFree: true },
+          { id: "lesson3", title: "Hỏi Đáp", isFree: true },
+        ],
+      },
+      {
+        id: "body",
+        title: "Cơ thể",
+        lessons: [
+          { id: "lesson1", title: "Học Từ Mới", isFree: true },
+          { id: "lesson2", title: "Học Câu", isFree: true },
+          { id: "lesson3", title: "Hỏi Đáp", isFree: true },
+        ],
+      },
+      {
+        id: "school",
+        title: "Dụng cụ học tập",
+        lessons: [
+          { id: "lesson1", title: "Học Từ Mới", isFree: true },
+          { id: "lesson2", title: "Học Câu", isFree: true },
+          { id: "lesson3", title: "Hỏi Đáp", isFree: true },
+        ],
+      },
+    ],
+  },
 ];

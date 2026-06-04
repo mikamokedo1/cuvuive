@@ -7,6 +7,7 @@ const publicPaths = [
   "/auth",
   "/blogs",
   "/about-us",
+  "/editorial-policy",
   "/privacy",
   "/terms",
   "/feedback",
@@ -25,6 +26,7 @@ const publicPaths = [
   "/sounds",
   "/upgrade",
   "/do-tuoi",
+  "/cong-cu",
 ];
 
 function isPublicPath(pathname: string): boolean {

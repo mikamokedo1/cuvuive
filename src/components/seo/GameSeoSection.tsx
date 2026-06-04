@@ -4,6 +4,7 @@ import { safeJsonLd } from "@/libs/utils/safe-jsonld";
 import { COURSES } from "@/libs/constants/courses";
 import { GROUPS } from "@/libs/constants/groups";
 import Image from "next/image";
+import { Breadcrumbs } from "@/components/common/Breadcrumbs";
 
 interface GameSeoSectionProps {
   gameId: string;
@@ -52,32 +53,6 @@ export function GameSeoSection({ gameId }: GameSeoSectionProps) {
     },
   };
 
-  // BreadcrumbList JSON-LD (Fix #4)
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Trang chủ",
-        item: "https://cuthongminh.com",
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Trò chơi",
-        item: "https://cuthongminh.com/games",
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: gameTitle,
-        item: gameUrl,
-      },
-    ],
-  };
-
   // Optional VideoObject JSON-LD (Fix #11)
   const videoJsonLd = seo.videoUrl
     ? {
@@ -108,12 +83,19 @@ export function GameSeoSection({ gameId }: GameSeoSectionProps) {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }} />
       {videoJsonLd && (
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(videoJsonLd) }} />
       )}
 
       <section className="max-w-3xl mx-auto px-6 py-10 text-slate-600 font-[family-name:var(--font-nunito-sans)]">
+        {/* Visual Breadcrumb */}
+        <Breadcrumbs items={[
+          { label: "Trang chủ", href: "/" },
+          { label: "Trò chơi", href: "/games" },
+          ...(topic ? [{ label: topic.title, href: `/${topic.slug}` }] : []),
+          { label: gameTitle, href: `/games/${gameId}` },
+        ]} />
+
         <h2 className="text-2xl font-bold text-slate-800 mb-4 font-[family-name:var(--font-baloo-2)]">
           {gameTitle}
         </h2>
