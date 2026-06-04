@@ -75,7 +75,7 @@ export function ExitIntentPopup() {
             <span className="flex items-center gap-1.5">🚫 Không QC</span>
           </div>
           <Link
-            href="/auth/sign-up"
+            href="/games"
             onClick={() => setVisible(false)}
             className="flex items-center justify-center gap-2 w-full py-4 bg-[#FF9C01] hover:bg-orange-500 text-slate-900 font-bold rounded-full text-lg shadow-[0_8px_30px_rgb(255,156,1,0.3)] hover:shadow-[0_8px_30px_rgb(255,156,1,0.4)] active:scale-[0.98] transition-all"
           >

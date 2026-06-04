@@ -26,6 +26,11 @@ const ClientDynamicComponents = dynamic(
   { ssr: false },
 );
 
+const SessionTrackerListener = dynamic(
+  () => import("@/features/parent-dashboard/SessionTrackerListener").then((mod) => mod.SessionTrackerListener),
+  { ssr: false },
+);
+
 export function AppProviders() {
   return (
     <>
@@ -34,6 +39,7 @@ export function AppProviders() {
       <ReferralTracker />
       <PaywallListener />
       <ClientDynamicComponents />
+      <SessionTrackerListener />
     </>
   );
 }

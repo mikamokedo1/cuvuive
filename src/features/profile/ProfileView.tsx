@@ -119,6 +119,21 @@ export function ProfileView({ courses, currentStreak, activeDays }: ProfileViewP
             activeDays={activeDays}
           />
 
+          {/* Dashboard Link Banner */}
+          <Link
+            href="/parent-dashboard"
+            className="mt-6 flex items-center justify-between p-5 bg-gradient-to-r from-orange-50 to-amber-50 rounded-2xl border-2 border-orange-200 hover:border-orange-300 hover:shadow-md transition-all group"
+          >
+            <div className="flex items-center gap-3">
+              <span className="text-2xl">📊</span>
+              <div>
+                <p className="font-bold text-slate-900 text-sm">Xem thống kê chi tiết</p>
+                <p className="text-xs text-slate-500">Biểu đồ, phân tích thế mạnh & gợi ý bài học</p>
+              </div>
+            </div>
+            <span className="text-orange-500 group-hover:translate-x-1 transition-transform font-bold">→</span>
+          </Link>
+
           <div className="mt-12 mb-8">
             <LessonTitle tag="h1">Tiến độ học tập</LessonTitle>
           </div>

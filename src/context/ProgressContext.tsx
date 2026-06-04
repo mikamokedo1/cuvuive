@@ -123,6 +123,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
             group_id: record.groupId,
             lesson_id: record.lessonId,
             completed_at: new Date().toISOString(),
+            score: 100,
           }));
 
           supabase
@@ -204,6 +205,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
             group_id: groupId,
             lesson_id: lessonId,
             completed_at: new Date().toISOString(),
+            score: 100,
           });
 
           if (insertError) {

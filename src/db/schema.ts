@@ -9,6 +9,7 @@ export const users = pgTable("users", {
   subscriptionId: text("subscription_id"), // Stripe Subscription ID
   currentStreak: integer("current_streak").default(0),
   lastActiveDate: timestamp("last_active_date", { withTimezone: true }),
+  weeklyReportEnabled: boolean("weekly_report_enabled").default(true),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
 });
 
@@ -293,6 +294,32 @@ export const withdrawals = pgTable(
     return {
       userIdIdx: index("withdrawals_user_id_idx").on(table.userId),
       userStatusIdx: index("withdrawals_user_status_idx").on(table.userId, table.status),
+    };
+  },
+);
+
+// ============================================
+// LEARNING SESSIONS (Parent Dashboard)
+// ============================================
+
+export const learningSessions = pgTable(
+  "learning_sessions",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    courseId: text("course_id").notNull(),
+    startedAt: timestamp("started_at", { withTimezone: true }).notNull().defaultNow(),
+    endedAt: timestamp("ended_at", { withTimezone: true }),
+    durationSeconds: integer("duration_seconds").default(0),
+  },
+  (table) => {
+    return {
+      userIdIdx: index("learning_sessions_user_id_idx").on(table.userId),
+      userDateIdx: index("learning_sessions_user_date_idx").on(table.userId, table.startedAt),
     };
   },
 );

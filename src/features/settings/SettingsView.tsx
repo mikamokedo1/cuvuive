@@ -291,6 +291,34 @@ export function SettingsView() {
                 </p>
               </div>
 
+              {/* Weekly Report Setting */}
+              <div className="space-y-1">
+                <label htmlFor="weeklyReport" className="block text-sm font-semibold text-gray-700 ml-1">
+                  📊 Báo cáo tuần qua email
+                </label>
+                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-xl border-2 border-gray-200">
+                  <div>
+                    <p className="text-sm font-medium text-gray-700">Gửi email tổng kết hàng tuần</p>
+                    <p className="text-xs text-gray-400 mt-0.5">Thống kê thời gian học, bài hoàn thành và thế mạnh của bé</p>
+                  </div>
+                  <button
+                    type="button"
+                    role="switch"
+                    aria-checked={formik.values.weeklyReport !== false}
+                    onClick={() => formik.setFieldValue("weeklyReport", !formik.values.weeklyReport)}
+                    className={`relative w-12 h-7 rounded-full transition-colors duration-200 ${
+                      formik.values.weeklyReport !== false ? "bg-orange-500" : "bg-gray-300"
+                    }`}
+                  >
+                    <span
+                      className={`absolute top-0.5 left-0.5 w-6 h-6 bg-white rounded-full shadow-sm transition-transform duration-200 ${
+                        formik.values.weeklyReport !== false ? "translate-x-5" : ""
+                      }`}
+                    />
+                  </button>
+                </div>
+              </div>
+
               {generalError && (
                 <div className="bg-red-50 text-red-500 text-sm p-3 rounded-xl flex items-center gap-2 font-medium">
                   <ExclamationIcon className="h-5 w-5" />

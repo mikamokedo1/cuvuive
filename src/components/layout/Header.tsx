@@ -15,7 +15,7 @@ import { SignoutIcon } from "../common/Icons";
 import { useUser } from "@/context/UserContext";
 import { Dropdown } from "@/components/common/Dropdown";
 import { useAccess } from "@/context/AccessContext";
-import { Settings, MessageSquare, Trophy, Banknote } from "lucide-react";
+import { Settings, MessageSquare, Trophy, Banknote, LayoutDashboard } from "lucide-react";
 
 const Header = () => {
   const pathname = usePathname();
@@ -94,6 +94,13 @@ const Header = () => {
               >
                 <Trophy size={18} />
                 Tiến độ học tập
+              </Link>
+              <Link
+                href="/parent-dashboard"
+                className="w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 rounded-lg font-bold text-sm transition-colors flex items-center gap-2"
+              >
+                <LayoutDashboard size={18} />
+                Góc phụ huynh
               </Link>
               <Link
                 href="/settings"
