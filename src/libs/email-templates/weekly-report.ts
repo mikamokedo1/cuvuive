@@ -21,9 +21,7 @@ export function renderWeeklyReportEmail(data: WeeklyReportData): string {
   const minutesDelta =
     prevTotalMinutes > 0 ? Math.round(((totalMinutes - prevTotalMinutes) / prevTotalMinutes) * 100) : 0;
   const lessonsDelta =
-    prevLessonsCompleted > 0
-      ? Math.round(((lessonsCompleted - prevLessonsCompleted) / prevLessonsCompleted) * 100)
-      : 0;
+    prevLessonsCompleted > 0 ? Math.round(((lessonsCompleted - prevLessonsCompleted) / prevLessonsCompleted) * 100) : 0;
 
   const deltaText = (value: number) => {
     if (value > 0) return `<span style="color: #10b981;">↑ +${value}%</span>`;
@@ -47,7 +45,7 @@ export function renderWeeklyReportEmail(data: WeeklyReportData): string {
         <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background: linear-gradient(135deg, #ff9c01, #f97316); border-radius: 20px; padding: 30px; text-align: center;">
           <tr>
             <td>
-              <h1 style="color: white; font-size: 24px; margin: 0 0 8px;">🦉 Cú Thông Minh</h1>
+              <h1 style="color: white; font-size: 24px; margin: 0 0 8px;"><img src="https://assets.cuthongminh.com/assets/logo-long.webp" alt="Cú Thông Minh" style="width: 256px; height: 56px;" /></h1>
               <p style="color: rgba(255,255,255,0.9); font-size: 14px; margin: 0;">Báo cáo tuần của <strong>${kidName}</strong></p>
             </td>
           </tr>

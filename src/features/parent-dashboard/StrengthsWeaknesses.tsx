@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ThumbsUp, AlertTriangle, Lightbulb, ArrowRight } from "lucide-react";
 import type { CategoryStat, LessonSuggestion } from "@/libs/actions/dashboard";
 import { GROUPS } from "@/libs/constants/groups";
@@ -20,6 +21,10 @@ export function StrengthsWeaknesses({ categories, suggestions }: StrengthsWeakne
     return group ? `/${group.slug}` : "#";
   };
 
+  const getGroup = (category: string) => {
+    return GROUPS.find((g) => g.id === category);
+  };
+
   return (
     <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
       <h2 className="text-xl font-bold text-slate-900 font-[family-name:var(--font-baloo-2)] mb-6">
@@ -37,14 +42,24 @@ export function StrengthsWeaknesses({ categories, suggestions }: StrengthsWeakne
           </div>
           <div className="flex flex-wrap gap-2">
             {strengths.map((s) => {
-              const href = getHref(s.category);
+              const group = getGroup(s.category);
+              const href = group ? `/${group.slug}` : "#";
               return (
                 <Link
                   key={s.category}
                   href={href}
-                  className="px-3 py-1.5 bg-emerald-50 text-emerald-700 rounded-full text-xs font-bold border border-emerald-200 hover:bg-emerald-100 hover:border-emerald-300 hover:scale-[1.02] transition-all cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 text-emerald-700 rounded-full text-xs font-bold border border-emerald-200 hover:bg-emerald-100 hover:border-emerald-300 hover:scale-[1.02] transition-all cursor-pointer"
                 >
-                  ✅ {s.categoryTitle} ({s.percentage}%)
+                  {group?.icon && (
+                    <Image
+                      src={group.icon}
+                      alt={s.categoryTitle}
+                      width={16}
+                      height={16}
+                      className="w-4 h-4 object-contain"
+                    />
+                  )}
+                  <span>{s.categoryTitle} ({s.percentage}%)</span>
                 </Link>
               );
             })}
@@ -63,14 +78,24 @@ export function StrengthsWeaknesses({ categories, suggestions }: StrengthsWeakne
           </div>
           <div className="flex flex-wrap gap-2">
             {weaknesses.map((w) => {
-              const href = getHref(w.category);
+              const group = getGroup(w.category);
+              const href = group ? `/${group.slug}` : "#";
               return (
                 <Link
                   key={w.category}
                   href={href}
-                  className="px-3 py-1.5 bg-amber-50 text-amber-700 rounded-full text-xs font-bold border border-amber-200 hover:bg-amber-100 hover:border-amber-300 hover:scale-[1.02] transition-all cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 text-amber-700 rounded-full text-xs font-bold border border-amber-200 hover:bg-amber-100 hover:border-amber-300 hover:scale-[1.02] transition-all cursor-pointer"
                 >
-                  ⚠️ {w.categoryTitle} ({w.percentage}%)
+                  {group?.icon && (
+                    <Image
+                      src={group.icon}
+                      alt={w.categoryTitle}
+                      width={16}
+                      height={16}
+                      className="w-4 h-4 object-contain"
+                    />
+                  )}
+                  <span>{w.categoryTitle} ({w.percentage}%)</span>
                 </Link>
               );
             })}

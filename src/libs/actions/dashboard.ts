@@ -342,6 +342,35 @@ export async function getLessonSuggestionsAction(): Promise<LessonSuggestion[]> 
 
   const completedSet = new Set(completed.map((r) => `${r.courseId}:${r.groupId}:${r.lessonId}`));
 
+  // Helper to check if a group is unlocked based on completion of the previous group
+  const isGroupUnlocked = (course: typeof COURSES[number], groupId: string) => {
+    const groupIndex = course.groups.findIndex((g) => g.id === groupId);
+    if (groupIndex === 0) return true;
+    if (groupIndex === -1) return false;
+
+    // The previous group must be fully completed
+    const prevGroup = course.groups[groupIndex - 1];
+    return prevGroup.lessons.every((l) =>
+      completedSet.has(`${course.id}:${prevGroup.id}:${l.id}`)
+    );
+  };
+
+  // Helper to check if a lesson is unlocked (the group must be unlocked, and it must be either
+  // the first lesson or the previous lesson in the group must be completed)
+  const isLessonUnlocked = (course: typeof COURSES[number], groupId: string, lessonId: string) => {
+    if (!isGroupUnlocked(course, groupId)) return false;
+
+    const group = course.groups.find((g) => g.id === groupId);
+    if (!group) return false;
+
+    const lessonIndex = group.lessons.findIndex((l) => l.id === lessonId);
+    if (lessonIndex === 0) return true;
+    if (lessonIndex === -1) return false;
+
+    const prevLesson = group.lessons[lessonIndex - 1];
+    return completedSet.has(`${course.id}:${groupId}:${prevLesson.id}`);
+  };
+
   // Get category analysis to find weakest categories
   const categoryAnalysis = await getCategoryAnalysisAction();
 
@@ -369,7 +398,11 @@ export async function getLessonSuggestionsAction(): Promise<LessonSuggestion[]> 
           if (suggestions.length >= MAX_SUGGESTIONS) break;
 
           const key = `${course.id}:${group.id}:${lesson.id}`;
-          if (!completedSet.has(key)) {
+          
+          // Only suggest if:
+          // 1. The user has not completed this lesson
+          // 2. The lesson is unlocked (group is unlocked and previous lesson is completed)
+          if (!completedSet.has(key) && isLessonUnlocked(course, group.id, lesson.id)) {
             const isWeak = category.percentage < 30;
             suggestions.push({
               courseId: course.id,

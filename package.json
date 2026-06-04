@@ -12,6 +12,7 @@
     "lint": "eslint",
     "db:generate-seed": "npx tsx src/db/generate-seed.ts",
     "db:seed": "npx tsx src/db/seed.ts",
+    "send-test-email": "npx tsx scripts/send-test-email.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
