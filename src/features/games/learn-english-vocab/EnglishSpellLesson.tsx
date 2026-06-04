@@ -28,7 +28,7 @@ export function EnglishSpellLesson({ words, onComplete }: EnglishSpellLessonProp
   const { speak: speakVi } = useTextToSpeech("vi-VN");
 
   const orderedWords = useMemo(() => {
-    return shuffleArray(words).slice(0, Math.min(words.length, 6));
+    return shuffleArray(words).slice(0, Math.min(words.length, 15));
   }, [words]);
 
   const currentWord = orderedWords[currentIndex];

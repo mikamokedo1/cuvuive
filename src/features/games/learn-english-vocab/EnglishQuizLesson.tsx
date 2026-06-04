@@ -26,7 +26,7 @@ export function EnglishQuizLesson({ words, onComplete }: EnglishQuizLessonProps)
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [hasMistake, setHasMistake] = useState(false);
   const [score, setScore] = useState(0);
-  const requiredRounds = Math.min(words.length, 6);
+  const requiredRounds = Math.min(words.length, 15);
   const { speak: speakEn } = useTextToSpeech("en-US");
   const { speak: speakVi } = useTextToSpeech("vi-VN");
 

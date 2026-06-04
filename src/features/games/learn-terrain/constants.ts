@@ -18,8 +18,8 @@ const ImgSavanna = "https://assets.cuthongminh.com/games/learn-terrain/savanna.w
 
 // Group 2 — Địa hình nước
 const ImgOcean = "https://assets.cuthongminh.com/games/learn-terrain/ocean.webp";
-const ImgRiver = "https://assets.cuthongminh.com/games/learn-terrain/river.webp";
-const ImgLake = "https://assets.cuthongminh.com/games/learn-terrain/lake.webp";
+const ImgRiver = "https://assets.cuthongminh.com/games/learn-terrain/song.webp";
+const ImgLake = "https://assets.cuthongminh.com/games/learn-terrain/bien.webp";
 const ImgWaterfall = "https://assets.cuthongminh.com/games/learn-terrain/waterfall.webp";
 const ImgIsland = "https://assets.cuthongminh.com/games/learn-terrain/island.webp";
 const ImgSwamp = "https://assets.cuthongminh.com/games/learn-terrain/swamp.webp";

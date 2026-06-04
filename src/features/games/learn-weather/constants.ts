@@ -31,7 +31,7 @@ const MuaKho = "https://assets.cuthongminh.com/games/learn-weather/mua_kho.webp"
 const MuaMua = "https://assets.cuthongminh.com/games/learn-weather/mua_mua.webp";
 
 // Clothing (Group 3 Special Lesson)
-const AoAm = "https://assets.cuthongminh.com/games/learn-weather/ao_am.webp";
+const AoAm = "https://assets.cuthongminh.com/games/learn-word/ao-khoac.webp";
 const KhanQuang = "https://assets.cuthongminh.com/games/learn-weather/khan_quang.webp";
 const AoMua = "https://assets.cuthongminh.com/games/learn-weather/ao_mua.webp";
 const ODu = "https://assets.cuthongminh.com/games/learn-weather/o_du.webp";
