@@ -117,7 +117,7 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Pr
       {/* Breadcrumbs — visual + JSON-LD */}
       <Breadcrumbs items={[
         { label: "Trang chủ", href: "/" },
-        { label: "Blog" },
+        { label: "Blog", href: "/blogs" },
       ]} />
 
       {/* Speakable Schema for AI voice reading */}

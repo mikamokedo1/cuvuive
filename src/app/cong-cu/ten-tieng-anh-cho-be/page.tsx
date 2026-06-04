@@ -87,21 +87,6 @@ export default function EnglishNameToolPage() {
     },
   };
 
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Trang chủ", item: "https://cuthongminh.com" },
-      { "@type": "ListItem", position: 2, name: "Công cụ", item: "https://cuthongminh.com/cong-cu" },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: "Tên tiếng Anh cho bé",
-        item: "https://cuthongminh.com/cong-cu/ten-tieng-anh-cho-be",
-      },
-    ],
-  };
-
   // Group names for static SEO tables
   const boyNames = ENGLISH_NAMES.filter((n) => n.gender === "boy");
   const girlNames = ENGLISH_NAMES.filter((n) => n.gender === "girl");
@@ -109,7 +94,6 @@ export default function EnglishNameToolPage() {
   return (
     <div className="min-h-screen bg-slate-50 font-[family-name:var(--font-nunito-sans)]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(pageSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
 
       <HeaderHomeWithSearch />
 
@@ -120,7 +104,7 @@ export default function EnglishNameToolPage() {
             items={[
               { label: "Trang chủ", href: "/" },
               { label: "Công cụ", href: "/cong-cu" },
-              { label: "Tên tiếng Anh cho bé" },
+              { label: "Tên tiếng Anh cho bé", href: "/cong-cu/ten-tieng-anh-cho-be" },
             ]}
           />
 

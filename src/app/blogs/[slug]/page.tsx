@@ -263,7 +263,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     });
   }
 
-  breadcrumbItems.push({ label: post.title });
+  breadcrumbItems.push({ label: post.title, href: `/blogs/${post.slug}` });
 
   return (
     <article className="container mx-auto px-6 max-w-3xl">

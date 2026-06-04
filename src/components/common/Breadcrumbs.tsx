@@ -4,7 +4,7 @@ import { safeJsonLd } from "@/libs/utils/safe-jsonld";
 
 export interface BreadcrumbItem {
   label: string;
-  href?: string; // undefined = current page (last item, not linked)
+  href: string;
 }
 
 interface BreadcrumbsProps {
@@ -20,7 +20,7 @@ interface BreadcrumbsProps {
  *   <Breadcrumbs items={[
  *     { label: "Trang chủ", href: "/" },
  *     { label: "Blog", href: "/blogs" },
- *     { label: "Bài viết hiện tại" },
+ *     { label: "Bài viết hiện tại", href: "/blogs/current-post" },
  *   ]} />
  */
 export function Breadcrumbs({ items, className = "" }: BreadcrumbsProps) {
@@ -32,13 +32,9 @@ export function Breadcrumbs({ items, className = "" }: BreadcrumbsProps) {
       "@type": "ListItem",
       position: index + 1,
       name: item.label,
-      ...(item.href
-        ? {
-            item: item.href.startsWith("http")
-              ? item.href
-              : `https://cuthongminh.com${item.href}`,
-          }
-        : {}),
+      item: item.href.startsWith("http")
+        ? item.href
+        : `https://cuthongminh.com${item.href}`,
     })),
   };
 
@@ -77,7 +73,7 @@ export function Breadcrumbs({ items, className = "" }: BreadcrumbsProps) {
                   </Link>
                 ) : (
                   <span className="inline-flex items-center gap-1.5 text-slate-700 font-semibold">
-                    {isFirst && !item.href && (
+                    {isFirst && (
                       <Home className="w-3.5 h-3.5" />
                     )}
                     <span className="line-clamp-1">{item.label}</span>

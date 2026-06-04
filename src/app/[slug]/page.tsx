@@ -228,25 +228,6 @@ export default async function GroupLandingPage({ params }: PageProps) {
   const topicCluster = TOPIC_CLUSTERS[group.id];
   const clusterPosts = allPosts.filter((post) => topicCluster.blogSlugs.includes(post.slug));
 
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Trang chủ",
-        item: "https://cuthongminh.com",
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: group.title,
-        item: `https://cuthongminh.com/${slug}`,
-      },
-    ],
-  };
-
   const itemListJsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -263,7 +244,6 @@ export default async function GroupLandingPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-[#FFF9F0] font-[family-name:var(--font-nunito-sans)]">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(itemListJsonLd) }} />
 
       <div className="max-w-6xl mx-auto px-4 py-6">
@@ -273,7 +253,7 @@ export default async function GroupLandingPage({ params }: PageProps) {
         <div className="mt-16 mb-4">
           <Breadcrumbs items={[
             { label: "Trang chủ", href: "/" },
-            { label: group.title },
+            { label: group.title, href: `/${slug}` },
           ]} />
         </div>
 

@@ -63,15 +63,6 @@ const TOOLS: Tool[] = [
 ];
 
 export default function ToolsPage() {
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Trang chủ", item: "https://cuthongminh.com" },
-      { "@type": "ListItem", position: 2, name: "Công cụ", item: "https://cuthongminh.com/cong-cu" },
-    ],
-  };
-
   const collectionSchema = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -87,7 +78,6 @@ export default function ToolsPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 font-[family-name:var(--font-nunito-sans)]">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(collectionSchema) }} />
 
       <HeaderHomeWithSearch />
@@ -98,7 +88,7 @@ export default function ToolsPage() {
           <Breadcrumbs
             items={[
               { label: "Trang chủ", href: "/" },
-              { label: "Công cụ" },
+              { label: "Công cụ", href: "/cong-cu" },
             ]}
           />
 

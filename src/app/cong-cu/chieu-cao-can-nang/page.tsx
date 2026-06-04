@@ -101,25 +101,9 @@ export default function GrowthStandardsPage() {
     },
   };
 
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Trang chủ", item: "https://cuthongminh.com" },
-      { "@type": "ListItem", position: 2, name: "Công cụ", item: "https://cuthongminh.com/cong-cu" },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: "Chiều cao cân nặng trẻ em",
-        item: "https://cuthongminh.com/cong-cu/chieu-cao-can-nang",
-      },
-    ],
-  };
-
   return (
     <div className="min-h-screen bg-slate-50 font-[family-name:var(--font-nunito-sans)]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(pageSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
 
       <HeaderHomeWithSearch />
 
@@ -130,7 +114,7 @@ export default function GrowthStandardsPage() {
             items={[
               { label: "Trang chủ", href: "/" },
               { label: "Công cụ", href: "/cong-cu" },
-              { label: "Chiều cao cân nặng trẻ em" },
+              { label: "Chiều cao cân nặng trẻ em", href: "/cong-cu/chieu-cao-can-nang" },
             ]}
           />
 
