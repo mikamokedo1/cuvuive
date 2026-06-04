@@ -119,7 +119,7 @@ export default function EnglishNameToolPage() {
           <Breadcrumbs
             items={[
               { label: "Trang chủ", href: "/" },
-              { label: "Công cụ" },
+              { label: "Công cụ", href: "/cong-cu" },
               { label: "Tên tiếng Anh cho bé" },
             ]}
           />
@@ -127,16 +127,12 @@ export default function EnglishNameToolPage() {
           {/* Hero */}
           <div className="text-center mt-8 mb-10">
             <h1 className="text-3xl md:text-5xl font-extrabold font-[family-name:var(--font-baloo-2)] text-slate-900 mb-4 tracking-tight">
-              Tìm{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500">
-                Tên Tiếng Anh
-              </span>{" "}
-              Cho Bé
+              Tìm <span className="text-orange-500">Tên Tiếng Anh</span> Cho Bé
             </h1>
             <p className="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
               Nhập tên tiếng Việt của bé — nhận gợi ý tên tiếng Anh{" "}
-              <strong className="text-slate-700">cùng ý nghĩa</strong>. 70+ tên đẹp kèm phiên âm, nguồn gốc.
-              Miễn phí 100%.
+              <strong className="text-slate-700">cùng ý nghĩa</strong>. 70+ tên đẹp kèm phiên âm, nguồn gốc. Miễn phí
+              100%.
             </p>
           </div>
 
@@ -226,8 +222,9 @@ export default function EnglishNameToolPage() {
                   <div className="text-3xl mb-3">💡</div>
                   <h3 className="text-lg font-bold text-slate-900 mb-2">Cùng ý nghĩa</h3>
                   <p className="text-sm text-slate-600 leading-relaxed">
-                    Chọn tên Anh có nghĩa tương đương tên Việt. Ví dụ: bé tên <strong>Minh</strong> (sáng) → <strong>Lucas</strong> (ánh sáng),
-                    bé tên <strong>Hải</strong> → <strong>Dylan</strong> (con trai của biển).
+                    Chọn tên Anh có nghĩa tương đương tên Việt. Ví dụ: bé tên <strong>Minh</strong> (sáng) →{" "}
+                    <strong>Lucas</strong> (ánh sáng), bé tên <strong>Hải</strong> → <strong>Dylan</strong> (con trai
+                    của biển).
                   </p>
                 </div>
                 <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
@@ -242,8 +239,9 @@ export default function EnglishNameToolPage() {
                   <div className="text-3xl mb-3">🎯</div>
                   <h3 className="text-lg font-bold text-slate-900 mb-2">Cùng chữ cái đầu</h3>
                   <p className="text-sm text-slate-600 leading-relaxed">
-                    Dễ nhớ khi tên Anh và tên Việt bắt đầu cùng chữ. Ví dụ: <strong>Thanh</strong> → <strong>Theo</strong>,
-                    <strong> Long</strong> → <strong>Leo</strong>, <strong>An</strong> → <strong>Ava</strong>.
+                    Dễ nhớ khi tên Anh và tên Việt bắt đầu cùng chữ. Ví dụ: <strong>Thanh</strong> →{" "}
+                    <strong>Theo</strong>,<strong> Long</strong> → <strong>Leo</strong>, <strong>An</strong> →{" "}
+                    <strong>Ava</strong>.
                   </p>
                 </div>
               </div>
@@ -259,7 +257,9 @@ export default function EnglishNameToolPage() {
                   <details key={i} className="bg-white rounded-2xl border border-slate-100 shadow-sm group">
                     <summary className="flex items-center justify-between gap-4 p-5 cursor-pointer font-bold text-slate-900 hover:text-orange-600 transition-colors">
                       {item.q}
-                      <span className="text-orange-500 shrink-0 transition-transform group-open:rotate-45 text-xl">+</span>
+                      <span className="text-orange-500 shrink-0 transition-transform group-open:rotate-45 text-xl">
+                        +
+                      </span>
                     </summary>
                     <p className="px-5 pb-5 text-slate-600 leading-relaxed text-sm">{item.a}</p>
                   </details>

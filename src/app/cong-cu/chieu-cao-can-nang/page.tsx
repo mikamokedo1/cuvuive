@@ -129,7 +129,7 @@ export default function GrowthStandardsPage() {
           <Breadcrumbs
             items={[
               { label: "Trang chủ", href: "/" },
-              { label: "Công cụ" },
+              { label: "Công cụ", href: "/cong-cu" },
               { label: "Chiều cao cân nặng trẻ em" },
             ]}
           />
@@ -144,9 +144,8 @@ export default function GrowthStandardsPage() {
               Trẻ Em
             </h1>
             <p className="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
-              Kiểm tra bé phát triển bình thường không theo{" "}
-              <strong className="text-slate-700">chuẩn WHO</strong>. Nhập thông tin bé — xem kết quả ngay lập tức.
-              Miễn phí 100%.
+              Kiểm tra bé phát triển bình thường không theo <strong className="text-slate-700">chuẩn WHO</strong>. Nhập
+              thông tin bé — xem kết quả ngay lập tức. Miễn phí 100%.
             </p>
           </div>
 
@@ -161,9 +160,9 @@ export default function GrowthStandardsPage() {
                 Bảng Chiều Cao Cân Nặng Chuẩn WHO Cho Bé 0-8 Tuổi
               </h2>
               <p className="text-slate-600 leading-relaxed mb-6">
-                Dưới đây là bảng tham chiếu chiều cao và cân nặng theo chuẩn Tổ chức Y tế Thế giới (WHO) cho trẻ em
-                từ sơ sinh đến 8 tuổi. Bảng thể hiện 5 mức percentile: 3%, 15%, 50% (trung bình), 85% và 97%.
-                Trẻ phát triển bình thường khi nằm trong khoảng percentile 15-85.
+                Dưới đây là bảng tham chiếu chiều cao và cân nặng theo chuẩn Tổ chức Y tế Thế giới (WHO) cho trẻ em từ
+                sơ sinh đến 8 tuổi. Bảng thể hiện 5 mức percentile: 3%, 15%, 50% (trung bình), 85% và 97%. Trẻ phát
+                triển bình thường khi nằm trong khoảng percentile 15-85.
               </p>
               <WHOTable />
             </section>
@@ -177,19 +176,38 @@ export default function GrowthStandardsPage() {
                 <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
                   <h3 className="text-lg font-bold text-slate-900 mb-3">📏 Đo chiều cao</h3>
                   <ul className="space-y-2 text-slate-600 text-sm">
-                    <li className="flex gap-2"><span className="text-orange-500 font-bold">•</span> <strong>Bé dưới 2 tuổi:</strong> Đo chiều dài nằm trên mặt phẳng cứng, dùng thước dây</li>
-                    <li className="flex gap-2"><span className="text-orange-500 font-bold">•</span> <strong>Bé từ 2 tuổi:</strong> Đo đứng thẳng, chân trần, lưng áp tường</li>
-                    <li className="flex gap-2"><span className="text-orange-500 font-bold">•</span> Mắt nhìn thẳng, hai tay buông tự nhiên</li>
-                    <li className="flex gap-2"><span className="text-orange-500 font-bold">•</span> Đo vào buổi sáng (chiều cao cao nhất trong ngày)</li>
+                    <li className="flex gap-2">
+                      <span className="text-orange-500 font-bold">•</span> <strong>Bé dưới 2 tuổi:</strong> Đo chiều dài
+                      nằm trên mặt phẳng cứng, dùng thước dây
+                    </li>
+                    <li className="flex gap-2">
+                      <span className="text-orange-500 font-bold">•</span> <strong>Bé từ 2 tuổi:</strong> Đo đứng thẳng,
+                      chân trần, lưng áp tường
+                    </li>
+                    <li className="flex gap-2">
+                      <span className="text-orange-500 font-bold">•</span> Mắt nhìn thẳng, hai tay buông tự nhiên
+                    </li>
+                    <li className="flex gap-2">
+                      <span className="text-orange-500 font-bold">•</span> Đo vào buổi sáng (chiều cao cao nhất trong
+                      ngày)
+                    </li>
                   </ul>
                 </div>
                 <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
                   <h3 className="text-lg font-bold text-slate-900 mb-3">⚖️ Đo cân nặng</h3>
                   <ul className="space-y-2 text-slate-600 text-sm">
-                    <li className="flex gap-2"><span className="text-orange-500 font-bold">•</span> Cân vào buổi sáng, sau khi đi vệ sinh</li>
-                    <li className="flex gap-2"><span className="text-orange-500 font-bold">•</span> Mặc quần áo mỏng hoặc chỉ mặc tã</li>
-                    <li className="flex gap-2"><span className="text-orange-500 font-bold">•</span> Dùng cân điện tử có độ chính xác 0.1 kg</li>
-                    <li className="flex gap-2"><span className="text-orange-500 font-bold">•</span> Đặt cân trên mặt sàn cứng, bằng phẳng</li>
+                    <li className="flex gap-2">
+                      <span className="text-orange-500 font-bold">•</span> Cân vào buổi sáng, sau khi đi vệ sinh
+                    </li>
+                    <li className="flex gap-2">
+                      <span className="text-orange-500 font-bold">•</span> Mặc quần áo mỏng hoặc chỉ mặc tã
+                    </li>
+                    <li className="flex gap-2">
+                      <span className="text-orange-500 font-bold">•</span> Dùng cân điện tử có độ chính xác 0.1 kg
+                    </li>
+                    <li className="flex gap-2">
+                      <span className="text-orange-500 font-bold">•</span> Đặt cân trên mặt sàn cứng, bằng phẳng
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -202,14 +220,29 @@ export default function GrowthStandardsPage() {
               </h2>
               <div className="bg-red-50 rounded-2xl p-6 border border-red-100">
                 <ul className="space-y-3 text-slate-700 text-sm">
-                  <li className="flex gap-2"><span className="text-red-500 font-bold text-lg">⚠️</span> Cân nặng hoặc chiều cao dưới percentile 3 hoặc trên 97</li>
-                  <li className="flex gap-2"><span className="text-red-500 font-bold text-lg">⚠️</span> Bé giảm cân liên tục trong 2-3 tháng liên tiếp</li>
-                  <li className="flex gap-2"><span className="text-red-500 font-bold text-lg">⚠️</span> Đường tăng trưởng đột ngột đi ngang hoặc đi xuống</li>
-                  <li className="flex gap-2"><span className="text-red-500 font-bold text-lg">⚠️</span> BMI vượt percentile 97 (thừa cân béo phì)</li>
-                  <li className="flex gap-2"><span className="text-red-500 font-bold text-lg">⚠️</span> Bé ăn kém, biếng ăn kéo dài ảnh hưởng tăng trưởng</li>
+                  <li className="flex gap-2">
+                    <span className="text-red-500 font-bold text-lg">⚠️</span> Cân nặng hoặc chiều cao dưới percentile 3
+                    hoặc trên 97
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-red-500 font-bold text-lg">⚠️</span> Bé giảm cân liên tục trong 2-3 tháng liên
+                    tiếp
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-red-500 font-bold text-lg">⚠️</span> Đường tăng trưởng đột ngột đi ngang hoặc
+                    đi xuống
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-red-500 font-bold text-lg">⚠️</span> BMI vượt percentile 97 (thừa cân béo phì)
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-red-500 font-bold text-lg">⚠️</span> Bé ăn kém, biếng ăn kéo dài ảnh hưởng
+                    tăng trưởng
+                  </li>
                 </ul>
                 <p className="text-xs text-slate-500 mt-4">
-                  Lưu ý: Công cụ này chỉ mang tính tham khảo. Luôn tham vấn bác sĩ nhi khoa để đánh giá toàn diện sức khỏe của bé.
+                  Lưu ý: Công cụ này chỉ mang tính tham khảo. Luôn tham vấn bác sĩ nhi khoa để đánh giá toàn diện sức
+                  khỏe của bé.
                 </p>
               </div>
             </section>
@@ -224,7 +257,9 @@ export default function GrowthStandardsPage() {
                   <details key={i} className="bg-white rounded-2xl border border-slate-100 shadow-sm group">
                     <summary className="flex items-center justify-between gap-4 p-5 cursor-pointer font-bold text-slate-900 hover:text-orange-600 transition-colors">
                       {item.q}
-                      <span className="text-orange-500 shrink-0 transition-transform group-open:rotate-45 text-xl">+</span>
+                      <span className="text-orange-500 shrink-0 transition-transform group-open:rotate-45 text-xl">
+                        +
+                      </span>
                     </summary>
                     <p className="px-5 pb-5 text-slate-600 leading-relaxed text-sm">{item.a}</p>
                   </details>
@@ -238,7 +273,8 @@ export default function GrowthStandardsPage() {
                 🦉 Bé phát triển toàn diện cùng Cú Thông Minh
               </h2>
               <p className="text-slate-500 mb-6 max-w-lg mx-auto">
-                Ngoài thể chất, sự phát triển trí tuệ cũng rất quan trọng! Cho bé khám phá 100+ trò chơi giáo dục tương tác.
+                Ngoài thể chất, sự phát triển trí tuệ cũng rất quan trọng! Cho bé khám phá 100+ trò chơi giáo dục tương
+                tác.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                 <Link
