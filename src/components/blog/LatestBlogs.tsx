@@ -13,9 +13,9 @@ export default async function LatestBlogs() {
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div className="max-w-2xl">
-            <h2 className="text-4xl md:text-5xl font-bold font-[family-name:var(--font-baloo-2)] text-slate-900 mb-6 tracking-tight">
+            <h3 className="text-4xl md:text-5xl font-bold font-[family-name:var(--font-baloo-2)] text-slate-900 mb-6 tracking-tight">
               Góc Chia Sẻ <span className="text-orange-500">Kinh Nghiệm</span>
-            </h2>
+            </h3>
             <p className="text-lg text-slate-500 leading-relaxed font-medium">
               Khám phá những bài viết mới nhất về phương pháp giáo dục sớm, kinh nghiệm nuôi dạy trẻ và các hoạt động
               vui chơi bổ ích tại nhà.
@@ -32,7 +32,7 @@ export default async function LatestBlogs() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {posts.map((post) => (
-            <BlogCard key={post.slug} post={post} headingLevel="h3" />
+            <BlogCard key={post.slug} post={post} headingLevel="h4" />
           ))}
         </div>
       </div>

@@ -15,7 +15,7 @@ import { SignoutIcon } from "../common/Icons";
 import { useUser } from "@/context/UserContext";
 import { Dropdown } from "@/components/common/Dropdown";
 import { useAccess } from "@/context/AccessContext";
-import { Settings, MessageSquare, Trophy, Banknote, LayoutDashboard } from "lucide-react";
+import { Settings, MessageSquare, Trophy, Banknote, LayoutDashboard, Medal } from "lucide-react";
 
 const Header = () => {
   const pathname = usePathname();
@@ -32,7 +32,7 @@ const Header = () => {
           width={64}
           height={64}
           priority
-          className="md:hidden cursor-pointer object-contain drop-shadow-md transition-transform duration-300 hover:scale-105"
+          className="lg:hidden cursor-pointer object-contain drop-shadow-md transition-transform duration-300 hover:scale-105"
         />
         <Image
           src={LogoLong}
@@ -40,9 +40,28 @@ const Header = () => {
           width={256}
           height={56}
           priority
-          className="hidden md:block cursor-pointer drop-shadow-md transition-transform duration-300 hover:scale-105"
+          className="hidden lg:block cursor-pointer drop-shadow-md transition-transform duration-300 hover:scale-105"
         />
       </Link>
+
+      {/* Desktop Navigation Menu - hidden on mobile */}
+      <nav className="hidden md:flex items-center gap-2" aria-label="Main navigation">
+        {[
+          { href: "/learn-progress", icon: <Trophy size={16} />, label: "Tiến độ" },
+          { href: "/parent-dashboard", icon: <LayoutDashboard size={16} />, label: "Phụ huynh" },
+          { href: "/earn", icon: <Banknote size={16} />, label: "Kiếm tiền" },
+          { href: "/feedback", icon: <MessageSquare size={16} />, label: "Góp ý" },
+        ].map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className="flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white text-orange-500 text-sm font-bold shadow-sm transition-all duration-200 hover:bg-orange-500 hover:text-white hover:shadow-md"
+          >
+            {item.icon}
+            <span>{item.label}</span>
+          </Link>
+        ))}
+      </nav>
 
       {user ? (
         <div className="relative">
@@ -96,6 +115,13 @@ const Header = () => {
                 Tiến độ học tập
               </Link>
               <Link
+                href="/leaderboard"
+                className="w-full text-left px-4 py-2 text-amber-700 hover:bg-amber-50 rounded-lg font-bold text-sm transition-colors flex items-center gap-2"
+              >
+                <Medal size={18} />
+                Bảng xếp hạng
+              </Link>
+              <Link
                 href="/parent-dashboard"
                 className="w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 rounded-lg font-bold text-sm transition-colors flex items-center gap-2"
               >
@@ -103,11 +129,11 @@ const Header = () => {
                 Góc phụ huynh
               </Link>
               <Link
-                href="/settings"
-                className="w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 rounded-lg font-bold text-sm transition-colors flex items-center gap-2"
+                href="/earn"
+                className="w-full text-left px-4 py-2 text-emerald-700 hover:bg-emerald-50 rounded-lg font-bold text-sm transition-colors flex items-center gap-2"
               >
-                <Settings size={18} />
-                Cài đặt
+                <Banknote size={18} />
+                Kiếm tiền
               </Link>
               <Link
                 href="/feedback"
@@ -117,12 +143,13 @@ const Header = () => {
                 Góp ý
               </Link>
               <Link
-                href="/earn"
-                className="w-full text-left px-4 py-2 text-emerald-700 hover:bg-emerald-50 rounded-lg font-bold text-sm transition-colors flex items-center gap-2"
+                href="/settings"
+                className="w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 rounded-lg font-bold text-sm transition-colors flex items-center gap-2"
               >
-                <Banknote size={18} />
-                Kiếm tiền
+                <Settings size={18} />
+                Cài đặt
               </Link>
+
               <button
                 onClick={handleLogout}
                 className="cursor-pointer w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg font-bold text-sm transition-colors flex items-center gap-2"

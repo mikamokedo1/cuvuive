@@ -39,7 +39,7 @@ const beVietnamPro = Be_Vietnam_Pro({
 export const metadata: Metadata = {
   metadataBase: new URL("https://cuthongminh.com"),
   alternates: {
-    canonical: "/",
+    canonical: "https://cuthongminh.com",
     languages: {
       vi: "https://cuthongminh.com",
       "x-default": "https://cuthongminh.com",
@@ -130,9 +130,6 @@ export default async function RootLayout({
   return (
     <html lang="vi">
       <head>
-        {/* Explicit hreflang tags for global SEO */}
-        <link rel="alternate" hrefLang="vi" href="https://cuthongminh.com" />
-        <link rel="alternate" hrefLang="x-default" href="https://cuthongminh.com" />
         {/* Preconnect to external domains for faster resource loading */}
         <link rel="preconnect" href="https://assets.cuthongminh.com" />
         <link rel="dns-prefetch" href="https://assets.cuthongminh.com" />

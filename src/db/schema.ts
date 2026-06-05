@@ -323,3 +323,26 @@ export const learningSessions = pgTable(
     };
   },
 );
+
+// ============================================
+// LEADERBOARD SCORES (Cached/Materialized)
+// ============================================
+
+export const leaderboardScores = pgTable(
+  "leaderboard_scores",
+  {
+    userId: text("user_id")
+      .primaryKey()
+      .references(() => users.id, { onDelete: "cascade" }),
+    totalLessons: integer("total_lessons").notNull().default(0),
+    totalMinutes: integer("total_minutes").notNull().default(0),
+    currentStreak: integer("current_streak").notNull().default(0),
+    smartScore: integer("smart_score").notNull().default(0),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => {
+    return {
+      smartScoreIdx: index("idx_leaderboard_smart_score").on(table.smartScore),
+    };
+  },
+);

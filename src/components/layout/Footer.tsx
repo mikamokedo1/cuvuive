@@ -10,14 +10,20 @@ export function Footer() {
         <div className="flex flex-col md:flex-row gap-12 items-start justify-between mb-12">
           <div className="flex flex-col gap-6 max-w-xs text-center md:text-left">
             <div className="flex flex-col gap-4">
-              <Image src={LogoLong} alt="Cú Thông Minh - Trang chủ" width={220} height={48} className="mx-auto md:mx-0" />
+              <Image
+                src={LogoLong}
+                alt="Cú Thông Minh - Trang chủ"
+                width={220}
+                height={48}
+                className="mx-auto md:mx-0"
+              />
               <p className="text-slate-500 text-sm leading-relaxed">
                 Nền tảng học mà chơi số 1 cho bé, giúp con phát triển tư duy toàn diện qua những bài học sáng tạo.
               </p>
             </div>
-            
+
             <div className="flex flex-col gap-4">
-              <h3 className="font-bold text-slate-900 mb-1">Kết nối</h3>
+              <div className="font-bold text-slate-900 mb-1">Kết nối</div>
               <div className="flex gap-4 mb-2 justify-center md:justify-start">
                 <Link
                   href="https://www.facebook.com/CuthongminhOffical"
@@ -66,102 +72,169 @@ export function Footer() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-5 gap-10 w-full md:w-auto">
-            <div className="flex flex-col gap-4">
-              <h3 className="font-bold text-slate-900 mb-2">Khám phá</h3>
-              <Link href="/about-us" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
-                Giới thiệu về Cú Thông Minh
-              </Link>
-              <Link href="/blogs" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
-                Blog giáo dục mầm non
-              </Link>
-              <Link href="/games" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
-                Kho trò chơi giáo dục
-              </Link>
-              <Link
-                href="/upgrade"
-                className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors font-medium"
-              >
-                Nâng cấp Premium
-              </Link>
-              <Link
-                href="/gioi-thieu-kiem-tien"
-                className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors"
-              >
-                Giới thiệu bạn bè — Nhận hoa hồng
-              </Link>
-            </div>
+            <nav aria-label="Khám phá">
+              <div className="font-bold text-slate-900 mb-2">Khám phá</div>
+              <ul className="flex flex-col gap-4 list-none p-0 m-0">
+                <li>
+                  <Link href="/about-us" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
+                    Giới thiệu về Cú Thông Minh
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/blogs" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
+                    Blog giáo dục mầm non
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/games" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
+                    Kho trò chơi giáo dục
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/leaderboard" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
+                    🏆 Bảng xếp hạng
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/upgrade"
+                    className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors font-medium"
+                  >
+                    Nâng cấp Premium
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/gioi-thieu-kiem-tien"
+                    className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors"
+                  >
+                    Giới thiệu bạn bè — Nhận hoa hồng
+                  </Link>
+                </li>
+              </ul>
+            </nav>
 
-            <div className="flex flex-col gap-4">
-              <Link href="/cong-cu" className="font-bold text-slate-900 mb-2 hover:text-[#FF9C01] transition-colors">Công cụ</Link>
-              <Link href="/cong-cu/chieu-cao-can-nang" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
-                Tra cứu chiều cao cân nặng trẻ em
+            <nav aria-label="Công cụ">
+              <Link href="/cong-cu" className="font-bold text-slate-900 mb-2 block hover:text-[#FF9C01] transition-colors">
+                Công cụ
               </Link>
-              <Link href="/cong-cu/ten-tieng-anh-cho-be" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
-                Tìm tên tiếng Anh cho bé
-              </Link>
-            </div>
+              <ul className="flex flex-col gap-4 list-none p-0 m-0">
+                <li>
+                  <Link
+                    href="/cong-cu/chieu-cao-can-nang"
+                    className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors"
+                  >
+                    Tra cứu chiều cao cân nặng trẻ em
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/cong-cu/ten-tieng-anh-cho-be"
+                    className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors"
+                  >
+                    Tìm tên tiếng Anh cho bé
+                  </Link>
+                </li>
+              </ul>
+            </nav>
 
-            <div className="flex flex-col gap-4">
-              <h3 className="font-bold text-slate-900 mb-2">Theo độ tuổi</h3>
-              <Link href="/do-tuoi/3-tuoi" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
-                Trò chơi cho bé 3 tuổi
-              </Link>
-              <Link href="/do-tuoi/4-tuoi" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
-                Trò chơi cho bé 4 tuổi
-              </Link>
-              <Link href="/do-tuoi/5-tuoi" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
-                Bé 5 tuổi chuẩn bị vào lớp 1
-              </Link>
-              <Link href="/do-tuoi/6-8-tuoi" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
-                Trò chơi trí tuệ cho bé 6-8 tuổi
-              </Link>
-            </div>
+            <nav aria-label="Theo độ tuổi">
+              <div className="font-bold text-slate-900 mb-2">Theo độ tuổi</div>
+              <ul className="flex flex-col gap-4 list-none p-0 m-0">
+                <li>
+                  <Link href="/do-tuoi/3-tuoi" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
+                    Trò chơi cho bé 3 tuổi
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/do-tuoi/4-tuoi" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
+                    Trò chơi cho bé 4 tuổi
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/do-tuoi/5-tuoi" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
+                    Bé 5 tuổi chuẩn bị vào lớp 1
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/do-tuoi/6-8-tuoi" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
+                    Trò chơi trí tuệ cho bé 6-8 tuổi
+                  </Link>
+                </li>
+              </ul>
+            </nav>
 
-            <div className="flex flex-col gap-4">
-              <h3 className="font-bold text-slate-900 mb-2">Môn học</h3>
-              <div className="grid grid-cols-2 gap-x-8 gap-y-4 text-sm">
-                <Link href="/tro-choi-tu-duy" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
-                  Trò chơi tư duy logic
-                </Link>
-                <Link href="/tro-choi-my-thuat" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
-                  Bé học mỹ thuật sáng tạo
-                </Link>
-                <Link href="/ky-nang-song" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
-                  Kỹ năng sống cho bé
-                </Link>
-                <Link href="/dia-ly-tu-nhien" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
-                  Khám phá địa lý tự nhiên
-                </Link>
-                <Link href="/am-nhac" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
-                  Bé làm quen âm nhạc
-                </Link>
-                <Link href="/khoa-hoc" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
-                  Khoa học vui cho trẻ
-                </Link>
-                <Link href="/hoc-tieng-viet-cho-be" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
-                  Học tiếng Việt cho bé
-                </Link>
-                <Link href="/tro-choi-toan-hoc" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
-                  Toán học qua trò chơi
-                </Link>
-              </div>
-            </div>
+            <nav aria-label="Môn học">
+              <div className="font-bold text-slate-900 mb-2">Môn học</div>
+              <ul className="grid grid-cols-2 gap-x-8 gap-y-4 text-sm list-none p-0 m-0">
+                <li>
+                  <Link href="/tro-choi-tu-duy" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
+                    Trò chơi tư duy logic
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/tro-choi-my-thuat" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
+                    Bé học mỹ thuật sáng tạo
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/ky-nang-song" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
+                    Kỹ năng sống cho bé
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/dia-ly-tu-nhien" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
+                    Khám phá địa lý tự nhiên
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/am-nhac" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
+                    Bé làm quen âm nhạc
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/khoa-hoc" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
+                    Khoa học vui cho trẻ
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/hoc-tieng-viet-cho-be" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
+                    Học tiếng Việt cho bé
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/tro-choi-toan-hoc" className="text-slate-500 hover:text-[#FF9C01] transition-colors">
+                    Toán học qua trò chơi
+                  </Link>
+                </li>
+              </ul>
+            </nav>
 
-            <div className="flex flex-col gap-4">
-              <h3 className="font-bold text-slate-900 mb-2">Hỗ trợ</h3>
-              <Link href="/feedback" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
-                Gửi góp ý cho Cú Thông Minh
-              </Link>
-              <Link href="/editorial-policy" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
-                Chính sách biên tập & Giáo dục
-              </Link>
-              <Link href="/privacy" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
-                Chính sách bảo mật
-              </Link>
-              <Link href="/terms" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
-                Điều khoản sử dụng
-              </Link>
-            </div>
+            <nav aria-label="Hỗ trợ">
+              <div className="font-bold text-slate-900 mb-2">Hỗ trợ</div>
+              <ul className="flex flex-col gap-4 list-none p-0 m-0">
+                <li>
+                  <Link href="/feedback" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
+                    Gửi góp ý cho Cú Thông Minh
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/editorial-policy" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
+                    Chính sách biên tập & Giáo dục
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/privacy" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
+                    Chính sách bảo mật
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/terms" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
+                    Điều khoản sử dụng
+                  </Link>
+                </li>
+              </ul>
+            </nav>
           </div>
         </div>
 

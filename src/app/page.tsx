@@ -79,7 +79,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   alternates: {
-    canonical: "/",
+    canonical: "https://cuthongminh.com",
   },
 };
 
@@ -105,6 +105,12 @@ export default function Home() {
       "@type": "Offer",
       price: "0",
       priceCurrency: "VND",
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      bestRating: "5",
+      ratingCount: "1000",
     },
     publisher: {
       "@type": "Organization",
@@ -141,11 +147,11 @@ export default function Home() {
               </span>
             </h1>
 
-            <p className="text-xl md:text-2xl text-slate-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+            <h2 className="text-xl md:text-2xl text-slate-600 mb-12 max-w-3xl mx-auto leading-relaxed">
               Cú Thông Minh là nền tảng học tập dành cho trẻ mẫu giáo giúp trẻ học chữ cái, số đếm, màu sắc và hình học
               thông qua các trò chơi tương tác. Hàng trăm trò chơi tương tác lý thú giúp trẻ em từ 3-8 tuổi phát triển
               tư duy toán học, nhận thức không gian và làm quen ngôn ngữ một cách tự nhiên.
-            </p>
+            </h2>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
               <Link
@@ -230,12 +236,12 @@ export default function Home() {
         >
           <div className="container mx-auto px-6">
             <div className="text-center mb-20">
-              <h2
+              <h3
                 id="loi-ich"
                 className="text-4xl md:text-5xl font-bold font-[family-name:var(--font-baloo-2)] text-slate-900 mb-6 tracking-tight"
               >
                 Lợi ích khi là <span className="text-orange-500">Cú Thông Minh</span>
-              </h2>
+              </h3>
               <p className="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
                 Ứng dụng được thiết kế kỹ lưỡng dựa trên <strong>phương pháp giáo dục sớm</strong>, phù hợp với tâm lý
                 trẻ nhỏ.
@@ -248,9 +254,9 @@ export default function Home() {
                 <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 group-hover:bg-blue-200 group-hover:shadow-md transition-all duration-300 -rotate-3 text-blue-500 relative z-10">
                   <Brain className="w-8 h-8" />
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-4 font-[family-name:var(--font-baloo-2)] relative z-10">
+                <h4 className="text-2xl font-bold text-slate-900 mb-4 font-[family-name:var(--font-baloo-2)] relative z-10">
                   Phát triển toàn diện
-                </h3>
+                </h4>
                 <p className="text-slate-600 leading-relaxed font-medium relative z-10">
                   Rèn luyện khả năng quan sát, tư duy chiến lược và xử lý vấn đề qua từng thử thách lôi cuốn. Bé được{" "}
                   <strong>học toán đếm số</strong>, phép cộng trừ, nhận biết hình dạng,{" "}
@@ -265,9 +271,9 @@ export default function Home() {
                 <div className="w-16 h-16 bg-pink-100 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 group-hover:bg-pink-200 group-hover:shadow-md transition-all duration-300 rotate-3 text-pink-500 relative z-10">
                   <Heart className="w-8 h-8" />
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-4 font-[family-name:var(--font-baloo-2)] relative z-10">
+                <h4 className="text-2xl font-bold text-slate-900 mb-4 font-[family-name:var(--font-baloo-2)] relative z-10">
                   Tương tác thú vị
-                </h3>
+                </h4>
                 <p className="text-slate-600 leading-relaxed font-medium relative z-10">
                   Hình ảnh sắc nét, âm thanh sống động và nhân vật ngộ nghĩnh truyền cảm hứng học tập mỗi ngày. Mỗi{" "}
                   <strong>trò chơi giáo dục</strong> được thiết kế dựa trên nghiên cứu tâm lý trẻ em, kết hợp hoạt hình
@@ -281,9 +287,9 @@ export default function Home() {
                 <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 group-hover:bg-green-200 group-hover:shadow-md transition-all duration-300 rotate-6 text-green-500 relative z-10">
                   <Shield className="w-8 h-8" />
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-4 font-[family-name:var(--font-baloo-2)] relative z-10">
+                <h4 className="text-2xl font-bold text-slate-900 mb-4 font-[family-name:var(--font-baloo-2)] relative z-10">
                   Môi trường An toàn
-                </h3>
+                </h4>
                 <p className="text-slate-600 leading-relaxed font-medium relative z-10">
                   Tuyệt đối không có quảng cáo, không nội dung độc hại. Hệ thống theo dõi tiến độ học tập cho phép ba mẹ
                   nắm bắt quá trình phát triển của bé mỗi ngày. Dữ liệu cá nhân được bảo mật hoàn toàn, tuân thủ quy
@@ -308,9 +314,9 @@ export default function Home() {
                 <Trophy className="w-4 h-4 text-yellow-400" />
                 Kho tàng tri thức
               </div>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-[family-name:var(--font-baloo-2)] text-white mb-6">
-                Thế giới giải trí bất tận
-              </h2>
+              <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold font-[family-name:var(--font-baloo-2)] text-white mb-6">
+                Thế giới giải trí bất tận cho trẻ
+              </h3>
               <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-16 leading-relaxed font-medium">
                 Hơn 20+ thể loại trò chơi từ thế giới muôn loài, đồ vật, học chữ cái đến rèn luyện khả năng tính toán.
               </p>
@@ -383,19 +389,19 @@ export default function Home() {
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-100 text-orange-600 font-bold mb-6">
                   <Star className="w-4 h-4" /> Phương pháp học tập
                 </div>
-                <h2
+                <h3
                   id="phuong-phap"
                   className="text-4xl md:text-5xl font-bold font-[family-name:var(--font-baloo-2)] text-slate-900 mb-6 tracking-tight"
                 >
                   Phương pháp <span className="text-orange-500">Giáo dục sớm</span> tại Cú Thông Minh
-                </h2>
+                </h3>
               </div>
               <div className="flex flex-col gap-8 md:gap-12">
                 <div className="bg-white p-8 md:p-12 rounded-[2.5rem] shadow-sm border border-slate-100 flex flex-col md:flex-row items-center gap-8 md:gap-12 hover:shadow-md transition-shadow">
                   <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-slate-900 mb-4 font-[family-name:var(--font-baloo-2)]">
+                    <h4 className="text-2xl font-bold text-slate-900 mb-4 font-[family-name:var(--font-baloo-2)]">
                       Lấy cảm hứng từ Montessori & Play-based Learning
-                    </h3>
+                    </h4>
                     <p className="text-lg text-slate-600 leading-relaxed mb-4">
                       Tại Cú Thông Minh, chúng tôi áp dụng triết lý "Vừa học vừa chơi" (Play-based learning) kết hợp
                       cùng tinh hoa của phương pháp giáo dục sớm Montessori. Chúng tôi tin rằng trẻ em ở độ tuổi mầm non
@@ -419,9 +425,9 @@ export default function Home() {
 
                 <div className="bg-white p-8 md:p-12 rounded-[2.5rem] shadow-sm border border-slate-100 flex flex-col md:flex-row-reverse items-center gap-8 md:gap-12 hover:shadow-md transition-shadow">
                   <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-slate-900 mb-4 font-[family-name:var(--font-baloo-2)]">
+                    <h4 className="text-2xl font-bold text-slate-900 mb-4 font-[family-name:var(--font-baloo-2)]">
                       Môi trường học tập chủ động và an toàn
-                    </h3>
+                    </h4>
                     <p className="text-lg text-slate-600 leading-relaxed mb-4">
                       Chúng tôi hiểu nỗi lo của phụ huynh về thời gian sử dụng thiết bị điện tử. Vì vậy, Cú Thông Minh
                       được thiết kế giúp bé tương tác chủ động thay vì xem thụ động. Các trò chơi đòi hỏi bé phải suy
@@ -447,12 +453,12 @@ export default function Home() {
           <section className="py-24 bg-white relative">
             <div className="container mx-auto px-6 max-w-5xl">
               <div className="text-center mb-16">
-                <h2
+                <h3
                   id="phu-huynh"
                   className="text-4xl md:text-5xl font-bold font-[family-name:var(--font-baloo-2)] text-slate-900 mb-6 tracking-tight"
                 >
                   Phụ huynh nói gì về <span className="text-orange-500">Cú Thông Minh</span>?
-                </h2>
+                </h3>
                 <p className="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
                   Hàng ngàn gia đình đã tin công ứng dụng để làm bạn đồng hành cùng bé mỗi ngày.
                 </p>
@@ -468,12 +474,12 @@ export default function Home() {
           <section className="py-24 relative overflow-hidden bg-gradient-to-br from-[#FF9C01] to-orange-500">
             <div className="absolute inset-0 bg-[url('/patterns/cubes.png')] opacity-5 md:opacity-10 md:mix-blend-overlay"></div>
             <div className="container mx-auto px-6 relative z-10 text-center text-white">
-              <h2
+              <h3
                 id="bat-dau"
                 className="text-4xl md:text-6xl font-extrabold font-[family-name:var(--font-baloo-2)] mb-8 tracking-tight drop-shadow-md"
               >
                 Khơi dậy tiềm năng cùng bé
-              </h2>
+              </h3>
               <p className="text-xl md:text-2xl text-white/90 max-w-2xl mx-auto mb-12 font-medium drop-shadow-sm">
                 Tham gia cộng đồng phụ huynh tin dùng Cú Thông Minh để mang đến tương lai tươi sáng cho con bạn.
               </p>

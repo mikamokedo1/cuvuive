@@ -5,7 +5,7 @@ import { BlogPost } from "@/libs/blog";
 
 interface BlogCardProps {
   post: BlogPost;
-  headingLevel?: "h2" | "h3";
+  headingLevel?: "h2" | "h3" | "h4";
 }
 
 export default function BlogCard({ post, headingLevel = "h2" }: BlogCardProps) {

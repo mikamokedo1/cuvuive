@@ -210,6 +210,9 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
 
           if (insertError) {
             console.error("Error saving progress:", insertError);
+          } else {
+            // Fire-and-forget: refresh leaderboard score in the background
+            fetch("/api/leaderboard/refresh", { method: "POST" }).catch(() => {});
           }
         }
       } catch (error) {

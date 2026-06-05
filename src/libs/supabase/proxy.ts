@@ -27,6 +27,7 @@ const publicPaths = [
   "/upgrade",
   "/do-tuoi",
   "/cong-cu",
+  "/leaderboard",
 ];
 
 function isPublicPath(pathname: string): boolean {

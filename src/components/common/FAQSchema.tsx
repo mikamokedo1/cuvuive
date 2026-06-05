@@ -29,9 +29,9 @@ export function FAQSchema({ items, title, subtitle }: FAQSchemaProps) {
         <div className="container mx-auto px-6 max-w-4xl">
           {title && (
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold font-[family-name:var(--font-baloo-2)] text-slate-900 mb-6 tracking-tight">
+              <h3 className="text-4xl md:text-5xl font-bold font-[family-name:var(--font-baloo-2)] text-slate-900 mb-6 tracking-tight">
                 {title}
-              </h2>
+              </h3>
               {subtitle && <p className="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">{subtitle}</p>}
             </div>
           )}

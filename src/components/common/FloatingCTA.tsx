@@ -28,7 +28,7 @@ export function FloatingCTA() {
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-[80] md:hidden p-3 pb-[max(env(safe-area-inset-bottom),12px)] bg-white/90 backdrop-blur-md border-t border-slate-200 shadow-[0_-4px_12px_rgba(0,0,0,0.08)] animate-in slide-in-from-bottom duration-300">
+    <div className="fixed bottom-0 left-0 right-0 z-[40] md:hidden p-3 pb-[max(env(safe-area-inset-bottom),12px)] bg-white/90 backdrop-blur-md border-t border-slate-200 shadow-[0_-4px_12px_rgba(0,0,0,0.08)] animate-in slide-in-from-bottom duration-300">
       <Link
         href="/games"
         className="flex items-center justify-center gap-2 w-full py-3.5 bg-[#FF9C01] hover:bg-orange-500 text-slate-900 font-bold rounded-full text-base shadow-[0_4px_14px_0_rgba(255,156,1,0.39)] active:scale-[0.98] transition-all"
