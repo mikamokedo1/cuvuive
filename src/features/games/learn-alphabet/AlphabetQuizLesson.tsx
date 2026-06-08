@@ -9,6 +9,9 @@ import Image from "next/image";
 import { playButtonSound } from "@/libs/utils/playSound";
 import { FeedbackType } from "@/types/game";
 import { LoudSpeaker } from "@/libs/constants/game-assets";
+import { ActionButton } from "@/components/common/ActionButton";
+
+const MAP_INDEX_TO_COLOR = ["blue", "green", "orange", "purple"] as const;
 
 interface AlphabetQuizLessonProps {
   letters: LetterData[];
@@ -23,6 +26,7 @@ export function AlphabetQuizLesson({ letters, onComplete, requiredWins = 6 }: Al
   const [options, setOptions] = useState<LetterData[]>([]);
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState<FeedbackType>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
   // Generate new question
   const generateQuestion = () => {
@@ -42,6 +46,7 @@ export function AlphabetQuizLesson({ letters, onComplete, requiredWins = 6 }: Al
     setTargetLetter(target);
     setOptions(newOptions);
     setFeedback(null);
+    setSelectedId(null);
 
     // Auto speak question after a short delay
     setTimeout(() => {
@@ -59,6 +64,7 @@ export function AlphabetQuizLesson({ letters, onComplete, requiredWins = 6 }: Al
     if (feedback === "correct") return;
 
     playButtonSound();
+    setSelectedId(selected.id);
 
     if (selected.id === targetLetter.id) {
       speak(`Đúng rồi, ${targetLetter.word} có chữ ${targetLetter.letter}`);
@@ -77,7 +83,10 @@ export function AlphabetQuizLesson({ letters, onComplete, requiredWins = 6 }: Al
     } else {
       speak("Sai rồi, thử lại nhé");
       setFeedback("wrong");
-      setTimeout(() => setFeedback(null), 1000);
+      setTimeout(() => {
+        setFeedback(null);
+        setSelectedId(null);
+      }, 1000);
     }
   };
 
@@ -118,23 +127,41 @@ export function AlphabetQuizLesson({ letters, onComplete, requiredWins = 6 }: Al
 
       {/* Letter Options */}
       <div className="grid grid-cols-3 gap-6 md:gap-10 w-full max-w-xl justify-items-center mt-4">
-        {options.map((option) => (
-          <div
-            key={option.id}
-            onClick={() => handleOptionClick(option)}
-            className={`
-              relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-3xl shadow-lg border-4 bg-white
-              flex items-center justify-center cursor-pointer
-              transform transition-all duration-200 hover:scale-110 active:scale-95
-              ${feedback === "wrong" ? "opacity-30 grayscale" : ""}
-              ${feedback === "correct" && option.id === targetLetter.id ? "border-green-500 scale-110 shadow-green-200" : "border-white"}
-            `}
-          >
-            <span className="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-orange-500 via-pink-500 to-purple-500 select-none px-4 py-2 leading-tight">
-              {option.id}
-            </span>
-          </div>
-        ))}
+        {options.map((option, index) => {
+          const isSelected = selectedId === option.id;
+          const isCorrectAnswer = option.id === targetLetter.id;
+
+          // Determine button color based on response feedback
+          let btnColor: "green" | "orange" | "purple" | "blue" | "red" = MAP_INDEX_TO_COLOR[index % MAP_INDEX_TO_COLOR.length];
+          if (feedback === "wrong" && isSelected) {
+            btnColor = "red";
+          } else if (feedback === "correct" && isCorrectAnswer) {
+            btnColor = "green";
+          }
+
+          return (
+            <ActionButton
+              key={option.id}
+              onClick={() => handleOptionClick(option)}
+              disabled={feedback !== null}
+              variant="glossy"
+              color={btnColor}
+              size="auto"
+              clickPlaySound={false}
+              className={`
+                relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-3xl text-center font-black text-5xl
+                font-display text-white transition-all duration-300
+                ${feedback === null ? "hover:scale-110" : "cursor-default"}
+                ${feedback === "correct" && isCorrectAnswer ? "scale-110 shadow-green-200 shadow-xl" : ""}
+                ${feedback === "wrong" && isSelected ? "animate-shake shadow-red-200 shadow-lg" : ""}
+                ${feedback === "correct" && !isCorrectAnswer ? "opacity-40 scale-95" : ""}
+                ${feedback === "wrong" && !isSelected ? "opacity-40 scale-95" : ""}
+              `}
+            >
+              <span className="drop-shadow-md">{option.id}</span>
+            </ActionButton>
+          );
+        })}
       </div>
     </div>
   );

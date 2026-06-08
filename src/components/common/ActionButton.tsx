@@ -22,6 +22,7 @@ const buttonVariants = cva(
         orange: "from-orange-400 to-orange-600 shadow-[0_6px_0_#b45309]",
         purple: "from-purple-400 to-purple-600 shadow-[0_6px_0_#6b21a8]",
         blue: "from-cyan-400 to-blue-600 shadow-[0_6px_0_#0284c7]",
+        red: "from-rose-400 to-red-600 shadow-[0_6px_0_#991b1b]",
       },
 
       size: {
@@ -40,7 +41,7 @@ const buttonVariants = cva(
 );
 export interface ActionButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
-  color?: "green" | "orange" | "purple" | "blue";
+  color?: "green" | "orange" | "purple" | "blue" | "red";
   clickPlaySound?: boolean;
 }
 

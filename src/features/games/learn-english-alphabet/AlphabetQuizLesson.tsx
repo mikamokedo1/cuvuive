@@ -5,6 +5,9 @@ import Image from "next/image";
 import { AlphabetWord } from "./constants";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { CheckCircle2, XCircle } from "lucide-react";
+import { ActionButton } from "@/components/common/ActionButton";
+
+const MAP_INDEX_TO_COLOR = ["blue", "green", "orange", "purple"] as const;
 
 interface AlphabetQuizLessonProps {
   words: AlphabetWord[];
@@ -132,34 +135,45 @@ export function AlphabetQuizLesson({ words, onComplete }: AlphabetQuizLessonProp
         </div>
       </div>
 
-      {/* Answer options */}
-      <div className="grid grid-cols-2 gap-3 max-w-sm w-full">
-        {round.options.map((option) => {
+      <div className="grid grid-cols-2 gap-4 max-w-sm w-full">
+        {round.options.map((option, index) => {
           const isCorrectOption = option === round.correctWord.letter;
           const isSelected = selectedId === option;
 
+          // Determine button color based on response feedback
+          let btnColor: "green" | "orange" | "purple" | "blue" | "red" = MAP_INDEX_TO_COLOR[index % MAP_INDEX_TO_COLOR.length];
+          if (feedback === "wrong" && isSelected) {
+            btnColor = "red";
+          } else if (feedback === "correct" && isSelected) {
+            btnColor = "green";
+          }
+
           return (
-            <button
+            <ActionButton
               key={option}
               onClick={() => handleSelect(option)}
               disabled={feedback !== null}
+              variant="glossy"
+              color={btnColor}
+              size="auto"
+              clickPlaySound={false}
               className={`
-                relative py-4 px-3 rounded-2xl border-3 text-center font-black text-3xl
-                transition-all duration-300
-                ${feedback === null ? "bg-white hover:bg-blue-50 hover:scale-105 border-gray-200 cursor-pointer shadow-md" : "cursor-default"}
-                ${feedback === "correct" && isSelected ? "bg-green-100 border-green-500 scale-105 text-green-700" : ""}
-                ${feedback === "wrong" && isSelected ? "bg-red-100 border-red-400 text-red-600 animate-shake" : ""}
-                ${feedback !== null && !isSelected ? "opacity-40" : ""}
+                relative w-full py-6 rounded-3xl text-center font-black text-5xl
+                font-display text-white transition-all duration-300
+                ${feedback === null ? "hover:scale-105" : "cursor-default"}
+                ${feedback === "correct" && isSelected ? "scale-105 shadow-green-200 shadow-xl" : ""}
+                ${feedback === "wrong" && isSelected ? "animate-shake shadow-red-200 shadow-lg" : ""}
+                ${feedback !== null && !isSelected ? "opacity-40 scale-95" : ""}
               `}
             >
-              {option}
+              <span className="drop-shadow-md">{option}</span>
               {feedback === "correct" && isCorrectOption && (
-                <CheckCircle2 className="absolute -top-2 -right-2 w-7 h-7 text-green-500 fill-white" />
+                <CheckCircle2 className="absolute -top-3 -right-3 w-10 h-10 text-green-500 bg-white rounded-full p-1 shadow-md z-10 animate-scale" />
               )}
               {feedback === "wrong" && isSelected && (
-                <XCircle className="absolute -top-2 -right-2 w-7 h-7 text-red-400 fill-white" />
+                <XCircle className="absolute -top-3 -right-3 w-10 h-10 text-red-500 bg-white rounded-full p-1 shadow-md z-10 animate-scale" />
               )}
-            </button>
+            </ActionButton>
           );
         })}
       </div>
