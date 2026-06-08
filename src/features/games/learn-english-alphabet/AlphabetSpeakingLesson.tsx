@@ -59,8 +59,11 @@ export function AlphabetSpeakingLesson({ words, onComplete, isReviewMode = false
     name: w.letter,
     image: w.image,
     textRepresent: w.letter,
-    // Accept the letter
-    acceptedAnswers: [w.letter.toLowerCase(), w.letter],
+    // Use rich acceptedAnswers from constants (includes phonetic variants like "ay", "bee", "see")
+    // Fall back to just the letter if no acceptedAnswers defined
+    acceptedAnswers: w.acceptedAnswers?.length
+      ? w.acceptedAnswers
+      : [w.letter.toLowerCase(), w.letter],
   }));
 
   const handleNext = () => {
