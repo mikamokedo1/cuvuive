@@ -29,9 +29,9 @@ const emojiSvg = (emoji: string, bg: string) =>
   `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' rx='40' fill='%23${bg}'/%3E%3Ctext x='100' y='145' font-family='Arial, sans-serif' font-size='100' text-anchor='middle'%3E${encodeURIComponent(emoji)}%3C/text%3E%3C/svg%3E`;
 
 export const ALPHABET_WORDS: AlphabetWord[] = [
-  { id: "a", letter: "A", word: "Apple", vietnamese: "Quả Táo", image: Apple, acceptedAnswers: ["a", "ay"] },
+  { id: "a", letter: "A", word: "Apple", vietnamese: "Quả Táo", image: Apple, acceptedAnswers: ["a", "ay", "hey"] },
   { id: "b", letter: "B", word: "Banana", vietnamese: "Quả Chuối", image: Banana, acceptedAnswers: ["b", "bee", "be"] },
-  { id: "c", letter: "C", word: "Cat", vietnamese: "Con Mèo", image: Cat, acceptedAnswers: ["c", "see", "sea"] },
+  { id: "c", letter: "C", word: "Cat", vietnamese: "Con Mèo", image: Cat, acceptedAnswers: ["c", "see", "sea", "she"] },
   { id: "d", letter: "D", word: "Dog", vietnamese: "Con Chó", image: Dog, acceptedAnswers: ["d", "dee"] },
   { id: "e", letter: "E", word: "Elephant", vietnamese: "Con Voi", image: Elephant, acceptedAnswers: ["e", "ee"] },
   {
