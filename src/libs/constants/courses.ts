@@ -1784,6 +1784,44 @@ export const COURSES: CourseDef[] = [
     ],
   },
   {
+    id: "sequence-sort",
+    title: "Sắp Xếp",
+    description: "Bé học sắp xếp theo kích thước, số lượng và màu sắc.",
+    icon: "https://assets.cuthongminh.com/games/sequence-sort/logo.webp",
+    type: "logic",
+    groups: [
+      {
+        id: "group1",
+        title: "Kích Thước",
+        lessons: [
+          { id: "lesson1", title: "Nhỏ → Lớn", isFree: true },
+          { id: "lesson2", title: "Lớn → Nhỏ", isFree: true },
+          { id: "lesson3", title: "Thấp → Cao", isFree: true },
+          { id: "lesson4", title: "Cao → Thấp" },
+          { id: "lesson5", title: "Thử thách" },
+        ],
+      },
+      {
+        id: "group2",
+        title: "Số Lượng",
+        lessons: [
+          { id: "lesson1", title: "Ít → Nhiều", isFree: true },
+          { id: "lesson2", title: "Nhiều → Ít" },
+          { id: "lesson3", title: "Thử thách" },
+        ],
+      },
+      {
+        id: "group3",
+        title: "Màu Sắc",
+        lessons: [
+          { id: "lesson1", title: "Nhạt → Đậm", isFree: true },
+          { id: "lesson2", title: "Đậm → Nhạt" },
+          { id: "lesson3", title: "Thử thách" },
+        ],
+      },
+    ],
+  },
+  {
     id: "learn-english-vocab",
     title: "Học Từ Vựng",
     description: "Bé học từ vựng tiếng Anh cơ bản qua hình ảnh và phát âm: động vật, trái cây, màu sắc, số đếm.",

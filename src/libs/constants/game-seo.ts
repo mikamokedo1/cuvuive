@@ -1391,6 +1391,35 @@ const RAW_GAME_SEO: Record<string, GameSeoData> = {
       { slug: "luyen-noi-tieng-anh-cho-be-voi-ai", title: "Luyện Nói Tiếng Anh Cho Bé Với AI: Phương Pháp Vượt Trội" },
     ],
   },
+  "sequence-sort": {
+    title: "Sắp Xếp Thứ Tự cho bé - Trò chơi giáo dục Cú Thông Minh",
+    description:
+      "Bé học sắp xếp theo kích thước, số lượng và màu sắc qua trò chơi tương tác vui nhộn. Phát triển tư duy logic và khả năng so sánh.",
+    keywords: [
+      "sắp xếp thứ tự",
+      "trò chơi sắp xếp cho bé",
+      "so sánh kích thước",
+      "tư duy logic cho bé",
+      "bé học sắp xếp nhỏ lớn online",
+      "trò chơi so sánh số lượng cho trẻ",
+      "game tư duy sắp xếp cho trẻ mầm non",
+      "rèn luyện tư duy logic cho bé 3-6 tuổi",
+    ],
+    seoText:
+      "Trò chơi Sắp Xếp giúp bé từ 3-6 tuổi phát triển tư duy logic qua 3 dạng bài tập: sắp xếp theo kích thước (nhỏ đến lớn), sắp xếp theo số lượng (ít đến nhiều) và sắp xếp theo màu sắc (nhạt đến đậm). Bé sẽ quan sát, so sánh và nhấn chọn đúng thứ tự. Mỗi dạng có 3 bài học từ dễ đến thử thách.",
+    seoFeatures: [
+      "Sắp xếp theo kích thước",
+      "Sắp xếp theo số lượng",
+      "Sắp xếp theo màu sắc",
+      "Phát triển tư duy so sánh và logic",
+    ],
+    ogImage: "https://assets.cuthongminh.com/games/sequence-sort/logo.webp",
+    relatedGames: ["find-pattern", "odd-one-out", "mini-sudoku-kids"],
+    relatedBlogs: [
+      { slug: "day-be-tu-duy-logic", title: "Dạy Bé Tư Duy Logic" },
+      { slug: "loi-ich-tro-choi-tri-tue", title: "Lợi Ích Của Trò Chơi Trí Tuệ" },
+    ],
+  },
 };
 
 export const GAME_SEO: Record<string, GameSeoData> = Object.fromEntries(

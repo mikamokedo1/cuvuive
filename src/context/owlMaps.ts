@@ -418,4 +418,21 @@ export const MAP_PATHNAME_TO_TEXT: Record<string, string> = {
   "/games/talk-with-owl/family/lesson/lesson3": "Pé tập nói về gia đình nhé",
   "/games/talk-with-owl/body/lesson/lesson3": "Pé tập nói về cơ thể nhé",
   "/games/talk-with-owl/school/lesson/lesson3": "Pé tập nói về dụng cụ học tập nhé",
+  // sequence-sort
+  "/games/sequence-sort": "Pé học sắp xếp thứ tự nhé",
+  "/games/sequence-sort/group1": "Sắp xếp theo kích thước nhỏ lớn và cao thấp",
+  "/games/sequence-sort/group2": "Sắp xếp theo số lượng ít nhiều",
+  "/games/sequence-sort/group3": "Sắp xếp theo tông màu nhạt đậm",
+  "/games/sequence-sort/group1/lesson/lesson1": "Pé xếp các hình từ nhỏ đến lớn nhé",
+  "/games/sequence-sort/group1/lesson/lesson2": "Pé xếp các hình từ lớn đến nhỏ nhé",
+  "/games/sequence-sort/group1/lesson/lesson3": "Pé xếp các hình từ thấp đến cao nhé",
+  "/games/sequence-sort/group1/lesson/lesson4": "Pé xếp các hình từ cao đến thấp nhé",
+  "/games/sequence-sort/group1/lesson/lesson5": "Thử thách sắp xếp kích thước và chiều cao",
+  "/games/sequence-sort/group2/lesson/lesson1": "Pé xếp các hình từ ít đến nhiều nhé",
+  "/games/sequence-sort/group2/lesson/lesson2": "Pé xếp các hình từ nhiều đến ít nhé",
+  "/games/sequence-sort/group2/lesson/lesson3": "Thử thách sắp xếp số lượng",
+  "/games/sequence-sort/group3/lesson/lesson1": "Pé xếp các hình từ nhạt đến đậm nhé",
+  "/games/sequence-sort/group3/lesson/lesson2": "Pé xếp các hình từ đậm đến nhạt nhé",
+  "/games/sequence-sort/group3/lesson/lesson3": "Thử thách sắp xếp tông màu",
 };
+
