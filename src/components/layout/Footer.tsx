@@ -115,7 +115,10 @@ export function Footer() {
             </nav>
 
             <nav aria-label="Công cụ">
-              <Link href="/cong-cu" className="font-bold text-slate-900 mb-2 block hover:text-[#FF9C01] transition-colors">
+              <Link
+                href="/cong-cu"
+                className="font-bold text-slate-900 mb-2 block hover:text-[#FF9C01] transition-colors"
+              >
                 Công cụ
               </Link>
               <ul className="flex flex-col gap-4 list-none p-0 m-0">
@@ -142,22 +145,39 @@ export function Footer() {
               <div className="font-bold text-slate-900 mb-2">Theo độ tuổi</div>
               <ul className="flex flex-col gap-4 list-none p-0 m-0">
                 <li>
-                  <Link href="/do-tuoi/3-tuoi" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
+                  <Link
+                    href="/do-tuoi/3-tuoi"
+                    className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors"
+                  >
                     Trò chơi cho bé 3 tuổi
                   </Link>
                 </li>
                 <li>
-                  <Link href="/do-tuoi/4-tuoi" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
+                  <Link
+                    href="/do-tuoi/4-tuoi"
+                    className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors"
+                  >
                     Trò chơi cho bé 4 tuổi
                   </Link>
                 </li>
                 <li>
-                  <Link href="/do-tuoi/5-tuoi" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
+                  <Link
+                    href="/do-tuoi/5-tuoi"
+                    className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors"
+                  >
                     Bé 5 tuổi chuẩn bị vào lớp 1
                   </Link>
                 </li>
                 <li>
-                  <Link href="/do-tuoi/6-8-tuoi" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
+                  <Link href="/tien-lop-1" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
+                    Lộ trình Tiền Lớp 1
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/do-tuoi/6-8-tuoi"
+                    className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors"
+                  >
                     Trò chơi trí tuệ cho bé 6-8 tuổi
                   </Link>
                 </li>
@@ -219,7 +239,10 @@ export function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/editorial-policy" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
+                  <Link
+                    href="/editorial-policy"
+                    className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors"
+                  >
                     Chính sách biên tập & Giáo dục
                   </Link>
                 </li>

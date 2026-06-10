@@ -113,16 +113,16 @@ export function LeaderboardView({ entries, myRank }: LeaderboardViewProps) {
                       )}
                     </p>
                     {entry.email && (
-                      <p className="text-xs text-slate-400 truncate max-w-[120px] md:max-w-[200px]">
-                        {entry.email}
-                      </p>
+                      <p className="text-xs text-slate-400 truncate max-w-[120px] md:max-w-[200px]">{entry.email}</p>
                     )}
                   </div>
                 </div>
 
                 {/* Smart Score */}
                 <div className="col-span-3 md:col-span-3 text-center">
-                  <span className={`font-black text-base md:text-lg font-[family-name:var(--font-baloo-2)] ${medalStyle ? medalStyle.text : "text-slate-700"}`}>
+                  <span
+                    className={`font-black text-base md:text-lg font-[family-name:var(--font-baloo-2)] ${medalStyle ? medalStyle.text : "text-slate-700"}`}
+                  >
                     {entry.smartScore.toLocaleString("vi-VN")}
                   </span>
                   <span className="hidden md:inline text-xs text-slate-400 ml-1">điểm</span>

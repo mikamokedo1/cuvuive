@@ -1,15 +1,23 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Flame, TrendingUp, Gamepad2, Sparkles } from "lucide-react";
+import { Flame, TrendingUp, Gamepad2 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
+import { useUser } from "@/context/UserContext";
 import type { MyRankData } from "@/libs/actions/leaderboard";
+
+const avatarBoy = "https://assets.cuthongminh.com/assets/avatar-boy.webp";
+const avatarGirl = "https://assets.cuthongminh.com/assets/avatar-girl.webp";
 
 interface MyRankCardProps {
   data: MyRankData;
 }
 
 export function MyRankCard({ data }: MyRankCardProps) {
+  const { user } = useUser();
+  const avatarUrl = user?.user_metadata?.sex === "female" ? avatarGirl : avatarBoy;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -25,14 +33,12 @@ export function MyRankCard({ data }: MyRankCardProps) {
         {/* Header */}
         <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
-              <Sparkles className="w-6 h-6 text-yellow-200" />
+            <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center overflow-hidden border-2 border-white/30">
+              <Image src={avatarUrl} alt="Avatar" width={48} height={48} className="w-full h-full object-cover" />
             </div>
             <div>
               <p className="text-white/80 text-sm font-semibold">Thứ hạng của bạn</p>
-              <p className="text-2xl md:text-3xl font-black font-[family-name:var(--font-baloo-2)]">
-                #{data.rank}
-              </p>
+              <p className="text-2xl md:text-3xl font-black font-[family-name:var(--font-baloo-2)]">#{data.rank}</p>
             </div>
           </div>
           <div className="text-right">
@@ -67,7 +73,8 @@ export function MyRankCard({ data }: MyRankCardProps) {
           <div className="bg-white/10 backdrop-blur-sm rounded-xl px-4 py-3 flex items-center gap-3">
             <TrendingUp className="w-5 h-5 text-yellow-300 shrink-0" />
             <p className="text-sm font-semibold text-white/90">
-              Cần thêm <span className="font-black text-yellow-200">{data.pointsToNextRank.toLocaleString("vi-VN")}</span> điểm
+              Cần thêm{" "}
+              <span className="font-black text-yellow-200">{data.pointsToNextRank.toLocaleString("vi-VN")}</span> điểm
               để vượt <span className="font-black">{data.nextRankName}</span>!
             </p>
           </div>

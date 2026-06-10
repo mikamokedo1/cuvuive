@@ -300,6 +300,44 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Pre-Grade 1 Roadmap Banner */}
+        <ScrollReveal delay={100}>
+          <section className="py-8 bg-gradient-to-r from-orange-50 via-amber-50 to-yellow-50 border-y border-orange-100">
+            <div className="container mx-auto px-6 max-w-5xl">
+              <div className="bg-white rounded-[2rem] p-6 md:p-8 shadow-xl border border-orange-200/50 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8">
+                <div className="flex items-center gap-6">
+                  <div className="shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden border border-orange-200 shadow-md relative hidden sm:block">
+                    <Image
+                      src="https://vnlppyavpkuerviyszxg.supabase.co/storage/v1/object/public/blog-images/hero_chuan-bi-vao-lop-1-toan-dien-1780659661318.webp"
+                      alt="Lộ trình Tiền Lớp 1"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="text-left">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-100 text-orange-600 font-bold text-xs mb-2 border border-orange-200/50">
+                      <span>Dành riêng cho bé 5-6 tuổi</span>
+                    </div>
+                    <h3 className="text-2xl md:text-3xl font-extrabold font-[family-name:var(--font-baloo-2)] text-slate-900 leading-tight">
+                      Lộ Trình Tiền Lớp 1 Toàn Diện
+                    </h3>
+                    <p className="text-sm md:text-base text-slate-500 mt-2 leading-relaxed max-w-xl">
+                      Chuẩn bị hành trang vững chắc cho con tự tin bước vào lớp 1 với lộ trình 3 chặng chuẩn Montessori:
+                      Làm Quen ➔ Nền Tảng ➔ Tăng Tốc.
+                    </p>
+                  </div>
+                </div>
+                <Link
+                  href="/tien-lop-1"
+                  className="shrink-0 w-full md:w-auto px-8 py-4 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-extrabold rounded-2xl text-center shadow-[0_8px_30px_rgba(255,156,1,0.25)] hover:shadow-[0_8px_40px_rgba(255,156,1,0.4)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 text-base"
+                >
+                  Khám phá lộ trình
+                </Link>
+              </div>
+            </div>
+          </section>
+        </ScrollReveal>
+
         {/* Games Preview Section */}
         <ScrollReveal delay={100}>
           <section

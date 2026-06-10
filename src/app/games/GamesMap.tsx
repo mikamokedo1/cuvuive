@@ -98,7 +98,7 @@ export function GamesMap({ courses, staticCourses, groups }: GamesMapProps) {
       <WelcomeBackModal />
 
       {/* Map Container */}
-      <div className="relative w-full max-w-5xl md:aspect-[16/10] mt-4 z-10 transition-all px-4 sm:px-10 pt-10 pb-20 md:pt-30 min-h-[600px] flex items-center justify-center">
+      <div className="relative w-full max-w-5xl md:aspect-[16/10] z-10 transition-all px-4 sm:px-10 pt-10 pb-20 md:pt-30 min-h-[600px] flex items-center justify-center">
         <Image
           src={BgImage}
           alt="Bản đồ thế giới trò chơi"

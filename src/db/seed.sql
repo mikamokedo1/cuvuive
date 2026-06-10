@@ -1,6 +1,6 @@
 -- =============================================
 -- AUTO-GENERATED from constants/courses.ts
--- Generated at: 2026-05-30T07:30:26.979Z
+-- Generated at: 2026-06-09T10:11:05.528Z
 -- Do NOT edit manually. Run: npm run db:generate-seed
 -- =============================================
 
@@ -50,9 +50,10 @@ INSERT INTO courses (id, title, description, thumbnail, sort_index) VALUES
   ('learn-notes', 'Học Nốt Nhạc', 'Bé làm quen với các nốt nhạc Đồ Rê Mi trên khuông nhạc qua hình ảnh và âm thanh.', 'https://assets.cuthongminh.com/games/learn-notes/logo.webp', 40),
   ('learn-danger', 'Đồ Vật Nguy Hiểm', 'Bé học nhận biết các đồ vật nguy hiểm trong nhà và cách giữ an toàn.', 'https://assets.cuthongminh.com/games/learn-danger/logo.webp', 41),
   ('mini-sudoku-kids', 'Sudoku', 'Bé học suy luận logic qua bảng hình đơn giản, tìm ô còn thiếu theo quy luật hàng và cột.', 'https://assets.cuthongminh.com/games/mini-sudoku-kids/logo.webp', 42),
-  ('learn-english-vocab', 'Học Từ Vựng', 'Bé học từ vựng tiếng Anh cơ bản qua hình ảnh và phát âm: động vật, trái cây, màu sắc, số đếm.', 'https://assets.cuthongminh.com/games/learn-english-vocab/logo.webp', 43),
-  ('learn-english-alphabet', 'Bảng Chữ Cái', 'Bé học bảng chữ cái tiếng Anh từ A-Z qua các từ vựng sinh động.', 'https://assets.cuthongminh.com/games/learn-english-alphabet/logo.webp', 44),
-  ('talk-with-owl', 'Giao Tiếp', 'Bé luyện giao tiếp tiếng Anh trực tiếp với Cú Thông Minh qua giọng nói AI. Cú dạy bé chào hỏi, hỏi đáp và trò chuyện bằng tiếng Anh.', 'https://assets.cuthongminh.com/games/talk-with-owl/logo.webp', 45)
+  ('sequence-sort', 'Sắp Xếp', 'Bé học sắp xếp theo kích thước, số lượng và màu sắc.', 'https://assets.cuthongminh.com/games/sequence-sort/logo.webp', 43),
+  ('learn-english-vocab', 'Học Từ Vựng', 'Bé học từ vựng tiếng Anh cơ bản qua hình ảnh và phát âm: động vật, trái cây, màu sắc, số đếm.', 'https://assets.cuthongminh.com/games/learn-english-vocab/logo.webp', 44),
+  ('learn-english-alphabet', 'Bảng Chữ Cái', 'Bé học bảng chữ cái tiếng Anh từ A-Z qua các từ vựng sinh động.', 'https://assets.cuthongminh.com/games/learn-english-alphabet/logo.webp', 45),
+  ('talk-with-owl', 'Giao Tiếp', 'Bé luyện giao tiếp tiếng Anh trực tiếp với Cú Thông Minh qua giọng nói AI. Cú dạy bé chào hỏi, hỏi đáp và trò chuyện bằng tiếng Anh.', 'https://assets.cuthongminh.com/games/talk-with-owl/logo.webp', 46)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   description = EXCLUDED.description,
@@ -450,6 +451,15 @@ INSERT INTO groups (id, slug, course_id, title, sort_index) VALUES
   ('mini-sudoku-kids-group2', 'group2', 'mini-sudoku-kids', 'Sudoku hình ảnh 3×3', 2),
   ('mini-sudoku-kids-group3', 'group3', 'mini-sudoku-kids', 'Sudoku màu sắc', 3),
   ('mini-sudoku-kids-group4', 'group4', 'mini-sudoku-kids', 'Sudoku con vật', 4)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  sort_index = EXCLUDED.sort_index;
+
+-- Sắp Xếp Groups
+INSERT INTO groups (id, slug, course_id, title, sort_index) VALUES
+  ('sequence-sort-group1', 'group1', 'sequence-sort', 'Kích Thước', 1),
+  ('sequence-sort-group2', 'group2', 'sequence-sort', 'Số Lượng', 2),
+  ('sequence-sort-group3', 'group3', 'sequence-sort', 'Màu Sắc', 3)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   sort_index = EXCLUDED.sort_index;
@@ -1279,6 +1289,24 @@ INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) 
   ('mini-sudoku-kids-group4-lesson2', 'lesson2', 'mini-sudoku-kids-group4', 'mini-sudoku-kids', 'Tìm ô đúng', false, 2),
   ('mini-sudoku-kids-group4-lesson3', 'lesson3', 'mini-sudoku-kids-group4', 'mini-sudoku-kids', 'Suy luận nhanh', false, 3),
   ('mini-sudoku-kids-group4-lesson4', 'lesson4', 'mini-sudoku-kids-group4', 'mini-sudoku-kids', 'Bé siêu logic', false, 4)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  is_free = EXCLUDED.is_free,
+  sort_index = EXCLUDED.sort_index;
+
+-- Sắp Xếp Lessons
+INSERT INTO lessons (id, slug, group_id, course_id, title, is_free, sort_index) VALUES
+  ('sequence-sort-group1-lesson1', 'lesson1', 'sequence-sort-group1', 'sequence-sort', 'Nhỏ → Lớn', true, 1),
+  ('sequence-sort-group1-lesson2', 'lesson2', 'sequence-sort-group1', 'sequence-sort', 'Lớn → Nhỏ', true, 2),
+  ('sequence-sort-group1-lesson3', 'lesson3', 'sequence-sort-group1', 'sequence-sort', 'Thấp → Cao', true, 3),
+  ('sequence-sort-group1-lesson4', 'lesson4', 'sequence-sort-group1', 'sequence-sort', 'Cao → Thấp', false, 4),
+  ('sequence-sort-group1-lesson5', 'lesson5', 'sequence-sort-group1', 'sequence-sort', 'Thử thách', false, 5),
+  ('sequence-sort-group2-lesson1', 'lesson1', 'sequence-sort-group2', 'sequence-sort', 'Ít → Nhiều', true, 1),
+  ('sequence-sort-group2-lesson2', 'lesson2', 'sequence-sort-group2', 'sequence-sort', 'Nhiều → Ít', false, 2),
+  ('sequence-sort-group2-lesson3', 'lesson3', 'sequence-sort-group2', 'sequence-sort', 'Thử thách', false, 3),
+  ('sequence-sort-group3-lesson1', 'lesson1', 'sequence-sort-group3', 'sequence-sort', 'Nhạt → Đậm', true, 1),
+  ('sequence-sort-group3-lesson2', 'lesson2', 'sequence-sort-group3', 'sequence-sort', 'Đậm → Nhạt', false, 2),
+  ('sequence-sort-group3-lesson3', 'lesson3', 'sequence-sort-group3', 'sequence-sort', 'Thử thách', false, 3)
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
   is_free = EXCLUDED.is_free,

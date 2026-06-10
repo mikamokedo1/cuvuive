@@ -41,6 +41,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/tien-lop-1`,
+      lastModified: getLatestMtime(
+        "src/app/tien-lop-1/page.tsx",
+        "src/app/tien-lop-1/PreGrade1Roadmap.tsx",
+        "src/libs/constants/roadmaps.ts",
+      ),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
       url: `${baseUrl}/privacy`,
       lastModified: getLatestMtime("src/app/privacy/page.tsx"),
       changeFrequency: "yearly",
