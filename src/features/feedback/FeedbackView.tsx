@@ -168,37 +168,6 @@ export function FeedbackView() {
                 )}
               </div>
 
-              <div className="space-y-1">
-                <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 ml-1">
-                  Số điện thoại (Không bắt buộc)
-                </label>
-                <div className="relative group">
-                  <span
-                    className={`absolute left-4 top-3.5 transition-colors ${
-                      formik.touched.phone && formik.errors.phone
-                        ? "text-red-400"
-                        : "text-gray-400 group-focus-within:text-purple-500"
-                    }`}
-                  >
-                    📞
-                  </span>
-                  <input
-                    id="phone"
-                    type="text"
-                    {...formik.getFieldProps("phone")}
-                    className={`w-full pl-12 pr-4 py-3.5 rounded-xl border-2 focus:ring-4 focus:outline-none transition-all font-medium text-lg placeholder:text-gray-300 ${
-                      formik.touched.phone && formik.errors.phone
-                        ? "border-red-300 focus:border-red-400 focus:ring-red-100 text-red-900"
-                        : "border-gray-200 focus:border-purple-400 focus:ring-purple-100 text-gray-700"
-                    }`}
-                    placeholder="0123 456 789"
-                  />
-                </div>
-                {formik.touched.phone && formik.errors.phone && (
-                  <div className="text-red-500 text-sm ml-1 font-semibold">{formik.errors.phone as string}</div>
-                )}
-              </div>
-
               {generalError && (
                 <div className="bg-red-50 text-red-500 text-sm p-3 rounded-xl flex items-center gap-2 font-medium mt-2">
                   <ExclamationIcon className="h-5 w-5 shrink-0" />

@@ -17,7 +17,7 @@ const NAV_ITEMS = [
   { href: "/cong-cu", label: "Công cụ", icon: Wrench },
   { href: "/leaderboard", label: "Bảng xếp hạng", icon: Trophy },
   { href: "/about-us", label: "Giới thiệu", icon: Users },
-  { href: "/upgrade", label: "Bảng giá", icon: Crown, highlight: true },
+  { href: "/upgrade", label: "Bảng giá", icon: Crown },
 ];
 
 interface HeaderHomeProps {
