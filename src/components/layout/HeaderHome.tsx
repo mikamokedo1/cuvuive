@@ -94,13 +94,9 @@ export const HeaderHome = ({ blogSearchItems }: HeaderHomeProps) => {
                 key={item.href}
                 href={item.href}
                 className={`text-sm xl:text-base px-4 py-2 rounded-full font-bold transition-all duration-200 ${
-                  item.highlight
-                    ? scrolled
-                      ? "text-orange-600 hover:bg-orange-50"
-                      : "text-orange-500 hover:bg-white/20"
-                    : scrolled
-                      ? "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
-                      : "text-slate-700 hover:bg-white/20 hover:text-slate-900"
+                  scrolled
+                    ? "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                    : "text-slate-700 hover:bg-white/20 hover:text-slate-900"
                 }`}
               >
                 {item.label}
@@ -203,16 +199,10 @@ export const HeaderHome = ({ blogSearchItems }: HeaderHomeProps) => {
                   key={item.href}
                   href={item.href}
                   onClick={closeMobileMenu}
-                  className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl font-bold text-base transition-all duration-200 ${
-                    item.highlight
-                      ? "text-orange-600 hover:bg-orange-50 bg-orange-50/50"
-                      : "text-slate-700 hover:bg-slate-50"
-                  }`}
+                  className="flex items-center gap-3 px-4 py-3.5 rounded-2xl font-bold text-base transition-all duration-200 text-slate-700 hover:bg-slate-50"
                 >
                   <div
-                    className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
-                      item.highlight ? "bg-orange-100 text-orange-500" : "bg-slate-100 text-slate-500"
-                    }`}
+                    className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-slate-100 text-slate-500"
                   >
                     <Icon className="w-5 h-5" />
                   </div>

@@ -106,8 +106,9 @@ export interface LessonSuggestion {
 
 export async function getDashboardStatsAction(
   period: "today" | "yesterday" | "week" | "month" = "week",
+  targetUserId?: string,
 ): Promise<DashboardStats | null> {
-  const userId = await getAuthenticatedUserId();
+  const userId = targetUserId ?? (await getAuthenticatedUserId());
   if (!userId) return null;
 
   const today = getVietnamToday();
@@ -261,8 +262,8 @@ export async function getDashboardStatsAction(
 
 // ─── 2. Category Analysis ───────────────────────────────────────────
 
-export async function getCategoryAnalysisAction(): Promise<CategoryStat[]> {
-  const userId = await getAuthenticatedUserId();
+export async function getCategoryAnalysisAction(targetUserId?: string): Promise<CategoryStat[]> {
+  const userId = targetUserId ?? (await getAuthenticatedUserId());
   if (!userId) return [];
 
   // Get all completed lessons for this user
@@ -452,17 +453,24 @@ export async function getWeeklyReportDataAction(targetUserId?: string): Promise<
   const weekStart = addDays(today, -7);
   const prevWeekStart = addDays(today, -14);
 
-  // Get user info
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  const kidName = user?.user_metadata?.kidName || "Bé";
+  // Get kidName from auth.users via raw SQL (works without cookie session)
+  let kidName = "Bé";
+  try {
+    const result = await db.execute(
+      sql`SELECT raw_user_meta_data->>'kidName' as kid_name FROM auth.users WHERE id = ${userId}`
+    );
+    const row = result[0] as { kid_name?: string } | undefined;
+    if (row?.kid_name) kidName = row.kid_name;
+  } catch {
+    // Fallback if auth.users is not accessible
+  }
 
-  // Current week stats
-  const stats = await getDashboardStatsAction("week");
+  // Current week stats — pass userId so it works from cron (no cookie)
+  const stats = await getDashboardStatsAction("week", userId);
   if (!stats) return null;
 
-  // Category analysis for strengths/weaknesses
-  const categories = await getCategoryAnalysisAction();
+  // Category analysis for strengths/weaknesses — pass userId
+  const categories = await getCategoryAnalysisAction(userId);
   const strengths = categories.filter((c) => c.percentage >= 50).map((c) => c.categoryTitle);
   const weaknesses = categories
     .filter((c) => c.percentage < 30 && c.completedLessons > 0)
