@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const DISALLOWED_PATHS = ["/auth/", "/settings/", "/learn-progress/", "/api/", "/share/"];
+const DISALLOWED_PATHS = ["/auth/", "/settings/", "/api/", "/share/"];
 
 // AI crawler bot user agents that should be explicitly managed
 const AI_BOTS = [

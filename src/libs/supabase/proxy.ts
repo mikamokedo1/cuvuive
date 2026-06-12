@@ -29,6 +29,7 @@ const publicPaths = [
   "/cong-cu",
   "/leaderboard",
   "/tien-lop-1",
+  "/lo-trinh",
 ];
 
 function isPublicPath(pathname: string): boolean {

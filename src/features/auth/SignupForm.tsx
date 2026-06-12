@@ -61,7 +61,7 @@ export function SignupForm() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: `${location.origin}/`,
+        redirectTo: `${location.origin}/auth/sign-up-success`,
       },
     });
 

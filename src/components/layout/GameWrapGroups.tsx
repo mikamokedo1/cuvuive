@@ -7,6 +7,7 @@ import { useProgress } from "@/context/ProgressContext";
 import { useAccess } from "@/context/AccessContext";
 import { GroupData } from "@/features/games/learn-vehicle/constants";
 import { StaticImageData } from "next/image";
+import { useRoadmapBack } from "@/hooks/useRoadmapBack";
 
 interface GameWrapGroups {
   logo: string | StaticImageData;
@@ -18,11 +19,12 @@ interface GameWrapGroups {
 export const GameWrapGroups = ({ logo, gameId, groups, title }: GameWrapGroups) => {
   const { isGroupUnlocked, isLoaded, allProgress } = useProgress();
   const { isPremium, isLoggedIn, showPaywall } = useAccess();
+  const backTo = useRoadmapBack("/games");
 
   const dataReady = isLoaded || !!allProgress[gameId];
 
   return (
-    <GameLayout showBackButton={true} backTo="/games">
+    <GameLayout showBackButton={true} backTo={backTo}>
       <main className="w-full">
         <div className="w-full max-w-6xl mx-auto flex flex-col items-center justify-center relative mb-8 pt-4">
           <div className="relative w-24 h-24 md:w-48 md:h-48 mb-4">

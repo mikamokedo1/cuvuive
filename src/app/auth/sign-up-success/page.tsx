@@ -1,9 +1,36 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { ActionButton } from "@/components/common/ActionButton";
-const owlHi = "https://assets.cuthongminh.com/games/common/owl-say-hi.webp";
 import Image from "next/image";
 import Link from "next/link";
+import { getRedirectUrl, clearRedirectUrl } from "@/context/AccessContext";
+
+const owlHi = "https://assets.cuthongminh.com/games/common/owl-say-hi.webp";
 
 export default function Page() {
+  const [targetHref, setTargetHref] = useState("/lo-trinh");
+
+  useEffect(() => {
+    // Ưu tiên 1: redirect URL từ paywall (AccessContext sessionStorage)
+    const paywallRedirect = getRedirectUrl();
+    if (paywallRedirect && !paywallRedirect.includes("/auth/")) {
+      clearRedirectUrl();
+      setTargetHref(paywallRedirect);
+      return;
+    }
+
+    // Ưu tiên 2: lộ trình đã chọn từ popup tuổi
+    const preferredRoadmap = localStorage.getItem("owl_preferred_roadmap");
+    if (preferredRoadmap) {
+      setTargetHref(`/lo-trinh/${preferredRoadmap}`);
+      return;
+    }
+
+    // Fallback: danh sách lộ trình
+    setTargetHref("/lo-trinh");
+  }, []);
+
   return (
     <div className="min-h-screen bg-green-50 flex items-center justify-center p-4 bg-[url('/bg-pattern.png')]">
       <div className="flex flex-col md:flex-row bg-white rounded-3xl shadow-2xl overflow-hidden max-w-4xl w-full border-4 border-white/50 backdrop-blur-sm">
@@ -24,24 +51,26 @@ export default function Page() {
         {/* Right Side - Content */}
         <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center bg-white relative text-center">
           <div className="mb-8">
-            <h1 className="text-4xl text-green-600 font-display mb-4 drop-shadow-sm">Đăng Ký Thành Công!</h1>
-            <p className="text-gray-500 font-medium text-lg">Chúc mừng bé đã gia nhập Cú Thông Minh🎉</p>
+            <div className="text-5xl mb-4">🎉</div>
+            <h1 className="text-4xl text-green-600 font-display mb-3 drop-shadow-sm">Chào mừng bé!</h1>
+            <p className="text-gray-500 font-medium text-lg">
+              Tài khoản đã được tạo thành công. Bắt đầu hành trình học cùng Cú Thông Minh nhé!
+            </p>
           </div>
 
-          {/* <div className="bg-green-50 rounded-xl p-6 mb-8 border-2 border-green-100">
-            <p className="text-gray-700 mb-2">Chúng tôi đã gửi email xác nhận đến hộp thư của bạn.</p>
-            <p className="text-gray-600 text-sm">Vui lòng kiểm tra email và bấm vào liên kết để kích hoạt tài khoản.</p>
-          </div> */}
-
-          <Link href="/auth/login" className="w-full block">
+          <Link href={targetHref} className="w-full block">
             <ActionButton
               variant="glossy"
               color="green"
               className="w-full py-4 text-xl uppercase tracking-wider shadow-lg hover:shadow-xl"
             >
-              Đăng Nhập Ngay
+              🚀 Bắt đầu học ngay
             </ActionButton>
           </Link>
+
+          <p className="text-xs text-gray-400 mt-4 font-medium">
+            Bé sẽ được đưa tới lộ trình phù hợp với độ tuổi
+          </p>
         </div>
       </div>
     </div>

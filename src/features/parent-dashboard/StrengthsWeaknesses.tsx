@@ -59,7 +59,9 @@ export function StrengthsWeaknesses({ categories, suggestions }: StrengthsWeakne
                       className="w-4 h-4 object-contain"
                     />
                   )}
-                  <span>{s.categoryTitle} ({s.percentage}%)</span>
+                  <span>
+                    {s.categoryTitle} ({s.percentage}%)
+                  </span>
                 </Link>
               );
             })}
@@ -74,7 +76,7 @@ export function StrengthsWeaknesses({ categories, suggestions }: StrengthsWeakne
             <div className="w-7 h-7 bg-amber-100 rounded-lg flex items-center justify-center">
               <AlertTriangle className="w-4 h-4 text-amber-500" />
             </div>
-            <h3 className="font-bold text-sm text-amber-700">Cần luyện thêm</h3>
+            <h3 className="font-bold text-sm sm:text-base text-amber-700">Cần luyện thêm</h3>
           </div>
           <div className="flex flex-wrap gap-2">
             {weaknesses.map((w) => {
@@ -95,7 +97,9 @@ export function StrengthsWeaknesses({ categories, suggestions }: StrengthsWeakne
                       className="w-4 h-4 object-contain"
                     />
                   )}
-                  <span>{w.categoryTitle} ({w.percentage}%)</span>
+                  <span>
+                    {w.categoryTitle} ({w.percentage}%)
+                  </span>
                 </Link>
               );
             })}
@@ -112,10 +116,7 @@ export function StrengthsWeaknesses({ categories, suggestions }: StrengthsWeakne
               const href = getHref(n.category);
               return (
                 <span key={n.category}>
-                  <Link
-                    href={href}
-                    className="hover:underline hover:text-slate-500 transition-colors"
-                  >
+                  <Link href={href} className="hover:underline hover:text-slate-500 transition-colors">
                     {n.categoryTitle}
                   </Link>
                   {idx < notStarted.length - 1 ? ", " : ""}
@@ -133,7 +134,7 @@ export function StrengthsWeaknesses({ categories, suggestions }: StrengthsWeakne
             <div className="w-7 h-7 bg-orange-100 rounded-lg flex items-center justify-center">
               <Lightbulb className="w-4 h-4 text-orange-500" />
             </div>
-            <h3 className="font-bold text-sm text-orange-700">Bài học gợi ý</h3>
+            <h3 className="font-bold text-sm sm:text-base text-orange-700">Bài học gợi ý</h3>
           </div>
           <div className="flex flex-col gap-2">
             {suggestions.slice(0, 4).map((s, i) => (

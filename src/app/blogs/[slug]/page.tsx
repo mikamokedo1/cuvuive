@@ -48,6 +48,8 @@ import { TOPIC_CLUSTERS, GENERAL_PARENTING_SLUGS } from "@/libs/seo/topic-cluste
 import { GROUPS } from "@/libs/constants/groups";
 import AIFact from "@/components/blog/AIFact";
 import { Breadcrumbs, type BreadcrumbItem } from "@/components/common/Breadcrumbs";
+import { ROADMAPS } from "@/libs/constants/roadmaps";
+import { Route } from "lucide-react";
 
 export async function generateStaticParams() {
   const posts = await getAllPosts();
@@ -368,6 +370,38 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <ShareButtons url={`/blogs/${post.slug}`} title={post.title} />
         <p className="text-xs text-slate-400 font-medium">Bài viết hữu ích? Hãy chia sẻ với bạn bè!</p>
       </div>
+
+      {/* Roadmap CTA — internal links for all blogs */}
+      <section className="mt-12 pt-8 border-t border-slate-100">
+        <div className="flex items-center gap-2 mb-4">
+          <Route className="w-5 h-5 text-orange-500" />
+          <h2 className="text-lg font-bold text-slate-800">Lộ trình học tập cho bé</h2>
+        </div>
+        <div className="grid grid-cols-3 gap-3">
+          {ROADMAPS.map((roadmap, i) => {
+            const themes = [
+              { bg: "bg-emerald-50 hover:bg-emerald-100 border-emerald-200", badge: "bg-emerald-500", text: "text-emerald-700" },
+              { bg: "bg-orange-50 hover:bg-orange-100 border-orange-200", badge: "bg-orange-500", text: "text-orange-700" },
+              { bg: "bg-blue-50 hover:bg-blue-100 border-blue-200", badge: "bg-blue-500", text: "text-blue-700" },
+            ];
+            const t = themes[i % 3];
+            return (
+              <Link
+                key={roadmap.id}
+                href={`/lo-trinh/${roadmap.slug}`}
+                className={`flex flex-col gap-2 p-3 rounded-xl border ${t.bg} transition-colors group`}
+              >
+                <span className={`inline-flex items-center self-start px-2 py-0.5 rounded-full text-white text-[11px] font-bold ${t.badge}`}>
+                  {roadmap.ageRange[0]}–{roadmap.ageRange[1]} tuổi
+                </span>
+                <span className={`text-sm font-bold ${t.text} group-hover:underline leading-tight`}>
+                  {roadmap.title}
+                </span>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
 
       {relatedGames.length > 0 && (
         <section className="mt-16 pt-10 border-t border-slate-200">

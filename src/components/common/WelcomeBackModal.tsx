@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import { X } from "lucide-react";
 import { ActionButton } from "@/components/common/ActionButton";
 import { updateUserStreakAction, getUserWeeklyActivityAction } from "@/libs/actions/user";
@@ -14,6 +14,7 @@ export function WelcomeBackModal() {
   const [activeDays, setActiveDays] = useState<number[]>([]);
   const [isFirstTime, setIsFirstTime] = useState(false);
   const [loading, setLoading] = useState(true);
+  const hasCheckedRef = useRef(false);
   const router = useRouter();
   const { allProgress } = useProgress();
 
@@ -27,6 +28,9 @@ export function WelcomeBackModal() {
   }, [allProgress]);
 
   useEffect(() => {
+    if (hasCheckedRef.current) return;
+    hasCheckedRef.current = true;
+
     async function checkStreak() {
       try {
         // Parallel fetching

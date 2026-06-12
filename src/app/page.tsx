@@ -12,10 +12,12 @@ import {
   Star,
   Sparkles,
   ShieldCheck,
+  MapPin,
 } from "lucide-react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { GROUPS, GROUP_DESCRIPTIONS } from "@/libs/constants/groups";
+import { ROADMAPS, getRoadmapTotalGames } from "@/libs/constants/roadmaps";
 import { Footer } from "@/components/layout/Footer";
 import { HeaderHomeWithSearch } from "@/components/layout/HeaderHomeWithSearch";
 import { FAQSchema, type FAQItem } from "@/components/common/FAQSchema";
@@ -155,18 +157,18 @@ export default function Home() {
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
               <Link
-                href="/games"
+                href="/lo-trinh"
                 className="w-full sm:w-auto px-8 py-4 bg-[#FF9C01] hover:bg-orange-500 text-slate-900 font-bold rounded-full group flex items-center justify-center gap-3 text-lg shadow-[0_8px_30px_rgb(255,156,1,0.3)] hover:shadow-[0_8px_30px_rgb(255,156,1,0.4)] hover:-translate-y-1 active:translate-y-0 transition-all duration-300"
               >
-                Trải nghiệm ngay
+                Chọn lộ trình phù hợp
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
-                href="#games"
+                href="/games"
                 className="w-full sm:w-auto px-8 py-4 bg-white text-slate-700 font-bold rounded-full border border-slate-200 hover:border-orange-300 hover:bg-orange-50 border-b-4 hover:border-b-orange-400 flex items-center justify-center gap-3 text-lg transition-all duration-300 shadow-sm hover:shadow-md"
               >
                 <Gamepad2 className="w-5 h-5 text-orange-400" />
-                Khám phá Kho bài học
+                Khám phá kho trò chơi
               </Link>
             </div>
 
@@ -300,38 +302,129 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Pre-Grade 1 Roadmap Banner */}
+        {/* Roadmaps Section */}
         <ScrollReveal delay={100}>
-          <section className="py-8 bg-gradient-to-r from-orange-50 via-amber-50 to-yellow-50 border-y border-orange-100">
-            <div className="container mx-auto px-6 max-w-5xl">
-              <div className="bg-white rounded-[2rem] p-6 md:p-8 shadow-xl border border-orange-200/50 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8">
-                <div className="flex items-center gap-6">
-                  <div className="shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden border border-orange-200 shadow-md relative hidden sm:block">
-                    <Image
-                      src="https://vnlppyavpkuerviyszxg.supabase.co/storage/v1/object/public/blog-images/hero_chuan-bi-vao-lop-1-toan-dien-1780659661318.webp"
-                      alt="Lộ trình Tiền Lớp 1"
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="text-left">
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-100 text-orange-600 font-bold text-xs mb-2 border border-orange-200/50">
-                      <span>Dành riêng cho bé 5-6 tuổi</span>
-                    </div>
-                    <h3 className="text-2xl md:text-3xl font-extrabold font-[family-name:var(--font-baloo-2)] text-slate-900 leading-tight">
-                      Lộ Trình Tiền Lớp 1 Toàn Diện
-                    </h3>
-                    <p className="text-sm md:text-base text-slate-500 mt-2 leading-relaxed max-w-xl">
-                      Chuẩn bị hành trang vững chắc cho con tự tin bước vào lớp 1 với lộ trình 3 chặng chuẩn Montessori:
-                      Làm Quen ➔ Nền Tảng ➔ Tăng Tốc.
-                    </p>
-                  </div>
+          <section className="py-20 bg-gradient-to-b from-white to-orange-50/30 relative overflow-hidden">
+            {/* Subtle bg pattern */}
+            <div className="absolute inset-0 bg-[url('/patterns/stardust.png')] opacity-5 pointer-events-none" />
+
+            <div className="container mx-auto px-6 relative z-10">
+              <div className="text-center mb-14">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-100 text-orange-600 font-bold mb-5">
+                  <MapPin className="w-4 h-4" /> Lộ trình theo độ tuổi
                 </div>
+                <h3 className="text-4xl md:text-5xl font-bold font-[family-name:var(--font-baloo-2)] text-slate-900 mb-4 tracking-tight">
+                  Học đúng lộ trình — <span className="text-orange-500">đúng cho từng bé</span>
+                </h3>
+                <p className="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
+                  Mỗi bé có một giai đoạn phát triển riêng. Chọn lộ trình phù hợp để bé được dẫn dắt khoa học từng bước,
+                  vừa học vừa chơi.
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                {ROADMAPS.map((roadmap, i) => {
+                  const totalGames = getRoadmapTotalGames(roadmap);
+                  const themes = [
+                    {
+                      gradient: "from-emerald-400 to-teal-500",
+                      ring: "ring-emerald-200 hover:ring-emerald-400",
+                      ageBg: "bg-emerald-500",
+                      pill: "bg-emerald-50 text-emerald-700 border-emerald-200",
+                      cta: "bg-emerald-500 hover:bg-emerald-600",
+                      shadow: "hover:shadow-emerald-100",
+                    },
+                    {
+                      gradient: "from-orange-400 to-amber-500",
+                      ring: "ring-orange-200 hover:ring-orange-400",
+                      ageBg: "bg-orange-500",
+                      pill: "bg-orange-50 text-orange-700 border-orange-200",
+                      cta: "bg-orange-500 hover:bg-orange-600",
+                      shadow: "hover:shadow-orange-100",
+                    },
+                    {
+                      gradient: "from-blue-400 to-indigo-500",
+                      ring: "ring-blue-200 hover:ring-blue-400",
+                      ageBg: "bg-blue-500",
+                      pill: "bg-blue-50 text-blue-700 border-blue-200",
+                      cta: "bg-blue-500 hover:bg-blue-600",
+                      shadow: "hover:shadow-blue-100",
+                    },
+                  ];
+                  const theme = themes[i % 3];
+
+                  return (
+                    <Link
+                      key={roadmap.id}
+                      href={`/lo-trinh/${roadmap.slug}`}
+                      className={`group bg-white rounded-[1.75rem] overflow-hidden shadow-lg ring-2 ${theme.ring} ${theme.shadow} hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col`}
+                    >
+                      {/* Hero image */}
+                      <div className="relative h-44 overflow-hidden bg-slate-100">
+                        <Image
+                          src={roadmap.heroImage}
+                          alt={roadmap.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 340px"
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        {/* Subtle color tint overlay */}
+                        <div className={`absolute inset-0 bg-gradient-to-br ${theme.gradient} opacity-20`} />
+                        {/* Age badge */}
+                        <div className="absolute top-4 left-4">
+                          <span
+                            className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-white text-sm font-extrabold ${theme.ageBg} shadow-md`}
+                          >
+                            👶 {roadmap.ageRange[0]}–{roadmap.ageRange[1]} tuổi
+                          </span>
+                        </div>
+                        {/* Title overlay */}
+                        <div className="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-black/50 to-transparent">
+                          <h4 className="text-xl font-extrabold text-white font-[family-name:var(--font-baloo-2)] [text-shadow:0_1px_4px_rgba(0,0,0,0.4)]">
+                            {roadmap.title}
+                          </h4>
+                        </div>
+                      </div>
+
+                      {/* Content */}
+                      <div className="flex-1 p-5 flex flex-col justify-between">
+                        <p className="text-slate-500 text-sm leading-relaxed mb-4 line-clamp-2">
+                          {roadmap.description}
+                        </p>
+
+                        {/* Stats */}
+                        <div className="flex flex-wrap gap-2 mb-5">
+                          <span
+                            className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold border ${theme.pill}`}
+                          >
+                            🚀 {roadmap.stages.length} chặng
+                          </span>
+                          <span
+                            className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold border ${theme.pill}`}
+                          >
+                            🎮 {totalGames} trò chơi
+                          </span>
+                        </div>
+
+                        {/* CTA */}
+                        <div
+                          className={`${theme.cta} text-white text-center py-3 px-4 rounded-xl font-bold text-sm group-hover:gap-3 flex items-center justify-center gap-2 transition-all`}
+                        >
+                          Khám phá lộ trình
+                          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+
+              <div className="text-center mt-10">
                 <Link
-                  href="/tien-lop-1"
-                  className="shrink-0 w-full md:w-auto px-8 py-4 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-extrabold rounded-2xl text-center shadow-[0_8px_30px_rgba(255,156,1,0.25)] hover:shadow-[0_8px_40px_rgba(255,156,1,0.4)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 text-base"
+                  href="/lo-trinh"
+                  className="inline-flex items-center gap-2 text-slate-500 hover:text-orange-500 font-semibold text-sm transition-colors"
                 >
-                  Khám phá lộ trình
+                  Xem tất cả lộ trình <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
             </div>
@@ -403,10 +496,10 @@ export default function Home() {
 
               <div className="mt-16">
                 <Link
-                  href="/games"
+                  href="/lo-trinh"
                   className="inline-flex items-center justify-center px-8 lg:px-12 py-4 bg-white hover:bg-slate-100 text-slate-900 font-extrabold rounded-full gap-3 transition-colors duration-300 text-lg shadow-[0_0_40px_rgba(255,255,255,0.3)] hover:shadow-[0_0_60px_rgba(255,255,255,0.5)]"
                 >
-                  Học thử ngay
+                  Chọn lộ trình ngay
                   <ArrowRight className="w-5 h-5 text-orange-500" />
                 </Link>
               </div>

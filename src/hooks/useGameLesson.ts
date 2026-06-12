@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useProgress } from "@/context/ProgressContext";
 import { useAccess } from "@/context/AccessContext";
 import { COURSES } from "@/libs/constants/courses";
@@ -23,6 +23,7 @@ export function useGameLesson<G extends { id: string }>({
 }: UseGameLessonOptions<G>) {
   const params = useParams();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [showModal, setShowModal] = useState(false);
 
   const { isLoaded, isLessonUnlocked, markLessonComplete } = useProgress();
@@ -105,9 +106,13 @@ export function useGameLesson<G extends { id: string }>({
 
       router.push(`/games/${gameSlug}/${groupId}/lesson/${nextLessonId}`);
     } else {
-      router.push(`/games/${gameSlug}`);
+      // Last lesson in group done → go back to game overview or roadmap
+      const from = searchParams.get("from");
+      const backUrl =
+        from && from.startsWith("lo-trinh/") ? `/${from}` : `/games/${gameSlug}`;
+      router.push(backUrl);
     }
-  }, [lessonId, lessonOrder, gameSlug, groupId, checkAccess, showPaywall, router]);
+  }, [lessonId, lessonOrder, gameSlug, groupId, checkAccess, showPaywall, router, searchParams]);
 
   return {
     groupId,

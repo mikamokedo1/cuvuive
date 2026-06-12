@@ -144,41 +144,28 @@ export function Footer() {
             <nav aria-label="Theo độ tuổi">
               <div className="font-bold text-slate-900 mb-2">Theo độ tuổi</div>
               <ul className="flex flex-col gap-4 list-none p-0 m-0">
-                <li>
+                <li className="pt-2 border-t border-slate-100">
                   <Link
-                    href="/do-tuoi/3-tuoi"
+                    href="/lo-trinh/be-kham-pha"
                     className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors"
                   >
-                    Trò chơi cho bé 3 tuổi
+                    Lộ trình Bé Khám Phá (3–4 tuổi)
                   </Link>
                 </li>
                 <li>
                   <Link
-                    href="/do-tuoi/4-tuoi"
+                    href="/lo-trinh/tien-lop-1"
                     className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors"
                   >
-                    Trò chơi cho bé 4 tuổi
+                    Lộ trình Tiền Lớp 1 (5–6 tuổi)
                   </Link>
                 </li>
                 <li>
                   <Link
-                    href="/do-tuoi/5-tuoi"
+                    href="/lo-trinh/tieu-hoc-vui"
                     className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors"
                   >
-                    Bé 5 tuổi chuẩn bị vào lớp 1
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/tien-lop-1" className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors">
-                    Lộ trình Tiền Lớp 1
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/do-tuoi/6-8-tuoi"
-                    className="text-slate-500 hover:text-[#FF9C01] text-sm transition-colors"
-                  >
-                    Trò chơi trí tuệ cho bé 6-8 tuổi
+                    Lộ trình Tiểu Học Vui (7–12 tuổi)
                   </Link>
                 </li>
               </ul>

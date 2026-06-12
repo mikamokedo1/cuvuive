@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ActionButton } from "@/components/common/ActionButton";
-import { Crown, Star } from "lucide-react";
+import { Crown, Route } from "lucide-react";
 
 // Assets (Cloudflare R2)
 const LogoLong = "https://assets.cuthongminh.com/assets/logo-long.webp";
@@ -47,8 +47,7 @@ const Header = () => {
       {/* Desktop Navigation Menu - hidden on mobile */}
       <nav className="hidden md:flex items-center gap-2" aria-label="Main navigation">
         {[
-          { href: "/tien-lop-1", icon: <Star size={16} />, label: "Tiền Lớp 1" },
-          { href: "/learn-progress", icon: <Trophy size={16} />, label: "Tiến độ" },
+          { href: "/lo-trinh", icon: <Route size={16} />, label: "Lộ Trình" },
           { href: "/parent-dashboard", icon: <LayoutDashboard size={16} />, label: "Phụ huynh" },
           { href: "/earn", icon: <Banknote size={16} />, label: "Kiếm tiền" },
           { href: "/feedback", icon: <MessageSquare size={16} />, label: "Góp ý" },
@@ -109,18 +108,18 @@ const Header = () => {
               </div>
 
               <Link
-                href="/tien-lop-1"
+                href="/lo-trinh"
                 className="w-full text-left px-4 py-2 text-orange-700 hover:bg-orange-50 rounded-lg font-bold text-sm transition-colors flex items-center gap-2"
               >
-                <Star size={18} />
-                Lộ trình Tiền Lớp 1
+                <Route size={18} />
+                Lộ trình học tập
               </Link>
               <Link
-                href="/learn-progress"
+                href="/parent-dashboard"
                 className="w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 rounded-lg font-bold text-sm transition-colors flex items-center gap-2"
               >
                 <Trophy size={18} />
-                Tiến độ học tập
+                Tiến độ & Thống kê
               </Link>
               <Link
                 href="/leaderboard"

@@ -434,6 +434,9 @@ export const MAP_PATHNAME_TO_TEXT: Record<string, string> = {
   "/games/sequence-sort/group3/lesson/lesson1": "Pé xếp các hình từ nhạt đến đậm nhé",
   "/games/sequence-sort/group3/lesson/lesson2": "Pé xếp các hình từ đậm đến nhạt nhé",
   "/games/sequence-sort/group3/lesson/lesson3": "Thử thách sắp xếp tông màu",
-  //tienlop1
+  //roadmaps
   "/tien-lop-1": "Pé chuẩn bị hành trang để vào lớp 1",
+  "/lo-trinh/be-kham-pha": "Pé khám phá thế giới xung quanh nào",
+  "/lo-trinh/tien-lop-1": "Pé chuẩn bị hành trang để vào lớp 1",
+  "/lo-trinh/tieu-hoc-vui": "Pé học giỏi cùng Cú nào",
 };

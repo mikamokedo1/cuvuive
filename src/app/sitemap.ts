@@ -41,10 +41,39 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/tien-lop-1`,
+      url: `${baseUrl}/lo-trinh`,
       lastModified: getLatestMtime(
-        "src/app/tien-lop-1/page.tsx",
-        "src/app/tien-lop-1/PreGrade1Roadmap.tsx",
+        "src/app/lo-trinh/page.tsx",
+        "src/libs/constants/roadmaps.ts",
+      ),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/lo-trinh/be-kham-pha`,
+      lastModified: getLatestMtime(
+        "src/app/lo-trinh/[id]/page.tsx",
+        "src/app/lo-trinh/[id]/RoadmapView.tsx",
+        "src/libs/constants/roadmaps.ts",
+      ),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/lo-trinh/tien-lop-1`,
+      lastModified: getLatestMtime(
+        "src/app/lo-trinh/[id]/page.tsx",
+        "src/app/lo-trinh/[id]/RoadmapView.tsx",
+        "src/libs/constants/roadmaps.ts",
+      ),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/lo-trinh/tieu-hoc-vui`,
+      lastModified: getLatestMtime(
+        "src/app/lo-trinh/[id]/page.tsx",
+        "src/app/lo-trinh/[id]/RoadmapView.tsx",
         "src/libs/constants/roadmaps.ts",
       ),
       changeFrequency: "weekly",

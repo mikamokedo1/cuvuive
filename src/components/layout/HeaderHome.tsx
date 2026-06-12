@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState, useCallback } from "react";
 import { useUser } from "@/context/UserContext";
-import { Search, Menu, X, Gamepad2, BookOpen, Wrench, Users, Crown, Trophy } from "lucide-react";
+import { Search, Menu, X, Gamepad2, BookOpen, Wrench, Users, Crown, Trophy, Route } from "lucide-react";
 import { SearchOverlay } from "@/components/common/SearchOverlay";
 import { type SearchItem } from "@/libs/utils/search-data";
 
@@ -13,6 +13,7 @@ const LogoShort = "https://assets.cuthongminh.com/assets/logo.webp";
 
 const NAV_ITEMS = [
   { href: "/games", label: "Trò chơi", icon: Gamepad2 },
+  { href: "/lo-trinh", label: "Lộ trình", icon: Route },
   { href: "/blogs", label: "Blog", icon: BookOpen },
   { href: "/cong-cu", label: "Công cụ", icon: Wrench },
   { href: "/leaderboard", label: "Bảng xếp hạng", icon: Trophy },

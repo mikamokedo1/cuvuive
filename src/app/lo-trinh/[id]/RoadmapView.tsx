@@ -1,32 +1,19 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useProgress } from "@/context/ProgressContext";
-import { COURSES } from "@/libs/constants/courses";
+import { getCourseIcon, getCourseTotalLessons } from "@/libs/constants/course-helpers";
 import { playButtonSound } from "@/libs/utils/playSound";
 import type { Roadmap, RoadmapStage, RoadmapGame } from "@/libs/constants/roadmaps";
-import { Lock, ChevronDown, ChevronUp, Star, ArrowLeft } from "lucide-react";
+import { getGameLabel } from "@/libs/constants/roadmaps";
+import { ChevronDown, ChevronUp, Star, ArrowLeft } from "lucide-react";
 
 // ─── Assets ──────────────────────────────────────────────────────────────────
 
 const owlAvatar = "https://assets.cuthongminh.com/assets/avatar-boy.webp";
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
-
-/** Get the icon URL for a game from COURSES constant */
-function getGameIcon(gameId: string): string {
-  const course = COURSES.find((c) => c.id === gameId);
-  return (course?.icon as string) ?? "";
-}
-
-/** Calculate total lessons in a course */
-function getCourseTotalLessons(gameId: string): number {
-  const course = COURSES.find((c) => c.id === gameId);
-  if (!course) return 0;
-  return course.groups.reduce((sum, g) => sum + g.lessons.length, 0);
-}
 
 // ─── Stage colour maps ──────────────────────────────────────────────────────
 
@@ -78,44 +65,60 @@ function GameNode({
   completedLessons,
   totalLessons,
   isEven,
+  isCurrent,
+  roadmapSlug,
 }: {
   game: RoadmapGame;
   stageColor: (typeof STAGE_COLORS)[keyof typeof STAGE_COLORS];
   completedLessons: number;
   totalLessons: number;
   isEven: boolean;
+  isCurrent: boolean;
+  roadmapSlug: string;
 }) {
-  const icon = getGameIcon(game.gameId);
+  const icon = getCourseIcon(game.gameId);
+  const label = getGameLabel(game);
   const isDone = totalLessons > 0 && completedLessons >= totalLessons;
   const isStarted = completedLessons > 0;
   const progressPct = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
+  const gameHref = `/games/${game.gameId}?from=lo-trinh/${roadmapSlug}`;
 
   return (
     <div className={`flex items-center gap-4 ${isEven ? "flex-row" : "flex-row-reverse"}`}>
       {/* Node circle */}
       <Link
-        href={`/games/${game.gameId}`}
+        href={gameHref}
         onClick={() => playButtonSound()}
-        className={`
+      className={`
           relative shrink-0 w-[72px] h-[72px] sm:w-20 sm:h-20 rounded-full
           bg-white border-[3px] flex items-center justify-center
           transition-all duration-300 hover:scale-110 active:scale-95 group
+          ${isCurrent ? "scale-110" : ""}
           ${
             isDone
               ? "border-yellow-400 shadow-[0_0_20px_rgba(250,204,21,0.3)]"
-              : isStarted
-                ? `${stageColor.nodeActive} shadow-lg`
-                : "border-slate-200 shadow-md hover:border-slate-300"
+              : isCurrent
+                ? `${stageColor.nodeActive} shadow-xl`
+                : isStarted
+                  ? `${stageColor.nodeActive} shadow-lg`
+                  : "border-slate-200 shadow-md hover:border-slate-300"
           }
         `}
       >
         {icon && (
           <Image
             src={icon}
-            alt={game.label}
+            alt={label}
             width={56}
             height={56}
             className="w-11 h-11 sm:w-14 sm:h-14 object-contain drop-shadow-sm group-hover:scale-105 transition-transform"
+          />
+        )}
+
+        {/* Beacon ping animation for current game */}
+        {isCurrent && !isDone && (
+          <span
+            className={`absolute inset-0 rounded-full animate-ping opacity-40 border-[3px] ${stageColor.nodeActive}`}
           />
         )}
 
@@ -155,11 +158,19 @@ function GameNode({
 
       {/* Label */}
       <div className={`flex flex-col ${isEven ? "items-start" : "items-end"}`}>
-        <span className="text-sm sm:text-base font-bold text-slate-700 leading-tight">{game.label}</span>
-        {isStarted && (
+        <span className="text-sm sm:text-base font-bold text-slate-700 leading-tight">{label}</span>
+        {isCurrent && !isDone && (
+          <span className={`text-xs font-bold ${stageColor.dot.replace("bg-", "text-")} mt-0.5`}>
+            ▶ Đang ở đây
+          </span>
+        )}
+        {isStarted && !isCurrent && (
           <span className={`text-xs font-semibold ${isDone ? "text-yellow-500" : "text-slate-400"}`}>
             {isDone ? "Hoàn thành ✓" : `${progressPct}%`}
           </span>
+        )}
+        {isStarted && isCurrent && !isDone && (
+          <span className="text-xs font-semibold text-slate-400">{progressPct}%</span>
         )}
       </div>
     </div>
@@ -172,11 +183,15 @@ function CategorySection({
   stageColor,
   allProgress,
   globalIndex,
+  currentGameId,
+  roadmapSlug,
 }: {
   category: { id: string; title: string; emoji: string; games: RoadmapGame[] };
   stageColor: (typeof STAGE_COLORS)[keyof typeof STAGE_COLORS];
   allProgress: Record<string, { completedLessons: Record<string, string[]> }>;
   globalIndex: number;
+  currentGameId: string | null;
+  roadmapSlug: string;
 }) {
   return (
     <div className="mt-6 first:mt-0">
@@ -212,6 +227,8 @@ function CategorySection({
               completedLessons={completedLessons}
               totalLessons={totalLessons}
               isEven={(globalIndex + i) % 2 === 0}
+              isCurrent={game.gameId === currentGameId}
+              roadmapSlug={roadmapSlug}
             />
           );
         })}
@@ -227,14 +244,16 @@ function StageCard({
   onToggle,
   stageProgress,
   allProgress,
-  isLocked,
+  currentGameId,
+  roadmapSlug,
 }: {
   stage: RoadmapStage;
   isExpanded: boolean;
   onToggle: () => void;
   stageProgress: { completed: number; total: number; pct: number };
   allProgress: Record<string, { completedLessons: Record<string, string[]> }>;
-  isLocked: boolean;
+  currentGameId: string | null;
+  roadmapSlug: string;
 }) {
   const colors = STAGE_COLORS[stage.color];
   let gameGlobalIndex = 0;
@@ -244,11 +263,9 @@ function StageCard({
       className={`
         relative rounded-[1.5rem] border-2 overflow-hidden transition-all duration-500
         ${
-          isLocked
-            ? "border-slate-200 opacity-70"
-            : isExpanded
-              ? `border-transparent shadow-xl ring-2 ${colors.ring}`
-              : "border-slate-200 shadow-md hover:shadow-lg"
+          isExpanded
+            ? `border-transparent shadow-xl ring-2 ${colors.ring}`
+            : "border-slate-200 shadow-md hover:shadow-lg"
         }
       `}
     >
@@ -262,17 +279,16 @@ function StageCard({
           onToggle();
         }}
         className="w-full px-5 py-4 sm:px-6 sm:py-5 flex items-center gap-4 cursor-pointer group"
-        disabled={isLocked}
       >
         {/* Stage number badge */}
         <div
           className={`
             shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center
             font-extrabold text-lg shadow-md transition-transform group-hover:scale-105
-            ${isLocked ? "bg-slate-300 text-slate-500" : `${colors.banner} ${colors.bannerText}`}
+            ${colors.banner} ${colors.bannerText}
           `}
         >
-          {isLocked ? <Lock className="w-5 h-5" /> : stage.number}
+          {stage.number}
         </div>
 
         {/* Title & subtitle */}
@@ -281,39 +297,34 @@ function StageCard({
             {stage.emoji} {stage.title}
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 font-medium mt-0.5 truncate">
-            {isLocked ? "Hoàn thành chặng trước để mở khóa" : stage.subtitle}
+            {stage.subtitle}
           </p>
         </div>
 
         {/* Progress badge or locked */}
         <div className="shrink-0 flex items-center gap-2">
-          {!isLocked && (
-            <div className="text-right mr-1">
-              <span className={`text-sm font-bold ${stageProgress.pct === 100 ? "text-yellow-500" : "text-slate-600"}`}>
-                {stageProgress.pct}%
-              </span>
-            </div>
+          <div className="text-right mr-1">
+            <span className={`text-sm font-bold ${stageProgress.pct === 100 ? "text-yellow-500" : "text-slate-600"}`}>
+              {stageProgress.pct}%
+            </span>
+          </div>
+          {isExpanded ? (
+            <ChevronUp className="w-5 h-5 text-slate-400" />
+          ) : (
+            <ChevronDown className="w-5 h-5 text-slate-400" />
           )}
-          {!isLocked &&
-            (isExpanded ? (
-              <ChevronUp className="w-5 h-5 text-slate-400" />
-            ) : (
-              <ChevronDown className="w-5 h-5 text-slate-400" />
-            ))}
         </div>
       </button>
 
       {/* Progress bar */}
-      {!isLocked && (
-        <div className="px-5 sm:px-6 pb-1">
-          <div className={`h-2 rounded-full ${colors.progressTrack} overflow-hidden`}>
-            <div
-              className={`h-full rounded-full ${colors.progress} transition-all duration-700 ease-out`}
-              style={{ width: `${stageProgress.pct}%` }}
-            />
-          </div>
+      <div className="px-5 sm:px-6 pb-1">
+        <div className={`h-2 rounded-full ${colors.progressTrack} overflow-hidden`}>
+          <div
+            className={`h-full rounded-full ${colors.progress} transition-all duration-700 ease-out`}
+            style={{ width: `${stageProgress.pct}%` }}
+          />
         </div>
-      )}
+      </div>
 
       {/* Expandable content */}
       <div
@@ -332,6 +343,8 @@ function StageCard({
                 stageColor={colors}
                 allProgress={allProgress}
                 globalIndex={startIndex}
+                currentGameId={currentGameId}
+                roadmapSlug={roadmapSlug}
               />
             );
           })}
@@ -343,9 +356,10 @@ function StageCard({
 
 // ─── Main Component ──────────────────────────────────────────────────────────
 
-export function PreGrade1Roadmap({ roadmap }: { roadmap: Roadmap }) {
-  const { allProgress } = useProgress();
+export function RoadmapView({ roadmap }: { roadmap: Roadmap }) {
+  const { allProgress, lastPlayedCourseId, isLoaded } = useProgress();
   const [expandedStage, setExpandedStage] = useState<string>(roadmap.stages[0]?.id ?? "");
+  const hasAutoExpanded = useRef(false);
 
   // Calculate per-stage progress
   const stageProgressMap = useMemo(() => {
@@ -388,20 +402,55 @@ export function PreGrade1Roadmap({ roadmap }: { roadmap: Roadmap }) {
     };
   }, [stageProgressMap]);
 
-  // Determine which stages are locked (requires previous stage ≥ 80%)
-  const isStageLockedMap = useMemo(() => {
-    const map: Record<string, boolean> = {};
-    roadmap.stages.forEach((stage, i) => {
-      if (i === 0) {
-        map[stage.id] = false;
-      } else {
-        const prevStage = roadmap.stages[i - 1];
-        const prevProgress = stageProgressMap[prevStage.id];
-        map[stage.id] = (prevProgress?.pct ?? 0) < 80;
+  // Tìm game hiện tại đang chơi
+  const currentGameId = useMemo(() => {
+    // Ưu tiên game cuối cùng user chơi (nếu thuộc roadmap này)
+    if (lastPlayedCourseId) {
+      for (const stage of roadmap.stages) {
+        for (const cat of stage.categories) {
+          if (cat.games.some((g) => g.gameId === lastPlayedCourseId)) {
+            return lastPlayedCourseId;
+          }
+        }
       }
-    });
-    return map;
+    }
+    // Fallback: game đầu tiên chưa hoàn thành trong roadmap
+    for (const stage of roadmap.stages) {
+      for (const cat of stage.categories) {
+        for (const game of cat.games) {
+          const prog = allProgress[game.gameId];
+          const totalLessons = getCourseTotalLessons(game.gameId);
+          const completed = prog ? Object.values(prog.completedLessons).flat().length : 0;
+          if (completed < totalLessons) return game.gameId;
+        }
+      }
+    }
+    return null;
+  }, [lastPlayedCourseId, allProgress, roadmap.stages]);
+
+  // Tìm stage đang học: ưu tiên stage có progress dở dang (0 < pct < 100)
+  // Nếu không có, chọn stage đầu tiên chưa bắt đầu
+  const activeStageId = useMemo(() => {
+    // Stage đang làm dở
+    for (const stage of roadmap.stages) {
+      const prog = stageProgressMap[stage.id];
+      if (prog && prog.pct > 0 && prog.pct < 100) return stage.id;
+    }
+    // Stage chưa bắt đầu đầu tiên
+    for (const stage of roadmap.stages) {
+      const prog = stageProgressMap[stage.id];
+      if (prog && prog.pct === 0) return stage.id;
+    }
+    return roadmap.stages[0]?.id ?? "";
   }, [roadmap.stages, stageProgressMap]);
+
+  // Auto-expand stage đang học — chỉ 1 lần khi progress load xong
+  useEffect(() => {
+    if (isLoaded && !hasAutoExpanded.current) {
+      hasAutoExpanded.current = true;
+      setExpandedStage(activeStageId);
+    }
+  }, [isLoaded, activeStageId]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f0fdf4] via-[#ecfeff] to-[#fffbeb] font-[family-name:var(--font-nunito-sans)] pt-24 sm:pt-28 pb-28">
@@ -410,8 +459,8 @@ export function PreGrade1Roadmap({ roadmap }: { roadmap: Roadmap }) {
         <div className="bg-white rounded-[1.5rem] p-5 sm:p-6 shadow-lg border border-slate-100 flex items-start gap-4">
           <div className="shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border border-orange-200 shadow-sm relative">
             <Image
-              src="https://vnlppyavpkuerviyszxg.supabase.co/storage/v1/object/public/blog-images/hero_chuan-bi-vao-lop-1-toan-dien-1780659661318.webp"
-              alt="Lộ trình học"
+              src={roadmap.heroImage}
+              alt={`Lộ Trình ${roadmap.title}`}
               fill
               className="object-cover"
             />
@@ -473,8 +522,7 @@ export function PreGrade1Roadmap({ roadmap }: { roadmap: Roadmap }) {
       {/* Stages */}
       <section className="px-4 pb-24 max-w-2xl mx-auto space-y-4 mt-2">
         {roadmap.stages.map((stage) => {
-          const isLocked = isStageLockedMap[stage.id];
-          const isExpanded = expandedStage === stage.id && !isLocked;
+          const isExpanded = expandedStage === stage.id;
 
           return (
             <StageCard
@@ -484,7 +532,8 @@ export function PreGrade1Roadmap({ roadmap }: { roadmap: Roadmap }) {
               onToggle={() => setExpandedStage((prev) => (prev === stage.id ? "" : stage.id))}
               stageProgress={stageProgressMap[stage.id] ?? { completed: 0, total: 0, pct: 0 }}
               allProgress={allProgress}
-              isLocked={isLocked}
+              currentGameId={currentGameId}
+              roadmapSlug={roadmap.slug}
             />
           );
         })}
@@ -494,7 +543,7 @@ export function PreGrade1Roadmap({ roadmap }: { roadmap: Roadmap }) {
       <div className="fixed bottom-0 inset-x-0 z-30 p-4 bg-gradient-to-t from-white via-white/95 to-transparent">
         <div className="max-w-2xl mx-auto">
           <Link
-            href={`/games/${findNextGame(roadmap, allProgress)}`}
+            href={`/games/${findNextGame(roadmap, allProgress)}?from=lo-trinh/${roadmap.slug}`}
             onClick={() => playButtonSound()}
             className="block w-full py-4 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 text-white text-center text-lg font-extrabold shadow-[0_8px_30px_rgba(255,156,1,0.35)] hover:shadow-[0_8px_40px_rgba(255,156,1,0.5)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300"
           >
