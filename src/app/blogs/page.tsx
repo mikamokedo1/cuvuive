@@ -63,10 +63,13 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Pr
   const params = await searchParams;
   const currentPage = parseInt(params.page || "1", 10);
   const limit = 12;
-  const [{ posts, total }, tagsWithCounts] = await Promise.all([getPaginatedPosts(currentPage, limit), getTagsWithCounts()]);
+  const [{ posts, total }, tagsWithCounts, allPosts] = await Promise.all([
+    getPaginatedPosts(currentPage, limit),
+    getTagsWithCounts(),
+    getAllPosts(),
+  ]);
   const totalPages = Math.ceil(total / limit);
 
-  const allPosts = await getAllPosts();
   const featuredPosts = allPosts
     .filter(post => GENERAL_PARENTING_SLUGS.includes(post.slug))
     .slice(0, 3);

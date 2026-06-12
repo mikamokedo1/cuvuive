@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import { cache } from "react";
 
 // Define the shape of our blog post frontmatter
 export interface BlogPost {
@@ -86,7 +87,7 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
 /**
  * Gets all blog posts, sorted by date (newest first)
  */
-export async function getAllPosts(): Promise<BlogPost[]> {
+export const getAllPosts = cache(async (): Promise<BlogPost[]> => {
   ensureBlogsDirectory();
 
   try {
@@ -116,7 +117,7 @@ export async function getAllPosts(): Promise<BlogPost[]> {
     console.error("Error reading blogs directory:", e);
     return [];
   }
-}
+});
 /**
  * Gets paginated blog posts
  */

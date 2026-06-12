@@ -145,7 +145,7 @@ export default async function RootLayout({
         <AutoRecoveryBoundary>
           <ClientProviders>
             {children}
-            <Suspense>
+            <Suspense fallback={null}>
               <AppProviders />
               <FacebookMessenger />
             </Suspense>

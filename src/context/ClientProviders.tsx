@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useMemo } from "react";
+import { ReactNode } from "react";
 import { UserProvider } from "./UserContext";
 import { AccessProvider } from "./AccessContext";
 import { ProgressProvider } from "./ProgressContext";
@@ -17,18 +17,17 @@ import { OwlProvider } from "./OwlContext";
  *
  * Order matters: UserProvider must be outermost because
  * AccessProvider, ProgressProvider, and PlayTimerProvider all depend on it.
+ *
+ * Note: React Compiler (enabled in next.config.ts) handles memoization
+ * automatically — no need for manual useMemo wrappers.
  */
 export function ClientProviders({ children }: { children: ReactNode }) {
-  // Memoize children to prevent re-renders of the server-rendered tree
-  // when provider state changes (e.g., user logs in, progress updates)
-  const memoizedChildren = useMemo(() => children, [children]);
-
   return (
     <UserProvider>
       <AccessProvider>
         <ProgressProvider>
           <PlayTimerProvider>
-            <OwlProvider>{memoizedChildren}</OwlProvider>
+            <OwlProvider>{children}</OwlProvider>
           </PlayTimerProvider>
         </ProgressProvider>
       </AccessProvider>
