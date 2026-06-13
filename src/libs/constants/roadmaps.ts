@@ -128,7 +128,7 @@ export const PRE_GRADE_1_ROADMAP: Roadmap = {
   slug: "tien-lop-1",
   title: "Tiền Lớp 1",
   description:
-    "Lộ trình chuẩn bị vào lớp 1 dành cho bé 5-6 tuổi. Bám sát Bộ chuẩn phát triển trẻ em 5 tuổi (QĐ 4222/2024) — giúp bé tự tin bước vào tiểu học.",
+    "Lộ trình bài học tiền lớp 1 dành cho bé 5-6 tuổi. Chương trình tiền tiểu học bám sát Bộ chuẩn phát triển trẻ em 5 tuổi (QĐ 4222/2024) — giúp bé tự tin bước vào tiểu học với bài học tiền tiểu học toàn diện.",
   ageRange: [5, 6],
   educationalLevel: "Pre-primary",
   heroImage:

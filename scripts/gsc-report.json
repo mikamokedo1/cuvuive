@@ -1,51 +1,100 @@
 {
-  "generatedAt": "2026-05-22T07:10:16.284Z",
+  "generatedAt": "2026-06-12T23:15:29.044Z",
   "period": {
-    "startDate": "2026-04-22",
-    "endDate": "2026-05-20",
+    "startDate": "2026-05-13",
+    "endDate": "2026-06-10",
     "days": 28
   },
   "overview": {
-    "totalClicks": 43,
-    "totalImpressions": 1075,
-    "avgCtr": 0.04,
-    "avgPosition": 8.444635008340942
+    "totalClicks": 179,
+    "totalImpressions": 2950,
+    "avgCtr": 0.060677966101694916,
+    "avgPosition": 7.896921788823214
   },
   "topQueries": [
     {
-      "query": "bài tập kỹ năng sống montessori",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0,
-      "position": 77
+      "query": "cuthongminh.com",
+      "clicks": 5,
+      "impressions": 28,
+      "ctr": 0.17857142857142858,
+      "position": 19.821428571428573
     },
     {
-      "query": "bé 2 tuổi học gì",
+      "query": "game đồng hồ",
+      "clicks": 2,
+      "impressions": 7,
+      "ctr": 0.2857142857142857,
+      "position": 5.571428571428571
+    },
+    {
+      "query": "trò chơi đồng hồ",
+      "clicks": 1,
+      "impressions": 33,
+      "ctr": 0.030303030303030304,
+      "position": 7.090909090909091
+    },
+    {
+      "query": "biện pháp phát triển trí nhớ cho trẻ mẫu giáo",
       "clicks": 0,
       "impressions": 2,
       "ctr": 0,
-      "position": 31.5
+      "position": 57
     },
     {
-      "query": "bé 2 tuổi nên học gì",
+      "query": "bài tập kỹ năng sống montessori",
       "clicks": 0,
-      "impressions": 1,
+      "impressions": 2,
       "ctr": 0,
-      "position": 30
+      "position": 71
+    },
+    {
+      "query": "bé 5 tuổi cần học những gì",
+      "clicks": 0,
+      "impressions": 4,
+      "ctr": 0,
+      "position": 7.25
+    },
+    {
+      "query": "bảng màu cho bé",
+      "clicks": 0,
+      "impressions": 11,
+      "ctr": 0,
+      "position": 8.363636363636363
+    },
+    {
+      "query": "bảng màu cho bé 3 tuổi",
+      "clicks": 0,
+      "impressions": 6,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "query": "bảng màu cho bé học",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0,
+      "position": 6
     },
     {
       "query": "bảng màu cơ bản cho bé",
       "clicks": 0,
-      "impressions": 2,
+      "impressions": 20,
       "ctr": 0,
-      "position": 9.5
+      "position": 9.15
     },
     {
-      "query": "cuthongminh.com",
+      "query": "bảng màu sắc cơ bản cho bé",
       "clicks": 0,
-      "impressions": 23,
+      "impressions": 1,
       "ctr": 0,
-      "position": 16.52173913043478
+      "position": 7
+    },
+    {
+      "query": "các bài tập montessori cho trẻ 3 tuổi",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0,
+      "position": 24
     },
     {
       "query": "các trò chơi rèn luyện trí nhớ cho trẻ",
@@ -55,470 +104,470 @@
       "position": 49
     },
     {
+      "query": "cách dạy bé xem đồng hồ",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0,
+      "position": 14.5
+    },
+    {
       "query": "cách dạy trẻ 5 tuổi chuẩn bị vào lớp 1",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0,
+      "position": 31
+    },
+    {
+      "query": "cách kiếm 1 triệu 1 ngày",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0,
+      "position": 54
+    },
+    {
+      "query": "cách xem đồng hồ",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0,
+      "position": 21
+    },
+    {
+      "query": "câu đố logic",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0,
+      "position": 18
+    },
+    {
+      "query": "dạy bé học số",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0,
+      "position": 24
+    },
+    {
+      "query": "dạy bé xem giờ",
+      "clicks": 0,
+      "impressions": 3,
+      "ctr": 0,
+      "position": 14.666666666666666
+    },
+    {
+      "query": "dạy bé xem giờ đồng hồ",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "query": "game cộng trừ",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0,
+      "position": 9
+    },
+    {
+      "query": "game học số cho bé",
+      "clicks": 0,
+      "impressions": 12,
+      "ctr": 0,
+      "position": 7.916666666666667
+    },
+    {
+      "query": "game tư duy cho bé",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0,
+      "position": 10
+    },
+    {
+      "query": "gửi tiết kiệm online quay vòng cả gốc và lãi",
       "clicks": 0,
       "impressions": 1,
       "ctr": 0,
       "position": 50
     },
     {
-      "query": "dạy bé ghép vần",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0,
-      "position": 13
-    },
-    {
-      "query": "game tính tiền",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0,
-      "position": 10
-    },
-    {
-      "query": "game đồng hồ",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0,
-      "position": 3
-    },
-    {
-      "query": "hệ thống trường mầm non montessori",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0,
-      "position": 89
-    },
-    {
-      "query": "khủng hoảng tuổi lên 3",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0,
-      "position": 90
-    },
-    {
-      "query": "khủng hoảng tuổi lên ba",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0,
-      "position": 94
-    },
-    {
-      "query": "montessori trường mầm non",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0,
-      "position": 59
-    },
-    {
-      "query": "mầm non bé thông minh",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0,
-      "position": 25
-    },
-    {
-      "query": "thêm gợi ý",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0,
-      "position": 3
-    },
-    {
-      "query": "trò chơi cộng trừ cho trẻ em",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0,
-      "position": 7
-    },
-    {
-      "query": "trò chơi học số",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0,
-      "position": 26
-    },
-    {
-      "query": "trò chơi khám phá",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0,
-      "position": 20
-    },
-    {
-      "query": "trò chơi nối số cho bé",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0,
-      "position": 70
-    },
-    {
-      "query": "trò chơi rèn luyện trí nhớ",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0,
-      "position": 64
-    },
-    {
-      "query": "trò chơi toán mầm non",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0,
-      "position": 28
-    },
-    {
-      "query": "trò chơi về hình dạng",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0,
-      "position": 36
-    },
-    {
-      "query": "trò chơi đồng hồ",
-      "clicks": 0,
-      "impressions": 28,
-      "ctr": 0,
-      "position": 9
-    },
-    {
-      "query": "ứng dụng ai nào sử dụng trò chơi giáo dục để giúp trẻ học chữ cái, số đếm và tư duy logic?",
+      "query": "học pha màu",
       "clicks": 0,
       "impressions": 1,
       "ctr": 0,
       "position": 1
     },
     {
-      "query": "🇷🇺 là cờ nước nào",
+      "query": "học số cho bé mầm non",
       "clicks": 0,
       "impressions": 1,
       "ctr": 0,
-      "position": 8
+      "position": 3
+    },
+    {
+      "query": "khám phá khoa học cho trẻ 3 tuổi",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0,
+      "position": 16
+    },
+    {
+      "query": "kiếm tiền ngay cả khi đang ngủ",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0,
+      "position": 52.5
+    },
+    {
+      "query": "kiếm tiền online",
+      "clicks": 0,
+      "impressions": 3,
+      "ctr": 0,
+      "position": 75
     }
   ],
   "topPages": [
     {
       "page": "https://cuthongminh.com/",
-      "clicks": 7,
-      "impressions": 46,
-      "ctr": 0.15217391304347827,
-      "position": 9.326086956521738
+      "clicks": 34,
+      "impressions": 67,
+      "ctr": 0.5074626865671642,
+      "position": 2.626865671641791
+    },
+    {
+      "page": "https://cuthongminh.com/games/learn-numbers",
+      "clicks": 23,
+      "impressions": 182,
+      "ctr": 0.12637362637362637,
+      "position": 7.7032967032967035
     },
     {
       "page": "https://cuthongminh.com/games/learn-clock",
-      "clicks": 6,
-      "impressions": 131,
-      "ctr": 0.04580152671755725,
-      "position": 6.770992366412214
+      "clicks": 16,
+      "impressions": 150,
+      "ctr": 0.10666666666666667,
+      "position": 6.18
     },
     {
-      "page": "https://cuthongminh.com/blogs/dau-tieng-viet-cho-be",
-      "clicks": 3,
-      "impressions": 52,
-      "ctr": 0.057692307692307696,
-      "position": 7.25
-    },
-    {
-      "page": "https://cuthongminh.com/games/learn-alphabet",
-      "clicks": 3,
-      "impressions": 11,
-      "ctr": 0.2727272727272727,
-      "position": 8.636363636363637
-    },
-    {
-      "page": "https://cuthongminh.com/blogs/hoc-thoi-tiet-va-khi-hau",
-      "clicks": 2,
-      "impressions": 25,
-      "ctr": 0.08,
-      "position": 6.68
+      "page": "https://cuthongminh.com/blogs/game-cong-tru-cho-be",
+      "clicks": 15,
+      "impressions": 188,
+      "ctr": 0.0797872340425532,
+      "position": 7.308510638297872
     },
     {
       "page": "https://cuthongminh.com/blogs/sudoku-cho-be-mam-non",
+      "clicks": 12,
+      "impressions": 138,
+      "ctr": 0.08695652173913043,
+      "position": 6.666666666666667
+    },
+    {
+      "page": "https://cuthongminh.com/blogs/dau-tieng-viet-cho-be",
+      "clicks": 10,
+      "impressions": 220,
+      "ctr": 0.045454545454545456,
+      "position": 5.763636363636364
+    },
+    {
+      "page": "https://cuthongminh.com/tro-choi-toan-hoc",
+      "clicks": 7,
+      "impressions": 61,
+      "ctr": 0.11475409836065574,
+      "position": 9.78688524590164
+    },
+    {
+      "page": "https://cuthongminh.com/blogs/be-hoc-pha-mau-nghe-thuat",
+      "clicks": 6,
+      "impressions": 184,
+      "ctr": 0.03260869565217391,
+      "position": 7.646739130434782
+    },
+    {
+      "page": "https://cuthongminh.com/blogs/hoc-xem-dong-ho-cho-be",
+      "clicks": 5,
+      "impressions": 226,
+      "ctr": 0.022123893805309734,
+      "position": 7.615044247787611
+    },
+    {
+      "page": "https://cuthongminh.com/blogs/phep-cong-tru-don-gian",
+      "clicks": 3,
+      "impressions": 97,
+      "ctr": 0.030927835051546393,
+      "position": 7.628865979381444
+    },
+    {
+      "page": "https://cuthongminh.com/blogs/be-3-tuoi-nen-hoc-gi",
       "clicks": 2,
-      "impressions": 74,
-      "ctr": 0.02702702702702703,
-      "position": 5.9324324324324325
+      "impressions": 15,
+      "ctr": 0.13333333333333333,
+      "position": 9.2
+    },
+    {
+      "page": "https://cuthongminh.com/blogs/be-5-tuoi-can-biet-nhung-gi",
+      "clicks": 2,
+      "impressions": 121,
+      "ctr": 0.01652892561983471,
+      "position": 7.322314049586777
+    },
+    {
+      "page": "https://cuthongminh.com/blogs/be-tap-to-mau-sang-tao",
+      "clicks": 2,
+      "impressions": 8,
+      "ctr": 0.25,
+      "position": 11.75
+    },
+    {
+      "page": "https://cuthongminh.com/blogs/goi-ten-cam-xuc",
+      "clicks": 2,
+      "impressions": 34,
+      "ctr": 0.058823529411764705,
+      "position": 9.147058823529411
+    },
+    {
+      "page": "https://cuthongminh.com/blogs/luyen-noi-tieng-anh-cho-be-voi-ai",
+      "clicks": 2,
+      "impressions": 23,
+      "ctr": 0.08695652173913043,
+      "position": 9.73913043478261
     },
     {
       "page": "https://cuthongminh.com/blogs/tro-choi-tim-diem-khac-biet",
       "clicks": 2,
-      "impressions": 27,
-      "ctr": 0.07407407407407407,
-      "position": 7.148148148148148
+      "impressions": 50,
+      "ctr": 0.04,
+      "position": 5.92
     },
     {
-      "page": "https://cuthongminh.com/tro-choi-toan-hoc",
+      "page": "https://cuthongminh.com/games/find-pattern",
       "clicks": 2,
-      "impressions": 30,
-      "ctr": 0.06666666666666667,
-      "position": 10.433333333333334
+      "impressions": 25,
+      "ctr": 0.08,
+      "position": 11.84
+    },
+    {
+      "page": "https://cuthongminh.com/games/learn-alphabet",
+      "clicks": 2,
+      "impressions": 15,
+      "ctr": 0.13333333333333333,
+      "position": 9.333333333333334
+    },
+    {
+      "page": "https://cuthongminh.com/games/learn-notes",
+      "clicks": 2,
+      "impressions": 15,
+      "ctr": 0.13333333333333333,
+      "position": 7.133333333333334
+    },
+    {
+      "page": "https://cuthongminh.com/games/talk-with-owl/numbers",
+      "clicks": 2,
+      "impressions": 13,
+      "ctr": 0.15384615384615385,
+      "position": 5.6923076923076925
+    },
+    {
+      "page": "https://cuthongminh.com/blogs/bai-tap-tu-duy-tim-hinh-khac-loai",
+      "clicks": 1,
+      "impressions": 6,
+      "ctr": 0.16666666666666666,
+      "position": 17.5
     },
     {
       "page": "https://cuthongminh.com/blogs/be-2-tuoi-nen-hoc-gi",
       "clicks": 1,
-      "impressions": 29,
-      "ctr": 0.034482758620689655,
-      "position": 11.758620689655173
+      "impressions": 49,
+      "ctr": 0.02040816326530612,
+      "position": 7.959183673469388
     },
     {
-      "page": "https://cuthongminh.com/blogs/be-5-tuoi-can-biet-nhung-gi",
+      "page": "https://cuthongminh.com/blogs/be-6-tuoi-nen-hoc-gi",
       "clicks": 1,
-      "impressions": 3,
-      "ctr": 0.3333333333333333,
-      "position": 7
+      "impressions": 73,
+      "ctr": 0.0136986301369863,
+      "position": 5.273972602739726
     },
     {
-      "page": "https://cuthongminh.com/blogs/be-hoc-pha-mau-nghe-thuat",
+      "page": "https://cuthongminh.com/blogs/be-chuan-bi-vao-lop-1-can-hoc-gi",
       "clicks": 1,
-      "impressions": 44,
-      "ctr": 0.022727272727272728,
-      "position": 8.75
+      "impressions": 43,
+      "ctr": 0.023255813953488372,
+      "position": 9.511627906976743
+    },
+    {
+      "page": "https://cuthongminh.com/blogs/day-be-biet-cac-nghe-nghiep",
+      "clicks": 1,
+      "impressions": 37,
+      "ctr": 0.02702702702702703,
+      "position": 6.756756756756757
     },
     {
       "page": "https://cuthongminh.com/blogs/day-be-hoc-dem",
       "clicks": 1,
-      "impressions": 17,
-      "ctr": 0.058823529411764705,
-      "position": 7.294117647058823
+      "impressions": 16,
+      "ctr": 0.0625,
+      "position": 7.375
     },
     {
-      "page": "https://cuthongminh.com/blogs/game-cong-tru-cho-be",
+      "page": "https://cuthongminh.com/blogs/day-be-to-mau-dung-cach",
       "clicks": 1,
-      "impressions": 52,
-      "ctr": 0.019230769230769232,
-      "position": 6.615384615384615
+      "impressions": 49,
+      "ctr": 0.02040816326530612,
+      "position": 9.020408163265307
     },
     {
       "page": "https://cuthongminh.com/blogs/game-hoc-chu-cho-be",
       "clicks": 1,
-      "impressions": 33,
-      "ctr": 0.030303030303030304,
-      "position": 9.181818181818182
+      "impressions": 47,
+      "ctr": 0.02127659574468085,
+      "position": 9.106382978723405
     },
     {
-      "page": "https://cuthongminh.com/blogs/hoc-quy-luat-logic",
+      "page": "https://cuthongminh.com/blogs/hoc-thoi-tiet-va-khi-hau",
       "clicks": 1,
-      "impressions": 7,
-      "ctr": 0.14285714285714285,
-      "position": 6.571428571428571
+      "impressions": 32,
+      "ctr": 0.03125,
+      "position": 6.5
     },
     {
-      "page": "https://cuthongminh.com/blogs/phat-trien-tri-nho-cho-tre-mam-non",
+      "page": "https://cuthongminh.com/blogs/lam-quen-voi-nhac-cu",
       "clicks": 1,
-      "impressions": 12,
-      "ctr": 0.08333333333333333,
-      "position": 34.666666666666664
-    },
-    {
-      "page": "https://cuthongminh.com/blogs/phep-cong-tru-don-gian",
-      "clicks": 1,
-      "impressions": 96,
-      "ctr": 0.010416666666666666,
-      "position": 8.072916666666668
-    },
-    {
-      "page": "https://cuthongminh.com/blogs/so-sanh-so-luong",
-      "clicks": 1,
-      "impressions": 20,
-      "ctr": 0.05,
-      "position": 7
-    },
-    {
-      "page": "https://cuthongminh.com/dia-ly-tu-nhien",
-      "clicks": 1,
-      "impressions": 39,
-      "ctr": 0.02564102564102564,
-      "position": 10.538461538461538
-    },
-    {
-      "page": "https://cuthongminh.com/games/compare-quantity",
-      "clicks": 1,
-      "impressions": 3,
-      "ctr": 0.3333333333333333,
-      "position": 8.333333333333332
-    },
-    {
-      "page": "https://cuthongminh.com/games/learn-body",
-      "clicks": 1,
-      "impressions": 5,
-      "ctr": 0.2,
-      "position": 6.6
-    },
-    {
-      "page": "https://cuthongminh.com/games/learn-math",
-      "clicks": 1,
-      "impressions": 22,
-      "ctr": 0.045454545454545456,
-      "position": 7.681818181818182
-    },
-    {
-      "page": "https://cuthongminh.com/gioi-thieu-kiem-tien",
-      "clicks": 1,
-      "impressions": 25,
-      "ctr": 0.04,
-      "position": 2.6399999999999997
-    },
-    {
-      "page": "https://cuthongminh.com/terms",
-      "clicks": 1,
-      "impressions": 12,
-      "ctr": 0.08333333333333333,
-      "position": 14.416666666666666
-    },
-    {
-      "page": "https://cuthongminh.com/about-us",
-      "clicks": 0,
-      "impressions": 24,
-      "ctr": 0,
-      "position": 9.75
-    },
-    {
-      "page": "https://cuthongminh.com/am-nhac",
-      "clicks": 0,
-      "impressions": 3,
-      "ctr": 0,
+      "impressions": 9,
+      "ctr": 0.1111111111111111,
       "position": 8
-    },
-    {
-      "page": "https://cuthongminh.com/blogs",
-      "clicks": 0,
-      "impressions": 14,
-      "ctr": 0,
-      "position": 6.142857142857143
-    },
-    {
-      "page": "https://cuthongminh.com/blogs/bai-tap-tu-duy-tim-hinh-khac-loai",
-      "clicks": 0,
-      "impressions": 5,
-      "ctr": 0,
-      "position": 7.6
-    },
-    {
-      "page": "https://cuthongminh.com/blogs/bang-cuu-chuong-cho-be",
-      "clicks": 0,
-      "impressions": 2,
-      "ctr": 0,
-      "position": 9
-    },
-    {
-      "page": "https://cuthongminh.com/blogs/be-3-tuoi-nen-hoc-gi",
-      "clicks": 0,
-      "impressions": 3,
-      "ctr": 0,
-      "position": 12
     }
   ],
   "devices": [
     {
       "device": "DESKTOP",
-      "clicks": 22,
-      "impressions": 470,
-      "ctr": 0.04680851063829787,
-      "position": 9.229787234042552
+      "clicks": 108,
+      "impressions": 1229,
+      "ctr": 0.08787632221318145,
+      "position": 8.475183075671278
     },
     {
       "device": "MOBILE",
-      "clicks": 19,
-      "impressions": 580,
-      "ctr": 0.032758620689655175,
-      "position": 7.73448275862069
+      "clicks": 65,
+      "impressions": 1667,
+      "ctr": 0.038992201559688064,
+      "position": 6.965806838632274
     },
     {
       "device": "TABLET",
-      "clicks": 2,
-      "impressions": 25,
-      "ctr": 0.08,
-      "position": 7.6
+      "clicks": 6,
+      "impressions": 54,
+      "ctr": 0.1111111111111111,
+      "position": 6.666666666666667
     }
   ],
   "countries": [
     {
       "country": "vnm",
-      "clicks": 41,
-      "impressions": 955,
-      "ctr": 0.04293193717277487,
-      "position": 8.527748691099475
+      "clicks": 177,
+      "impressions": 2760,
+      "ctr": 0.0641304347826087,
+      "position": 7.399637681159421
     },
     {
-      "country": "chn",
+      "country": "gbr",
+      "clicks": 1,
+      "impressions": 5,
+      "ctr": 0.2,
+      "position": 5.2
+    },
+    {
+      "country": "kor",
       "clicks": 1,
       "impressions": 6,
       "ctr": 0.16666666666666666,
-      "position": 6.666666666666667
-    },
-    {
-      "country": "jpn",
-      "clicks": 1,
-      "impressions": 4,
-      "ctr": 0.25,
-      "position": 7
-    },
-    {
-      "country": "abw",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0,
-      "position": 1
+      "position": 20
     },
     {
       "country": "arg",
       "clicks": 0,
       "impressions": 1,
       "ctr": 0,
-      "position": 1
+      "position": 8
     },
     {
       "country": "aus",
       "clicks": 0,
-      "impressions": 6,
+      "impressions": 5,
       "ctr": 0,
-      "position": 6.666666666666667
+      "position": 5.8
     },
     {
       "country": "bel",
       "clicks": 0,
-      "impressions": 1,
+      "impressions": 2,
       "ctr": 0,
-      "position": 10
+      "position": 8.5
     },
     {
-      "country": "bra",
+      "country": "blr",
       "clicks": 0,
-      "impressions": 4,
+      "impressions": 1,
       "ctr": 0,
       "position": 1
     },
     {
-      "country": "can",
-      "clicks": 0,
-      "impressions": 8,
-      "ctr": 0,
-      "position": 5.5
-    },
-    {
-      "country": "che",
+      "country": "bra",
       "clicks": 0,
       "impressions": 1,
       "ctr": 0,
       "position": 8
+    },
+    {
+      "country": "can",
+      "clicks": 0,
+      "impressions": 13,
+      "ctr": 0,
+      "position": 6.3076923076923075
+    },
+    {
+      "country": "che",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "country": "chn",
+      "clicks": 0,
+      "impressions": 6,
+      "ctr": 0,
+      "position": 8.5
     },
     {
       "country": "cze",
       "clicks": 0,
       "impressions": 4,
       "ctr": 0,
-      "position": 8
+      "position": 8.5
     },
     {
       "country": "deu",
       "clicks": 0,
-      "impressions": 1,
+      "impressions": 6,
       "ctr": 0,
-      "position": 11
+      "position": 8.333333333333332
     },
     {
-      "country": "fra",
+      "country": "fin",
       "clicks": 0,
-      "impressions": 2,
+      "impressions": 1,
+      "ctr": 0,
+      "position": 7
+    },
+    {
+      "country": "hkg",
+      "clicks": 0,
+      "impressions": 5,
+      "ctr": 0,
+      "position": 4.4
+    },
+    {
+      "country": "hun",
+      "clicks": 0,
+      "impressions": 1,
       "ctr": 0,
       "position": 4
     },
@@ -527,221 +576,137 @@
       "clicks": 0,
       "impressions": 3,
       "ctr": 0,
-      "position": 5.333333333333333
+      "position": 31.666666666666668
     },
     {
       "country": "ind",
       "clicks": 0,
       "impressions": 2,
       "ctr": 0,
-      "position": 6.5
+      "position": 7.5
     },
     {
-      "country": "kor",
+      "country": "jpn",
+      "clicks": 0,
+      "impressions": 13,
+      "ctr": 0,
+      "position": 7.615384615384615
+    },
+    {
+      "country": "khm",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "country": "lao",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0,
+      "position": 7
+    },
+    {
+      "country": "mmr",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0,
+      "position": 14
+    },
+    {
+      "country": "mys",
       "clicks": 0,
       "impressions": 2,
       "ctr": 0,
-      "position": 5
+      "position": 4
     },
     {
-      "country": "pol",
+      "country": "pak",
       "clicks": 0,
       "impressions": 1,
       "ctr": 0,
-      "position": 1
+      "position": 9
     },
     {
-      "country": "pri",
+      "country": "phl",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0,
+      "position": 6.5
+    },
+    {
+      "country": "prt",
       "clicks": 0,
       "impressions": 1,
       "ctr": 0,
-      "position": 1
+      "position": 8
     },
     {
-      "country": "pry",
+      "country": "pse",
       "clicks": 0,
       "impressions": 1,
       "ctr": 0,
-      "position": 1
+      "position": 9
+    },
+    {
+      "country": "rou",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0,
+      "position": 21
+    },
+    {
+      "country": "rus",
+      "clicks": 0,
+      "impressions": 4,
+      "ctr": 0,
+      "position": 27
+    },
+    {
+      "country": "sen",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0,
+      "position": 4
     },
     {
       "country": "sgp",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0,
+      "position": 9
+    },
+    {
+      "country": "swe",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0,
+      "position": 10
+    },
+    {
+      "country": "tun",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0,
+      "position": 11
+    },
+    {
+      "country": "twn",
       "clicks": 0,
       "impressions": 1,
       "ctr": 0,
       "position": 2
     },
     {
-      "country": "twn",
-      "clicks": 0,
-      "impressions": 2,
-      "ctr": 0,
-      "position": 7
-    },
-    {
-      "country": "ukr",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0,
-      "position": 1
-    },
-    {
       "country": "usa",
       "clicks": 0,
-      "impressions": 67,
+      "impressions": 92,
       "ctr": 0,
-      "position": 8.716417910447761
+      "position": 11.347826086956522
     }
   ],
   "searchAppearance": [],
   "dailyData": [
-    {
-      "date": "2026-04-22",
-      "clicks": 1,
-      "impressions": 18,
-      "ctr": 0.05555555555555555,
-      "position": 7.833333333333333
-    },
-    {
-      "date": "2026-04-23",
-      "clicks": 0,
-      "impressions": 18,
-      "ctr": 0,
-      "position": 11.88888888888889
-    },
-    {
-      "date": "2026-04-24",
-      "clicks": 1,
-      "impressions": 11,
-      "ctr": 0.09090909090909091,
-      "position": 8.272727272727273
-    },
-    {
-      "date": "2026-04-25",
-      "clicks": 0,
-      "impressions": 19,
-      "ctr": 0,
-      "position": 13.052631578947368
-    },
-    {
-      "date": "2026-04-26",
-      "clicks": 2,
-      "impressions": 23,
-      "ctr": 0.08695652173913043,
-      "position": 6.956521739130435
-    },
-    {
-      "date": "2026-04-27",
-      "clicks": 1,
-      "impressions": 27,
-      "ctr": 0.037037037037037035,
-      "position": 7.666666666666667
-    },
-    {
-      "date": "2026-04-28",
-      "clicks": 0,
-      "impressions": 24,
-      "ctr": 0,
-      "position": 7.875
-    },
-    {
-      "date": "2026-04-29",
-      "clicks": 2,
-      "impressions": 21,
-      "ctr": 0.09523809523809523,
-      "position": 6.761904761904762
-    },
-    {
-      "date": "2026-04-30",
-      "clicks": 1,
-      "impressions": 22,
-      "ctr": 0.045454545454545456,
-      "position": 7.045454545454546
-    },
-    {
-      "date": "2026-05-01",
-      "clicks": 0,
-      "impressions": 17,
-      "ctr": 0,
-      "position": 11.411764705882353
-    },
-    {
-      "date": "2026-05-02",
-      "clicks": 1,
-      "impressions": 36,
-      "ctr": 0.027777777777777776,
-      "position": 9.527777777777779
-    },
-    {
-      "date": "2026-05-03",
-      "clicks": 1,
-      "impressions": 37,
-      "ctr": 0.02702702702702703,
-      "position": 6.783783783783784
-    },
-    {
-      "date": "2026-05-04",
-      "clicks": 1,
-      "impressions": 31,
-      "ctr": 0.03225806451612903,
-      "position": 9.483870967741936
-    },
-    {
-      "date": "2026-05-05",
-      "clicks": 1,
-      "impressions": 52,
-      "ctr": 0.019230769230769232,
-      "position": 7.8076923076923075
-    },
-    {
-      "date": "2026-05-06",
-      "clicks": 2,
-      "impressions": 33,
-      "ctr": 0.06060606060606061,
-      "position": 8.121212121212121
-    },
-    {
-      "date": "2026-05-07",
-      "clicks": 5,
-      "impressions": 36,
-      "ctr": 0.1388888888888889,
-      "position": 7.277777777777778
-    },
-    {
-      "date": "2026-05-08",
-      "clicks": 1,
-      "impressions": 80,
-      "ctr": 0.0125,
-      "position": 6.2375
-    },
-    {
-      "date": "2026-05-09",
-      "clicks": 1,
-      "impressions": 49,
-      "ctr": 0.02040816326530612,
-      "position": 5.755102040816326
-    },
-    {
-      "date": "2026-05-10",
-      "clicks": 2,
-      "impressions": 45,
-      "ctr": 0.044444444444444446,
-      "position": 7.622222222222222
-    },
-    {
-      "date": "2026-05-11",
-      "clicks": 3,
-      "impressions": 46,
-      "ctr": 0.06521739130434782,
-      "position": 8.76086956521739
-    },
-    {
-      "date": "2026-05-12",
-      "clicks": 0,
-      "impressions": 49,
-      "ctr": 0,
-      "position": 7.346938775510204
-    },
     {
       "date": "2026-05-13",
       "clicks": 2,
@@ -797,6 +762,153 @@
       "impressions": 71,
       "ctr": 0.04225352112676056,
       "position": 14.859154929577464
+    },
+    {
+      "date": "2026-05-21",
+      "clicks": 5,
+      "impressions": 42,
+      "ctr": 0.11904761904761904,
+      "position": 9.666666666666666
+    },
+    {
+      "date": "2026-05-22",
+      "clicks": 4,
+      "impressions": 35,
+      "ctr": 0.11428571428571428,
+      "position": 7.828571428571428
+    },
+    {
+      "date": "2026-05-23",
+      "clicks": 1,
+      "impressions": 52,
+      "ctr": 0.019230769230769232,
+      "position": 7.75
+    },
+    {
+      "date": "2026-05-24",
+      "clicks": 3,
+      "impressions": 47,
+      "ctr": 0.06382978723404255,
+      "position": 6.829787234042553
+    },
+    {
+      "date": "2026-05-25",
+      "clicks": 5,
+      "impressions": 54,
+      "ctr": 0.09259259259259259,
+      "position": 7.703703703703703
+    },
+    {
+      "date": "2026-05-26",
+      "clicks": 2,
+      "impressions": 44,
+      "ctr": 0.045454545454545456,
+      "position": 7.659090909090909
+    },
+    {
+      "date": "2026-05-27",
+      "clicks": 9,
+      "impressions": 91,
+      "ctr": 0.0989010989010989,
+      "position": 6.934065934065934
+    },
+    {
+      "date": "2026-05-28",
+      "clicks": 3,
+      "impressions": 77,
+      "ctr": 0.03896103896103896,
+      "position": 6.428571428571429
+    },
+    {
+      "date": "2026-05-29",
+      "clicks": 5,
+      "impressions": 86,
+      "ctr": 0.05813953488372093,
+      "position": 10.232558139534884
+    },
+    {
+      "date": "2026-05-30",
+      "clicks": 9,
+      "impressions": 101,
+      "ctr": 0.0891089108910891,
+      "position": 7.1683168316831685
+    },
+    {
+      "date": "2026-05-31",
+      "clicks": 8,
+      "impressions": 84,
+      "ctr": 0.09523809523809523,
+      "position": 7.321428571428571
+    },
+    {
+      "date": "2026-06-01",
+      "clicks": 8,
+      "impressions": 153,
+      "ctr": 0.05228758169934641,
+      "position": 6.562091503267974
+    },
+    {
+      "date": "2026-06-02",
+      "clicks": 4,
+      "impressions": 134,
+      "ctr": 0.029850746268656716,
+      "position": 7.470149253731344
+    },
+    {
+      "date": "2026-06-03",
+      "clicks": 6,
+      "impressions": 144,
+      "ctr": 0.041666666666666664,
+      "position": 6.930555555555555
+    },
+    {
+      "date": "2026-06-04",
+      "clicks": 9,
+      "impressions": 159,
+      "ctr": 0.05660377358490566,
+      "position": 7.119496855345912
+    },
+    {
+      "date": "2026-06-05",
+      "clicks": 10,
+      "impressions": 179,
+      "ctr": 0.055865921787709494,
+      "position": 6.681564245810056
+    },
+    {
+      "date": "2026-06-06",
+      "clicks": 5,
+      "impressions": 192,
+      "ctr": 0.026041666666666668,
+      "position": 9.614583333333334
+    },
+    {
+      "date": "2026-06-07",
+      "clicks": 10,
+      "impressions": 194,
+      "ctr": 0.05154639175257732,
+      "position": 8.164948453608247
+    },
+    {
+      "date": "2026-06-08",
+      "clicks": 13,
+      "impressions": 226,
+      "ctr": 0.05752212389380531,
+      "position": 6.743362831858407
+    },
+    {
+      "date": "2026-06-09",
+      "clicks": 20,
+      "impressions": 252,
+      "ctr": 0.07936507936507936,
+      "position": 6.392857142857143
+    },
+    {
+      "date": "2026-06-10",
+      "clicks": 23,
+      "impressions": 223,
+      "ctr": 0.1031390134529148,
+      "position": 6.403587443946188
     }
   ]
 }

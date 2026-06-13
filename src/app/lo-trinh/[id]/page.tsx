@@ -37,6 +37,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       "game giáo dục",
       "trò chơi giáo dục",
       "cú thông minh",
+      ...(roadmap.id === "tien-lop-1"
+        ? [
+            "tiền lớp 1",
+            "bài học tiền lớp 1",
+            "tiền tiểu học",
+            "bài học tiền tiểu học",
+            "chuẩn bị vào lớp 1",
+            "bé 5 tuổi vào lớp 1",
+          ]
+        : []),
     ],
     alternates: {
       canonical: `/lo-trinh/${roadmap.slug}`,

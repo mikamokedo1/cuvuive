@@ -22,6 +22,8 @@ export const metadata: Metadata = {
     "chuẩn bị vào lớp 1",
     "tiền lớp 1",
     "tiền tiểu học",
+    "bài học tiền lớp 1",
+    "bài học tiền tiểu học",
     "trò chơi giáo dục theo tuổi",
     "cú thông minh",
   ],

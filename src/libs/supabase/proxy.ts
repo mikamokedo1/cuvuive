@@ -28,7 +28,6 @@ const publicPaths = [
   "/do-tuoi",
   "/cong-cu",
   "/leaderboard",
-  "/tien-lop-1",
   "/lo-trinh",
 ];
 

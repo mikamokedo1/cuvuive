@@ -223,6 +223,9 @@ const RAW_GAME_SEO: Record<string, GameSeoData> = {
     relatedBlogs: [
       { slug: "cach-day-be-hoc-so", title: "Cách Dạy Bé Học Số" },
       { slug: "day-be-hoc-dem", title: "Cách Dạy Trẻ Mầm Non Học Số" },
+      { slug: "be-5-tuoi-can-biet-nhung-gi", title: "Bé 5 Tuổi Cần Biết Những Gì Trước Khi Vào Lớp 1" },
+      { slug: "day-be-hoc-qua-tro-choi", title: "Dạy Bé Học Qua Trò Chơi: 7 Phương Pháp Play-Based Learning" },
+      { slug: "ap-dung-montessori-tai-nha", title: "Phương Pháp Montessori Tại Nhà Cho Trẻ 3-6 Tuổi" },
     ],
   },
   "compare-quantity": {
@@ -308,7 +311,10 @@ const RAW_GAME_SEO: Record<string, GameSeoData> = {
     ],
     ogImage: "https://assets.cuthongminh.com/games/learn-shape/learn-shape-logo.webp",
     relatedGames: ["learn-numbers", "compare-quantity", "learn-math"],
-    relatedBlogs: [{ slug: "nhan-biet-hinh-dang", title: "Nhận Biết Hình Dạng Cho Trẻ Mầm Non" }],
+    relatedBlogs: [
+      { slug: "nhan-biet-hinh-dang", title: "Nhận Biết Hình Dạng Cho Trẻ Mầm Non" },
+      { slug: "ap-dung-montessori-tai-nha", title: "Phương Pháp Montessori Tại Nhà Cho Trẻ 3-6 Tuổi" },
+    ],
   },
   "learn-animal": {
     title: "Học Động Vật cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -753,6 +759,8 @@ const RAW_GAME_SEO: Record<string, GameSeoData> = {
     relatedBlogs: [
       { slug: "phep-cong-tru-don-gian", title: "Bé Học Phép Cộng Trừ Đơn Giản" },
       { slug: "phep-tinh-don-gian-cho-be-mau-giao", title: "Phép Tính Cho Bé Mẫu Giáo" },
+      { slug: "be-5-tuoi-can-biet-nhung-gi", title: "Bé 5 Tuổi Cần Biết Những Gì Trước Khi Vào Lớp 1" },
+      { slug: "day-be-hoc-qua-tro-choi", title: "Dạy Bé Học Qua Trò Chơi: 7 Phương Pháp Play-Based Learning" },
     ],
   },
   "learn-multiply": {
@@ -868,6 +876,7 @@ const RAW_GAME_SEO: Record<string, GameSeoData> = {
     relatedBlogs: [
       { slug: "hoc-quy-luat-logic", title: "Bé Học Quy Luật Logic" },
       { slug: "day-be-tu-duy-logic", title: "Dạy Bé Tư Duy Logic" },
+      { slug: "cach-ren-luyen-su-tap-trung-cho-tre-mam-non", title: "Cách Rèn Luyện Sự Tập Trung Cho Trẻ Mầm Non" },
     ],
   },
   "learn-alphabet": {
@@ -899,6 +908,7 @@ const RAW_GAME_SEO: Record<string, GameSeoData> = {
       { slug: "hoc-bang-chu-cai-tieng-viet", title: "Bé Học Bảng Chữ Cái Tiếng Việt" },
       { slug: "day-be-hoc-bang-chu-cai-tai-nha", title: "Dạy Bé Học Bảng Chữ Cái Tại Nhà" },
       { slug: "game-hoc-chu-cho-be", title: "Top 7 Game Học Chữ Cho Bé" },
+      { slug: "ap-dung-montessori-tai-nha", title: "Phương Pháp Montessori Tại Nhà Cho Trẻ 3-6 Tuổi" },
     ],
   },
   "find-differences": {
@@ -925,7 +935,10 @@ const RAW_GAME_SEO: Record<string, GameSeoData> = {
     ],
     ogImage: "https://assets.cuthongminh.com/games/game-4-logo.webp",
     relatedGames: ["find-pattern", "odd-one-out", "maze-runner"],
-    relatedBlogs: [{ slug: "tro-choi-tim-diem-khac-biet", title: "Trò Chơi Tìm Điểm Khác Biệt" }],
+    relatedBlogs: [
+      { slug: "tro-choi-tim-diem-khac-biet", title: "Trò Chơi Tìm Điểm Khác Biệt" },
+      { slug: "cach-ren-luyen-su-tap-trung-cho-tre-mam-non", title: "Cách Rèn Luyện Sự Tập Trung Cho Trẻ Mầm Non" },
+    ],
   },
   "odd-one-out": {
     title: "Tìm Hình Khác Biệt cho bé - Trò chơi giáo dục Cú Thông Minh",
@@ -977,6 +990,7 @@ const RAW_GAME_SEO: Record<string, GameSeoData> = {
     relatedGames: ["find-pattern", "find-differences", "line-connect"],
     relatedBlogs: [
       { slug: "me-cung-cho-be", title: "Mê Cung Cho Bé: Rèn Luyện IQ" },
+      { slug: "cach-ren-luyen-su-tap-trung-cho-tre-mam-non", title: "Cách Rèn Luyện Sự Tập Trung Cho Trẻ Mầm Non" },
     ],
   },
   "line-connect": {
@@ -1092,6 +1106,8 @@ const RAW_GAME_SEO: Record<string, GameSeoData> = {
     relatedGames: ["learn-numbers", "compare-quantity", "learn-math"],
     relatedBlogs: [
       { slug: "hoc-xem-dong-ho-cho-be", title: "Học Xem Đồng Hồ Cho Bé" },
+      { slug: "be-5-tuoi-can-biet-nhung-gi", title: "Bé 5 Tuổi Cần Biết Những Gì Trước Khi Vào Lớp 1" },
+      { slug: "day-be-hoc-qua-tro-choi", title: "Dạy Bé Học Qua Trò Chơi: 7 Phương Pháp Play-Based Learning" },
     ],
   },
   "mini-piano": {
@@ -1360,7 +1376,9 @@ const RAW_GAME_SEO: Record<string, GameSeoData> = {
     seoFeatures: ["Học 26 chữ cái tiếng Anh", "Phát âm chuẩn từng chữ cái", "Hình ảnh minh họa sinh động", "Trò chơi ghép chữ cái"],
     ogImage: "https://assets.cuthongminh.com/games/learn-english-alphabet/logo.webp",
     relatedGames: ["learn-english-vocab", "learn-alphabet"],
-    relatedBlogs: [],
+    relatedBlogs: [
+      { slug: "day-be-hoc-bang-chu-cai-tieng-anh", title: "Cách Dạy Bé Học Bảng Chữ Cái Tiếng Anh Tại Nhà" },
+    ],
   },
   "talk-with-owl": {
     title: "Giao Tiếp Tiếng Anh với AI - Trò chơi giáo dục Cú Thông Minh",

@@ -135,6 +135,12 @@ const nextConfig: NextConfig = {
         destination: "/blogs/mau-sac-cho-tre-mau-giao",
         permanent: true,
       },
+      // Shortcut URL → actual roadmap page
+      {
+        source: "/tien-lop-1",
+        destination: "/lo-trinh/tien-lop-1",
+        permanent: true,
+      },
     ];
   },
   experimental: {

@@ -166,10 +166,31 @@ export const GENERAL_PARENTING_SLUGS = [
   "be-5-tuoi-can-biet-nhung-gi",
   "be-6-tuoi-nen-hoc-gi",
   "be-chuan-bi-vao-lop-1-can-hoc-gi",
+  "lo-trinh-tien-lop-1-cu-thong-minh",
+  "chuan-bi-vao-lop-1-toan-dien",
   "giao-duc-som-la-gi",
   "tre-xem-tivi-dien-thoai-qua-nhieu",
   "day-be-hoc-qua-tro-choi",
   "screen-time-cho-tre-mam-non",
   "ap-dung-montessori-tai-nha",
   "steam-cho-tre-mam-non",
+];
+
+/**
+ * "Tiền Lớp 1" topic cluster — groups all school-readiness blog posts
+ * for cross-linking. Used for related post recommendations on blog pages
+ * targeting “tiền lớp 1”, “bài học tiền lớp 1”, “tiền tiểu học” keywords.
+ */
+export const TIEN_LOP_1_SLUGS = [
+  // Pillar posts
+  "lo-trinh-tien-lop-1-cu-thong-minh",
+  "chuan-bi-vao-lop-1-toan-dien",
+  // Primary posts
+  "be-chuan-bi-vao-lop-1-can-hoc-gi",
+  "be-5-tuoi-can-biet-nhung-gi",
+  "be-6-tuoi-nen-hoc-gi",
+  "cach-ren-luyen-su-tap-trung-cho-tre-mam-non",
+  // Supporting posts
+  "ky-nang-song-toan-dien-cho-be-truoc-6-tuoi",
+  "day-be-hoc-qua-tro-choi",
 ];
