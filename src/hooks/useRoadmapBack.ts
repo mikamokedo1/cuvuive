@@ -1,26 +1,34 @@
 /**
  * useRoadmapBack
  *
- * Reads the `?from=` query param (set by RoadmapView when navigating to a game)
+ * Reads the `#from=` hash fragment (set by RoadmapView when navigating to a game)
  * and returns the correct "back" URL.
  *
+ * Uses hash fragments instead of query params so Google doesn't treat each
+ * roadmap referral as a separate URL (preventing duplicate content issues).
+ *
  * Examples:
- *   /games/learn-alphabet?from=lo-trinh/tien-lop-1  → back = /lo-trinh/tien-lop-1
+ *   /games/learn-alphabet#from=lo-trinh/tien-lop-1  → back = /lo-trinh/tien-lop-1
  *   /games/learn-alphabet                            → back = /games
  */
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const ROADMAP_PREFIX = "lo-trinh/";
 
 export function useRoadmapBack(fallback: string = "/games"): string {
-  const searchParams = useSearchParams();
-  const from = searchParams.get("from");
+  const [backUrl, setBackUrl] = useState(fallback);
 
-  if (from && from.startsWith(ROADMAP_PREFIX)) {
-    return `/${from}`;
-  }
+  useEffect(() => {
+    const hash = window.location.hash; // e.g. "#from=lo-trinh/tien-lop-1"
+    if (hash.startsWith("#from=")) {
+      const from = decodeURIComponent(hash.slice("#from=".length));
+      if (from.startsWith(ROADMAP_PREFIX)) {
+        setBackUrl(`/${from}`);
+      }
+    }
+  }, []);
 
-  return fallback;
+  return backUrl;
 }

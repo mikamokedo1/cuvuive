@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
-import { getRoadmapBySlug, ROADMAPS } from "@/libs/constants/roadmaps";
+import { getRoadmapBySlug, ROADMAPS, getGameLabel } from "@/libs/constants/roadmaps";
 import { RoadmapView } from "./RoadmapView";
 import { safeJsonLd } from "@/libs/utils/safe-jsonld";
 import { Breadcrumbs } from "@/components/common/Breadcrumbs";
@@ -117,6 +117,30 @@ export default async function RoadmapPage({ params }: PageProps) {
       />
       <HeaderHomeWithSearch />
       <RoadmapView roadmap={roadmap} />
+
+      {/* SSR content for search engines — RoadmapView is client-side so bots can't see its content */}
+      <section className="sr-only" aria-label={`Nội dung lộ trình ${roadmap.title}`}>
+        <h2>Lộ Trình {roadmap.title} — {roadmap.stages.length} chặng học</h2>
+        <p>{roadmap.description}</p>
+        {roadmap.stages.map((stage) => (
+          <div key={stage.id}>
+            <h3>Chặng {stage.number}: {stage.title}</h3>
+            <p>{stage.subtitle}</p>
+            {stage.categories.map((cat) => (
+              <div key={cat.id}>
+                <h4>{cat.emoji} {cat.title}</h4>
+                <ul>
+                  {cat.games.map((game) => (
+                    <li key={game.gameId}>
+                      <a href={`/games/${game.gameId}`}>{getGameLabel(game)}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        ))}
+      </section>
     </>
   );
 }

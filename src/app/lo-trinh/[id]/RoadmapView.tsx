@@ -81,7 +81,7 @@ function GameNode({
   const isDone = totalLessons > 0 && completedLessons >= totalLessons;
   const isStarted = completedLessons > 0;
   const progressPct = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
-  const gameHref = `/games/${game.gameId}?from=lo-trinh/${roadmapSlug}`;
+  const gameHref = `/games/${game.gameId}#from=lo-trinh/${roadmapSlug}`;
 
   return (
     <div className={`flex items-center gap-4 ${isEven ? "flex-row" : "flex-row-reverse"}`}>
@@ -543,7 +543,7 @@ export function RoadmapView({ roadmap }: { roadmap: Roadmap }) {
       <div className="fixed bottom-0 inset-x-0 z-30 p-4 bg-gradient-to-t from-white via-white/95 to-transparent">
         <div className="max-w-2xl mx-auto">
           <Link
-            href={`/games/${findNextGame(roadmap, allProgress)}?from=lo-trinh/${roadmap.slug}`}
+            href={`/games/${findNextGame(roadmap, allProgress)}#from=lo-trinh/${roadmap.slug}`}
             onClick={() => playButtonSound()}
             className="block w-full py-4 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 text-white text-center text-lg font-extrabold shadow-[0_8px_30px_rgba(255,156,1,0.35)] hover:shadow-[0_8px_40px_rgba(255,156,1,0.5)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300"
           >
