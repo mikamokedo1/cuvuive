@@ -29,6 +29,8 @@ const publicPaths = [
   "/cong-cu",
   "/leaderboard",
   "/lo-trinh",
+  // Agent readiness
+  "/.well-known",
 ];
 
 function isPublicPath(pathname: string): boolean {
