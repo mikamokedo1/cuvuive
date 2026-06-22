@@ -100,6 +100,16 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      {
+        source: "/",
+        headers: [
+          {
+            key: "Link",
+            value:
+              '<https://cuthongminh.com/llms.txt>; rel="alternate"; type="text/plain"; title="LLMs.txt", <https://cuthongminh.com/llms-full.txt>; rel="alternate"; type="text/plain"; title="LLMs Full.txt"',
+          },
+        ],
+      },
     ];
   },
   async redirects() {
