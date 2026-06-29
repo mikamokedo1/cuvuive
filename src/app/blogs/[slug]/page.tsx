@@ -50,6 +50,7 @@ import AIFact from "@/components/blog/AIFact";
 import { Breadcrumbs, type BreadcrumbItem } from "@/components/common/Breadcrumbs";
 import { ROADMAPS } from "@/libs/constants/roadmaps";
 import { Route } from "lucide-react";
+import { ExitIntentPopup } from "@/components/common/ExitIntentPopup";
 
 export async function generateStaticParams() {
   const posts = await getAllPosts();
@@ -268,6 +269,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   breadcrumbItems.push({ label: post.title, href: `/blogs/${post.slug}` });
 
   return (
+    <>
     <article className="container mx-auto px-6 max-w-3xl">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }} />
 
@@ -469,5 +471,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </section>
       )}
     </article>
+    <ExitIntentPopup />
+    </>
   );
 }

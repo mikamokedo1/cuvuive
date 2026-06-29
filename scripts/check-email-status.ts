@@ -33,14 +33,14 @@ async function main() {
       console.log(`  ${i + 1}. ID: ${u.id} - Email: ${u.email}`);
     });
 
-    // Check Resend Configuration
-    const resendApiKey = process.env.RESEND_API_KEY;
-    const fromEmail = process.env.RESEND_FROM_EMAIL;
+    // Check Brevo Configuration
+    const brevoApiKey = process.env.BREVO_API_KEY;
+    const fromEmail = process.env.BREVO_FROM_EMAIL;
     const cronSecret = process.env.CRON_SECRET;
 
     console.log("\nChecking configuration:");
-    console.log(`- RESEND_API_KEY: ${resendApiKey ? "Configured (Starts with " + resendApiKey.substring(0, 7) + "...)" : "❌ NOT Configured"}`);
-    console.log(`- RESEND_FROM_EMAIL: ${fromEmail || "❌ NOT Configured"}`);
+    console.log(`- BREVO_API_KEY: ${brevoApiKey ? "Configured (Starts with " + brevoApiKey.substring(0, 10) + "...)" : "❌ NOT Configured"}`);
+    console.log(`- BREVO_FROM_EMAIL: ${fromEmail || "❌ NOT Configured"}`);
     console.log(`- CRON_SECRET: ${cronSecret ? "Configured" : "❌ NOT Configured"}`);
 
   } catch (error) {
