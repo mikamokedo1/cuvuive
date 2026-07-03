@@ -50,7 +50,9 @@ import AIFact from "@/components/blog/AIFact";
 import { Breadcrumbs, type BreadcrumbItem } from "@/components/common/Breadcrumbs";
 import { ROADMAPS } from "@/libs/constants/roadmaps";
 import { Route } from "lucide-react";
-import { ExitIntentPopup } from "@/components/common/ExitIntentPopup";
+import dynamic from "next/dynamic";
+
+const ExitIntentPopup = dynamic(() => import("@/components/common/ExitIntentPopup").then((mod) => mod.ExitIntentPopup));
 
 export async function generateStaticParams() {
   const posts = await getAllPosts();
