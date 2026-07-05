@@ -81,6 +81,20 @@ export const useTextToSpeech = (defaultLang: string = "vi"): UseTextToSpeechRetu
     }
   }, [defaultLang]);
 
+  // Cancel speech and clear pending timeouts when the component unmounts
+  // (e.g., when navigating away from a game page)
+  useEffect(() => {
+    return () => {
+      if (speakTimeoutRef.current) {
+        clearTimeout(speakTimeoutRef.current);
+        speakTimeoutRef.current = null;
+      }
+      if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, []);
+
   const speak = useCallback((text: string, onEnd?: () => void) => {
     if (typeof window === "undefined" || !("speechSynthesis" in window)) {
       console.warn("Text-to-speech not supported");

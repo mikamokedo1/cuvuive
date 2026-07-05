@@ -31,6 +31,11 @@ const SessionTrackerListener = dynamic(
   { ssr: false },
 );
 
+const RouteChangeAudioCleanup = dynamic(
+  () => import("@/components/common/RouteChangeAudioCleanup").then((mod) => mod.RouteChangeAudioCleanup),
+  { ssr: false },
+);
+
 export function AppProviders() {
   return (
     <>
@@ -40,6 +45,7 @@ export function AppProviders() {
       <PaywallListener />
       <ClientDynamicComponents />
       <SessionTrackerListener />
+      <RouteChangeAudioCleanup />
     </>
   );
 }
