@@ -28,6 +28,12 @@ export function ClockQuizLesson({ type, onComplete }: ClockQuizLessonProps) {
     setItems(newItems);
   }, []);
 
+  useEffect(() => {
+    if (items.length > 0 && items[currentIndex]) {
+      speak("Mấy giờ rồi? Bé hãy chọn giờ đúng nhé.");
+    }
+  }, [currentIndex, items, speak]);
+
   const handleSelect = (option: TimeScenario) => {
     if (selectedOption !== null) return; // Prevent double click
     setSelectedOption(option);

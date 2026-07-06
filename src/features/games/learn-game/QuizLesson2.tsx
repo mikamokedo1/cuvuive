@@ -63,7 +63,7 @@ export function QuizLesson2({ numbers, onComplete, requiredWins = 6 }: QuizLesso
   useEffect(() => {
     if (targetNumber !== undefined) {
       const timer = setTimeout(() => {
-        speak(`Số ${NUMBER_NAMES_VI[targetNumber] ?? targetNumber}`);
+        speak(`Số ${NUMBER_NAMES_VI[targetNumber] ?? targetNumber} ở đâu nhỉ?`);
       }, 500);
       return () => clearTimeout(timer);
     }

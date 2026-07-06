@@ -6,6 +6,8 @@ import { ShapeCard } from "./ShapeCard";
 import { BackLessonButton } from "@/components/games/BackLessonButton";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 import { useSwipe } from "@/hooks/useSwipe";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
+import { useEffect } from "react";
 
 interface ShapeLearnLessonProps {
   shapes: ShapeData[];
@@ -14,6 +16,15 @@ interface ShapeLearnLessonProps {
 
 export function ShapeLearnLesson({ shapes, onComplete }: ShapeLearnLessonProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { speak } = useTextToSpeech();
+
+  const currentShape = shapes[currentIndex];
+
+  useEffect(() => {
+    if (currentShape) {
+      speak(currentShape.name);
+    }
+  }, [currentShape, speak]);
 
   const handleNext = () => {
     if (currentIndex < shapes.length - 1) {
@@ -32,7 +43,6 @@ export function ShapeLearnLesson({ shapes, onComplete }: ShapeLearnLessonProps) 
   const swipeRef = useSwipe({ onSwipeLeft: handleNext, onSwipeRight: handlePrev });
 
   const isLast = currentIndex === shapes.length - 1;
-  const currentShape = shapes[currentIndex];
 
   return (
     <div ref={swipeRef} className="flex flex-col items-center gap-6 md:gap-8 w-full max-w-4xl px-4">

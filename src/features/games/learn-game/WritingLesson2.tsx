@@ -66,6 +66,10 @@ export function WritingLesson2({ numbers, onComplete }: WritingLesson2Props) {
     setIsTransitioning(false);
   }, [currentIndex]);
 
+  useEffect(() => {
+    speak(`Bé hãy tập viết số ${currentNumber} nhé`);
+  }, [currentNumber, speak]);
+
   // Extract path samples for validation
   useEffect(() => {
     const extractPoints = () => {
