@@ -68,6 +68,10 @@ export function WritingLesson({ range, onComplete }: WritingLessonProps) {
     }
   }, [currentNumber]);
 
+  useEffect(() => {
+    speak(`Bé hãy tập viết số ${currentNumber} nhé`);
+  }, [currentNumber, speak]);
+
   // Check if a point is near the path (within tolerance)
   const isPointNearPath = useCallback(
     (point: Point, tolerance: number = 20): boolean => {

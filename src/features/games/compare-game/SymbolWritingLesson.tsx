@@ -8,6 +8,8 @@ import { playButtonSound, playSound } from "@/libs/utils/playSound";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 import { MAP_COMPARE_SIGN_SOUND } from "./VisualCompareLesson";
 import { LoudSpeaker, Eraser as Easer, Pen } from "@/libs/constants/game-assets";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
+
 
 interface SymbolWritingLessonProps {
   comparisonType: "greater" | "less" | "equal";
@@ -67,6 +69,13 @@ export function SymbolWritingLesson({ comparisonType, onComplete }: SymbolWritin
       return () => clearTimeout(timer);
     }
   }, [symbol]);
+
+  const { speak } = useTextToSpeech();
+
+  useEffect(() => {
+    const symbolVi = SYMBOL_NAMES_VI[symbol as keyof typeof SYMBOL_NAMES_VI] || "";
+    speak(`Bé hãy tập viết ${symbolVi} nhé`);
+  }, [symbol, speak]);
 
   const isPointNearPath = useCallback(
     (point: Point, tolerance: number = 25): boolean => {

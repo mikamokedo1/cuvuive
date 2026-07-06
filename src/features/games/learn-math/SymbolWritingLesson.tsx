@@ -8,6 +8,7 @@ import { playButtonSound } from "@/libs/utils/playSound";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 import { MathOperator } from "./constants";
 import { Eraser as Easer, Pen } from "@/libs/constants/game-assets";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 
 interface SymbolWritingLessonProps {
   operator: MathOperator;
@@ -61,6 +62,13 @@ export function SymbolWritingLesson({ operator, onComplete }: SymbolWritingLesso
       return () => clearTimeout(timer);
     }
   }, [symbol]);
+
+  const { speak } = useTextToSpeech();
+
+  useEffect(() => {
+    const operatorName = operator === "add" ? "cộng" : "trừ";
+    speak(`Bé hãy tập viết dấu ${operatorName} nhé`);
+  }, [operator, speak]);
 
   const isPointNearPath = useCallback(
     (point: Point, tolerance: number = 25): boolean => {

@@ -51,6 +51,12 @@ export function ColorQuizLesson({ colors, onComplete, requiredWins = 5 }: ColorQ
     generateQuestion();
   }, [colors]); // Init
 
+  useEffect(() => {
+    if (targetColor) {
+      speak(`Màu nào giống ${targetColor.name} nhỉ?`);
+    }
+  }, [targetColor, speak]);
+
   const handleOptionClick = (selected: ColorData) => {
     speak(selected.name);
     if (!targetColor) return;

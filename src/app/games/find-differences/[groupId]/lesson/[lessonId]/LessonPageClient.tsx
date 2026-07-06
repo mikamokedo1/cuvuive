@@ -5,6 +5,10 @@ import { FIND_DIFFERENCES_DATA } from "@/features/games/find-differences/constan
 import { DifferenceBoard } from "@/features/games/find-differences/DifferenceBoard";
 import { playCorrectSound, playSound, playWrongSound } from "@/libs/utils/playSound";
 import { GameWrapGame } from "@/components/layout/GameWrapGame";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
+import { useEffect } from "react";
+import { usePathname } from "next/navigation";
+import { MAP_PATHNAME_TO_TEXT } from "@/context/owlMaps";
 
 interface LessonPageClientProps {
   groupId: string;
@@ -16,6 +20,16 @@ export function LessonPageClient({ groupId, lessonId }: LessonPageClientProps) {
   const group = FIND_DIFFERENCES_DATA.find((g) => g.id === groupId);
   const LESSON_ORDER = group?.lessons.map((l) => l.id) || [];
   const groups = FIND_DIFFERENCES_DATA.map((g) => ({ id: g.id, title: g.id }));
+  const { speak } = useTextToSpeech();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const text = MAP_PATHNAME_TO_TEXT[pathname as keyof typeof MAP_PATHNAME_TO_TEXT] || "Bé hãy tìm các điểm khác biệt nhé";
+    const timer = setTimeout(() => {
+      speak(text);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [pathname, speak]);
 
   const game = useGameLesson({
     gameSlug: "find-differences",

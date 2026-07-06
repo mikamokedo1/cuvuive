@@ -8,6 +8,8 @@ import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { AnalogClock } from "./components/AnalogClock";
 import { DigitalClock } from "./components/DigitalClock";
 import { generateRandomTime, timeToText, TimeScenario } from "./constants";
+import { usePathname } from "next/navigation";
+import { MAP_PATHNAME_TO_TEXT } from "@/context/owlMaps";
 
 interface ClockLearnLessonProps {
   type: "analog" | "digital";
@@ -18,6 +20,7 @@ export function ClockLearnLesson({ type, onComplete }: ClockLearnLessonProps) {
   const [items, setItems] = useState<TimeScenario[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const { speak } = useTextToSpeech();
+  const pathname = usePathname();
 
   useEffect(() => {
     // Generate 5 random times for learning
@@ -46,9 +49,18 @@ export function ClockLearnLesson({ type, onComplete }: ClockLearnLessonProps) {
   useEffect(() => {
     const currentItem = items[currentIndex];
     if (currentItem) {
-      speak(timeToText(currentItem.hours, currentItem.minutes));
+      if (currentIndex === 0) {
+        const text = MAP_PATHNAME_TO_TEXT[pathname as keyof typeof MAP_PATHNAME_TO_TEXT];
+        if (text) {
+          speak(`${text}. ${timeToText(currentItem.hours, currentItem.minutes)}`);
+        } else {
+          speak(timeToText(currentItem.hours, currentItem.minutes));
+        }
+      } else {
+        speak(timeToText(currentItem.hours, currentItem.minutes));
+      }
     }
-  }, [currentIndex]);
+  }, [currentIndex, items, pathname, speak]);
 
   const swipeRef = useSwipe({ onSwipeLeft: handleNext, onSwipeRight: handlePrev });
 

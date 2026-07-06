@@ -4,6 +4,7 @@ import { useState } from "react";
 import StaffDisplay from "./StaffDisplay";
 import { NoteData, getGroupNotes } from "./constants";
 import { playNoteSound } from "@/features/games/mini-piano/utils/audioUtils";
+import { useEffect } from "react";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { Volume2 } from "lucide-react";
 import { BackLessonButton } from "@/components/games/BackLessonButton";
@@ -28,6 +29,13 @@ export default function NoteLearnLesson({ groupId, onComplete }: NoteLearnLesson
     speak(`Đây là nốt ${note.label} ký hiệu chữ ${note.note}`);
     setTimeout(() => playNoteSound(note.freq), 4000);
   };
+
+  // Auto-play on initial load
+  useEffect(() => {
+    if (notes.length > 0) {
+      playCurrentNote(notes[0]);
+    }
+  }, []);
 
   const handleNext = () => {
     if (isLast) {

@@ -59,6 +59,12 @@ export function QuizLesson({ range, onComplete, requiredWins = 6 }: QuizLessonPr
     generateQuestion();
   }, [generateQuestion]); // Init
 
+  useEffect(() => {
+    if (targetNumber !== null) {
+      speak(`Số ${targetNumber} ở đâu nhỉ?`);
+    }
+  }, [targetNumber, speak]);
+
   const handleAnswer = (num: number) => {
     speak(`số ${num}`);
     if (num === targetNumber) {

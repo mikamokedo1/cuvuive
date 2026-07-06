@@ -4,6 +4,8 @@ import { useState } from "react";
 import { ColoringCanvas } from "./ColoringCanvas";
 import { ColoringImage, ALL_IMAGES } from "./constants";
 import { ChevronRight, ChevronLeft, CheckCircle2 } from "lucide-react";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
+import { useEffect } from "react";
 
 interface FreeColorLessonProps {
   groupId: string;
@@ -16,6 +18,13 @@ export function FreeColorLesson({ groupId, onComplete }: FreeColorLessonProps) {
   const [completedImages, setCompletedImages] = useState<Set<number>>(new Set());
 
   const currentImage: ColoringImage | undefined = images[currentIndex];
+  const { speak } = useTextToSpeech();
+
+  useEffect(() => {
+    if (currentImage) {
+      speak("Bé hãy tô màu cho bức tranh nhé");
+    }
+  }, [currentImage, speak]);
 
   if (!currentImage) {
     return <div className="text-center text-red-500 font-bold">Không tìm thấy hình vẽ</div>;
