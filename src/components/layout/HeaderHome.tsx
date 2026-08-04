@@ -73,12 +73,12 @@ export const HeaderHome = ({ blogSearchItems }: HeaderHomeProps) => {
             : "bg-transparent py-4 pt-6"
         }`}
       >
-        <div className="container mx-auto px-6 flex justify-between items-center">
+        <div className="container mx-auto px-4 sm:px-6 flex justify-between items-center gap-2">
           {/* Logo */}
           <Link href="/" className="shrink-0">
             <span className="sr-only">Trang chủ Cú Thông Minh</span>
             <Image
-              className="lg:block hidden"
+              className="lg:block hidden w-[160px] xl:w-[200px] h-auto object-contain"
               src={LogoLong}
               alt="Cú Thông Minh - Nền tảng học và chơi cho bé"
               width={200}
@@ -89,12 +89,12 @@ export const HeaderHome = ({ blogSearchItems }: HeaderHomeProps) => {
           </Link>
 
           {/* Desktop Navigation — centered */}
-          <div className="hidden lg:flex items-center gap-1">
+          <div className="hidden lg:flex items-center gap-0.5 xl:gap-1.5 2xl:gap-2">
             {NAV_ITEMS.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`text-sm xl:text-base px-4 py-2 rounded-full font-bold transition-all duration-200 ${
+                className={`text-sm xl:text-base px-2.5 xl:px-4 py-2 rounded-full font-bold transition-all duration-200 whitespace-nowrap ${
                   scrolled
                     ? "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
                     : "text-slate-700 hover:bg-white/20 hover:text-slate-900"
@@ -106,11 +106,11 @@ export const HeaderHome = ({ blogSearchItems }: HeaderHomeProps) => {
           </div>
 
           {/* Right side actions */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             {/* Search Button */}
             <button
               onClick={() => setSearchOpen(true)}
-              className={`p-2.5 rounded-full transition-colors duration-200 ${
+              className={`p-2 sm:p-2.5 rounded-full transition-colors duration-200 shrink-0 ${
                 scrolled
                   ? "text-slate-500 hover:bg-slate-100 hover:text-slate-700"
                   : "text-slate-600 hover:bg-white/20 hover:text-slate-800"
@@ -125,7 +125,7 @@ export const HeaderHome = ({ blogSearchItems }: HeaderHomeProps) => {
             {user ? (
               <Link
                 href="/games"
-                className="px-6 py-3 bg-[#FF9C01] hover:bg-orange-500 text-slate-900 font-bold rounded-full shadow-[0_4px_14px_0_rgba(255,156,1,0.39)] hover:shadow-[0_6px_20px_rgba(255,156,1,0.23)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 text-sm"
+                className="px-4 xl:px-6 py-2.5 xl:py-3 bg-[#FF9C01] hover:bg-orange-500 text-slate-900 font-bold rounded-full shadow-[0_4px_14px_0_rgba(255,156,1,0.39)] hover:shadow-[0_6px_20px_rgba(255,156,1,0.23)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 text-xs sm:text-sm font-bold whitespace-nowrap shrink-0"
               >
                 Tất cả bài học
               </Link>
@@ -133,7 +133,7 @@ export const HeaderHome = ({ blogSearchItems }: HeaderHomeProps) => {
               <>
                 <Link
                   href="/auth/login"
-                  className={`hidden sm:inline-flex px-5 py-2.5 font-bold rounded-full transition-colors duration-200 text-sm ${
+                  className={`hidden sm:inline-flex px-3.5 xl:px-5 py-2 xl:py-2.5 font-bold rounded-full transition-colors duration-200 text-sm whitespace-nowrap shrink-0 ${
                     scrolled ? "text-slate-600 hover:bg-slate-100" : "text-slate-700 hover:bg-white/20"
                   }`}
                 >
@@ -141,7 +141,7 @@ export const HeaderHome = ({ blogSearchItems }: HeaderHomeProps) => {
                 </Link>
                 <Link
                   href="/auth/sign-up"
-                  className="hidden sm:inline-flex px-6 py-3 bg-[#FF9C01] hover:bg-orange-500 text-slate-900 font-bold rounded-full shadow-[0_4px_14px_0_rgba(255,156,1,0.39)] hover:shadow-[0_6px_20px_rgba(255,156,1,0.23)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 text-sm"
+                  className="hidden sm:inline-flex px-4 xl:px-6 py-2.5 xl:py-3 bg-[#FF9C01] hover:bg-orange-500 text-slate-900 font-bold rounded-full shadow-[0_4px_14px_0_rgba(255,156,1,0.39)] hover:shadow-[0_6px_20px_rgba(255,156,1,0.23)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 text-xs sm:text-sm font-bold whitespace-nowrap shrink-0"
                 >
                   Đăng ký miễn phí
                 </Link>

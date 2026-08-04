@@ -55,7 +55,7 @@ const Header = () => {
           <Link
             key={item.href}
             href={item.href}
-            className="flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white text-orange-500 text-sm font-bold shadow-sm transition-all duration-200 hover:bg-orange-500 hover:text-white hover:shadow-md"
+            className="flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white text-orange-500 text-sm font-bold shadow-sm transition-all duration-200 hover:bg-orange-500 hover:text-white hover:shadow-md whitespace-nowrap"
           >
             {item.icon}
             <span>{item.label}</span>
