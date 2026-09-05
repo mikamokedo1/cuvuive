@@ -227,7 +227,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       },
       sameAs: [
         "https://cuthongminh.com/about-us",
-        "https://www.facebook.com/CuthongminhOffical",
+        "https://www.facebook.com/cuthongminh",
       ],
       knowsAbout: [
         "Giáo dục mầm non",

@@ -5,10 +5,6 @@ import { eq } from "drizzle-orm";
 import { renderWeeklyReportEmail } from "@/libs/email-templates/weekly-report";
 import { getWeeklyReportDataAction } from "@/libs/actions/dashboard";
 
-const CRON_SECRET = process.env.CRON_SECRET;
-const BREVO_API_KEY = process.env.BREVO_API_KEY || process.env.RESEND_API_KEY;
-const FROM_EMAIL = process.env.BREVO_FROM_EMAIL || process.env.RESEND_FROM_EMAIL || "Cú Thông Minh <noreply@cuthongminh.com>";
-
 /**
  * Parses "Name <email@domain.com>" or "email@domain.com" into Brevo sender object format.
  */
@@ -53,6 +49,11 @@ function getVietnamDayOfWeek(date: Date = new Date()): number {
  * Security: Protected by CRON_SECRET header.
  */
 export async function GET(request: NextRequest) {
+  // Read env vars at request time (not module scope) so tests and hot-reloads work correctly
+  const CRON_SECRET = process.env.CRON_SECRET;
+  const BREVO_API_KEY = process.env.BREVO_API_KEY || process.env.RESEND_API_KEY;
+  const FROM_EMAIL = process.env.BREVO_FROM_EMAIL || process.env.RESEND_FROM_EMAIL || "Cú Thông Minh <noreply@cuthongminh.com>";
+
   // Verify cron secret
   const authHeader = request.headers.get("authorization");
   if (CRON_SECRET && authHeader !== `Bearer ${CRON_SECRET}`) {

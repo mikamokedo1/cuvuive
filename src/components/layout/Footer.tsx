@@ -26,7 +26,7 @@ export function Footer() {
               <div className="font-bold text-slate-900 mb-1">Kết nối</div>
               <div className="flex gap-4 mb-2 justify-center md:justify-start">
                 <Link
-                  href="https://www.facebook.com/CuthongminhOffical"
+                  href="https://www.facebook.com/cuthongminh"
                   className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-[#FF9C01] hover:text-white transition-all shadow-sm"
                   aria-label="Facebook"
                 >

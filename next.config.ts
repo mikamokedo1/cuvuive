@@ -114,6 +114,17 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Redirect singular /blog to plural /blogs (catch-all for external backlinks)
+      {
+        source: "/blog",
+        destination: "/blogs",
+        permanent: true,
+      },
+      {
+        source: "/blog/:slug*",
+        destination: "/blogs/:slug*",
+        permanent: true,
+      },
       // Blog merges — consolidate cannibalized content
       // Pair 1: tro-choi-me-cung → me-cung-cho-be
       {

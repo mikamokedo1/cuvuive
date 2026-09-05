@@ -33,6 +33,7 @@ export const TOPIC_CLUSTERS: Record<GameGroupType, TopicCluster> = {
       "day-be-nhan-biet-tien",
       "sudoku-cho-be-mam-non",
       "day-be-phep-cong-trong-pham-vi-10",
+      "day-be-hoc-toan-toan-dien",
     ],
   },
   logic: {
@@ -49,6 +50,7 @@ export const TOPIC_CLUSTERS: Record<GameGroupType, TopicCluster> = {
       "sudoku-cho-be-mam-non",
       "cach-ren-luyen-su-tap-trung-cho-tre-mam-non",
       "phat-trien-tri-nho-cho-tre-mam-non",
+      "phat-trien-tu-duy-logic-toan-dien",
     ],
   },
   language: {
@@ -64,6 +66,7 @@ export const TOPIC_CLUSTERS: Record<GameGroupType, TopicCluster> = {
       "day-be-ghep-van-tai-nha",
       "day-be-hoc-tu-vung-tieng-viet",
       "game-hoc-chu-cho-be",
+      "day-be-hoc-tieng-viet-toan-dien",
     ],
   },
   science: {
@@ -83,6 +86,7 @@ export const TOPIC_CLUSTERS: Record<GameGroupType, TopicCluster> = {
       "kham-pha-thoi-tiet-cung-be",
       "be-hoc-ve-co-the-nguoi",
       "kham-pha-mon-an",
+      "be-kham-pha-khoa-hoc-toan-dien",
     ],
   },
   "life-skill": {
@@ -105,6 +109,8 @@ export const TOPIC_CLUSTERS: Record<GameGroupType, TopicCluster> = {
       "lich-sinh-hoat-cho-be-mam-non",
       "nguy-hiem-khi-giao-xe-may-cho-hoc-sinh",
       "phong-chong-bao-hanh-tre-em",
+      "ky-nang-song-toan-dien",
+      "chuan-bi-cho-be-di-hoc-mam-non-khong-khoc",
     ],
   },
   geography: {
@@ -149,6 +155,9 @@ export const TOPIC_CLUSTERS: Record<GameGroupType, TopicCluster> = {
     blogSlugs: [
       "day-tu-vung-tieng-anh-cho-be-mam-non",
       "day-be-hoc-bang-chu-cai-tieng-anh",
+      "day-be-hoc-tieng-anh-toan-dien",
+      "luyen-noi-tieng-anh-cho-be-voi-ai",
+      "song-ngu-anh-viet-cho-tre",
     ],
   },
 };
@@ -174,6 +183,14 @@ export const GENERAL_PARENTING_SLUGS = [
   "screen-time-cho-tre-mam-non",
   "ap-dung-montessori-tai-nha",
   "steam-cho-tre-mam-non",
+  "khoa-hoc-tien-lop-1",
+  "lo-trinh-be-kham-pha-3-4-tuoi",
+  "lo-trinh-tieu-hoc-vui-7-12-tuoi",
+  "cach-chon-app-giao-duc-an-toan",
+  "top-5-app-hoc-tap-cho-be-2026",
+  "cu-thong-minh-vs-monkey",
+  "chuan-bi-cho-be-di-hoc-mam-non-khong-khoc",
+  "ren-ne-nep-hoc-tap-cho-con-vao-lop-1",
 ];
 
 /**
@@ -185,12 +202,14 @@ export const TIEN_LOP_1_SLUGS = [
   // Pillar posts
   "lo-trinh-tien-lop-1-cu-thong-minh",
   "chuan-bi-vao-lop-1-toan-dien",
+  "khoa-hoc-tien-lop-1",
   // Primary posts
   "be-chuan-bi-vao-lop-1-can-hoc-gi",
   "be-5-tuoi-can-biet-nhung-gi",
   "be-6-tuoi-nen-hoc-gi",
   "cach-ren-luyen-su-tap-trung-cho-tre-mam-non",
   // Supporting posts
-  "ky-nang-song-toan-dien-cho-be-truoc-6-tuoi",
+  "ky-nang-song-toan-dien",
   "day-be-hoc-qua-tro-choi",
+  "ren-ne-nep-hoc-tap-cho-con-vao-lop-1",
 ];
