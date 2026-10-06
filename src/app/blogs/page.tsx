@@ -10,6 +10,7 @@ import { Tag, TrendingUp, BookOpen } from "lucide-react";
 import { GENERAL_PARENTING_SLUGS } from "@/libs/seo/topic-clusters";
 import { GROUPS } from "@/libs/constants/groups";
 import { Breadcrumbs } from "@/components/common/Breadcrumbs";
+import { ZChatParentBanner } from "@/components/common/ZChatParentBanner";
 
 /** Collect all tags with their post counts, sorted by count desc */
 async function getTagsWithCounts(): Promise<{ tag: string; count: number }[]> {
@@ -156,6 +157,8 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Pr
         {tagsWithCounts.length > 0 && (
           <aside className="lg:w-72 shrink-0">
             <div className="lg:sticky lg:top-24">
+              {/* ZChat cho phụ huynh — sản phẩm cùng đội ngũ */}
+              <ZChatParentBanner placement="danh-sach-blog" variant="box" className="mb-6" />
               <div className="bg-slate-50 rounded-2xl border border-slate-100 p-6">
                 <h3 className="text-lg font-bold font-[family-name:var(--font-baloo-2)] text-slate-800 mb-4 flex items-center gap-2">
                   <Tag className="w-5 h-5 text-orange-500" />

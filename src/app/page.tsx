@@ -76,6 +76,7 @@ const TestimonialSlider = dynamic(
 );
 
 import LatestBlogs from "@/components/blog/LatestBlogs";
+import { ZChatParentBanner } from "@/components/common/ZChatParentBanner";
 
 import type { Metadata } from "next";
 
@@ -511,6 +512,13 @@ export default function Home() {
         <ScrollReveal delay={100}>
           <LatestBlogs />
         </ScrollReveal>
+
+        {/* ZChat cho phụ huynh — sản phẩm cùng đội ngũ */}
+        <section className="pb-16">
+          <div className="container mx-auto px-6 max-w-6xl">
+            <ZChatParentBanner placement="trang-chu" />
+          </div>
+        </section>
 
         {/* Educational Methodology Section */}
         <ScrollReveal delay={100}>

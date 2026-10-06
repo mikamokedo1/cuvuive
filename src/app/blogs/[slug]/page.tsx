@@ -47,6 +47,7 @@ import { GAME_SEO } from "@/libs/constants/game-seo";
 import { TOPIC_CLUSTERS, GENERAL_PARENTING_SLUGS } from "@/libs/seo/topic-clusters";
 import { GROUPS } from "@/libs/constants/groups";
 import AIFact from "@/components/blog/AIFact";
+import { ZChatParentBanner } from "@/components/common/ZChatParentBanner";
 import { Breadcrumbs, type BreadcrumbItem } from "@/components/common/Breadcrumbs";
 import { ROADMAPS } from "@/libs/constants/roadmaps";
 import { Route } from "lucide-react";
@@ -374,6 +375,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <ShareButtons url={`/blogs/${post.slug}`} title={post.title} />
         <p className="text-xs text-slate-400 font-medium">Bài viết hữu ích? Hãy chia sẻ với bạn bè!</p>
       </div>
+
+      {/* ZChat cho phụ huynh — sản phẩm cùng đội ngũ */}
+      <ZChatParentBanner placement="blog" className="mt-12" />
 
       {/* Roadmap CTA — internal links for all blogs */}
       <section className="mt-12 pt-8 border-t border-slate-100">
