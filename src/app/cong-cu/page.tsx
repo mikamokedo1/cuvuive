@@ -7,7 +7,7 @@ import { HeaderHomeWithSearch } from "@/components/layout/HeaderHomeWithSearch";
 import { Footer } from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
-  title: "Công Cụ Miễn Phí Cho Phụ Huynh | Cú Thông Minh",
+  title: "Công Cụ Miễn Phí Cho Phụ Huynh",
   description:
     "Bộ công cụ miễn phí dành cho phụ huynh: tra cứu chiều cao cân nặng trẻ em theo WHO, tìm tên tiếng Anh cho bé, và nhiều tiện ích hữu ích khác. 100% miễn phí.",
   keywords: [

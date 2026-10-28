@@ -9,7 +9,7 @@ import { ArrowRight } from "lucide-react";
 import { RoadmapIndexList } from "./RoadmapIndexList";
 
 export const metadata: Metadata = {
-  title: "Lộ Trình Học Tập Theo Độ Tuổi - Cú Thông Minh",
+  title: "Lộ Trình Học Tập Theo Độ Tuổi (3-8 Tuổi)",
   description:
     "Khám phá 3 lộ trình học tập được thiết kế riêng cho từng nhóm tuổi: Bé Khám Phá (3-4 tuổi), Tiền Lớp 1 (5-6 tuổi), Tiểu Học Vui (7-8 tuổi). Giúp bé phát triển toàn diện qua trò chơi giáo dục tương tác.",
   keywords: [

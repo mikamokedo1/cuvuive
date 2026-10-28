@@ -37,7 +37,9 @@ export const AGE_GROUPS: AgeGroupDef[] = [
       "learn-vehicle",
       "learn-weather",
       "mini-piano",
-      "paint-picture"
+      "paint-picture",
+      "mix-color",
+      "learn-cleaning",
     ],
     blogTags: ["trẻ 3 tuổi", "nhận thức", "giáo dục sớm", "phát triển ngôn ngữ", "mầm non"],
   },
@@ -61,10 +63,12 @@ export const AGE_GROUPS: AgeGroupDef[] = [
       "learn-word",
       "learn-food",
       "find-pattern",
+      "sequence-sort",
       "learn-hygiene",
       "learn-danger",
       "line-connect",
-      "learn-body"
+      "learn-body",
+      "learn-english-alphabet",
     ],
     blogTags: ["trẻ 4 tuổi", "phát triển tư duy", "kỹ năng sống", "toán học", "dạy bé học chữ"],
   },
@@ -94,7 +98,10 @@ export const AGE_GROUPS: AgeGroupDef[] = [
       "learn-instrument",
       "mini-sudoku-kids",
       "find-differences",
-      "learn-money"
+      "maze-runner",
+      "learn-money",
+      "learn-english-vocab",
+      "talk-with-owl",
     ],
     blogTags: ["tiền tiểu học", "chuẩn bị vào lớp 1", "trẻ 5 tuổi", "dạy con học toán", "sự tự tin"],
   },
@@ -124,7 +131,8 @@ export const AGE_GROUPS: AgeGroupDef[] = [
       "learn-flower",
       "learn-costume",
       "learn-notes",
-      "learn-money"
+      "learn-money",
+      "talk-with-owl",
     ],
     blogTags: ["trẻ tiểu học", "học toán", "trẻ 6 tuổi", "khám phá khoa học", "kỹ năng mềm"],
   }

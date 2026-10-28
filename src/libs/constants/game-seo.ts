@@ -29,10 +29,10 @@ function buildMetaTitle(gameId: string, title: string): string {
   const topic = course ? GROUPS.find((group) => group.id === course.type) : undefined;
 
   if (!topic) {
-    return title;
+    return stripBrandSuffix(title);
   }
 
-  return `${stripBrandSuffix(title)} | Chủ đề ${topic.title} | Cú Thông Minh`;
+  return `${stripBrandSuffix(title)} | Chủ đề ${topic.title}`;
 }
 
 function buildMetaDescription(gameId: string, description: string): string {
@@ -148,6 +148,31 @@ const SEO_OVERRIDES: Record<string, SeoOverride> = {
   "learn-english-alphabet": {
     title: "Bảng Chữ Cái Tiếng Anh | Game Học Chữ Cho Bé",
     description: "Bé học bảng chữ cái tiếng Anh từ A-Z qua hình ảnh minh họa sinh động, nghe phát âm và tập đánh vần từ vựng.",
+  },
+  "learn-multiply": {
+    title: "Trò Chơi Học Toán Phép Nhân | Bảng Cửu Chương 2-5 Cho Bé",
+    description:
+      "Trò chơi học toán phép nhân và bảng cửu chương 2, 3, 4, 5 miễn phí cho bé 5-8 tuổi qua hình ảnh trực quan, điền số thiếu và nhảy số vui nhộn.",
+  },
+  "mini-sudoku-kids": {
+    title: "Sudoku Dễ Cho Bé 4-8 Tuổi | Trò Chơi Toán Tư Duy Mầm Non",
+    description:
+      "Game toán Sudoku dễ cho bé 4, 5, 6 tuổi với lưới 3x3 và 4x4 bằng hình ảnh và con số. Rèn luyện tư duy logic, suy luận miễn phí mỗi ngày.",
+  },
+  "learn-tones": {
+    title: "Học 5 Dấu Thanh Tiếng Việt | Trò Chơi Học Chữ Cho Bé",
+    description:
+      "Giúp bé 3-6 tuổi nhận biết, phát âm và tập viết 5 dấu thanh tiếng Việt (sắc, huyền, hỏi, ngã, nặng) qua trò chơi tương tác sinh động.",
+  },
+  "talk-with-owl": {
+    title: "Luyện Nói Tiếng Anh Với AI | Game Giao Tiếp Cho Bé 3-8 Tuổi",
+    description:
+      "Bé luyện nói và giao tiếp tiếng Anh trực tiếp với cô giáo AI Cú Thông Minh qua 10 chủ đề quen thuộc. Sửa phát âm nhẹ nhàng, tự nhiên.",
+  },
+  "sequence-sort": {
+    title: "Trò Chơi Sắp Xếp Thứ Tự | Rèn Tư Duy Logic Cho Bé 3-6 Tuổi",
+    description:
+      "Bé học sắp xếp từ nhỏ đến lớn, ít đến nhiều và nhạt đến đậm qua trò chơi tương tác vui nhộn, phát triển tư duy so sánh và logic.",
   },
 };
 

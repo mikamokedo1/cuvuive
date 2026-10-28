@@ -28,7 +28,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!group) return {};
 
-  const title = `${group.title} | Cú Thông Minh`;
+  const title = group.title;
+  const ogTitle = `${group.title} | Cú Thông Minh`;
   const canonicalUrl = `/do-tuoi/${age}`;
 
   return {
@@ -39,9 +40,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       canonical: canonicalUrl,
     },
     openGraph: {
-      title,
+      title: ogTitle,
       description: group.description,
-      images: [{ url: "/og-image.webp", width: 1200, height: 630, alt: title }],
+      images: [{ url: "/og-image.webp", width: 1200, height: 630, alt: ogTitle }],
       url: `https://cuthongminh.com${canonicalUrl}`,
     },
   };

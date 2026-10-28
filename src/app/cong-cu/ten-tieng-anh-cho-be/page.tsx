@@ -8,7 +8,7 @@ import { HeaderHomeWithSearch } from "@/components/layout/HeaderHomeWithSearch";
 import { Footer } from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
-  title: "Tên Tiếng Anh Cho Bé — 70+ Tên Hay & Ý Nghĩa Theo Tên Việt | Cú Thông Minh",
+  title: "Tên Tiếng Anh Cho Bé — 70+ Tên Hay & Ý Nghĩa Theo Tên Việt",
   description:
     "Tìm tên tiếng Anh hay cho bé trai, bé gái theo ý nghĩa tên tiếng Việt. 70+ tên đẹp kèm phiên âm, nghĩa, nguồn gốc. Nhập tên Việt → gợi ý tên Anh phù hợp. Miễn phí 100%.",
   keywords: [

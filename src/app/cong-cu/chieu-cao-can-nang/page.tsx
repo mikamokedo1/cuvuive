@@ -8,7 +8,7 @@ import { HeaderHomeWithSearch } from "@/components/layout/HeaderHomeWithSearch";
 import { Footer } from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
-  title: "Tra Cứu Chiều Cao Cân Nặng Trẻ Em Theo Chuẩn WHO 2026 | Cú Thông Minh",
+  title: "Tra Cứu Chiều Cao Cân Nặng Trẻ Em Theo Chuẩn WHO 2026",
   description:
     "Bảng chiều cao cân nặng trẻ em từ sơ sinh đến 8 tuổi theo chuẩn WHO. Nhập tuổi, cân nặng, chiều cao — xem ngay bé phát triển bình thường không. Biểu đồ percentile trực quan, miễn phí 100%.",
   keywords: [

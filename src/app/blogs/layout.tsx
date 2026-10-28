@@ -3,7 +3,7 @@ import { HeaderHomeWithSearch } from "@/components/layout/HeaderHomeWithSearch";
 import { Footer } from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
-  title: "Blog Kiến Thức & Nuôi Dạy Trẻ | Cú Thông Minh",
+  title: "Blog Kiến Thức & Nuôi Dạy Trẻ",
   description: "Góc chia sẻ kiến thức, phương pháp giáo dục sớm, nuôi dạy trẻ và thông tin cập nhật từ Cú Thông Minh.",
   alternates: {
     canonical: "/blogs",

@@ -7,9 +7,9 @@ import { GROUPS } from "@/libs/constants/groups";
 import { safeJsonLd } from "@/libs/utils/safe-jsonld";
 
 export const metadata: Metadata = {
-  title: "Kho Trò Chơi Giáo Dục - Cú Thông Minh",
+  title: "Kho Trò Chơi Giáo Dục Tương Tác Cho Bé 3-8 Tuổi",
   description:
-    "Khám phá hơn 20+ trò chơi giáo dục tương tác đa dạng chủ đề: Toán học, Âm nhạc, Động vật, Địa lý giúp bé phát triển trí tuệ toàn diện.",
+    "Khám phá 45+ trò chơi giáo dục tương tác với hơn 580 bài học đa dạng chủ đề: Toán học, Tiếng Việt, Tiếng Anh, Tư duy logic, Khoa học, Âm nhạc và Kỹ năng sống cho bé.",
   keywords: [
     "trò chơi giáo dục cho bé",
     "game học tập cho trẻ mầm non",
@@ -24,9 +24,9 @@ export const metadata: Metadata = {
     canonical: "/games",
   },
   openGraph: {
-    title: "Kho Trò Chơi Giáo Dục - Cú Thông Minh",
+    title: "Kho Trò Chơi Giáo Dục Tương Tác Cho Bé 3-8 Tuổi | Cú Thông Minh",
     description:
-      "Hơn 20+ trò chơi giáo dục tương tác giúp bé phát triển trí tuệ toàn diện: Toán học, Âm nhạc, Động vật, Địa lý.",
+      "Khám phá 45+ trò chơi giáo dục tương tác giúp bé phát triển trí tuệ toàn diện: Toán học, Tiếng Việt, Tiếng Anh, Tư duy logic, Khoa học, Âm nhạc.",
     images: [{ url: "/og-image.webp", width: 1200, height: 630, alt: "Cú Thông Minh - Kho trò chơi giáo dục" }],
   },
 };

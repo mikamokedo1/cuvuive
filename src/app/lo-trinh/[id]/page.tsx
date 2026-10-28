@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   );
 
   return {
-    title: `Lộ Trình ${roadmap.title} - Cú Thông Minh`,
+    title: `Lộ Trình ${roadmap.title} (${roadmap.ageRange[0]}-${roadmap.ageRange[1]} Tuổi)`,
     description: `${roadmap.description} ${roadmap.stages.length} chặng học với ${totalGames}+ trò chơi giáo dục tương tác.`,
     keywords: [
       roadmap.title.toLowerCase(),

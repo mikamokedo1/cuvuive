@@ -32,7 +32,8 @@ async function getTagsWithCounts(): Promise<{ tag: string; count: number }[]> {
 export async function generateMetadata({ searchParams }: { searchParams: Promise<{ page?: string }> }): Promise<Metadata> {
   const params = await searchParams;
   const currentPage = parseInt(params.page || "1", 10);
-  const title = currentPage > 1 ? `Blog Kiến Thức & Nuôi Dạy Trẻ - Trang ${currentPage} | Cú Thông Minh` : "Blog Kiến Thức & Nuôi Dạy Trẻ | Cú Thông Minh";
+  const title = currentPage > 1 ? `Blog Kiến Thức & Nuôi Dạy Trẻ - Trang ${currentPage}` : "Blog Kiến Thức & Nuôi Dạy Trẻ";
+  const ogTitle = `${title} | Cú Thông Minh`;
   const description = "Chia sẻ kiến thức giáo dục sớm, phương pháp dạy con khoa học và mẹo vặt học tập tại nhà cho trẻ 3-8 tuổi. Cập nhật hàng tuần bởi Cú Thông Minh.";
   const canonical = currentPage > 1 ? `/blogs?page=${currentPage}` : "/blogs";
   
@@ -53,7 +54,7 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
       canonical,
     },
     openGraph: {
-      title,
+      title: ogTitle,
       description,
       url: `https://cuthongminh.com${canonical}`,
     },
