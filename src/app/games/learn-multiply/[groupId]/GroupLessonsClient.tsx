@@ -2,7 +2,7 @@
 
 import { useProgress } from "@/context/ProgressContext";
 import { useAccess } from "@/context/AccessContext";
-import { BookOpen, Eye, Hash, PencilLine, ArrowRight } from "lucide-react";
+import { BookOpen, Eye, Hash, PencilLine, ArrowRight, Scale, Crosshair, Sparkles } from "lucide-react";
 import { GROUP_CONFIG } from "@/features/games/learn-multiply/constants";
 import { GameWrapLessons } from "@/components/layout/GameWrapLessons";
 
@@ -13,6 +13,9 @@ const iconMap: Record<string, React.ReactNode> = {
   Hash: <Hash className="text-white w-6 h-6" />,
   PencilLine: <PencilLine className="text-white w-6 h-6" />,
   ArrowRight: <ArrowRight className="text-white w-6 h-6" />,
+  Scale: <Scale className="text-white w-6 h-6" />,
+  Crosshair: <Crosshair className="text-white w-6 h-6" />,
+  Sparkles: <Sparkles className="text-white w-6 h-6" />,
 };
 
 interface GroupLessonsClientProps {
@@ -67,19 +70,14 @@ export function GroupLessonsClient({ groupId }: GroupLessonsClientProps) {
   });
 
   const isGroupCompleted = progress.completedGroups.includes(groupId);
+  const completedInGroup = progress.completedLessons[groupId] ?? [];
   let activeIndex = -1;
 
   if (!isGroupCompleted) {
-    for (let i = lessons.length - 1; i >= 0; i--) {
-      if (isLessonUnlocked(courseId, groupId, lessons[i].id)) {
-        activeIndex = i;
-        break;
-      }
+    activeIndex = lessons.findIndex((lesson) => !completedInGroup.includes(lesson.id));
+    if (activeIndex === -1) {
+      activeIndex = 0;
     }
-  }
-
-  if (!isGroupCompleted && activeIndex === -1) {
-    activeIndex = 0;
   }
 
   return (

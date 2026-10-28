@@ -5,10 +5,10 @@ import { GameWrapGame } from "@/components/layout/GameWrapGame";
 
 // Lesson Components
 import { ExplainMultiplyLesson } from "@/features/games/learn-multiply/ExplainMultiplyLesson";
-import { VisualMultiplyLesson } from "@/features/games/learn-multiply/VisualMultiplyLesson";
-import { NumberMultiplyLesson } from "@/features/games/learn-multiply/NumberMultiplyLesson";
+import { BalanceScaleMultiplyLesson } from "@/features/games/learn-multiply/BalanceScaleMultiplyLesson";
+import { BubbleCannonMultiplyLesson } from "@/features/games/learn-multiply/BubbleCannonMultiplyLesson";
+import { PlinkoCatchMultiplyLesson } from "@/features/games/learn-multiply/PlinkoCatchMultiplyLesson";
 import { FillBlankLesson } from "@/features/games/learn-multiply/FillBlankLesson";
-import { SkipCountLesson } from "@/features/games/learn-multiply/SkipCountLesson";
 import { GROUP_CONFIG } from "@/features/games/learn-multiply/constants";
 
 const GROUPS = [
@@ -16,7 +16,11 @@ const GROUPS = [
   { id: "group2", title: "Bảng nhân 3" },
   { id: "group3", title: "Bảng nhân 4" },
   { id: "group4", title: "Bảng nhân 5" },
-  { id: "group5", title: "Luyện tập" },
+  { id: "group5", title: "Bảng nhân 6" },
+  { id: "group6", title: "Bảng nhân 7" },
+  { id: "group7", title: "Bảng nhân 8" },
+  { id: "group8", title: "Bảng nhân 9" },
+  { id: "group9", title: "Đấu trường 2-9" },
 ];
 
 interface LessonPageClientProps {
@@ -31,7 +35,10 @@ export function LessonPageClient({ groupId, lessonId }: LessonPageClientProps) {
   const maxLessons = config?.lessons?.length ?? 5;
   const LESSON_ORDER = Array.from({ length: maxLessons }, (_, i) => `lesson${i + 1}`);
 
-  const game = useGameLesson({ gameSlug: "learn-multiply", lessonOrder: LESSON_ORDER, groups: GROUPS ,
+  const game = useGameLesson({
+    gameSlug: "learn-multiply",
+    lessonOrder: LESSON_ORDER,
+    groups: GROUPS,
     initialGroupId: groupId,
     initialLessonId: lessonId,
   });
@@ -47,37 +54,22 @@ export function LessonPageClient({ groupId, lessonId }: LessonPageClientProps) {
   // Render the appropriate lesson component
   let LessonContent = null;
 
-  if (game.groupId === "group5") {
-    // Practice group: mixed multiplier, no explain lesson
+  if (config.multiplier === "mixed") {
+    // Mixed arena group (group9): 3 physics games + fill blank
     switch (game.lessonId) {
       case "lesson1":
         LessonContent = (
-          <VisualMultiplyLesson multiplier="mixed" maxProduct={config.maxProduct} onComplete={game.handleComplete} />
+          <BalanceScaleMultiplyLesson
+            multiplier="mixed"
+            maxProduct={config.maxProduct}
+            onComplete={game.handleComplete}
+          />
         );
         break;
       case "lesson2":
         LessonContent = (
-          <NumberMultiplyLesson multiplier="mixed" maxProduct={config.maxProduct} onComplete={game.handleComplete} />
-        );
-        break;
-      case "lesson3":
-        LessonContent = (
-          <FillBlankLesson multiplier="mixed" maxProduct={config.maxProduct} onComplete={game.handleComplete} />
-        );
-        break;
-    }
-  } else {
-    // Standard groups (2, 3, 4, 5)
-    switch (game.lessonId) {
-      case "lesson1":
-        LessonContent = (
-          <ExplainMultiplyLesson multiplier={config.multiplier as number} onComplete={game.handleComplete} />
-        );
-        break;
-      case "lesson2":
-        LessonContent = (
-          <VisualMultiplyLesson
-            multiplier={config.multiplier}
+          <BubbleCannonMultiplyLesson
+            multiplier="mixed"
             maxProduct={config.maxProduct}
             onComplete={game.handleComplete}
           />
@@ -85,8 +77,8 @@ export function LessonPageClient({ groupId, lessonId }: LessonPageClientProps) {
         break;
       case "lesson3":
         LessonContent = (
-          <NumberMultiplyLesson
-            multiplier={config.multiplier}
+          <PlinkoCatchMultiplyLesson
+            multiplier="mixed"
             maxProduct={config.maxProduct}
             onComplete={game.handleComplete}
           />
@@ -95,6 +87,42 @@ export function LessonPageClient({ groupId, lessonId }: LessonPageClientProps) {
       case "lesson4":
         LessonContent = (
           <FillBlankLesson
+            multiplier="mixed"
+            maxProduct={config.maxProduct}
+            onComplete={game.handleComplete}
+          />
+        );
+        break;
+    }
+  } else {
+    // Standard multiplication tables (2, 3, 4, 5, 6, 7, 8, 9)
+    switch (game.lessonId) {
+      case "lesson1":
+        LessonContent = (
+          <ExplainMultiplyLesson multiplier={config.multiplier as number} onComplete={game.handleComplete} />
+        );
+        break;
+      case "lesson2":
+        LessonContent = (
+          <BalanceScaleMultiplyLesson
+            multiplier={config.multiplier}
+            maxProduct={config.maxProduct}
+            onComplete={game.handleComplete}
+          />
+        );
+        break;
+      case "lesson3":
+        LessonContent = (
+          <BubbleCannonMultiplyLesson
+            multiplier={config.multiplier}
+            maxProduct={config.maxProduct}
+            onComplete={game.handleComplete}
+          />
+        );
+        break;
+      case "lesson4":
+        LessonContent = (
+          <PlinkoCatchMultiplyLesson
             multiplier={config.multiplier}
             maxProduct={config.maxProduct}
             onComplete={game.handleComplete}
@@ -103,7 +131,11 @@ export function LessonPageClient({ groupId, lessonId }: LessonPageClientProps) {
         break;
       case "lesson5":
         LessonContent = (
-          <SkipCountLesson multiplier={config.multiplier} onComplete={game.handleComplete} />
+          <FillBlankLesson
+            multiplier={config.multiplier}
+            maxProduct={config.maxProduct}
+            onComplete={game.handleComplete}
+          />
         );
         break;
     }

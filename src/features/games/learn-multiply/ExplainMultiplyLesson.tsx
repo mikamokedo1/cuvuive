@@ -1,10 +1,14 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import Image from "next/image";
-import { ThingImages } from "@/libs/constants/thingImages";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 import { BackLessonButton } from "@/components/games/BackLessonButton";
+import {
+  FeedbackCard,
+  NumberBox,
+  OperatorSign,
+  SpeakerButton,
+} from "@/features/games/_shared/math";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { useSwipe } from "@/hooks/useSwipe";
 
@@ -13,67 +17,43 @@ interface ExplainMultiplyLessonProps {
   onComplete: () => void;
 }
 
-// Predefined examples per multiplier to keep it simple for kids
-const EXAMPLES: Record<number, Array<{ groups: number; perGroup: number }>> = {
-  2: [
-    { groups: 2, perGroup: 1 },
-    { groups: 2, perGroup: 2 },
-    { groups: 2, perGroup: 3 },
-    { groups: 2, perGroup: 4 },
-    { groups: 2, perGroup: 5 },
-  ],
-  3: [
-    { groups: 3, perGroup: 1 },
-    { groups: 3, perGroup: 2 },
-    { groups: 3, perGroup: 3 },
-    { groups: 3, perGroup: 4 },
-  ],
-  4: [
-    { groups: 4, perGroup: 1 },
-    { groups: 4, perGroup: 2 },
-    { groups: 4, perGroup: 3 },
-  ],
-  5: [
-    { groups: 5, perGroup: 1 },
-    { groups: 5, perGroup: 2 },
-    { groups: 5, perGroup: 3 },
-  ],
-};
-
-type Phase = "intro" | "example";
+const ROW_COLORS = [
+  "bg-purple-500 border-purple-600",
+  "bg-indigo-500 border-indigo-600",
+  "bg-blue-500 border-blue-600",
+  "bg-cyan-500 border-cyan-600",
+  "bg-teal-500 border-teal-600",
+  "bg-emerald-500 border-emerald-600",
+  "bg-amber-500 border-amber-600",
+  "bg-orange-500 border-orange-600",
+  "bg-rose-500 border-rose-600",
+];
 
 export function ExplainMultiplyLesson({ multiplier, onComplete }: ExplainMultiplyLessonProps) {
   const { speak } = useTextToSpeech();
-  const [phase, setPhase] = useState<Phase>("intro");
-  const [exampleIdx, setExampleIdx] = useState(0);
-  const [animStage, setAnimStage] = useState(0); // 0: show groups, 1: show equation, 2: show answer
-  const [imageIdx] = useState(() => Math.floor(Math.random() * ThingImages.length));
+  const [selectedFactor, setSelectedFactor] = useState<number>(3);
+  const [visitedFactors, setVisitedFactors] = useState<number[]>([3]);
   const hasCompletedRef = useRef(false);
 
-  const examples = EXAMPLES[multiplier] || EXAMPLES[2];
-  const thingImage = ThingImages[imageIdx];
-  const thingName = thingImage.name;
+  const answer = multiplier * selectedFactor;
 
-  const currentExample = examples[exampleIdx];
-  const answer = currentExample.groups * currentExample.perGroup;
+  const selectFactor = (n: number) => {
+    setSelectedFactor(n);
+    setVisitedFactors((prev) => (prev.includes(n) ? prev : [...prev, n]));
+    speak(`${multiplier} nhân ${n} bằng ${multiplier * n}`);
+  };
 
-  const isFirst = phase === "intro";
-  const isLast = phase === "example" && exampleIdx === examples.length - 1 && animStage >= 2;
+  useEffect(() => {
+    const t = setTimeout(() => {
+      speak(`Bảng nhân ${multiplier}. ${multiplier} nhân ${selectedFactor} bằng ${multiplier * selectedFactor}`);
+    }, 300);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [multiplier]);
 
   const handleNext = () => {
-    if (phase === "intro") {
-      setPhase("example");
-      setExampleIdx(0);
-      setAnimStage(0);
-      return;
-    }
-    if (animStage < 2) {
-      setAnimStage((s) => s + 1);
-      return;
-    }
-    if (exampleIdx < examples.length - 1) {
-      setExampleIdx((i) => i + 1);
-      setAnimStage(0);
+    if (selectedFactor < 10) {
+      selectFactor(selectedFactor + 1);
     } else if (!hasCompletedRef.current) {
       hasCompletedRef.current = true;
       onComplete();
@@ -81,138 +61,159 @@ export function ExplainMultiplyLesson({ multiplier, onComplete }: ExplainMultipl
   };
 
   const handleBack = () => {
-    if (phase === "example") {
-      if (animStage > 0) {
-        setAnimStage((s) => s - 1);
-      } else if (exampleIdx > 0) {
-        setExampleIdx((i) => i - 1);
-        setAnimStage(2);
-      } else {
-        setPhase("intro");
-      }
+    if (selectedFactor > 1) {
+      selectFactor(selectedFactor - 1);
     }
   };
 
   const swipeRef = useSwipe({ onSwipeLeft: handleNext, onSwipeRight: handleBack });
 
-  useEffect(() => {
-    if (phase === "intro") {
-      speak("dấu nhân");
-    }
-  }, [phase]);
-
-  useEffect(() => {
-    if (phase !== "example") return;
-    const ex = examples[exampleIdx];
-    const ans = ex.groups * ex.perGroup;
-    if (animStage === 0) {
-      speak(`${ex.groups} nhóm, mỗi nhóm có ${ex.perGroup} ${thingName}`);
-    } else if (animStage === 1) {
-      speak(`${ex.groups} nhân ${ex.perGroup}`);
-    } else if (animStage === 2) {
-      speak(`bằng ${ans} ${thingName}`);
-    }
-  }, [phase, exampleIdx, animStage]);
-
-  // --- INTRO ---
-  if (phase === "intro") {
-    return (
-      <div ref={swipeRef} className="flex flex-col items-center gap-8 w-full max-w-lg px-4">
-        <span
-          onClick={() => speak("dấu nhân")}
-          className="text-9xl font-black drop-shadow-lg text-purple-500 animate-scale cursor-pointer"
-        >
-          ×
-        </span>
-        <p className="text-2xl font-bold text-slate-600 text-center">Dấu Nhân</p>
-        <div className="flex items-center gap-6">
-          <NextLessonButton onClick={handleNext} isLast={false} />
-        </div>
-      </div>
-    );
-  }
-
-  // --- EXAMPLES ---
   return (
-    <div ref={swipeRef} className="flex flex-col items-center gap-6 w-full max-w-md px-4">
-      {/* Main card */}
-      <div className="bg-white rounded-[32px] p-6 border-4 border-purple-200 shadow-2xl shadow-purple-100/50 w-full transition-all">
-        {/* Step 0: Show groups of items */}
-        <div className="flex flex-col items-center">
-          <p className="text-lg font-bold text-purple-600 mb-3">
-            {currentExample.groups} nhóm, mỗi nhóm {currentExample.perGroup} {thingName}
-          </p>
-          <div className="flex flex-wrap justify-center gap-3">
-            {Array.from({ length: currentExample.groups }).map((_, gi) => (
-              <div
-                key={`group-${gi}`}
-                className="border-2 border-dashed border-purple-300 rounded-2xl p-2 flex flex-wrap gap-1 justify-center items-center min-w-[60px] cursor-pointer hover:scale-105 hover:border-purple-500 transition-all active:scale-95"
-                onClick={() => speak(`${currentExample.perGroup} ${thingName}`)}
-              >
-                {Array.from({ length: currentExample.perGroup }).map((_, ii) => (
-                  <div key={`item-${gi}-${ii}`} className="w-10 h-10 sm:w-12 sm:h-12 relative">
-                    <Image src={thingImage.icon} alt={thingName} fill className="object-contain drop-shadow-md" />
-                  </div>
+    <div
+      ref={swipeRef}
+      className="flex flex-col items-center gap-2.5 sm:gap-4 w-full max-w-4xl px-2 sm:px-4 select-none"
+    >
+      <FeedbackCard feedback={null} className="!p-3 sm:!p-6">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-3 sm:gap-5 items-center">
+          {/* LEFT COLUMN (5 cols): Interactive 1..10 Multiplication Table Selector */}
+          <div className="md:col-span-5 flex flex-col gap-2">
+            <div className="grid grid-cols-2 gap-1.5 sm:gap-2">
+              {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => {
+                const isSelected = n === selectedFactor;
+                const isVisited = visitedFactors.includes(n);
+                return (
+                  <button
+                    key={n}
+                    onClick={() => selectFactor(n)}
+                    className={`flex items-center justify-between px-3 py-1.5 sm:px-3.5 sm:py-2.5 rounded-xl sm:rounded-2xl font-black text-sm sm:text-base transition-all cursor-pointer border-2 ${
+                      isSelected
+                        ? "bg-purple-600 text-white border-purple-700 scale-[1.02] shadow-md"
+                        : isVisited
+                          ? "bg-emerald-50 text-slate-700 border-emerald-200 hover:bg-emerald-100"
+                          : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-purple-50 hover:border-purple-200"
+                    }`}
+                  >
+                    <span>
+                      {multiplier} × {n}
+                    </span>
+                    <span className={isSelected ? "text-amber-300" : "text-emerald-600"}>
+                      = {multiplier * n}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* RIGHT COLUMN (7 cols): Shared Math Components + Pop-It Multiplication Matrix */}
+          <div className="md:col-span-7 flex flex-col gap-2 sm:gap-3 bg-slate-50 rounded-2xl sm:rounded-3xl p-2.5 sm:p-4 border-2 border-slate-200">
+            {/* Shared NumberBox + OperatorSign + SpeakerButton Equation Row */}
+            <div className="flex items-center justify-center gap-1.5 sm:gap-2.5">
+              <NumberBox
+                value={multiplier}
+                gradient="purple"
+                speakText={`${multiplier}`}
+                className="!w-11 !h-11 sm:!w-14 sm:!h-14 !rounded-xl [&_span]:!text-xl sm:[&_span]:!text-3xl"
+              />
+              <OperatorSign symbol="×" speakText="dấu nhân" className="!text-2xl sm:!text-4xl" />
+              <NumberBox
+                value={selectedFactor}
+                gradient="blue"
+                speakText={`${selectedFactor}`}
+                className="!w-11 !h-11 sm:!w-14 sm:!h-14 !rounded-xl [&_span]:!text-xl sm:[&_span]:!text-3xl"
+              />
+              <OperatorSign symbol="=" speakText="dấu bằng" className="!text-2xl sm:!text-4xl" />
+              <NumberBox
+                value={answer}
+                gradient="emerald"
+                speakText={`${answer}`}
+                className="!w-12 !h-11 sm:!w-16 sm:!h-14 !rounded-xl [&_span]:!text-xl sm:[&_span]:!text-3xl"
+              />
+              <div className="ml-1">
+                <SpeakerButton
+                  onSpeak={() => speak(`${multiplier} nhân ${selectedFactor} bằng ${answer}`)}
+                />
+              </div>
+            </div>
+
+            {/* Column Numbers Header (1..10) */}
+            <div className="grid grid-cols-12 gap-1 items-center px-0.5 sm:px-1">
+              <div className="col-span-1 text-[11px] sm:text-xs font-black text-slate-400 text-center">
+                ×
+              </div>
+              <div className="col-span-10 grid grid-cols-10 gap-1">
+                {Array.from({ length: 10 }, (_, c) => c + 1).map((colNum) => (
+                  <button
+                    key={`col-hdr-${colNum}`}
+                    onClick={() => selectFactor(colNum)}
+                    className={`text-[11px] sm:text-xs font-black rounded-md py-0.5 text-center transition-all cursor-pointer ${
+                      colNum <= selectedFactor
+                        ? "bg-purple-600 text-white shadow-xs"
+                        : "text-slate-400 hover:bg-slate-200"
+                    }`}
+                  >
+                    {colNum}
+                  </button>
                 ))}
               </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Step 1: Show equation */}
-        <div
-          className={`flex flex-col items-center mt-4 transition-all duration-500 ease-out ${
-            animStage >= 1 ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-3 h-0 mt-0 overflow-hidden"
-          }`}
-        >
-          <div
-            className="bg-purple-50 rounded-2xl px-6 py-3 cursor-pointer hover:scale-105 transition-all active:scale-95"
-            onClick={() => speak(`${currentExample.groups} nhân ${currentExample.perGroup}`)}
-          >
-            <span className="text-3xl sm:text-4xl font-black text-purple-600 tracking-wide">
-              {currentExample.groups} × {currentExample.perGroup}
-            </span>
-          </div>
-        </div>
-
-        {/* Step 2: Show answer */}
-        <div
-          className={`flex flex-col items-center mt-4 transition-all duration-500 ease-out ${
-            animStage >= 2 ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-3 h-0 mt-0 overflow-hidden"
-          }`}
-        >
-          <span className="text-7xl font-black drop-shadow-lg text-emerald-500 animate-scale cursor-pointer" onClick={() => speak("dấu bằng")}>
-            =
-          </span>
-
-          {/* Answer items */}
-          <div
-            className="flex gap-1.5 flex-wrap justify-center mt-2 cursor-pointer hover:scale-[1.02] transition-all"
-            onClick={() => speak(`${answer} ${thingName}`)}
-          >
-            {Array.from({ length: answer }).map((_, i) => (
-              <div key={`ans-${i}`} className="w-10 h-10 sm:w-12 sm:h-12 relative">
-                <Image src={thingImage.icon} alt={thingName} fill className="object-contain drop-shadow-md" />
+              <div className="col-span-1 text-[11px] sm:text-xs font-black text-emerald-600 text-center">
+                =
               </div>
-            ))}
-          </div>
+            </div>
 
-          {/* Equation summary */}
-          <div
-            className="mt-4 bg-slate-50 rounded-2xl px-6 py-3 animate-scale cursor-pointer"
-            onClick={() => speak(`${currentExample.groups} nhân ${currentExample.perGroup} bằng ${answer}`)}
-          >
-            <span className="text-3xl sm:text-4xl font-black text-orange-500 tracking-wide">
-              {currentExample.groups} × {currentExample.perGroup} = {answer}
-            </span>
+            {/* Matrix Rows (multiplier rows × 10 columns) */}
+            <div className="flex flex-col gap-1 sm:gap-1.5">
+              {Array.from({ length: multiplier }, (_, r) => r + 1).map((rowNum) => {
+                const rowSum = rowNum * selectedFactor;
+                const rowColor = ROW_COLORS[(rowNum - 1) % ROW_COLORS.length];
+
+                return (
+                  <div
+                    key={`row-${rowNum}`}
+                    className="grid grid-cols-12 gap-1 items-center px-0.5 sm:px-1"
+                  >
+                    <div className="col-span-1 text-[11px] sm:text-xs font-extrabold text-slate-500 text-center">
+                      ×{rowNum}
+                    </div>
+
+                    <div className="col-span-10 grid grid-cols-10 gap-1">
+                      {Array.from({ length: 10 }, (_, c) => c + 1).map((colNum) => {
+                        const isActive = colNum <= selectedFactor;
+                        return (
+                          <button
+                            key={`cell-${rowNum}-${colNum}`}
+                            onClick={() => selectFactor(colNum)}
+                            className={`h-5 sm:h-7 rounded-md sm:rounded-lg border-b-2 transition-all cursor-pointer flex items-center justify-center ${
+                              isActive
+                                ? `${rowColor} text-white scale-100 shadow-xs`
+                                : "bg-slate-200/70 border-slate-300/60 text-transparent hover:bg-slate-300"
+                            }`}
+                            title={`${rowNum} × ${colNum} = ${rowNum * colNum}`}
+                          >
+                            <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-white/60" />
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    <div
+                      onClick={() => speak(`${rowSum}`)}
+                      className="col-span-1 bg-emerald-100 text-emerald-800 font-black text-[11px] sm:text-xs rounded-md sm:rounded-lg py-0.5 sm:py-1 text-center cursor-pointer hover:bg-emerald-200 transition-colors"
+                    >
+                      {rowSum}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
-      </div>
+      </FeedbackCard>
 
-      {/* Navigation */}
-      <div className="flex items-center gap-6">
-        <BackLessonButton onClick={handleBack} disabled={isFirst} />
-        <NextLessonButton onClick={handleNext} isLast={isLast} />
+      {/* Shared Navigation Buttons */}
+      <div className="flex items-center gap-4 sm:gap-5">
+        <BackLessonButton onClick={handleBack} disabled={selectedFactor <= 1} />
+        <NextLessonButton onClick={handleNext} isLast={selectedFactor >= 10} />
       </div>
     </div>
   );

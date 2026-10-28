@@ -8,7 +8,7 @@ export async function generateMetadata(): Promise<Metadata> {
   if (!seo) return {};
   const gameTitle = seo.title.split(" - ")[0];
   return {
-    title: `${gameTitle} - Cú Thông Minh`,
+    title: gameTitle,
     description: seo.description,
     alternates: { canonical: `/games/${GAME_ID}` },
     openGraph: {

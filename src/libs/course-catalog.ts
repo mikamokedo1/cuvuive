@@ -100,6 +100,7 @@ export function isLessonUnlockedForCourse(
   if (!isGroupUnlockedForCourse(courseId, groupId, allProgress)) {
     return false;
   }
+  if (courseId === "learn-multiply") return true;
 
   const group = getGroupDefinition(courseId, groupId);
   if (!group) return false;
