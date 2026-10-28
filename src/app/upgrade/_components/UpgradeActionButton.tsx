@@ -6,6 +6,7 @@ import { ActionButton } from "@/components/common/ActionButton";
 import { toast } from "react-hot-toast";
 import { Loader2 } from "lucide-react";
 import { useUser } from "@/context/UserContext";
+import { useAccess } from "@/context/AccessContext";
 
 interface UpgradeActionButtonProps {
   planCode: string;
@@ -16,12 +17,12 @@ interface UpgradeActionButtonProps {
 export function UpgradeActionButton({ planCode, priceFormatted, colorDef }: UpgradeActionButtonProps) {
   const router = useRouter();
   const { user } = useUser();
+  const { showPaywall } = useAccess();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleUpgrade = async () => {
     if (!user) {
-      toast.error("Vui lòng đăng nhập để nâng cấp tính năng nhé!");
-      router.push("/auth/login?next=/upgrade");
+      showPaywall("login", "/upgrade");
       return;
     }
 

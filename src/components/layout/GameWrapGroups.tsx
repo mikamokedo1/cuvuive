@@ -5,6 +5,7 @@ import Image from "next/image";
 import { LessonTitle } from "@/components/games/LessonTitle";
 import { useProgress } from "@/context/ProgressContext";
 import { useAccess } from "@/context/AccessContext";
+import { getGroupDefinition } from "@/libs/course-catalog";
 import { GroupData } from "@/features/games/learn-vehicle/constants";
 import { StaticImageData } from "next/image";
 import { useRoadmapBack } from "@/hooks/useRoadmapBack";
@@ -43,7 +44,10 @@ export const GameWrapGroups = ({ logo, gameId, groups, title }: GameWrapGroups) 
             const isCompleted = dataReady ? courseProgress.completedGroups.includes(group.id) : false;
 
             // Check premium locking: if group requires premium and user doesn't have it
-            const groupRequiresPremium = !!group.isPremium;
+            const groupDef = getGroupDefinition(gameId, group.id);
+            const groupRequiresPremium =
+              !!group.isPremium ||
+              (groupDef && groupDef.lessons.length > 0 ? groupDef.lessons.every((l) => !l.isFree) : false);
             const premiumLocked = dataReady ? groupRequiresPremium && (!isLoggedIn || !isPremium) : false;
             const isLocked = !unlocked || premiumLocked;
 

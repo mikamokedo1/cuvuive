@@ -82,6 +82,7 @@ export function isGroupUnlockedForCourse(
 ): boolean {
   const course = getCourseDefinition(courseId);
   if (!course) return true;
+  if (courseId === "learn-multiply") return true;
 
   const groupIndex = course.groups.findIndex((group) => group.id === groupId);
   if (groupIndex === 0) return true;

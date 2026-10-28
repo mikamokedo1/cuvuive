@@ -400,7 +400,9 @@ export default async function UpgradePage() {
                       </div>
 
                       <span className="text-xs text-green-600 font-bold mt-1 block">
-                        {discount ? `Tiết kiệm ${discount}% so với gói tháng` : "Chỉ với 2k mỗi ngày"}
+                        {discount
+                          ? `Chỉ ~${(Math.round(pkg.price / (pkg.durationMonths * 30) / 100) * 100).toLocaleString("vi-VN")}đ/ngày • Tiết kiệm ${discount}%`
+                          : "Chỉ với 2.000đ mỗi ngày"}
                       </span>
                     </div>
 

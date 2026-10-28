@@ -80,7 +80,11 @@ export function AccessProvider({ children }: { children: ReactNode }) {
   const showPaywall = useCallback((type: PaywallType, redirectUrl?: string) => {
     const url = redirectUrl || null;
     setPaywallState({ isOpen: true, type, redirectUrl: url });
-    saveRedirectUrl(url);
+    if (type === "login") {
+      saveRedirectUrl(url);
+    } else {
+      clearRedirectUrl();
+    }
   }, []);
 
   const hidePaywall = useCallback(() => {
