@@ -11,31 +11,13 @@ import {
   BlankBox,
   SpeakerButton,
 } from "@/features/games/_shared/math";
-import { generateMultiplyQuestion } from "./constants";
+import { generateSharedMathQuestion, MathOperationType } from "./constants";
 
 interface BubbleCannonMultiplyLessonProps {
   multiplier: number | "mixed";
   maxProduct: number;
   onComplete: () => void;
-  operation?: "multiply" | "divide";
-}
-
-function generateMathCannonQuestion(
-  operation: "multiply" | "divide",
-  multiplier: number | "mixed",
-  maxProduct: number,
-  prevQuestion?: string,
-): { a: number; b: number; answer: number; questionKey: string } {
-  const q = generateMultiplyQuestion(multiplier, maxProduct, prevQuestion);
-  if (operation === "divide") {
-    return {
-      a: q.answer,
-      b: q.a,
-      answer: q.b,
-      questionKey: `div-${q.questionKey}`,
-    };
-  }
-  return q;
+  operation?: MathOperationType;
 }
 
 interface BubbleItem {
@@ -113,7 +95,7 @@ function generateBubbleNumbers(
   correctAnswer: number,
   multiplier: number | "mixed",
   maxProduct: number,
-  operation: "multiply" | "divide",
+  operation: MathOperationType,
 ): number[] {
   const nums = new Set<number>([correctAnswer]);
 
@@ -134,6 +116,30 @@ function generateBubbleNumbers(
     }
     while (nums.size < 6) {
       const r = Math.floor(Math.random() * 10) + 1;
+      if (r !== correctAnswer) nums.add(r);
+    }
+    return Array.from(nums).sort(() => Math.random() - 0.5);
+  }
+
+  if (operation === "add" || operation === "sub" || operation === "add-sub") {
+    const step = maxProduct > 20 ? 10 : 2;
+    const candidates = [
+      correctAnswer + 1,
+      correctAnswer - 1,
+      correctAnswer + 2,
+      correctAnswer - 2,
+      correctAnswer + step,
+      correctAnswer - step,
+      correctAnswer + 3,
+    ];
+    for (const c of candidates) {
+      if (nums.size >= 6) break;
+      if (c >= 1 && c <= Math.max(maxProduct, 10) && c !== correctAnswer) {
+        nums.add(c);
+      }
+    }
+    while (nums.size < 6) {
+      const r = Math.floor(Math.random() * Math.max(maxProduct, 10)) + 1;
       if (r !== correctAnswer) nums.add(r);
     }
     return Array.from(nums).sort(() => Math.random() - 0.5);
@@ -178,13 +184,11 @@ export function BubbleCannonMultiplyLesson({
   const prevQuestionRef = useRef<string>("");
   const roundResolvedRef = useRef<boolean>(false);
 
-  const isDivide = operation === "divide";
-  const opSymbol = isDivide ? "÷" : "×";
-  const opWord = isDivide ? "chia" : "nhân";
-
   const [question, setQuestion] = useState(() =>
-    generateMathCannonQuestion(operation, multiplier, maxProduct),
+    generateSharedMathQuestion(operation, multiplier, maxProduct),
   );
+  const opSymbol = question.opSymbol;
+  const opWord = question.opWord;
 
   const spawnBubblesForQuestion = useCallback(
     (q: { a: number; b: number; answer: number }) => {
@@ -240,17 +244,17 @@ export function BubbleCannonMultiplyLesson({
   );
 
   const newQuestion = useCallback(() => {
-    const q = generateMathCannonQuestion(operation, multiplier, maxProduct, prevQuestionRef.current);
+    const q = generateSharedMathQuestion(operation, multiplier, maxProduct, prevQuestionRef.current);
     prevQuestionRef.current = q.questionKey;
     roundResolvedRef.current = false;
     setQuestion(q);
     spawnBubblesForQuestion(q);
     quiz.resetFeedback();
     setTimeout(() => {
-      speak(`${q.a} ${opWord} ${q.b} bằng mấy?`);
+      speak(`${q.a} ${q.opWord} ${q.b} bằng mấy?`);
     }, 500);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [operation, multiplier, maxProduct, spawnBubblesForQuestion, speak, opWord]);
+  }, [operation, multiplier, maxProduct, spawnBubblesForQuestion, speak]);
 
   const quiz = useQuizLogic({
     correctAnswer: question.answer,

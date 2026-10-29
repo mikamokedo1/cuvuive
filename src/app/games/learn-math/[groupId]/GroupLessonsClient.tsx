@@ -2,7 +2,7 @@
 
 import { useProgress } from "@/context/ProgressContext";
 import { useAccess } from "@/context/AccessContext";
-import { BookOpen, Eye, Hash, Pencil } from "lucide-react";
+import { BookOpen, Eye, Hash, Pencil, Scale, Crosshair, Sparkles } from "lucide-react";
 import { GROUP_CONFIG } from "@/features/games/learn-math/constants";
 import { GameWrapLessons } from "@/components/layout/GameWrapLessons";
 
@@ -12,6 +12,9 @@ const iconMap: Record<string, React.ReactNode> = {
   Eye: <Eye className="text-white w-6 h-6" />,
   Hash: <Hash className="text-white w-6 h-6" />,
   Pencil: <Pencil className="text-white w-6 h-6" />,
+  Scale: <Scale className="text-white w-6 h-6" />,
+  Crosshair: <Crosshair className="text-white w-6 h-6" />,
+  Sparkles: <Sparkles className="text-white w-6 h-6" />,
 };
 
 interface GroupLessonsClientProps {

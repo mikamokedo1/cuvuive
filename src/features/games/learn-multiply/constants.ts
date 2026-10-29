@@ -257,3 +257,105 @@ export function generateChoices(correctAnswer: number, maxProduct: number): numb
 
   return Array.from(choices).sort(() => Math.random() - 0.5);
 }
+
+export type MathOperationType = "multiply" | "divide" | "add" | "sub" | "add-sub";
+
+export interface SharedMathQuestion {
+  a: number;
+  b: number;
+  answer: number;
+  opSymbol: "×" | "÷" | "+" | "−";
+  opWord: string;
+  questionKey: string;
+}
+
+export function generateSharedMathQuestion(
+  operation: MathOperationType,
+  multiplier: number | "mixed",
+  maxProduct: number,
+  prevQuestion?: string,
+  preferRoundTens = false,
+): SharedMathQuestion {
+  if (operation === "multiply") {
+    const q = generateMultiplyQuestion(multiplier, maxProduct, prevQuestion);
+    return { ...q, opSymbol: "×", opWord: "nhân" };
+  }
+  if (operation === "divide") {
+    const q = generateMultiplyQuestion(multiplier, maxProduct, prevQuestion);
+    return {
+      a: q.answer,
+      b: q.a,
+      answer: q.b,
+      opSymbol: "÷",
+      opWord: "chia",
+      questionKey: `div-${q.questionKey}`,
+    };
+  }
+
+  let a = 0;
+  let b = 0;
+  let answer = 0;
+  let opSymbol: "+" | "−" = "+";
+  let opWord = "cộng";
+  let questionKey = "";
+  let attempts = 0;
+
+  do {
+    const subOp = operation === "add-sub" ? (Math.random() > 0.5 ? "add" : "sub") : operation;
+    opSymbol = subOp === "add" ? "+" : "−";
+    opWord = subOp === "add" ? "cộng" : "trừ";
+
+    if (maxProduct > 20) {
+      // Grade 1 (Lớp 1): Range 100 without regrouping (cộng trừ không nhớ)
+      if (preferRoundTens || Math.random() < 0.45) {
+        if (subOp === "add") {
+          const tAns = Math.floor(Math.random() * 8) + 2; // 20..90
+          const tA = Math.floor(Math.random() * (tAns - 1)) + 1;
+          const tB = tAns - tA;
+          a = tA * 10;
+          b = tB * 10;
+          answer = tAns * 10;
+        } else {
+          const tA = Math.floor(Math.random() * 8) + 2; // 20..90
+          const tB = Math.floor(Math.random() * (tA - 1)) + 1;
+          a = tA * 10;
+          b = tB * 10;
+          answer = (tA - tB) * 10;
+        }
+      } else {
+        if (subOp === "add") {
+          const t1 = Math.floor(Math.random() * 6) + 1;
+          const t2 = Math.floor(Math.random() * (9 - t1)) + 1;
+          const u1 = Math.floor(Math.random() * 7) + 1;
+          const u2 = Math.floor(Math.random() * (9 - u1)) + 1;
+          a = t1 * 10 + u1;
+          b = t2 * 10 + u2;
+          answer = a + b;
+        } else {
+          const t1 = Math.floor(Math.random() * 7) + 2;
+          const t2 = Math.floor(Math.random() * (t1 - 1)) + 1;
+          const u1 = Math.floor(Math.random() * 7) + 2;
+          const u2 = Math.floor(Math.random() * u1);
+          a = t1 * 10 + u1;
+          b = t2 * 10 + u2;
+          answer = a - b;
+        }
+      }
+    } else {
+      if (subOp === "add") {
+        answer = Math.floor(Math.random() * (maxProduct - 1)) + 2;
+        a = Math.floor(Math.random() * (answer - 1)) + 1;
+        b = answer - a;
+      } else {
+        a = Math.floor(Math.random() * (maxProduct - 1)) + 2;
+        b = Math.floor(Math.random() * (a - 1)) + 1;
+        answer = a - b;
+      }
+    }
+
+    questionKey = `${a}-${opSymbol}-${b}`;
+    attempts++;
+  } while (questionKey === prevQuestion && attempts < 15);
+
+  return { a, b, answer, opSymbol, opWord, questionKey };
+}

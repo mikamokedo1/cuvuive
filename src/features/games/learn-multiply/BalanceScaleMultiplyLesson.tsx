@@ -10,32 +10,13 @@ import {
   BlankBox,
   SpeakerButton,
 } from "@/features/games/_shared/math";
-import { generateMultiplyQuestion } from "./constants";
+import { generateSharedMathQuestion, type MathOperationType } from "./constants";
 
 interface BalanceScaleMultiplyLessonProps {
   multiplier: number | "mixed";
   maxProduct: number;
   onComplete: () => void;
-  operation?: "multiply" | "divide";
-}
-
-function generateMathScaleQuestion(
-  operation: "multiply" | "divide",
-  multiplier: number | "mixed",
-  maxProduct: number,
-  prevQuestion?: string,
-): { a: number; b: number; answer: number; questionKey: string } {
-  const q = generateMultiplyQuestion(multiplier, maxProduct, prevQuestion);
-  if (operation === "divide") {
-    // q.a is table (2..9), q.b is quotient (1..10), q.answer is dividend (a * b)
-    return {
-      a: q.answer,
-      b: q.a,
-      answer: q.b,
-      questionKey: `div-${q.questionKey}`,
-    };
-  }
-  return q;
+  operation?: MathOperationType;
 }
 
 interface DroppedBlock {
@@ -59,6 +40,9 @@ const BLOCK_COLORS: Record<number, string> = {
   8: "#6366f1",
   9: "#14b8a6",
   10: "#ef4444",
+  20: "#3b82f6",
+  30: "#8b5cf6",
+  50: "#ec4899",
 };
 
 function playTone(freq: number, duration = 0.12, type: OscillatorType = "sine") {
@@ -96,19 +80,24 @@ export function BalanceScaleMultiplyLesson({
   const beamVelRef = useRef<number>(0);
   const prevQuestionRef = useRef<string>("");
 
-  const isDivide = operation === "divide";
-  const opSymbol = isDivide ? "÷" : "×";
-  const opWord = isDivide ? "chia" : "nhân";
-
   const [question, setQuestion] = useState(() =>
-    generateMathScaleQuestion(operation, multiplier, maxProduct),
+    generateSharedMathQuestion(operation, multiplier, maxProduct, undefined, true),
   );
   const [droppedValues, setDroppedValues] = useState<number[]>([]);
+
+  const opSymbol = question.opSymbol;
+  const opWord = question.opWord;
 
   const currentSum = droppedValues.reduce((acc, v) => acc + v, 0);
 
   const newQuestion = useCallback(() => {
-    const q = generateMathScaleQuestion(operation, multiplier, maxProduct, prevQuestionRef.current);
+    const q = generateSharedMathQuestion(
+      operation,
+      multiplier,
+      maxProduct,
+      prevQuestionRef.current,
+      true,
+    );
     prevQuestionRef.current = q.questionKey;
     setQuestion(q);
     setDroppedValues([]);
@@ -117,10 +106,10 @@ export function BalanceScaleMultiplyLesson({
     quiz.resetFeedback();
 
     setTimeout(() => {
-      speak(`${q.a} ${opWord} ${q.b} bằng mấy?`);
+      speak(`${q.a} ${q.opWord} ${q.b} bằng mấy?`);
     }, 500);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [operation, multiplier, maxProduct, opWord]);
+  }, [operation, multiplier, maxProduct]);
 
   const quiz = useQuizLogic({
     correctAnswer: question.answer,
@@ -134,11 +123,28 @@ export function BalanceScaleMultiplyLesson({
   // Available weight options for the current question
   const weightOptions = React.useMemo(() => {
     const opts = new Set<number>();
-    if (isDivide) {
+    if (operation === "divide") {
       opts.add(1);
       opts.add(2);
       opts.add(3);
       opts.add(5);
+    } else if (operation === "add" || operation === "sub" || operation === "add-sub") {
+      if (maxProduct > 20) {
+        opts.add(10);
+        opts.add(20);
+        opts.add(30);
+        opts.add(50);
+      } else if (maxProduct > 10) {
+        opts.add(1);
+        opts.add(2);
+        opts.add(5);
+        opts.add(10);
+      } else {
+        opts.add(1);
+        opts.add(2);
+        opts.add(3);
+        opts.add(5);
+      }
     } else {
       opts.add(question.a);
       opts.add(question.b);
@@ -150,12 +156,12 @@ export function BalanceScaleMultiplyLesson({
       }
     }
     return Array.from(opts).slice(0, 4).sort((x, y) => x - y);
-  }, [question, isDivide]);
+  }, [question, operation, maxProduct]);
 
   useEffect(() => {
     prevQuestionRef.current = question.questionKey;
     const t = setTimeout(() => {
-      speak(`${question.a} ${opWord} ${question.b} bằng mấy?`);
+      speak(`${question.a} ${question.opWord} ${question.b} bằng mấy?`);
     }, 500);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps

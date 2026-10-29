@@ -158,7 +158,7 @@ export const PRE_GRADE_1_ROADMAP: Roadmap = {
       "from-blue-50 to-sky-50",
       [
         cat("tieng-viet-2", "Tiếng Việt", "🔤", ["learn-syllable", "learn-word"]),
-        cat("toan-2", "Toán Học", "🔢", ["learn-math:Cộng trừ", "find-pattern", "sequence-sort"]),
+        cat("toan-2", "Toán Học", "🔢", ["learn-math:Cộng trừ 10 & 20", "find-pattern", "sequence-sort"]),
         cat("ky-nang-2", "Kỹ Năng Sống", "💛", [
           "learn-hygiene",
           "learn-traffic",
@@ -208,10 +208,11 @@ export const PRIMARY_SCHOOL_ROADMAP: Roadmap = {
       "green",
       "from-emerald-50 to-green-50",
       [
-        cat("tieng-viet-nc", "Tiếng Việt Nâng Cao", "🔤", ["learn-syllable", "learn-word"]),
+        cat("tieng-viet-nc", "Tiếng Việt Lớp 1", "🔤", ["learn-alphabet:Bảng chữ cái", "learn-tones:5 Dấu thanh", "learn-syllable:Ghép vần", "learn-word:Đọc từ & câu"]),
         cat("tieng-anh", "Tiếng Anh", "🇬🇧", [
           "learn-english-alphabet:Bảng chữ cái Anh",
           "learn-english-vocab:Từ vựng Anh",
+          "talk-with-owl:Giao tiếp AI",
         ]),
       ],
     ),
@@ -219,13 +220,23 @@ export const PRIMARY_SCHOOL_ROADMAP: Roadmap = {
       "toan-nhan-thuc",
       2,
       "Toán & Nhận Thức",
-      "Phép tính, đo lường và nhận thức thế giới",
+      "Phép tính Cộng Trừ 10-20-100, Nhân Chia & Đo lường",
       "🔢",
       "blue",
       "from-blue-50 to-sky-50",
       [
-        cat("phep-tinh", "Phép Tính", "➕", ["learn-math:Cộng trừ", "learn-multiply", "learn-divide"]),
-        cat("nhan-thuc", "Nhận Thức", "🕐", ["learn-clock", "learn-money", "find-pattern", "sequence-sort"]),
+        cat("phep-tinh", "Phép Tính Tiểu Học", "➕", [
+          "learn-math:Cộng trừ 10, 20, 100",
+          "learn-multiply:Bảng nhân 2-9",
+          "learn-divide:Bảng chia 2-9",
+        ]),
+        cat("nhan-thuc", "Đo Lường & Nhận Thức", "🕐", [
+          "compare-quantity:So sánh < > =",
+          "learn-clock",
+          "learn-money",
+          "find-pattern",
+          "sequence-sort",
+        ]),
       ],
     ),
     stage(

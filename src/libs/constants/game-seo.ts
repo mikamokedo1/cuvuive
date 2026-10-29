@@ -74,9 +74,9 @@ const SEO_OVERRIDES: Record<string, SeoOverride> = {
       "Bé học so sánh nhiều hơn, ít hơn và bằng nhau qua hình ảnh trực quan, luyện phản xạ và tư duy toán học sớm.",
   },
   "learn-math": {
-    title: "Phép Cộng Trừ Đơn Giản | Game Toán Cho Bé 3-8 Tuổi",
+    title: "Học Phép Cộng Trừ Phạm Vi 10, 20, 100 | Game Toán Lớp 1 Cho Bé",
     description:
-      "Bé học phép cộng trừ trong phạm vi 20 bằng hình ảnh minh họa, bài tập tương tác và phần luyện tập theo nhóm.",
+      "Bé học phép cộng trừ phạm vi 10, 20 và 100 (Toán lớp 1 không nhớ) qua hình ảnh trực quan và 3 game vật lý: Cân thăng bằng, Pháo bóng, Thác Plinko.",
   },
   "learn-alphabet": {
     title: "Bảng Chữ Cái Tiếng Việt | Game Học Chữ Cho Bé",
@@ -757,35 +757,35 @@ const RAW_GAME_SEO: Record<string, GameSeoData> = {
     relatedBlogs: [{ slug: "trang-phuc-cac-quoc-gia", title: "Trang Phục Các Quốc Gia" }],
   },
   "learn-math": {
-    title: "Học Toán Đơn Giản cho bé - Trò chơi giáo dục Cú Thông Minh",
+    title: "Học Phép Cộng Trừ Phạm Vi 10, 20, 100 cho bé - Trò chơi Cú Thông Minh",
     description:
-      "Bé học phép cộng và phép trừ đơn giản với các số đến 20 qua hình ảnh minh họa và trò chơi tương tác vui nhộn.",
+      "Bé học phép cộng và phép trừ trong phạm vi 10, 20 và 100 (Toán lớp 1 không nhớ) qua hình ảnh minh họa và 3 trò chơi vật lý tương tác vui nhộn.",
     keywords: [
       "phép cộng trừ",
-      "toán cho bé",
-      "toán mầm non",
-      "học cộng trừ đơn giản",
+      "game cộng trừ cho bé",
+      "toán lớp 1",
+      "cộng trừ phạm vi 10",
+      "cộng trừ phạm vi 20",
+      "cộng trừ không nhớ trong phạm vi 100",
       "bài tập phép cộng trừ cho bé lớp 1",
       "toán tư duy cho bé 5-6 tuổi",
       "trò chơi học cộng trừ online miễn phí",
-      "dạy bé phép tính đơn giản tại nhà",
-      "game toán cộng trừ cho trẻ mầm non",
     ],
     seoText:
-      "Trò chơi Toán Đơn Giản giúp bé từ 3-8 tuổi học phép cộng và phép trừ với các con số đến 20. Bé sẽ hiểu khái niệm qua hình ảnh minh họa, thực hành cộng/trừ bằng hình và bằng số, tập viết dấu cộng trừ và luyện tập tổng hợp.",
+      "Trò chơi Học Cộng Trừ giúp bé từ 4-8 tuổi chinh phục phép cộng và phép trừ theo đúng lộ trình chuẩn: Phạm vi 10, Phạm vi 20 và Cộng trừ không nhớ trong phạm vi 100 (Toán Lớp 1). Bên cạnh bài học trực quan bằng hình ảnh và tập viết dấu, bé còn được rèn phản xạ qua 3 mini-game vật lý: Cân thăng bằng, Đại chiến pháo bóng và Thác Plinko hứng quả.",
     seoFeatures: [
-      "Phép cộng và phép trừ đơn giản",
-      "Giải thích bằng hình ảnh minh họa",
-      "Tập viết dấu cộng và trừ",
-      "Luyện tập tổng hợp",
+      "6 nhóm bài học: Cộng/Trừ phạm vi 10, 20, 100 (Lớp 1) & Đấu trường",
+      "3 mini-game vật lý: Cân thăng bằng, Pháo bóng, Thác Plinko",
+      "Giải thích trực quan bằng hình ảnh & tập viết dấu",
+      "Phù hợp cho bé Tiền tiểu học (5-6 tuổi) và Lớp 1 (6-7 tuổi)",
     ],
     ogImage: "https://assets.cuthongminh.com/games/learn-math/logo.webp",
-    relatedGames: ["learn-numbers", "compare-quantity", "learn-multiply"],
+    relatedGames: ["learn-numbers", "compare-quantity", "learn-multiply", "learn-divide"],
     relatedBlogs: [
       { slug: "phep-cong-tru-don-gian", title: "Bé Học Phép Cộng Trừ Đơn Giản" },
+      { slug: "game-cong-tru-cho-be", title: "Game Cộng Trừ Cho Bé 5-7 Tuổi" },
       { slug: "phep-tinh-don-gian-cho-be-mau-giao", title: "Phép Tính Cho Bé Mẫu Giáo" },
       { slug: "be-5-tuoi-can-biet-nhung-gi", title: "Bé 5 Tuổi Cần Biết Những Gì Trước Khi Vào Lớp 1" },
-      { slug: "day-be-hoc-qua-tro-choi", title: "Dạy Bé Học Qua Trò Chơi: 7 Phương Pháp Play-Based Learning" },
     ],
   },
   "learn-multiply": {
