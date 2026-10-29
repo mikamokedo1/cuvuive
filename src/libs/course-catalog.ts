@@ -82,7 +82,7 @@ export function isGroupUnlockedForCourse(
 ): boolean {
   const course = getCourseDefinition(courseId);
   if (!course) return true;
-  if (courseId === "learn-multiply") return true;
+  if (courseId === "learn-multiply" || courseId === "learn-divide") return true;
 
   const groupIndex = course.groups.findIndex((group) => group.id === groupId);
   if (groupIndex === 0) return true;
@@ -101,7 +101,7 @@ export function isLessonUnlockedForCourse(
   if (!isGroupUnlockedForCourse(courseId, groupId, allProgress)) {
     return false;
   }
-  if (courseId === "learn-multiply") return true;
+  if (courseId === "learn-multiply" || courseId === "learn-divide") return true;
 
   const group = getGroupDefinition(courseId, groupId);
   if (!group) return false;

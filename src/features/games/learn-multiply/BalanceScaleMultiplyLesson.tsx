@@ -16,6 +16,26 @@ interface BalanceScaleMultiplyLessonProps {
   multiplier: number | "mixed";
   maxProduct: number;
   onComplete: () => void;
+  operation?: "multiply" | "divide";
+}
+
+function generateMathScaleQuestion(
+  operation: "multiply" | "divide",
+  multiplier: number | "mixed",
+  maxProduct: number,
+  prevQuestion?: string,
+): { a: number; b: number; answer: number; questionKey: string } {
+  const q = generateMultiplyQuestion(multiplier, maxProduct, prevQuestion);
+  if (operation === "divide") {
+    // q.a is table (2..9), q.b is quotient (1..10), q.answer is dividend (a * b)
+    return {
+      a: q.answer,
+      b: q.a,
+      answer: q.b,
+      questionKey: `div-${q.questionKey}`,
+    };
+  }
+  return q;
 }
 
 interface DroppedBlock {
@@ -67,6 +87,7 @@ export function BalanceScaleMultiplyLesson({
   multiplier,
   maxProduct,
   onComplete,
+  operation = "multiply",
 }: BalanceScaleMultiplyLessonProps) {
   const { speak } = useTextToSpeech();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -75,15 +96,19 @@ export function BalanceScaleMultiplyLesson({
   const beamVelRef = useRef<number>(0);
   const prevQuestionRef = useRef<string>("");
 
+  const isDivide = operation === "divide";
+  const opSymbol = isDivide ? "÷" : "×";
+  const opWord = isDivide ? "chia" : "nhân";
+
   const [question, setQuestion] = useState(() =>
-    generateMultiplyQuestion(multiplier, maxProduct),
+    generateMathScaleQuestion(operation, multiplier, maxProduct),
   );
   const [droppedValues, setDroppedValues] = useState<number[]>([]);
 
   const currentSum = droppedValues.reduce((acc, v) => acc + v, 0);
 
   const newQuestion = useCallback(() => {
-    const q = generateMultiplyQuestion(multiplier, maxProduct, prevQuestionRef.current);
+    const q = generateMathScaleQuestion(operation, multiplier, maxProduct, prevQuestionRef.current);
     prevQuestionRef.current = q.questionKey;
     setQuestion(q);
     setDroppedValues([]);
@@ -92,10 +117,10 @@ export function BalanceScaleMultiplyLesson({
     quiz.resetFeedback();
 
     setTimeout(() => {
-      speak(`${q.a} nhân ${q.b} bằng mấy?`);
+      speak(`${q.a} ${opWord} ${q.b} bằng mấy?`);
     }, 500);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [multiplier, maxProduct]);
+  }, [operation, multiplier, maxProduct, opWord]);
 
   const quiz = useQuizLogic({
     correctAnswer: question.answer,
@@ -109,21 +134,28 @@ export function BalanceScaleMultiplyLesson({
   // Available weight options for the current question
   const weightOptions = React.useMemo(() => {
     const opts = new Set<number>();
-    opts.add(question.a);
-    opts.add(question.b);
-    if (question.answer >= 10) opts.add(10);
-    opts.add(1);
-    if (opts.size < 4) {
+    if (isDivide) {
+      opts.add(1);
       opts.add(2);
+      opts.add(3);
       opts.add(5);
+    } else {
+      opts.add(question.a);
+      opts.add(question.b);
+      if (question.answer >= 10) opts.add(10);
+      opts.add(1);
+      if (opts.size < 4) {
+        opts.add(2);
+        opts.add(5);
+      }
     }
     return Array.from(opts).slice(0, 4).sort((x, y) => x - y);
-  }, [question]);
+  }, [question, isDivide]);
 
   useEffect(() => {
     prevQuestionRef.current = question.questionKey;
     const t = setTimeout(() => {
-      speak(`${question.a} nhân ${question.b} bằng mấy?`);
+      speak(`${question.a} ${opWord} ${question.b} bằng mấy?`);
     }, 500);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -162,7 +194,7 @@ export function BalanceScaleMultiplyLesson({
       const maxTilt = 0.32;
       const targetAngle = Math.max(
         -maxTilt,
-        Math.min(maxTilt, (diff / Math.max(weightLeft, 10)) * 0.42),
+        Math.min(maxTilt, (diff / Math.max(weightLeft, 6)) * 0.42),
       );
 
       const stiffness = 0.085;
@@ -249,7 +281,7 @@ export function BalanceScaleMultiplyLesson({
         ctx.lineWidth = 4;
         ctx.stroke();
 
-        // Left Pan + Question Crate (a × b)
+        // Left Pan + Question Crate
         ctx.fillStyle = "#475569";
         ctx.beginPath();
         ctx.roundRect(leftTipX - 68, leftPanY - 6, 136, 12, 6);
@@ -275,7 +307,7 @@ export function BalanceScaleMultiplyLesson({
         ctx.font = "900 25px system-ui, sans-serif";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.fillText(`${question.a} × ${question.b}`, leftTipX, qBoxY + qBoxH / 2);
+        ctx.fillText(`${question.a} ${opSymbol} ${question.b}`, leftTipX, qBoxY + qBoxH / 2);
 
         // Right Pan tray
         ctx.fillStyle =
@@ -359,7 +391,7 @@ export function BalanceScaleMultiplyLesson({
     return () => {
       cancelAnimationFrame(animId);
     };
-  }, [question]);
+  }, [question, opSymbol]);
 
   const handleDropBlock = (val: number) => {
     if (quiz.feedback === "correct") return;
@@ -423,7 +455,11 @@ export function BalanceScaleMultiplyLesson({
               speakText={`${question.a}`}
               className="!w-12 !h-12 sm:!w-16 sm:!h-16 !rounded-xl [&_span]:!text-2xl sm:[&_span]:!text-3xl"
             />
-            <OperatorSign symbol="×" speakText="dấu nhân" className="!text-3xl sm:!text-4xl" />
+            <OperatorSign
+              symbol={opSymbol}
+              speakText={`dấu ${opWord}`}
+              className="!text-3xl sm:!text-4xl"
+            />
             <NumberBox
               value={question.b}
               gradient="blue"
@@ -438,7 +474,7 @@ export function BalanceScaleMultiplyLesson({
             />
             <div className="ml-1">
               <SpeakerButton
-                onSpeak={() => speak(`${question.a} nhân ${question.b} bằng mấy?`)}
+                onSpeak={() => speak(`${question.a} ${opWord} ${question.b} bằng mấy?`)}
               />
             </div>
           </div>

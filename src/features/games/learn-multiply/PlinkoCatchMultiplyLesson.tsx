@@ -18,6 +18,25 @@ interface PlinkoCatchMultiplyLessonProps {
   multiplier: number | "mixed";
   maxProduct: number;
   onComplete: () => void;
+  operation?: "multiply" | "divide";
+}
+
+function generateMathPlinkoQuestion(
+  operation: "multiply" | "divide",
+  multiplier: number | "mixed",
+  maxProduct: number,
+  prevQuestion?: string,
+): { a: number; b: number; answer: number; questionKey: string } {
+  const q = generateMultiplyQuestion(multiplier, maxProduct, prevQuestion);
+  if (operation === "divide") {
+    return {
+      a: q.answer,
+      b: q.a,
+      answer: q.b,
+      questionKey: `div-${q.questionKey}`,
+    };
+  }
+  return q;
 }
 
 interface FallingOrb {
@@ -88,6 +107,7 @@ export function PlinkoCatchMultiplyLesson({
   multiplier,
   maxProduct,
   onComplete,
+  operation = "multiply",
 }: PlinkoCatchMultiplyLessonProps) {
   const { speak } = useTextToSpeech();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -98,21 +118,25 @@ export function PlinkoCatchMultiplyLesson({
   const prevQuestionRef = useRef<string>("");
   const roundResolvedRef = useRef<boolean>(false);
 
+  const isDivide = operation === "divide";
+  const opSymbol = isDivide ? "÷" : "×";
+  const opWord = isDivide ? "chia" : "nhân";
+
   const [question, setQuestion] = useState(() =>
-    generateMultiplyQuestion(multiplier, maxProduct),
+    generateMathPlinkoQuestion(operation, multiplier, maxProduct),
   );
 
   const newQuestion = useCallback(() => {
-    const q = generateMultiplyQuestion(multiplier, maxProduct, prevQuestionRef.current);
+    const q = generateMathPlinkoQuestion(operation, multiplier, maxProduct, prevQuestionRef.current);
     prevQuestionRef.current = q.questionKey;
     roundResolvedRef.current = false;
     setQuestion(q);
     quiz.resetFeedback();
     setTimeout(() => {
-      speak(`${q.a} nhân ${q.b} bằng mấy?`);
+      speak(`${q.a} ${opWord} ${q.b} bằng mấy?`);
     }, 500);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [multiplier, maxProduct, speak]);
+  }, [operation, multiplier, maxProduct, speak, opWord]);
 
   const quiz = useQuizLogic({
     correctAnswer: question.answer,
@@ -128,7 +152,7 @@ export function PlinkoCatchMultiplyLesson({
   useEffect(() => {
     prevQuestionRef.current = question.questionKey;
     const t = setTimeout(() => {
-      speak(`${question.a} nhân ${question.b} bằng mấy?`);
+      speak(`${question.a} ${opWord} ${question.b} bằng mấy?`);
     }, 500);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -204,10 +228,12 @@ export function PlinkoCatchMultiplyLesson({
       const isCorrect = spawnCountRef.current % 2 === 1 || Math.random() < 0.45;
       let val = question.answer;
       if (!isCorrect) {
-        const offsets = [-question.a, question.a, 2, -2, 4, -3];
+        const offsets = isDivide
+          ? [-2, -1, 1, 2, 3, -3]
+          : [-question.a, question.a, 2, -2, 4, -3];
         const off = offsets[Math.floor(Math.random() * offsets.length)];
-        val = Math.max(2, question.answer + off);
-        if (val === question.answer) val += 2;
+        val = Math.max(1, question.answer + off);
+        if (val === question.answer) val += 1;
       }
 
       const spawnX = 110 + Math.random() * (W - 220);
@@ -350,7 +376,7 @@ export function PlinkoCatchMultiplyLesson({
         ctx.font = "900 19px system-ui, sans-serif";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.fillText(`🦉 ${question.a} × ${question.b}`, 0, 2);
+        ctx.fillText(`🦉 ${question.a} ${opSymbol} ${question.b}`, 0, 2);
         ctx.restore();
 
         for (let i = burstsRef.current.length - 1; i >= 0; i--) {
@@ -382,7 +408,7 @@ export function PlinkoCatchMultiplyLesson({
       Matter.World.clear(engine.world, false);
       Matter.Engine.clear(engine);
     };
-  }, [question]);
+  }, [question, isDivide, opSymbol]);
 
   const moveBasketToPointer = (clientX: number) => {
     const canvas = canvasRef.current;
@@ -405,7 +431,11 @@ export function PlinkoCatchMultiplyLesson({
               speakText={`${question.a}`}
               className="!w-12 !h-12 sm:!w-16 sm:!h-16 !rounded-xl [&_span]:!text-2xl sm:[&_span]:!text-3xl"
             />
-            <OperatorSign symbol="×" speakText="dấu nhân" className="!text-3xl sm:!text-4xl" />
+            <OperatorSign
+              symbol={opSymbol}
+              speakText={`dấu ${opWord}`}
+              className="!text-3xl sm:!text-4xl"
+            />
             <NumberBox
               value={question.b}
               gradient="blue"
@@ -420,7 +450,7 @@ export function PlinkoCatchMultiplyLesson({
             />
             <div className="ml-1">
               <SpeakerButton
-                onSpeak={() => speak(`${question.a} nhân ${question.b} bằng mấy?`)}
+                onSpeak={() => speak(`${question.a} ${opWord} ${question.b} bằng mấy?`)}
               />
             </div>
           </div>

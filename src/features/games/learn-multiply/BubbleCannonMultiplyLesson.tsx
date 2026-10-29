@@ -17,6 +17,25 @@ interface BubbleCannonMultiplyLessonProps {
   multiplier: number | "mixed";
   maxProduct: number;
   onComplete: () => void;
+  operation?: "multiply" | "divide";
+}
+
+function generateMathCannonQuestion(
+  operation: "multiply" | "divide",
+  multiplier: number | "mixed",
+  maxProduct: number,
+  prevQuestion?: string,
+): { a: number; b: number; answer: number; questionKey: string } {
+  const q = generateMultiplyQuestion(multiplier, maxProduct, prevQuestion);
+  if (operation === "divide") {
+    return {
+      a: q.answer,
+      b: q.a,
+      answer: q.b,
+      questionKey: `div-${q.questionKey}`,
+    };
+  }
+  return q;
 }
 
 interface BubbleItem {
@@ -94,8 +113,32 @@ function generateBubbleNumbers(
   correctAnswer: number,
   multiplier: number | "mixed",
   maxProduct: number,
+  operation: "multiply" | "divide",
 ): number[] {
   const nums = new Set<number>([correctAnswer]);
+
+  if (operation === "divide") {
+    const candidates = [
+      correctAnswer + 1,
+      correctAnswer - 1,
+      correctAnswer + 2,
+      correctAnswer - 2,
+      correctAnswer + 3,
+      correctAnswer + 4,
+    ];
+    for (const c of candidates) {
+      if (nums.size >= 6) break;
+      if (c >= 1 && c <= 12 && c !== correctAnswer) {
+        nums.add(c);
+      }
+    }
+    while (nums.size < 6) {
+      const r = Math.floor(Math.random() * 10) + 1;
+      if (r !== correctAnswer) nums.add(r);
+    }
+    return Array.from(nums).sort(() => Math.random() - 0.5);
+  }
+
   const mult = multiplier === "mixed" ? 5 : multiplier;
 
   const candidates = [
@@ -123,6 +166,7 @@ export function BubbleCannonMultiplyLesson({
   multiplier,
   maxProduct,
   onComplete,
+  operation = "multiply",
 }: BubbleCannonMultiplyLessonProps) {
   const { speak } = useTextToSpeech();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -134,8 +178,12 @@ export function BubbleCannonMultiplyLesson({
   const prevQuestionRef = useRef<string>("");
   const roundResolvedRef = useRef<boolean>(false);
 
+  const isDivide = operation === "divide";
+  const opSymbol = isDivide ? "÷" : "×";
+  const opWord = isDivide ? "chia" : "nhân";
+
   const [question, setQuestion] = useState(() =>
-    generateMultiplyQuestion(multiplier, maxProduct),
+    generateMathCannonQuestion(operation, multiplier, maxProduct),
   );
 
   const spawnBubblesForQuestion = useCallback(
@@ -151,7 +199,7 @@ export function BubbleCannonMultiplyLesson({
         bulletRef.current = null;
       }
 
-      const values = generateBubbleNumbers(q.answer, multiplier, maxProduct);
+      const values = generateBubbleNumbers(q.answer, multiplier, maxProduct, operation);
       const newBubbles: BubbleItem[] = values.map((val, idx) => {
         const col = idx % 3;
         const row = Math.floor(idx / 3);
@@ -188,21 +236,21 @@ export function BubbleCannonMultiplyLesson({
         newBubbles.map((b) => b.body),
       );
     },
-    [multiplier, maxProduct],
+    [multiplier, maxProduct, operation],
   );
 
   const newQuestion = useCallback(() => {
-    const q = generateMultiplyQuestion(multiplier, maxProduct, prevQuestionRef.current);
+    const q = generateMathCannonQuestion(operation, multiplier, maxProduct, prevQuestionRef.current);
     prevQuestionRef.current = q.questionKey;
     roundResolvedRef.current = false;
     setQuestion(q);
     spawnBubblesForQuestion(q);
     quiz.resetFeedback();
     setTimeout(() => {
-      speak(`${q.a} nhân ${q.b} bằng mấy?`);
+      speak(`${q.a} ${opWord} ${q.b} bằng mấy?`);
     }, 500);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [multiplier, maxProduct, spawnBubblesForQuestion, speak]);
+  }, [operation, multiplier, maxProduct, spawnBubblesForQuestion, speak, opWord]);
 
   const quiz = useQuizLogic({
     correctAnswer: question.answer,
@@ -218,7 +266,7 @@ export function BubbleCannonMultiplyLesson({
   useEffect(() => {
     prevQuestionRef.current = question.questionKey;
     const t = setTimeout(() => {
-      speak(`${question.a} nhân ${question.b} bằng mấy?`);
+      speak(`${question.a} ${opWord} ${question.b} bằng mấy?`);
     }, 500);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -528,7 +576,11 @@ export function BubbleCannonMultiplyLesson({
               speakText={`${question.a}`}
               className="!w-12 !h-12 sm:!w-16 sm:!h-16 !rounded-xl [&_span]:!text-2xl sm:[&_span]:!text-3xl"
             />
-            <OperatorSign symbol="×" speakText="dấu nhân" className="!text-3xl sm:!text-4xl" />
+            <OperatorSign
+              symbol={opSymbol}
+              speakText={`dấu ${opWord}`}
+              className="!text-3xl sm:!text-4xl"
+            />
             <NumberBox
               value={question.b}
               gradient="blue"
@@ -543,7 +595,7 @@ export function BubbleCannonMultiplyLesson({
             />
             <div className="ml-1">
               <SpeakerButton
-                onSpeak={() => speak(`${question.a} nhân ${question.b} bằng mấy?`)}
+                onSpeak={() => speak(`${question.a} ${opWord} ${question.b} bằng mấy?`)}
               />
             </div>
           </div>

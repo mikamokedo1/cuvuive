@@ -4,10 +4,10 @@ import { useGameLesson } from "@/hooks/useGameLesson";
 import { GameWrapGame } from "@/components/layout/GameWrapGame";
 
 import { ExplainDivideLesson } from "@/features/games/learn-divide/ExplainDivideLesson";
-import { VisualDivideLesson } from "@/features/games/learn-divide/VisualDivideLesson";
-import { NumberDivideLesson } from "@/features/games/learn-divide/NumberDivideLesson";
 import { FillBlankDivideLesson } from "@/features/games/learn-divide/FillBlankDivideLesson";
-import { ReverseMultiplyLesson } from "@/features/games/learn-divide/ReverseMultiplyLesson";
+import { BalanceScaleMultiplyLesson } from "@/features/games/learn-multiply/BalanceScaleMultiplyLesson";
+import { BubbleCannonMultiplyLesson } from "@/features/games/learn-multiply/BubbleCannonMultiplyLesson";
+import { PlinkoCatchMultiplyLesson } from "@/features/games/learn-multiply/PlinkoCatchMultiplyLesson";
 import { GROUP_CONFIG } from "@/features/games/learn-divide/constants";
 
 const GROUPS = [
@@ -15,7 +15,11 @@ const GROUPS = [
   { id: "group2", title: "Bảng chia 3" },
   { id: "group3", title: "Bảng chia 4" },
   { id: "group4", title: "Bảng chia 5" },
-  { id: "group5", title: "Luyện tập" },
+  { id: "group5", title: "Bảng chia 6" },
+  { id: "group6", title: "Bảng chia 7" },
+  { id: "group7", title: "Bảng chia 8" },
+  { id: "group8", title: "Bảng chia 9" },
+  { id: "group9", title: "Đấu trường 2-9" },
 ];
 
 interface LessonPageClientProps {
@@ -29,7 +33,10 @@ export function LessonPageClient({ groupId, lessonId }: LessonPageClientProps) {
   const maxLessons = config?.lessons?.length ?? 5;
   const LESSON_ORDER = Array.from({ length: maxLessons }, (_, i) => `lesson${i + 1}`);
 
-  const game = useGameLesson({ gameSlug: "learn-divide", lessonOrder: LESSON_ORDER, groups: GROUPS ,
+  const game = useGameLesson({
+    gameSlug: "learn-divide",
+    lessonOrder: LESSON_ORDER,
+    groups: GROUPS,
     initialGroupId: groupId,
     initialLessonId: lessonId,
   });
@@ -43,27 +50,51 @@ export function LessonPageClient({ groupId, lessonId }: LessonPageClientProps) {
 
   let LessonContent = null;
 
-  if (game.groupId === "group5") {
-    // Practice group: mixed divisor, no explain lesson
+  if (config.divisor === "mixed") {
+    // Mixed arena group (group9): 3 physics games + fill blank
     switch (game.lessonId) {
       case "lesson1":
         LessonContent = (
-          <VisualDivideLesson divisor="mixed" maxDividend={config.maxDividend} onComplete={game.handleComplete} />
+          <BalanceScaleMultiplyLesson
+            multiplier="mixed"
+            maxProduct={config.maxDividend}
+            onComplete={game.handleComplete}
+            operation="divide"
+          />
         );
         break;
       case "lesson2":
         LessonContent = (
-          <NumberDivideLesson divisor="mixed" maxDividend={config.maxDividend} onComplete={game.handleComplete} />
+          <BubbleCannonMultiplyLesson
+            multiplier="mixed"
+            maxProduct={config.maxDividend}
+            onComplete={game.handleComplete}
+            operation="divide"
+          />
         );
         break;
       case "lesson3":
         LessonContent = (
-          <FillBlankDivideLesson divisor="mixed" maxDividend={config.maxDividend} onComplete={game.handleComplete} />
+          <PlinkoCatchMultiplyLesson
+            multiplier="mixed"
+            maxProduct={config.maxDividend}
+            onComplete={game.handleComplete}
+            operation="divide"
+          />
+        );
+        break;
+      case "lesson4":
+        LessonContent = (
+          <FillBlankDivideLesson
+            divisor="mixed"
+            maxDividend={config.maxDividend}
+            onComplete={game.handleComplete}
+          />
         );
         break;
     }
   } else {
-    // Standard groups
+    // Standard division tables (2..9)
     switch (game.lessonId) {
       case "lesson1":
         LessonContent = (
@@ -72,22 +103,41 @@ export function LessonPageClient({ groupId, lessonId }: LessonPageClientProps) {
         break;
       case "lesson2":
         LessonContent = (
-          <VisualDivideLesson divisor={config.divisor} maxDividend={config.maxDividend} onComplete={game.handleComplete} />
+          <BalanceScaleMultiplyLesson
+            multiplier={config.divisor}
+            maxProduct={config.maxDividend}
+            onComplete={game.handleComplete}
+            operation="divide"
+          />
         );
         break;
       case "lesson3":
         LessonContent = (
-          <NumberDivideLesson divisor={config.divisor} maxDividend={config.maxDividend} onComplete={game.handleComplete} />
+          <BubbleCannonMultiplyLesson
+            multiplier={config.divisor}
+            maxProduct={config.maxDividend}
+            onComplete={game.handleComplete}
+            operation="divide"
+          />
         );
         break;
       case "lesson4":
         LessonContent = (
-          <FillBlankDivideLesson divisor={config.divisor} maxDividend={config.maxDividend} onComplete={game.handleComplete} />
+          <PlinkoCatchMultiplyLesson
+            multiplier={config.divisor}
+            maxProduct={config.maxDividend}
+            onComplete={game.handleComplete}
+            operation="divide"
+          />
         );
         break;
       case "lesson5":
         LessonContent = (
-          <ReverseMultiplyLesson divisor={config.divisor} maxDividend={config.maxDividend} onComplete={game.handleComplete} />
+          <FillBlankDivideLesson
+            divisor={config.divisor}
+            maxDividend={config.maxDividend}
+            onComplete={game.handleComplete}
+          />
         );
         break;
     }

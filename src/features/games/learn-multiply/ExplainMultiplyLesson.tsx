@@ -15,6 +15,7 @@ import { useSwipe } from "@/hooks/useSwipe";
 interface ExplainMultiplyLessonProps {
   multiplier: number;
   onComplete: () => void;
+  operation?: "multiply" | "divide";
 }
 
 const ROW_COLORS = [
@@ -29,27 +30,49 @@ const ROW_COLORS = [
   "bg-rose-500 border-rose-600",
 ];
 
-export function ExplainMultiplyLesson({ multiplier, onComplete }: ExplainMultiplyLessonProps) {
+export function ExplainMultiplyLesson({
+  multiplier,
+  onComplete,
+  operation = "multiply",
+}: ExplainMultiplyLessonProps) {
   const { speak } = useTextToSpeech();
   const [selectedFactor, setSelectedFactor] = useState<number>(3);
   const [visitedFactors, setVisitedFactors] = useState<number[]>([3]);
   const hasCompletedRef = useRef(false);
 
-  const answer = multiplier * selectedFactor;
+  const isDivide = operation === "divide";
+  const product = multiplier * selectedFactor;
+  const firstNum = isDivide ? product : multiplier;
+  const secondNum = isDivide ? multiplier : selectedFactor;
+  const answer = isDivide ? selectedFactor : product;
+  const opSymbol = isDivide ? "÷" : "×";
+  const opWord = isDivide ? "chia" : "nhân";
 
   const selectFactor = (n: number) => {
     setSelectedFactor(n);
     setVisitedFactors((prev) => (prev.includes(n) ? prev : [...prev, n]));
-    speak(`${multiplier} nhân ${n} bằng ${multiplier * n}`);
+    if (isDivide) {
+      speak(`${multiplier * n} chia ${multiplier} bằng ${n}`);
+    } else {
+      speak(`${multiplier} nhân ${n} bằng ${multiplier * n}`);
+    }
   };
 
   useEffect(() => {
     const t = setTimeout(() => {
-      speak(`Bảng nhân ${multiplier}. ${multiplier} nhân ${selectedFactor} bằng ${multiplier * selectedFactor}`);
+      if (isDivide) {
+        speak(
+          `Bảng chia ${multiplier}. ${multiplier * selectedFactor} chia ${multiplier} bằng ${selectedFactor}`,
+        );
+      } else {
+        speak(
+          `Bảng nhân ${multiplier}. ${multiplier} nhân ${selectedFactor} bằng ${multiplier * selectedFactor}`,
+        );
+      }
     }, 300);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [multiplier]);
+  }, [multiplier, isDivide]);
 
   const handleNext = () => {
     if (selectedFactor < 10) {
@@ -75,12 +98,14 @@ export function ExplainMultiplyLesson({ multiplier, onComplete }: ExplainMultipl
     >
       <FeedbackCard feedback={null} className="!p-3 sm:!p-6">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-3 sm:gap-5 items-center">
-          {/* LEFT COLUMN (5 cols): Interactive 1..10 Multiplication Table Selector */}
+          {/* LEFT COLUMN (5 cols): Interactive 1..10 Table Selector */}
           <div className="md:col-span-5 flex flex-col gap-2">
             <div className="grid grid-cols-2 gap-1.5 sm:gap-2">
               {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => {
                 const isSelected = n === selectedFactor;
                 const isVisited = visitedFactors.includes(n);
+                const leftExpr = isDivide ? `${multiplier * n} ÷ ${multiplier}` : `${multiplier} × ${n}`;
+                const rightRes = isDivide ? n : multiplier * n;
                 return (
                   <button
                     key={n}
@@ -93,11 +118,9 @@ export function ExplainMultiplyLesson({ multiplier, onComplete }: ExplainMultipl
                           : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-purple-50 hover:border-purple-200"
                     }`}
                   >
-                    <span>
-                      {multiplier} × {n}
-                    </span>
+                    <span>{leftExpr}</span>
                     <span className={isSelected ? "text-amber-300" : "text-emerald-600"}>
-                      = {multiplier * n}
+                      = {rightRes}
                     </span>
                   </button>
                 );
@@ -105,21 +128,25 @@ export function ExplainMultiplyLesson({ multiplier, onComplete }: ExplainMultipl
             </div>
           </div>
 
-          {/* RIGHT COLUMN (7 cols): Shared Math Components + Pop-It Multiplication Matrix */}
+          {/* RIGHT COLUMN (7 cols): Shared Math Components + Pop-It Matrix */}
           <div className="md:col-span-7 flex flex-col gap-2 sm:gap-3 bg-slate-50 rounded-2xl sm:rounded-3xl p-2.5 sm:p-4 border-2 border-slate-200">
             {/* Shared NumberBox + OperatorSign + SpeakerButton Equation Row */}
             <div className="flex items-center justify-center gap-1.5 sm:gap-2.5">
               <NumberBox
-                value={multiplier}
+                value={firstNum}
                 gradient="purple"
-                speakText={`${multiplier}`}
-                className="!w-11 !h-11 sm:!w-14 sm:!h-14 !rounded-xl [&_span]:!text-xl sm:[&_span]:!text-3xl"
+                speakText={`${firstNum}`}
+                className="!w-12 !h-11 sm:!w-16 sm:!h-14 !rounded-xl [&_span]:!text-xl sm:[&_span]:!text-3xl"
               />
-              <OperatorSign symbol="×" speakText="dấu nhân" className="!text-2xl sm:!text-4xl" />
+              <OperatorSign
+                symbol={opSymbol}
+                speakText={`dấu ${opWord}`}
+                className="!text-2xl sm:!text-4xl"
+              />
               <NumberBox
-                value={selectedFactor}
+                value={secondNum}
                 gradient="blue"
-                speakText={`${selectedFactor}`}
+                speakText={`${secondNum}`}
                 className="!w-11 !h-11 sm:!w-14 sm:!h-14 !rounded-xl [&_span]:!text-xl sm:[&_span]:!text-3xl"
               />
               <OperatorSign symbol="=" speakText="dấu bằng" className="!text-2xl sm:!text-4xl" />
@@ -131,7 +158,7 @@ export function ExplainMultiplyLesson({ multiplier, onComplete }: ExplainMultipl
               />
               <div className="ml-1">
                 <SpeakerButton
-                  onSpeak={() => speak(`${multiplier} nhân ${selectedFactor} bằng ${answer}`)}
+                  onSpeak={() => speak(`${firstNum} ${opWord} ${secondNum} bằng ${answer}`)}
                 />
               </div>
             </div>
@@ -139,7 +166,7 @@ export function ExplainMultiplyLesson({ multiplier, onComplete }: ExplainMultipl
             {/* Column Numbers Header (1..10) */}
             <div className="grid grid-cols-12 gap-1 items-center px-0.5 sm:px-1">
               <div className="col-span-1 text-[11px] sm:text-xs font-black text-slate-400 text-center">
-                ×
+                {opSymbol}
               </div>
               <div className="col-span-10 grid grid-cols-10 gap-1">
                 {Array.from({ length: 10 }, (_, c) => c + 1).map((colNum) => (
@@ -173,7 +200,7 @@ export function ExplainMultiplyLesson({ multiplier, onComplete }: ExplainMultipl
                     className="grid grid-cols-12 gap-1 items-center px-0.5 sm:px-1"
                   >
                     <div className="col-span-1 text-[11px] sm:text-xs font-extrabold text-slate-500 text-center">
-                      ×{rowNum}
+                      {isDivide ? `#${rowNum}` : `×${rowNum}`}
                     </div>
 
                     <div className="col-span-10 grid grid-cols-10 gap-1">
@@ -188,7 +215,6 @@ export function ExplainMultiplyLesson({ multiplier, onComplete }: ExplainMultipl
                                 ? `${rowColor} text-white scale-100 shadow-xs`
                                 : "bg-slate-200/70 border-slate-300/60 text-transparent hover:bg-slate-300"
                             }`}
-                            title={`${rowNum} × ${colNum} = ${rowNum * colNum}`}
                           >
                             <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-white/60" />
                           </button>
@@ -197,10 +223,10 @@ export function ExplainMultiplyLesson({ multiplier, onComplete }: ExplainMultipl
                     </div>
 
                     <div
-                      onClick={() => speak(`${rowSum}`)}
+                      onClick={() => speak(`${isDivide ? selectedFactor : rowSum}`)}
                       className="col-span-1 bg-emerald-100 text-emerald-800 font-black text-[11px] sm:text-xs rounded-md sm:rounded-lg py-0.5 sm:py-1 text-center cursor-pointer hover:bg-emerald-200 transition-colors"
                     >
-                      {rowSum}
+                      {isDivide ? selectedFactor : rowSum}
                     </div>
                   </div>
                 );
