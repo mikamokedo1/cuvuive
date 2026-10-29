@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
+import { Volume2 } from "lucide-react";
 import { TrueFalseStatement } from "./constants";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
@@ -47,7 +48,6 @@ export function DangerTrueFalseLesson({ statements, onComplete }: DangerTrueFals
       playButtonSound();
 
       const isCorrect = answer === current.isTrue;
-      console.log(isCorrect);
       if (isCorrect) {
         setFeedback("correct");
         setScore((prev) => prev + 1);
@@ -62,14 +62,15 @@ export function DangerTrueFalseLesson({ statements, onComplete }: DangerTrueFals
           } else {
             onComplete();
           }
-        }, 5000);
+        }, 2500);
       } else {
         setFeedback("wrong");
         playWrongSound();
+        speak("Sai rồi, thử lại nhé!");
         setTimeout(() => {
           setFeedback(null);
           setSelectedAnswer(null);
-        }, 3000);
+        }, 1500);
       }
     },
     [feedback, current, currentIndex, totalQuestions, speak, onComplete],
@@ -97,7 +98,7 @@ export function DangerTrueFalseLesson({ statements, onComplete }: DangerTrueFals
 
       {/* Statement card with image */}
       <div
-        className={`w-full max-w-md rounded-3xl p-6 md:p-8 shadow-xl border-4 cursor-pointer transition-all duration-500 ${
+        className={`relative w-full max-w-md rounded-3xl p-6 md:p-8 shadow-xl border-4 cursor-pointer transition-all duration-500 ${
           feedback === "correct"
             ? "bg-green-50 border-green-400"
             : feedback === "wrong"
@@ -106,6 +107,9 @@ export function DangerTrueFalseLesson({ statements, onComplete }: DangerTrueFals
         }`}
         onClick={() => !feedback && speak(current.statement)}
       >
+        <div className="absolute top-3 right-3 w-10 h-10 rounded-full bg-orange-500 text-white flex items-center justify-center shadow-md">
+          <Volume2 className="w-5 h-5" />
+        </div>
         <div className="flex flex-col items-center gap-4 text-center">
           {/* Illustration image */}
           <div className="relative w-36 h-36 md:w-44 md:h-44 rounded-2xl overflow-hidden">

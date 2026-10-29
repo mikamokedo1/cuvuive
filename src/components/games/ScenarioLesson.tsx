@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
+import { Volume2 } from "lucide-react";
 import { ScenarioQuestion } from "@/types/game";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
@@ -61,7 +62,7 @@ export function ScenarioLesson({ scenarios, onComplete, altText = "scenario" }: 
           } else {
             onComplete();
           }
-        }, 5000);
+        }, 2500);
       } else {
         speak(text);
 
@@ -83,10 +84,13 @@ export function ScenarioLesson({ scenarios, onComplete, altText = "scenario" }: 
     <div className="flex flex-col items-center gap-6 md:gap-8 w-full max-w-4xl px-4">
       {/* Situation card */}
       <div
-        className="w-full bg-blue-50 border-4 border-blue-200 rounded-2xl p-6 md:p-8 shadow-lg cursor-pointer hover:bg-blue-100 transition-colors flex flex-col items-center"
+        className="relative w-full bg-blue-50 border-4 border-blue-200 rounded-2xl p-6 md:p-8 shadow-lg cursor-pointer hover:bg-blue-100 transition-colors flex flex-col items-center"
         onClick={() => speak(currentScenario.situationText)}
       >
-        <div className="relative w-40 h-40 md:w-56 md:h-56 mb-4">
+        <div className="absolute top-3 right-3 w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center shadow-md">
+          <Volume2 className="w-5 h-5" />
+        </div>
+        <div className="relative w-40 h-40 md:w-56 md:h-56 mb-2">
           <Image
             src={currentScenario.image}
             alt={altText}
@@ -98,7 +102,7 @@ export function ScenarioLesson({ scenarios, onComplete, altText = "scenario" }: 
       </div>
 
       {/* Options */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 w-full max-w-2xl mt-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 w-full max-w-2xl mt-2">
         {currentScenario.options.map((option) => {
           const isSelected = selectedOption === option.id;
           const isCorrectAnswer = option.id === currentScenario.correctOptionId;
@@ -118,19 +122,33 @@ export function ScenarioLesson({ scenarios, onComplete, altText = "scenario" }: 
           }
 
           return (
-            <button
+            <div
               key={option.id}
-              onClick={() => handleSelectOption(option.id, option.text)}
-              disabled={feedback !== null}
+              onClick={() => {
+                if (feedback === null) handleSelectOption(option.id, option.text);
+              }}
+              role="button"
+              tabIndex={0}
               className={`
                 relative flex flex-col items-center justify-center p-4 md:p-6
-                rounded-3xl border-4 shadow-md transition-all duration-300
+                rounded-3xl border-4 shadow-md transition-all duration-300 cursor-pointer
                 ${cardStyle}
               `}
             >
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  speak(option.text);
+                }}
+                aria-label={`Nghe: ${option.text}`}
+                className="absolute top-2.5 right-2.5 w-9 h-9 rounded-full bg-blue-100 hover:bg-blue-200 active:scale-90 text-blue-600 flex items-center justify-center shadow-sm transition-transform z-10 cursor-pointer"
+              >
+                <Volume2 className="w-4 h-4" />
+              </button>
               <span className="text-4xl md:text-5xl mb-2">{option.emoji}</span>
               <span
-                className={`font-bold text-sm md:text-base ${
+                className={`font-bold text-sm md:text-base text-center ${
                   feedback === "correct" && isCorrectAnswer
                     ? "text-green-700"
                     : feedback === "wrong" && isSelected
@@ -140,7 +158,7 @@ export function ScenarioLesson({ scenarios, onComplete, altText = "scenario" }: 
               >
                 {option.text}
               </span>
-            </button>
+            </div>
           );
         })}
       </div>

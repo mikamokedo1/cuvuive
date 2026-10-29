@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
+import { Volume2 } from "lucide-react";
 import { ScenarioMatchActivity, EMOTION_ITEMS } from "./constants";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
@@ -81,10 +82,13 @@ export function EmotionScenarioLesson({ activities, onComplete }: EmotionScenari
     <div className="flex flex-col items-center gap-6 md:gap-8 w-full max-w-4xl px-4">
       {/* Situation Text Banner */}
       <div
-        className="w-full bg-blue-50 border-4 border-blue-200 rounded-2xl p-6 md:p-8 shadow-lg cursor-pointer hover:bg-blue-100 transition-colors flex flex-col items-center"
+        className="relative w-full bg-blue-50 border-4 border-blue-200 rounded-2xl p-6 md:p-8 shadow-lg cursor-pointer hover:bg-blue-100 transition-colors flex flex-col items-center"
         onClick={() => speak(currentActivity.situationText)}
       >
-        <div className="relative w-40 h-40 md:w-56 md:h-56 mb-4">
+        <div className="absolute top-3 right-3 w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center shadow-md">
+          <Volume2 className="w-5 h-5" />
+        </div>
+        <div className="relative w-40 h-40 md:w-56 md:h-56 mb-2">
           <Image
             src={currentActivity.image}
             alt="scenario image"
@@ -96,7 +100,7 @@ export function EmotionScenarioLesson({ activities, onComplete }: EmotionScenari
       </div>
 
       {/* Emotion Options Grid */}
-      <div className="grid grid-cols-2 gap-4 md:gap-8 w-full max-w-2xl mt-4">
+      <div className="grid grid-cols-2 gap-4 md:gap-8 w-full max-w-2xl mt-2">
         {currentActivity.options.map((optionId) => {
           const emotion = EMOTION_ITEMS.find((e) => e.id === optionId);
           if (!emotion) return null;
@@ -119,16 +123,30 @@ export function EmotionScenarioLesson({ activities, onComplete }: EmotionScenari
           }
 
           return (
-            <button
+            <div
               key={optionId}
-              onClick={() => handleSelectOption(optionId, emotion.name)}
-              disabled={feedback !== null}
+              onClick={() => {
+                if (feedback === null) handleSelectOption(optionId, emotion.name);
+              }}
+              role="button"
+              tabIndex={0}
               className={`
                 relative flex flex-col items-center justify-center p-4 md:p-6
-                rounded-3xl border-4 shadow-md transition-all duration-300
+                rounded-3xl border-4 shadow-md transition-all duration-300 cursor-pointer
                 ${cardStyle}
               `}
             >
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  speak(emotion.name);
+                }}
+                aria-label={`Nghe: ${emotion.name}`}
+                className="absolute top-2.5 right-2.5 w-9 h-9 rounded-full bg-blue-100 hover:bg-blue-200 active:scale-90 text-blue-600 flex items-center justify-center shadow-sm z-10 cursor-pointer"
+              >
+                <Volume2 className="w-4 h-4" />
+              </button>
               <div className="relative w-24 h-24 md:w-32 md:h-32">
                 <Image src={emotion.image} alt={emotion.name} fill className="object-contain drop-shadow-sm" />
               </div>
@@ -144,7 +162,7 @@ export function EmotionScenarioLesson({ activities, onComplete }: EmotionScenari
               >
                 {emotion.name}
               </span>
-            </button>
+            </div>
           );
         })}
       </div>

@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { EntityData, FeedbackType } from "@/types/game";
 import { BodyAction, BODY_ITEMS } from "./constants";
 import Image from "next/image";
+import { Volume2 } from "lucide-react";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { playWrongSound } from "@/libs/utils/playSound";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
@@ -115,12 +116,26 @@ export function BodyActionLesson({ actions, onComplete, requiredWins = 6 }: Body
           }
 
           return (
-            <button
+            <div
               key={bodyId}
-              onClick={() => handleOptionClick(bodyId)}
-              disabled={feedback !== null}
+              onClick={() => {
+                if (feedback === null) handleOptionClick(bodyId);
+              }}
+              role="button"
+              tabIndex={0}
               className={`relative flex flex-col items-center gap-2 p-3 md:p-4 rounded-3xl bg-white shadow-xl border-4 cursor-pointer transition-all duration-300 ${cardClass}`}
             >
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  speak(bodyPart.name);
+                }}
+                aria-label={`Nghe: ${bodyPart.name}`}
+                className="absolute top-2 right-2 w-8 h-8 rounded-full bg-purple-100 hover:bg-purple-200 active:scale-90 text-purple-600 flex items-center justify-center shadow-sm z-10 cursor-pointer"
+              >
+                <Volume2 className="w-4 h-4" />
+              </button>
               <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28">
                 <Image
                   src={bodyPart.image}
@@ -135,7 +150,7 @@ export function BodyActionLesson({ actions, onComplete, requiredWins = 6 }: Body
               {feedback === "correct" && isCorrect && (
                 <div className="absolute -top-3 -right-3 text-2xl animate-bounce">⭐</div>
               )}
-            </button>
+            </div>
           );
         })}
       </div>

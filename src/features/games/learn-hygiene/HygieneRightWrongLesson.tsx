@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
+import { Volume2 } from "lucide-react";
 import { RightWrongScenario } from "./constants";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
@@ -79,17 +80,21 @@ export function HygieneRightWrongLesson({ scenarios, onComplete }: HygieneRightW
     <div className="flex flex-col items-center gap-8 w-full max-w-2xl px-4">
       {/* Scenario Card */}
       <div
+        onClick={() => speak(currentScenario.text)}
         className={`
-          w-full rounded-3xl p-8 shadow-xl border-4 transition-all duration-300
+          relative w-full rounded-3xl p-8 shadow-xl border-4 transition-all duration-300 cursor-pointer
           ${
             feedback === "correct"
               ? "bg-green-50 border-green-400 scale-105"
               : feedback === "wrong"
                 ? "bg-red-50 border-red-400 animate-shake"
-                : "bg-white border-purple-200"
+                : "bg-white border-purple-200 hover:border-purple-400"
           }
         `}
       >
+        <div className="absolute top-3 right-3 w-10 h-10 rounded-full bg-purple-500 text-white flex items-center justify-center shadow-md">
+          <Volume2 className="w-5 h-5" />
+        </div>
         <div className="text-center flex flex-col items-center">
           {/* Scenario Image */}
           <div className="relative w-48 h-48 md:w-56 md:h-56 mb-6" onClick={() => speak(currentScenario.text)}>

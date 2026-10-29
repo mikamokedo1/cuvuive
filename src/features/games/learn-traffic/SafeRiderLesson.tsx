@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
+import { Volume2 } from "lucide-react";
 import { SafeRideActivity, SafeAction } from "./constants";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
@@ -101,9 +102,12 @@ export function SafeRiderLesson({ activities, onComplete }: SafeRiderLessonProps
     <div className="flex flex-col items-center gap-6 w-full max-w-4xl px-4">
       {/* Situation image + text */}
       <div
-        className="w-full bg-blue-50 border-4 border-blue-200 rounded-2xl p-6 shadow-lg cursor-pointer hover:bg-blue-100 transition-colors flex flex-col items-center"
+        className="relative w-full bg-blue-50 border-4 border-blue-200 rounded-2xl p-6 shadow-lg cursor-pointer hover:bg-blue-100 transition-colors flex flex-col items-center"
         onClick={() => speak(currentActivity.situationText)}
       >
+        <div className="absolute top-3 right-3 w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center shadow-md">
+          <Volume2 className="w-5 h-5" />
+        </div>
         <div className="relative w-40 h-40 md:w-48 md:h-48 mb-4 rounded-xl overflow-hidden">
           <Image
             src={currentActivity.image}
@@ -136,16 +140,30 @@ export function SafeRiderLesson({ activities, onComplete }: SafeRiderLessonProps
           }
 
           return (
-            <button
+            <div
               key={action.id}
-              onClick={() => handleActionClick(action)}
-              disabled={isCorrect || showResult}
-              className={`flex flex-col items-center gap-1 p-3 md:p-4 rounded-2xl border-3 shadow-md transition-all duration-300 active:scale-95 ${cardClass}`}
+              onClick={() => {
+                if (!isCorrect && !showResult) handleActionClick(action);
+              }}
+              role="button"
+              tabIndex={0}
+              className={`relative flex flex-col items-center gap-1 p-3 md:p-4 rounded-2xl border-3 shadow-md transition-all duration-300 active:scale-95 ${cardClass}`}
             >
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  speak(action.text);
+                }}
+                aria-label={`Nghe: ${action.text}`}
+                className="absolute top-2 right-2 w-8 h-8 rounded-full bg-blue-100 hover:bg-blue-200 active:scale-90 text-blue-600 flex items-center justify-center shadow-sm z-10 cursor-pointer"
+              >
+                <Volume2 className="w-4 h-4" />
+              </button>
               <span className="text-3xl md:text-4xl">{action.emoji}</span>
-              <span className="font-bold text-xs md:text-sm text-gray-700">{action.text}</span>
+              <span className="font-bold text-xs md:text-sm text-gray-700 text-center">{action.text}</span>
               {isCorrect && <span className="text-green-500 text-sm">✓</span>}
-            </button>
+            </div>
           );
         })}
       </div>

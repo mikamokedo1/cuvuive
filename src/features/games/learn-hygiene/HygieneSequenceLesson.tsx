@@ -6,6 +6,7 @@ import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { playButtonSound } from "@/libs/utils/playSound";
 import Image from "next/image";
+import { Volume2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface HygieneSequenceLessonProps {
@@ -91,6 +92,45 @@ export function HygieneSequenceLesson({ activities, onComplete }: HygieneSequenc
     }
   };
 
+  const placeStepInSlot = (stepIndex: number, slotIndex: number) => {
+    if (stepIndex === slotIndex) {
+      playButtonSound();
+      speak(currentActivity.steps[stepIndex]);
+
+      const newPlaced = [...placedSteps];
+      newPlaced[slotIndex] = stepIndex;
+      setPlacedSteps(newPlaced);
+
+      if (newPlaced.every((step) => step !== null)) {
+        setShowSuccess(true);
+        playWinEffect(500);
+        speak("Giỏi lắm! Đúng thứ tự rồi!");
+
+        setTimeout(() => {
+          if (currentActivityIndex < activities.length - 1) {
+            setCurrentActivityIndex(currentActivityIndex + 1);
+          } else {
+            onComplete();
+          }
+        }, 2500);
+      }
+    } else {
+      setWrongSlot(slotIndex);
+      speak("Chưa đúng vị trí rồi, thử lại nhé!");
+
+      setTimeout(() => {
+        setWrongSlot(null);
+      }, 1000);
+    }
+  };
+
+  const handleTapStep = (stepIndex: number) => {
+    if (showSuccess) return;
+    const nextSlotIndex = placedSteps.findIndex((s) => s === null);
+    if (nextSlotIndex === -1) return;
+    placeStepInSlot(stepIndex, nextSlotIndex);
+  };
+
   const handleDragEnd = (info: { point: { x: number; y: number } }, stepIndex: number) => {
     let slotIndex: number | null = null;
     for (const { index, rect } of cachedSlotRects.current) {
@@ -110,46 +150,25 @@ export function HygieneSequenceLesson({ activities, onComplete }: HygieneSequenc
     cachedSlotRects.current = [];
 
     if (slotIndex === null) return;
-
-    // The logic: children must place step 0 into slot 0, step 1 into slot 1, etc.
-    if (stepIndex === slotIndex) {
-      // Correct placement
-      playButtonSound();
-      speak(currentActivity.steps[stepIndex]);
-
-      const newPlaced = [...placedSteps];
-      newPlaced[slotIndex] = stepIndex;
-      setPlacedSteps(newPlaced);
-
-      // Check if all steps are complete
-      if (newPlaced.every((step) => step !== null)) {
-        setShowSuccess(true);
-        playWinEffect(500);
-        speak("Giỏi lắm! Đúng thứ tự rồi!");
-
-        setTimeout(() => {
-          if (currentActivityIndex < activities.length - 1) {
-            setCurrentActivityIndex(currentActivityIndex + 1);
-          } else {
-            onComplete();
-          }
-        }, 2500);
-      }
-    } else {
-      // Wrong placement
-      setWrongSlot(slotIndex);
-      speak("Chưa đúng vị trí rồi, thử lại nhé!");
-
-      setTimeout(() => {
-        setWrongSlot(null);
-      }, 1000);
-    }
+    placeStepInSlot(stepIndex, slotIndex);
   };
 
   if (!currentActivity) return <div>Đang tải...</div>;
 
   return (
-    <div ref={containerRef} className="flex flex-col items-center gap-6 w-full max-w-4xl px-4 select-none">
+    <div ref={containerRef} className="flex flex-col items-center gap-5 w-full max-w-4xl px-4 select-none">
+      {/* Top Speaker Prompt Banner */}
+      <button
+        type="button"
+        onClick={() => speak(`Sắp xếp các bước: ${currentActivity.title}`)}
+        className="flex items-center gap-3 bg-blue-50 hover:bg-blue-100 border-2 border-blue-200 rounded-2xl px-5 py-3 shadow-sm cursor-pointer transition-colors"
+      >
+        <div className="w-9 h-9 rounded-full bg-blue-500 text-white flex items-center justify-center shrink-0">
+          <Volume2 className="w-5 h-5" />
+        </div>
+        <span className="font-bold text-base md:text-lg text-blue-800">{currentActivity.title}</span>
+      </button>
+
       {/* Target Slots (Empty Cells) */}
       <div className="flex flex-wrap justify-center gap-4 w-full mt-4">
         {currentActivity.steps.map((_, index) => {
@@ -224,9 +243,20 @@ export function HygieneSequenceLesson({ activities, onComplete }: HygieneSequenc
                     onDragStart={() => handleDragStart(stepIndex)}
                     onDrag={(_, info) => handleDragUpdate(info)}
                     onDragEnd={(_, info) => handleDragEnd(info, stepIndex)}
-                    className="relative flex flex-col items-center justify-center w-[130px] h-[160px] md:w-[150px] md:h-[180px] bg-white rounded-xl shadow-lg border-2 border-blue-200 cursor-grab hover:-translate-y-2 hover:shadow-xl transition-all shadow-blue-100"
-                    onClick={() => speak(currentActivity.steps[stepIndex])}
+                    className="relative flex flex-col items-center justify-center w-[130px] h-[160px] md:w-[150px] md:h-[180px] bg-white rounded-xl shadow-lg border-2 border-blue-200 cursor-pointer hover:-translate-y-2 hover:shadow-xl transition-all shadow-blue-100"
+                    onClick={() => handleTapStep(stepIndex)}
                   >
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        speak(currentActivity.steps[stepIndex]);
+                      }}
+                      aria-label={`Nghe: ${currentActivity.steps[stepIndex]}`}
+                      className="absolute top-1.5 right-1.5 w-8 h-8 rounded-full bg-blue-100 hover:bg-blue-200 active:scale-90 text-blue-600 flex items-center justify-center shadow-sm z-20 cursor-pointer"
+                    >
+                      <Volume2 className="w-4 h-4" />
+                    </button>
                     {currentActivity.stepImages?.[stepIndex] ? (
                       <div className="relative w-full flex-1 p-2">
                         <Image
