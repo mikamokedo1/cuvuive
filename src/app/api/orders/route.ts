@@ -4,6 +4,7 @@ import { orders, plans } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { createClient } from "@/libs/supabase/server";
 import { applyRateLimit } from "@/libs/utils/rate-limit";
+import { PREMIUM_PLAN_CODE } from "@/libs/constants/pricing";
 
 export async function POST(request: NextRequest) {
   // Rate limit: 5 requests per minute per IP
@@ -25,6 +26,11 @@ export async function POST(request: NextRequest) {
 
     if (!planCode) {
       return NextResponse.json({ error: "Missing planCode" }, { status: 400 });
+    }
+
+    // Only the lifetime plan is on sale; older plans remain in the table for past orders
+    if (planCode !== PREMIUM_PLAN_CODE) {
+      return NextResponse.json({ error: "Plan not found" }, { status: 404 });
     }
 
     // Find the requested plan

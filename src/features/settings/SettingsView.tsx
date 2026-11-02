@@ -8,6 +8,7 @@ import { useFormik } from "formik";
 import { ActionButton } from "@/components/common/ActionButton";
 import { ExclamationIcon, PhoneIcon, UserIcon } from "@/components/common/Icons";
 import { useUser } from "@/context/UserContext";
+import { isLifetimeEndDate } from "@/libs/constants/pricing";
 import Header from "@/components/layout/Header";
 import {
   accountProfileSchema,
@@ -116,7 +117,9 @@ export function SettingsView() {
                     <span className="text-xl font-bold text-yellow-600 flex items-center gap-2">🌟 Premium</span>
                     {premiumEndDate && (
                       <span className="text-sm font-medium text-orange-700 mt-1.5">
-                        Hiệu lực đến: {new Date(premiumEndDate).toLocaleDateString("vi-VN")}
+                        {isLifetimeEndDate(premiumEndDate)
+                          ? "Hiệu lực: Trọn đời"
+                          : `Hiệu lực đến: ${new Date(premiumEndDate).toLocaleDateString("vi-VN")}`}
                       </span>
                     )}
                   </div>

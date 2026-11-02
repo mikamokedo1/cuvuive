@@ -14,7 +14,7 @@ export const MAP_PATHNAME_TO_TEXT: Record<string, string> = {
   "/": "Chào mừng pé đến với Cú Thông Minh",
   "/privacy": "Chính sách bảo mật",
   "/terms": "Điều khoản sử dụng",
-  "/upgrade": "Ba mẹ chọn gói phù hợp cho bé nhé",
+  "/upgrade": "Ba mẹ nâng cấp Premium trọn đời cho bé nhé",
   "/games/learn-numbers": "Học số đếm",
   "/games/learn-numbers/group1": "Bắt đầu với số 1,2 và 3",
   "/games/learn-numbers/group2": "Làm quen với số 4,5 và 6",

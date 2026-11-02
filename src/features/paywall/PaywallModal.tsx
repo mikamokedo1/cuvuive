@@ -9,6 +9,7 @@ import { Crown, X, Sparkles, BookOpen, Star, Loader2 } from "lucide-react";
 import { GoogleIcon } from "@/components/common/Icons";
 import { useAccess } from "@/context/AccessContext";
 import { createClient } from "@/libs/supabase/client";
+import { PREMIUM_PRICE } from "@/libs/constants/pricing";
 
 interface PaywallModalProps {
   isOpen: boolean;
@@ -114,7 +115,7 @@ export function PaywallModal({ isOpen, type, onClose }: PaywallModalProps) {
             </div>
             <h2 className="text-2xl text-amber-600 font-display mb-2 text-center">Nâng cấp Premium</h2>
             <p className="text-gray-500 font-medium text-sm text-center mb-6">
-              Mở khóa toàn bộ 48+ trò chơi và tất cả bài học chỉ từ 60.000đ!
+              Mở khóa toàn bộ 48+ trò chơi và tất cả bài học trọn đời chỉ {PREMIUM_PRICE.toLocaleString("vi-VN")}đ!
             </p>
 
             {/* Benefits List */}

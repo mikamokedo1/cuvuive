@@ -88,51 +88,88 @@ export async function GET(request: NextRequest) {
     const sender = parseFromEmail(FROM_EMAIL);
     let sent = 0;
     let failed = 0;
+    let skippedNoActivity = 0;
+    let brevoBlocked = false;
     const errors: string[] = [];
+    const batchStart = Date.now();
+    const CONCURRENCY = 5;
 
-    for (const user of usersForToday) {
-      try {
-        // Get report data for this user
-        const reportData = await getWeeklyReportDataAction(user.id);
+    // Process users in parallel batches of CONCURRENCY
+    for (let batchIdx = 0; batchIdx < usersForToday.length; batchIdx += CONCURRENCY) {
+      if (brevoBlocked) break;
 
-        if (!reportData || (reportData.lessonsCompleted === 0 && reportData.totalMinutes === 0)) {
-          // Skip users with no activity this week
-          continue;
-        }
+      const batch = usersForToday.slice(batchIdx, batchIdx + CONCURRENCY);
+      const results = await Promise.allSettled(
+        batch.map(async (user, idx) => {
+          const globalIdx = batchIdx + idx + 1;
+          const userStart = Date.now();
 
-        const html = renderWeeklyReportEmail(reportData);
+          // 1. Fetch report data
+          const reportData = await getWeeklyReportDataAction(user.id);
+          const fetchMs = Date.now() - userStart;
 
-        // Send email via Brevo API v3
-        const response = await fetch("https://api.brevo.com/v3/smtp/email", {
-          method: "POST",
-          headers: {
-            "accept": "application/json",
-            "content-type": "application/json",
-            "api-key": BREVO_API_KEY,
-          },
-          body: JSON.stringify({
-            sender,
-            to: [{ email: user.email }],
-            subject: `📊 Báo cáo tuần: ${reportData.kidName} đã học ${reportData.lessonsCompleted} bài`,
-            htmlContent: html,
-          }),
-        });
+          if (!reportData || (reportData.lessonsCompleted === 0 && reportData.totalMinutes === 0)) {
+            return { status: "skipped" as const, fetchMs };
+          }
 
-        if (response.ok) {
-          sent++;
+          // 2. Render email
+          const html = renderWeeklyReportEmail(reportData);
+
+          // 3. Send email via Brevo API v3
+          const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+            method: "POST",
+            headers: {
+              "accept": "application/json",
+              "content-type": "application/json",
+              "api-key": BREVO_API_KEY,
+            },
+            body: JSON.stringify({
+              sender,
+              to: [{ email: user.email }],
+              subject: `📊 Báo cáo tuần: ${reportData.kidName} đã học ${reportData.lessonsCompleted} bài`,
+              htmlContent: html,
+            }),
+          });
+
+          if (response.ok) {
+            return { status: "sent" as const, fetchMs };
+          } else {
+            const error = await response.text();
+            return { status: "failed" as const, fetchMs, error: `${user.email}: ${error}`, rawError: error };
+          }
+        })
+      );
+
+      // Aggregate results
+      for (const result of results) {
+        if (result.status === "fulfilled") {
+          const r = result.value;
+          if (r.status === "sent") sent++;
+          else if (r.status === "skipped") skippedNoActivity++;
+          else if (r.status === "failed") {
+            failed++;
+            if (r.error) errors.push(r.error);
+            if (r.rawError && (r.rawError.includes("unrecognised IP") || r.rawError.includes("unauthorized"))) {
+              console.error(`Weekly report cron: Brevo IP blocked, aborting. Error: ${r.rawError}`);
+              brevoBlocked = true;
+            }
+          }
         } else {
-          const error = await response.text();
           failed++;
-          errors.push(`${user.email}: ${error}`);
+          errors.push(String(result.reason));
         }
-
-        // Small safety delay between emails
-        await new Promise((resolve) => setTimeout(resolve, 100));
-      } catch (error) {
-        failed++;
-        errors.push(`${user.email}: ${String(error)}`);
       }
+
+      const processed = Math.min(batchIdx + CONCURRENCY, usersForToday.length);
+      console.log(
+        `Weekly report cron: Progress ${processed}/${usersForToday.length} — sent=${sent} failed=${failed} skipped=${skippedNoActivity} (${Date.now() - batchStart}ms elapsed)`
+      );
     }
+
+    const totalMs = Date.now() - batchStart;
+    console.log(
+      `Weekly report cron: Batch complete in ${totalMs}ms — sent=${sent} failed=${failed} skipped=${skippedNoActivity}`
+    );
 
     return NextResponse.json({
       ok: true,

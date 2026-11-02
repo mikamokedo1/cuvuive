@@ -30,7 +30,7 @@ export default function TermsPage() {
           <h1 className="text-4xl md:text-5xl font-bold font-[family-name:var(--font-baloo-2)] text-slate-900 mb-4 tracking-tight">
             Điều Khoản Sử Dụng
           </h1>
-          <p className="text-lg text-slate-500">Cập nhật lần cuối: 23 tháng 3, 2026</p>
+          <p className="text-lg text-slate-500">Cập nhật lần cuối: 2 tháng 11, 2026</p>
         </div>
 
         <div className="bg-white rounded-[2rem] shadow-sm border border-slate-100 p-8 md:p-12 prose prose-slate max-w-none prose-headings:font-[family-name:var(--font-baloo-2)] prose-headings:text-slate-900 prose-a:text-[#FF9C01] hover:prose-a:text-orange-600">
@@ -75,13 +75,12 @@ export default function TermsPage() {
               bản.{" "}
             </li>
             <li>
-              Để mở khóa toàn bộ kho trò chơi, bạn cần thanh toán qua một "Gói định kỳ" theo tháng hoặc năm được thiết
-              lập trên ứng dụng.
+              Để mở khóa toàn bộ kho trò chơi, bạn thanh toán một lần cho gói Premium trọn đời. Gói có hiệu lực trong suốt
+              thời gian dịch vụ Cú Thông Minh còn hoạt động và không cần gia hạn. Các gói theo tháng hoặc năm đã mua
+              trước đây vẫn có hiệu lực đến hết thời hạn.
             </li>
             <li>
-              Tất cả khoản thanh toán là khoản phí cuối cùng. Việc gia hạn có thể là tự động (nếu thông qua App
-              Store/Google Play), và bạn hoàn toàn có thể tự hủy đăng ký ngay ở Cài đặt thiết bị nếu không có nhu cầu
-              tiếp tục.
+              Tất cả khoản thanh toán là khoản phí cuối cùng.
             </li>
           </ul>
 

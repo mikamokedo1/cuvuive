@@ -65,9 +65,18 @@ describe('POST /api/orders', () => {
     mockGetUser.mockResolvedValueOnce({ data: { user: { id: 'user_123' } } });
     mockLimit.mockResolvedValueOnce([]); // Empty plans
 
-    const req = createRequest({ planCode: 'invalid_plan' });
+    const req = createRequest({ planCode: 'lifetime' });
     const res = await POST(req);
     expect(res.status).toBe(404);
+  });
+
+  it('Should return 404 for a plan that is no longer on sale', async () => {
+    mockGetUser.mockResolvedValueOnce({ data: { user: { id: 'user_123' } } });
+
+    const req = createRequest({ planCode: 'seed' });
+    const res = await POST(req);
+    expect(res.status).toBe(404);
+    expect(mockValues).not.toHaveBeenCalled();
   });
 
   it('Should successfully create an order and return it', async () => {
@@ -83,7 +92,7 @@ describe('POST /api/orders', () => {
     const finalOrder = { id: 55, cartCode: 'SEVQR55', status: 'pending' };
     mockReturningUpdate.mockResolvedValueOnce([finalOrder]);
 
-    const req = createRequest({ planCode: 'seed' });
+    const req = createRequest({ planCode: 'lifetime' });
     const res = await POST(req);
     const json = await res.json();
 

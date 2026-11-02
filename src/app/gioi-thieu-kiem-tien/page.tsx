@@ -206,44 +206,14 @@ export default function ReferralIntroPage() {
               </div>
 
               <div className="p-6 md:p-8">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {/* Example 1 */}
-                  <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 text-center border border-green-100">
-                    <p className="text-sm font-bold text-gray-400 mb-1">Gói Lớp Mầm (1 tháng)</p>
-                    <p className="text-lg font-bold text-gray-600 mb-3">
-                      Đơn hàng: <span className="text-gray-800">49,000 ₫</span>
-                    </p>
-                    <div className="bg-white rounded-xl p-4 shadow-sm">
-                      <p className="text-xs text-gray-400 font-bold mb-1">BẠN NHẬN</p>
-                      <p className="text-3xl font-extrabold text-emerald-600">4,900 ₫</p>
-                    </div>
-                  </div>
-
-                  {/* Example 2 */}
-                  <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 text-center border border-blue-100">
-                    <p className="text-sm font-bold text-gray-400 mb-1">Gói Lớp Chồi (6 tháng)</p>
-                    <p className="text-lg font-bold text-gray-600 mb-3">
-                      Đơn hàng: <span className="text-gray-800">199,000 ₫</span>
-                    </p>
-                    <div className="bg-white rounded-xl p-4 shadow-sm">
-                      <p className="text-xs text-gray-400 font-bold mb-1">BẠN NHẬN</p>
-                      <p className="text-3xl font-extrabold text-blue-600">19,900 ₫</p>
-                    </div>
-                  </div>
-
-                  {/* Example 3 */}
-                  <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 text-center border border-amber-100 relative">
-                    <div className="absolute -top-3 right-4 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-md">
-                      HOT
-                    </div>
-                    <p className="text-sm font-bold text-gray-400 mb-1">Gói Lớp Lá (12 tháng)</p>
-                    <p className="text-lg font-bold text-gray-600 mb-3">
-                      Đơn hàng: <span className="text-gray-800">299,000 ₫</span>
-                    </p>
-                    <div className="bg-white rounded-xl p-4 shadow-sm">
-                      <p className="text-xs text-gray-400 font-bold mb-1">BẠN NHẬN</p>
-                      <p className="text-3xl font-extrabold text-amber-600">29,900 ₫</p>
-                    </div>
+                <div className="max-w-sm mx-auto bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 text-center border border-amber-100">
+                  <p className="text-sm font-bold text-gray-400 mb-1">Gói Premium Trọn Đời</p>
+                  <p className="text-lg font-bold text-gray-600 mb-3">
+                    Đơn hàng: <span className="text-gray-800">299,000 ₫</span>
+                  </p>
+                  <div className="bg-white rounded-xl p-4 shadow-sm">
+                    <p className="text-xs text-gray-400 font-bold mb-1">BẠN NHẬN</p>
+                    <p className="text-3xl font-extrabold text-amber-600">29,900 ₫</p>
                   </div>
                 </div>
 
@@ -256,22 +226,22 @@ export default function ReferralIntroPage() {
                     <div>
                       <p className="text-3xl font-extrabold text-emerald-600">5</p>
                       <p className="text-xs text-gray-400 font-bold">bạn bè</p>
-                      <p className="text-sm font-bold text-gray-600 mt-1">~100K - 150K ₫</p>
+                      <p className="text-sm font-bold text-gray-600 mt-1">~150K ₫</p>
                     </div>
                     <div>
                       <p className="text-3xl font-extrabold text-emerald-600">10</p>
                       <p className="text-xs text-gray-400 font-bold">bạn bè</p>
-                      <p className="text-sm font-bold text-gray-600 mt-1">~200K - 300K ₫</p>
+                      <p className="text-sm font-bold text-gray-600 mt-1">~300K ₫</p>
                     </div>
                     <div>
                       <p className="text-3xl font-extrabold text-emerald-600">50</p>
                       <p className="text-xs text-gray-400 font-bold">bạn bè</p>
-                      <p className="text-sm font-bold text-gray-600 mt-1">~1M - 1.5M ₫</p>
+                      <p className="text-sm font-bold text-gray-600 mt-1">~1.5M ₫</p>
                     </div>
                     <div>
                       <p className="text-3xl font-extrabold text-amber-600">100</p>
                       <p className="text-xs text-gray-400 font-bold">bạn bè</p>
-                      <p className="text-sm font-bold text-gray-600 mt-1">~2M - 3M ₫</p>
+                      <p className="text-sm font-bold text-gray-600 mt-1">~3M ₫</p>
                     </div>
                   </div>
                 </div>
