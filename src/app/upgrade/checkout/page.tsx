@@ -8,6 +8,7 @@ import { ActionButton } from "@/components/common/ActionButton";
 import { Loader2, CheckCircle2, Copy, Check, Download } from "lucide-react";
 const owlHi = "https://assets.cuthongminh.com/games/common/owl-say-hi.webp";
 import { useUser } from "@/context/UserContext";
+import { getPaywallSource, trackEvent } from "@/libs/analytics";
 
 function CheckoutContent() {
   const { refreshSubscription } = useUser();
@@ -84,6 +85,24 @@ function CheckoutContent() {
 
     return () => clearInterval(interval);
   }, [orderId, router, status]);
+
+  // Report the sale to GA once per order, crediting the game whose paywall led here.
+  useEffect(() => {
+    if (status !== "paid" || !orderId || !orderInfo) return;
+    const key = `purchase_tracked_${orderId}`;
+    try {
+      if (localStorage.getItem(key)) return;
+      localStorage.setItem(key, "1");
+    } catch {
+      // storage unavailable: still report, at worst twice
+    }
+    trackEvent("purchase", {
+      transaction_id: orderInfo.cartCode,
+      value: orderInfo.amount,
+      currency: "VND",
+      course_id: getPaywallSource() ?? "none",
+    });
+  }, [status, orderId, orderInfo]);
 
   const fireConfetti = async () => {
     const confetti = (await import("canvas-confetti")).default;

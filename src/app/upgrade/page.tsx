@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { PREMIUM_LIST_PRICE, PREMIUM_PLAN_CODE, PREMIUM_PRICE } from "@/libs/constants/pricing";
 import Header from "@/components/layout/Header";
+import { TOTAL_GAMES } from "@/features/paywall/paywallPitch";
 import { UpgradeActionButton } from "./_components/UpgradeActionButton";
 import { Footer } from "@/components/layout/Footer";
 import {
@@ -47,7 +48,7 @@ export const metadata: Metadata = {
 // ============================================
 
 const COMPARISON_FEATURES = [
-  { label: "Số trò chơi truy cập", free: "Giới hạn", premium: "Toàn bộ 48+ game", icon: Sparkles },
+  { label: "Số trò chơi truy cập", free: "Giới hạn", premium: `Toàn bộ ${TOTAL_GAMES} game`, icon: Sparkles },
   { label: "Bài học mỗi trò chơi", free: "Nhóm đầu tiên", premium: "Tất cả bài học", icon: BookOpen },
   { label: "Theo dõi tiến độ học tập", free: "Cơ bản", premium: "Biểu đồ chi tiết + Radar kỹ năng", icon: BarChart3 },
   { label: "AI Cú nói chuyện với bé", free: false, premium: true, icon: MessageCircle },
@@ -79,7 +80,7 @@ const FAQ_ITEMS = [
   {
     question: "Premium khác gì tài khoản miễn phí?",
     answer:
-      "Tài khoản miễn phí cho phép bé trải nghiệm một số bài học đầu tiên của mỗi trò chơi. Khi nâng cấp Premium, bé sẽ được mở khóa toàn bộ 48+ trò chơi, tất cả bài học, cùng các tính năng đặc biệt như AI Cú nói chuyện, biểu đồ theo dõi tiến độ chi tiết, bảng xếp hạng và lộ trình Tiền Lớp 1.",
+      `Tài khoản miễn phí cho phép bé trải nghiệm một số bài học đầu tiên của mỗi trò chơi. Khi nâng cấp Premium, bé sẽ được mở khóa toàn bộ ${TOTAL_GAMES} trò chơi, tất cả bài học, cùng các tính năng đặc biệt như AI Cú nói chuyện, biểu đồ theo dõi tiến độ chi tiết, bảng xếp hạng và lộ trình Tiền Lớp 1.`,
   },
   {
     question: "Thanh toán bằng hình thức nào?",
