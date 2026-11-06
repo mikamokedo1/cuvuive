@@ -10,6 +10,8 @@ import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { motion } from "framer-motion";
 
 const DO_NOT_SHOW_PATHNAMES = ["/auth/update-password"];
+/** Lessons where the AI Cú is already on screen and talking: a second owl would crowd it and talk over it. */
+const DO_NOT_SHOW_PATTERNS = [/^\/games\/learn-alphabet\/group\d+\/lesson\/lesson2$/];
 
 export const OwlCompanion = () => {
   const pathname = usePathname();
@@ -58,7 +60,7 @@ export const OwlCompanion = () => {
     setIsBouncing(false);
   };
 
-  if (DO_NOT_SHOW_PATHNAMES.includes(pathname)) {
+  if (DO_NOT_SHOW_PATHNAMES.includes(pathname) || DO_NOT_SHOW_PATTERNS.some((re) => re.test(pathname))) {
     return null;
   }
 

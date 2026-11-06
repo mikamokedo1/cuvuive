@@ -5,7 +5,7 @@ import { GROUPS, getLettersForGroup } from "@/features/games/learn-alphabet/cons
 import { AlphabetLearnLesson } from "@/features/games/learn-alphabet/AlphabetLearnLesson";
 import { AlphabetQuizLesson } from "@/features/games/learn-alphabet/AlphabetQuizLesson";
 import { AlphabetMemoryLesson } from "@/features/games/learn-alphabet/AlphabetMemoryLesson";
-import { AlphabetSpeakingLesson } from "@/features/games/learn-alphabet/AlphabetSpeakingLesson";
+import { AlphabetAiSpeakingLesson } from "@/features/games/learn-alphabet/AlphabetAiSpeakingLesson";
 import { AlphabetWritingLesson } from "@/features/games/learn-alphabet/AlphabetWritingLesson";
 import { GameWrapGame } from "@/components/layout/GameWrapGame";
 import { useProgress } from "@/context/ProgressContext";
@@ -41,7 +41,13 @@ export function LessonPageClient({ groupId, lessonId }: LessonPageClientProps) {
         return <AlphabetLearnLesson letters={letters} onComplete={game.handleComplete} isReviewMode={isReviewMode} />;
       case "lesson2":
         return (
-          <AlphabetSpeakingLesson letters={letters} onComplete={game.handleComplete} isReviewMode={isReviewMode} />
+          <AlphabetAiSpeakingLesson
+            key={game.groupId}
+            groupId={game.groupId}
+            letters={letters}
+            onComplete={game.handleComplete}
+            isReviewMode={isReviewMode}
+          />
         );
       case "lesson3":
         return <AlphabetWritingLesson letters={letters} onComplete={game.handleComplete} isReviewMode={isReviewMode} />;

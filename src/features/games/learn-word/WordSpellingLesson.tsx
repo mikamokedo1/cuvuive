@@ -8,6 +8,7 @@ import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { playButtonSound } from "@/libs/utils/playSound";
 import Loading from "@/components/common/Loading";
+import { handwritingInBox, handwritingText } from "@/libs/fonts/handwriting";
 
 interface WordSpellingLessonProps {
   words: WordData[];
@@ -122,8 +123,8 @@ export function WordSpellingLesson({ words, onComplete, requiredWins = 15 }: Wor
           <div
             key={idx}
             className={`
-              flex items-center justify-center min-w-[3rem] h-12 md:min-w-[4rem] md:h-16 px-4
-              rounded-2xl border-4 text-2xl md:text-4xl font-black
+              flex items-center justify-center min-w-[3rem] h-14 md:min-w-[4rem] md:h-20 px-4
+              rounded-2xl border-4 text-[22px] md:text-[33px] ${handwritingText} lowercase
               ${
                 idx < placedCount
                   ? "bg-emerald-50 border-emerald-400 text-emerald-600 shadow-md transform scale-105"
@@ -132,7 +133,7 @@ export function WordSpellingLesson({ words, onComplete, requiredWins = 15 }: Wor
               transition-all duration-300
             `}
           >
-            {idx < placedCount ? syllable : "?"}
+            <span className={handwritingInBox}>{idx < placedCount ? syllable : "?"}</span>
           </div>
         ))}
       </div>
@@ -144,14 +145,14 @@ export function WordSpellingLesson({ words, onComplete, requiredWins = 15 }: Wor
             key={syllable.id}
             onClick={() => handleSyllableClick(syllable)}
             className={`
-              flex justify-center items-center min-w-[4rem] h-16 md:min-w-[6rem] md:h-20 px-6
+              flex justify-center items-center min-w-[4rem] h-20 md:min-w-[6rem] md:h-24 px-6
               bg-white rounded-2xl border-4 border-blue-200 shadow-lg
-              text-3xl md:text-5xl font-black text-blue-500
+              text-[33px] md:text-[40px] ${handwritingText} lowercase text-blue-500
               hover:bg-blue-50 hover:scale-110 active:scale-95 transition-all
               ${wrongId === syllable.id ? "border-orange-400 text-orange-500 bg-orange-50 animate-shake" : ""}
             `}
           >
-            {syllable.text}
+            <span className={handwritingInBox}>{syllable.text}</span>
           </button>
         ))}
       </div>

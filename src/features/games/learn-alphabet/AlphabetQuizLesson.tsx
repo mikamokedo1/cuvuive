@@ -10,6 +10,7 @@ import { playButtonSound } from "@/libs/utils/playSound";
 import { FeedbackType } from "@/types/game";
 import { LoudSpeaker } from "@/libs/constants/game-assets";
 import { ActionButton } from "@/components/common/ActionButton";
+import { handwritingInBox, handwritingText } from "@/libs/fonts/handwriting";
 
 const MAP_INDEX_TO_COLOR = ["blue", "green", "orange", "purple"] as const;
 
@@ -158,7 +159,7 @@ export function AlphabetQuizLesson({ letters, onComplete, requiredWins = 6 }: Al
                 ${feedback === "wrong" && !isSelected ? "opacity-40 scale-95" : ""}
               `}
             >
-              <span className="drop-shadow-md">{option.id}</span>
+              <span className={`${handwritingText} ${handwritingInBox} text-[40px] sm:text-[48px] md:text-[54px] drop-shadow-md`}>{option.id}</span>
             </ActionButton>
           );
         })}

@@ -8,6 +8,7 @@ import { playButtonSound } from "@/libs/utils/playSound";
 import { playWinEffect } from "@/libs/utils/playWinEffect";
 import { BackLessonButton } from "@/components/games/BackLessonButton";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
+import { handwritingText } from "@/libs/fonts/handwriting";
 
 interface WordLearnLessonProps {
   words: WordData[];
@@ -148,7 +149,7 @@ export function WordLearnLesson({ words, onComplete }: WordLearnLessonProps) {
           hover:scale-105 active:scale-95 transition-transform duration-200"
         onClick={handleTapWord}
       >
-        <span className="text-4xl md:text-5xl font-extrabold text-[#38BDF8] capitalize select-none">
+        <span className={`${handwritingText} text-4xl md:text-5xl text-[#38BDF8] lowercase select-none`}>
           {currentWord.name}
         </span>
       </div>

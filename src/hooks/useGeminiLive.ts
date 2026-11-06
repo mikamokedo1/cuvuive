@@ -7,6 +7,23 @@ import { useAudioPlayback } from "./useAudioPlayback";
 export type GeminiLiveStatus = "idle" | "connecting" | "live" | "error" | "quota_exceeded";
 export type DisconnectReason = "idle_timeout" | "session_expired" | "user" | null;
 
+/**
+ * The lesson to run. The relay builds the prompt and the greeting from it (server/voice-relay.ts):
+ * pages never send prompts, so the relay cannot be used as a free general-purpose chatbot.
+ */
+export type GeminiLesson =
+  | { kind: "talk-with-owl"; groupId: string; lessonId: string }
+  | { kind: "letter-practice"; groupId: string; startIndex?: number };
+
+/** Predefined prompts a page may trigger mid-lesson */
+export type GeminiCue = { cue: "nudge" } | { cue: "manual_next"; nextIndex: number };
+
+export interface GeminiToolCall {
+  id: string;
+  name: string;
+  args: Record<string, unknown>;
+}
+
 interface TranscriptEntry {
   role: "user" | "model";
   text: string;
@@ -17,12 +34,16 @@ interface UseGeminiLiveOptions {
   relayUrl?: string;
   /** Gemini voice name */
   voice?: string;
-  /** System instructions for the AI */
-  instructions?: string;
+  /** Lesson to run; the relay derives prompt, greeting, tools and free-quota bucket from it */
+  lesson: GeminiLesson;
   /** Supabase JWT token for auth + quota tracking */
   token?: string;
-  /** Optional greeting prompt sent after connection — triggers AI to speak first */
-  greeting?: string;
+  /** Called for every function call the AI makes. Answer it with sendToolResponse. */
+  onToolCall?: (call: GeminiToolCall) => void;
+  /** Push-to-talk: audio is only sent between startTalking() and stopTalking(). */
+  pushToTalk?: boolean;
+  /** Disconnect after this long without activity (default 30s). */
+  idleTimeoutMs?: number;
 }
 
 interface UseGeminiLiveReturn {
@@ -34,20 +55,31 @@ interface UseGeminiLiveReturn {
   disconnectReason: DisconnectReason;
   connect: () => Promise<void>;
   disconnect: (reason?: DisconnectReason) => void;
-  sendText: (text: string) => void;
+  /** Trigger a predefined prompt (the relay ignores free text) */
+  sendCue: (cue: GeminiCue) => void;
+  /** Answer a function call from onToolCall */
+  sendToolResponse: (id: string, name: string, response: Record<string, unknown>) => void;
+  /** Push-to-talk only: begin / end the child's turn */
+  startTalking: () => void;
+  stopTalking: () => void;
+  isTalking: boolean;
+  /** True when the microphone could not be opened */
+  micError: boolean;
 }
 
 /**
  * Orchestration hook that manages the full voice chat lifecycle:
  * WebSocket connection, mic capture, audio playback, and transcript.
  */
-export function useGeminiLive(options: UseGeminiLiveOptions = {}): UseGeminiLiveReturn {
+export function useGeminiLive(options: UseGeminiLiveOptions): UseGeminiLiveReturn {
   const {
     relayUrl = "ws://localhost:8081",
     voice = "Skye",
-    instructions = "",
+    lesson,
     token,
-    greeting,
+    onToolCall,
+    pushToTalk = false,
+    idleTimeoutMs = 30_000,
   } = options;
 
   const [status, setStatus] = useState<GeminiLiveStatus>("idle");
@@ -60,7 +92,18 @@ export function useGeminiLive(options: UseGeminiLiveOptions = {}): UseGeminiLive
   const disconnectRef = useRef<((reason?: DisconnectReason) => void) | null>(null);
   const lastActivityRef = useRef<number>(Date.now());
 
-  const IDLE_TIMEOUT_MS = 30_000; // 30 seconds
+  const IDLE_TIMEOUT_MS = idleTimeoutMs;
+  const [isTalking, setIsTalking] = useState(false);
+  const [micError, setMicError] = useState(false);
+  const talkingRef = useRef(false);
+  const lessonRef = useRef(lesson);
+  useEffect(() => {
+    lessonRef.current = lesson;
+  }, [lesson]);
+  const onToolCallRef = useRef(onToolCall);
+  useEffect(() => {
+    onToolCallRef.current = onToolCall;
+  }, [onToolCall]);
 
   const { isCapturing, micLevel, startCapture, stopCapture, muteMic, unmuteMic } = useAudioCapture();
   const {
@@ -114,6 +157,11 @@ export function useGeminiLive(options: UseGeminiLiveOptions = {}): UseGeminiLive
   // Handle Gemini messages
   const handleGeminiMessage = useCallback(
     (message: any) => {
+      for (const fc of message.toolCall?.functionCalls ?? []) {
+        lastActivityRef.current = Date.now();
+        onToolCallRef.current?.({ id: fc.id, name: fc.name, args: fc.args ?? {} });
+      }
+
       const sc = message.serverContent;
       if (!sc) return;
 
@@ -166,7 +214,6 @@ export function useGeminiLive(options: UseGeminiLiveOptions = {}): UseGeminiLive
   // ── Connect ──
   const connect = useCallback(async () => {
     if (statusRef.current !== "idle") return;
-    console.log("🔌 [Client] connect() triggered. greeting:", greeting);
     setStatus("connecting");
     setDisconnectReason(null);
     setTranscript([]);
@@ -185,8 +232,9 @@ export function useGeminiLive(options: UseGeminiLiveOptions = {}): UseGeminiLive
             JSON.stringify({
               type: "start",
               voiceName: voice,
-              instructions,
               token: token || undefined,
+              lesson: lessonRef.current,
+              manualActivity: pushToTalk || undefined,
             }),
           );
         };
@@ -200,7 +248,6 @@ export function useGeminiLive(options: UseGeminiLiveOptions = {}): UseGeminiLive
           }
 
           if (msg.type === "server.ready") {
-            console.log("🟢 [Client] server.ready received! Status -> live. greeting:", greeting);
             setStatus("live");
             resolve();
 
@@ -216,29 +263,25 @@ export function useGeminiLive(options: UseGeminiLiveOptions = {}): UseGeminiLive
 
             // Start mic capture after session is ready
             startCapture((base64) => {
+              if (pushToTalk && !talkingRef.current) return;
               sendToRelay({
                 type: "audio",
                 audio: { data: base64, mimeType: "audio/pcm;rate=16000" },
               });
-            }).catch(console.error);
+            })
+              .then((ok) => setMicError(!ok))
+              .catch((err) => {
+                console.error(err);
+                setMicError(true);
+              });
 
-            // Send greeting prompt with a natural 800ms delay to make AI speak first
-            // (Allows Live audio negotiation to settle and feels more lifelike to the child)
-            if (greeting) {
-              console.log("📤 [Client] Scheduling greeting send in 800ms:", greeting);
-              setTimeout(() => {
-                console.log("📤 [Client] Sending greeting text to relay:", greeting);
-                sendToRelay({ type: "text", text: greeting });
-              }, 800);
-            } else {
-              console.warn("⚠️ [Client] No greeting provided, owl will not speak first.");
-            }
-
+            // The relay sends the lesson's greeting itself, so Cú speaks first
             return;
           }
 
           if (msg.type === "server.error") {
             console.error("Relay error:", msg.message);
+            if (statusRef.current === "connecting") reject(new Error(msg.message));
             return;
           }
 
@@ -253,6 +296,9 @@ export function useGeminiLive(options: UseGeminiLiveOptions = {}): UseGeminiLive
 
           if (msg.type === "server.quota_exceeded") {
             console.log("Quota exceeded:", msg);
+            // Set the ref now: the relay closes the socket right after, and onclose must not
+            // overwrite this status with "idle" before React re-renders.
+            statusRef.current = "quota_exceeded";
             setStatus("quota_exceeded");
             stopCapture();
             stopPlayback();
@@ -269,7 +315,7 @@ export function useGeminiLive(options: UseGeminiLiveOptions = {}): UseGeminiLive
         };
 
         ws.onclose = () => {
-          if (statusRef.current !== "idle") {
+          if (statusRef.current !== "idle" && statusRef.current !== "quota_exceeded") {
             setStatus("idle");
             stopCapture();
             stopPlayback();
@@ -288,9 +334,9 @@ export function useGeminiLive(options: UseGeminiLiveOptions = {}): UseGeminiLive
   }, [
     relayUrl,
     voice,
-    instructions,
     token,
-    greeting,
+    pushToTalk,
+    IDLE_TIMEOUT_MS,
     initPlayback,
     startCapture,
     stopCapture,
@@ -312,6 +358,8 @@ export function useGeminiLive(options: UseGeminiLiveOptions = {}): UseGeminiLive
     wsRef.current = null;
     stopCapture();
     disposePlayback();
+    talkingRef.current = false;
+    setIsTalking(false);
     setDisconnectReason(reason);
     setStatus("idle");
   }, [sendToRelay, stopCapture, disposePlayback]);
@@ -322,14 +370,37 @@ export function useGeminiLive(options: UseGeminiLiveOptions = {}): UseGeminiLive
   }, [disconnect]);
 
   // ── Send text message ──
-  const sendText = useCallback(
-    (text: string) => {
-      if (!text.trim()) return;
-      appendTranscript("user", text);
-      sendToRelay({ type: "text", text });
+  const sendCue = useCallback(
+    (cue: GeminiCue) => {
+      sendToRelay({ type: "cue", ...cue });
     },
-    [sendToRelay, appendTranscript],
+    [sendToRelay],
   );
+
+  const sendToolResponse = useCallback(
+    (id: string, name: string, response: Record<string, unknown>) => {
+      sendToRelay({ type: "tool_response", functionResponses: [{ id, name, response }] });
+    },
+    [sendToRelay],
+  );
+
+  const startTalking = useCallback(() => {
+    if (!pushToTalk || talkingRef.current || statusRef.current !== "live") return;
+    stopPlayback(); // the child takes the turn: cut Cú off
+    unmuteMic();
+    talkingRef.current = true;
+    setIsTalking(true);
+    lastActivityRef.current = Date.now();
+    sendToRelay({ type: "activity_start" });
+  }, [pushToTalk, sendToRelay, stopPlayback, unmuteMic]);
+
+  const stopTalking = useCallback(() => {
+    if (!talkingRef.current) return;
+    talkingRef.current = false;
+    setIsTalking(false);
+    lastActivityRef.current = Date.now();
+    sendToRelay({ type: "activity_end" });
+  }, [sendToRelay]);
 
   useEffect(() => {
     return () => {
@@ -350,6 +421,11 @@ export function useGeminiLive(options: UseGeminiLiveOptions = {}): UseGeminiLive
     disconnectReason,
     connect,
     disconnect,
-    sendText,
+    sendCue,
+    sendToolResponse,
+    startTalking,
+    stopTalking,
+    isTalking,
+    micError,
   };
 }

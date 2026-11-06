@@ -63,7 +63,10 @@ const nextConfig: NextConfig = {
       {
         key: "Content-Security-Policy",
         value:
-          "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' https://assets.cuthongminh.com https://vnlppyavpkuerviyszxg.supabase.co https://qr.sepay.vn data: blob:; font-src 'self' data:; connect-src 'self' ws://localhost:* wss://localhost:* wss://cuthongminh.com wss://*.supabase.co https://*.supabase.co https://www.google-analytics.com https://assets.cuthongminh.com; media-src 'self' https://assets.cuthongminh.com blob:;",
+          // GA4 sends hits to analytics.google.com, region*.google-analytics.com and www.google.com
+          // (not only www.google-analytics.com), plus stats.g.doubleclick.net and the country Google domain
+          // (www.google.com.vn) when Google Signals is on; worker-src allows canvas-confetti's blob worker.
+          "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' https://assets.cuthongminh.com https://vnlppyavpkuerviyszxg.supabase.co https://qr.sepay.vn https://*.google-analytics.com https://www.googletagmanager.com https://*.g.doubleclick.net https://www.google.com https://www.google.com.vn data: blob:; font-src 'self' data:; connect-src 'self' ws://localhost:* wss://localhost:* wss://cuthongminh.com wss://*.supabase.co https://*.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://*.g.doubleclick.net https://www.google.com https://www.googletagmanager.com https://assets.cuthongminh.com; worker-src 'self' blob:; media-src 'self' https://assets.cuthongminh.com blob:;",
       },
     ];
 

@@ -9,6 +9,7 @@ import { NextLessonButton } from "@/components/games/NextLessonButton";
 import { LetterData } from "./constants";
 import { LetterSelector } from "./LetterSelector";
 import { LETTER_PATHS } from "@/libs/constants/letterPaths";
+import { checkTracing, splitSubpaths } from "./tracingCheck";
 import { LoudSpeaker, Eraser as Easer, Pen } from "@/libs/constants/game-assets";
 
 interface AlphabetWritingLessonProps {
@@ -17,10 +18,7 @@ interface AlphabetWritingLessonProps {
   isReviewMode?: boolean;
 }
 
-interface Point {
-  x: number;
-  y: number;
-}
+import type { Point } from "./tracingCheck";
 
 export function AlphabetWritingLesson({ letters, onComplete, isReviewMode = false }: AlphabetWritingLessonProps) {
   const { speak } = useTextToSpeech();
@@ -32,41 +30,44 @@ export function AlphabetWritingLesson({ letters, onComplete, isReviewMode = fals
   const [showSparkle, setShowSparkle] = useState(false);
   const svgRef = useRef<SVGSVGElement>(null);
   const [cursorPos, setCursorPos] = useState<Point | null>(null);
-  const [pathSamples, setPathSamples] = useState<Point[]>([]);
+  /** Samples per template stroke (each stroke is checked on its own), tagged with their letter */
+  const [samples, setSamples] = useState<{ letterId: string; strokes: Point[][] } | null>(null);
 
   const currentLetter = letters[currentIndex];
   const letterPath = LETTER_PATHS[currentLetter.id];
+  // Samples of the previous letter are ignored until the new ones are measured
+  const strokeSamples = samples?.letterId === currentLetter.id ? samples.strokes : [];
+  const pathSamples = strokeSamples.flat();
 
-  // Sample points along the template SVG path for validation
+  // Sample points along each template stroke (hidden path.template-sub elements) for validation
   useEffect(() => {
-    setPathSamples([]);
     if (!letterPath) return;
+    const letterId = currentLetter.id;
 
-    const extractPoints = () => {
+    const extractStrokes = (): Point[][] => {
       if (!svgRef.current) return [];
-      const pathElement = svgRef.current.querySelector("path.template-path") as SVGPathElement;
-      if (!pathElement) return [];
-
-      const points: Point[] = [];
-      const totalLength = pathElement.getTotalLength();
+      const elements = Array.from(svgRef.current.querySelectorAll("path.template-sub")) as SVGPathElement[];
       const step = 5;
-
-      for (let i = 0; i <= totalLength; i += step) {
-        const pt = pathElement.getPointAtLength(i);
-        points.push({ x: pt.x, y: pt.y });
-      }
-      return points;
+      return elements.map((el) => {
+        const points: Point[] = [];
+        const totalLength = el.getTotalLength();
+        for (let i = 0; i <= totalLength; i += step) {
+          const pt = el.getPointAtLength(i);
+          points.push({ x: pt.x, y: pt.y });
+        }
+        const end = el.getPointAtLength(totalLength);
+        points.push({ x: end.x, y: end.y }); // always include the very end (e.g. the tail of "a")
+        return points;
+      });
     };
 
     const timer = setTimeout(() => {
-      const points = extractPoints();
-      if (points.length > 0) {
-        setPathSamples(points);
-      }
+      const strokes = extractStrokes();
+      if (strokes.length > 0) setSamples({ letterId, strokes });
     }, 100);
 
     return () => clearTimeout(timer);
-  }, [currentIndex, letterPath]);
+  }, [currentIndex, letterPath, currentLetter.id]);
 
   // Speak letter name when it changes
   useEffect(() => {
@@ -143,26 +144,10 @@ export function AlphabetWritingLesson({ letters, onComplete, isReviewMode = fals
     setCursorPos(null);
   };
 
+  // Every stroke must be traced end to end (see tracingCheck.ts), not just most of the letter
   const validateDrawing = (allStrokes: Point[][]) => {
-    if (pathSamples.length === 0) return;
-
-    const allUserPoints = allStrokes.flat();
-    let coveredCount = 0;
-    const coverageTolerance = 32;
-
-    pathSamples.forEach((pathPoint) => {
-      const isCovered = allUserPoints.some((userPoint) => {
-        const dx = userPoint.x - pathPoint.x;
-        const dy = userPoint.y - pathPoint.y;
-        return dx * dx + dy * dy <= coverageTolerance * coverageTolerance;
-      });
-      if (isCovered) coveredCount++;
-    });
-
-    const coverageRatio = coveredCount / pathSamples.length;
-
-    // Require at least 80% of the template path to be covered
-    if (coverageRatio >= 0.9) {
+    if (strokeSamples.length === 0) return;
+    if (checkTracing(strokeSamples, allStrokes).passed) {
       triggerSuccess();
     }
   };
@@ -215,13 +200,21 @@ export function AlphabetWritingLesson({ letters, onComplete, isReviewMode = fals
           onPointerLeave={handlePointerLeave}
           style={{ cursor: "none" }}
         >
-          {/* Background grid */}
-          <defs>
-            <pattern id="grid" width="26" height="32" patternUnits="userSpaceOnUse">
-              <path d="M 26 0 L 0 0 0 32" fill="none" stroke="#e2e8f0" strokeWidth="0.5" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#grid)" />
+          {/* Writing lines like a grade-1 exercise book: baseline, x-line, ascender and descender lines */}
+          {letterPath && (
+            <g pointerEvents="none">
+              {[
+                { y: letterPath.guides.ascender, stroke: "#e2e8f0", width: 1.5 },
+                { y: letterPath.guides.xLine, stroke: "#93c5fd", width: 2 },
+                { y: letterPath.guides.baseline, stroke: "#f87171", width: 2.5 },
+                { y: letterPath.guides.descender, stroke: "#e2e8f0", width: 1.5 },
+              ]
+                .filter((line) => line.y > 0 && line.y < 320)
+                .map((line) => (
+                  <line key={line.y} x1="0" x2="260" y1={line.y} y2={line.y} stroke={line.stroke} strokeWidth={line.width} />
+                ))}
+            </g>
+          )}
 
           {/* Guide letter (dashed path template) */}
           {letterPath && (
@@ -237,6 +230,10 @@ export function AlphabetWritingLesson({ letters, onComplete, isReviewMode = fals
                 strokeDasharray="8 16"
                 opacity="0.6"
               />
+              {/* One invisible path per stroke, only used to sample each stroke for the check */}
+              {splitSubpaths(letterPath.path).map((d, i) => (
+                <path key={i} className="template-sub" d={d} fill="none" stroke="none" />
+              ))}
               {/* Start dot */}
               <circle
                 cx={letterPath.startPoint.x}

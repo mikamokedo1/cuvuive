@@ -9,6 +9,7 @@ import Image from "next/image";
 import { playButtonSound } from "@/libs/utils/playSound";
 import { FeedbackType } from "@/types/game";
 import Loading from "@/components/common/Loading";
+import { handwritingText } from "@/libs/fonts/handwriting";
 
 interface ToneQuizLessonProps {
   words: ToneWord[];
@@ -127,7 +128,7 @@ export function ToneQuizLesson({ words, onComplete, requiredWins = 6 }: ToneQuiz
             e.stopPropagation();
             speak(targetWord?.spelling ?? "");
           }}
-          className=" animate-scale shrink-0 text-4xl md:text-5xl font-black leading-[70px] text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 text-center"
+          className={`${handwritingText} lowercase animate-scale shrink-0 text-4xl md:text-5xl leading-[70px] text-blue-600 text-center`}
         >
           {targetWord!.name}
         </div>

@@ -34,7 +34,7 @@ describe("PaywallModal premium", () => {
 
     expect(screen.getByText("🎉 Bé đã hoàn thành 4 bài!")).toBeInTheDocument();
     expect(screen.getByText("Làm quen 4-6")).toBeInTheDocument();
-    expect(screen.getByText("Đếm, nhận biết và tập viết số từ 1 đến 20")).toBeInTheDocument();
+    expect(screen.getByText("Đếm, nhận biết và tập viết số từ 0 đến 20")).toBeInTheDocument();
     expect(screen.getByText("Mở khóa cho bé")).toBeInTheDocument();
     expect(screen.getByText("299.000đ")).toBeInTheDocument();
     expect(screen.getByText("399.000đ")).toBeInTheDocument();

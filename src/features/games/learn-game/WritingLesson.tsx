@@ -10,6 +10,7 @@ import { playButtonSound, playSound } from "@/libs/utils/playSound";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 import { LoudSpeaker, Eraser as Easer, Pen } from "@/libs/constants/game-assets";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
+import { checkTracing, splitAtJumps } from "@/features/games/learn-alphabet/tracingCheck";
 
 interface WritingLessonProps {
   range: [number, number];
@@ -148,30 +149,10 @@ export function WritingLesson({ range, onComplete }: WritingLessonProps) {
   };
 
   // Validate coverage: Check per-point coverage along the reference path
+  // Same rule as the alphabet (tracingCheck.ts): enough of every stroke, both ends reached
   const validateDrawing = (allStrokes: Point[][]) => {
     if (pathSamples.length === 0) return;
-
-    // Flatten all user points
-    const allUserPoints = allStrokes.flat();
-
-    // Check coverage: detailed check of how many path sample points are covered
-    let coveredCount = 0;
-    const coverageTolerance = 30; // Distance to consider a path point "covered"
-
-    pathSamples.forEach((pathPoint) => {
-      // Check if this path point is covered by ANY user point
-      const isCovered = allUserPoints.some((userPoint) => {
-        const dx = userPoint.x - pathPoint.x;
-        const dy = userPoint.y - pathPoint.y;
-        return dx * dx + dy * dy <= coverageTolerance * coverageTolerance;
-      });
-      if (isCovered) coveredCount++;
-    });
-
-    const coverageRatio = coveredCount / pathSamples.length;
-
-    // Required coverage: ~95% of path points must be visited
-    if (coverageRatio >= 1) {
+    if (checkTracing(splitAtJumps(pathSamples), allStrokes).passed) {
       triggerSuccess();
     }
   };
@@ -218,13 +199,13 @@ export function WritingLesson({ range, onComplete }: WritingLessonProps) {
           onPointerLeave={handlePointerLeave}
           style={{ cursor: "none" }}
         >
-          {/* Background grid (subtle) */}
-          <defs>
-            <pattern id="grid" width="26" height="32" patternUnits="userSpaceOnUse">
-              <path d="M 26 0 L 0 0 0 32" fill="none" stroke="#e2e8f0" strokeWidth="0.5" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#grid)" />
+          {/* Writing lines: top of the digits and baseline (Playwrite VN proportions) */}
+          {numberData?.guides && (
+            <g pointerEvents="none">
+              <line x1="0" x2="260" y1={numberData.guides.top} y2={numberData.guides.top} stroke="#93c5fd" strokeWidth="2" />
+              <line x1="0" x2="260" y1={numberData.guides.baseline} y2={numberData.guides.baseline} stroke="#f87171" strokeWidth="2.5" />
+            </g>
+          )}
 
           {/* Number path (dashed guide) */}
           <path

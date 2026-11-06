@@ -12,8 +12,8 @@ export const TOTAL_LESSONS = COURSES.reduce(
  */
 const HIGHLIGHTS: Record<string, string[]> = {
   "learn-numbers": [
-    "Đếm, nhận biết và tập viết số từ 1 đến 20",
-    "Mỗi nhóm 4 kiểu chơi: học số, chọn số, đếm đồ vật, tập viết",
+    "Đếm, nhận biết và tập viết số từ 0 đến 20",
+    "4 kiểu chơi: học số, chọn số, đếm đồ vật, tập viết",
     "Học đếm số bằng tiếng Anh, nói chuyện trực tiếp với Cú",
   ],
   "learn-alphabet": [

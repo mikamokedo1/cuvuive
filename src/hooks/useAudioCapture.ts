@@ -8,8 +8,11 @@ interface UseAudioCaptureReturn {
   isCapturing: boolean;
   /** Current mic input level (0-1) */
   micLevel: number;
-  /** Start capturing mic audio; calls onChunk with base64 PCM data */
-  startCapture: (onChunk: (base64: string) => void) => Promise<void>;
+  /**
+   * Start capturing mic audio; calls onChunk with base64 PCM data and the chunk's level (0-1).
+   * Resolves false when the microphone could not be opened (denied, missing, unsupported).
+   */
+  startCapture: (onChunk: (base64: string, level: number) => void) => Promise<boolean>;
   /** Stop capturing and release resources */
   stopCapture: () => void;
   /** Mute mic (disable track without releasing it) — prevents echo on mobile */
@@ -65,7 +68,7 @@ export function useAudioCapture(): UseAudioCaptureReturn {
   }, []);
 
   const startCapture = useCallback(
-    async (onChunk: (base64: string) => void) => {
+    async (onChunk: (base64: string, level: number) => void): Promise<boolean> => {
       // ── Step 1: Kill competing audio sources (iOS Safari fix) ──
       if ("speechSynthesis" in window) {
         window.speechSynthesis.cancel();
@@ -79,7 +82,7 @@ export function useAudioCapture(): UseAudioCaptureReturn {
           });
           if (permResult.state === "denied") {
             console.error("Microphone permission denied");
-            return;
+            return false;
           }
         }
       } catch {
@@ -98,7 +101,7 @@ export function useAudioCapture(): UseAudioCaptureReturn {
         });
       } catch (err) {
         console.error("Microphone access failed:", err);
-        return;
+        return false;
       }
 
       micStreamRef.current = stream;
@@ -126,7 +129,7 @@ export function useAudioCapture(): UseAudioCaptureReturn {
 
         // Encode and deliver chunk
         const base64 = floatToPcm16Base64(samples, ctx.sampleRate, 16000);
-        onChunk(base64);
+        onChunk(base64, level);
       };
 
       source.connect(processor);
@@ -134,6 +137,7 @@ export function useAudioCapture(): UseAudioCaptureReturn {
       silenceGain.connect(ctx.destination);
 
       setIsCapturing(true);
+      return true;
     },
     [],
   );

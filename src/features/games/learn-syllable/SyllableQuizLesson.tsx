@@ -9,6 +9,7 @@ import Image from "next/image";
 import { playButtonSound } from "@/libs/utils/playSound";
 import { FeedbackType } from "@/types/game";
 import Loading from "@/components/common/Loading";
+import { handwritingInBox, handwritingText } from "@/libs/fonts/handwriting";
 
 interface SyllableQuizLessonProps {
   syllables: SyllableData[];
@@ -111,7 +112,7 @@ export function SyllableQuizLesson({ syllables, onComplete, requiredWins = 6 }: 
           {target.image ? (
             <Image src={target.image} alt={target.name} fill className="object-contain drop-shadow-md" />
           ) : (
-            <span className="text-5xl md:text-6xl font-black text-blue-400 drop-shadow-md select-none">
+            <span className={`${handwritingText} lowercase text-5xl md:text-6xl text-blue-400 drop-shadow-md select-none`}>
               {target.name}
             </span>
           )}
@@ -137,7 +138,7 @@ export function SyllableQuizLesson({ syllables, onComplete, requiredWins = 6 }: 
               ${feedback === "correct" && option.syllable === target.syllable ? "border-emerald-500 scale-110 shadow-emerald-200 bg-emerald-50" : "border-gray-200"}
             `}
           >
-            <span className="text-4xl md:text-6xl font-black text-emerald-600 select-none">{option.syllable}</span>
+            <span className={`${handwritingText} ${handwritingInBox} text-[40px] sm:text-[48px] md:text-[54px] text-emerald-600 select-none`}>{option.syllable}</span>
           </div>
         ))}
       </div>

@@ -10,6 +10,7 @@ import { playButtonSound } from "@/libs/utils/playSound";
 import Loading from "@/components/common/Loading";
 import { LoudSpeaker } from "@/libs/constants/game-assets";
 import { FeedbackType } from "@/types/game";
+import { handwritingText } from "@/libs/fonts/handwriting";
 
 interface WordListeningLessonProps {
   words: WordData[];
@@ -135,7 +136,7 @@ export function WordListeningLesson({ words, onComplete, requiredWins = 15 }: Wo
               ${feedback === "correct" && option.id !== target.id ? "opacity-30" : ""}
             `}
           >
-            <span className="text-3xl md:text-4xl font-extrabold text-[#38BDF8] capitalize drop-shadow-sm">
+            <span className={`${handwritingText} text-3xl md:text-4xl text-[#38BDF8] lowercase drop-shadow-sm`}>
               {option.name === "Em Pé" ? "Em Bé" : option.name}
             </span>
           </button>

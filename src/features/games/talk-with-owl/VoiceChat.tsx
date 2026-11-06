@@ -23,13 +23,12 @@ const FREE_SESSION_LIMIT_MS = 3 * 60_000;
 const PREMIUM_SESSION_LIMIT_MS = 10 * 60_000;
 
 interface VoiceChatProps {
-  /** Topic-specific system instruction for the AI */
-  topicInstruction?: string;
-  /** Greeting prompt to make the AI speak first after connecting */
-  greeting?: string;
+  /** Topic group and lesson: the relay builds the matching prompt and greeting */
+  groupId: string;
+  lessonId: string;
 }
 
-export function VoiceChat({ topicInstruction, greeting }: VoiceChatProps) {
+export function VoiceChat({ groupId, lessonId }: VoiceChatProps) {
   const logRef = useRef<HTMLDivElement>(null);
   const { isPremium, isLoggedIn, showPaywall } = useAccess();
   const [sessionExpired, setSessionExpired] = useState(false);
@@ -60,8 +59,7 @@ export function VoiceChat({ topicInstruction, greeting }: VoiceChatProps) {
       relayUrl: RELAY_URL,
       voice: "Kore",
       token: authToken,
-      instructions: topicInstruction,
-      greeting,
+      lesson: { kind: "talk-with-owl", groupId, lessonId },
     });
 
   // Track if user explicitly dismissed the modal for the current disconnect

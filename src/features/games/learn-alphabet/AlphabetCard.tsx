@@ -4,15 +4,18 @@ import { LetterData } from "./constants";
 import Image from "next/image";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { useEffect } from "react";
+import { schoolHandwriting } from "@/libs/fonts/handwriting";
 
 interface AlphabetCardProps {
   letter: LetterData;
   active?: boolean;
   showName?: boolean;
   onClick?: () => void;
+  /** Smaller padding and picture on phones, for screens that also show other controls */
+  compact?: boolean;
 }
 
-export function AlphabetCard({ letter, active = false, showName = true, onClick }: AlphabetCardProps) {
+export function AlphabetCard({ letter, active = false, showName = true, onClick, compact = false }: AlphabetCardProps) {
   const { speak } = useTextToSpeech();
 
   useEffect(() => {
@@ -32,23 +35,35 @@ export function AlphabetCard({ letter, active = false, showName = true, onClick 
   return (
     <div
       className={`
-        relative flex flex-col items-center gap-4 p-6 rounded-3xl cursor-pointer
+        relative flex flex-col items-center rounded-3xl cursor-pointer
+        ${compact ? "gap-1 p-2 md:gap-4 md:p-6" : "gap-4 p-6"}
         transition-all duration-300 transform
         ${active ? "scale-100 opacity-100" : "scale-90 opacity-60"}
       `}
     >
       {/* Large Letter Display */}
       <div
-        className="text-8xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-br from-orange-500 via-pink-500 to-purple-500 drop-shadow-lg select-none leading-tight py-4 px-4 flex gap-2"
+        className="text-8xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-br from-orange-500 via-pink-500 to-purple-500 drop-shadow-lg select-none leading-tight pt-8 pb-4 px-4 flex items-baseline gap-2"
         onClick={handleClick}
       >
         <span>{letter.letter}</span>
-        <span>{letter.id}</span>
+        {/* Lowercase in school handwriting, the way children are taught to write it. Solid colour, not the
+            clipped gradient: its long descenders (y, g) reach outside the box and would be cut off. */}
+        <span className={`${schoolHandwriting.className} font-normal text-purple-600`}>{letter.id}</span>
       </div>
 
       {/* Representative image */}
-      <div className="relative w-40 h-40 md:w-48 md:h-48" onClick={() => speak(`${letter.word}`)}>
-        <Image src={letter.image} alt={letter.word} fill className="object-contain drop-shadow-lg" sizes="(max-width: 768px) 160px, 192px" />
+      <div
+        className={`relative ${compact ? "w-28 h-28" : "w-40 h-40"} md:w-48 md:h-48`}
+        onClick={() => speak(`${letter.word}`)}
+      >
+        <Image
+          src={letter.image}
+          alt={letter.word}
+          fill
+          className="object-contain drop-shadow-lg"
+          sizes="(max-width: 768px) 160px, 192px"
+        />
       </div>
     </div>
   );

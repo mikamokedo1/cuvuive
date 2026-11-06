@@ -14,10 +14,19 @@
  */
 
 import { WebSocketServer, WebSocket } from "ws";
-import { GoogleGenAI, Modality } from "@google/genai";
+import { GoogleGenAI, Modality, Type, type Tool } from "@google/genai";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import * as dotenv from "dotenv";
 import * as path from "path";
+import { GROUPS as OWL_GROUPS, getLessonGreeting, getLessonInstruction } from "../src/features/games/talk-with-owl/constants";
+import { GROUPS as ALPHABET_GROUPS, getLettersForGroup } from "../src/features/games/learn-alphabet/constants";
+import {
+  NUDGE_TEXT,
+  allowedToolResults,
+  buildLetterPracticeInstruction,
+  greetingFor,
+  manualNextMessage,
+} from "../src/features/games/learn-alphabet/letterPractice";
 
 // Load .env.local from the frontend root
 dotenv.config({ path: path.resolve(__dirname, "../.env.local") });
@@ -59,56 +68,81 @@ const supabase: SupabaseClient = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY
 
 // ─── Quota Config ───────────────────────────────────────────────────
 
-/** Free/guest users: max 3 minutes per day (by IP) */
+/** Non-Premium users (guests and free accounts): max 3 minutes per day, counted separately for each game */
 const FREE_DAILY_LIMIT_SECONDS = 3 * 60; // 180s
 /** Premium users: max 20 minutes per day */
 const PREMIUM_DAILY_LIMIT_SECONDS = 20 * 60; // 1200s
 
-// ─── In-Memory IP Rate Limiter (free/guest users) ───────────────────
+// ─── In-Memory Rate Limiter (non-Premium users) ─────────────────────
+// Keyed by "<user id or ip:address>|<game>" so each game has its own free minutes.
+// Kept in memory on purpose: it resets when the relay restarts, acceptable for a free trial.
 
-interface IpUsage {
+interface FreeUsage {
   usedSeconds: number;
   date: string; // YYYY-MM-DD — auto-resets on new day
 }
 
-const ipUsageMap = new Map<string, IpUsage>();
+const freeUsageMap = new Map<string, FreeUsage>();
 
-function getIpUsage(ip: string): number {
+function getFreeUsage(key: string): number {
   const today = new Date().toISOString().split("T")[0];
-  const entry = ipUsageMap.get(ip);
+  const entry = freeUsageMap.get(key);
   if (!entry || entry.date !== today) {
-    ipUsageMap.set(ip, { usedSeconds: 0, date: today });
+    freeUsageMap.set(key, { usedSeconds: 0, date: today });
     return 0;
   }
   return entry.usedSeconds;
 }
 
-function addIpUsage(ip: string, seconds: number): void {
+function addFreeUsage(key: string, seconds: number): void {
   if (seconds <= 0) return;
   const today = new Date().toISOString().split("T")[0];
-  const entry = ipUsageMap.get(ip);
+  const entry = freeUsageMap.get(key);
   if (!entry || entry.date !== today) {
-    ipUsageMap.set(ip, { usedSeconds: seconds, date: today });
+    freeUsageMap.set(key, { usedSeconds: seconds, date: today });
   } else {
     entry.usedSeconds += seconds;
   }
 }
 
-// Clean up stale IPs every hour to prevent memory leaks
+// Clean up stale entries every hour to prevent memory leaks
 setInterval(() => {
   const today = new Date().toISOString().split("T")[0];
-  for (const [ip, entry] of ipUsageMap) {
-    if (entry.date !== today) ipUsageMap.delete(ip);
+  for (const [key, entry] of freeUsageMap) {
+    if (entry.date !== today) freeUsageMap.delete(key);
   }
 }, 60 * 60 * 1000);
 
 // ─── Types ──────────────────────────────────────────────────────────
 
+/** Which lesson the page is running. The relay builds the prompt itself: clients never send one. */
+type LessonSpec =
+  | { kind: "talk-with-owl"; groupId: string; lessonId: string }
+  | { kind: "letter-practice"; groupId: string; startIndex?: number };
+
 interface ClientStartMessage {
   type: "start";
   voiceName?: string;
-  instructions?: string;
   token?: string; // Supabase JWT for auth
+  lesson?: LessonSpec;
+  /** Push-to-talk: the client marks speech with activity_start / activity_end instead of server VAD. */
+  manualActivity?: boolean;
+}
+
+/** Predefined prompts a page may trigger during a lesson (no free text from clients). */
+interface ClientCueMessage {
+  type: "cue";
+  cue: "nudge" | "manual_next";
+  nextIndex?: number;
+}
+
+interface ClientToolResponseMessage {
+  type: "tool_response";
+  functionResponses: { id: string; name: string; response: Record<string, unknown> }[];
+}
+
+interface ClientActivityMessage {
+  type: "activity_start" | "activity_end";
 }
 
 interface ClientAudioMessage {
@@ -125,27 +159,97 @@ interface ClientCloseMessage {
   type: "close" | "audioStreamEnd";
 }
 
-type ClientMessage = ClientStartMessage | ClientAudioMessage | ClientTextMessage | ClientCloseMessage;
+type ClientMessage =
+  | ClientStartMessage
+  | ClientAudioMessage
+  | ClientTextMessage
+  | ClientCloseMessage
+  | ClientToolResponseMessage
+  | ClientActivityMessage
+  | ClientCueMessage;
 
-// ─── Default System Instructions ────────────────────────────────────
+// ─── Tool Sets ──────────────────────────────────────────────────────
+// Declared on the server, not by the client, so a page can only ask for functions defined here.
 
-const DEFAULT_INSTRUCTIONS = `Bạn là "Cú Thông Minh" — một cô giáo tiếng Anh người Việt Nam vui vẻ, dạy trẻ em Việt Nam 3-8 tuổi.
-Bạn nói chuyện chủ yếu bằng tiếng Việt, xen kẽ từ vựng và câu tiếng Anh đơn giản để dạy bé.
-Ví dụ: "Hôm nay mình học về màu sắc nhé! Red là màu đỏ. Con nói thử: Red!"
-Khi dạy từ mới, luôn nói nghĩa tiếng Việt kèm theo.
-Khi bé nói đúng, khen ngợi: "Giỏi lắm!", "Con phát âm chuẩn quá!", "Wow, con trả lời đúng rồi"
-Khi bé nói sai, nhẹ nhàng sửa và khuyến khích thử lại: "Gần đúng rồi! Nghe cô nói lại nhé..."
-Giữ câu trả lời ngắn gọn (1-3 câu), vui vẻ và dễ hiểu.
-Thỉnh thoảng hỏi bé câu đơn giản để tương tác.
-Dạy từ vựng về: màu sắc, số đếm, con vật, đồ ăn, chào hỏi, gia đình, và những thứ quen thuộc hàng ngày.
-Luôn ấm áp, kiên nhẫn và khuyến khích — như một cô giáo thân thiện mà bé yêu quý.
+const TOOLSETS: Record<string, Tool[]> = {
+  "letter-practice": [
+    {
+      functionDeclarations: [
+        {
+          name: "be_noi_dung",
+          description: "Gọi khi bé đã đọc đúng hoặc gần đúng chữ cái đang học.",
+          parameters: {
+            type: Type.OBJECT,
+            properties: { chu: { type: Type.STRING, description: "Chữ cái bé vừa đọc, ví dụ Ơ" } },
+            required: ["chu"],
+          },
+        },
+        {
+          // Called on EVERY wrong reading. The page counts them and decides when to move on:
+          // the model judges a single reading well but does not count attempts reliably.
+          name: "be_doc_sai",
+          description: "Gọi MỖI LẦN bé đọc sai chữ cái đang học. Sau đó làm theo kết quả hàm trả về.",
+          parameters: {
+            type: Type.OBJECT,
+            properties: { chu: { type: Type.STRING, description: "Chữ cái đang học, ví dụ Ơ" } },
+            required: ["chu"],
+          },
+        },
+      ],
+    },
+  ],
+};
 
-QUY TẮC VỀ TỐC ĐỘ NÓI (CỰC KỲ QUAN TRỌNG):
-- Nói CHẬM RÃI, rõ ràng, từng từ một. Tốc độ nói phải chậm hơn bình thường vì đối tượng là trẻ nhỏ 3-8 tuổi.
-- Khi nói từ tiếng Anh: phát âm THẬT CHẬM, tách rõ từng âm tiết. Ví dụ: "Ap...ple" thay vì "Apple" nhanh.
-- Giữa các câu phải có khoảng dừng tự nhiên để bé kịp nghe và hiểu.
-- KHÔNG BAO GIỜ nói nhanh hay dồn dập. Hãy tưởng tượng bạn đang nói chuyện với một em bé 4 tuổi.
-- Khi dạy phát âm, nói từ đó 2 lần: lần 1 thật chậm từng âm, lần 2 nói liền tự nhiên nhưng vẫn chậm.`;
+// ─── Lessons ────────────────────────────────────────────────────────
+
+interface LessonSession {
+  /** Free-quota bucket */
+  game: string;
+  instructions: string;
+  /** First user turn, sent by the relay once Gemini is ready, so Cú speaks first */
+  greeting: string;
+  tools?: Tool[];
+  /** Function results the page may send; anything else is replaced (null = no tools) */
+  allowedResults: Set<string> | null;
+  /** Text for a page cue, or null if the cue is not valid for this lesson */
+  cueText: (cue: ClientCueMessage) => string | null;
+}
+
+function resolveLesson(spec: LessonSpec | undefined): LessonSession | null {
+  if (!spec || typeof spec !== "object") return null;
+  if (spec.kind === "talk-with-owl") {
+    const group = OWL_GROUPS.find((g) => g.id === spec.groupId);
+    if (!group || !/^lesson[1-9]$/.test(String(spec.lessonId))) return null;
+    return {
+      game: "talk-with-owl",
+      instructions: getLessonInstruction(group.id, spec.lessonId),
+      greeting: getLessonGreeting(group.id, spec.lessonId),
+      allowedResults: null,
+      cueText: () => null,
+    };
+  }
+  if (spec.kind === "letter-practice") {
+    if (!ALPHABET_GROUPS.some((g) => g.id === spec.groupId)) return null;
+    const letters = getLettersForGroup(spec.groupId);
+    if (letters.length === 0) return null;
+    const start = Number.isInteger(spec.startIndex) ? Math.max(0, Math.min(Number(spec.startIndex), letters.length - 1)) : 0;
+    return {
+      game: "learn-alphabet",
+      instructions: buildLetterPracticeInstruction(letters),
+      greeting: greetingFor(letters, start),
+      tools: TOOLSETS["letter-practice"],
+      allowedResults: allowedToolResults(letters),
+      cueText: (cue) => {
+        if (cue.cue === "nudge") return NUDGE_TEXT;
+        if (cue.cue === "manual_next" && Number.isInteger(cue.nextIndex) && cue.nextIndex! >= 0 && cue.nextIndex! <= letters.length) {
+          return manualNextMessage(letters, cue.nextIndex!);
+        }
+        return null;
+      },
+    };
+  }
+  return null;
+}
 
 // ─── Quota Helpers ──────────────────────────────────────────────────
 
@@ -157,6 +261,22 @@ async function verifyToken(token: string): Promise<string | null> {
   } catch {
     return null;
   }
+}
+
+/** Same rule as src/libs/subscription.ts: an active subscription whose end date is in the future. */
+async function isPremiumUser(userId: string): Promise<boolean> {
+  const { data, error } = await supabase
+    .from("subscriptions")
+    .select("id")
+    .eq("user_id", userId)
+    .eq("status", "active")
+    .gt("end_date", new Date().toISOString())
+    .limit(1);
+  if (error) {
+    console.error("❌ Premium lookup failed:", error.message);
+    return false;
+  }
+  return (data?.length ?? 0) > 0;
 }
 
 async function getUsedSecondsToday(userId: string): Promise<number> {
@@ -222,7 +342,20 @@ wss.on("connection", (clientWs: WebSocket, req) => {
   let sessionStartTime: number | null = null;
   let remainingQuotaSeconds: number | null = null;
   let quotaCutoffTimer: ReturnType<typeof setTimeout> | null = null;
-  let isGuestSession = false;
+  /** Premium usage is stored in the DB; everyone else is tracked in memory, per game. */
+  let isPremiumSession = false;
+  let freeUsageKey: string | null = null;
+  /** The lesson this connection runs, built by the relay from the page's lesson id */
+  let lesson: LessonSession | null = null;
+
+  async function sendUserTurn(text: string) {
+    if (!geminiSession || !isReady) return;
+    try {
+      await geminiSession.sendClientContent({ turns: [{ role: "user", parts: [{ text }] }], turnComplete: true });
+    } catch (err) {
+      console.error("❌ Failed to send text:", err);
+    }
+  }
 
   // Send typed message to client
   function sendToClient(data: Record<string, unknown>) {
@@ -231,17 +364,17 @@ wss.on("connection", (clientWs: WebSocket, req) => {
     }
   }
 
-  // Save session usage to DB (premium) or in-memory (guest)
+  // Save session usage to DB (premium) or in-memory (everyone else, per game)
   async function saveSessionUsage() {
     if (!sessionStartTime) return;
     const elapsed = Math.round((Date.now() - sessionStartTime) / 1000);
     if (elapsed > 0) {
-      if (sessionUserId) {
+      if (isPremiumSession && sessionUserId) {
         console.log(`💾 Saving usage: user=${sessionUserId}, seconds=${elapsed}`);
         await addUsedSeconds(sessionUserId, elapsed);
-      } else if (isGuestSession) {
-        console.log(`💾 Saving guest IP usage: ip=${clientIp}, seconds=${elapsed}`);
-        addIpUsage(clientIp, elapsed);
+      } else if (freeUsageKey) {
+        console.log(`💾 Saving free usage: ${freeUsageKey}, seconds=${elapsed}`);
+        addFreeUsage(freeUsageKey, elapsed);
       }
     }
     sessionStartTime = null; // prevent double-save
@@ -278,9 +411,16 @@ wss.on("connection", (clientWs: WebSocket, req) => {
     // ── Start Session ──
     if (msg.type === "start") {
       const voiceName = (msg as ClientStartMessage).voiceName || "Kore";
-      const userInstructions = (msg as ClientStartMessage).instructions || "";
       const token = (msg as ClientStartMessage).token;
-      const systemInstruction = userInstructions.trim() || DEFAULT_INSTRUCTIONS;
+      lesson = resolveLesson((msg as ClientStartMessage).lesson);
+      if (!lesson) {
+        sendToClient({ type: "server.error", message: "Unknown lesson" });
+        return;
+      }
+      const systemInstruction = lesson.instructions;
+      const game = lesson.game;
+      const tools = lesson.tools;
+      const manualActivity = (msg as ClientStartMessage).manualActivity === true;
 
       // ── Auth & Quota Check ──
       if (token) {
@@ -288,8 +428,12 @@ wss.on("connection", (clientWs: WebSocket, req) => {
         if (!userId) {
           // Token is invalid/expired — fall through to guest rate limit below
           console.log("⚠️ Invalid token — falling back to guest mode");
+        } else if (!(await isPremiumUser(userId))) {
+          // Logged in but not Premium: free minutes below, keyed by account
+          sessionUserId = userId;
         } else {
           sessionUserId = userId;
+          isPremiumSession = true;
 
           // Check daily quota
           const usedToday = await getUsedSecondsToday(userId);
@@ -310,24 +454,24 @@ wss.on("connection", (clientWs: WebSocket, req) => {
         }
       }
 
-      // Guest/free user: enforce IP-based rate limit (3 min/day)
-      if (!sessionUserId) {
-        isGuestSession = true;
-        const ipUsed = getIpUsage(clientIp);
-        const ipRemaining = FREE_DAILY_LIMIT_SECONDS - ipUsed;
-        console.log(`📊 Guest ${clientIp}: used=${ipUsed}s, remaining=${ipRemaining}s`);
+      // Non-Premium (guest or free account): 3 min/day per game, by account if logged in, else by IP
+      if (!isPremiumSession) {
+        freeUsageKey = `${sessionUserId ?? `ip:${clientIp}`}|${game}`;
+        const freeUsed = getFreeUsage(freeUsageKey);
+        const freeRemaining = FREE_DAILY_LIMIT_SECONDS - freeUsed;
+        console.log(`📊 Free ${freeUsageKey}: used=${freeUsed}s, remaining=${freeRemaining}s`);
 
-        if (ipRemaining <= 0) {
+        if (freeRemaining <= 0) {
           sendToClient({
             type: "server.quota_exceeded",
-            usedSeconds: ipUsed,
+            usedSeconds: freeUsed,
             limitSeconds: FREE_DAILY_LIMIT_SECONDS,
             remainingSeconds: 0,
           });
           return;
         }
 
-        remainingQuotaSeconds = ipRemaining;
+        remainingQuotaSeconds = freeRemaining;
       }
 
       let connectionAttempts = 0;
@@ -357,12 +501,16 @@ wss.on("connection", (clientWs: WebSocket, req) => {
                   },
                 },
               },
-              realtimeInputConfig: {
-                automaticActivityDetection: {
-                  endOfSpeechSensitivity: "END_SENSITIVITY_HIGH" as any,
-                  silenceDurationMs: 300,
-                },
-              },
+              realtimeInputConfig: manualActivity
+                ? { automaticActivityDetection: { disabled: true } }
+                : {
+                    automaticActivityDetection: {
+                      endOfSpeechSensitivity: "END_SENSITIVITY_HIGH" as any,
+                      silenceDurationMs: 300,
+                    },
+                  },
+              // Scripted lessons also get transcripts: the page uses them to tell whether Gemini heard the child
+              ...(tools ? { tools, inputAudioTranscription: {}, outputAudioTranscription: {} } : {}),
               systemInstruction: systemInstruction,
             },
             callbacks: {
@@ -372,16 +520,22 @@ wss.on("connection", (clientWs: WebSocket, req) => {
                 sessionStartTime = Date.now();
 
                 // Send ready with remaining quota info
+                const effectiveLimit = isPremiumSession ? PREMIUM_DAILY_LIMIT_SECONDS : FREE_DAILY_LIMIT_SECONDS;
                 sendToClient({
                   type: "server.ready",
                   remainingSeconds: remainingQuotaSeconds,
+                  limitSeconds: effectiveLimit,
+                  isPremium: isPremiumSession,
                 });
+
+                // Make Cú speak first (short delay lets the Live audio session settle)
+                const greeting = lesson?.greeting;
+                if (greeting) setTimeout(() => void sendUserTurn(greeting), 800);
 
                 // Auto-cut timer: force disconnect when quota runs out
                 if (remainingQuotaSeconds !== null && remainingQuotaSeconds > 0) {
-                  const effectiveLimit = isGuestSession ? FREE_DAILY_LIMIT_SECONDS : PREMIUM_DAILY_LIMIT_SECONDS;
                   quotaCutoffTimer = setTimeout(async () => {
-                    console.log(`⏰ Quota cutoff for ${sessionUserId ?? `guest ${clientIp}`}`);
+                    console.log(`⏰ Quota cutoff for ${freeUsageKey ?? sessionUserId}`);
                     sendToClient({
                       type: "server.quota_exceeded",
                       usedSeconds: effectiveLimit,
@@ -483,23 +637,46 @@ wss.on("connection", (clientWs: WebSocket, req) => {
       return;
     }
 
-    // ── Forward Text ──
-    if (msg.type === "text" && geminiSession) {
-      const textMsg = msg as ClientTextMessage;
-      console.log(`💬 Forwarding text prompt to Gemini: "${textMsg.text}"`);
+    // ── Forward function results (answers to Gemini tool calls) ──
+    if (msg.type === "tool_response") {
+      if (!geminiSession || !isReady) return;
+      const { functionResponses } = msg as ClientToolResponseMessage;
+      if (!Array.isArray(functionResponses) || functionResponses.length === 0 || !lesson?.allowedResults) return;
+      const allowed = lesson.allowedResults;
+      const safe = functionResponses.slice(0, 4).map((r) => {
+        const result = typeof r?.response?.result === "string" ? r.response.result : "";
+        if (!allowed.has(result)) console.warn("⚠️ Unexpected tool result replaced");
+        return { id: String(r?.id ?? ""), name: String(r?.name ?? ""), response: { result: allowed.has(result) ? result : "Đã ghi nhận." } };
+      });
       try {
-        await geminiSession.sendClientContent({
-          turns: [
-            {
-              role: "user",
-              parts: [{ text: textMsg.text }],
-            },
-          ],
-          turnComplete: true,
-        });
+        await geminiSession.sendToolResponse({ functionResponses: safe });
       } catch (err) {
-        console.error("❌ Failed to send text:", err);
+        console.error("❌ Tool response error:", err instanceof Error ? err.message : err);
       }
+      return;
+    }
+
+    // ── Push-to-talk boundaries (only meaningful when started with manualActivity) ──
+    if (msg.type === "activity_start" || msg.type === "activity_end") {
+      if (!geminiSession || !isReady) return;
+      try {
+        await geminiSession.sendRealtimeInput(
+          msg.type === "activity_start" ? { activityStart: {} } : { activityEnd: {} },
+        );
+      } catch (err) {
+        console.error("❌ Activity signal error:", err instanceof Error ? err.message : err);
+      }
+      return;
+    }
+
+    // ── Page cues (predefined prompts only; free text from clients is ignored) ──
+    if (msg.type === "cue") {
+      const text = lesson?.cueText(msg as ClientCueMessage);
+      if (text) await sendUserTurn(text);
+      return;
+    }
+    if (msg.type === "text") {
+      console.warn("⚠️ Ignored free text from client");
       return;
     }
 

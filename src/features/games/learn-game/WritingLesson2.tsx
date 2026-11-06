@@ -8,6 +8,7 @@ import { playButtonSound } from "@/libs/utils/playSound";
 import { NextLessonButton } from "@/components/games/NextLessonButton";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { LoudSpeaker, Eraser as Easer, Pen } from "@/libs/constants/game-assets";
+import { checkTracing, splitAtJumps } from "@/features/games/learn-alphabet/tracingCheck";
 
 interface WritingLesson2Props {
   numbers: number[];
@@ -56,6 +57,7 @@ export function WritingLesson2({ numbers, onComplete }: WritingLesson2Props) {
   // Reset state when number changes
   useEffect(() => {
     activeDigitIndexRef.current = 0;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- existing reset when the item changes
     setActiveDigitIndex(0);
     setCompletedStrokes([]);
     setCurrentStroke([]);
@@ -91,6 +93,7 @@ export function WritingLesson2({ numbers, onComplete }: WritingLesson2Props) {
     };
 
     // Clear old samples first
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- existing reset when the item changes
     setPathSamples([]);
 
     // Small delay to ensure SVG has re-rendered with new paths
@@ -184,22 +187,8 @@ export function WritingLesson2({ numbers, onComplete }: WritingLesson2Props) {
   const validateDrawing = (allStrokes: Point[][]) => {
     if (pathSamples.length === 0) return;
 
-    const allUserPoints = allStrokes.flat();
-    let coveredCount = 0;
-    const coverageTolerance = 30;
-
-    pathSamples.forEach((pathPoint) => {
-      const isCovered = allUserPoints.some((userPoint) => {
-        const dx = userPoint.x - pathPoint.x;
-        const dy = userPoint.y - pathPoint.y;
-        return dx * dx + dy * dy <= coverageTolerance * coverageTolerance;
-      });
-      if (isCovered) coveredCount++;
-    });
-
-    const coverageRatio = coveredCount / pathSamples.length;
-
-    if (coverageRatio >= 1) {
+    // Same rule as the alphabet (tracingCheck.ts): enough of every stroke, both ends reached
+    if (checkTracing(splitAtJumps(pathSamples), allStrokes).passed) {
       // Use ref values to avoid stale closures
       const currentActiveIdx = activeDigitIndexRef.current;
 
@@ -301,13 +290,13 @@ export function WritingLesson2({ numbers, onComplete }: WritingLesson2Props) {
           onPointerLeave={handlePointerLeave}
           style={{ cursor: "none" }}
         >
-          {/* Background grid */}
-          <defs>
-            <pattern id="grid2" width="26" height="32" patternUnits="userSpaceOnUse">
-              <path d="M 26 0 L 0 0 0 32" fill="none" stroke="#e2e8f0" strokeWidth="0.5" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#grid2)" />
+          {/* Writing lines across all digits: top of the digits and baseline */}
+          {DIGIT_PATHS[0].guides && (
+            <g pointerEvents="none">
+              <line x1="0" x2={canvasWidth} y1={DIGIT_PATHS[0].guides.top} y2={DIGIT_PATHS[0].guides.top} stroke="#93c5fd" strokeWidth="2" />
+              <line x1="0" x2={canvasWidth} y1={DIGIT_PATHS[0].guides.baseline} y2={DIGIT_PATHS[0].guides.baseline} stroke="#f87171" strokeWidth="2.5" />
+            </g>
+          )}
 
           {/* Separator line for multi-digit */}
           {isMultiDigit && (

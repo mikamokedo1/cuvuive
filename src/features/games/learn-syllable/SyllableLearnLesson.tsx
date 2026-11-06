@@ -8,6 +8,7 @@ import { useSwipe } from "@/hooks/useSwipe";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import Image from "next/image";
 import { playButtonSound } from "@/libs/utils/playSound";
+import { handwritingText } from "@/libs/fonts/handwriting";
 
 interface SyllableLearnLessonProps {
   syllables: SyllableData[];
@@ -68,7 +69,7 @@ export function SyllableLearnLesson({ syllables, onComplete }: SyllableLearnLess
           {currentSyllable.image ? (
             <Image src={currentSyllable.image} alt={currentSyllable.name} fill className="object-contain" />
           ) : (
-            <span className="text-6xl md:text-8xl font-black text-emerald-400 drop-shadow-md select-none">
+            <span className={`${handwritingText} lowercase text-6xl md:text-8xl text-emerald-400 drop-shadow-md select-none`}>
               {currentSyllable.name}
             </span>
           )}
@@ -77,7 +78,7 @@ export function SyllableLearnLesson({ syllables, onComplete }: SyllableLearnLess
         <div className="flex flex-col items-center gap-2 z-10 w-full mt-2">
           <div
             onClick={handleSpeakSyllable}
-            className="cursor-pointer transition-all text-7xl md:text-9xl font-black text-emerald-600 drop-shadow-sm"
+            className={`${handwritingText} cursor-pointer transition-all text-7xl md:text-9xl text-emerald-600 drop-shadow-sm`}
           >
             {currentSyllable.syllable}
           </div>
@@ -86,7 +87,7 @@ export function SyllableLearnLesson({ syllables, onComplete }: SyllableLearnLess
               e.stopPropagation();
               speak(currentSyllable.fullSpelling);
             }}
-            className="mt-2 cursor-pointer transition-all hover:opacity-80 text-2xl md:text-3xl font-bold text-gray-500"
+            className={`${handwritingText} lowercase mt-2 cursor-pointer transition-all hover:opacity-80 text-2xl md:text-3xl text-gray-500`}
           >
             {currentSyllable.name}
           </div>

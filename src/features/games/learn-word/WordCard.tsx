@@ -1,6 +1,7 @@
 import { WordData } from "./constants";
 import Image from "next/image";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
+import { handwritingText } from "@/libs/fonts/handwriting";
 
 export function WordCard({ word }: { word: WordData }) {
   const { speak } = useTextToSpeech();
@@ -12,7 +13,7 @@ export function WordCard({ word }: { word: WordData }) {
       <div className="relative w-32 h-32 md:w-48 md:h-48 mb-4">
         {word.image ? <Image src={word.image} alt={word.name} fill className="object-contain" /> : null}
       </div>
-      <span className="text-3xl md:text-5xl font-extrabold text-[#38BDF8] capitalize">{word.name}</span>
+      <span className={`${handwritingText} text-3xl md:text-5xl text-[#38BDF8] lowercase`}>{word.name}</span>
     </div>
   );
 }

@@ -3,6 +3,7 @@
 import { LetterData } from "./constants";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import Image from "next/image";
+import { handwritingInBox, handwritingText } from "@/libs/fonts/handwriting";
 
 interface LetterSelectorProps {
   letters: LetterData[];
@@ -25,7 +26,7 @@ export function LetterSelector({ letters, currentIndex, onSelect }: LetterSelect
                 onSelect(index);
               }}
               className={`
-                relative w-12 h-12 rounded-xl font-bold text-lg cursor-pointer
+                relative w-12 h-16 rounded-xl font-bold text-lg cursor-pointer
                 transition-all duration-200 transform active:scale-95
                 ${
                   isActive
@@ -35,7 +36,7 @@ export function LetterSelector({ letters, currentIndex, onSelect }: LetterSelect
               `}
             >
               <div className="relative w-full h-full flex flex-col items-center justify-center">
-                <span className="text-base leading-none">{letter.id}</span>
+                <span className={`${handwritingText} ${handwritingInBox} text-[28px]`}>{letter.id}</span>
               </div>
             </button>
           );

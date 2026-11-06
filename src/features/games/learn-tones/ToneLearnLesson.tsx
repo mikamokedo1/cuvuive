@@ -8,6 +8,7 @@ import { useSwipe } from "@/hooks/useSwipe";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import Image from "next/image";
 import { playButtonSound } from "@/libs/utils/playSound";
+import { handwritingText } from "@/libs/fonts/handwriting";
 
 interface ToneLearnLessonProps {
   words: ToneWord[];
@@ -110,7 +111,7 @@ export function ToneLearnLesson({ words, onComplete }: ToneLearnLessonProps) {
 
             <div
               onClick={() => speak(currentWord?.spelling ?? "")}
-              className=" animate-scale shrink-0 text-4xl md:text-5xl font-black leading-[70px] text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 text-center"
+              className={`${handwritingText} lowercase animate-scale shrink-0 text-4xl md:text-5xl leading-[70px] text-blue-600 text-center`}
             >
               {currentWord!.name}
             </div>

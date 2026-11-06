@@ -11,6 +11,7 @@ import { TONE_PATHS } from "@/libs/constants/tonePaths";
 import Loading from "@/components/common/Loading";
 import { getRandomItem } from "@/libs/utils/randomQuestion";
 import { LoudSpeaker, Eraser as Easer, Pen } from "@/libs/constants/game-assets";
+import { checkTracing, splitAtJumps } from "@/features/games/learn-alphabet/tracingCheck";
 
 interface ToneWritingLessonProps {
   words: ToneWord[];
@@ -80,6 +81,7 @@ export function ToneWritingLesson({ words, onComplete, requiredWins = 4 }: ToneW
 
   useEffect(() => {
     // Reset path samples when target word changes to trigger re-extraction
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- existing reset when the item changes
     setPathSamples([]);
 
     if (!targetWord || targetWord.tone === "ngang") return;
@@ -172,26 +174,10 @@ export function ToneWritingLesson({ words, onComplete, requiredWins = 4 }: ToneW
     setCursorPos(null);
   };
 
+  // Same rule as the alphabet (tracingCheck.ts): enough of the mark, both ends reached
   const validateDrawing = (allStrokes: Point[][]) => {
     if (pathSamples.length === 0 || !targetWord) return;
-
-    const allUserPoints = allStrokes.flat();
-    let coveredCount = 0;
-    const coverageTolerance = 35; // How close a drawn point must be to a path sample
-
-    pathSamples.forEach((pathPoint) => {
-      const isCovered = allUserPoints.some((userPoint) => {
-        const dx = userPoint.x - pathPoint.x;
-        const dy = userPoint.y - pathPoint.y;
-        return dx * dx + dy * dy <= coverageTolerance * coverageTolerance;
-      });
-      if (isCovered) coveredCount++;
-    });
-
-    const coverageRatio = coveredCount / pathSamples.length;
-
-    // At least 85% of the template path must be covered by drawn strokes
-    if (coverageRatio >= 0.85) {
+    if (checkTracing(splitAtJumps(pathSamples), allStrokes).passed) {
       triggerSuccess();
     }
   };
